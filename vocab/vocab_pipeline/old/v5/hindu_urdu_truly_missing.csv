@@ -1,0 +1,16 @@
+english_word,word_class,kannada_translation,transliteration,verb_transitivity,level
+"hi ,  hey (casual greeting)",exclamation,ಹಾಯ್ / ಹೇ / ನಮಸ್ಕಾರ,hāy / hē / namaskāra,,a1
+"sandal ,  slipper (open footwear)",noun,ಚಪ್ಪಲಿ / ಸ್ಯಾಂಡಲ್,cappali / syāṁḍal,,a1
+"to smile ,  to laugh",verb,ನಗು / ಮುಗುಳುನಗೆ ಬೀರು,nagu / muguḷunage bīru,intransitive,a2
+"cover (protection, shelter)",noun,ಆಶ್ರಯ / ರಕ್ಷಣೆ / ಹೊದಿಕೆ,āśraya / rakṣaṇe / hodike,,b1
+"cover (shelter, protection)",noun,ರಕ್ಷಣೆ / ಆಶ್ರಯ / ಹೊದಿಕೆ,rakṣaṇe / āśraya / hodike,,b1
+covered (insured or protected),adjective,ರಕ್ಷಣೆಗೊಳಪಟ್ಟ / ವಿಮೆಗೊಳಪಟ್ಟ,rakṣaṇegoḷapaṭṭa / vimegoḷapaṭṭa,,b1
+covered (topic or area dealt with),adjective,ನಿರ್ವಹಿಸಿದ / ಚರ್ಚಿಸಿದ / ಒಳಗೊಂಡ,nirvahisida / carcisida / oḷagoṁḍa,,b1
+cream (dairy product),adjective,ಕೆನೆಯುಳ್ಳ / ಕೆನೆಯಂತಹ,keneyuḷḷa / keneyaṁtaha,,b1
+cream (lotion),adjective,ಕೆನೆಯಂತಹ / ಲೇಪನದಂತಹ,keneyaṁtaha / lēpanadaṁtaha,,b1
+cream-colored,adjective,ಕೆನೆ ಬಣ್ಣದ / ಕೆನೆವರ್ಣದ,kene baṇṇada / kenevarṇada,,b1
+creamy (dairy product),adjective,ಕೆನೆಯುಳ್ಳ / ಕೆನೆಭರಿತ,keneyuḷḷa / kenebharita,,b1
+cruel,adjective,ಕ್ರೂರ / ನಿರ್ದಯಿ / ಕಠಿಣ,krūra / nirdayi / kaṭhiṇa,,b1
+cultural,adjective,ಸಾಂಸ್ಕೃತಿಕ,sāṁskr̥tika,,b1
+"neither (agreement ,  negative reply)",pronoun,ನಾನೂ ಇಲ್ಲ / ನಾನೂ ಸಹ ಇಲ್ಲ,nānū illa / nānū saha illa,,b1
+"bunch (a lot of ,  many - informal)",noun,ಬಹಳಷ್ಟು / ಹೆಚ್ಚು / ಸಾಕಷ್ಟು,bahaḷaṣṭu / heccu / sākaṣṭu,,b2

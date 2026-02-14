@@ -1,0 +1,1452 @@
+INFO:     Will watch for changes in these directories: ['/Users/raghavganesh/Documents/Code Projects/Language Learning Project']
+INFO:     Uvicorn running on http://0.0.0.0:5001 (Press CTRL+C to quit)
+INFO:     Started reloader process [16830] using WatchFiles
+/Users/raghavganesh/Documents/Code Projects/Language Learning Project/backend/api_client.py:17: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+INFO:     Started server process [16923]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+Existing vocabulary for telugu detected (9875 rows) - deleting and reloading...
+Loading vocabulary from /Users/raghavganesh/Documents/Code Projects/Language Learning Project/vocab/telugu-oxford-5000.csv...
+Existing vocabulary for kannada detected (9877 rows) - deleting and reloading...
+Loading vocabulary from /Users/raghavganesh/Documents/Code Projects/Language Learning Project/vocab/kannada-oxford-5000.csv...
+Existing vocabulary for urdu detected (9875 rows) - deleting and reloading...
+Loading vocabulary from /Users/raghavganesh/Documents/Code Projects/Language Learning Project/vocab/urdu-oxford-5000.csv...
+Existing vocabulary for malayalam detected (9876 rows) - deleting and reloading...
+Loading vocabulary from /Users/raghavganesh/Documents/Code Projects/Language Learning Project/vocab/malayalam-oxford-5000.csv...
+Existing vocabulary for hindi detected (9875 rows) - deleting and reloading...
+Loading vocabulary from /Users/raghavganesh/Documents/Code Projects/Language Learning Project/vocab/hindi-oxford-5000.csv...
+Existing vocabulary for tamil detected (9877 rows) - deleting and reloading...
+Loading vocabulary from /Users/raghavganesh/Documents/Code Projects/Language Learning Project/vocab/tamil-oxford-5000.csv...
+Getting dashboard data for tamil...
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:55385 - "GET /api/dashboard/tamil HTTP/1.1" 200 OK
+Getting dashboard data for telugu...
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:55387 - "GET /api/dashboard/telugu HTTP/1.1" 200 OK
+Getting dashboard data for hindi...
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:55389 - "GET /api/dashboard/hindi HTTP/1.1" 200 OK
+Getting dashboard data for kannada...
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:55391 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
+Getting dashboard data for urdu...
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:55393 - "GET /api/dashboard/urdu HTTP/1.1" 200 OK
+Getting dashboard data for tamil...
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:55788 - "GET /api/dashboard/tamil HTTP/1.1" 200 OK
+Getting dashboard data for telugu...
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:55790 - "GET /api/dashboard/telugu HTTP/1.1" 200 OK
+Getting dashboard data for hindi...
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:55792 - "GET /api/dashboard/hindi HTTP/1.1" 200 OK
+Getting dashboard data for kannada...
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:55794 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
+Getting dashboard data for urdu...
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:55796 - "GET /api/dashboard/urdu HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55868 - "OPTIONS /api/srs/sync-quotas-all HTTP/1.1" 200 OK
+✓ Synced SRS quotas from weekly goals for malayalam (week 2026-01-26)
+✓ Synced SRS quotas for 1 languages
+INFO:     127.0.0.1:55868 - "POST /api/srs/sync-quotas-all HTTP/1.1" 200 OK
+Getting dashboard data for kannada...
+INFO:     127.0.0.1:55872 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55872 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+Getting dashboard data for malayalam...
+✓ Synced SRS quotas from weekly goals for malayalam (week 2026-01-26)
+✓ Synced SRS quotas for 1 languages
+INFO:     127.0.0.1:55876 - "POST /api/srs/sync-quotas-all HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:55868 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55872 - "GET /api/dashboard/malayalam HTTP/1.1" 200 OK
+Getting dashboard data for kannada...
+Getting dashboard data for malayalam...
+INFO:     127.0.0.1:55872 - "GET /api/streak HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:55880 - "GET /api/dashboard/malayalam HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:55876 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55876 - "GET /api/streak HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55878 - "GET /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55874 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+Getting dashboard data for kannada...
+INFO:     127.0.0.1:55876 - "GET /api/profile HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55868 - "GET /api/user-interests HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55876 - "GET /api/srs/settings/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55876 - "GET /api/stats/language/kannada HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:55880 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55878 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55876 - "GET /api/srs/settings/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55868 - "GET /api/stats/daily?language=kannada&days=365 HTTP/1.1" 200 OK
+Getting dashboard data for kannada...
+INFO:     127.0.0.1:55880 - "GET /api/stats/language/kannada HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:55878 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55876 - "GET /api/stats/language/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55874 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55872 - "GET /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55868 - "GET /api/languages/learning HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55868 - "GET /api/stats/daily?language=kannada&days=365 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55868 - "GET /api/stats/language/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55868 - "GET /api/srs/settings/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55868 - "GET /api/stats/language/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55868 - "GET /api/streak HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55876 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+Getting dashboard data for kannada...
+INFO:     127.0.0.1:56105 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+Getting dashboard data for malayalam...
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:56103 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:56105 - "GET /api/dashboard/malayalam HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56105 - "GET /api/streak HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56107 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56113 - "GET /api/srs/stats/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56107 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56107 - "GET /api/words-for-review/kannada?limit=50 HTTP/1.1" 200 OK
+Filters received - mastery: None (type: <class 'NoneType'>), word_class: None (type: <class 'NoneType'>), level: None (type: <class 'NoneType'>)
+Filters as strings - mastery: '', word_class: '', level: ''
+INFO:     127.0.0.1:56107 - "GET /api/vocabulary/kannada?limit=1000 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56107 - "GET /api/srs/stats/kannada HTTP/1.1" 200 OK
+✓ Synced SRS quotas from weekly goals for malayalam (week 2026-01-26)
+✓ Synced SRS quotas for 1 languages
+INFO:     127.0.0.1:57029 - "POST /api/srs/sync-quotas-all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57210 - "GET /api/words-for-review/tamil?limit=20 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57249 - "GET /api/srs/stats/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57370 - "OPTIONS /api/srs/sync-quotas-all HTTP/1.1" 200 OK
+✓ Synced SRS quotas from weekly goals for malayalam (week 2026-01-26)
+✓ Synced SRS quotas for 1 languages
+INFO:     127.0.0.1:57370 - "POST /api/srs/sync-quotas-all HTTP/1.1" 200 OK
+Getting dashboard data for kannada...
+INFO:     127.0.0.1:57374 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57374 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+Getting dashboard data for malayalam...
+✓ Synced SRS quotas from weekly goals for malayalam (week 2026-01-26)
+✓ Synced SRS quotas for 1 languages
+INFO:     127.0.0.1:57378 - "POST /api/srs/sync-quotas-all HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:57370 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
+Getting dashboard data for kannada...
+INFO:     127.0.0.1:57370 - "GET /api/streak HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:57378 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:57382 - "GET /api/dashboard/malayalam HTTP/1.1" 200 OK
+Getting dashboard data for malayalam...
+INFO:     127.0.0.1:57382 - "GET /api/streak HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:57378 - "GET /api/dashboard/malayalam HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57380 - "GET /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57376 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57380 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57376 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+Getting dashboard data for kannada...
+INFO:     127.0.0.1:57392 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57376 - "GET /api/profile HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57400 - "GET /api/user-interests HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57402 - "GET /api/srs/settings/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57400 - "GET /api/srs/settings/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57376 - "GET /api/stats/language/kannada HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:57397 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
+Getting dashboard data for kannada...
+INFO:     127.0.0.1:57392 - "GET /api/stats/daily?language=kannada&days=365 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57400 - "GET /api/stats/language/kannada HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:57376 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57392 - "GET /api/stats/language/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57399 - "GET /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57397 - "GET /api/languages/learning HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57397 - "GET /api/stats/daily?language=kannada&days=365 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57397 - "GET /api/stats/language/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57397 - "GET /api/srs/settings/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57397 - "GET /api/stats/language/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57397 - "GET /api/streak HTTP/1.1" 200 OK
+Filters received - mastery: None (type: <class 'NoneType'>), word_class: None (type: <class 'NoneType'>), level: None (type: <class 'NoneType'>)
+Filters as strings - mastery: '', word_class: '', level: ''
+INFO:     127.0.0.1:57397 - "GET /api/vocabulary/kannada?limit=50&offset=0 HTTP/1.1" 200 OK
+[transliterate_text] detected from_scheme=Kannada for language=kannada
+[transliterate_text] from=Kannada to=ITRANS in=ಅ out=a
+INFO:     127.0.0.1:57399 - "POST /api/transliterate HTTP/1.1" 200 OK
+[transliterate_text] detected from_scheme=Kannada for language=kannada
+[transliterate_text] from=Kannada to=ITRANS in=ಆ out=A
+INFO:     127.0.0.1:57399 - "POST /api/transliterate HTTP/1.1" 200 OK
+[transliterate_text] detected from_scheme=Kannada for language=kannada
+[transliterate_text] from=Kannada to=ITRANS in=ಇ out=i
+INFO:     127.0.0.1:57399 - "POST /api/transliterate HTTP/1.1" 200 OK
+[transliterate_text] detected from_scheme=Kannada for language=kannada
+[transliterate_text] from=Kannada to=ITRANS in=ಈ out=I
+INFO:     127.0.0.1:57399 - "POST /api/transliterate HTTP/1.1" 200 OK
+[transliterate_text] detected from_scheme=Kannada for language=kannada
+[transliterate_text] from=Kannada to=ITRANS in=ಉ out=u
+INFO:     127.0.0.1:57399 - "POST /api/transliterate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57397 - "POST /api/lesson-words/kannada/kn-vowels-1 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57392 - "POST /api/lesson-words/kannada/kn-vowels-1 HTTP/1.1" 200 OK
+[transliterate_text] detected from_scheme=Kannada for language=kannada
+[transliterate_text] from=Kannada to=ITRANS in=ಆ out=A
+INFO:     127.0.0.1:57392 - "POST /api/transliterate HTTP/1.1" 200 OK
+[transliterate_text] detected from_scheme=Kannada for language=kannada
+[transliterate_text] from=Kannada to=ITRANS in=ಈ out=I
+INFO:     127.0.0.1:57397 - "POST /api/transliterate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57424 - "GET /api/srs/stats/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57424 - "GET /api/srs/stats/kannada HTTP/1.1" 200 OK
+Getting dashboard data for kannada...
+INFO:     127.0.0.1:57441 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+Getting dashboard data for malayalam...
+Dashboard data retrieved successfully
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:57441 - "GET /api/dashboard/malayalam HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57424 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57441 - "GET /api/streak HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57442 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57442 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57452 - "GET /api/srs/stats/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57452 - "OPTIONS /api/srs/sync-quotas-all HTTP/1.1" 200 OK
+✓ Synced SRS quotas from weekly goals for malayalam (week 2026-01-26)
+✓ Synced SRS quotas for 1 languages
+INFO:     127.0.0.1:57452 - "POST /api/srs/sync-quotas-all HTTP/1.1" 200 OK
+Getting dashboard data for kannada...
+INFO:     127.0.0.1:57467 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+Getting dashboard data for malayalam...
+INFO:     127.0.0.1:57467 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+✓ Synced SRS quotas from weekly goals for malayalam (week 2026-01-26)
+✓ Synced SRS quotas for 1 languages
+INFO:     127.0.0.1:57470 - "POST /api/srs/sync-quotas-all HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:57452 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
+Getting dashboard data for kannada...
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:57474 - "GET /api/dashboard/malayalam HTTP/1.1" 200 OK
+Getting dashboard data for malayalam...
+INFO:     127.0.0.1:57452 - "GET /api/streak HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:57470 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:57467 - "GET /api/dashboard/malayalam HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57470 - "GET /api/streak HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57472 - "GET /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57468 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57472 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57467 - "GET /api/srs/stats/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57468 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57468 - "GET /api/words-for-review/kannada?limit=50 HTTP/1.1" 200 OK
+Filters received - mastery: None (type: <class 'NoneType'>), word_class: None (type: <class 'NoneType'>), level: None (type: <class 'NoneType'>)
+Filters as strings - mastery: '', word_class: '', level: ''
+INFO:     127.0.0.1:57468 - "GET /api/vocabulary/kannada?limit=1000 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57467 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57490 - "GET /api/srs/stats/kannada HTTP/1.1" 200 OK
+Getting dashboard data for telugu...
+INFO:     127.0.0.1:57569 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+Getting dashboard data for malayalam...
+INFO:     127.0.0.1:57571 - "GET /api/srs/stats/telugu HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:57569 - "GET /api/dashboard/malayalam HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:57490 - "GET /api/dashboard/telugu HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57490 - "GET /api/streak HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57570 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57570 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+Getting dashboard data for tamil...
+INFO:     127.0.0.1:57490 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+Getting dashboard data for malayalam...
+INFO:     127.0.0.1:57571 - "GET /api/srs/stats/tamil HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:57570 - "GET /api/dashboard/tamil HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:57490 - "GET /api/dashboard/malayalam HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57570 - "GET /api/streak HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57569 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57569 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+Getting dashboard data for tamil...
+INFO:     127.0.0.1:57569 - "GET /api/profile HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57582 - "GET /api/srs/settings/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57571 - "GET /api/user-interests HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57582 - "GET /api/srs/settings/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57569 - "GET /api/stats/language/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57584 - "GET /api/stats/daily?language=tamil&days=365 HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:57570 - "GET /api/dashboard/tamil HTTP/1.1" 200 OK
+Getting dashboard data for tamil...
+INFO:     127.0.0.1:57582 - "GET /api/stats/language/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57569 - "GET /api/stats/language/tamil HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:57584 - "GET /api/dashboard/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57490 - "GET /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57570 - "GET /api/languages/learning HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57570 - "GET /api/stats/daily?language=tamil&days=365 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57570 - "GET /api/stats/language/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57570 - "GET /api/srs/settings/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57570 - "GET /api/stats/language/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57570 - "GET /api/streak HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57618 - "OPTIONS /api/srs/settings/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57618 - "PUT /api/srs/settings/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57618 - "OPTIONS /api/srs/settings/telugu HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57618 - "PUT /api/srs/settings/telugu HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57618 - "OPTIONS /api/srs/settings/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57618 - "PUT /api/srs/settings/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57618 - "OPTIONS /api/srs/settings/malayalam HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57618 - "PUT /api/srs/settings/malayalam HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57618 - "OPTIONS /api/srs/settings/hindi HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57618 - "PUT /api/srs/settings/hindi HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57618 - "OPTIONS /api/srs/settings/urdu HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57618 - "PUT /api/srs/settings/urdu HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57618 - "GET /api/srs/settings/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57618 - "GET /api/stats/language/tamil HTTP/1.1" 200 OK
+Filters received - mastery: None (type: <class 'NoneType'>), word_class: None (type: <class 'NoneType'>), level: None (type: <class 'NoneType'>)
+Filters as strings - mastery: '', word_class: '', level: ''
+INFO:     127.0.0.1:57653 - "GET /api/vocabulary/tamil?limit=50&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57659 - "GET /api/srs/stats/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57659 - "OPTIONS /api/srs/sync-quotas-all HTTP/1.1" 200 OK
+✓ Synced SRS quotas from weekly goals for malayalam (week 2026-01-26)
+✓ Synced SRS quotas for 1 languages
+INFO:     127.0.0.1:57659 - "POST /api/srs/sync-quotas-all HTTP/1.1" 200 OK
+Getting dashboard data for kannada...
+INFO:     127.0.0.1:57671 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57671 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+Getting dashboard data for malayalam...
+✓ Synced SRS quotas from weekly goals for malayalam (week 2026-01-26)
+✓ Synced SRS quotas for 1 languages
+INFO:     127.0.0.1:57674 - "POST /api/srs/sync-quotas-all HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:57659 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
+Getting dashboard data for kannada...
+INFO:     127.0.0.1:57659 - "GET /api/streak HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:57678 - "GET /api/dashboard/malayalam HTTP/1.1" 200 OK
+Getting dashboard data for malayalam...
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:57674 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57674 - "GET /api/streak HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:57659 - "GET /api/dashboard/malayalam HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57676 - "GET /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57672 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57659 - "GET /api/srs/stats/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57676 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57672 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57676 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+Getting dashboard data for kannada...
+INFO:     127.0.0.1:57676 - "GET /api/profile HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57678 - "GET /api/srs/settings/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57674 - "GET /api/user-interests HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57678 - "GET /api/srs/settings/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57676 - "GET /api/stats/language/kannada HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:57672 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
+Getting dashboard data for kannada...
+INFO:     127.0.0.1:57671 - "GET /api/stats/daily?language=kannada&days=365 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57678 - "GET /api/stats/language/kannada HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:57676 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57671 - "GET /api/stats/language/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57659 - "GET /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57672 - "GET /api/languages/learning HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57672 - "GET /api/stats/daily?language=kannada&days=365 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57672 - "GET /api/stats/language/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57672 - "GET /api/srs/settings/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57672 - "GET /api/stats/language/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57672 - "GET /api/streak HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57672 - "GET /api/srs/stats/kannada HTTP/1.1" 200 OK
+Getting dashboard data for telugu...
+INFO:     127.0.0.1:57729 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+Getting dashboard data for malayalam...
+INFO:     127.0.0.1:57731 - "GET /api/srs/stats/telugu HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:57727 - "GET /api/dashboard/telugu HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:57729 - "GET /api/dashboard/malayalam HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57727 - "GET /api/streak HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57730 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57730 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+Getting dashboard data for telugu...
+INFO:     127.0.0.1:57727 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+Getting dashboard data for malayalam...
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:57730 - "GET /api/dashboard/telugu HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:57727 - "GET /api/dashboard/malayalam HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57727 - "GET /api/streak HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57729 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57727 - "GET /api/srs/stats/telugu HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57729 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57749 - "GET /api/words-for-review/telugu?limit=50 HTTP/1.1" 200 OK
+Filters received - mastery: None (type: <class 'NoneType'>), word_class: None (type: <class 'NoneType'>), level: None (type: <class 'NoneType'>)
+Filters as strings - mastery: '', word_class: '', level: ''
+INFO:     127.0.0.1:57749 - "GET /api/vocabulary/telugu?limit=1000 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57749 - "GET /api/srs/stats/telugu HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57749 - "GET /api/words-for-review/telugu?limit=50 HTTP/1.1" 200 OK
+Filters received - mastery: None (type: <class 'NoneType'>), word_class: None (type: <class 'NoneType'>), level: None (type: <class 'NoneType'>)
+Filters as strings - mastery: '', word_class: '', level: ''
+INFO:     127.0.0.1:57749 - "GET /api/vocabulary/telugu?limit=1000 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57830 - "OPTIONS /api/flashcard/update HTTP/1.1" 200 OK
+[SRS] Updated word 21513425: learning, ease=2.30, next=2026-01-31, new=True
+INFO:     127.0.0.1:57830 - "POST /api/flashcard/update HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57830 - "GET /api/srs/preview/21510845 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57855 - "GET /api/srs/preview/21510845 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57865 - "GET /api/srs/preview/21510845 HTTP/1.1" 200 OK
+[SRS] Updated word 21510845: learning, ease=2.58, next=2026-01-31, new=True
+INFO:     127.0.0.1:57865 - "POST /api/flashcard/update HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57865 - "GET /api/srs/preview/21510865 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57865 - "GET /api/srs/preview/21510865 HTTP/1.1" 200 OK
+[SRS] Updated word 21510865: learning, ease=2.30, next=2026-01-31, new=True
+INFO:     127.0.0.1:57905 - "POST /api/flashcard/update HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57911 - "GET /api/srs/preview/21509122 HTTP/1.1" 200 OK
+[SRS] Updated word 21509122: learning, ease=2.65, next=2026-02-02, new=True
+INFO:     127.0.0.1:57947 - "POST /api/flashcard/update HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57947 - "GET /api/srs/preview/21509158 HTTP/1.1" 200 OK
+[SRS] Updated word 21509158: learning, ease=2.65, next=2026-02-02, new=True
+INFO:     127.0.0.1:57967 - "POST /api/flashcard/update HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57967 - "GET /api/srs/preview/21513784 HTTP/1.1" 200 OK
+[SRS] Updated word 21513784: learning, ease=2.65, next=2026-02-02, new=True
+INFO:     127.0.0.1:57967 - "POST /api/flashcard/update HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57967 - "GET /api/srs/preview/21510882 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57992 - "GET /api/srs/preview/21510865 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57992 - "GET /api/srs/preview/21510882 HTTP/1.1" 200 OK
+[SRS] Updated word 21510882: learning, ease=2.65, next=2026-02-02, new=True
+INFO:     127.0.0.1:58006 - "POST /api/flashcard/update HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58006 - "GET /api/srs/preview/21513785 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58006 - "GET /api/srs/preview/21510882 HTTP/1.1" 200 OK
+[SRS] Updated word 21513785: learning, ease=2.65, next=2026-02-02, new=True
+INFO:     127.0.0.1:58006 - "POST /api/flashcard/update HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58006 - "GET /api/srs/preview/21509833 HTTP/1.1" 200 OK
+[SRS] Updated word 21509833: learning, ease=2.65, next=2026-02-02, new=True
+INFO:     127.0.0.1:58006 - "POST /api/flashcard/update HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58006 - "GET /api/srs/preview/21513403 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58032 - "GET /api/srs/preview/21509833 HTTP/1.1" 200 OK
+[SRS] Updated word 21513403: learning, ease=2.65, next=2026-02-02, new=True
+INFO:     127.0.0.1:58052 - "POST /api/flashcard/update HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58052 - "GET /api/srs/preview/21513404 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58052 - "GET /api/srs/preview/21513404 HTTP/1.1" 200 OK
+[SRS] Updated word 21513404: learning, ease=2.65, next=2026-02-02, new=True
+INFO:     127.0.0.1:58083 - "POST /api/flashcard/update HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58083 - "GET /api/srs/preview/21513405 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58083 - "GET /api/srs/stats/telugu HTTP/1.1" 200 OK
+Getting dashboard data for telugu...
+INFO:     127.0.0.1:58105 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+Getting dashboard data for malayalam...
+Dashboard data retrieved successfully
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:58103 - "GET /api/dashboard/telugu HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58105 - "GET /api/dashboard/malayalam HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58105 - "GET /api/streak HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58106 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58106 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58106 - "GET /api/srs/stats/telugu HTTP/1.1" 200 OK
+✓ Synced SRS quotas from weekly goals for malayalam (week 2026-01-26)
+✓ Synced SRS quotas for 1 languages
+INFO:     127.0.0.1:58106 - "POST /api/srs/sync-quotas-all HTTP/1.1" 200 OK
+Getting dashboard data for kannada...
+INFO:     127.0.0.1:58105 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+Getting dashboard data for malayalam...
+INFO:     127.0.0.1:58105 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+✓ Synced SRS quotas from weekly goals for malayalam (week 2026-01-26)
+✓ Synced SRS quotas for 1 languages
+INFO:     127.0.0.1:58120 - "POST /api/srs/sync-quotas-all HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:58106 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
+Getting dashboard data for kannada...
+INFO:     127.0.0.1:58106 - "GET /api/streak HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:58124 - "GET /api/dashboard/malayalam HTTP/1.1" 200 OK
+Getting dashboard data for malayalam...
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:58120 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58120 - "GET /api/streak HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:58106 - "GET /api/dashboard/malayalam HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58122 - "GET /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58103 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58122 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58103 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58122 - "GET /api/srs/stats/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58106 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+Getting dashboard data for malayalam...
+INFO:     127.0.0.1:58146 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58149 - "GET /api/srs/stats/malayalam HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:58106 - "GET /api/dashboard/malayalam HTTP/1.1" 200 OK
+Getting dashboard data for malayalam...
+INFO:     127.0.0.1:58106 - "GET /api/streak HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:58149 - "GET /api/dashboard/malayalam HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58148 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58148 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+Getting dashboard data for malayalam...
+INFO:     127.0.0.1:58148 - "GET /api/profile HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58159 - "GET /api/srs/settings/malayalam HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58146 - "GET /api/user-interests HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58159 - "GET /api/srs/settings/malayalam HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58161 - "GET /api/stats/language/malayalam HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58148 - "GET /api/stats/daily?language=malayalam&days=365 HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:58149 - "GET /api/dashboard/malayalam HTTP/1.1" 200 OK
+Getting dashboard data for malayalam...
+INFO:     127.0.0.1:58159 - "GET /api/stats/language/malayalam HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58161 - "GET /api/stats/language/malayalam HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:58148 - "GET /api/dashboard/malayalam HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58106 - "GET /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58149 - "GET /api/languages/learning HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58149 - "GET /api/stats/daily?language=malayalam&days=365 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58149 - "GET /api/stats/language/malayalam HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58149 - "GET /api/srs/settings/malayalam HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58149 - "GET /api/stats/language/malayalam HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58149 - "GET /api/streak HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58171 - "GET /api/srs/stats/malayalam HTTP/1.1" 200 OK
+Getting dashboard data for kannada...
+INFO:     127.0.0.1:58183 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+Getting dashboard data for malayalam...
+INFO:     127.0.0.1:58185 - "GET /api/srs/stats/kannada HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:58183 - "GET /api/dashboard/malayalam HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:58171 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58171 - "GET /api/streak HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58184 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58184 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+Getting dashboard data for hindi...
+INFO:     127.0.0.1:58199 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+Getting dashboard data for malayalam...
+INFO:     127.0.0.1:58201 - "GET /api/srs/stats/hindi HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:58197 - "GET /api/dashboard/hindi HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:58199 - "GET /api/dashboard/malayalam HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58197 - "GET /api/streak HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58200 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58200 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+Getting dashboard data for malayalam...
+INFO:     127.0.0.1:58241 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58243 - "GET /api/srs/stats/malayalam HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:58239 - "GET /api/dashboard/malayalam HTTP/1.1" 200 OK
+Getting dashboard data for malayalam...
+INFO:     127.0.0.1:58239 - "GET /api/streak HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:58243 - "GET /api/dashboard/malayalam HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58242 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58239 - "GET /api/words-for-review/malayalam?limit=50 HTTP/1.1" 200 OK
+Filters received - mastery: None (type: <class 'NoneType'>), word_class: None (type: <class 'NoneType'>), level: None (type: <class 'NoneType'>)
+Filters as strings - mastery: '', word_class: '', level: ''
+INFO:     127.0.0.1:58243 - "GET /api/srs/stats/malayalam HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58239 - "GET /api/vocabulary/malayalam?limit=1000 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58242 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+[SRS] Updated word 21537124: learning, ease=2.65, next=2026-02-02, new=True
+INFO:     127.0.0.1:58262 - "POST /api/flashcard/update HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58262 - "GET /api/srs/preview/21535564 HTTP/1.1" 200 OK
+[SRS] Updated word 21535564: learning, ease=2.65, next=2026-02-02, new=True
+INFO:     127.0.0.1:58277 - "POST /api/flashcard/update HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58277 - "GET /api/srs/preview/21535565 HTTP/1.1" 200 OK
+[SRS] Updated word 21535565: learning, ease=2.65, next=2026-02-02, new=True
+INFO:     127.0.0.1:58277 - "POST /api/flashcard/update HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58277 - "GET /api/srs/preview/21538750 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58277 - "GET /api/srs/preview/21535564 HTTP/1.1" 200 OK
+[SRS] Updated word 21538750: learning, ease=2.65, next=2026-02-02, new=True
+INFO:     127.0.0.1:58277 - "POST /api/flashcard/update HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58301 - "GET /api/srs/preview/21538786 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58301 - "GET /api/srs/preview/21538750 HTTP/1.1" 200 OK
+[SRS] Updated word 21538786: learning, ease=2.65, next=2026-02-02, new=True
+INFO:     127.0.0.1:58301 - "POST /api/flashcard/update HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58301 - "GET /api/srs/preview/21537160 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58333 - "GET /api/srs/preview/21537160 HTTP/1.1" 200 OK
+[SRS] Updated word 21537160: learning, ease=2.65, next=2026-02-02, new=True
+INFO:     127.0.0.1:58333 - "POST /api/flashcard/update HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58333 - "GET /api/srs/preview/21543412 HTTP/1.1" 200 OK
+[SRS] Updated word 21543412: learning, ease=2.65, next=2026-02-02, new=True
+INFO:     127.0.0.1:58333 - "POST /api/flashcard/update HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58343 - "GET /api/srs/preview/21540510 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58343 - "GET /api/srs/preview/21543412 HTTP/1.1" 200 OK
+[SRS] Updated word 21540510: learning, ease=2.30, next=2026-01-31, new=True
+INFO:     127.0.0.1:58375 - "POST /api/flashcard/update HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58375 - "GET /api/srs/preview/21543413 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58375 - "GET /api/srs/preview/21543413 HTTP/1.1" 200 OK
+[SRS] Updated word 21543413: learning, ease=2.65, next=2026-02-02, new=True
+INFO:     127.0.0.1:58393 - "POST /api/flashcard/update HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58393 - "GET /api/srs/preview/21539461 HTTP/1.1" 200 OK
+[SRS] Updated word 21539461: learning, ease=2.65, next=2026-02-02, new=True
+INFO:     127.0.0.1:58393 - "POST /api/flashcard/update HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58393 - "GET /api/srs/preview/21536650 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58393 - "GET /api/srs/stats/malayalam HTTP/1.1" 200 OK
+Getting dashboard data for malayalam...
+INFO:     127.0.0.1:58420 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:58419 - "GET /api/dashboard/malayalam HTTP/1.1" 200 OK
+Getting dashboard data for malayalam...
+INFO:     127.0.0.1:58419 - "GET /api/streak HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:58420 - "GET /api/dashboard/malayalam HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58421 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58421 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+✓ Synced SRS quotas from weekly goals for malayalam (week 2026-01-26)
+✓ Synced SRS quotas for 1 languages
+INFO:     127.0.0.1:58446 - "POST /api/srs/sync-quotas-all HTTP/1.1" 200 OK
+Getting dashboard data for kannada...
+INFO:     127.0.0.1:58450 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+Getting dashboard data for malayalam...
+INFO:     127.0.0.1:58450 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+✓ Synced SRS quotas from weekly goals for malayalam (week 2026-01-26)
+✓ Synced SRS quotas for 1 languages
+INFO:     127.0.0.1:58454 - "POST /api/srs/sync-quotas-all HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:58446 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58458 - "GET /api/dashboard/malayalam HTTP/1.1" 200 OK
+Getting dashboard data for kannada...
+Getting dashboard data for malayalam...
+INFO:     127.0.0.1:58458 - "GET /api/streak HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:58450 - "GET /api/dashboard/malayalam HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:58454 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58454 - "GET /api/streak HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58456 - "GET /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58452 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58456 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58456 - "OPTIONS /api/srs/sync-quotas-all HTTP/1.1" 200 OK
+Getting dashboard data for kannada...
+INFO:     127.0.0.1:58450 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58450 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+Getting dashboard data for malayalam...
+✓ Synced SRS quotas from weekly goals for malayalam (week 2026-01-26)
+✓ Synced SRS quotas for 1 languages
+INFO:     127.0.0.1:58456 - "POST /api/srs/sync-quotas-all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58458 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+✓ Synced SRS quotas from weekly goals for malayalam (week 2026-01-26)
+✓ Synced SRS quotas for 1 languages
+INFO:     127.0.0.1:58446 - "POST /api/srs/sync-quotas-all HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:58450 - "GET /api/dashboard/malayalam HTTP/1.1" 200 OK
+Getting dashboard data for malayalam...
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:58454 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
+Getting dashboard data for kannada...
+INFO:     127.0.0.1:58454 - "GET /api/streak HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:58458 - "GET /api/dashboard/malayalam HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:58450 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58450 - "GET /api/streak HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58464 - "GET /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58456 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58456 - "GET /api/srs/stats/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58446 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58456 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+Getting dashboard data for telugu...
+INFO:     127.0.0.1:58485 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+Getting dashboard data for malayalam...
+INFO:     127.0.0.1:58488 - "GET /api/srs/stats/telugu HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:58484 - "GET /api/dashboard/telugu HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:58485 - "GET /api/dashboard/malayalam HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58484 - "GET /api/streak HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58486 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58484 - "GET /api/words-for-review/telugu?limit=50 HTTP/1.1" 200 OK
+Filters received - mastery: None (type: <class 'NoneType'>), word_class: None (type: <class 'NoneType'>), level: None (type: <class 'NoneType'>)
+Filters as strings - mastery: '', word_class: '', level: ''
+INFO:     127.0.0.1:58485 - "GET /api/srs/stats/telugu HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58486 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58484 - "GET /api/vocabulary/telugu?limit=1000 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58484 - "GET /api/srs/stats/telugu HTTP/1.1" 200 OK
+Getting dashboard data for hindi...
+INFO:     127.0.0.1:58486 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+Getting dashboard data for malayalam...
+INFO:     127.0.0.1:58488 - "GET /api/srs/stats/hindi HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:58484 - "GET /api/dashboard/hindi HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:58486 - "GET /api/dashboard/malayalam HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58486 - "GET /api/streak HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58485 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58507 - "GET /api/words-for-review/hindi?limit=50 HTTP/1.1" 200 OK
+Filters received - mastery: None (type: <class 'NoneType'>), word_class: None (type: <class 'NoneType'>), level: None (type: <class 'NoneType'>)
+Filters as strings - mastery: '', word_class: '', level: ''
+INFO:     127.0.0.1:58508 - "GET /api/srs/stats/hindi HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58507 - "GET /api/vocabulary/hindi?limit=1000 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58485 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58670 - "GET /api/srs/preview/21548648 HTTP/1.1" 200 OK
+[SRS] Updated word 21548648: learning, ease=2.30, next=2026-01-31, new=True
+INFO:     127.0.0.1:58705 - "POST /api/flashcard/update HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58705 - "GET /api/srs/preview/21553064 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58705 - "GET /api/srs/stats/hindi HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58724 - "GET /api/words-for-review/hindi?limit=50 HTTP/1.1" 200 OK
+Filters received - mastery: None (type: <class 'NoneType'>), word_class: None (type: <class 'NoneType'>), level: None (type: <class 'NoneType'>)
+Filters as strings - mastery: '', word_class: '', level: ''
+INFO:     127.0.0.1:58725 - "GET /api/srs/stats/hindi HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58724 - "GET /api/vocabulary/hindi?limit=1000 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58748 - "GET /api/srs/preview/21550312 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58771 - "GET /api/srs/preview/21550312 HTTP/1.1" 200 OK
+[SRS] Updated word 21550312: learning, ease=2.65, next=2026-02-02, new=True
+INFO:     127.0.0.1:58771 - "POST /api/flashcard/update HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58771 - "GET /api/srs/preview/21550330 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58789 - "GET /api/srs/stats/hindi HTTP/1.1" 200 OK
+✓ Synced SRS quotas from weekly goals for malayalam (week 2026-01-26)
+✓ Synced SRS quotas for 1 languages
+INFO:     127.0.0.1:58789 - "POST /api/srs/sync-quotas-all HTTP/1.1" 200 OK
+Getting dashboard data for kannada...
+INFO:     127.0.0.1:58796 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58796 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+Getting dashboard data for malayalam...
+✓ Synced SRS quotas from weekly goals for malayalam (week 2026-01-26)
+✓ Synced SRS quotas for 1 languages
+INFO:     127.0.0.1:58799 - "POST /api/srs/sync-quotas-all HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:58796 - "GET /api/dashboard/malayalam HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:58789 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
+Getting dashboard data for malayalam...
+Getting dashboard data for kannada...
+INFO:     127.0.0.1:58789 - "GET /api/streak HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:58796 - "GET /api/dashboard/malayalam HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:58799 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58799 - "GET /api/streak HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58801 - "GET /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58797 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58801 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58797 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58797 - "GET /api/srs/stats/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58801 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58801 - "GET /api/words-for-review/kannada?limit=50 HTTP/1.1" 200 OK
+Filters received - mastery: None (type: <class 'NoneType'>), word_class: None (type: <class 'NoneType'>), level: None (type: <class 'NoneType'>)
+Filters as strings - mastery: '', word_class: '', level: ''
+INFO:     127.0.0.1:58797 - "GET /api/srs/stats/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58801 - "GET /api/vocabulary/kannada?limit=1000 HTTP/1.1" 200 OK
+[SRS] Updated word 21518999: learning, ease=2.65, next=2026-02-02, new=True
+INFO:     127.0.0.1:58829 - "POST /api/flashcard/update HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58829 - "GET /api/srs/preview/21519035 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58879 - "GET /api/srs/stats/kannada HTTP/1.1" 200 OK
+✓ Synced SRS quotas from weekly goals for malayalam (week 2026-01-26)
+✓ Synced SRS quotas for 1 languages
+INFO:     127.0.0.1:58891 - "POST /api/srs/sync-quotas-all HTTP/1.1" 200 OK
+Getting dashboard data for kannada...
+INFO:     127.0.0.1:58896 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+Getting dashboard data for malayalam...
+INFO:     127.0.0.1:58896 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+✓ Synced SRS quotas from weekly goals for malayalam (week 2026-01-26)
+✓ Synced SRS quotas for 1 languages
+INFO:     127.0.0.1:58899 - "POST /api/srs/sync-quotas-all HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:58891 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:58903 - "GET /api/dashboard/malayalam HTTP/1.1" 200 OK
+Getting dashboard data for kannada...
+Getting dashboard data for malayalam...
+INFO:     127.0.0.1:58903 - "GET /api/streak HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:58899 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:58891 - "GET /api/dashboard/malayalam HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58891 - "GET /api/streak HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58901 - "GET /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58897 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+Filters received - mastery: None (type: <class 'NoneType'>), word_class: None (type: <class 'NoneType'>), level: None (type: <class 'NoneType'>)
+Filters as strings - mastery: '', word_class: '', level: ''
+INFO:     127.0.0.1:58891 - "GET /api/vocabulary/kannada?limit=50&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58901 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58897 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58901 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+Getting dashboard data for kannada...
+INFO:     127.0.0.1:58901 - "GET /api/profile HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58903 - "GET /api/srs/settings/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58899 - "GET /api/user-interests HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58903 - "GET /api/srs/settings/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58901 - "GET /api/stats/language/kannada HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:58897 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
+Getting dashboard data for kannada...
+INFO:     127.0.0.1:58896 - "GET /api/stats/daily?language=kannada&days=365 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58903 - "GET /api/stats/language/kannada HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:58901 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58896 - "GET /api/stats/language/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58891 - "GET /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58897 - "GET /api/languages/learning HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58897 - "GET /api/stats/daily?language=kannada&days=365 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58897 - "GET /api/stats/language/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58897 - "GET /api/srs/settings/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58897 - "GET /api/stats/language/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58897 - "GET /api/streak HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58959 - "OPTIONS /api/srs/simulate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58959 - "POST /api/srs/simulate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58959 - "POST /api/srs/simulate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58969 - "POST /api/srs/simulate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58969 - "POST /api/srs/simulate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58987 - "POST /api/srs/simulate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58987 - "POST /api/srs/simulate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58987 - "POST /api/srs/simulate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58987 - "POST /api/srs/simulate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58987 - "POST /api/srs/simulate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58987 - "POST /api/srs/simulate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58987 - "POST /api/srs/simulate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58987 - "POST /api/srs/simulate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58987 - "POST /api/srs/simulate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58987 - "POST /api/srs/simulate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58987 - "POST /api/srs/simulate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58987 - "POST /api/srs/simulate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58987 - "POST /api/srs/simulate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58987 - "POST /api/srs/simulate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58987 - "POST /api/srs/simulate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58987 - "POST /api/srs/simulate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58987 - "POST /api/srs/simulate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58987 - "POST /api/srs/simulate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59010 - "POST /api/srs/simulate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59010 - "POST /api/srs/simulate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59010 - "POST /api/srs/simulate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59010 - "POST /api/srs/simulate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59010 - "POST /api/srs/simulate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59010 - "POST /api/srs/simulate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59010 - "POST /api/srs/simulate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59010 - "POST /api/srs/simulate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59010 - "POST /api/srs/simulate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59010 - "POST /api/srs/simulate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59010 - "POST /api/srs/simulate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59010 - "POST /api/srs/simulate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59010 - "POST /api/srs/simulate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59036 - "POST /api/srs/simulate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59036 - "POST /api/srs/simulate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59036 - "POST /api/srs/simulate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59036 - "POST /api/srs/simulate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59054 - "POST /api/srs/simulate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59054 - "POST /api/srs/simulate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59054 - "POST /api/srs/simulate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59054 - "POST /api/srs/simulate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59054 - "POST /api/srs/simulate HTTP/1.1" 200 OK
+✓ Synced SRS quotas from weekly goals for malayalam (week 2026-01-26)
+✓ Synced SRS quotas for 1 languages
+INFO:     127.0.0.1:59084 - "POST /api/srs/sync-quotas-all HTTP/1.1" 200 OK
+Getting dashboard data for kannada...
+INFO:     127.0.0.1:59089 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+Getting dashboard data for malayalam...
+INFO:     127.0.0.1:59089 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+✓ Synced SRS quotas from weekly goals for malayalam (week 2026-01-26)
+✓ Synced SRS quotas for 1 languages
+INFO:     127.0.0.1:59092 - "POST /api/srs/sync-quotas-all HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:59096 - "GET /api/dashboard/malayalam HTTP/1.1" 200 OK
+Getting dashboard data for malayalam...
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:59084 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
+Getting dashboard data for kannada...
+INFO:     127.0.0.1:59084 - "GET /api/streak HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:59092 - "GET /api/dashboard/malayalam HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:59096 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59092 - "GET /api/streak HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59094 - "GET /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59090 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59094 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59090 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59094 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49877 - "OPTIONS /api/srs/sync-quotas-all HTTP/1.1" 200 OK
+✓ Synced SRS quotas from weekly goals for malayalam (week 2026-01-26)
+✓ Synced SRS quotas for 1 languages
+INFO:     127.0.0.1:49877 - "POST /api/srs/sync-quotas-all HTTP/1.1" 200 OK
+Getting dashboard data for kannada...
+INFO:     127.0.0.1:49883 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49883 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+Getting dashboard data for malayalam...
+✓ Synced SRS quotas from weekly goals for malayalam (week 2026-01-26)
+✓ Synced SRS quotas for 1 languages
+INFO:     127.0.0.1:49886 - "POST /api/srs/sync-quotas-all HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:49877 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
+Getting dashboard data for kannada...
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:49883 - "GET /api/dashboard/malayalam HTTP/1.1" 200 OK
+Getting dashboard data for malayalam...
+INFO:     127.0.0.1:49877 - "GET /api/streak HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:49886 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:49890 - "GET /api/dashboard/malayalam HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49886 - "GET /api/streak HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49888 - "GET /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49884 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49888 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49884 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49888 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49955 - "GET /api/srs/stats/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50012 - "OPTIONS /api/srs/sync-quotas-all HTTP/1.1" 200 OK
+✓ Synced SRS quotas from weekly goals for malayalam (week 2026-01-26)
+✓ Synced SRS quotas for 1 languages
+INFO:     127.0.0.1:50012 - "POST /api/srs/sync-quotas-all HTTP/1.1" 200 OK
+Getting dashboard data for kannada...
+INFO:     127.0.0.1:50014 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+Getting dashboard data for malayalam...
+INFO:     127.0.0.1:50014 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+✓ Synced SRS quotas from weekly goals for malayalam (week 2026-01-26)
+✓ Synced SRS quotas for 1 languages
+INFO:     127.0.0.1:50018 - "POST /api/srs/sync-quotas-all HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:50022 - "GET /api/dashboard/malayalam HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:50012 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
+Getting dashboard data for malayalam...
+Getting dashboard data for kannada...
+INFO:     127.0.0.1:50012 - "GET /api/streak HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:50018 - "GET /api/dashboard/malayalam HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:50022 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50022 - "GET /api/streak HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50020 - "GET /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50016 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+Getting dashboard data for kannada...
+INFO:     127.0.0.1:50020 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50022 - "GET /api/profile HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50014 - "GET /api/user-interests HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50020 - "GET /api/srs/settings/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50020 - "GET /api/srs/settings/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50014 - "GET /api/stats/language/kannada HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:50018 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
+Getting dashboard data for kannada...
+INFO:     127.0.0.1:50022 - "GET /api/stats/daily?language=kannada&days=365 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50020 - "GET /api/stats/language/kannada HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:50014 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50022 - "GET /api/stats/language/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50016 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50012 - "GET /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50018 - "GET /api/languages/learning HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50018 - "GET /api/stats/daily?language=kannada&days=365 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50018 - "GET /api/stats/language/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50018 - "GET /api/srs/settings/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50018 - "GET /api/stats/language/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50018 - "GET /api/streak HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50022 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+Filters received - mastery: None (type: <class 'NoneType'>), word_class: None (type: <class 'NoneType'>), level: None (type: <class 'NoneType'>)
+Filters as strings - mastery: '', word_class: '', level: ''
+INFO:     127.0.0.1:50044 - "GET /api/vocabulary/kannada?limit=50&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50044 - "OPTIONS /api/lesson-words/kannada/kn-vowels-1 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50044 - "OPTIONS /api/transliterate HTTP/1.1" 200 OK
+[transliterate_text] detected from_scheme=Kannada for language=kannada
+[transliterate_text] from=Kannada to=ITRANS in=ಅ out=a
+INFO:     127.0.0.1:50044 - "POST /api/transliterate HTTP/1.1" 200 OK
+[transliterate_text] detected from_scheme=Kannada for language=kannada
+[transliterate_text] from=Kannada to=ITRANS in=ಆ out=A
+INFO:     127.0.0.1:50052 - "POST /api/transliterate HTTP/1.1" 200 OK
+[transliterate_text] detected from_scheme=Kannada for language=kannada
+[transliterate_text] from=Kannada to=ITRANS in=ಇ out=i
+INFO:     127.0.0.1:50052 - "POST /api/transliterate HTTP/1.1" 200 OK
+[transliterate_text] detected from_scheme=Kannada for language=kannada
+[transliterate_text] from=Kannada to=ITRANS in=ಈ out=I
+INFO:     127.0.0.1:50052 - "POST /api/transliterate HTTP/1.1" 200 OK
+[transliterate_text] detected from_scheme=Kannada for language=kannada
+[transliterate_text] from=Kannada to=ITRANS in=ಉ out=u
+INFO:     127.0.0.1:50052 - "POST /api/transliterate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50050 - "POST /api/lesson-words/kannada/kn-vowels-1 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50044 - "POST /api/lesson-words/kannada/kn-vowels-1 HTTP/1.1" 200 OK
+[transliterate_text] detected from_scheme=Kannada for language=kannada
+[transliterate_text] from=Kannada to=ITRANS in=ಆ out=A
+INFO:     127.0.0.1:50044 - "POST /api/transliterate HTTP/1.1" 200 OK
+[transliterate_text] detected from_scheme=Kannada for language=kannada
+[transliterate_text] from=Kannada to=ITRANS in=ಈ out=I
+INFO:     127.0.0.1:50050 - "POST /api/transliterate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50050 - "GET /api/srs/stats/kannada HTTP/1.1" 200 OK
+Getting dashboard data for telugu...
+INFO:     127.0.0.1:50079 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+Getting dashboard data for malayalam...
+INFO:     127.0.0.1:50082 - "GET /api/srs/stats/telugu HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:50077 - "GET /api/dashboard/telugu HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:50079 - "GET /api/dashboard/malayalam HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50077 - "GET /api/streak HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50081 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50081 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+Getting dashboard data for tamil...
+INFO:     127.0.0.1:50077 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+Getting dashboard data for malayalam...
+INFO:     127.0.0.1:50082 - "GET /api/srs/stats/tamil HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:50077 - "GET /api/dashboard/malayalam HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:50081 - "GET /api/dashboard/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50081 - "GET /api/streak HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50079 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50079 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+Getting dashboard data for hindi...
+INFO:     127.0.0.1:50081 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+Getting dashboard data for malayalam...
+INFO:     127.0.0.1:50082 - "GET /api/srs/stats/hindi HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:50081 - "GET /api/dashboard/malayalam HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50079 - "GET /api/dashboard/hindi HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50079 - "GET /api/streak HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50077 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50077 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+Getting dashboard data for urdu...
+INFO:     127.0.0.1:50102 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+Getting dashboard data for malayalam...
+INFO:     127.0.0.1:50104 - "GET /api/srs/stats/urdu HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:50077 - "GET /api/dashboard/urdu HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:50102 - "GET /api/dashboard/malayalam HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50102 - "GET /api/streak HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50103 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+Getting dashboard data for urdu...
+INFO:     127.0.0.1:50077 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+Getting dashboard data for malayalam...
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:50102 - "GET /api/dashboard/urdu HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:50077 - "GET /api/dashboard/malayalam HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50102 - "GET /api/streak HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50103 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50104 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50104 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50134 - "GET /api/srs/stats/urdu HTTP/1.1" 200 OK
+Getting dashboard data for urdu...
+INFO:     127.0.0.1:50145 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+Getting dashboard data for malayalam...
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:50134 - "GET /api/dashboard/urdu HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50134 - "GET /api/streak HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:50145 - "GET /api/dashboard/malayalam HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50146 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50146 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50146 - "GET /api/srs/stats/urdu HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50160 - "GET /api/words-for-review/urdu?limit=50 HTTP/1.1" 200 OK
+Filters received - mastery: None (type: <class 'NoneType'>), word_class: None (type: <class 'NoneType'>), level: None (type: <class 'NoneType'>)
+Filters as strings - mastery: '', word_class: '', level: ''
+INFO:     127.0.0.1:50146 - "GET /api/srs/stats/urdu HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50160 - "GET /api/vocabulary/urdu?limit=1000 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50453 - "GET /api/srs/stats/urdu HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50713 - "GET /api/words-for-review/urdu?limit=50 HTTP/1.1" 200 OK
+Filters received - mastery: None (type: <class 'NoneType'>), word_class: None (type: <class 'NoneType'>), level: None (type: <class 'NoneType'>)
+Filters as strings - mastery: '', word_class: '', level: ''
+INFO:     127.0.0.1:50715 - "GET /api/srs/stats/urdu HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50713 - "GET /api/vocabulary/urdu?limit=1000 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50742 - "GET /api/srs/stats/urdu HTTP/1.1" 200 OK
+Getting dashboard data for telugu...
+INFO:     127.0.0.1:50752 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+Getting dashboard data for malayalam...
+INFO:     127.0.0.1:50754 - "GET /api/srs/stats/telugu HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:50750 - "GET /api/dashboard/telugu HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:50752 - "GET /api/dashboard/malayalam HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50752 - "GET /api/streak HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50752 - "GET /api/words-for-review/telugu?limit=50 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50750 - "GET /api/srs/stats/telugu HTTP/1.1" 200 OK
+Filters received - mastery: None (type: <class 'NoneType'>), word_class: None (type: <class 'NoneType'>), level: None (type: <class 'NoneType'>)
+Filters as strings - mastery: '', word_class: '', level: ''
+INFO:     127.0.0.1:50752 - "GET /api/vocabulary/telugu?limit=1000 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50753 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50753 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50785 - "GET /api/srs/preview/21513405 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50817 - "GET /api/srs/preview/21513405 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51976 - "GET /api/srs/stats/telugu HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54082 - "OPTIONS /api/srs/sync-quotas-all HTTP/1.1" 200 OK
+✓ Synced SRS quotas from weekly goals for malayalam (week 2026-01-26)
+✓ Synced SRS quotas for 1 languages
+INFO:     127.0.0.1:54082 - "POST /api/srs/sync-quotas-all HTTP/1.1" 200 OK
+Getting dashboard data for kannada...
+INFO:     127.0.0.1:54087 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54087 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+Getting dashboard data for malayalam...
+✓ Synced SRS quotas from weekly goals for malayalam (week 2026-01-26)
+✓ Synced SRS quotas for 1 languages
+INFO:     127.0.0.1:54090 - "POST /api/srs/sync-quotas-all HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:54094 - "GET /api/dashboard/malayalam HTTP/1.1" 200 OK
+Getting dashboard data for malayalam...
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:54082 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
+Getting dashboard data for kannada...
+INFO:     127.0.0.1:54082 - "GET /api/streak HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:54090 - "GET /api/dashboard/malayalam HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:54094 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54094 - "GET /api/streak HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54092 - "GET /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54088 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54092 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54088 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54088 - "GET /api/srs/stats/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54092 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54092 - "OPTIONS /api/lesson-words/kannada/kn-vowels-1 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54112 - "OPTIONS /api/transliterate HTTP/1.1" 200 OK
+[transliterate_text] detected from_scheme=Kannada for language=kannada
+[transliterate_text] from=Kannada to=ITRANS in=ಅ out=a
+INFO:     127.0.0.1:54112 - "POST /api/transliterate HTTP/1.1" 200 OK
+[transliterate_text] detected from_scheme=Kannada for language=kannada
+[transliterate_text] from=Kannada to=ITRANS in=ಆ out=A
+INFO:     127.0.0.1:54114 - "POST /api/transliterate HTTP/1.1" 200 OK
+[transliterate_text] detected from_scheme=Kannada for language=kannada
+[transliterate_text] from=Kannada to=ITRANS in=ಇ out=i
+INFO:     127.0.0.1:54114 - "POST /api/transliterate HTTP/1.1" 200 OK
+[transliterate_text] detected from_scheme=Kannada for language=kannada
+[transliterate_text] from=Kannada to=ITRANS in=ಈ out=I
+INFO:     127.0.0.1:54114 - "POST /api/transliterate HTTP/1.1" 200 OK
+[transliterate_text] detected from_scheme=Kannada for language=kannada
+[transliterate_text] from=Kannada to=ITRANS in=ಉ out=u
+INFO:     127.0.0.1:54114 - "POST /api/transliterate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54092 - "POST /api/lesson-words/kannada/kn-vowels-1 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54112 - "POST /api/lesson-words/kannada/kn-vowels-1 HTTP/1.1" 200 OK
+[transliterate_text] detected from_scheme=Kannada for language=kannada
+[transliterate_text] from=Kannada to=ITRANS in=ಆ out=A
+[transliterate_text] detected from_scheme=Kannada for language=kannada
+[transliterate_text] from=Kannada to=ITRANS in=ಈ out=I
+INFO:     127.0.0.1:54112 - "POST /api/transliterate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54092 - "POST /api/transliterate HTTP/1.1" 200 OK
+Filters received - mastery: None (type: <class 'NoneType'>), word_class: None (type: <class 'NoneType'>), level: None (type: <class 'NoneType'>)
+Filters as strings - mastery: '', word_class: '', level: ''
+INFO:     127.0.0.1:54092 - "GET /api/vocabulary/kannada?limit=50&offset=0 HTTP/1.1" 200 OK
+Getting dashboard data for kannada...
+INFO:     127.0.0.1:54092 - "GET /api/profile HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54127 - "GET /api/srs/settings/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54125 - "GET /api/user-interests HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54127 - "GET /api/srs/settings/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54092 - "GET /api/stats/language/kannada HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:54112 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
+Getting dashboard data for kannada...
+INFO:     127.0.0.1:54128 - "GET /api/stats/daily?language=kannada&days=365 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54127 - "GET /api/stats/language/kannada HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:54092 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54128 - "GET /api/stats/language/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54114 - "GET /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54112 - "GET /api/languages/learning HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54112 - "GET /api/stats/daily?language=kannada&days=365 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54112 - "GET /api/stats/language/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54112 - "GET /api/srs/settings/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54112 - "GET /api/stats/language/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54112 - "GET /api/streak HTTP/1.1" 200 OK
+Filters received - mastery: None (type: <class 'NoneType'>), word_class: None (type: <class 'NoneType'>), level: None (type: <class 'NoneType'>)
+Filters as strings - mastery: '', word_class: '', level: ''
+INFO:     127.0.0.1:54144 - "GET /api/vocabulary/kannada?limit=50&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54144 - "GET /api/srs/stats/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54164 - "GET /api/words-for-review/kannada?limit=50 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54165 - "GET /api/srs/stats/kannada HTTP/1.1" 200 OK
+Filters received - mastery: None (type: <class 'NoneType'>), word_class: None (type: <class 'NoneType'>), level: None (type: <class 'NoneType'>)
+Filters as strings - mastery: '', word_class: '', level: ''
+INFO:     127.0.0.1:54187 - "GET /api/vocabulary/kannada?limit=50 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54299 - "GET /api/srs/stats/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54299 - "GET /api/words-for-review/kannada?limit=50 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54306 - "GET /api/srs/stats/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54463 - "OPTIONS /api/srs/sync-quotas-all HTTP/1.1" 200 OK
+✓ Synced SRS quotas from weekly goals for malayalam (week 2026-01-26)
+✓ Synced SRS quotas for 1 languages
+INFO:     127.0.0.1:54463 - "POST /api/srs/sync-quotas-all HTTP/1.1" 200 OK
+Getting dashboard data for kannada...
+INFO:     127.0.0.1:54465 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54465 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+Getting dashboard data for malayalam...
+✓ Synced SRS quotas from weekly goals for malayalam (week 2026-01-26)
+✓ Synced SRS quotas for 1 languages
+INFO:     127.0.0.1:54469 - "POST /api/srs/sync-quotas-all HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:54463 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
+Getting dashboard data for kannada...
+INFO:     127.0.0.1:54463 - "GET /api/streak HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:54469 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54469 - "GET /api/streak HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:54473 - "GET /api/dashboard/malayalam HTTP/1.1" 200 OK
+Getting dashboard data for malayalam...
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:54469 - "GET /api/dashboard/malayalam HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54471 - "GET /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54467 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54469 - "GET /api/srs/stats/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54471 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54467 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54467 - "GET /api/words-for-review/kannada?limit=50 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54469 - "GET /api/srs/stats/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54471 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61347 - "OPTIONS /api/srs/sync-quotas-all HTTP/1.1" 200 OK
+✓ Synced SRS quotas from weekly goals for malayalam (week 2026-01-26)
+✓ Synced SRS quotas for 1 languages
+INFO:     127.0.0.1:61347 - "POST /api/srs/sync-quotas-all HTTP/1.1" 200 OK
+Getting dashboard data for kannada...
+INFO:     127.0.0.1:61353 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+Getting dashboard data for malayalam...
+✓ Synced SRS quotas from weekly goals for malayalam (week 2026-01-26)
+✓ Synced SRS quotas for 1 languages
+INFO:     127.0.0.1:61356 - "POST /api/srs/sync-quotas-all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61353 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:61347 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
+Getting dashboard data for kannada...
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:61360 - "GET /api/dashboard/malayalam HTTP/1.1" 200 OK
+Getting dashboard data for malayalam...
+INFO:     127.0.0.1:61360 - "GET /api/streak HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:61347 - "GET /api/dashboard/malayalam HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:61353 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61353 - "GET /api/streak HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61358 - "GET /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61354 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61358 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61354 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61358 - "GET /api/srs/stats/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61353 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61353 - "GET /api/words-for-review/kannada?limit=50 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61358 - "GET /api/srs/stats/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63000 - "OPTIONS /api/srs/sync-quotas-all HTTP/1.1" 200 OK
+✓ Synced SRS quotas from weekly goals for malayalam (week 2026-01-26)
+✓ Synced SRS quotas for 1 languages
+INFO:     127.0.0.1:63000 - "POST /api/srs/sync-quotas-all HTTP/1.1" 200 OK
+Getting dashboard data for kannada...
+INFO:     127.0.0.1:63005 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63005 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+Getting dashboard data for malayalam...
+✓ Synced SRS quotas from weekly goals for malayalam (week 2026-01-26)
+✓ Synced SRS quotas for 1 languages
+INFO:     127.0.0.1:63008 - "POST /api/srs/sync-quotas-all HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:63005 - "GET /api/dashboard/malayalam HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:63000 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
+Getting dashboard data for malayalam...
+Getting dashboard data for kannada...
+INFO:     127.0.0.1:63000 - "GET /api/streak HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:63008 - "GET /api/dashboard/malayalam HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:63005 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63005 - "GET /api/streak HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63010 - "GET /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63006 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63010 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63006 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63010 - "GET /api/srs/stats/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63005 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63010 - "GET /api/words-for-review/kannada?limit=50 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63006 - "GET /api/srs/stats/kannada HTTP/1.1" 200 OK
+Filters received - mastery: None (type: <class 'NoneType'>), word_class: None (type: <class 'NoneType'>), level: None (type: <class 'NoneType'>)
+Filters as strings - mastery: '', word_class: '', level: ''
+INFO:     127.0.0.1:63012 - "GET /api/vocabulary/kannada?limit=50 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63443 - "GET /api/srs/preview/21515812 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63474 - "GET /api/srs/preview/21515812 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63474 - "GET /api/srs/preview/21515812 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49412 - "OPTIONS /api/srs/sync-quotas-all HTTP/1.1" 200 OK
+✓ Synced SRS quotas from weekly goals for malayalam (week 2026-01-26)
+✓ Synced SRS quotas for 1 languages
+INFO:     127.0.0.1:49412 - "POST /api/srs/sync-quotas-all HTTP/1.1" 200 OK
+Getting dashboard data for kannada...
+INFO:     127.0.0.1:49419 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49412 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+Getting dashboard data for malayalam...
+✓ Synced SRS quotas from weekly goals for malayalam (week 2026-01-26)
+✓ Synced SRS quotas for 1 languages
+INFO:     127.0.0.1:49423 - "POST /api/srs/sync-quotas-all HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:49418 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49412 - "GET /api/dashboard/malayalam HTTP/1.1" 200 OK
+Getting dashboard data for kannada...
+Getting dashboard data for malayalam...
+INFO:     127.0.0.1:49412 - "GET /api/streak HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:49423 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:49419 - "GET /api/dashboard/malayalam HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49419 - "GET /api/streak HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49425 - "GET /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49421 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49419 - "GET /api/srs/stats/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49425 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49421 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49425 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49425 - "GET /api/words-for-review/kannada?limit=50 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49444 - "GET /api/srs/stats/kannada HTTP/1.1" 200 OK
+Filters received - mastery: None (type: <class 'NoneType'>), word_class: None (type: <class 'NoneType'>), level: None (type: <class 'NoneType'>)
+Filters as strings - mastery: '', word_class: '', level: ''
+INFO:     127.0.0.1:49470 - "GET /api/vocabulary/kannada?limit=50 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49534 - "GET /api/srs/preview/21515812 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49534 - "GET /api/srs/preview/21515812 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49578 - "GET /api/srs/preview/21515812 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49669 - "GET /api/srs/preview/21515812 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51758 - "OPTIONS /api/srs/sync-quotas-all HTTP/1.1" 200 OK
+✓ Synced SRS quotas from weekly goals for malayalam (week 2026-01-26)
+✓ Synced SRS quotas for 1 languages
+INFO:     127.0.0.1:51758 - "POST /api/srs/sync-quotas-all HTTP/1.1" 200 OK
+Getting dashboard data for kannada...
+INFO:     127.0.0.1:51763 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51763 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+Getting dashboard data for malayalam...
+✓ Synced SRS quotas from weekly goals for malayalam (week 2026-01-26)
+✓ Synced SRS quotas for 1 languages
+INFO:     127.0.0.1:51766 - "POST /api/srs/sync-quotas-all HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:51758 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
+Getting dashboard data for kannada...
+INFO:     127.0.0.1:51758 - "GET /api/streak HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:51770 - "GET /api/dashboard/malayalam HTTP/1.1" 200 OK
+Getting dashboard data for malayalam...
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:51766 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51766 - "GET /api/streak HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:51758 - "GET /api/dashboard/malayalam HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51768 - "GET /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51764 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51768 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51768 - "GET /api/srs/stats/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51764 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51768 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51768 - "GET /api/words-for-review/kannada?limit=50 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51764 - "GET /api/srs/stats/kannada HTTP/1.1" 200 OK
+Filters received - mastery: None (type: <class 'NoneType'>), word_class: None (type: <class 'NoneType'>), level: None (type: <class 'NoneType'>)
+Filters as strings - mastery: '', word_class: '', level: ''
+INFO:     127.0.0.1:52145 - "GET /api/vocabulary/kannada?limit=50 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52201 - "GET /api/srs/preview/21515812 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52201 - "OPTIONS /api/flashcard/update HTTP/1.1" 200 OK
+[SRS] Updated word 21515812: mastered, ease=2.58, next=2026-02-01, new=True
+INFO:     127.0.0.1:52201 - "POST /api/flashcard/update HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52201 - "GET /api/srs/preview/21515813 HTTP/1.1" 200 OK
+[SRS] Updated word 21515813: mastered, ease=2.65, next=2026-02-02, new=True
+INFO:     127.0.0.1:52201 - "POST /api/flashcard/update HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52201 - "GET /api/srs/preview/21518999 HTTP/1.1" 200 OK
+[SRS] Updated word 21518999: learning, ease=2.80, next=2026-02-05, new=False
+INFO:     127.0.0.1:52201 - "POST /api/flashcard/update HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52201 - "GET /api/srs/preview/21519035 HTTP/1.1" 200 OK
+[SRS] Updated word 21519035: learning, ease=2.58, next=2026-01-31, new=True
+INFO:     127.0.0.1:52224 - "POST /api/flashcard/update HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52224 - "GET /api/srs/preview/21517409 HTTP/1.1" 200 OK
+[SRS] Updated word 21517409: mastered, ease=2.65, next=2026-02-02, new=True
+INFO:     127.0.0.1:52224 - "POST /api/flashcard/update HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52224 - "GET /api/srs/preview/21523661 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52350 - "GET /api/srs/preview/21515812 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52350 - "GET /api/srs/preview/21515812 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52356 - "GET /api/srs/preview/21515812 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52356 - "GET /api/srs/preview/21515812 HTTP/1.1" 200 OK
+✓ Synced SRS quotas from weekly goals for malayalam (week 2026-01-26)
+✓ Synced SRS quotas for 1 languages
+INFO:     127.0.0.1:53317 - "POST /api/srs/sync-quotas-all HTTP/1.1" 200 OK
+Getting dashboard data for kannada...
+INFO:     127.0.0.1:53321 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+Getting dashboard data for malayalam...
+INFO:     127.0.0.1:53321 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+✓ Synced SRS quotas from weekly goals for malayalam (week 2026-01-26)
+✓ Synced SRS quotas for 1 languages
+INFO:     127.0.0.1:53325 - "POST /api/srs/sync-quotas-all HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:53329 - "GET /api/dashboard/malayalam HTTP/1.1" 200 OK
+Getting dashboard data for malayalam...
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:53317 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
+Getting dashboard data for kannada...
+INFO:     127.0.0.1:53317 - "GET /api/streak HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:53325 - "GET /api/dashboard/malayalam HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:53329 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53329 - "GET /api/streak HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53327 - "GET /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53323 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53327 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53323 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53327 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53486 - "GET /api/srs/stats/kannada HTTP/1.1" 200 OK
+Getting dashboard data for kannada...
+INFO:     127.0.0.1:53568 - "GET /api/profile HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53575 - "GET /api/user-interests HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53576 - "GET /api/srs/settings/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53575 - "GET /api/srs/settings/kannada HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:53571 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
+Getting dashboard data for kannada...
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:53575 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53568 - "GET /api/stats/language/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53575 - "GET /api/stats/language/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53568 - "GET /api/stats/language/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53572 - "GET /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53578 - "GET /api/stats/daily?language=kannada&days=365 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53571 - "GET /api/languages/learning HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53571 - "GET /api/stats/daily?language=kannada&days=365 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53571 - "GET /api/stats/language/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53571 - "GET /api/srs/settings/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53571 - "GET /api/stats/language/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53571 - "GET /api/streak HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53667 - "GET /api/srs/stats/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53667 - "OPTIONS /api/lesson-words/kannada/kn-vowels-1 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53673 - "OPTIONS /api/transliterate HTTP/1.1" 200 OK
+[transliterate_text] detected from_scheme=Kannada for language=kannada
+[transliterate_text] from=Kannada to=ITRANS in=ಅ out=a
+INFO:     127.0.0.1:53673 - "POST /api/transliterate HTTP/1.1" 200 OK
+[transliterate_text] detected from_scheme=Kannada for language=kannada
+[transliterate_text] from=Kannada to=ITRANS in=ಆ out=A
+INFO:     127.0.0.1:53673 - "POST /api/transliterate HTTP/1.1" 200 OK
+[transliterate_text] detected from_scheme=Kannada for language=kannada
+[transliterate_text] from=Kannada to=ITRANS in=ಇ out=i
+INFO:     127.0.0.1:53673 - "POST /api/transliterate HTTP/1.1" 200 OK
+[transliterate_text] detected from_scheme=Kannada for language=kannada
+[transliterate_text] from=Kannada to=ITRANS in=ಈ out=I
+INFO:     127.0.0.1:53673 - "POST /api/transliterate HTTP/1.1" 200 OK
+[transliterate_text] detected from_scheme=Kannada for language=kannada
+[transliterate_text] from=Kannada to=ITRANS in=ಉ out=u
+INFO:     127.0.0.1:53673 - "POST /api/transliterate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53675 - "POST /api/lesson-words/kannada/kn-vowels-1 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53667 - "POST /api/lesson-words/kannada/kn-vowels-1 HTTP/1.1" 200 OK
+[transliterate_text] detected from_scheme=Kannada for language=kannada
+[transliterate_text] from=Kannada to=ITRANS in=ಆ out=A
+[transliterate_text] detected from_scheme=Kannada for language=kannada
+[transliterate_text] from=Kannada to=ITRANS in=ಈ out=I
+INFO:     127.0.0.1:53667 - "POST /api/transliterate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53675 - "POST /api/transliterate HTTP/1.1" 200 OK
+Filters received - mastery: None (type: <class 'NoneType'>), word_class: None (type: <class 'NoneType'>), level: None (type: <class 'NoneType'>)
+Filters as strings - mastery: '', word_class: '', level: ''
+INFO:     127.0.0.1:53675 - "GET /api/vocabulary/kannada?limit=50&offset=0 HTTP/1.1" 200 OK
+WARNING:  WatchFiles detected changes in 'backend/main.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [16923]
+/Users/raghavganesh/Documents/Code Projects/Language Learning Project/backend/api_client.py:17: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+INFO:     Started server process [31408]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [31408]
+Existing vocabulary for telugu detected (9875 rows) - deleting and reloading...
+Loading vocabulary from /Users/raghavganesh/Documents/Code Projects/Language Learning Project/vocab/telugu-oxford-5000.csv...
+Existing vocabulary for kannada detected (9877 rows) - deleting and reloading...
+Loading vocabulary from /Users/raghavganesh/Documents/Code Projects/Language Learning Project/vocab/kannada-oxford-5000.csv...
+Existing vocabulary for urdu detected (9875 rows) - deleting and reloading...
+Loading vocabulary from /Users/raghavganesh/Documents/Code Projects/Language Learning Project/vocab/urdu-oxford-5000.csv...
+Existing vocabulary for malayalam detected (9876 rows) - deleting and reloading...
+Loading vocabulary from /Users/raghavganesh/Documents/Code Projects/Language Learning Project/vocab/malayalam-oxford-5000.csv...
+Existing vocabulary for hindi detected (9875 rows) - deleting and reloading...
+Loading vocabulary from /Users/raghavganesh/Documents/Code Projects/Language Learning Project/vocab/hindi-oxford-5000.csv...
+Existing vocabulary for tamil detected (9877 rows) - deleting and reloading...
+Loading vocabulary from /Users/raghavganesh/Documents/Code Projects/Language Learning Project/vocab/tamil-oxford-5000.csv...
+INFO:     Stopping reloader process [16830]

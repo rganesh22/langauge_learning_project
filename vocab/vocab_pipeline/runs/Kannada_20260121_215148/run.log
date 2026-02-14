@@ -1,0 +1,30 @@
+2026-01-21 21:51:48,907 [INFO] --- MODE: PREPARE (Fresh Translation) ---
+2026-01-21 21:51:48,907 [INFO] Created run folder: runs/Kannada_20260121_215148
+2026-01-21 21:51:48,907 [INFO] Input CSV: kannada_missing_rows.csv
+2026-01-21 21:51:48,907 [INFO] Loaded Prompt: prompts/prompt_kannada.txt
+2026-01-21 21:51:48,911 [INFO] Generating batch requests...
+2026-01-21 21:51:48,927 [INFO] SUCCESS: Generated 52 batch requests in runs/Kannada_20260121_215148/batch_input.jsonl
+2026-01-21 21:53:32,273 [INFO] --- MODE: SUBMIT ---
+2026-01-21 21:53:32,273 [WARNING] Both GOOGLE_API_KEY and GEMINI_API_KEY are set. Using GOOGLE_API_KEY.
+2026-01-21 21:53:32,320 [INFO] Uploading file to Google GenAI...
+2026-01-21 21:53:32,865 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files "HTTP/1.1 200 OK"
+2026-01-21 21:53:34,042 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AJRbA5VNMZGQ7hgUqqMJIekdqbhTQRehCKKRiVqKIprSjw4tGIi1Uu_zTnl9s5aPOxJlGfAdtNXLP3WsniOcUB0JXgLp58MbUqeXTpDr_smZIg&upload_protocol=resumable "HTTP/1.1 200 OK"
+2026-01-21 21:53:34,047 [INFO] Creating Batch Job with model gemini-2.5-flash...
+2026-01-21 21:53:34,920 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:batchGenerateContent "HTTP/1.1 200 OK"
+2026-01-21 21:53:34,926 [INFO] JOB STARTED: batches/q2h38d1djovx807cdtyr4ug8g478ktb1wdgd
+2026-01-21 21:58:40,554 [INFO] --- MODE: RETRIEVE ---
+2026-01-21 21:58:40,554 [WARNING] Both GOOGLE_API_KEY and GEMINI_API_KEY are set. Using GOOGLE_API_KEY.
+2026-01-21 21:58:40,876 [INFO] HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/batches/q2h38d1djovx807cdtyr4ug8g478ktb1wdgd "HTTP/1.1 200 OK"
+2026-01-21 21:58:40,880 [INFO] Status: JobState.JOB_STATE_PENDING
+2026-01-21 21:58:40,880 [INFO] Job still processing...
+2026-01-21 22:01:38,928 [INFO] --- MODE: RETRIEVE ---
+2026-01-21 22:01:38,928 [WARNING] Both GOOGLE_API_KEY and GEMINI_API_KEY are set. Using GOOGLE_API_KEY.
+2026-01-21 22:01:39,242 [INFO] HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/batches/q2h38d1djovx807cdtyr4ug8g478ktb1wdgd "HTTP/1.1 200 OK"
+2026-01-21 22:01:39,248 [INFO] Status: JobState.JOB_STATE_SUCCEEDED
+2026-01-21 22:01:39,248 [INFO] Job Complete. Downloading results...
+2026-01-21 22:01:39,248 [INFO] Retrieving content for: files/batch-q2h38d1djovx807cdtyr4ug8g478ktb1wdgd
+2026-01-21 22:01:39,336 [INFO] HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/files/batch-q2h38d1djovx807cdtyr4ug8g478ktb1wdgd:download?alt=media "HTTP/1.1 302 Found"
+2026-01-21 22:01:39,592 [INFO] HTTP Request: GET https://generativelanguage.googleapis.com/download/v1beta/files/batch-q2h38d1djovx807cdtyr4ug8g478ktb1wdgd:download?alt=media "HTTP/1.1 200 OK"
+2026-01-21 22:01:39,886 [INFO] Saved to runs/Kannada_20260121_215148/batch_output.jsonl
+2026-01-21 22:01:47,317 [INFO] --- MODE: FINALIZE ---
+2026-01-21 22:01:47,738 [INFO] ✅ Final CSV created: runs/Kannada_20260121_215148/final_vocab.csv

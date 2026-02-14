@@ -1,0 +1,82 @@
+﻿id,english_word,word_class,level,verb_transitivity,target_translation,transliteration
+0,brother (younger),noun,a1,nan,അനുജൻ / തമ്പി / സഹോദരൻ,anujan / tampi / sahōdaran
+1,brown,noun,a1,nan,തവിട്ടുനിറം / കാവൽനിറം,taviṭṭuniṟaṁ / kāvalniṟaṁ
+2,brown (adjective),noun,a1,nan,തവിട്ടുനിറമുള്ള / കാവൽനിറമുള്ള,taviṭṭuniṟamuḷḷa / kāvalniṟamuḷḷa
+3,building,noun,a1,nan,കെട്ടിടം / സൗധം / മന്ദിരം,keṭṭiṭaṁ / saudhaṁ / mandiraṁ
+4,bus,noun,a1,nan,ബസ്,bas
+5,"business (commercial enterprise, trade)",noun,a1,nan,വ്യാപാരം / കച്ചവടം / ബിസിനസ് / സംരംഭം,vyāpāraṁ / kaccavaṭaṁ / bisinas / saṁraṁbhaṁ
+6,"busy (crowded, bustling)",adjective,a1,nan,തിരക്കുള്ള / ജനത്തിരക്കുള്ള,tirakkuḷḷa / janattirakkuḷḷa
+7,busy (telephone line engaged),adjective,a1,nan,തിരക്കിലാണ് / എൻഗേജ്ഡ്,tirakkilāṇ / engējḍ
+8,by (deadline),preposition,a1,nan,മുമ്പ് / ഉള്ളിൽ,mump / uḷḷil
+9,by (means of),preposition,a1,nan,വഴി / ഉപയോഗിച്ച്,vaḻi / upayōgicc
+10,"by (near, beside)",preposition,a1,nan,അടുത്ത് / അരികിൽ / സമീപം,aṭutt / arikil / samīpaṁ
+11,bye (casual),noun,a1,nan,ബൈ / വിട,bai / viṭa
+12,bye (polite parting),exclamation,a1,nan,പോയിവരാം / യാത്ര / നമസ്കാരം,pōyivarāṁ / yātra / namaskāraṁ
+13,cafe,noun,a1,nan,കഫേ / കാപ്പിക്കട / ചായക്കട,kaphē / kāppikkaṭa / cāyakkaṭa
+14,cake,noun,a1,nan,കേക്ക്,kēkk
+15,"call (shout, cry)",noun,a1,nan,വിളി / കൂവൽ / ആർപ്പുവിളി,viḷi / kūval / ārppuviḷi
+16,call (telephone),noun,a1,nan,കോൾ / ഫോൺ വിളി / ടെലിഫോൺ വിളി,kōḷ / phōṇ viḷi / ṭeliphōṇ viḷi
+17,camera,noun,a1,nan,ക്യാമറ,kyāmaṟa
+18,can (ability),modal verb,a1,nan,കഴിയുക,kaḻiyuka
+19,"can (permission, request)",modal verb,a1,nan,കഴിയുക / അനുവദിക്കുക,kaḻiyuka / anuvadikkuka
+20,"cannot (be allowed to , prohibited)",modal verb,a1,nan,പാടില്ല,pāṭilla
+21,"capital (chief, of the main city)",adjective,a1,nan,പ്രധാന / മുഖ്യ,pradhāna / mukhya
+22,capital (city),noun,a1,nan,തലസ്ഥാനം,talasthānaṁ
+23,capital (financial assets),noun,a1,nan,മൂലധനം / ധനം / നിക്ഷേപം,mūladhanaṁ / dhanaṁ / nikṣēpaṁ
+24,capital (letter),adjective,a1,nan,വലിയ,valiya
+25,"hi , hey (casual greeting)",exclamation,a1,nan,ഹായ് / ഹേയ്,hāy / hēy
+26,"sandal , slipper (open footwear)",noun,a1,nan,ചെരിപ്പ് / സാൻഡൽ,ceripp / sānḍal
+27,"to smile , to laugh",verb,a2,intransitive,ചിരിക്കുക,cirikkuka
+28,impact (collision),noun,b1,nan,കൂട്ടിയിടി / ആഘാതം / ഇടി,kūṭṭiyiṭi / āghātaṁ / iṭi
+29,impact (influence),noun,b1,nan,സ്വാധീനം / ഫലം / പ്രഭാവം,svādhīnaṁ / phalaṁ / prabhāvaṁ
+30,"import (goods, trade)",noun,b1,nan,ഇറക്കുമതി,iṟakkumati
+31,"importance (significance, weight)",noun,b1,nan,പ്രാധാന്യം / ഗൗരവം / പ്രസക്തി,prādhānyaṁ / gauravaṁ / prasakti
+32,impression (effect on mind),noun,b1,nan,സ്വാധീനം / ധാരണ / അനുഭവം,svādhīnaṁ / dhāraṇa / anubhavaṁ
+33,"impression (opinion, view)",noun,b1,nan,അഭിപ്രായം / ധാരണ / കാഴ്ചപ്പാട്,abhiprāyaṁ / dhāraṇa / kāḻcappāṭ
+34,impression (physical mark),noun,b1,nan,മുദ്ര / അടയാളം / പാട്,mudra / aṭayāḷaṁ / pāṭ
+35,impressive,adjective,b1,nan,ശ്രദ്ധേയമായ / ഗംഭീരമായ / ആകർഷകമായ,śraddhēyamāya / gaṁbhīramāya / ākarṣakamāya
+36,improvement,noun,b1,nan,പുരോഗതി / മെച്ചപ്പെടുത്തൽ / ഉന്നമനം,purōgati / meccappeṭuttal / unnamanaṁ
+37,"incredibly (extremely, very)",adverb,b1,nan,അങ്ങേയറ്റം / വളരെ / അതിയായി,aṅṅēyaṟṟaṁ / vaḷare / atiyāyi
+38,incredibly (unbelievably),adverb,b1,nan,അവിശ്വസനീയമാംവിധം / അവിശ്വസനീയമായി,aviśvasanīyamāṁvidhaṁ / aviśvasanīyamāyi
+39,indeed (to a high degree),adverb,b1,nan,ശരിക്കും / തീർച്ചയായും / സത്യത്തിൽ,śarikkuṁ / tīrccayāyuṁ / satyattil
+40,"indeed (truly, in fact)",adverb,b1,nan,തീർച്ചയായും / യഥാർത്ഥത്തിൽ / വാസ്തവത്തിൽ,tīrccayāyuṁ / yathārtthattil / vāstavattil
+41,indirect,adjective,b1,nan,പരോക്ഷമായ / നേർവഴിയല്ലാത്ത,parōkṣamāya / nērvaḻiyallātta
+42,indoor,adjective,b1,nan,അകത്തെ / ഉൾവശത്തെ,akatte / uḷvaśatte
+43,indoors,adverb,b1,nan,അകത്ത് / ഉൾവശത്ത്,akatt / uḷvaśatt
+44,"industry (diligence, hard work)",noun,b1,nan,കഠിനാധ്വാനം / ഉത്സാഹം / പ്രയത്നം,kaṭhinādhvānaṁ / utsāhaṁ / prayatnaṁ
+45,influence,noun,b1,nan,സ്വാധീനം / പ്രചോദനം,svādhīnaṁ / pracōdanaṁ
+46,"injured (feelings, pride)",adjective,b1,nan,മുറിവേറ്റ / വേദനാജനകമായ,muṟivēṟṟa / vēdanājanakamāya
+47,inner clothing,noun,b1,nan,അടിവസ്ത്രം / ഉൾവസ്ത്രം,aṭivastraṁ / uḷvastraṁ
+48,"innocent (naive, pure)",adjective,b1,nan,നിഷ്കളങ്കമായ / ശുദ്ധമായ,niṣkaḷaṅkamāya / śuddhamāya
+49,"innocent (not guilty, legally)",adjective,b1,nan,നിരപരാധിയായ / കുറ്റമില്ലാത്ത,niraparādhiyāya / kuṟṟamillātta
+50,"inside (the inner part, interior)",noun,b1,nan,അകം / ഉൾഭാഗം / ഉള്ളിൽ,akaṁ / uḷbhāgaṁ / uḷḷil
+51,insurance claim,noun,b1,nan,ഇൻഷുറൻസ് ക്ലെയിം / ഇൻഷുറൻസ് അവകാശവാദം,inṣuṟans kleyiṁ / inṣuṟans avakāśavādaṁ
+52,intention (firm resolve),noun,b1,nan,ഉദ്ദേശ്യം / ലക്ഷ്യം / നിശ്ചയം,uddēśyaṁ / lakṣyaṁ / niścayaṁ
+53,"neither (agreement , negative reply)",pronoun,b1,nan,രണ്ടുമില്ല / ഒന്നുമില്ല,raṇṭumilla / onnumilla
+54,upon (on top of),preposition,b1,nan,മുകളിൽ / മേൽ / പുറത്ത്,mukaḷil / mēl / puṟatt
+55,upset (emotionally distressed),adjective,b1,nan,വിഷമിച്ച / അസ്വസ്ഥനായ / ദുഃഖിതനായ,viṣamicca / asvasthanāya / duḥkhitanāya
+56,"upset (physically ill, generally unwell)",adjective,b1,nan,സുഖമില്ലാത്ത / അസുഖമുള്ള / വയ്യാത്ത,sukhamillātta / asukhamuḷḷa / vayyātta
+57,"upset (physically ill, stomach)",adjective,b1,nan,വയറുവേദനയുള്ള / വയറിന് സുഖമില്ലാത്ത / ദഹനക്കേടുള്ള,vayaṟuvēdanayuḷḷa / vayaṟin sukhamillātta / dahanakkēṭuḷḷa
+58,upset (stomach),adjective,b1,nan,വയറുവേദനയുള്ള / വയറിന് സുഖമില്ലാത്ത / ദഹനക്കേടുള്ള,vayaṟuvēdanayuḷḷa / vayaṟin sukhamillātta / dahanakkēṭuḷḷa
+59,"used (accustomed to, familiar with)",adjective,b1,nan,ശീലിച്ച / പരിചയമുള്ള / വഴങ്ങിയ,śīlicca / paricayamuḷḷa / vaḻaṅṅiya
+60,"used (not new, second-hand)",adjective,b1,nan,ഉപയോഗിച്ച / പഴയ / സെക്കൻഡ് ഹാൻഡ്,upayōgicca / paḻaya / sekkanḍ hānḍ
+61,useless (without benefit),adjective,b1,nan,ഉപയോഗശൂന്യം / പ്രയോജനമില്ലാത്ത / നിരർത്ഥകമായ,upayōgaśūnyaṁ / prayōjanamillātta / nirartthakamāya
+62,valuable (important),adjective,b1,nan,വിലപ്പെട്ട / പ്രധാനപ്പെട്ട / അമൂല്യമായ,vilappeṭṭa / pradhānappeṭṭa / amūlyamāya
+63,value (importance),noun,b1,nan,പ്രാധാന്യം / വില / മഹത്വം,prādhānyaṁ / vila / mahatvaṁ
+64,value (moral principle),noun,b1,nan,മൂല്യം / തത്വം,mūlyaṁ / tatvaṁ
+65,"value (worth, price)",noun,b1,nan,വില / മൂല്യം / നിരക്ക്,vila / mūlyaṁ / nirakk
+66,various,adjective,b1,nan,വിവിധ / പലതരം / വ്യത്യസ്തമായ,vividha / palataraṁ / vyatyastamāya
+67,"version (account, story)",noun,b1,nan,പതിപ്പ് / വിവരണം / രൂപം,patipp / vivaraṇaṁ / rūpaṁ
+68,"version (of software, product)",noun,b1,nan,പതിപ്പ് / വേർഷൻ,patipp / vērṣan
+69,"victim (affected by disaster, tragedy)",noun,b1,nan,ഇര / ദുരിതബാധിതൻ,ira / duritabādhitan
+70,"victim (scapegoat, sacrificial)",noun,b1,nan,ബലിമൃഗം / ഇര / ബലി,balimr̥gaṁ / ira / bali
+71,"viewer (media, audience)",noun,b1,nan,പ്രേക്ഷകൻ / കാണികൾ,prēkṣakan / kāṇikaḷ
+72,viewer (observer),noun,b1,nan,നിരീക്ഷകൻ / കാണുന്നയാൾ,nirīkṣakan / kāṇunnayāḷ
+73,villager (informal),noun,b1,nan,നാട്ടുകാരൻ / ഗ്രാമീണൻ / ഗ്രാമവാസി,nāṭṭukāran / grāmīṇan / grāmavāsi
+74,"violent (aggressive, forceful)",adjective,b1,nan,അക്രമാസക്തമായ / അതിശക്തമായ / ക്രൂരമായ,akramāsaktamāya / atiśaktamāya / krūramāya
+75,"violent (intense, severe)",adjective,b1,nan,തീവ്രമായ / അതിരൂക്ഷമായ / കഠിനമായ,tīvramāya / atirūkṣamāya / kaṭhinamāya
+76,"voice (opinion, influence)",noun,b1,nan,അഭിപ്രായം / സ്വാധീനം / ശബ്ദം,abhiprāyaṁ / svādhīnaṁ / śabdaṁ
+77,volume (loudness),noun,b1,nan,ശബ്ദതീവ്രത / ഉച്ചത / വോളിയം,śabdatīvrata / uccata / vōḷiyaṁ
+78,volunteer,noun,b1,nan,സന്നദ്ധപ്രവർത്തകൻ / സന്നദ്ധസേവകൻ / വോളണ്ടിയർ,sannaddhapravarttakan / sannaddhasēvakan / vōḷaṇṭiyar
+79,"to merge (companies, organizations)",verb,c1,nan,ലയിപ്പിക്കുക / ലയിക്കുക / സംയോജിപ്പിക്കുക / ഒന്നിപ്പിക്കുക,layippikkuka / layikkuka / saṁyōjippikkuka / onnippikkuka
+80,to minimize,verb,c1,transitive,കുറയ്ക്കുക / ചുരുക്കുക / ലഘൂകരിക്കുക,kuṟaykkuka / curukkuka / laghūkarikkuka

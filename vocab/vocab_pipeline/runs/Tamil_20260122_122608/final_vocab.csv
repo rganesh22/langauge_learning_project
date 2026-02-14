@@ -1,0 +1,133 @@
+﻿id,english_word,word_class,level,verb_transitivity,target_translation,transliteration
+0,"hi , hey (casual greeting)",exclamation,a1,nan,ஹாய் / வணக்கம் / ஏய்,hāy / vaṇakkam / ēy
+1,to,infinitive marker,a1,nan,ஆக,āka
+2,"to smile , to laugh",verb,a2,intransitive,சிரி / புன்னகை / நகை,ciri / puṉṉakai / nakai
+3,alternative (non-conventional),adjective,b1,nan,மாற்று / மாற்றுவழி,māṟṟu / māṟṟuvaḻi
+4,amazed (awe-struck),adjective,b1,nan,வியப்புற்ற / ஆச்சரியப்பட்ட / பிரமித்த,viyappuṟṟa / āccariyappaṭṭa / piramitta
+5,ambition,noun,b1,nan,லட்சியம் / குறிக்கோள் / அவா,laṭciyam / kuṟikkōḷ / avā
+6,ambitious,adjective,b1,nan,லட்சியம் கொண்ட / குறிக்கோள் கொண்ட / லட்சியவாதமுள்ள,laṭciyam koṇṭa / kuṟikkōḷ koṇṭa / laṭciyavātamuḷḷa
+7,ambitious (person),adjective,b1,nan,லட்சியம் கொண்ட / குறிக்கோள் கொண்ட / லட்சியவாதமுள்ள,laṭciyam koṇṭa / kuṟikkōḷ koṇṭa / laṭciyavātamuḷḷa
+8,analysis,noun,b1,nan,பகுப்பாய்வு / ஆய்வு / ஆராய்வு,pakuppāyvu / āyvu / ārāyvu
+9,announcement (formal decree),noun,b1,nan,அறிவிப்பு / பிரகடனம் / ஆணை,aṟivippu / pirakaṭaṉam / āṇai
+10,"announcement (notice, update)",noun,b1,nan,அறிவிப்பு / அறிக்கை / தகவல்,aṟivippu / aṟikkai / takaval
+11,annoyed,adjective,b1,nan,எரிச்சலடைந்த / சினமுற்ற,ericcalaṭainta / ciṉamuṟṟa
+12,annoying (bothersome; a nuisance),adjective,b1,nan,எரிச்சலூட்டும் / தொந்தரவான,ericcalūṭṭum / tontaravāṉa
+13,apart (into pieces),adverb,b1,nan,துண்டு துண்டாக / சிதறி,tuṇṭu tuṇṭāka / citaṟi
+14,apart (separated by distance),adverb,b1,nan,தனித்தனியாக / விலகி / இடைவெளிவிட்டு,taṉittaṉiyāka / vilaki / iṭaiveḷiviṭṭu
+15,application (formal request),noun,b1,nan,விண்ணப்பம் / கோரிக்கை,viṇṇappam / kōrikkai
+16,application (software),noun,b1,nan,செயலி / அப்ளிகேஷன்,ceyali / apḷikēṣaṉ
+17,appointment (scheduled meeting),noun,b1,nan,சந்திப்பு / முன்பதிவு / அப்பாயிண்ட்மென்ட்,cantippu / muṉpativu / appāyiṇṭmeṉṭ
+18,"approximately (as an estimate, roughly)",adverb,b1,nan,தோராயமாக / ஏறக்குறைய / சுமார்,tōrāyamāka / ēṟakkuṟaiya / cumār
+19,"arm (weapon, firearm)",noun,b1,nan,ஆயுதம் / துப்பாக்கி,āyutam / tuppākki
+20,arrest,noun,b1,nan,கைது / பிடிப்பு / சிறைப்பிடிப்பு,kaitu / piṭippu / ciṟaippiṭippu
+21,arrival (formal),noun,b1,nan,வருகை,varukai
+22,arrival (general),noun,b1,nan,வருகை,varukai
+23,assignment (official duty or mission),noun,b1,nan,பணி / ஒதுக்கீடு / பொறுப்பு,paṇi / otukkīṭu / poṟuppu
+24,at worst,adverb,b1,nan,மோசமானபட்சத்தில் / மிக மோசமாகப் போனால்,mōcamāṉapaṭcattil / mika mōcamākap pōṉāl
+25,"atmosphere (air, gases)",noun,b1,nan,வளிமண்டலம்,vaḷimaṇṭalam
+26,"atmosphere (mood, vibe)",noun,b1,nan,சூழல் / மனநிலை / சூழ்நிலை / உணர்வு,cūḻal / maṉanilai / cūḻnilai / uṇarvu
+27,"attention (military, formal command)",exclamation,b1,nan,கவனம்,kavaṉam
+28,block (building structure),noun,b1,nan,தொகுதி / கட்டிடம்,tokuti / kaṭṭiṭam
+29,"neither (agreement , negative reply)",pronoun,b1,nan,இரண்டும் இல்லை / எதுவுமில்லை,iraṇṭum illai / etuvumillai
+30,suitable (appropriate),adjective,b1,nan,தகுந்த / பொருத்தமான / ஏற்ற,takunta / poruttamāṉa / ēṟṟa
+31,summary,noun,b1,nan,சுருக்கம் / தொகுப்பு / சாரம்,curukkam / tokuppu / cāram
+32,supply,noun,b1,nan,விநியோகம் / வழங்கல் / அளிப்பு,viniyōkam / vaḻaṅkal / aḷippu
+33,"supporter (person, advocate)",noun,b1,nan,ஆதரவாளர் / ஆதரவாளி / பற்றாளர்,ātaravāḷar / ātaravāḷi / paṟṟāḷar
+34,"supporter (physical object, brace)",noun,b1,nan,தாங்கி / துணைக்கருவி,tāṅki / tuṇaikkaruvi
+35,surely (expressing mild disbelief or rhetorical question),adverb,b1,nan,நிச்சயமாகவா? / அப்படியா? / உண்மையிலேயே?,niccayamākavā? / appaṭiyā? / uṇmaiyilēyē?
+36,swim,noun,b1,nan,நீச்சல்,nīccal
+37,symptom,noun,b1,nan,அறிகுறி / அடையாளம்,aṟikuṟi / aṭaiyāḷam
+38,"table (data arrangement, chart)",noun,b1,nan,அட்டவணை / பட்டியல் / விவரப்பட்டியல்,aṭṭavaṇai / paṭṭiyal / vivarappaṭṭiyal
+39,tail (of a coin),noun,b1,nan,பூ / மறுபக்கம்,pū / maṟupakkam
+40,"tail (rear end, part)",noun,b1,nan,வால்,vāl
+41,talent,noun,b1,nan,திறமை / ஆற்றல் / புலமை,tiṟamai / āṟṟal / pulamai
+42,talented,adjective,b1,nan,திறமையான / ஆற்றல்மிக்க,tiṟamaiyāṉa / āṟṟalmikka
+43,talented (f),adjective,b1,nan,திறமையான / ஆற்றல்மிக்க,tiṟamaiyāṉa / āṟṟalmikka
+44,talented (female),adjective,b1,nan,திறமையான / ஆற்றல்மிக்க,tiṟamaiyāṉa / āṟṟalmikka
+45,talented (m),adjective,b1,nan,திறமையான / ஆற்றல்மிக்க,tiṟamaiyāṉa / āṟṟalmikka
+46,talented (male),adjective,b1,nan,திறமையான / ஆற்றல்மிக்க,tiṟamaiyāṉa / āṟṟalmikka
+47,tape (adhesive),noun,b1,nan,டேப் / பசை நாடா,ṭēp / pacai nāṭā
+48,tape (measuring device),noun,b1,nan,டேப் / அளக்கும் நாடா,ṭēp / aḷakkum nāṭā
+49,"taste (preference, style)",noun,b1,nan,ரசனை / விருப்பம்,racaṉai / viruppam
+50,tax,noun,b1,nan,வரி / தீர்வை,vari / tīrvai
+51,"technical (relating to rules, procedure)",adjective,b1,nan,நுட்பமான / விதிமுறை சார்ந்த,nuṭpamāṉa / vitimuṟai cārnta
+52,"technique (method, procedure)",noun,b1,nan,நுட்பம் / முறை / செயல்முறை,nuṭpam / muṟai / ceyalmuṟai
+53,"temporarily (for the moment, coll.)",adverb,b1,nan,தற்காலிகமாக / இப்போதைக்கு,taṟkālikamāka / ippōtaikku
+54,temporary (not permanent),adjective,b1,nan,தற்காலிக / நிலையற்ற,taṟkālika / nilaiyaṟṟa
+55,will (desire),noun,b1,nan,விருப்பம் / ஆசை,viruppam / ācai
+56,will (legal document),noun,b1,nan,உயில் / மரண சாசனம்,uyil / maraṇa cācaṉam
+57,"will (strong resolve, determination)",noun,b1,nan,மன உறுதி / உறுதி / மனோபலம்,maṉa uṟuti / uṟuti / maṉōpalam
+58,win,noun,b1,nan,வெற்றி / ஜயம்,veṟṟi / jayam
+59,wing (of a building),noun,b1,nan,கட்டிடப் பிரிவு / பகுதி,kaṭṭiṭap pirivu / pakuti
+60,wing (political group),noun,b1,nan,பிரிவு / அணி / சாரி,pirivu / aṇi / cāri
+61,within (time limit),preposition,b1,nan,-க்குள் / உள்ளே / காலக்கெடுவுக்குள்,-kkuḷ / uḷḷē / kālakkeṭuvukkuḷ
+62,wonder (marvel or astonishing thing),noun,b1,nan,அதிசயம் / ஆச்சரியம் / வியப்பு,aticayam / āccariyam / viyappu
+63,wooden (stiff or unnatural),adjective,b1,nan,விறைப்பான / செயற்கையான,viṟaippāṉa / ceyaṟkaiyāṉa
+64,wool,noun,b1,nan,கம்பளி / ஆட்டுமயிர்,kampaḷi / āṭṭumayir
+65,worldwide,adverb,b1,nan,உலகளவில் / உலகம் முழுவதும்,ulakaḷavil / ulakam muḻuvatum
+66,worldwide (adjective),adverb,b1,nan,உலகளவில் / உலகம் முழுவதும்,ulakaḷavil / ulakam muḻuvatum
+67,"worried (anxious, distressed)",adjective,b1,nan,கவலையான / பதட்டமான / வருத்தமான,kavalaiyāṉa / pataṭṭamāṉa / varuttamāṉa
+68,worry,noun,b1,nan,கவலை / பதட்டம்,kavalai / pataṭṭam
+69,worse,adverb,b1,nan,மோசமாக / இன்னும் மோசமாக,mōcamāka / iṉṉum mōcamāka
+70,worse (comparative adverb),adverb,b1,nan,இதைவிட மோசமாக / இன்னும் மோசமாக,itaiviṭa mōcamāka / iṉṉum mōcamāka
+71,"worst (at worst, at minimum)",adjective,b1,nan,குறைந்தபட்சம் / மோசமான நிலையில் கூட,kuṟaintapaṭcam / mōcamāṉa nilaiyil kūṭa
+72,worst (superlative adjective),adjective,b1,nan,மிக மோசமான / மிகவும் மோசமான / ஆக மோசமான,mika mōcamāṉa / mikavum mōcamāṉa / āka mōcamāṉa
+73,worst (superlative adverb),adverb,b1,nan,மிக மோசமாக / மிகவும் மோசமாக / ஆக மோசமாக,mika mōcamāka / mikavum mōcamāka / āka mōcamāka
+74,"worth (deserving of, beneficial)",adjective,b1,nan,மதிப்புள்ள / தகுதியான / பயனுள்ள,matippuḷḷa / takutiyāṉa / payaṉuḷḷa
+75,"written (formal, official)",adjective,b1,nan,எழுத்துப்பூர்வமான / எழுதப்பட்ட,eḻuttuppūrvamāṉa / eḻutappaṭṭa
+76,"wrong (incorrect, not right)",adverb,b1,nan,தவறாக / பிழையாக,tavaṟāka / piḻaiyāka
+77,wrong (incorrectly),adverb,b1,nan,தவறாக / பிழையாக,tavaṟāka / piḻaiyāka
+78,wrong (morally bad),adverb,b1,nan,தவறாக / அநீதியாக / தீயதாக,tavaṟāka / anītiyāka / tīyatāka
+79,"wrong (morally bad, unjust)",adverb,b1,nan,தவறாக / அநீதியாக / நியாயமற்றதாக,tavaṟāka / anītiyāka / niyāyamaṟṟatāka
+80,briefly (in short; concisely),adverb,b2,N/A,சுருக்கமாக / சுருக்கமாய்,curukkamāka / curukkamāy
+81,"broad (general, scope)",adjective,b2,N/A,பரந்த / விரிவான,paranta / virivāṉa
+82,"broad (wide, physical)",adjective,b2,N/A,அகலமான / விசாலமான,akalamāṉa / vicālamāṉa
+83,"broadcaster (company, entity)",noun,b2,N/A,ஒலிபரப்பு நிறுவனம்,oliparappu niṟuvaṉam
+84,broadcaster (person),noun,b2,N/A,ஒலிபரப்பாளர் / அறிவிப்பாளர்,oliparappāḷar / aṟivippāḷar
+85,broadly (generally speaking),adverb,b2,N/A,பொதுவாக / பரவலாக,potuvāka / paravalāka
+86,broadly (widely),adverb,b2,N/A,பரவலாக / விரிவாக,paravalāka / virivāka
+87,budget,noun,b2,N/A,பட்ஜெட் / வரவு செலவுத் திட்டம்,paṭjeṭ / varavu celavut tiṭṭam
+88,bug (illness),noun,b2,N/A,நோய் / தொற்று,nōy / toṟṟu
+89,bug (software error),noun,b2,N/A,பக் / பிழை / தவறு,pak / piḻai / tavaṟu
+90,bullet (typographical mark),noun,b2,nan,புள்ளி / குறியீடு,puḷḷi / kuṟiyīṭu
+91,"bunch (a lot of , many - informal)",noun,b2,nan,நிறைய / அதிகம் / ஏராளம்,niṟaiya / atikam / ērāḷam
+92,"bunch (cluster of grapes, keys, or flowers)",noun,b2,nan,கொத்து / குலை,kottu / kulai
+93,burn,noun,b2,nan,எரிப்பு,erippu
+94,burn (injury),noun,b2,nan,தீக்காயம் / சுட்ட காயம்,tīkkāyam / cuṭṭa kāyam
+95,bush (mechanical part),noun,b2,nan,புஷ்,puṣ
+96,"but (conjunction, contrast)",preposition,b2,nan,ஆனால் / ஆயினும் / எனினும்,āṉāl / āyiṉum / eṉiṉum
+97,but (except),preposition,b2,nan,தவிர / அன்றி,tavira / aṉṟi
+98,"cabin (aircraft, ship compartment)",noun,b2,nan,அறை / பகுதி,aṟai / pakuti
+99,"cabin (small dwelling, hut)",noun,b2,nan,குடிசை / குடில் / சிறு வீடு,kuṭicai / kuṭil / ciṟu vīṭu
+100,"cable (structural rope, hawser)",noun,b2,nan,கம்பிவடம் / கயிறு / வடம்,kampivaṭam / kayiṟu / vaṭam
+101,canal (anatomical channel),noun,b2,nan,நாளம் / கால்வாய் / குழாய்,nāḷam / kālvāy / kuḻāy
+102,Cancer (zodiac sign),noun,b2,nan,கடகம்,kaṭakam
+103,candle,noun,b2,nan,மெழுகுவர்த்தி,meḻukuvartti
+104,capable,adjective,b2,nan,திறமையான / ஆற்றல்மிக்க / வல்லமைமிக்க,tiṟamaiyāṉa / āṟṟalmikka / vallamaimikka
+105,specimen (representative instance),noun,c1,nan,மாதிரி / எடுத்துக்காட்டு,mātiri / eṭuttukkāṭṭu
+106,specimen (scientific sample),noun,c1,nan,மாதிரி / கூறு / ஆய்வுப்பொருள்,mātiri / kūṟu / āyvupporuḷ
+107,spectacle (embarrassing public scene),noun,c1,nan,கேலிக்கூத்து / கூத்து,kēlikkūttu / kūttu
+108,spectacle (grand visual display),noun,c1,nan,கண்கவர் காட்சி / காட்சி / விழாக்கோலம்,kaṇkavar kāṭci / kāṭci / viḻākkōlam
+109,spectacles (eyeglasses),noun,c1,nan,கண்ணாடி / மூக்குக்கண்ணாடி,kaṇṇāṭi / mūkkukkaṇṇāṭi
+110,spectrum (range),noun,c1,nan,வீச்சு / பரப்பு / களம்,vīccu / parappu / kaḷam
+111,spectrum (scientific),noun,c1,nan,நிறமாலை / அலைக்கற்றை,niṟamālai / alaikkaṟṟai
+112,spell (magic),noun,c1,nan,மந்திரம் / சூனியம் / ஏவல்,mantiram / cūṉiyam / ēval
+113,spell (period of time),noun,c1,nan,காலம் / நேரம்,kālam / nēram
+114,sphere (domain of influence),noun,c1,nan,களம் / புலம் / செல்வாக்கு மண்டலம்,kaḷam / pulam / celvākku maṇṭalam
+115,sphere (geometric shape),noun,c1,nan,கோளம் / உருண்டை,kōḷam / uruṇṭai
+116,spin (bias or interpretation),noun,c1,nan,திரிபு / சார்பு / கோணம்,tiripu / cārpu / kōṇam
+117,spine (of a book),noun,c1,nan,புத்தகத்தின் முதுகு / அட்டைப்பகுதி,puttakattiṉ mutuku / aṭṭaippakuti
+118,spine (sharp projection),noun,c1,nan,முள் / கூர்முள்,muḷ / kūrmuḷ
+119,"spotlight (attention, focus)",noun,c1,nan,கவனம் / மையக் கவனம் / வெளிச்சம்,kavaṉam / maiyak kavaṉam / veḷiccam
+120,spotlight (physical lamp),noun,c1,nan,ஸ்பாட்லைட் / தேடுவிளக்கு / ஒளிவிளக்கு,spāṭlaiṭ / tēṭuviḷakku / oḷiviḷakku
+121,spouse (husband),noun,c1,nan,கணவர் / துணைவர் / பர்த்தா,kaṇavar / tuṇaivar / parttā
+122,spouse (wife),noun,c1,nan,மனைவி / துணைவி / பத்தினி,maṉaivi / tuṇaivi / pattiṉi
+123,spy,noun,c1,nan,ஒற்றன் / உளவாளி / வேவுகாரன்,oṟṟaṉ / uḷavāḷi / vēvukāraṉ
+124,"squad (military, police unit)",noun,c1,nan,படைப்பிரிவு / குழு / அணி,paṭaippirivu / kuḻu / aṇi
+125,squad (sports team),noun,c1,nan,அணி / குழு,aṇi / kuḻu
+126,stability,noun,c1,nan,நிலைத்தன்மை / ஸ்திரத்தன்மை / உறுதி,nilaittaṉmai / stirattaṉmai / uṟuti
+127,stake (financial interest or share),noun,c1,nan,பங்கு / முதலீடு / ஈடுபாடு,paṅku / mutalīṭu / īṭupāṭu
+128,stake (wooden post),noun,c1,nan,ஆப்பு / முளை / குச்சி,āppu / muḷai / kucci
+129,standing (permanent),adjective,c1,nan,நிரந்தரமான / நிலையான / நிலைத்த,nirantaramāṉa / nilaiyāṉa / nilaitta
+130,"to merge (companies, organizations)",verb,c1,nan,ஒன்றிணை / ஒருங்கிணை / இணை,oṉṟiṇai / oruṅkiṇai / iṇai
+131,to minimize,verb,c1,nan,குறை / சுருக்கு / சிறுமைப்படுத்து,kuṟai / curukku / ciṟumaippaṭuttu

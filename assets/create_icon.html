@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+canvas { display: none; }
+</style>
+</head>
+<body>
+<canvas id="favicon" width="32" height="32"></canvas>
+<canvas id="icon" width="1024" height="1024"></canvas>
+<script>
+function createIcon(canvasId, size) {
+  const canvas = document.getElementById(canvasId);
+  const ctx = canvas.getContext('2d');
+  
+  // Blue background
+  ctx.fillStyle = '#4A90E2';
+  ctx.fillRect(0, 0, size, size);
+  
+  // White "F" letter
+  ctx.fillStyle = 'white';
+  ctx.font = `bold ${size * 0.6}px Arial`;
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText('F', size / 2, size / 2);
+  
+  // Convert to data URL
+  return canvas.toDataURL('image/png');
+}
+
+// This would need to be run in a browser to generate the files
+// For now, we'll create placeholder files
+console.log('Icon generation script ready');
+</script>
+</body>
+</html>

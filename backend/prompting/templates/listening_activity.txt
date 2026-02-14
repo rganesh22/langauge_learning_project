@@ -1,0 +1,51 @@
+Generate a {language} listening activity with a passage and comprehension questions.
+
+IMPORTANT: The user's current CEFR level is {user_cefr_level}. Tailor the passage complexity, vocabulary, and sentence structures to be appropriate for this level.
+
+Topic: {selected_topic}
+
+Regional Dialect: {selected_region}
+
+Language Style: {formality_instruction}
+
+{learned_section}
+
+{learning_section}
+
+Instructions:
+1. Write an engaging passage in {language_for_template} script appropriate for {user_cefr_level} level language learners. Adjust complexity, sentence length, and vocabulary difficulty to match this level.
+2. {usage_instruction}
+3. {learning_instruction}
+4. The passage should be maximum 5 paragraphs long (3-5 paragraphs), separated by \\n\\n between paragraphs. Formatting should be simple - no markdown symbols (**, *, backticks) or special formatting.
+5. After the passage, create 5 multiple-choice comprehension questions in {language_for_template} script. Make questions appropriate for {user_cefr_level} level.
+6. Each question should have 4 options in {language_for_template} script, with one correct answer.
+7. Generate a creative, unique name for this passage in {language_for_template} script.
+8. Create a speaker profile with name (in {language_for_template} script), gender (MUST be ONLY "{preferred_gender}" to match the preferred speaker), age range, city (in {language_for_template} script), state/province (in {language_for_template} script), country (in {language_for_template} script), dialect description (in {language_for_template} script), and background/profession (in {language_for_template} script). All fields except gender must be in {language_for_template} script and should match the regional dialect and formality level specified. The gender field MUST be ONLY "{preferred_gender}" for voice selection.
+
+Return ONLY valid JSON in this exact format:
+- In JSON, if any string values contain quotes ("), they must be escaped as \\"
+- No markdown symbols (**, *, `) or formatting should be present
+- Return ONLY valid JSON, no text outside the JSON string
+
+{{
+    "passage_name": "passage name in {language_for_template} script",
+    "passage": "passage text in {language_for_template} script, separated by \\n\\n between paragraphs",
+    "questions": [
+        {{
+            "question": "question text in {language_for_template} script",
+            "options": ["option1", "option2", "option3", "option4"],
+            "correct": 0
+        }},
+        ... (4 more questions)
+    ],
+    "speaker_profile": {{
+        "name": "name in {language_for_template} script",
+        "gender": "{preferred_gender}",
+        "age": "age range (e.g., 25-35)",
+        "city": "city name in {language_for_template} script",
+        "state": "state/province name in {language_for_template} script",
+        "country": "country name in {language_for_template} script",
+        "dialect": "dialect description in {language_for_template} script",
+        "background": "profession/background in {language_for_template} script"
+    }}
+}}

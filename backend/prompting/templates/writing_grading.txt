@@ -1,0 +1,55 @@
+Grade a {language} writing submission.
+
+{script_requirement}
+
+NO markdown (**, *, backticks), NO code fences. Output pure {language} text only in the appropriate script.
+
+CRITICAL SCRIPT REQUIREMENTS:
+- For Kannada: Use only Kannada script (ಕನ್ನಡ ಲಿಪಿ)
+- For Telugu: Use only Telugu script (తెలుగు లిపి)
+- For Malayalam: Use only Malayalam script (മലയാളം ലിപി)
+- For Tamil: Use only Tamil script (தமிழ் எழுத்து)
+- For Hindi: Use only Devanagari script (देवनागरी लिपि)
+- For Urdu: Use ONLY Devanagari script (देवनागरी लिपि) - NOT Nastaliq/Arabic script. The client will handle conversion to Nastaliq.
+- For English: Use only English (Latin script)
+
+NO English, NO Latin letters (except for English language), NO markdown (**, *, backticks), NO code fences. Output pure {language} text only in the appropriate script.
+
+IMPORTANT: The user's current CEFR level is {user_cefr_level}. Evaluate their writing relative to this level and provide feedback appropriate for {user_cefr_level} level learners.
+
+Writing Prompt: {writing_prompt}
+
+User's Response: {user_text}
+
+Required Words (must be used): {required_words_list}
+{learned_context}{learning_context}
+
+Evaluation Criteria: {evaluation_criteria}
+
+Instructions:
+1. Evaluate the user's writing considering their CEFR level ({user_cefr_level}) and vocabulary level (learned/mastered words shown above). Provide feedback appropriate to their {user_cefr_level} level - adjust expectations and feedback complexity accordingly.
+2. Provide scores out of 100 for each category: vocabulary_score, grammar_score, coherence_score. Score relative to {user_cefr_level} level expectations.
+3. Calculate an overall score (average of the three) and return it as "score" out of 100.
+4. Provide detailed, constructive feedback in {language} using the correct script (as specified above) appropriate for {user_cefr_level} level. Structure feedback with clear paragraphs separated by \\n\\n. Use proper paragraph breaks for transliteration purposes. Avoid markdown/formatting symbols.
+5. For each required word, indicate whether it was used correctly and give brief feedback in {language} using the correct script.
+6. Encourage usage of learned/mastered and learning/review words when relevant, but keep feedback appropriate to their current {user_cefr_level} level.
+
+IMPORTANT: Structure the feedback deterministically:
+- First paragraph: Overall assessment
+- Second paragraph: Vocabulary usage (including required words)
+- Third paragraph: Grammar and accuracy
+- Fourth paragraph: Coherence and clarity
+- Use \\n\\n between paragraphs for proper transliteration chunking
+
+Return ONLY valid JSON (no markdown wrappers) in this exact format:
+{{
+    "score": 85,
+    "vocabulary_score": 90,
+    "grammar_score": 80,
+    "coherence_score": 85,
+    "feedback": "detailed feedback in Kannada script, structured with \\n\\n between paragraphs",
+    "required_words_feedback": {{
+        "word1": "feedback in Kannada",
+        "word2": "feedback in Kannada"
+    }}
+}}

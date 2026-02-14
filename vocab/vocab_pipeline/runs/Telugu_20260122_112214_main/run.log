@@ -1,0 +1,36 @@
+2026-01-22 11:22:14,175 [INFO] --- MODE: PREPARE (Fresh Translation) ---
+2026-01-22 11:22:14,175 [INFO] Created run folder: runs/Telugu_20260122_112214
+2026-01-22 11:22:14,175 [INFO] Input CSV: kannada-oxford-5000.csv
+2026-01-22 11:22:14,175 [INFO] Loaded Prompt: prompts/prompt_telugu.txt
+2026-01-22 11:22:14,191 [INFO] Generating batch requests...
+2026-01-22 11:22:14,306 [INFO] SUCCESS: Generated 396 batch requests in runs/Telugu_20260122_112214/batch_input.jsonl
+2026-01-22 11:24:40,484 [INFO] --- MODE: SUBMIT ---
+2026-01-22 11:24:40,484 [WARNING] Both GOOGLE_API_KEY and GEMINI_API_KEY are set. Using GOOGLE_API_KEY.
+2026-01-22 11:24:40,534 [INFO] Uploading file to Google GenAI...
+2026-01-22 11:24:40,949 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files "HTTP/1.1 200 OK"
+2026-01-22 11:24:42,273 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AJRbA5Vjvt_zFcGtPWG49KQgv255gZMTlpcp5c4xhGtdaox2XJ9B1lzLwr_RM61QGqwNKv5blkVdlvqPp122SdPHh3fLp9upyhcFFYZZKWKAlg&upload_protocol=resumable "HTTP/1.1 200 OK"
+2026-01-22 11:24:42,277 [INFO] Creating Batch Job with model gemini-2.5-flash...
+2026-01-22 11:24:43,314 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:batchGenerateContent "HTTP/1.1 200 OK"
+2026-01-22 11:24:43,319 [INFO] JOB STARTED: batches/efxwr1r86oegg6yv4cmaawtw1bmfnuctogca
+2026-01-22 11:31:00,897 [INFO] --- MODE: RETRIEVE ---
+2026-01-22 11:31:00,897 [WARNING] Both GOOGLE_API_KEY and GEMINI_API_KEY are set. Using GOOGLE_API_KEY.
+2026-01-22 11:31:01,265 [INFO] HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/batches/efxwr1r86oegg6yv4cmaawtw1bmfnuctogca "HTTP/1.1 200 OK"
+2026-01-22 11:31:01,267 [INFO] Status: JobState.JOB_STATE_PENDING
+2026-01-22 11:31:01,267 [INFO] Job still processing...
+2026-01-22 11:35:05,562 [INFO] --- MODE: RETRIEVE ---
+2026-01-22 11:35:05,563 [WARNING] Both GOOGLE_API_KEY and GEMINI_API_KEY are set. Using GOOGLE_API_KEY.
+2026-01-22 11:35:05,928 [INFO] HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/batches/efxwr1r86oegg6yv4cmaawtw1bmfnuctogca "HTTP/1.1 200 OK"
+2026-01-22 11:35:05,934 [INFO] Status: JobState.JOB_STATE_PENDING
+2026-01-22 11:35:05,934 [INFO] Job still processing...
+2026-01-22 12:09:25,990 [INFO] --- MODE: RETRIEVE ---
+2026-01-22 12:09:25,990 [WARNING] Both GOOGLE_API_KEY and GEMINI_API_KEY are set. Using GOOGLE_API_KEY.
+2026-01-22 12:09:26,348 [INFO] HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/batches/efxwr1r86oegg6yv4cmaawtw1bmfnuctogca "HTTP/1.1 200 OK"
+2026-01-22 12:09:26,353 [INFO] Status: JobState.JOB_STATE_SUCCEEDED
+2026-01-22 12:09:26,353 [INFO] Job Complete. Downloading results...
+2026-01-22 12:09:26,354 [INFO] Retrieving content for: files/batch-efxwr1r86oegg6yv4cmaawtw1bmfnuctogca
+2026-01-22 12:09:26,445 [INFO] HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/files/batch-efxwr1r86oegg6yv4cmaawtw1bmfnuctogca:download?alt=media "HTTP/1.1 302 Found"
+2026-01-22 12:09:26,805 [INFO] HTTP Request: GET https://generativelanguage.googleapis.com/download/v1beta/files/batch-efxwr1r86oegg6yv4cmaawtw1bmfnuctogca:download?alt=media "HTTP/1.1 200 OK"
+2026-01-22 12:09:27,361 [INFO] Saved to runs/Telugu_20260122_112214/batch_output.jsonl
+2026-01-22 12:09:54,786 [INFO] --- MODE: FINALIZE ---
+2026-01-22 12:09:54,788 [WARNING] Skipping malformed line: Expecting property name enclosed in double quotes: line 100 column 1 (char 2403)
+2026-01-22 12:09:57,576 [INFO] ✅ Final CSV created: runs/Telugu_20260122_112214/final_vocab.csv

@@ -1,0 +1,39 @@
+﻿id,english_word,word_class,level,verb_transitivity,hindi_translation,urdu_translation,hindi_transliteration,urdu_transliteration
+0,"(It) is not (existence, location negation)",auxiliary verb,a1,N/A,नहीं है,नहीं है,nahīṁ hai,nahīṁ hai
+1,"(It) is not (identity, copula negation)",auxiliary verb,a1,N/A,नहीं है,नहीं है,nahīṁ hai,nahīṁ hai
+2,a (meaning one),indefinite article,a1,N/A,एक,एक,ēk,ēk
+3,a few,determiner,a1,N/A,कुछ / थोड़े से,कुछ / थोड़े से,kuch / thōṛē sē,kuch / thōṛē sē
+4,a few (some),adjective,a1,N/A,कुछ / थोड़े,कुछ / थोड़े,kuch / thōṛē,kuch / thōṛē
+5,a lot (a large amount/quantity),determiner,a1,N/A,बहुत सारा / ढेर सारा,बहुत सारा / ढेर सारा,bahut sārā / ḍhēr sārā,bahut sārā / ḍhēr sārā
+6,"a lot (adverbial degree, very much)",adverb,a1,N/A,बहुत / काफ़ी,बहुत / काफ़ी,bahut / kāfī,bahut / kāfī
+7,"a lot (quantifier, much/many)",adverb,a1,N/A,बहुत / ढेर सारा,बहुत / ढेर सारा,bahut / ḍhēr sārā,bahut / ḍhēr sārā
+8,about (approximately),preposition,a1,N/A,लगभग / क़रीब,लगभग / क़रीब,lagabhag / qarīb,lagabhag / qarīb
+9,about (concerning a topic),preposition,a1,N/A,के बारे में / विषय में,के बारे में / बाबत / मुतअल्लिक़,kē bārē mēṁ / viṣay mēṁ,kē bārē mēṁ / bābat / mutaalliq
+10,about (on the verge of doing),preposition,a1,nan,वाला / के कगार पर,वाला / के कगार पर,vālā / kē kagār par,vālā / kē kagār par
+11,about to (do X),preposition,a1,nan,वाला / के कगार पर,वाला / के कगार पर,vālā / kē kagār par,vālā / kē kagār par
+12,above,preposition,a1,nan,ऊपर / के ऊपर / से ऊपर,ऊपर / के ऊपर / से ऊपर,ūpar / kē ūpar / sē ūpar,ūpar / kē ūpar / sē ūpar
+13,accounting,noun,a1,nan,हिसाब-किताब (m) / लेखा (m) / लेखांकन (m),हिसाब-किताब (m) / मुहासिबा (m) / बही-खाता (m),hisāb-kitāb (m) / lēkhā (m) / lēkhāṁkan (m),hisāb-kitāb (m) / muhāsibā (m) / bahī-khātā (m)
+14,across (moving from one side to the other),preposition,a1,nan,पार / के पार / के उस पार,पार / के पार / के उस पार,pār / kē pār / kē us pār,pār / kē pār / kē us pār
+15,across (on the opposite side),preposition,a1,nan,उस पार / के उस पार / सामने,उस पार / के उस पार / सामने,us pār / kē us pār / sāmanē,us pār / kē us pār / sāmanē
+16,across (to the opposite side),adverb,a1,nan,उस पार / पार,उस पार / पार,us pār / pār,us pār / pār
+17,action (a specific deed or act),noun,a1,nan,काम (m) / कार्य (m) / कर्म (m),काम (m) / अमल (m) / फ़ेल (m),kām (m) / kāry (m) / karm (m),kām (m) / amal (m) / fēl (m)
+18,action (general activity or step),noun,a1,nan,क़दम (m) / कार्रवाई (f) / क्रिया (f),क़दम (m) / कार्रवाई (f) / अमल (m),qadam (m) / kārravāī (f) / kriyā (f),qadam (m) / kārravāī (f) / amal (m)
+19,activity (general state of action),noun,a1,nan,गतिविधि (f) / क्रियाकलाप (m) / सक्रियता (f),सरगर्मी (f) / गतिविधि (f) / क्रियाकलाप (m),gatividhi (f) / kriyākalāp (m) / sakriyatā (f),saragarmī (f) / gatividhi (f) / kriyākalāp (m)
+20,activity (task or event),noun,a1,nan,काम (m) / गतिविधि (f) / क्रियाकलाप (m),काम (m) / सरगर्मी (f) / फ़े'अल (m) / अमल (m),kām (m) / gatividhi (f) / kriyākalāp (m),kām (m) / saragarmī (f) / fē'al (m) / amal (m)
+21,actress,noun,a1,nan,ऐक्ट्रेस (f) / अभिनेत्री (f) / अदाकारा (f),ऐक्ट्रेस (f) / अदाकारा (f) / फ़नकारा (f),aikṭrēs (f) / abhinētrī (f) / adākārā (f),aikṭrēs (f) / adākārā (f) / fanakārā (f)
+22,"adult (person, polite reference)",noun,a1,nan,बालिग़ (m) / वयस्क (m) / प्रौढ़ (m),बालिग़ (m) / सयाना (m) / अहल-ए-शुऊर (m),bāliġa (m) / vayask (m) / prauṛh (m),bāliġa (m) / sayānā (m) / ahal-ē-śuūr (m)
+23,advice (authoritative guidance),noun,a1,nan,सलाह (f) / परामर्श (m) / निर्देश (m) / उपदेश (m),सलाह (f) / मशवरा (m) / हिदायत (f) / नसीहत (f),salāh (f) / parāmarśa (m) / nirdēśa (m) / upadēśa (m),salāh (f) / maśavarā (m) / hidāyat (f) / nasīhat (f)
+24,"advice (guidance, counsel)",noun,a1,nan,सलाह (f) / राय (f) / परामर्श (m) / उपदेश (m),सलाह (f) / मशवरा (m) / नसीहत (f) / हिदायत (f),salāh (f) / rāy (f) / parāmarśa (m) / upadēśa (m),salāh (f) / maśavarā (m) / nasīhat (f) / hidāyat (f)
+25,"afraid (apologetic, reluctant)",adjective,a1,nan,हिचकिचाता हुआ / अनिच्छुक / माफ़ी चाहता हुआ,हिचकिचाता हुआ / झिझकता हुआ / मा'ज़िरत ख़्वाह / क़ासिर,hicakicātā huā / anicchuk / māfī cāhatā huā,hicakicātā huā / jhijhakatā huā / mā'zirat k͟hvāh / qāsir
+26,after (following time or event),preposition,a1,nan,के बाद / उपरांत / पश्चात,के बाद / बाद अज़ / पश्चात्,kē bād / uparāṁt / paścāt,kē bād / bād az / paścāt
+27,"after (upon completion, sequence)",preposition,a1,nan,के बाद / उपरांत / पश्चात,के बाद / बाद अज़ / पश्चात्,kē bād / uparāṁt / paścāt,kē bād / bād az / paścāt
+28,afternoon,noun,a1,nan,दोपहर (f) / दोपहर के बाद (m) / अपराह्न (m),दोपहर (f) / ज़ुहर (f) / बाद-दोपहर (f),dōpahar (f) / dōpahar kē bād (m) / aparāhn (m),dōpahar (f) / zuhar (f) / bād-dōpahar (f)
+29,again (one more time),adverb,a1,nan,फिर से / दोबारा / पुनः,फिर से / दोबारा / मुकर्रर,phir sē / dōbārā / punaḥ,phir sē / dōbārā / mukarrar
+30,ago,adverb,a1,N/A,पहले / पूर्व,पहले / क़ब्ल,pahalē / pūrv,pahalē / qabl
+31,air (travel),noun,a1,N/A,हवाई यात्रा (f) / वायु यात्रा (f),हवाई सफ़र (m) / हवाई परवाज़ (f),havāī yātrā (f) / vāyu yātrā (f),havāī safar (m) / havāī paravāz (f)
+32,airport,noun,a1,N/A,हवाई अड्डा (m) / विमानपत्तन (m),हवाई अड्डा (m) / हवाई जहाज़ का अड्डा (m),havāī aḍḍā (m) / vimānapattan (m),havāī aḍḍā (m) / havāī jahāz kā aḍḍā (m)
+33,all (entire duration or quantity),determiner,a1,N/A,सारा / पूरा / समस्त,सारा / पूरा / तमाम / कुल,sārā / pūrā / samast,sārā / pūrā / tamām / kul
+34,all (entire quantity/duration),determiner,a1,N/A,सारा / पूरा / समस्त,सारा / पूरा / तमाम / कुल,sārā / pūrā / samast,sārā / pūrā / tamām / kul
+35,"all (people, everyone)",pronoun,a1,N/A,सब / सभी / हर कोई,सब / सभी / हर कोई / तमाम लोग,sab / sabhī / har kōī,sab / sabhī / har kōī / tamām lōg
+36,also,adverb,a1,N/A,भी / और / इसके अलावा,भी / और / इसके अलावा,bhī / aur / isakē alāvā,bhī / aur / isakē alāvā
+37,always (at all times),adverb,a1,N/A,हमेशा / सदा / सदैव,हमेशा / हर वक़्त / हरदम / मुस्तक़िल,hamēśā / sadā / sadaiv,hamēśā / har vaqt / haradam / mustaqil

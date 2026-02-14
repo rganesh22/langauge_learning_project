@@ -1,0 +1,30 @@
+2026-01-25 16:08:38,106 [INFO] --- MODE: PREPARE (Fresh Translation) ---
+2026-01-25 16:08:38,106 [INFO] Created run folder: runs/Hindi_Urdu_20260125_160838
+2026-01-25 16:08:38,106 [INFO] Input CSV: hindu_urdu_truly_missing.csv
+2026-01-25 16:08:38,106 [INFO] Loaded Prompt: prompts/prompt_hindi_urdu.txt
+2026-01-25 16:08:38,109 [INFO] Generating batch requests...
+2026-01-25 16:08:38,110 [INFO] SUCCESS: Generated 2 batch requests in runs/Hindi_Urdu_20260125_160838/batch_input.jsonl
+2026-01-25 16:08:43,923 [INFO] --- MODE: SUBMIT ---
+2026-01-25 16:08:43,923 [WARNING] Both GOOGLE_API_KEY and GEMINI_API_KEY are set. Using GOOGLE_API_KEY.
+2026-01-25 16:08:43,971 [INFO] Uploading file to Google GenAI...
+2026-01-25 16:08:44,437 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files "HTTP/1.1 200 OK"
+2026-01-25 16:08:45,404 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AJRbA5XD_WlTGPZbkagHe8AQx4JvkszrnHrhV8ijdIhjSY5UiCYQC7Xre3DdRzwUBYApsXtEol-9p3-pN8Gz0z26HfTYGzavmjwUYCpOGEb7K5U&upload_protocol=resumable "HTTP/1.1 200 OK"
+2026-01-25 16:08:45,405 [INFO] Creating Batch Job with model gemini-2.5-flash...
+2026-01-25 16:08:46,130 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:batchGenerateContent "HTTP/1.1 200 OK"
+2026-01-25 16:08:46,134 [INFO] JOB STARTED: batches/b53ru136mpylb4k61kokg4bp0akhtpj7z5tz
+2026-01-25 16:13:52,429 [INFO] --- MODE: RETRIEVE ---
+2026-01-25 16:13:52,429 [WARNING] Both GOOGLE_API_KEY and GEMINI_API_KEY are set. Using GOOGLE_API_KEY.
+2026-01-25 16:13:52,629 [INFO] HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/batches/b53ru136mpylb4k61kokg4bp0akhtpj7z5tz "HTTP/1.1 200 OK"
+2026-01-25 16:13:52,631 [INFO] Status: JobState.JOB_STATE_RUNNING
+2026-01-25 16:13:52,631 [INFO] Job still processing...
+2026-01-25 16:35:42,614 [INFO] --- MODE: RETRIEVE ---
+2026-01-25 16:35:42,614 [WARNING] Both GOOGLE_API_KEY and GEMINI_API_KEY are set. Using GOOGLE_API_KEY.
+2026-01-25 16:35:42,813 [INFO] HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/batches/b53ru136mpylb4k61kokg4bp0akhtpj7z5tz "HTTP/1.1 200 OK"
+2026-01-25 16:35:42,816 [INFO] Status: JobState.JOB_STATE_SUCCEEDED
+2026-01-25 16:35:42,816 [INFO] Job Complete. Downloading results...
+2026-01-25 16:35:42,816 [INFO] Retrieving content for: files/batch-b53ru136mpylb4k61kokg4bp0akhtpj7z5tz
+2026-01-25 16:35:42,968 [INFO] HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/files/batch-b53ru136mpylb4k61kokg4bp0akhtpj7z5tz:download?alt=media "HTTP/1.1 302 Found"
+2026-01-25 16:35:43,285 [INFO] HTTP Request: GET https://generativelanguage.googleapis.com/download/v1beta/files/batch-b53ru136mpylb4k61kokg4bp0akhtpj7z5tz:download?alt=media "HTTP/1.1 200 OK"
+2026-01-25 16:35:43,291 [INFO] Saved to runs/Hindi_Urdu_20260125_160838/batch_output.jsonl
+2026-01-25 16:35:47,503 [INFO] --- MODE: FINALIZE ---
+2026-01-25 16:35:47,574 [INFO] ✅ Final CSV created: runs/Hindi_Urdu_20260125_160838/final_vocab.csv

@@ -1,0 +1,1053 @@
+﻿id,english_word,word_class,level,verb_transitivity,kannada_translation,transliteration
+0,"cannot (be allowed to , prohibited)",modal verb,a1,N/A,ಅನುಮತಿ ಇಲ್ಲ / ನಿಷಿದ್ಧ,anumati illa / niṣiddha
+1,circulation (publication count),noun,c1,N/A,ಪ್ರಸಾರ / ಪ್ರಸಾರದ ಸಂಖ್ಯೆ,prasāra / prasārada saṁkhye
+2,circumstance,noun,b2,N/A,ಪರಿಸ್ಥಿತಿ / ಸಂದರ್ಭ / ಸನ್ನಿವೇಶ / ಸ್ಥಿತಿ,paristhiti / saṁdarbha / sannivēśa / sthiti
+3,to cite,verb,b2,transitive,ಉಲ್ಲೇಖಿಸು / ಪ್ರಸ್ತಾಪಿಸು,ullēkhisu / prastāpisu
+4,"citizen (of a city, town, municipal focus)",noun,b2,N/A,ನಾಗರಿಕ / ನಗರವಾಸಿ / ಪಟ್ಟಣವಾಸಿ / ಪೌರ,nāgarika / nagaravāsi / paṭṭaṇavāsi / paura
+5,citizenship,noun,c1,N/A,ಪೌರತ್ವ / ನಾಗರಿಕತ್ವ,pauratva / nāgarikatva
+6,city,noun,a1,N/A,ನಗರ / ಮಹಾನಗರ,nagara / mahānagara
+7,civic (relating to citizen duty),adjective,c1,N/A,ನಾಗರಿಕ / ಪೌರ,nāgarika / paura
+8,civic (relating to city administration),adjective,c1,N/A,ಪೌರಸಭೆಯ / ಮಹಾನಗರ ಪಾಲಿಕೆಯ / ನಾಗರಿಕ,paurasabheya / mahānagara pālikeya / nāgarika
+9,civil (polite behavior),adjective,b2,N/A,ಸಭ್ಯ / ವಿನಯದ / ಮರ್ಯಾದೆಯುಳ್ಳ,sabhya / vinayada / maryādeyuḷḷa
+10,"civil (relating to citizens, non-military)",adjective,b2,N/A,ನಾಗರಿಕ,nāgarika
+11,civil (legal context),adjective,b2,N/A,ಸಿವಿಲ್ / ನಾಗರಿಕ / ದಿವಾನಿ,sivil / nāgarika / divāni
+12,civilian (person),adjective,c1,N/A,ನಾಗರಿಕ,nāgarika
+13,civilian,noun,c1,N/A,ನಾಗರಿಕ,nāgarika
+14,civilization,noun,b2,N/A,ನಾಗರಿಕತೆ,nāgarikate
+15,claim (formal demand),noun,b1,N/A,ಹಕ್ಕು / ಬೇಡಿಕೆ,hakku / bēḍike
+16,insurance claim,noun,b1,N/A,ವಿಮಾ ಹಕ್ಕು,vimā hakku
+17,claim (assertion of truth),noun,b1,N/A,ವಾದ / ಹೇಳಿಕೆ / ಪ್ರತಿಪಾದನೆ,vāda / hēḷike / pratipādane
+18,"to claim (right, possession)",verb,b1,transitive,ಹಕ್ಕು ಸಾಧಿಸು / ಬೇಡಿಕೆ ಇಡು,hakku sādhisu / bēḍike iḍu
+19,to claim (assert a fact),verb,b1,transitive,ವಾದಿಸು / ಪ್ರತಿಪಾದಿಸು,vādisu / pratipādisu
+20,to clarify,verb,b2,transitive,ಸ್ಪಷ್ಟೀಕರಿಸು / ವಿವರಿಸು,spaṣṭīkarisu / vivarisu
+21,clarity,noun,c1,N/A,ಸ್ಪಷ್ಟತೆ / ನಿಚ್ಚಳತೆ / ತೆಳುಪು,spaṣṭate / niccaḷate / teḷupu
+22,clash (of colors or styles),noun,c1,N/A,ಹೊಂದಾಣಿಕೆಯಾಗದಿರುವುದು,hoṁdāṇikeyāgadiruvudu
+23,clash (scheduling conflict),noun,c1,N/A,ಸಮಯದ ಸಂಘರ್ಷ / ಕಾಲದ ಘರ್ಷಣೆ,samayada saṁgharṣa / kālada gharṣaṇe
+24,"class (lesson, session)",noun,a1,N/A,ತರಗತಿ / ವರ್ಗ,taragati / varga
+25,class (grade level),noun,a1,N/A,ತರಗತಿ / ವರ್ಗ,taragati / varga
+26,"classic (standard-setting, high quality)",adjective,b2,N/A,ಶ್ರೇಷ್ಠ / ಸಾರ್ವಕಾಲಿಕ / ಉತ್ತಮ,śrēṣṭha / sārvakālika / uttama
+27,classic (relating to antiquity or formal study),adjective,b2,N/A,ಶಾಸ್ತ್ರೀಯ,śāstrīya
+28,classic (literary or artistic work),noun,b2,N/A,ಶ್ರೇಷ್ಠ ಕೃತಿ / ಮಹಾನ್ ಕೃತಿ,śrēṣṭha kr̥ti / mahān kr̥ti
+29,classic (timeless style or item),noun,b2,N/A,ಕ್ಲಾಸಿಕ್ / ಸಾರ್ವಕಾಲಿಕ ವಸ್ತು,klāsik / sārvakālika vastu
+30,classical,adjective,a2,N/A,ಶಾಸ್ತ್ರೀಯ,śāstrīya
+31,classification,noun,c1,N/A,ವರ್ಗೀಕರಣ,vargīkaraṇa
+32,to classify,verb,b2,transitive,ವರ್ಗೀಕರಿಸು,vargīkarisu
+33,classroom,noun,a1,N/A,ತರಗತಿ ಕೋಣೆ,taragati kōṇe
+34,clause (grammatical unit),noun,b1,N/A,ಉಪವಾಕ್ಯ,upavākya
+35,"clause (provision, condition)",noun,b1,N/A,ಶರತ್ತು / ವಿಧಿ,śarattu / vidhi
+36,to clean,verb,a1,transitive,ಸ್ವಚ್ಛಗೊಳಿಸು / ಸ್ವಚ್ಛ ಮಾಡು / ಶುದ್ಧಗೊಳಿಸು,svacchagoḷisu / svaccha māḍu / śuddhagoḷisu
+37,"to wipe clean (surface, spill)",verb,a1,transitive,ಒರೆಸು,oresu
+38,"cleaning (purification, making pure)",noun,a2,N/A,ಶುದ್ಧೀಕರಣ,śuddhīkaraṇa
+39,clear (transparent),adjective,a2,N/A,ಪಾರದರ್ಶಕ / ನಿರ್ಮಲ / ಸ್ವಚ್ಛ,pāradarśaka / nirmala / svaccha
+40,clear (explicit),adjective,a2,N/A,ಸ್ಪಷ್ಟ,spaṣṭa
+41,"to clear (remove clutter, empty)",verb,b1,transitive,ತೆರವುಗೊಳಿಸು / ತೆಗೆದು ಹಾಕು / ಖಾಲಿ ಮಾಡು,teravugoḷisu / tegedu hāku / khāli māḍu
+42,"to clear (become clear, go away)",verb,b1,intransitive,ಪರಿಹಾರವಾಗು / ನಿವಾರಣೆಯಾಗು / ಸ್ಪಷ್ಟವಾಗು,parihāravāgu / nivāraṇeyāgu / spaṣṭavāgu
+43,"to clear (to approve, pass)",verb,b2,transitive,ಅನುಮೋದಿಸು / ಮಂಜೂರು ಮಾಡು,anumōdisu / maṁjūru māḍu
+44,clearly (evidently),adverb,a2,N/A,ಸ್ಪಷ್ಟವಾಗಿ,spaṣṭavāgi
+45,clerk (government administrative role),noun,b2,N/A,ಕರಣಿಕ,karaṇika
+46,"clerk (general, older term)",noun,b2,N/A,ಗುಮಾಸ್ತ,gumāsta
+47,clever (cunning),adjective,a2,N/A,ಕುತಂತ್ರಿ / ಜಾಣ,kutaṁtri / jāṇa
+48,click,noun,b1,N/A,ಕ್ಲಿಕ್,klik
+49,to click (a mouse button),verb,b1,transitive,ಕ್ಲಿಕ್ ಮಾಡು,klik māḍu
+53,to come (respectful address),verb,a1,intransitive,ಬನ್ನಿ / ದಯಮಾಡಿ ಬನ್ನಿ,banni / dayamāḍi banni
+71,"black (illicit, e.g., black market/money)",adjective,a2,N/A,ಕಪ್ಪು,kappu
+72,"blank (empty, not filled)",adjective,a2,N/A,ಖಾಲಿ / ಶೂನ್ಯ,khāli / śūnya
+74,to answer (a telephone),verb,a1,transitive,ಫೋನ್ ತೆಗೆ / ಕರೆ ಸ್ವೀಕರಿಸು / ರಿಸೀವ್ ಮಾಡು,phōn tege / kare svīkarisu / risīv māḍu
+74,to answer (a door),verb,a1,transitive,ಬಾಗಿಲು ತೆಗೆ,bāgilu tege
+75,"any (zero quantity, typically negative context)",pronoun,a1,N/A,ಏನೂ,ēnū
+76,"any more (time, cessation)",adverb,a2,N/A,ಇನ್ನು,innu
+77,anywhere (in questions or possibilities),adverb,a2,N/A,ಎಲ್ಲಾದರೂ,ellādarū
+79,anywhere (in negative statements),pronoun,a2,N/A,ಎಲ್ಲೂ,ellū
+80,appetite (for food),noun,c1,N/A,ಹಸಿವು,hasivu
+81,apple,noun,a1,N/A,ಸೇಬು,sēbu
+82,to be born,verb,a1,intransitive,ಹುಟ್ಟು,huṭṭu
+83,bread (Western style),noun,a1,N/A,ಬ್ರೆಡ್,breḍ
+84,"bread (flatbread, roti)",noun,a1,N/A,ರೊಟ್ಟಿ / ಚಪಾತಿ,roṭṭi / capāti
+85,"to break (a rule, law, or promise)",verb,a1,transitive,ಉಲ್ಲಂಘಿಸು / ಮೀರು / ಮುರಿ,ullaṁghisu / mīru / muri
+86,baseball (the ball or sport),noun,a2,N/A,ಬೇಸ್ಬಾಲ್,bēsbāl
+87,"basic (simple, fundamental)",adjective,b1,N/A,ಮೂಲಭೂತ / ಪ್ರಾಥಮಿಕ / ಸರಳ,mūlabhūta / prāthamika / saraḷa
+88,basketball (the ball or sport),noun,a2,N/A,ಬಾಸ್ಕೇಟ್ಬಾಲ್,bāskēṭbāl
+89,"to be (to exist, to be present, to be located)",verb,a1,intransitive,ಇರು,iru
+90,"to be (to become, to happen, to define identity)",verb,a1,intransitive,ಆಗು,āgu
+94,"is not (identity negation, copula)",auxiliary verb,a1,N/A,ಅಲ್ಲ,alla
+95,is not (existence/location negation),auxiliary verb,a1,N/A,ಇಲ್ಲ,illa
+96,bear (animal),noun,a2,N/A,ಕರಡಿ,karaḍi
+97,beef,noun,a2,N/A,ದನದ ಮಾಂಸ,danada māṁsa
+98,beer,noun,a1,N/A,ಬಿಯರ್,biyar
+99,"before (time, sequence)",conjunction,a2,N/A,ಮುಂಚೆ / ಮೊದಲು / ಪೂರ್ವ,muṁce / modalu / pūrva
+103,advertising,noun,a2,N/A,ಜಾಹೀರಾತು / ಪ್ರಚಾರ,jāhīrātu / pracāra
+106,"ahead (in front, forward)",adverb,b1,N/A,ಮುಂದೆ / ಮುಂಭಾಗದಲ್ಲಿ,muṁde / muṁbhāgadalli
+107,"go ahead (proceed, permission)",verb,b1,intransitive,ಸಾಗು / ಮುಂದುವರಿ,sāgu / muṁduvari
+108,"to aid (support, assist)",verb,b2,transitive,ಬೆಂಬಲಿಸು / ಸಹಾಯ ಮಾಡು / ನೆರವು ನೀಡು,beṁbalisu / sahāya māḍu / neravu nīḍu
+110,alertness (vigilance),noun,c1,N/A,ಎಚ್ಚರಿಕೆ / ಜಾಗರೂಕತೆ,eccarike / jāgarūkate
+111,"to alert (warn, notify)",verb,b2,transitive,ಸೂಚಿಸು / ಎಚ್ಚರಿಸು / ತಿಳಿಸು,sūcisu / eccarisu / tiḷisu
+112,to align (intransitive),verb,c1,intransitive,ಸರಿಹೊಂದು / ಹೊಂದಾಣಿಕೆ ಆಗು / ಸಮನ್ವಯವಾಗು,sarihoṁdu / hoṁdāṇike āgu / samanvayavāgu
+113,"alike (similar, adjective)",adjective,c1,N/A,ಒಂದೇ ತರಹದ / ಸಮಾನವಾದ / ಸರಿಸಮವಾದ,oṁdē tarahada / samānavāda / sarisamavāda
+114,"alike (equally, adverb)",adverb,c1,N/A,ಹಾಗೆಯೇ / ಸಮಾನವಾಗಿ / ಒಂದೇ ತರಹ,hāgeyē / samānavāgi / oṁdē taraha
+125,cent (unit of land area),noun,a1,N/A,ಸೆಂಟ್,seṁṭ
+126,"centre (institution, hub)",noun,a1,N/A,ಕೇಂದ್ರ,kēṁdra
+127,to centre (to place in the middle),verb,b1,transitive,ಮಧ್ಯದಲ್ಲಿ ಇಡು / ನಡುವೆ ಇಡು,madhyadalli iḍu / naḍuve iḍu
+128,"to centre (to focus, to revolve around)",verb,b1,intransitive,ಕೇಂದ್ರೀಕರಿಸು,kēṁdrīkarisu
+129,century (100 years),noun,a1,N/A,ಶತಮಾನ / ನೂರು ವರ್ಷ,śatamāna / nūru varṣa
+130,century (cricket score),noun,a1,N/A,ಶತಕ,śataka
+131,"ceremony (event, function)",noun,b1,N/A,ಕಾರ್ಯಕ್ರಮ / ಸಮಾರಂಭ,kāryakrama / samāraṁbha
+132,"ceremony (religious rite, ritual)",noun,b1,N/A,ಸಮಾರಂಭ / ಆಚರಣೆ / ವಿಧಿ,samāraṁbha / ācaraṇe / vidhi
+133,"certain (sure, confident)",adjective,a2,N/A,ಖಚಿತ / ಖಂಡಿತ,khacita / khaṁḍita
+134,certain (specific but unnamed),adjective,a2,N/A,ನಿರ್ದಿಷ್ಟ / ಒಂದು,nirdiṣṭa / oṁdu
+135,"certainly (as a positive response, yes)",adverb,a2,N/A,ಖಂಡಿತ / ಖಚಿತವಾಗಿ,khaṁḍita / khacitavāgi
+136,certainty,noun,b2,N/A,ಖಚಿತತೆ,khacitate
+137,certificate,noun,b2,N/A,ಪ್ರಮಾಣ ಪತ್ರ,pramāṇa patra
+138,"chain (physical object, like jewelry or security)",noun,b1,N/A,ಸರಪಳಿ / ಸಂಕಲೆ,sarapaḷi / saṁkale
+139,chain (business or sequence of stores),noun,b1,N/A,ಸರಣಿ,saraṇi
+140,to chain (to link sequentially),verb,b2,transitive,ಜೋಡಿಸು / ಸೇರಿಸು,jōḍisu / sērisu
+141,chair (position of authority),noun,a2,N/A,ಅಧ್ಯಕ್ಷ ಸ್ಥಾನ / ಪೀಠ,adhyakṣa sthāna / pīṭha
+142,to chair,verb,b2,transitive,ಅಧ್ಯಕ್ಷತೆ ವಹಿಸು,adhyakṣate vahisu
+143,chairperson,noun,b2,N/A,ಅಧ್ಯಕ್ಷರು / ಸಭಾಪತಿ,adhyakṣaru / sabhāpati
+144,chair (committee head),noun,b2,N/A,ಅಧ್ಯಕ್ಷರು / ಮುಖ್ಯಸ್ಥರು,adhyakṣaru / mukhyastharu
+145,challenge (formal objection),noun,b2,N/A,ಆಕ್ಷೇಪಣೆ / ವಿರೋಧ,ākṣēpaṇe / virōdha
+146,"to challenge (to question a claim, decision)",verb,b2,transitive,ಆಕ್ಷೇಪಿಸು / ಪ್ರಶ್ನಿಸು,ākṣēpisu / praśnisu
+147,challenging (demanding effort),adjective,b2,N/A,ಸವಾಲಿನ / ಶ್ರಮದಾಯಕ,savālina / śramadāyaka
+148,challenging (very difficult),adjective,b2,N/A,ಕಠಿಣವಾದ / ಕಷ್ಟಕರವಾದ,kaṭhiṇavāda / kaṣṭakaravāda
+149,chamber (legislative assembly),noun,c1,N/A,ಸದನ / ಸಭೆ,sadana / sabhe
+150,chamber (internal cavity),noun,c1,N/A,ಕುಹರ / ಪೊಳ್ಳು,kuhara / poḷḷu
+151,chamber (formal room),noun,c1,N/A,ಸದನ / ಸಭೆ / ಕೋಣೆ,sadana / sabhe / kōṇe
+152,champion (advocate),noun,b1,N/A,ಸಮರ್ಥಕ / ಪ್ರತಿಪಾದಕ / ಬೆಂಬಲಿಗ,samarthaka / pratipādaka / beṁbaliga
+153,championship (the event),noun,b2,N/A,ಪಂದ್ಯಾವಳಿ / ಚಾಂಪಿಯನ್‌ಶಿಪ್ / ಸ್ಪರ್ಧೆ,paṁdyāvaḷi / cāṁpiyanśip / spardhe
+154,chance (opportunity),noun,a2,N/A,ಅವಕಾಶ / ಸಂದರ್ಭ / ಸುಸಂದರ್ಭ,avakāśa / saṁdarbha / susaṁdarbha
+155,chance (probability),noun,a2,N/A,ಸಾಧ್ಯತೆ / ಸಂಭವನೀಯತೆ / ಅವಕಾಶ,sādhyate / saṁbhavanīyate / avakāśa
+156,change (alteration),noun,a1,N/A,ಬದಲಾವಣೆ / ಪರಿವರ್ತನೆ / ಮಾರ್ಪಾಡು,badalāvaṇe / parivartane / mārpāḍu
+157,change (money remainder),noun,a1,N/A,ಚಿಲ್ಲರೆ / ಉಳಿದ ಹಣ,cillare / uḷida haṇa
+158,"to change (state, condition)",verb,a1,intransitive,ಬದಲಾಗು / ಮಾರ್ಪಡು,badalāgu / mārpaḍu
+159,"to change (alter, replace something)",verb,a1,transitive,ಬದಲಾಯಿಸು / ಮಾರ್ಪಡಿಸು / ಪರಿವರ್ತಿಸು,badalāyisu / mārpaḍisu / parivartisu
+160,channel (television station),noun,b1,N/A,ವಾಹಿನಿ / ಚಾನೆಲ್,vāhini / cānel
+161,channel (waterway),noun,b1,N/A,ಕಾಲುವೆ / ನಾಲೆ / ಹಳ್ಳ,kāluve / nāle / haḷḷa
+162,channel (means of communication),noun,b1,N/A,ಮಾಧ್ಯಮ / ಮಾರ್ಗ,mādhyama / mārga
+163,chaos (anarchy),noun,c1,N/A,ಅವ್ಯವಸ್ಥೆ / ಅರಾಜಕತೆ / ಗೊಂದಲ,avyavasthe / arājakate / goṁdala
+164,chapter (period of time),noun,b1,N/A,ಹಂತ / ಘಟ್ಟ / ಅವಧಿ,haṁta / ghaṭṭa / avadhi
+165,"character (personality, integrity)",noun,a2,N/A,ವ್ಯಕ್ತಿತ್ವ / ನಡತೆ / ಗುಣ,vyaktitva / naḍate / guṇa
+166,character (role in fiction),noun,a2,N/A,ಪಾತ್ರ / ಕಥಾಪಾತ್ರ,pātra / kathāpātra
+167,characteristic (quality or feature),adjective,b2,N/A,ವಿಶಿಷ್ಟವಾದ / ಲಕ್ಷಣದ / ಗುಣಲಕ್ಷಣದ,viśiṣṭavāda / lakṣaṇada / guṇalakṣaṇada
+168,characteristic,noun,b2,N/A,ಲಕ್ಷಣ / ಗುಣ / ವೈಶಿಷ್ಟ್ಯ,lakṣaṇa / guṇa / vaiśiṣṭya
+169,to characterize (to describe the features of),verb,c1,transitive,ವಿವರಿಸು / ವರ್ಣಿಸು,vivarisu / varṇisu
+170,to characterize (to be the distinguishing feature of),verb,c1,transitive,ಗುರುತಿಸು / ವೈಶಿಷ್ಟ್ಯಗೊಳಿಸು,gurutisu / vaiśiṣṭyagoḷisu
+171,"charge (fee, cost)",noun,b1,N/A,ಶುಲ್ಕ / ಬೆಲೆ / ದರ,śulka / bele / dara
+172,charge (accusation),noun,b1,N/A,ಆರೋಪ / ದೂರು / ಆಪಾದನೆ,ārōpa / dūru / āpādane
+173,"charge (responsibility, duty)",noun,b1,N/A,ಜವಾಬ್ದಾರಿ / ಉಸ್ತುವಾರಿ / ಕರ್ತವ್ಯ,javābdāri / ustuvāri / kartavya
+174,charge (electrical state),noun,b1,N/A,ವಿದ್ಯುತ್ ಆವೇಶ / ಆವೇಶ,vidyut āvēśa / āvēśa
+175,"to charge (a battery, device)",verb,b1,transitive,ಚಾರ್ಜ್ ಮಾಡು / ಶಕ್ತಿ ತುಂಬು,cārj māḍu / śakti tuṁbu
+176,to breed,verb,c1,transitive,ಸಂತಾನೋತ್ಪತ್ತಿ ಮಾಡು,saṁtānōtpatti māḍu
+177,brown (adjective),adjective,a1,N/A,ಕಂದು,kaṁdu
+178,bureaucracy (system of administration),noun,c1,N/A,ಆಡಳಿತ ವ್ಯವಸ್ಥೆ,āḍaḷita vyavasthe
+179,bureaucracy (administration),noun,c1,N/A,ನೌಕರಶಾಹಿ,naukaraśāhi
+180,"bureaucracy (excessive red tape, slowness)",noun,c1,N/A,ಅನಗತ್ಯ ವಿಳಂಬ / ಕೆಂಪು ಪಟ್ಟಿ,anagatya viḷaṁba / keṁpu paṭṭi
+181,bureaucracy (red tape),noun,c1,N/A,ಅನಗತ್ಯ ವಿಳಂಬ / ಕೆಂಪು ಪಟ್ಟಿ,anagatya viḷaṁba / keṁpu paṭṭi
+182,burial (physical interment),noun,c1,N/A,ಹೂಳುವಿಕೆ / ದಫನ / ಸಮಾಧಿ,hūḷuvike / daphana / samādhi
+183,burial (funeral ceremony),noun,c1,N/A,ಅಂತ್ಯಕ್ರಿಯೆ / ಸಂಸ್ಕಾರ,aṁtyakriye / saṁskāra
+184,burn,noun,b2,N/A,ಸುಡುಗಾಯ / ಸುಟ್ಟ ಗಾಯ,suḍugāya / suṭṭa gāya
+185,burn (injury),noun,b2,N/A,ಸುಟ್ಟ ಗಾಯ / ಸುಡುಗಾಯ,suṭṭa gāya / suḍugāya
+186,to burn (to be on fire),verb,a2,intransitive,ಉರಿ,uri
+187,to burn (to destroy by fire),verb,a2,transitive,ಸುಡು / ದಹಿಸು,suḍu / dahisu
+188,to burst (to rush in suddenly),verb,c1,intransitive,ನುಗ್ಗು / ಧುಮುಕು,nuggu / dhumuku
+189,to burst (to express emotion suddenly),verb,c1,intransitive,ಉಕ್ಕಿಬರು / ಹೊಮ್ಮು,ukkibaru / hommu
+190,"to burst (into tears, laughter)",verb,c1,intransitive,ಒಮ್ಮೆಗೆ ಅಳು / ಒಮ್ಮೆಗೆ ನಗು,ommege aḷu / ommege nagu
+191,to bury (to hide an object),verb,b1,transitive,ಹೂಳು,hūḷu
+192,to bury (a deceased person),verb,b1,transitive,ದಫನ ಮಾಡು / ಹೂಳು / ಸಮಾಧಿ ಮಾಡು,daphana māḍu / hūḷu / samādhi māḍu
+193,"to bury (general, literal interment)",verb,b1,transitive,ಹೂಳು,hūḷu
+194,bus,noun,a1,N/A,ಬಸ್ಸು,bassu
+195,bush (mechanical part),noun,b2,N/A,ಬುಶ್,buś
+196,"business (commercial enterprise, trade)",noun,a1,N/A,ವ್ಯಾಪಾರ / ವ್ಯವಹಾರ / ಉದ್ಯಮ,vyāpāra / vyavahāra / udyama
+197,"business (matter, affair, task)",noun,a2,N/A,ಕೆಲಸ / ವಿಷಯ / ಕಾರ್ಯ,kelasa / viṣaya / kārya
+198,businesswoman,noun,a2,N/A,ಮಹಿಳಾ ವ್ಯಾಪಾರಿ / ವ್ಯವಹಾರಸ್ಥೆ / ಉದ್ಯಮಿ ಮಹಿಳೆ,mahiḷā vyāpāri / vyavahārasthe / udyami mahiḷe
+199,businessman (large-scale entrepreneur),noun,b1,N/A,ಉದ್ಯಮಿ / ವ್ಯಾಪಾರಸ್ಥ / ವ್ಯವಹಾರಸ್ಥ,udyami / vyāpārastha / vyavahārastha
+200,busy (telephone line engaged),adjective,a1,N/A,ಎಂಗೇಜ್,eṁgēj
+201,"busy (crowded, bustling)",adjective,a1,N/A,ಗಿಜಿಗುಡುವ / ಜನನಿಬಿಡ / ನಿರತ,gijiguḍuva / jananibiḍa / nirata
+202,"but (except, only)",conjunction,a2,N/A,ಹೊರತು / ಹೊರತುಪಡಿಸಿ,horatu / horatupaḍisi
+203,"but (conjunction, contrast)",conjunction,b2,N/A,ಆದರೆ / ಆದರೂ / ಆದರೆನು,ādare / ādarū / ādarenu
+205,to butter (apply butter),verb,a2,transitive,ಬೆಣ್ಣೆ ಹಚ್ಚು,beṇṇe haccu
+206,button (device control),noun,a2,N/A,ಗುಂಡಿ / ಬಟನ್,guṁḍi / baṭan
+207,to buy,verb,a1,transitive,ಕೊಳ್ಳು / ಖರೀದಿ ಮಾಡು,koḷḷu / kharīdi māḍu
+208,by (means or agent),preposition,b1,N/A,ಇಂದ / ಮೂಲಕ,iṁda / mūlaka
+209,by (next to),preposition,b1,N/A,ಪಕ್ಕದಲ್ಲಿ / ಹತ್ತಿರ / ಸಮೀಪ,pakkadalli / hattira / samīpa
+210,by (not later than),preposition,b1,N/A,ಒಳಗಾಗಿ / ಒಳಗೆ,oḷagāgi / oḷage
+214,bye (polite parting),exclamation,a1,N/A,ಹೋಗಿ ಬನ್ನಿ / ನಮಸ್ಕಾರ,hōgi banni / namaskāra
+215,"cabin (small dwelling, hut)",noun,b2,N/A,ಗುಡಿಸಲು / ಸಣ್ಣ ಮನೆ,guḍisalu / saṇṇa mane
+216,"cabin (aircraft, ship compartment)",noun,b2,N/A,ಕ್ಯಾಬಿನ್ / ವಿಭಾಗ,kyābin / vibhāga
+217,cabinet (political body),noun,c1,N/A,ಮಂತ್ರಿಮಂಡಲ / ಸಚಿವ ಸಂಪುಟ,maṁtrimaṁḍala / saciva saṁpuṭa
+218,cabinet (storage unit),noun,c1,N/A,ಕಪಾಟು / ಬೀರು,kapāṭu / bīru
+219,"cable (structural rope, hawser)",noun,b2,N/A,ಕೇಬಲ್ / ತಂತಿ,kēbal / taṁti
+220,to arrive,verb,a1,intransitive,ಬರು / ತಲುಪು,baru / talupu
+221,arrow (directional symbol),noun,b2,N/A,ಬಾಣ / ದಿಗ್ಸೂಚಕ ಬಾಣ / ಗುರುತು ಬಾಣ,bāṇa / digsūcaka bāṇa / gurutu bāṇa
+222,art (skill or technique),noun,a1,N/A,ಕಲೆ / ಕೌಶಲ್ಯ,kale / kauśalya
+223,article (writing),noun,a1,N/A,ಲೇಖನ / ಬರಹ,lēkhana / baraha
+224,article (object),noun,a1,N/A,ವಸ್ತು / ಸಾಮಾನು / ಪದಾರ್ಥ,vastu / sāmānu / padārtha
+225,"to articulate (to connect naturally, intransitive)",verb,c1,intransitive,ಸಂಧಿಸು / ಜೋಡಣೆಗೊಳ್ಳು,saṁdhisu / jōḍaṇegoḷḷu
+228,"to connect (to be joined, intransitive)",verb,a2,intransitive,ಸೇರಿಕೊಳ್ಳು / ಸಂಪರ್ಕಗೊಳ್ಳು / ಜೋಡಣೆಗೊಳ್ಳು,sērikoḷḷu / saṁparkagoḷḷu / jōḍaṇegoḷḷu
+235,"to convert (to change one's religion, intransitive)",verb,b2,intransitive,ಮತಾಂತರಗೊಳ್ಳು / ಮತಾಂತರವಾಗು,matāṁtaragoḷḷu / matāṁtaravāgu
+242,curve (bend in a road/path),noun,b2,N/A,ತಿರುವು / ಡೊಂಕು / ವಕ್ರ,tiruvu / ḍoṁku / vakra
+262,scornfully pessimistic,adjective,c1,N/A,ಸಿನಿಕತನದ / ತಿರಸ್ಕಾರದ ನಿರಾಶಾವಾದದ,sinikatanada / tiraskārada nirāśāvādada
+270,dam (barrier across a river),noun,b1,N/A,ಅಣೆಕಟ್ಟು / ಕಟ್ಟೆ,aṇekaṭṭu / kaṭṭe
+272,dark (lacking light),adjective,a2,N/A,ಕತ್ತಲೆಯ / ಕತ್ತಲಾದ,kattaleya / kattalāda
+272,dark (deep or intense color),adjective,a2,N/A,ಗಾಢ / ಕಪ್ಪು,gāḍha / kappu
+273,to date (go on a romantic outing),verb,b1,intransitive,ಡೇಟಿಂಗ್ ಮಾಡು / ಪ್ರೇಮಸಂಗಮ ಮಾಡು,ḍēṭiṁg māḍu / prēmasaṁgama māḍu
+273,date (calendar day),noun,a1,N/A,ದಿನಾಂಕ / ತಾರೀಕು,dināṁka / tārīku
+273,date (fruit),noun,a2,N/A,ಖರ್ಜೂರ,kharjūra
+274,dead (no longer living),adjective,a1,N/A,ಸತ್ತ / ಮೃತ,satta / mr̥ta
+275,deadly (extremely serious),adjective,b2,N/A,ತೀವ್ರವಾದ / ಮಾರಣಾಂತಿಕ / ಘೋರವಾದ,tīvravāda / māraṇāṁtika / ghōravāda
+276,deadly (accurate),adjective,b2,N/A,ಅತ್ಯಂತ ನಿಖರವಾದ / ಚುರುಕಾದ / ಗುರಿ ತಪ್ಪದ,atyaṁta nikharavāda / curukāda / guri tappada
+277,deal (amount),noun,b1,N/A,ಪ್ರಮಾಣ / ಮೊತ್ತ / ಅಳತೆ,pramāṇa / motta / aḷate
+278,"each (each one, individually)",adverb,a1,N/A,ಪ್ರತಿಯೊಬ್ಬ / ಒಬ್ಬೊಬ್ಬ,pratiyobba / obbobba
+279,each (per unit),determiner,a1,N/A,ಪ್ರತಿಯೊಂದಕ್ಕೆ / ಒಂದೊಂದಕ್ಕೆ,pratiyoṁdakke / oṁdoṁdakke
+280,each (per unit),pronoun,a1,N/A,ಒಂದಕ್ಕೆ / ಪ್ರತಿಯೊಂದಕ್ಕೆ,oṁdakke / pratiyoṁdakke
+281,"easily (likely, probably)",adverb,a2,N/A,ಸುಲಭವಾಗಿ / ಬಹುಶಃ / ಸರಳವಾಗಿ,sulabhavāgi / bahuśaḥ / saraḷavāgi
+282,"east (the direction, adj)",adjective,a1,N/A,ಪೂರ್ವದ / ಮೂಡಣ,pūrvada / mūḍaṇa
+283,east (eastern),adjective,a1,N/A,ಪೂರ್ವದ / ಮೂಡಣ,pūrvada / mūḍaṇa
+284,east (towards the east),adverb,a1,N/A,ಪೂರ್ವಕ್ಕೆ / ಮೂಡಣಕ್ಕೆ,pūrvakke / mūḍaṇakke
+285,east,noun,a1,N/A,ಪೂರ್ವ / ಮೂಡಣ / ಪೂರ್ವ ದಿಕ್ಕು,pūrva / mūḍaṇa / pūrva dikku
+286,easy (simple or straightforward nature),adjective,a1,N/A,ಸುಲಭ / ಸರಳ / ನಿರಾಯಾಸ,sulabha / saraḷa / nirāyāsa
+287,"to edit (formally, to revise content)",verb,b2,transitive,ಸಂಪಾದಿಸು / ತಿದ್ದಿ ಬರೆ / ಪರಿಷ್ಕರಿಸು,saṁpādisu / tiddi bare / pariṣkarisu
+288,edition (of a newspaper or magazine),noun,b2,N/A,ಸಂಚಿಕೆ / ಆವೃತ್ತಿ / ಪ್ರತಿ,saṁcike / āvr̥tti / prati
+289,to emerge (to come out),verb,b2,intransitive,ಹೊರಬರು / ಮೂಡಿಬರು / ಗೋಚರಿಸು,horabaru / mūḍibaru / gōcarisu
+290,to emerge (to become known),verb,b2,intransitive,ತಿಳಿದುಬರು / ಬಯಲಾಗು / ಪ್ರಕಟವಾಗು,tiḷidubaru / bayalāgu / prakaṭavāgu
+291,emergence (coming out or surfacing),noun,c1,N/A,ಹೊರಹೊಮ್ಮುವಿಕೆ / ಉದಯ / ಗೋಚರವಾಗುವಿಕೆ,horahommuvike / udaya / gōcaravāguvike
+292,"emergency (sudden crisis, medical need)",noun,b1,N/A,ತುರ್ತು ಪರಿಸ್ಥಿತಿ / ಆಪತ್ತು / ಸಂಕಷ್ಟ,turtu paristhiti / āpattu / saṁkaṣṭa
+293,state of emergency (political declaration),noun,b2,N/A,ತುರ್ತು ಸ್ಥಿತಿ / ತುರ್ತು ಪರಿಸ್ಥಿತಿ,turtu sthiti / turtu paristhiti
+294,"emission (of pollutants, heat)",noun,b2,N/A,ಹೊರಸೂಸುವಿಕೆ / ಹೊರಹಾಕುವಿಕೆ / ವಿಸರ್ಜನೆ,horasūsuvike / horahākuvike / visarjane
+295,emission (biological discharge),noun,b2,N/A,ಸ್ರಾವ / ವಿಸರ್ಜನೆ / ಹೊರಹರಿವು,srāva / visarjane / horaharivu
+296,emotion (intense agitation or excitement),noun,b2,N/A,ಭಾವೋದ್ವೇಗ / ಭಾವನೆ / ಸಂವೇದನೆ,bhāvōdvēga / bhāvane / saṁvēdane
+297,"emotional (relating to feelings, affect)",adjective,b2,N/A,ಭಾವನಾತ್ಮಕ / ಭಾವುಕ / ಭಾವಮಯ,bhāvanātmaka / bhāvuka / bhāvamaya
+298,emotional (easily moved or sensitive),adjective,b2,N/A,ಭಾವುಕ / ಸೂಕ್ಷ್ಮಸಂವೇದಿ / ಭಾವನಾತ್ಮಕ,bhāvuka / sūkṣmasaṁvēdi / bhāvanātmaka
+299,emotionally,adverb,b2,N/A,ಭಾವನಾತ್ಮಕವಾಗಿ / ಭಾವುಕವಾಗಿ / ಮನಸ್ಸಿನಿಂದ,bhāvanātmakavāgi / bhāvukavāgi / manassiniṁda
+300,emphasis (stress in speech),noun,b2,N/A,ಒತ್ತು / ಪ್ರಾಮುಖ್ಯತೆ / ಮಹತ್ವ,ottu / prāmukhyate / mahatva
+301,to emphasize (make prominent),verb,b2,transitive,ಒತ್ತುಕೊಡು / ಪ್ರಾಮುಖ್ಯತೆ ನೀಡು / ಮಹತ್ವ ನೀಡು / ಒತ್ತಿ ಹೇಳು,ottukoḍu / prāmukhyate nīḍu / mahatva nīḍu / otti hēḷu
+302,"empire (business, organization)",noun,b2,N/A,ಸಾಮ್ರಾಜ್ಯ / ಅಧಿಪತ್ಯ,sāmrājya / adhipatya
+303,empirical,adjective,c1,N/A,ಅನುಭವಾತ್ಮಕ / ಪ್ರಾಯೋಗಿಕ,anubhavātmaka / prāyōgika
+304,to employ (hire someone),verb,a2,transitive,ನೇಮಿಸು / ಕೆಲಸಕ್ಕೆ ತೆಗೆದುಕೊಳ್ಳು / ಉದ್ಯೋಗ ನೀಡು,nēmisu / kelasakke tegedukoḷḷu / udyōga nīḍu
+305,to employ (use a tool or method),verb,a2,transitive,ಬಳಸಿಕೊ / ಉಪಯೋಗಿಸು / ಅನ್ವಯಿಸು,baḷasiko / upayōgisu / anvayisu
+306,employee (female staff member),noun,a2,N/A,ಉದ್ಯೋಗಿಣಿ / ಮಹಿಳಾ ಉದ್ಯೋಗಿ / ನೌಕರಳು,udyōgiṇi / mahiḷā udyōgi / naukaraḷu
+307,"employee (subordinate, junior worker)",noun,b1,N/A,ನೌಕರ / ಉದ್ಯೋಗಿ / ಕೆಲಸಗಾರ / ಅಧೀನ ನೌಕರ,naukara / udyōgi / kelasagāra / adhīna naukara
+308,"employer (owner, boss)",noun,a2,N/A,ಮಾಲೀಕ / ಉದ್ಯೋಗದಾತ / ಧಣಿ / ಒಡೆಯ,mālīka / udyōgadāta / dhaṇi / oḍeya
+309,empty (containing nothing),adjective,a2,N/A,ಖಾಲಿ / ಬರಿದಾದ / ಶೂನ್ಯ,khāli / baridāda / śūnya
+310,to empty (something),verb,b1,transitive,ಖಾಲಿ ಮಾಡು / ಬರಿದು ಮಾಡು / ತೆರವುಗೊಳಿಸು,khāli māḍu / baridu māḍu / teravugoḷisu
+311,to empty (become empty),verb,b1,intransitive,ಖಾಲಿಯಾಗು / ಬರಿದಾಗು / ತೆರವಾಗು,khāliyāgu / baridāgu / teravāgu
+312,to enable (a feature or setting),verb,b2,transitive,ಸಕ್ರಿಯಗೊಳಿಸು / ಕಾರ್ಯಗತಗೊಳಿಸು / ಚಾಲನೆ ನೀಡು,sakriyagoḷisu / kāryagatagoḷisu / cālane nīḍu
+313,to enact (a law),verb,c1,transitive,ಜಾರಿಗೊಳಿಸು / ಕಾನೂನು ಮಾಡು / ವಿಧಿಸು,jārigoḷisu / kānūnu māḍu / vidhisu
+314,"to enact (a scene, role)",verb,c1,transitive,ಅಭಿನಯಿಸು / ನಟಿಸು / ಪ್ರದರ್ಶಿಸು,abhinayisu / naṭisu / pradarśisu
+315,encounter (unplanned meeting or minor clash),noun,b2,N/A,ಎದುರಾಗುವಿಕೆ / ಭೇಟಿ / ಮುಖಾಮುಖಿ / ಸಂಘರ್ಷ,edurāguvike / bhēṭi / mukhāmukhi / saṁgharṣa
+316,to encounter (to meet by chance),verb,b2,intransitive,ಎದುರಾಗು / ಭೇಟಿಯಾಗು / ಸಿಕ್ಕು,edurāgu / bhēṭiyāgu / sikku
+317,"to encounter (difficulty, opposition)",verb,b2,transitive,ಎದುರಿಸು / ಎದುರುಗೊಳ್ಳು / ಹೋರಾಡು,edurisu / edurugoḷḷu / hōrāḍu
+318,to encourage,verb,b1,transitive,ಪ್ರೋತ್ಸಾಹಿಸು / ಉತ್ತೇಜಿಸು / ಧೈರ್ಯ ತುಂಬು,prōtsāhisu / uttējisu / dhairya tuṁbu
+319,encouragement,noun,c1,N/A,ಪ್ರೋತ್ಸಾಹ / ಉತ್ತೇಜನ / ಧೈರ್ಯ,prōtsāha / uttējana / dhairya
+320,to end (to finish doing something),verb,a1,transitive,ಮುಗಿಸು / ಅಂತ್ಯಗೊಳಿಸು / ಪೂರ್ಣಗೊಳಿಸು,mugisu / aṁtyagoḷisu / pūrṇagoḷisu
+321,endeavour,noun,c1,N/A,ಪ್ರಯತ್ನ / ಸಾಹಸ / ಯತ್ನ,prayatna / sāhasa / yatna
+322,"ending (conclusion of story, event)",noun,a2,N/A,ಅಂತ್ಯ / ಮುಕ್ತಾಯ / ಕೊನೆ,aṁtya / muktāya / kone
+323,"to endorse (to publicly support a product, candidate)",verb,c1,transitive,ಬೆಂಬಲಿಸು / ಸಮರ್ಥಿಸು / ಪುಷ್ಟೀಕರಿಸು,beṁbalisu / samarthisu / puṣṭīkarisu
+324,to endorse (formally approve),verb,c1,transitive,ಅನುಮೋದಿಸು / ದೃಢೀಕರಿಸು / ಅಂಗೀಕರಿಸು,anumōdisu / dr̥ḍhīkarisu / aṁgīkarisu
+325,endorsement (commercial product promotion),noun,c1,N/A,ಅನುಮೋದನೆ / ಬೆಂಬಲ / ಪ್ರಚಾರ,anumōdane / beṁbala / pracāra
+326,cream (dairy product),noun,b1,N/A,ಕೆನೆ / ಕ್ಷೀರಸಾರ,kene / kṣīrasāra
+327,cream (lotion),noun,b1,N/A,ಕ್ರೀಮ್ / ಲೇಪನ,krīm / lēpana
+350,to double (increase twofold),verb,a2,intransitive,ದುಪ್ಪಟ್ಟಾಗು / ದ್ವಿಗುಣವಾಗು,duppaṭṭāgu / dviguṇavāgu
+376,to drain (empty a container),verb,b2,transitive,ಖಾಲಿ ಮಾಡು / ಬರಿದು ಮಾಡು,khāli māḍu / baridu māḍu
+388,fat (animal fat),noun,b1,N/A,ಕೊಬ್ಬು / ಮೇದಸ್ಸು,kobbu / mēdassu
+389,"fine (good, acceptable)",adjective,a1,N/A,ಉತ್ತಮ / ಚೆನ್ನಾಗಿದೆ,uttama / cennāgide
+389,"fine (thin, delicate)",adjective,b2,N/A,ಸೂಕ್ಷ್ಮ / ನುಣುಪು,sūkṣma / nuṇupu
+395,further (to a greater extent),adverb,b1,N/A,ಇನ್ನೂ ಹೆಚ್ಚು / ಮತ್ತಷ್ಟು,innū heccu / mattaṣṭu
+395,"to further (promote, advance)",verb,c1,transitive,ಮುಂದುವರಿಸು / ಪ್ರೋತ್ಸಾಹಿಸು,muṁduvarisu / prōtsāhisu
+398,"to gather (assemble, intransitive)",verb,b1,intransitive,ಸೇರು / ಒಟ್ಟುಗೂಡು,sēru / oṭṭugūḍu
+399,"firm (resolute, steadfast)",adjective,b2,N/A,ದೃಢ / ಸ್ಥಿರ,dr̥ḍha / sthira
+399,firm (business company),noun,b1,N/A,ಸಂಸ್ಥೆ / ಕಂಪನಿ,saṁsthe / kaṁpani
+400,"firm (determined, resolute)",adjective,b2,N/A,ಗಟ್ಟಿ / ದೃಢ / ಸ್ಥಿರ / ಅಚಲ,gaṭṭi / dr̥ḍha / sthira / acala
+401,first (ordinal),adjective,a2,N/A,ಮೊದಲ / ಪ್ರಥಮ / ಆದ್ಯ,modala / prathama / ādya
+402,flat (apartment),noun,a1,N/A,ಫ್ಲ್ಯಾಟ್ / ಅಪಾರ್ಟ್ಮೆಂಟ್,phlyāṭ / apārṭmeṁṭ
+403,flu,noun,a2,N/A,ಜ್ವರ / ಶೀತಜ್ವರ / ಫ್ಲೂ,jvara / śītajvara / phlū
+404,flying (act of),noun,a2,N/A,ಹಾರಾಟ / ಗಗನಯಾನ,hārāṭa / gaganayāna
+405,folk (traditional),adjective,b1,N/A,ಜಾನಪದ / ಗ್ರಾಮೀಣ,jānapada / grāmīṇa
+406,"following (subsequent, adjective)",adjective,a2,N/A,ನಂತರದ / ಅನಂತರದ / ಮುಂದಿನ / ತರುವಾಯದ,naṁtarada / anaṁtarada / muṁdina / taruvāyada
+407,following (group of supporters/followers),noun,b1,N/A,ಅನುಯಾಯಿಗಳು / ಹಿಂಬಾಲಕರು / ಬೆಂಬಲಿಗರು / ಅಭಿಮಾನಿಗಳು,anuyāyigaḷu / hiṁbālakaru / beṁbaligaru / abhimānigaḷu
+408,"following (preposition - after, according to)",preposition,b2,N/A,ನಂತರ / ಅನುಸರಿಸಿ / ತರುವಾಯ,naṁtara / anusarisi / taruvāya
+409,hospital,noun,a1,N/A,ಆಸ್ಪತ್ರೆ / ಚಿಕಿತ್ಸಾಲಯ,āspatre / cikitsālaya
+410,host (computer network),noun,b2,N/A,ಹೋಸ್ಟ್,hōsṭ
+411,to host (a website or server),verb,b2,transitive,ಹೋಸ್ಟ್ ಮಾಡು / ನಿರ್ವಹಿಸು,hōsṭ māḍu / nirvahisu
+412,genius (person or quality),noun,b2,N/A,ಪ್ರತಿಭೆ / ಮೇಧಾವಿ / ಬುದ್ಧಿವಂತಿಕೆ,pratibhe / mēdhāvi / buddhivaṁtike
+413,"to grade (classify, assess)",verb,b2,transitive,ವಿಂಗಡಿಸು / ಶ್ರೇಣೀಕರಿಸು / ಮೌಲ್ಯಮಾಪನ ಮಾಡು,viṁgaḍisu / śrēṇīkarisu / maulyamāpana māḍu
+414,gradually,adverb,b2,N/A,ಕ್ರಮೇಣ / ಹಂತಹಂತವಾಗಿ / ನಿಧಾನವಾಗಿ,kramēṇa / haṁtahaṁtavāgi / nidhānavāgi
+415,graduate (person),noun,b1,N/A,ಪದವೀಧರ / ಪದವಿ ಪಡೆದವರು,padavīdhara / padavi paḍedavaru
+416,to graduate,verb,b1,intransitive,ಪದವಿ ಪಡೆ / ಪದವಿ ಪೂರ್ಣಗೊಳಿಸು,padavi paḍe / padavi pūrṇagoḷisu
+417,grain (cereal crops collectively),noun,b1,N/A,ಧಾನ್ಯ / ಕಾಳು / ಬೆಳೆ,dhānya / kāḷu / beḷe
+418,grain (single seed/particle),noun,b1,N/A,ಕಾಳು / ಬೀಜ / ಕಣ,kāḷu / bīja / kaṇa
+419,"grain (small particle, e.g., sand)",noun,b1,N/A,ಕಣ / ರೇಣು / ಪುಡಿ,kaṇa / rēṇu / puḍi
+420,"grand (magnificent, stately)",adjective,b2,N/A,ಭವ್ಯ / ವೈಭವದ / ಅದ್ಭುತ,bhavya / vaibhavada / adbhuta
+421,"grand (extensive, major scale)",adjective,b2,N/A,ಬೃಹತ್ / ಮಹತ್ತರ / ದೊಡ್ಡ / ವಿಶಾಲ,br̥hat / mahattara / doḍḍa / viśāla
+422,grandfather (paternal),noun,a1,N/A,ತಾತ / ಅಜ್ಜ,tāta / ajja
+423,grandfather (maternal),noun,a1,N/A,ಅಜ್ಜ,ajja
+424,grandmother (paternal),noun,a1,N/A,ಅಜ್ಜಿ,ajji
+425,grandmother (maternal),noun,a1,N/A,ಅಜ್ಜಿ,ajji
+426,grandfather (paternal),noun,a1,N/A,ತಾತ / ಅಜ್ಜ,tāta / ajja
+427,grandmother (paternal),noun,a1,N/A,ಅಜ್ಜಿ,ajji
+428,grandfather (maternal),noun,a1,N/A,ಅಜ್ಜ / ತಾತ,ajja / tāta
+429,grandmother (maternal),noun,a1,N/A,ಅಜ್ಜಿ,ajji
+430,grant (financial aid),noun,b2,N/A,ಅನುದಾನ / ಧನಸಹಾಯ,anudāna / dhanasahāya
+431,to grant (permission/wish),verb,b2,transitive,ಮಂಜೂರು ಮಾಡು / ಅನುಮತಿ ನೀಡು / ಒಪ್ಪಿಗೆ ನೀಡು,maṁjūru māḍu / anumati nīḍu / oppige nīḍu
+432,to grant (financial aid),verb,b2,transitive,ಅನುದಾನ ನೀಡು / ಧನಸಹಾಯ ಒದಗಿಸು / ಒದಗಿಸು,anudāna nīḍu / dhanasahāya odagisu / odagisu
+433,graphics,noun,b2,N/A,ಗ್ರಾಫಿಕ್ಸ್ / ಚಿತ್ರಣಗಳು / ನಕ್ಷೆಗಳು,grāphiks / citraṇagaḷu / nakṣegaḷu
+434,grasp (physical hold),noun,c1,N/A,ಹಿಡಿತ,hiḍita
+435,grasp (understanding),noun,c1,N/A,ಗ್ರಹಿಕೆ / ತಿಳುವಳಿಕೆ,grahike / tiḷuvaḷike
+436,"to grasp (physically, to hold)",verb,c1,transitive,ಹಿಡಿ / ಹಿಡಿದುಕೊ,hiḍi / hiḍiduko
+437,to grasp (firmly seize),verb,c1,transitive,ಗಟ್ಟಿಯಾಗಿ ಹಿಡಿ / ಭದ್ರವಾಗಿ ಹಿಡಿ,gaṭṭiyāgi hiḍi / bhadravāgi hiḍi
+438,"to grasp (conceptually, to understand)",verb,c1,transitive,ಗ್ರಹಿಸು / ಅರ್ಥಮಾಡಿಕೊ / ತಿಳಿದುಕೊ,grahisu / arthamāḍiko / tiḷiduko
+439,grass,noun,a2,N/A,ಹುಲ್ಲು,hullu
+440,grateful,adjective,b1,N/A,ಕೃತಜ್ಞ / ಆಭಾರಿ,kr̥tajña / ābhāri
+441,grave (burial site),noun,a2,N/A,ಸಮಾಧಿ / ಗೋರಿ,samādhi / gōri
+442,grave (serious),adjective,c1,N/A,ಗಂಭೀರ / ಪ್ರಮುಖ,gaṁbhīra / pramukha
+443,gravity (physical force),noun,c1,N/A,ಗುರುತ್ವಾಕರ್ಷಣೆ / ಗುರುತ್ವ,gurutvākarṣaṇe / gurutva
+444,gravity (seriousness),noun,c1,N/A,ಗಾಂಭೀರ್ಯ / ಗಂಭೀರತೆ,gāṁbhīrya / gaṁbhīrate
+445,great (excellent/wonderful),adjective,a1,N/A,ಅದ್ಭುತ / ಉತ್ತಮ / ಭವ್ಯ,adbhuta / uttama / bhavya
+446,great (good/fine),adjective,a1,N/A,ಚೆನ್ನಾಗಿದೆ / ಒಳ್ಳೆಯದು / ಉತ್ತಮ,cennāgide / oḷḷeyadu / uttama
+447,great (large/big),adjective,a1,N/A,ದೊಡ್ಡ / ಮಹಾ,doḍḍa / mahā
+448,unripe fruit,noun,a1,N/A,ಕಾಯಿ,kāyi
+449,greens (leafy vegetables),noun,a1,N/A,ಸೊಪ್ಪು / ಹಸಿರು ತರಕಾರಿ,soppu / hasiru tarakāri
+450,produce (general greens),noun,a1,N/A,ತರಕಾರಿ / ಹಸಿರು ತರಕಾರಿ / ಕಾಯಿಪಲ್ಲೆ,tarakāri / hasiru tarakāri / kāyipalle
+451,greenhouse,noun,b2,N/A,ಹಸಿರುಮನೆ,hasirumane
+452,"to greet (formally, respectfully)",verb,a2,transitive,ನಮಸ್ಕರಿಸು / ವಂದಿಸು,namaskarisu / vaṁdisu
+453,to greet (to welcome),verb,a2,transitive,ಸ್ವಾಗತಿಸು,svāgatisu
+454,"to greet (casually, to say hi)",verb,a2,transitive,ನಮಸ್ಕಾರ ಹೇಳು / ಹಲೋ ಹೇಳು,namaskāra hēḷu / halō hēḷu
+455,grey (hair due to age),noun,a2,N/A,ನರೆ,nare
+456,grid (power system),noun,c1,N/A,ವಿದ್ಯುತ್ ಜಾಲ / ಗ್ರಿಡ್,vidyut jāla / griḍ
+457,grief (sorrow),noun,c1,N/A,ಶೋಕ / ದುಃಖ / ವ್ಯಥೆ,śōka / duḥkha / vyathe
+458,"free (without cost, adverb)",adverb,a2,N/A,ಉಚಿತವಾಗಿ / ಸುಮ್ಮನೆ,ucitavāgi / summane
+459,individual (person),noun,a2,N/A,ವ್ಯಕ್ತಿ / ಒಬ್ಬ,vyakti / obba
+460,injury,noun,a2,N/A,ಗಾಯ / ಪೆಟ್ಟು,gāya / peṭṭu
+461,to ink (a contract),verb,b2,transitive,ಸಹಿ ಮಾಡು / ಸಹಿ ಹಾಕು,sahi māḍu / sahi hāku
+462,"inner (emotional, spiritual)",adjective,b2,N/A,ಆಂತರಿಕ / ಅಂತರಂಗದ / ಒಳಗಿನ,āṁtarika / aṁtaraṁgada / oḷagina
+463,input (contribution),noun,b2,N/A,ಸಲಹೆ / ಕೊಡುಗೆ,salahe / koḍuge
+464,input (feedback),noun,b2,N/A,ಅಭಿಪ್ರಾಯ / ಪ್ರತಿಕ್ರಿಯೆ,abhiprāya / pratikriye
+465,"inquiry (question, request for info)",noun,b2,N/A,ವಿಚಾರಣೆ / ಪ್ರಶ್ನೆ / ಕೇಳಿಕೆ,vicāraṇe / praśne / kēḷike
+466,insect,noun,a2,N/A,ಕೀಟ / ಹುಳು,kīṭa / huḷu
+467,"to insert (data, text)",verb,b2,transitive,ಸೇರಿಸು / ಹಾಕು,sērisu / hāku
+468,"insertion (text, data)",noun,c1,N/A,ಸೇರ್ಪಡೆ / ಸೇರಿಸಿದ ಅಂಶ,sērpaḍe / sērisida aṁśa
+469,inside (adverb),adverb,a2,N/A,ಒಳಗೆ,oḷage
+470,inside (preposition),preposition,a2,N/A,ಒಳಗೆ,oḷage
+471,judge (legal official),noun,b1,N/A,ನ್ಯಾಯಾಧೀಶ / ಜಡ್ಜ್,nyāyādhīśa / jaḍj
+472,to judge (rule legally),verb,b1,transitive,ತೀರ್ಪು ನೀಡು / ತೀರ್ಮಾನಿಸು,tīrpu nīḍu / tīrmānisu
+473,judgement (legal ruling),noun,b2,N/A,ತೀರ್ಪು / ನಿರ್ಣಯ,tīrpu / nirṇaya
+474,"judgement (discretion, ability)",noun,b2,N/A,ವಿವೇಚನೆ / ನಿರ್ಧಾರ ಶಕ್ತಿ,vivēcane / nirdhāra śakti
+475,junction (railway station hub),noun,c1,N/A,ಜಂಕ್ಷನ್,jaṁkṣan
+476,just (only),adjective,a2,N/A,ಕೇವಲ / ಮಾತ್ರ,kēvala / mātra
+477,just (a moment ago),adjective,b1,N/A,ಈಗ ತಾನೇ ಆದ / ಇದೇ ಈಗ ಆದ,īga tānē āda / idē īga āda
+478,just (exactly),adjective,b2,N/A,ನಿಖರವಾದ / ಸರಿಯಾದ / ಖಚಿತವಾದ,nikharavāda / sariyāda / khacitavāda
+479,key (important),adjective,a1,N/A,ಮುಖ್ಯವಾದ / ಪ್ರಮುಖವಾದ / ಪ್ರಧಾನವಾದ,mukhyavāda / pramukhavāda / pradhānavāda
+480,kind (person),noun,a1,N/A,ದಯಾಳು / ಕರುಣಾಮಯಿ,dayāḷu / karuṇāmayi
+480,kind (type/sort),noun,a1,N/A,ವಿಧ / ರೀತಿ / ಪ್ರಕಾರ,vidha / rīti / prakāra
+481,knock (sound/action),noun,b1,N/A,ತಟ್ಟು / ತಟ್ಟುವಿಕೆ,taṭṭu / taṭṭuvike
+481,to knock,verb,b1,intransitive,ತಟ್ಟು,taṭṭu
+482,"impossible (intolerable, unreasonable)",adjective,a2,N/A,ಅಸಾಧ್ಯ / ಸಾಧ್ಯವಿಲ್ಲದ,asādhya / sādhyavillada
+483,to increase (intransitive),verb,a2,intransitive,ಹೆಚ್ಚಾಗು / ವೃದ್ಧಿಸು,heccāgu / vr̥ddhisu
+484,to increase (transitive),verb,a2,transitive,ಹೆಚ್ಚಿಸು / ವೃದ್ಧಿಸು / ಬೆಳೆಸು,heccisu / vr̥ddhisu / beḷesu
+485,to incur (anger or liability),verb,c1,transitive,ಹೊತ್ತುಕೊಳ್ಳು / ಅನುಭವಿಸು / ಒಳಗಾಗು,hottukoḷḷu / anubhavisu / oḷagāgu
+486,"her (familiar, non-respectful, object)",pronoun,a1,N/A,ಅವಳನ್ನು,avaḷannu
+487,"her (respectful, formal, object)",pronoun,a1,N/A,ಅವರನ್ನು,avarannu
+488,"highway (major state, national road)",noun,b2,N/A,ಹೆದ್ದಾರಿ,heddāri
+489,"hill (large, mountain)",noun,a2,N/A,ಬೆಟ್ಟ / ಪರ್ವತ / ಗುಡ್ಡ,beṭṭa / parvata / guḍḍa
+490,"him (casual, object)",pronoun,a1,N/A,ಅವನನ್ನು / ಅವನನ್ನ,avanannu / avananna
+491,"him (formal, object)",pronoun,a1,N/A,ಅವರನ್ನು,avarannu
+492,"hint (trace, small amount)",noun,c1,N/A,ಸುಳಿವು / ಲವಲೇಶ / ಗುರುತು,suḷivu / lavalēśa / gurutu
+493,"hint (trace of flavor, mood)",noun,c1,N/A,ಲವಲೇಶ / ಛಾಯೆ / ಸುಳಿವು,lavalēśa / chāye / suḷivu
+494,to hint (by non-verbal cue or insinuation),verb,c1,transitive,ಇಂಗಿತ ಕೊಡು / ಸುಳಿವು ಕೊಡು / ಸೂಚಿಸು,iṁgita koḍu / suḷivu koḍu / sūcisu
+495,hire (rental cost or agreement),noun,b2,N/A,ಬಾಡಿಗೆ / ಗುತ್ತಿಗೆ,bāḍige / guttige
+496,"his (respectful, possessive adjective)",determiner,a1,N/A,ಅವರ,avara
+497,"his (standard, possessive pronoun)",pronoun,a2,N/A,ಅವನದು,avanadu
+498,"his (respectful, possessive pronoun)",pronoun,a2,N/A,ಅವರದು,avaradu
+499,"history (personal record, background)",noun,a2,N/A,ಇತಿಹಾಸ / ಚರಿತ್ರೆ / ಹಿನ್ನೆಲೆ,itihāsa / caritre / hinnele
+500,"to hold (a meeting, event)",verb,a2,transitive,ನಡೆಸು / ಆಯೋಜಿಸು / ಏರ್ಪಡಿಸು,naḍesu / āyōjisu / ērpaḍisu
+501,hole (puncture or tear),noun,a2,N/A,ತೂತು / ರಂಧ್ರ,tūtu / raṁdhra
+502,hole (pit or large depression),noun,a2,N/A,ಗುಂಡಿ / ಕುಳಿ / ತಗ್ಗು,guṁḍi / kuḷi / taggu
+503,holiday (day off work or school),noun,a1,N/A,ರಜೆ,raje
+504,"holiday (vacation, extended trip)",noun,a1,N/A,ಪ್ರವಾಸ / ರಜಾದಿನ / ವಿಹಾರ,pravāsa / rajādina / vihāra
+505,hollow (meaningless or vain),adjective,b2,N/A,ನಿರರ್ಥಕ / ವ್ಯರ್ಥ / ಅರ್ಥಹೀನ,nirarthaka / vyartha / arthahīna
+506,home (adjective),adjective,a2,N/A,ಮನೆಯ / ಗೃಹ / ಸ್ವಂತ,maneya / gr̥ha / svaṁta
+507,"home (direction, towards residence)",adverb,a1,N/A,ಮನೆಗೆ / ಮನೆ ಕಡೆಗೆ / ಸ್ವಗೃಹಕ್ಕೆ,manege / mane kaḍege / svagr̥hakke
+508,to harm (to cause damage or loss),verb,b2,transitive,ಹಾನಿ ಮಾಡು / ಕೆಡಿಸು / ನಷ್ಟ ಉಂಟುಮಾಡು,hāni māḍu / keḍisu / naṣṭa uṁṭumāḍu
+509,to harm (to injure or hurt someone),verb,b2,transitive,ನೋವುಂಟು ಮಾಡು / ಗಾಯ ಮಾಡು / ಹಿಂಸಿಸು / ಪೀಡಿಸು,nōvuṁṭu māḍu / gāya māḍu / hiṁsisu / pīḍisu
+510,harmful (dangerous),adjective,b2,N/A,ಹಾನಿಕರ / ಅಪಾಯಕಾರಿ / ಕೆಟ್ಟ / ಅಹಿತಕರ,hānikara / apāyakāri / keṭṭa / ahitakara
+511,harmony (social agreement),noun,c1,N/A,ಸಾಮರಸ್ಯ / ಒಮ್ಮತ / ಸೌಹಾರ್ದ / ಸಹಬಾಳ್ವೆ,sāmarasya / ommata / sauhārda / sahabāḷve
+512,harmony (musical arrangement),noun,c1,N/A,ಸ್ವರಮೇಳ / ಶ್ರುತಿ / ಸಾಮರಸ್ಯ,svaramēḷa / śruti / sāmarasya
+513,harsh (severe or strict),adjective,c1,N/A,ಕಠಿಣ / ನಿಷ್ಠುರ / ಕಟ್ಟುನಿಟ್ಟಾದ / ಕ್ರೂರ,kaṭhiṇa / niṣṭhura / kaṭṭuniṭṭāda / krūra
+514,harsh (rough or abrasive),adjective,c1,N/A,ಒರಟು / ಕಠೋರ / ತೀಕ್ಷ್ಣ,oraṭu / kaṭhōra / tīkṣṇa
+515,"harvest (result, consequence)",noun,c1,N/A,ಫಲ / ಪರಿಣಾಮ / ಪ್ರತಿಫಲ / ಲಾಭ,phala / pariṇāma / pratiphala / lābha
+516,to harvest (crops),verb,c1,transitive,ಕೊಯ್ಲು ಮಾಡು / ಕಟಾವು ಮಾಡು / ಸಂಗ್ರಹಿಸು / ತೆಗೆ,koylu māḍu / kaṭāvu māḍu / saṁgrahisu / tege
+517,to harvest (results or consequences),verb,c1,transitive,ಪಡಿ / ಪಡೆಯು / ಪಡೆದುಕೊ / ಅನುಭವಿಸು,paḍi / paḍeyu / paḍeduko / anubhavisu
+518,hat,noun,a1,N/A,ಟೋಪಿ,ṭōpi
+519,hate,noun,b1,N/A,ದ್ವೇಷ / ವೈರ / ಹಗೆತನ,dvēṣa / vaira / hagetana
+520,to hate,verb,a1,transitive,ದ್ವೇಷಿಸು / ಹಗೆ ಮಾಡು / ಅಸಹ್ಯಪಡು,dvēṣisu / hage māḍu / asahyapaḍu
+521,"hatred (enmity, feud)",noun,c1,N/A,ದ್ವೇಷ / ವೈರತ್ವ / ಹಗೆತನ / ಮತ್ಸರ,dvēṣa / vairatva / hagetana / matsara
+522,"to haunt (of ghosts, spirits)",verb,c1,transitive,ಕಾಡು / ಆವರಿಸು,kāḍu / āvarisu
+523,"to haunt (of memories, feelings)",verb,c1,transitive,ಕಾಡಿಸು / ಸತಾಯಿಸು,kāḍisu / satāyisu
+524,to have (possess),verb,a1,transitive,ಹೊಂದಿರು / ಇಟ್ಟುಕೊ,hoṁdiru / iṭṭuko
+525,to have (a meal),verb,a1,transitive,ತಿನ್ನು / ಊಟ ಮಾಡು,tinnu / ūṭa māḍu
+526,to have (a drink),verb,a1,transitive,ಕುಡಿ,kuḍi
+527,to have (possession or existence),verb,a2,intransitive,ಇರು / ಹೊಂದಿರು,iru / hoṁdiru
+528,"to have (a discussion, an experience)",verb,a2,transitive,ಮಾಡು / ನಡೆಸು / ಅನುಭವಿಸು,māḍu / naḍesu / anubhavisu
+529,"to have (a bath, shower)",verb,a2,transitive,ಮಾಡು / ತಗೋ,māḍu / tagō
+530,have to,modal verb,a1,N/A,ಬೇಕು / ಅಗತ್ಯವಿದೆ,bēku / agatyavide
+531,"he (respectful, formal)",pronoun,a1,N/A,ಅವರು,avaru
+532,head (body part),noun,a1,N/A,ತಲೆ,tale
+533,"head (leader, chief)",noun,a1,N/A,ಮುಖ್ಯಸ್ಥ / ನಾಯಕ / ಅಧ್ಯಕ್ಷ / ತಲೆ,mukhyastha / nāyaka / adhyakṣa / tale
+534,to head (to move towards a place),verb,b1,intransitive,ಸಾಗು / ಹೋಗು / ಮುನ್ನಡೆ,sāgu / hōgu / munnaḍe
+535,to head (to lead or manage),verb,b1,transitive,ನಿರ್ವಹಿಸು / ಮುನ್ನಡೆಸು / ನೇತೃತ್ವ ವಹಿಸು,nirvahisu / munnaḍesu / nētr̥tva vahisu
+536,"headache (problem, nuisance)",noun,b1,N/A,ಕಿರಿಕಿರಿ / ತೊಂದರೆ / ಸಮಸ್ಯೆ,kirikiri / toṁdare / samasye
+537,headache (literal pain),noun,a1,N/A,ತಲೆನೋವು,talenōvu
+538,headline,noun,b1,N/A,ಮುಖ್ಯ ಶೀರ್ಷಿಕೆ / ಶಿರೋನಾಮೆ / ಹೆಡ್‌ಲೈನ್,mukhya śīrṣike / śirōnāme / heḍlain
+539,headquarters (central or main office),noun,b2,N/A,ಕೇಂದ್ರ ಕಛೇರಿ / ಮುಖ್ಯ ಕಛೇರಿ / ಪ್ರಧಾನ ಕಛೇರಿ,kēṁdra kachēri / mukhya kachēri / pradhāna kachēri
+540,to heal (to recover oneself),verb,b2,intransitive,ಗುಣವಾಗು / ವಾಸಿಯಾಗು / ಚೇತರಿಸಿಕೋ,guṇavāgu / vāsiyāgu / cētarisikō
+541,to heal (to cure),verb,b2,transitive,ವಾಸಿಯಾಗಿಸು / ಗುಣಪಡಿಸು / ಚಿಕಿತ್ಸೆ ನೀಡು,vāsiyāgisu / guṇapaḍisu / cikitse nīḍu
+542,health,noun,a1,N/A,ಆರೋಗ್ಯ / ಸುಖ,ārōgya / sukha
+543,healthcare,noun,b2,N/A,ಆರೋಗ್ಯ ಸೇವೆ / ವೈದ್ಯಕೀಯ ಸೇವೆ,ārōgya sēve / vaidyakīya sēve
+544,"healthy (describing food, habits, environment)",adjective,a1,N/A,ಆರೋಗ್ಯಕರ / ಹಿತಕರ,ārōgyakara / hitakara
+545,to hear,verb,a1,transitive,ಕೇಳು / ಆಲಿಸು,kēḷu / ālisu
+546,hearing (ability to perceive sound),noun,b2,N/A,ಶ್ರವಣ / ಕೇಳುವಿಕೆ,śravaṇa / kēḷuvike
+547,"hearing (formal inquiry, court proceeding)",noun,b2,N/A,ವಿಚಾರಣೆ / ಕೋರ್ಟ್ ವಿಚಾರಣೆ / ಆಲಿಕೆ,vicāraṇe / kōrṭ vicāraṇe / ālike
+548,heart (organ),noun,a2,N/A,ಹೃದಯ,hr̥daya
+549,"heart (emotions, spirit)",noun,a2,N/A,ಹೃದಯ / ಮನಸ್ಸು / ಭಾವನೆ,hr̥daya / manassu / bhāvane
+550,heat (temperature),noun,a2,N/A,ಬಿಸಿ / ಉಷ್ಣತೆ / ತಾಪ,bisi / uṣṇate / tāpa
+551,to heat (make warm/hot),verb,a2,transitive,ಬಿಸಿ ಮಾಡು / ಕಾಯಿಸು / ಉಷ್ಣಗೊಳಿಸು,bisi māḍu / kāyisu / uṣṇagoḷisu
+552,to heat (become warm/hot),verb,a2,intransitive,ಬಿಸಿಯಾಗು / ಕಾಯು / ಉಷ್ಣವಾಗು,bisiyāgu / kāyu / uṣṇavāgu
+553,heating (process of increasing temperature),noun,b1,N/A,ಬಿಸಿ ಮಾಡುವಿಕೆ / ಕಾಯಿಸುವಿಕೆ / ಉಷ್ಣಗೊಳಿಸುವಿಕೆ,bisi māḍuvike / kāyisuvike / uṣṇagoḷisuvike
+554,heating (building climate control system),noun,b1,N/A,ಬಿಸಿ ಮಾಡುವ ವ್ಯವಸ್ಥೆ / ತಾಪನ ವ್ಯವಸ್ಥೆ,bisi māḍuva vyavasthe / tāpana vyavasthe
+555,"heaven (sky, firmament)",noun,b2,N/A,ಆಕಾಶ / ಗಗನ / ಬಾನು,ākāśa / gagana / bānu
+556,"hi, hey (casual greeting)",exclamation,a1,N/A,ಹಾಯ್,hāy
+557,"greetings, hello (respectful standard greeting)",exclamation,a1,N/A,ನಮಸ್ಕಾರ,namaskāra
+558,intellectual (relating to intellect),adjective,c1,N/A,ಬೌದ್ಧಿಕ / ಬುದ್ಧಿವಂತ,bauddhika / buddhivaṁta
+559,"lens (optical, contact)",noun,b2,N/A,ಮಸೂರ,masūra
+560,"lethal (deadly, destructive)",adjective,c1,N/A,ಮಾರಕ / ಪ್ರಾಣಾಂತಿಕ / ಘಾತಕ,māraka / prāṇāṁtika / ghātaka
+561,lethal (highly impactful),adjective,c1,N/A,ಅತ್ಯಂತ ಪರಿಣಾಮಕಾರಿ / ಅತ್ಯಂತ ಪ್ರಭಾವಶಾಲಿ,atyaṁta pariṇāmakāri / atyaṁta prabhāvaśāli
+562,"letter (communication, mail)",noun,a1,N/A,ಪತ್ರ / ಕಾಗದ / ಲೇಖನ,patra / kāgada / lēkhana
+563,letter (alphabetic character),noun,a1,N/A,ಅಕ್ಷರ,akṣara
+564,level (equal in rank or status),adjective,b1,N/A,ಸಮ / ಸಮಾನ / ಒಂದೇ ಮಟ್ಟದ,sama / samāna / oṁdē maṭṭada
+565,"level (grade, stage)",noun,a2,N/A,ಮಟ್ಟ / ಹಂತ / ಶ್ರೇಣಿ,maṭṭa / haṁta / śrēṇi
+566,"to level (a surface, ground)",verb,b2,transitive,ಮಟ್ಟ ಮಾಡು / ಸಮ ಮಾಡು / ಸಮತಟ್ಟು ಮಾಡು,maṭṭa māḍu / sama māḍu / samataṭṭu māḍu
+567,"to level (an accusation, charge)",verb,b2,transitive,ಹೊರಿಸು / ಆರೋಪಿಸು / ಹೊಣೆ ಹೊರಿಸು,horisu / ārōpisu / hoṇe horisu
+568,"to level (a building, city, destroy)",verb,b2,transitive,ನೆಲಸಮ ಮಾಡು / ನಾಶ ಮಾಡು / ಧ್ವಂಸ ಮಾಡು,nelasama māḍu / nāśa māḍu / dhvaṁsa māḍu
+569,liable (responsible for),adjective,c1,N/A,ಹೊಣೆಗಾರ / ಹೊಣೆಗಾರಿಕೆಯುಳ್ಳ / ಬದ್ಧನಾದ,hoṇegāra / hoṇegārikeyuḷḷa / baddhanāda
+570,liable (prone to),adjective,c1,N/A,ಒಳಪಡುವ / ಗುರಿಯಾಗುವ / ಸಂಭವಿಸುವ,oḷapaḍuva / guriyāguva / saṁbhavisuva
+571,"liberal (generous, broad-minded)",adjective,c1,N/A,ಉದಾರ / ಔದಾರ್ಯಯುತ / ಮುಕ್ತ ಮನಸ್ಸಿನ,udāra / audāryayuta / mukta manassina
+572,"liberal (political ideology, adjective)",adjective,c1,N/A,ಉದಾರವಾದಿ / ಪ್ರಗತಿಪರ,udāravādi / pragatipara
+573,liberal (political person),noun,c1,N/A,ಉದಾರವಾದಿ / ಪ್ರಗತಿಪರ,udāravādi / pragatipara
+574,"liberality, generosity",noun,c1,N/A,ಉದಾರತೆ / ಔದಾರ್ಯ / ಉದಾರ ಮನಸ್ಸು,udārate / audārya / udāra manassu
+575,liberation (spiritual),noun,c1,N/A,ಮೋಕ್ಷ / ಮುಕ್ತಿ,mōkṣa / mukti
+576,liberation (political or general release),noun,c1,N/A,ವಿಮೋಚನೆ / ಬಿಡುಗಡೆ,vimōcane / biḍugaḍe
+577,liberty (permission),noun,c1,N/A,ಅನುಮತಿ / ಅವಕಾಶ,anumati / avakāśa
+578,liberty (undue familiarity),noun,c1,N/A,ಸಲುಗೆ / ಅತಿ ಸಲುಗೆ,saluge / ati saluge
+579,library (formal institution),noun,a1,N/A,ಗ್ರಂಥಾಲಯ / ಪುಸ್ತಕ ಭಂಡಾರ,graṁthālaya / pustaka bhaṁḍāra
+580,library (casual usage),noun,a1,N/A,ಲೈಬ್ರರಿ,laibrari
+581,licence,noun,b2,N/A,ಪರವಾನಿಗೆ / ಅನುಮತಿ ಪತ್ರ / ಲೈಸೆನ್ಸ್,paravānige / anumati patra / laisens
+582,to license,verb,c1,transitive,ಪರವಾನಿಗೆ ನೀಡು / ಅನುಮತಿ ನೀಡು,paravānige nīḍu / anumati nīḍu
+583,lie,noun,b1,N/A,ಸುಳ್ಳು / ಅಸತ್ಯ,suḷḷu / asatya
+584,"to lie (to rest, be horizontal)",verb,a1,intransitive,ಮಲಗು,malagu
+585,to lie (to tell an untruth),verb,a1,intransitive,ಸುಳ್ಳು ಹೇಳು / ಅಸತ್ಯ ನುಡಿ,suḷḷu hēḷu / asatya nuḍi
+588,life (vitality or soul),noun,a1,N/A,ಜೀವ / ಪ್ರಾಣ,jīva / prāṇa
+589,"life (existence, experience)",noun,a1,N/A,ಜೀವನ / ಬದುಕು,jīvana / baduku
+590,lifelong,adjective,c1,N/A,ಜೀವನಪರ್ಯಂತ / ಜೀವಮಾನವಿಡೀ,jīvanaparyaṁta / jīvamānaviḍī
+591,lifestyle,noun,a2,N/A,ಜೀವನಶೈಲಿ / ಬದುಕಿನ ರೀತಿ,jīvanaśaili / badukina rīti
+592,lifetime,noun,b2,N/A,ಜೀವಿತಾವಧಿ / ಜೀವಮಾನ,jīvitāvadhi / jīvamāna
+593,lift (elevator),noun,a2,N/A,ಲಿಫ್ಟ್ / ಎಲಿವೇಟರ್,liphṭ / elivēṭar
+594,"lift (ride, transportation)",noun,a2,N/A,ಲಿಫ್ಟ್ / ಸವಾರಿ,liphṭ / savāri
+595,"to lift (a restriction, ban)",verb,a2,transitive,ರದ್ದುಮಾಡು / ತೆಗೆದುಹಾಕು / ತೆರವುಗೊಳಿಸು,raddumāḍu / tegeduhāku / teravugoḷisu
+596,light (weight),adjective,a1,N/A,ಹಗುರ / ಲಘು,hagura / laghu
+597,"light (color, shade)",adjective,a1,N/A,ತಿಳಿ,tiḷi
+598,"light (fixture, lamp)",noun,a1,N/A,ದೀಪ / ಬಲ್ಬ್ / ಜ್ಯೋತಿ,dīpa / balb / jyōti
+599,"to light (a lamp, a fire)",verb,a2,transitive,ಹಚ್ಚು / ಬೆಳಗು / ಉರಿಸು,haccu / beḷagu / urisu
+600,to light (to illuminate),verb,a2,transitive,ಬೆಳಗು / ಹಚ್ಚು,beḷagu / haccu
+601,lighting (quality or effect),noun,b2,N/A,ಬೆಳಕು,beḷaku
+602,lighting (fixtures and equipment),noun,b2,N/A,ದೀಪದ ವ್ಯವಸ್ಥೆ / ಜ್ಯೋತಿ ವ್ಯವಸ್ಥೆ,dīpada vyavasthe / jyōti vyavasthe
+603,like (manner/kind),noun,b1,N/A,ರೀತಿ / ತರಹ,rīti / taraha
+604,to like,verb,a1,transitive,ಇಷ್ಟಪಡು / ಮೆಚ್ಚು,iṣṭapaḍu / meccu
+605,to like,verb,a1,transitive,ಇಷ್ಟಪಡು / ಮೆಚ್ಚು,iṣṭapaḍu / meccu
+606,likelihood,noun,c1,N/A,ಸಂಭವನೀಯತೆ,saṁbhavanīyate
+607,likely (probable),adjective,a2,N/A,ಸಂಭವನೀಯ,saṁbhavanīya
+608,likewise (in the same way),adverb,b2,N/A,ಹಾಗೆಯೇ / ಅದೇ ರೀತಿ,hāgeyē / adē rīti
+609,limb (body part),noun,c1,N/A,ಅವಯವ / ಕೈಕಾಲು,avayava / kaikālu
+610,to line up (intransitive),verb,b2,intransitive,ಸಾಲು ನಿಲ್ಲು / ಸಾಲುಗಟ್ಟು,sālu nillu / sālugaṭṭu
+610,to line up (transitive),verb,b2,transitive,ಸಾಲುಮಾಡು / ಸಾಲಾಗಿ ಇಡು,sālumāḍu / sālāgi iḍu
+611,last (the end),noun,a2,N/A,ಕೊನೆ / ಕಡೆ,kone / kaḍe
+612,late (adverb),adverb,a1,N/A,ತಡವಾಗಿ,taḍavāgi
+613,lately (recently),adverb,b2,N/A,ಇತ್ತೀಚೆಗೆ,ittīcege
+614,"later (adverbial, shortly)",adverb,a2,N/A,ಆಮೇಲೆ / ನಂತರ,āmēle / naṁtara
+615,"later (adjective, subsequent)",adjective,a2,N/A,ನಂತರದ / ಮುಂದಿನ,naṁtarada / muṁdina
+616,later (at a subsequent time),adverb,a1,N/A,ನಂತರ / ಆಮೇಲೆ,naṁtara / āmēle
+617,"later (after that, then)",adverb,a1,N/A,ನಂತರದಲ್ಲಿ / ಆಮೇಲೆ,naṁtaradalli / āmēle
+618,latest (the newest),noun,b2,N/A,ಹೊಸತು / ಇತ್ತೀಚಿನದು,hosatu / ittīcinadu
+619,latter (the second of two),noun,c1,N/A,ಎರಡನೆಯದು,eraḍaneyadu
+620,to make someone laugh,verb,a1,transitive,ನಗಿಸು,nagisu
+621,layer (hen),noun,b1,N/A,ಮೊಟ್ಟೆ ಕೋಳಿ,moṭṭe kōḷi
+622,lead (the metal),noun,b1,N/A,ಸೀಸ,sīsa
+623,lead (leash),noun,b1,N/A,ಕುತ್ತಿಗೆ ಪಟ್ಟಿ,kuttige paṭṭi
+624,leave (absence from work),noun,b2,N/A,ರಜೆ,raje
+625,"left (remaining, residual)",adverb,a1,N/A,ಉಳಿದ / ಬಾಕಿ / ಶೇಷ,uḷida / bāki / śēṣa
+635,"to merge (companies, transitive)",verb,c1,transitive,ವಿಲೀನಗೊಳಿಸು / ವಿಲೀನ ಮಾಡು,vilīnagoḷisu / vilīna māḍu
+635,"to merge (companies, intransitive)",verb,c1,intransitive,ವಿಲೀನವಾಗು / ಒಂದಾಗು,vilīnavāgu / oṁdāgu
+650,loud (adverb),adverb,a2,N/A,ಜೋರಾಗಿ / ಗಟ್ಟಿಯಾಗಿ / ಉಚ್ಚ ಸ್ವರದಲ್ಲಿ,jōrāgi / gaṭṭiyāgi / ucca svaradalli
+651,low (lowest point/level),noun,b2,N/A,ಕನಿಷ್ಠ / ಕೆಳಮಟ್ಟ / ಅತ್ಯಂತ ಕಡಿಮೆ,kaniṣṭha / keḷamaṭṭa / atyaṁta kaḍime
+652,musical (play/drama),noun,b1,N/A,ಸಂಗೀತ ನಾಟಕ / ಸಂಗೀತಮಯ ನಾಟಕ,saṁgīta nāṭaka / saṁgītamaya nāṭaka
+653,narrative (account/story),noun,b1,N/A,ಕಥನ / ನಿರೂಪಣೆ / ಕಥೆ / ವೃತ್ತಾಂತ,kathana / nirūpaṇe / kathe / vr̥ttāṁta
+654,nationwide (adverb),adverb,c1,N/A,ರಾಷ್ಟ್ರವ್ಯಾಪಿಯಾಗಿ / ದೇಶಾದ್ಯಂತ / ರಾಷ್ಟ್ರದಾದ್ಯಂತ,rāṣṭravyāpiyāgi / dēśādyaṁta / rāṣṭradādyaṁta
+655,native (adjective: relating to origin),adjective,b1,N/A,ಸ್ಥಳೀಯ / ಮೂಲ / ಜನ್ಮದ / ಸ್ವಂತ,sthaḷīya / mūla / janmada / svaṁta
+656,native (person),noun,b1,N/A,ಮೂಲ ನಿವಾಸಿ / ಸ್ಥಳೀಯ ನಿವಾಸಿ / ದೇಶೀಯ,mūla nivāsi / sthaḷīya nivāsi / dēśīya
+657,little (adverb: small amount/extent),adverb,a2,N/A,ಸ್ವಲ್ಪ / ಅಲ್ಪ ಪ್ರಮಾಣದಲ್ಲಿ / ಕಡಿಮೆ,svalpa / alpa pramāṇadalli / kaḍime
+658,little (pronoun/determiner: small quantity),determiner,a1,N/A,ಸ್ವಲ್ಪ / ಕಡಿಮೆ / ಅಲ್ಪ,svalpa / kaḍime / alpa
+659,little (adjective: small in size),adjective,a1,N/A,ಚಿಕ್ಕ / ಸಣ್ಣ / ಪುಟ್ಟ / ಅಲ್ಪ,cikka / saṇṇa / puṭṭa / alpa
+660,local (person),noun,b1,N/A,ಸ್ಥಳೀಯ ವ್ಯಕ್ತಿ / ಸ್ಥಳೀಯರು,sthaḷīya vyakti / sthaḷīyaru
+661,to locate (to place/situate),verb,b2,transitive,ಸ್ಥಾಪಿಸು / ಇರಿಸು / ನೆಲೆಗೊಳಿಸು,sthāpisu / irisu / nelegoḷisu
+661,to locate (to find),verb,b2,transitive,ಪತ್ತೆ ಹಚ್ಚು / ಹುಡುಕು / ಗುರುತಿಸು,patte haccu / huḍuku / gurutisu
+662,to log in (access computer system),verb,c1,intransitive,ಲಾಗ್ ಇನ್ ಮಾಡು / ಪ್ರವೇಶಿಸು,lāg in māḍu / pravēśisu
+663,lonely (adjective: remote/desolate place),adjective,b1,N/A,ನಿರ್ಜನವಾದ / ಏಕಾಂತವಾದ / ಅರಣ್ಯಮಯವಾದ,nirjanavāda / ēkāṁtavāda / araṇyamayavāda
+663,lonely (adjective: feeling sad due to lack of company),adjective,b1,N/A,ಏಕಾಕಿ / ಒಂಟಿತನದಿಂದ ಕೂಡಿದ / ಒಂಟಿಯಾದ,ēkāki / oṁṭitanadiṁda kūḍida / oṁṭiyāda
+664,long (adverb: for a long time),adverb,a1,N/A,ಬಹಳ ಹೊತ್ತು / ದೀರ್ಘಕಾಲ / ಹೆಚ್ಚು ಸಮಯ,bahaḷa hottu / dīrghakāla / heccu samaya
+664,long (adjective: extended in space),adjective,a1,N/A,ಉದ್ದ / ದೀರ್ಘ,udda / dīrgha
+665,long-term (adjective),adjective,b2,N/A,ದೀರ್ಘಾವಧಿಯ / ದೀರ್ಘಕಾಲೀನ / ದೂರಗಾಮಿ,dīrghāvadhiya / dīrghakālīna / dūragāmi
+666,look (noun: gaze),noun,a2,N/A,ನೋಟ / ದೃಷ್ಟಿ / ವೀಕ್ಷಣೆ,nōṭa / dr̥ṣṭi / vīkṣaṇe
+666,to look (verb: to gaze),verb,a2,intransitive,ನೋಡು / ವೀಕ್ಷಿಸು,nōḍu / vīkṣisu
+667,loose (adjective: not fixed/tight),adjective,b2,N/A,ಸಡಿಲ / ಸಡಿಲವಾದ / ಅಲುಗಾಡುವ,saḍila / saḍilavāda / alugāḍuva
+668,loose (adjective: clothing),adjective,b1,N/A,ಸಡಿಲವಾದ / ಸಡಿಲ / ಅಗಲವಾದ,saḍilavāda / saḍila / agalavāda
+669,loose (adjective: scattered),adjective,b2,N/A,ಬೀಡಿ / ಚದುರಿದ / ಹರಡಿದ,bīḍi / cadurida / haraḍida
+670,lorry,noun,a2,N/A,ಲಾರಿ / ಟ್ರಕ್ / ಸರಕು ವಾಹನ,lāri / ṭrak / saraku vāhana
+671,lot (adverbial degree: very much),adverb,a1,N/A,ತುಂಬಾ / ಬಹಳ / ಹೆಚ್ಚು,tuṁbā / bahaḷa / heccu
+672,lot (quantifier: a large amount/number),determiner,a1,N/A,ತುಂಬಾ / ಬಹಳ / ಹೆಚ್ಚು / ಅನೇಕ,tuṁbā / bahaḷa / heccu / anēka
+673,lot (determiner: a large amount),determiner,a1,N/A,ಹೆಚ್ಚಿನ / ತುಂಬಾ / ಬಹಳ / ಅನೇಕ,heccina / tuṁbā / bahaḷa / anēka
+674,lot (determiner: many/much),determiner,a2,N/A,ಹೆಚ್ಚಿನ / ತುಂಬಾ / ಬಹಳ / ಅನೇಕ,heccina / tuṁbā / bahaḷa / anēka
+675,nor,adverb,b1,N/A,ಸಹ ಇಲ್ಲ,saha illa
+676,north (direction),adjective,a1,N/A,ಉತ್ತರದ,uttarada
+677,north,noun,a1,N/A,ಉತ್ತರ,uttara
+678,"novel (new, original)",adjective,c1,N/A,ನವೀನ / ಹೊಸ / ಅಪೂರ್ವ,navīna / hosa / apūrva
+679,nowhere (indicating lack of progress),adverb,a2,N/A,ಎಲ್ಲೂ ಇಲ್ಲ,ellū illa
+680,"nuclear (atomic energy, weapons)",adjective,b1,N/A,ಅಣು / ಪರಮಾಣು,aṇu / paramāṇu
+681,number (telephone),noun,a1,N/A,ಸಂಖ್ಯೆ / ನಂಬರ್,saṁkhye / naṁbar
+682,"nut (edible seed, fruit)",noun,a2,N/A,ಬೀಜ / ಕಾಯಿ,bīja / kāyi
+683,to obey (a person or instruction),verb,b2,transitive,ಮಾತು ಕೇಳು / ಪಾಲಿಸು / ಅನುಸರಿಸು,mātu kēḷu / pālisu / anusarisu
+684,"objection (formal, procedural)",noun,c1,N/A,ಆಕ್ಷೇಪ / ತಕರಾರು,ākṣēpa / takarāru
+685,"objection (difficulty, reservation)",noun,c1,N/A,ತಕರಾರು / ಆಕ್ಷೇಪಣೆ / ವಿರೋಧ,takarāru / ākṣēpaṇe / virōdha
+686,"obligation (duty, moral necessity)",noun,b2,N/A,ಕರ್ತವ್ಯ / ಜವಾಬ್ದಾರಿ,kartavya / javābdāri
+687,"obligation (responsibility, liability)",noun,b2,N/A,ಬಾಧ್ಯತೆ / ಋಣ / ಹೊಣೆಗಾರಿಕೆ,bādhyate / r̥ṇa / hoṇegārike
+688,to oblige (to require legally or morally),verb,c1,transitive,ನಿರ್ಬಂಧಿಸು / ಕಡ್ಡಾಯಗೊಳಿಸು,nirbaṁdhisu / kaḍḍāyagoḷisu
+689,"observation (act of watching, studying)",noun,b2,N/A,ವೀಕ್ಷಣೆ,vīkṣaṇe
+690,"observation (remark, comment)",noun,b2,N/A,ಅಭಿಪ್ರಾಯ / ಟಿಪ್ಪಣಿ,abhiprāya / ṭippaṇi
+691,to observe (rules or laws),verb,b2,transitive,ಪಾಲಿಸು / ಅನುಸರಿಸು,pālisu / anusarisu
+692,to observe (a festival or ceremony),verb,b2,transitive,ಆಚರಿಸು,ācarisu
+693,observer (official representative),noun,b2,N/A,ವೀಕ್ಷಕ,vīkṣaka
+694,"to obsess (excessive, worrying preoccupation)",verb,c1,intransitive,ಗೀಳು ಹಚ್ಚಿಕೊ / ಗೀಳು ಹಿಡಿ,gīḷu hacciko / gīḷu hiḍi
+695,"to obsess (to focus intensely, be fixated)",verb,c1,intransitive,ತಲ್ಲೀನನಾಗು / ಮಗ್ನನಾಗು,tallīnanāgu / magnanāgu
+696,obsession (fixation or compulsion),noun,c1,N/A,ಗೀಳು / ವ್ಯಾಮೋಹ,gīḷu / vyāmōha
+697,obsession (intense enthusiasm or passion),noun,c1,N/A,ತೀವ್ರ ಆಸಕ್ತಿ / ಕಡುಮೋಹ / ಅಭಿರುಚಿ,tīvra āsakti / kaḍumōha / abhiruci
+698,obstacle (structural barrier),noun,b2,N/A,ಅಡತಡೆ / ತಡೆ / ಅಡ್ಡಿ,aḍataḍe / taḍe / aḍḍi
+699,to obtain (by effort or achievement),verb,b2,transitive,ಗಳಿಸು / ಪಡೆ / ಸಂಪಾದಿಸು,gaḷisu / paḍe / saṁpādisu
+700,obviously (self-evidently),adverb,b1,N/A,ಸ್ಪಷ್ಟವಾಗಿ / ಸಹಜವಾಗಿ / ನಿಸ್ಸಂದೇಹವಾಗಿ,spaṣṭavāgi / sahajavāgi / nissaṁdēhavāgi
+701,occasion (event or specific time),noun,b1,N/A,ಸಂದರ್ಭ / ಪ್ರಸಂಗ / ಸಮಯ,saṁdarbha / prasaṁga / samaya
+702,occasion (cause or reason),noun,b1,N/A,ಕಾರಣ / ಹೇತು / ಮೂಲ,kāraṇa / hētu / mūla
+703,occasional (infrequent occurrence),adjective,c1,N/A,ಅಪರೂಪದ / ಆಗಾಗ ಬರುವ / ಸಂದರ್ಭಾನುಸಾರವಾದ,aparūpada / āgāga baruva / saṁdarbhānusāravāda
+704,occasionally (formally),adverb,b2,N/A,ಆಗಾಗ / ಕೆಲವೊಮ್ಮೆ / ಅಪರೂಪವಾಗಿ,āgāga / kelavomme / aparūpavāgi
+705,"occasionally (formally, context-dependent)",adverb,c1,N/A,ಸಂದರ್ಭಾನುಸಾರವಾಗಿ / ಅವಶ್ಯಕತೆಗನುಗುಣವಾಗಿ,saṁdarbhānusāravāgi / avaśyakateganuguṇavāgi
+706,overseas (adjective),adjective,b2,N/A,ವಿದೇಶಿ / ಪರದೇಶದ / ಸಾಗರೋತ್ತರ,vidēśi / paradēśada / sāgarōttara
+707,oxygen (common loanword),noun,b2,N/A,ಆಕ್ಸಿಜನ್ / ಪ್ರಾಣವಾಯು,āksijan / prāṇavāyu
+708,"parking lot , park (area for vehicles)",noun,a1,N/A,ಪಾರ್ಕಿಂಗ್ / ವಾಹನ ನಿಲುಗಡೆ ಪ್ರದೇಶ / ನಿಲುಗಡೆ ಸ್ಥಳ,pārkiṁg / vāhana nilugaḍe pradēśa / nilugaḍe sthaḷa
+709,party (political organization),noun,a1,N/A,ಪಕ್ಷ,pakṣa
+710,passenger,noun,a2,N/A,ಪ್ರಯಾಣಿಕ / ಯಾತ್ರಿಕ,prayāṇika / yātrika
+711,passive (grammar),adjective,c1,N/A,ಕರ್ಮಣಿ,karmaṇi
+712,pastor,noun,c1,N/A,ಪಾದ್ರಿ / ಪಾಸ್ಟರ್ / ಧರ್ಮಗುರು,pādri / pāsṭar / dharmaguru
+713,patch (software fix),noun,c1,N/A,ಪ್ಯಾಚ್ / ತಿದ್ದುಪಡಿ / ಸುಧಾರಣೆ,pyāc / tiddupaḍi / sudhāraṇe
+714,patient (person receiving medical care),noun,b1,N/A,ರೋಗಿ / ಅಸ್ವಸ್ಥ,rōgi / asvastha
+715,"to pay (money, bills)",verb,a1,transitive,ಪಾವತಿಸು / ಸಂದಾಯ ಮಾಡು / ಹಣ ಕೊಡು,pāvatisu / saṁdāya māḍu / haṇa koḍu
+716,permit,noun,b2,N/A,ಪರವಾನಗಿ / ಅನುಮತಿ,paravānagi / anumati
+717,pet (favorite person or project),noun,b1,N/A,ಅಚ್ಚುಮೆಚ್ಚು,accumeccu
+718,phase (cyclical state),noun,b2,N/A,ಹಂತ / ಘಟ್ಟ,haṁta / ghaṭṭa
+719,"philosopher (knower of the fundamental truth, essence)",noun,c1,N/A,ತತ್ವಜ್ಞಾನಿ,tatvajñāni
+720,photograph (image),noun,a1,N/A,ಫೋಟೋ / ಛಾಯಾಚಿತ್ರ / ಚಿತ್ರ,phōṭō / chāyācitra / citra
+721,"doctor (formal, traditional)",noun,b1,N/A,ಡಾಕ್ಟರ್ / ವೈದ್ಯ / ವೈದ್ಯರು,ḍākṭar / vaidya / vaidyaru
+722,to pick (to harvest),verb,a2,transitive,ಕೊಯ್ಯು / ಕೀಳು / ಆರಿಸು,koyyu / kīḷu / ārisu
+723,to picture (to depict),verb,b2,transitive,ಚಿತ್ರಿಸು / ತೋರಿಸು / ಮೂಡಿಸು,citrisu / tōrisu / mūḍisu
+724,to pin (assign responsibility),verb,b2,transitive,ಹೊಣೆ ಹೊರಿಸು / ದೂಷಿಸು / ಆರೋಪಿಸು,hoṇe horisu / dūṣisu / ārōpisu
+725,pink,adjective,a1,N/A,ಗುಲಾಬಿ,gulābi
+726,"plan (diagram, map)",noun,a1,N/A,ನಕ್ಷೆ / ರೂಪರೇಖೆ,nakṣe / rūparēkhe
+727,neither... nor...,conjunction,a2,N/A,"ಇದೂ ಇಲ್ಲ, ಅದೂ ಇಲ್ಲ","idū illa, adū illa"
+728,neither (me neither),pronoun,b1,N/A,ನಾನೂ ಇಲ್ಲ / ನನಗೂ ಇಲ್ಲ,nānū illa / nanagū illa
+729,nerve (anatomical),noun,b2,N/A,ನರ,nara
+730,nervous (anatomical),adjective,b1,N/A,ನರಗಳ / ನರಮಂಡಲದ,naragaḷa / naramaṁḍalada
+731,net (amount after deductions),noun,b1,N/A,ನಿವ್ವಳ,nivvaḷa
+732,"neutral (science, chemistry)",adjective,b2,N/A,ತಟಸ್ಥ,taṭastha
+733,nine,number,a1,N/A,ಒಂಬತ್ತು,oṁbattu
+734,nineteen,number,a1,N/A,ಹತ್ತೊಂಬತ್ತು,hattoṁbattu
+735,ninety,number,a1,N/A,ತೊಂಬತ್ತು,toṁbattu
+736,"no (general response, absence)",interjection,a1,N/A,ಇಲ್ಲ / ಅಲ್ಲ,illa / alla
+737,"no (refusal, don't want)",interjection,a1,N/A,ಬೇಡ,bēḍa
+740,non-profit,adjective,c1,N/A,ಲಾಭರಹಿತ,lābharahita
+741,outside (attributive),adjective,a2,N/A,ಹೊರಗಿನ / ಬಾಹ್ಯ,horagina / bāhya
+742,plot (storyline),noun,b1,N/A,ಕಥಾವಸ್ತು / ಕಥಾಹಂದರ,kathāvastu / kathāhaṁdara
+743,"plot (secret scheme, conspiracy)",noun,b1,N/A,ಸಂಚು / ಷಡ್ಯಂತ್ರ,saṁcu / ṣaḍyaṁtra
+744,"to plot (coordinates, mark)",verb,b2,transitive,ಗುರುತು ಮಾಡು / ಗುರುತಿಸು,gurutu māḍu / gurutisu
+745,"to plot (a story, plan)",verb,b2,transitive,ಕಥೆ ಹೆಣೆ / ಕಥೆ ರಚಿಸು,kathe heṇe / kathe racisu
+746,plug (electrical connector),noun,c1,N/A,ಪ್ಲಗ್,plag
+747,"plug (stopper, lid)",noun,c1,N/A,ಮುಚ್ಚಳ / ಅಡಚು,muccaḷa / aḍacu
+748,"plug (advertisement, promotion)",noun,c1,N/A,ಪ್ರಚಾರ / ಜಾಹೀರಾತು,pracāra / jāhīrātu
+749,to plug (into a socket),verb,c1,transitive,ಪ್ಲಗ್ ಹಾಕು,plag hāku
+750,"to plug (a hole, leak)",verb,c1,transitive,ಮುಚ್ಚು / ಅಡಸು / ಮುಚ್ಚಿಹಾಕು,muccu / aḍasu / muccihāku
+751,to plunge (into water or depths),verb,c1,intransitive,ಧುಮುಕು / ಜಿಗಿದು ಬೀಳು,dhumuku / jigidu bīḷu
+752,"to plunge (to fall sharply, e.g., prices)",verb,c1,intransitive,ಕುಸಿ / ಇಳಿ / ತೀವ್ರವಾಗಿ ಇಳಿ,kusi / iḷi / tīvravāgi iḷi
+753,"plus (advantage, benefit)",adjective,b2,N/A,ಅನುಕೂಲ / ಲಾಭದಾಯಕ / ಹಿತಕರ,anukūla / lābhadāyaka / hitakara
+754,plus (in addition to),adjective,b2,N/A,ಜೊತೆಗೆ / ಮತ್ತೂ / ಇದಲ್ಲದೆ,jotege / mattū / idallade
+755,plus (furthermore; in addition),conjunction,b2,N/A,ಜೊತೆಗೆ / ಮತ್ತೂ / ಇದಲ್ಲದೆ / ಅದಲ್ಲದೆ,jotege / mattū / idallade / adallade
+756,plus (mathematical addition),conjunction,b2,N/A,ಮತ್ತು / ಜೊತೆಗೆ / ಸೇರಿಸಿ / ಪ್ಲಸ್,mattu / jotege / sērisi / plas
+757,plus (advantage),noun,b2,N/A,ಲಾಭ / ಅನುಕೂಲ / ಪ್ರಯೋಜನ / ಒಳಿತು,lābha / anukūla / prayōjana / oḷitu
+758,plus (mathematical addition),preposition,b1,N/A,ಸೇರಿಸಿ / ಪ್ಲಸ್ / ಜೊತೆಗೆ,sērisi / plas / jotege
+759,"plus (furthermore, in addition)",preposition,b1,N/A,ಇದಲ್ಲದೆ / ಜೊತೆಗೆ / ಮತ್ತೂ / ಅದಲ್ಲದೆ,idallade / jotege / mattū / adallade
+760,to pocket,verb,a2,transitive,ಜೇಬಿಗೆ ಹಾಕು / ಕಬಳಿಸು,jēbige hāku / kabaḷisu
+761,"poem (classical verse, rhyme)",noun,b1,N/A,ಪದ್ಯ / ಕಾವ್ಯ,padya / kāvya
+762,poet (female),noun,b1,N/A,ಕವಯಿತ್ರಿ,kavayitri
+763,poem (an individual piece),noun,b1,N/A,ಕವನ / ಪದ್ಯ,kavana / padya
+764,point (tip),noun,a1,N/A,ತುದಿ / ಮೊನೆ / ಅಗ್ರ,tudi / mone / agra
+765,point (idea),noun,a1,N/A,ವಿಷಯ / ಅಂಶ / ಸಂಗತಿ,viṣaya / aṁśa / saṁgati
+766,point (score),noun,a1,N/A,ಅಂಕ / ಸ್ಕೋರ್,aṁka / skōr
+767,to point (direction),verb,b1,transitive,ತೋರಿಸು / ಸೂಚಿಸು,tōrisu / sūcisu
+768,to point (suggest or indicate abstractly),verb,b1,intransitive,ಸೂಚಿಸು / ತೋರಿಸು / ಗಮನ ಸೆಳೆ,sūcisu / tōrisu / gamana seḷe
+769,pointed (having a sharp end),adjective,b2,N/A,ಚೂಪಾದ / ಮೊನಚಾದ / ತೀಕ್ಷ್ಣವಾದ,cūpāda / monacāda / tīkṣṇavāda
+770,"pointed (direct or critical, e.g., remark)",adjective,b2,N/A,ತೀಕ್ಷ್ಣ / ಖಚಿತವಾದ / ನೇರವಾದ,tīkṣṇa / khacitavāda / nēravāda
+771,poison,noun,b1,N/A,ವಿಷ / ಗರಳ,viṣa / garaḷa
+772,"to poison (to corrupt, influence negatively)",verb,b1,transitive,ವಿಷ ಕೊಡು / ಕೆಡಿಸು / ದುಷ್ಪರಿಣಾಮ ಬೀರು,viṣa koḍu / keḍisu / duṣpariṇāma bīru
+773,poisonous,adjective,b1,N/A,ವಿಷಕಾರಿ / ವಿಷಪೂರಿತ,viṣakāri / viṣapūrita
+774,pole (geographic or magnetic),noun,c1,N/A,ಧ್ರುವ,dhruva
+775,police (the institution/force),noun,a2,N/A,ಪೋಲೀಸ್ / ಆರಕ್ಷಕ ದಳ / ಪೋಲೀಸ್ ಇಲಾಖೆ,pōlīs / ārakṣaka daḷa / pōlīs ilākhe
+776,"police force, department",noun,a2,N/A,ಪೋಲೀಸ್ ಇಲಾಖೆ / ಆರಕ್ಷಕ ದಳ / ಪೋಲೀಸ್ ಪಡೆ,pōlīs ilākhe / ārakṣaka daḷa / pōlīs paḍe
+777,policeman (officer),noun,a1,N/A,ಪೋಲೀಸ್ / ಆರಕ್ಷಕ / ಪೋಲೀಸ್ ಅಧಿಕಾರಿ,pōlīs / ārakṣaka / pōlīs adhikāri
+778,"policy (principle, guideline)",noun,b1,N/A,ನೀತಿ / ಧೋರಣೆ / ನಿಯಮ,nīti / dhōraṇe / niyama
+779,policy (insurance document),noun,b1,N/A,ಪಾಲಿಸಿ / ವಿಮಾ ಪತ್ರ,pālisi / vimā patra
+780,polite (courteous),adjective,a2,N/A,ವಿನಯದ / ಸೌಜನ್ಯದ / ಮರ್ಯಾದೆಯ,vinayada / saujanyada / maryādeya
+781,political,adjective,b1,N/A,ರಾಜಕೀಯ,rājakīya
+782,politician,noun,b1,N/A,ರಾಜಕಾರಣಿ,rājakāraṇi
+783,politics,noun,b1,N/A,ರಾಜಕೀಯ,rājakīya
+784,poll (opinion survey),noun,c1,N/A,ಸಮೀಕ್ಷೆ / ಮತಸಮೀಕ್ಷೆ,samīkṣe / matasamīkṣe
+785,poll (election vote),noun,c1,N/A,ಮತದಾನ / ಮತ ಚಲಾವಣೆ,matadāna / mata calāvaṇe
+786,pollution,noun,a2,N/A,ಮಾಲಿನ್ಯ,mālinya
+787,pond,noun,c1,N/A,ಕೊಳ / ಕೆರೆ / ಹೊಂಡ,koḷa / kere / hoṁḍa
+788,pool (swimming facility),noun,a1,N/A,ಈಜುಕೊಳ,ījukoḷa
+789,pool (small body of water),noun,a1,N/A,ಕೊಳ / ಹೊಂಡ / ಚಿಕ್ಕ ಕೆರೆ / ನೀರಿನ ಗುಂಡಿ,koḷa / hoṁḍa / cikka kere / nīrina guṁḍi
+790,poor (lacking money),adjective,a1,N/A,ಬಡ / ನಿರ್ಗತಿಕ,baḍa / nirgatika
+791,poor (low quality),adjective,a1,N/A,ಕಳಪೆ / ಕೆಟ್ಟ / ಗುಣಮಟ್ಟವಿಲ್ಲದ,kaḷape / keṭṭa / guṇamaṭṭavillada
+792,pop (as in pop music/culture),adjective,a2,N/A,ಪಾಪ್,pāp
+793,"to pop (to burst, intransitive)",verb,c1,intransitive,ಸಿಡಿ / ಒಡೆ,siḍi / oḍe
+794,"to pop (to burst something, transitive)",verb,c1,transitive,ಸಿಡಿಸು / ಒಡೆಸು / ಮುರಿ,siḍisu / oḍesu / muri
+795,"on (in operation, active)",preposition,a1,N/A,ಆನ್ / ಚಾಲೂ,ān / cālū
+796,"pretty (quite, fairly)",adverb,a1,N/A,ಸಾಕಷ್ಟು / ತುಂಬಾ / ಅತ್ಯಂತ,sākaṣṭu / tuṁbā / atyaṁta
+797,"printing (general, 3D fabrication)",noun,b1,N/A,ಮುದ್ರಣ / ತ್ರಿಡಿ ಮುದ್ರಣ,mudraṇa / triḍi mudraṇa
+798,purely,adverb,b2,N/A,ಸಂಪೂರ್ಣವಾಗಿ / ಕೇವಲ,saṁpūrṇavāgi / kēvala
+799,programme (computer software),noun,a2,N/A,ಪ್ರೋಗ್ರಾಂ / ತಂತ್ರಾಂಶ / ಕಾರ್ಯಕ್ರಮ,prōgrāṁ / taṁtrāṁśa / kāryakrama
+800,"progressive (gradual, continuing)",adjective,b2,N/A,ಪ್ರಗತಿಪರ / ಪ್ರಗತಿಶೀಲ / ಮುಂದುವರೆಯುವ,pragatipara / pragatiśīla / muṁduvareyuva
+801,protrusion,noun,c1,N/A,ಉಬ್ಬು / ಚಾಚಿಕೊಂಡಿರುವಿಕೆ,ubbu / cācikoṁḍiruvike
+802,"famous, well-known",adjective,c1,N/A,ಹೆಸರಾಂತ / ಪ್ರಸಿದ್ಧ / ಖ್ಯಾತ / ಜನಪ್ರಿಯ,hesarāṁta / prasiddha / khyāta / janapriya
+803,potential (likelihood of success),noun,a2,N/A,ಸಾಮರ್ಥ್ಯ / ಶಕ್ತಿ / ಸಾಧಕತೆ,sāmarthya / śakti / sādhakate
+804,to propose (colloquial),verb,b2,transitive,ಪ್ರಪೋಸ್ ಮಾಡು / ಪ್ರಸ್ತಾಪಿಸು,prapōs māḍu / prastāpisu
+805,bar,noun,a2,N/A,ಬಾರ್,bār
+806,realistic (true to life),adjective,b2,N/A,ವಾಸ್ತವಿಕ / ನಿಜವಾದ,vāstavika / nijavāda
+807,"to rebuild (confidence, life)",verb,b2,transitive,ಮರುಕಟ್ಟು / ಪುನರ್ನಿರ್ಮಿಸು / ಪುನಃ ಕಟ್ಟಿಕೊ,marukaṭṭu / punarnirmisu / punaḥ kaṭṭiko
+808,relative (family member),adjective,b1,N/A,ಸಂಬಂಧದ / ಬಂಧುತ್ವದ,saṁbaṁdhada / baṁdhutvada
+809,relative,noun,b1,N/A,ಸಂಬಂಧಿ / ಬಂಧು / ನೆಂಟ,saṁbaṁdhi / baṁdhu / neṁṭa
+810,duty,noun,b1,N/A,ಕರ್ತವ್ಯ / ಜವಾಬ್ದಾರಿ / ಧರ್ಮ,kartavya / javābdāri / dharma
+811,remark,noun,b2,N/A,ಮಾತು / ಹೇಳಿಕೆ / ಟಿಪ್ಪಣಿ,mātu / hēḷike / ṭippaṇi
+812,salad,noun,a1,N/A,ಸಲಾಡ್,salāḍ
+813,sandwich,noun,a1,N/A,ಸ್ಯಾಂಡ್ವಿಚ್,syāṁḍvic
+814,saturday,noun,a1,N/A,ಶನಿವಾರ,śanivāra
+815,sauce,noun,a2,N/A,ಸಾಸ್,sās
+816,ring (circular shape),noun,a2,N/A,ವೃತ್ತ / ರಿಂಗ್ / ಚಕ್ರ,vr̥tta / riṁg / cakra
+817,to risk,verb,b1,transitive,ಅಪಾಯಕ್ಕೆ ಒಡ್ಡು / ಅಪಾಯ ಎದುರಿಸು,apāyakke oḍḍu / apāya edurisu
+818,rival,noun,b2,N/A,ಪ್ರತಿಸ್ಪರ್ಧಿ / ಎದುರಾಳಿ / ಪೈಪೋಟಿದಾರ,pratispardhi / edurāḷi / paipōṭidāra
+819,roughly (approximately),adverb,b2,N/A,ಸರಿಸುಮಾರು / ಸುಮಾರು / ಅಂದಾಜಿನಲ್ಲಿ,sarisumāru / sumāru / aṁdājinalli
+820,round,preposition,a2,N/A,ಸುತ್ತ / ಸುತ್ತಲೂ,sutta / suttalū
+821,routine (daily practice),noun,b2,N/A,ದಿನಚರಿ / ವಾಡಿಕೆ,dinacari / vāḍike
+822,reverse (a defeat or setback),noun,c1,N/A,ಹಿನ್ನಡೆ / ಸೋಲು,hinnaḍe / sōlu
+823,reverse (back side),noun,c1,N/A,ಹಿಂಭಾಗ / ಹಿಂದಿನ ಭಾಗ / ಮರುಭಾಗ,hiṁbhāga / hiṁdina bhāga / marubhāga
+824,reverse (gear),noun,c1,N/A,ರೆವರ್ಸು / ಹಿಂದಕ್ಕೆ ಚಲಿಸುವ ಗೇರ್,revarsu / hiṁdakke calisuva gēr
+825,to reverse (a vehicle),verb,c1,transitive,ರೆವರ್ಸು ಮಾಡು / ಹಿಂದಕ್ಕೆ ಸಾಗಿಸು,revarsu māḍu / hiṁdakke sāgisu
+826,to reverse (a ruling or decision),verb,c1,transitive,ರದ್ದುಮಾಡು / ತಿರುಗಿ ಹಾಕು / ಮರುಪರಿಶೀಲಿಸು / ತಳ್ಳಿಹಾಕು,raddumāḍu / tirugi hāku / marupariśīlisu / taḷḷihāku
+827,review (critique),noun,a2,N/A,ವಿಮರ್ಶೆ / ಪರಾಮರ್ಶೆ / ಟೀಕೆ,vimarśe / parāmarśe / ṭīke
+828,"review (inspection, examination)",noun,a2,N/A,ಪರಿಶೀಲನೆ / ಪರಿವೀಕ್ಷಣೆ / ಪುನರಾವಲೋಕನ / ಪರಿಶೋಧನೆ,pariśīlane / parivīkṣaṇe / punarāvalōkana / pariśōdhane
+829,to review (re-examine or check),verb,a2,transitive,ಪರಿಶೀಲಿಸು / ಪರಿವೀಕ್ಷಿಸು / ಪುನರಾವಲೋಕಿಸು / ಪರಿಶೋಧಿಸು,pariśīlisu / parivīkṣisu / punarāvalōkisu / pariśōdhisu
+830,"to review (a movie, book, or product)",verb,a2,transitive,ವಿಮರ್ಶಿಸು / ಪರಾಮರ್ಶಿಸು / ಟೀಕಿಸು,vimarśisu / parāmarśisu / ṭīkisu
+831,to revise (amend or formal change),verb,b2,transitive,ತಿದ್ದು / ಸುಧಾರಿಸು / ಮಾರ್ಪಡಿಸು / ಬದಲಾಯಿಸು,tiddu / sudhārisu / mārpaḍisu / badalāyisu
+832,revision (academic study),noun,b2,N/A,ಪುನರಾವೃತ್ತಿ / ಅಭ್ಯಾಸ / ಮರುಪರಿಶೀಲನೆ,punarāvr̥tti / abhyāsa / marupariśīlane
+833,revision (document amendment),noun,b2,N/A,ತಿದ್ದುಪಡಿ / ಸುಧಾರಣೆ / ಮಾರ್ಪಾಡು / ಬದಲಾವಣೆ,tiddupaḍi / sudhāraṇe / mārpāḍu / badalāvaṇe
+834,sceptical,adjective,c1,N/A,ಸಂದೇಹವಿರುವ / ಸಂಶಯಾತ್ಮಕ / ಅವಿಶ್ವಾಸದ,saṁdēhaviruva / saṁśayātmaka / aviśvāsada
+835,to schedule (an event or activity),verb,a2,transitive,ಸಮಯ ನಿಗದಿಪಡಿಸು / ವೇಳೆ ನಿಗದಿಪಡಿಸು / ಯೋಜಿಸು,samaya nigadipaḍisu / vēḷe nigadipaḍisu / yōjisu
+836,to schedule (to fix a specific time or appointment),verb,b2,transitive,ದಿನಾಂಕ ನಿಗದಿಪಡಿಸು / ವೇಳೆ ನಿಗದಿಪಡಿಸು / ನಿಗದಿಪಡಿಸು,dināṁka nigadipaḍisu / vēḷe nigadipaḍisu / nigadipaḍisu
+837,to schedule (to plan an agenda or timetable),verb,b2,transitive,ವೇಳಾಪಟ್ಟಿ ತಯಾರಿಸು / ಯೋಜನೆ ರೂಪಿಸು / ಕಾರ್ಯಕ್ರಮ ರೂಪಿಸು,vēḷāpaṭṭi tayārisu / yōjane rūpisu / kāryakrama rūpisu
+838,"scheme (plan, program)",noun,b2,N/A,ಯೋಜನೆ / ಕಾರ್ಯಕ್ರಮ / ರೂಪರೇಷೆ,yōjane / kāryakrama / rūparēṣe
+839,scheme (plot),noun,b2,N/A,ಪಿತೂರಿ / ಕುತಂತ್ರ / ಷಡ್ಯಂತ್ರ,pitūri / kutaṁtra / ṣaḍyaṁtra
+840,scholar (academic),noun,b2,N/A,ವಿದ್ವಾಂಸ / ಪಂಡಿತ / ಜ್ಞಾನಿ,vidvāṁsa / paṁḍita / jñāni
+841,scholar (scholarship recipient),noun,b2,N/A,ವೇತನಾರ್ಥಿ / ವಿದ್ಯಾರ್ಥಿವೇತನ ಪಡೆದ ವಿದ್ಯಾರ್ಥಿ,vētanārthi / vidyārthivētana paḍeda vidyārthi
+842,scholarship (financial aid),noun,b2,N/A,ವಿದ್ಯಾರ್ಥಿವೇತನ / ಶಿಷ್ಯವೇತನ,vidyārthivētana / śiṣyavētana
+843,scholarship (academic learning),noun,b2,N/A,ಪಾಂಡಿತ್ಯ / ವಿದ್ವತ್ತು / ಜ್ಞಾನ,pāṁḍitya / vidvattu / jñāna
+844,school,noun,a1,N/A,ಶಾಲೆ / ವಿದ್ಯಾಲಯ / ಪಾಠಶಾಲೆ,śāle / vidyālaya / pāṭhaśāle
+845,science,noun,a1,N/A,ವಿಜ್ಞಾನ / ಶಾಸ್ತ್ರ,vijñāna / śāstra
+846,scientific,adjective,b1,N/A,ವೈಜ್ಞಾನಿಕ,vaijñānika
+847,scientist,noun,a1,N/A,ವಿಜ್ಞಾನಿ,vijñāni
+848,scope (extent or range),noun,c1,N/A,ವ್ಯಾಪ್ತಿ / ಪರಿಧಿ / ಹರವು,vyāpti / paridhi / haravu
+849,scope (opportunity or potential),noun,c1,N/A,ಅವಕಾಶ / ಸಂಭಾವ್ಯತೆ / ಸಾದ್ಯತೆ,avakāśa / saṁbhāvyate / sādyate
+850,score (points in a game),noun,a2,N/A,ಅಂಕ / ಪಾಯಿಂಟ್,aṁka / pāyiṁṭ
+851,to score (to mark or cut a line),verb,b1,transitive,ಗೆರೆ ಹಾಕು / ಗೀರು,gere hāku / gīru
+852,scratch (starting point/from zero),noun,b2,N/A,ಮೊದಲ ಹಂತ / ಆರಂಭಿಕ ಹಂತ,modala haṁta / āraṁbhika haṁta
+853,starting from scratch (the concept/process),noun,b2,N/A,ಮೊದಲಿನಿಂದ ಆರಂಭ / ಶೂನ್ಯದಿಂದ ಪ್ರಾರಂಭ,modaliniṁda āraṁbha / śūnyadiṁda prāraṁbha
+854,"to scratch (skin, due to itch)",verb,b2,transitive,ಕೆರೆ,kere
+855,"to scratch (a surface, to mark/damage)",verb,b2,transitive,ಗೀರು / ಕೆರೆ,gīru / kere
+856,scream,noun,b2,N/A,ಕಿರಿಚಾಟ / ಚೀರಾಟ / ಕೂಗು,kiricāṭa / cīrāṭa / kūgu
+857,to scream (to shout loudly),verb,b2,intransitive,ಕಿರಿಚು / ಚೀರು / ಕೂಗು,kiricu / cīru / kūgu
+858,"screen (mesh, filter)",noun,b1,N/A,ಜಾಲರಿ,jālari
+859,screen (display/monitor),noun,b1,N/A,ಪರದೆ / ಸ್ಕ್ರೀನ್,parade / skrīn
+860,to screen (a movie or performance),verb,b2,transitive,ಪ್ರದರ್ಶಿಸು,pradarśisu
+861,"to screen (applicants, diseases, for suitability)",verb,b2,transitive,ಪರಿಶೀಲಿಸು / ಪರೀಕ್ಷಿಸು / ತಪಾಸಣೆ ಮಾಡು,pariśīlisu / parīkṣisu / tapāsaṇe māḍu
+862,to screen (a phone call),verb,b2,transitive,ಪರಿಶೀಲಿಸು / ಕರೆ ಪರಿಶೀಲಿಸು,pariśīlisu / kare pariśīlisu
+863,screening (medical examination or vetting),noun,b2,N/A,ಪರಿಶೀಲನೆ / ತಪಾಸಣೆ / ಪರೀಕ್ಷೆ,pariśīlane / tapāsaṇe / parīkṣe
+864,screening (film showing),noun,b2,N/A,ಪ್ರದರ್ಶನ,pradarśana
+865,screw (fastener),noun,c1,N/A,ತಿರುಪು ಮೊಳೆ / ಸ್ಕ್ರೂ,tirupu moḷe / skrū
+866,"screw (vulgar, sexual act)",noun,c1,N/A,ಸಂಭೋಗ / ಲೈಂಗಿಕ ಕ್ರಿಯೆ,saṁbhōga / laiṁgika kriye
+867,to screw (fasten with a screw),verb,c1,transitive,ಸ್ಕ್ರೂ ಹಾಕು / ತಿರುಪು ಮೊಳೆ ಹಾಕು / ತಿರುಗಿಸು,skrū hāku / tirupu moḷe hāku / tirugisu
+868,"to screw (cheat, exploit)",verb,c1,transitive,ಮೋಸ ಮಾಡು / ಸುಲಿಗೆ ಮಾಡು,mōsa māḍu / sulige māḍu
+869,to screw up (make a mistake/ruin),verb,c1,transitive,ಹಾಳು ಮಾಡು / ತಪ್ಪು ಮಾಡು / ಗೊಂದಲ ಮಾಡು,hāḷu māḍu / tappu māḍu / goṁdala māḍu
+870,"to screw (vulgar, to have sex)",verb,c1,transitive,ಕೆಯ್ಯಿ / ಸಂಭೋಗಿಸು,keyyi / saṁbhōgisu
+871,"script (writing system, alphabet)",noun,b1,N/A,ಲಿಪಿ,lipi
+872,"script (screenplay, dialogue)",noun,b1,N/A,ಚಿತ್ರಕಥೆ / ಸಂಭಾಷಣೆ,citrakathe / saṁbhāṣaṇe
+873,second (unit of time),noun,a2,N/A,ಸೆಕೆಂಡ್,sekeṁḍ
+874,second (ordinal number),ordinal number,a1,N/A,ಎರಡನೇ / ದ್ವಿತೀಯ,eraḍanē / dvitīya
+875,"secretary (official, society head)",noun,a2,N/A,ಕಾರ್ಯದರ್ಶಿ / ಸೆಕ್ರೆಟರಿ,kāryadarśi / sekreṭari
+876,"sector (economic, industry)",noun,b2,N/A,ವಲಯ / ಕ್ಷೇತ್ರ,valaya / kṣētra
+877,"secular (political, neutral)",adjective,c1,N/A,ಜಾತ್ಯತೀತ,jātyatīta
+878,seldom,adverb,c1,N/A,ಅಪರೂಪವಾಗಿ,aparūpavāgi
+879,selection (range offered),noun,b2,N/A,ವೈವಿಧ್ಯ / ಆಯ್ಕೆ,vaividhya / āyke
+880,senator,noun,c1,N/A,ಸೆನೆಟರ್,seneṭar
+881,shift (work period),noun,b1,N/A,ಪಾಳಿ / ಶಿಫ್ಟ್,pāḷi / śiphṭ
+882,ship,noun,a2,N/A,ಹಡಗು / ನೌಕೆ,haḍagu / nauke
+883,"to ship (fandom, relationships)",verb,b2,transitive,ಶಿಪ್ ಮಾಡು,śip māḍu
+884,shirt,noun,a1,N/A,ಅಂಗಿ / ಶರ್ಟ್,aṁgi / śarṭ
+885,shock (medical condition),noun,b2,N/A,ಆಘಾತ,āghāta
+886,shock (electric),noun,b2,N/A,ವಿದ್ಯುತ್ ಆಘಾತ,vidyut āghāta
+887,"sandal, slipper (open footwear)",noun,a1,N/A,ಚಪ್ಪಲಿ / ಸ್ಯಾಂಡಲ್,cappali / syāṁḍal
+888,to shoot (score a goal),verb,b1,transitive,ಹೊಡೆ,hoḍe
+889,"shooting (filming, photography session)",noun,b2,N/A,ಚಿತ್ರೀಕರಣ / ಶೂಟಿಂಗ್,citrīkaraṇa / śūṭiṁg
+890,shop,noun,a1,N/A,ಅಂಗಡಿ / ಮಳಿಗೆ / ಶಾಪ್,aṁgaḍi / maḷige / śāp
+891,shopping,noun,a1,N/A,ಶಾಪಿಂಗ್ / ಖರೀದಿ,śāpiṁg / kharīdi
+892,short (in height),adjective,a1,N/A,ಕುಳ್ಳ / ಗಿಡ್ಡ,kuḷḷa / giḍḍa
+893,short-term,adjective,b2,N/A,ಅಲ್ಪಾವಧಿ,alpāvadhi
+894,"shortage (scarcity, formal)",noun,b2,N/A,ಕೊರತೆ / ಅಭಾವ,korate / abhāva
+895,shortly,adverb,b2,N/A,ಸ್ವಲ್ಪ ಸಮಯದಲ್ಲೇ / ಬೇಗನೆ / ಶೀಘ್ರದಲ್ಲೇ,svalpa samayadallē / bēgane / śīghradallē
+896,shot (medical injection),noun,b2,N/A,ಸೂಜಿಮದ್ದು / ಇಂಜೆಕ್ಷನ್,sūjimaddu / iṁjekṣan
+897,shot (photograph or film sequence),noun,b2,N/A,ದೃಶ್ಯ / ಛಾಯಾಚಿತ್ರ / ಶಾಟ್,dr̥śya / chāyācitra / śāṭ
+898,shot (attempt or chance),noun,b2,N/A,ಪ್ರಯತ್ನ / ಅವಕಾಶ,prayatna / avakāśa
+899,should (expectation),modal verb,a2,N/A,ಇರಬೇಕು,irabēku
+900,shoulder (of a road),noun,a2,N/A,ರಸ್ತೆಯ ಬದಿ / ರಸ್ತೆಯ ಅಂಚು / ರಸ್ತೆಯ ಪಕ್ಕ,rasteya badi / rasteya aṁcu / rasteya pakka
+901,shout,noun,a2,N/A,ಕೂಗು / ಅರಚಾಟ,kūgu / aracāṭa
+902,to scream,verb,a2,intransitive,ಕಿರುಚು / ಕೂಗು / ಅರಚು,kirucu / kūgu / aracu
+903,show,noun,a1,N/A,ಪ್ರದರ್ಶನ / ಕಾರ್ಯಕ್ರಮ,pradarśana / kāryakrama
+904,to show,verb,a1,transitive,ತೋರಿಸು / ಪ್ರದರ್ಶಿಸು,tōrisu / pradarśisu
+905,shower (washing oneself),noun,a1,N/A,ಶವರ್ ಸ್ನಾನ / ಸ್ನಾನ,śavar snāna / snāna
+906,shower (rain),noun,a1,N/A,ಮಳೆ / ತುಂತುರು ಮಳೆ,maḷe / tuṁturu maḷe
+907,rain shower,noun,a1,N/A,ಸಣ್ಣ ಮಳೆ / ತುಂತುರು ಮಳೆ / ಹನಿ ಮಳೆ,saṇṇa maḷe / tuṁturu maḷe / hani maḷe
+908,to shrink (in size or volume),verb,c1,intransitive,ಸಂಕೋಚಿಸು / ಕುಗ್ಗು / ಕಿರಿದಾಗು,saṁkōcisu / kuggu / kiridāgu
+909,to shrink (from fear or responsibility),verb,c1,intransitive,ಹಿಂಜರಿ / ಹಿಂದೆ ಸರಿ,hiṁjari / hiṁde sari
+910,to shrug off (to dismiss),verb,c1,transitive,ನಿರ್ಲಕ್ಷಿಸು / ಕಡೆಗಣಿಸು,nirlakṣisu / kaḍegaṇisu
+911,"to shut (something, close)",verb,a2,transitive,ಮುಚ್ಚು,muccu
+912,"to shut (shop, close down)",verb,a2,intransitive,ಮುಚ್ಚು,muccu
+913,shut (closed state),adjective,a2,N/A,ಮುಚ್ಚಿದ,muccida
+915,shy,adjective,b1,N/A,ನಾಚಿಕೆ ಸ್ವಭಾವದ / ನಾಚಿಕೆ ಪಡುವ,nācike svabhāvada / nācike paḍuva
+916,sibling (older brother),noun,b2,N/A,ಅಣ್ಣ,aṇṇa
+917,sibling (younger brother),noun,b2,N/A,ತಮ್ಮ,tamma
+918,sibling (older sister),noun,b2,N/A,ಅಕ್ಕ,akka
+919,sibling (younger sister),noun,b2,N/A,ತಂಗಿ,taṁgi
+920,sick (ill),adjective,a1,N/A,ಹುಷಾರಿಲ್ಲದ / ಅನಾರೋಗ್ಯದ,huṣārillada / anārōgyada
+921,sick (nauseous),adjective,a1,N/A,ವಾಕರಿಕೆ ಇರುವ / ವಾಂತಿ ಬರುವಂತ,vākarike iruva / vāṁti baruvaṁta
+922,side (faction or team),noun,a2,N/A,ಪಕ್ಷ / ಗುಂಪು / ತಂಡ,pakṣa / guṁpu / taṁḍa
+923,sigh,noun,c1,N/A,ನಿಟ್ಟುಸಿರು,niṭṭusiru
+924,to sigh,verb,c1,intransitive,ನಿಟ್ಟುಸಿರು ಬಿಡು,niṭṭusiru biḍu
+925,sight (ability to see),noun,b1,N/A,ದೃಷ್ಟಿ,dr̥ṣṭi
+926,sight (view or spectacle),noun,b1,N/A,ದೃಶ್ಯ / ನೋಟ / ಕಾಣುವಿಕೆ,dr̥śya / nōṭa / kāṇuvike
+927,sign (board or indicator),noun,a2,N/A,ಸೂಚನಾ ಫಲಕ / ಬೋರ್ಡು / ಫಲಕ,sūcanā phalaka / bōrḍu / phalaka
+928,sign (symbol),noun,a2,N/A,ಚಿಹ್ನೆ / ಸಂಕೇತ / ಗುರುತು,cihne / saṁkēta / gurutu
+929,sign (indication or symptom),noun,a2,N/A,ಸೂಚನೆ / ಲಕ್ಷಣ / ಗುರುತು,sūcane / lakṣaṇa / gurutu
+930,sign (symptom),noun,a2,N/A,ಲಕ್ಷಣ / ಚಿಹ್ನೆ / ಸೂಚನೆ,lakṣaṇa / cihne / sūcane
+931,to sign (a document),verb,a2,transitive,ಸಹಿ ಮಾಡು / ದಸ್ತಖತ್ತು ಮಾಡು,sahi māḍu / dastakhattu māḍu
+932,to sign (make a gesture),verb,a2,N/A,ಸನ್ನೆ ಮಾಡು / ಸೂಚಿಸು,sanne māḍu / sūcisu
+933,signal (electronic transmission),noun,b1,N/A,ಸಂಕೇತ / ಸಿಗ್ನಲ್,saṁkēta / signal
+934,to signal (to make a gesture),verb,b1,transitive,ಸಂಕೇತಿಸು / ಸನ್ನೆ ಮಾಡು,saṁkētisu / sanne māḍu
+935,to signal (to indicate or imply),verb,b1,transitive,ಸೂಚಿಸು / ತಿಳಿಸು,sūcisu / tiḷisu
+936,signature (on official documents),noun,b2,N/A,ಸಹಿ / ದಸ್ತಖತ್ತು,sahi / dastakhattu
+937,"signature (formal, legal)",noun,b2,N/A,ದಸ್ತಖತ್ತು / ಸಹಿ,dastakhattu / sahi
+938,significance,noun,b2,N/A,ಮಹತ್ವ / ಪ್ರಾಮುಖ್ಯತೆ,mahatva / prāmukhyate
+939,significance (meaning),noun,b2,N/A,ಅರ್ಥ / ತಾತ್ಪರ್ಯ,artha / tātparya
+940,significant (meaningful or indicative),adjective,b2,N/A,ಅರ್ಥಪೂರ್ಣ / ಸೂಚಕ,arthapūrṇa / sūcaka
+941,significant (important),adjective,b2,N/A,ಪ್ರಮುಖ / ಮುಖ್ಯವಾದ / ಮಹತ್ವದ,pramukha / mukhyavāda / mahatvada
+942,"significantly (to a great extent, noteworthy amount)",adverb,b2,N/A,ಗಣನೀಯವಾಗಿ / ಗಮನಾರ್ಹವಾಗಿ,gaṇanīyavāgi / gamanārhavāgi
+943,"significantly (importantly, critically)",adverb,b2,N/A,ಮುಖ್ಯವಾಗಿ / ಪ್ರಮುಖವಾಗಿ,mukhyavāgi / pramukhavāgi
+944,silence (refusal to speak or comment),noun,b2,N/A,ಮೌನ / ಸುಮ್ಮನಿರುವಿಕೆ,mauna / summaniruvike
+945,silence (act of keeping quiet),noun,b2,N/A,ಮಾತನಾಡದಿರುವಿಕೆ / ಸುಮ್ಮನಿರುವಿಕೆ / ಮೌನ,mātanāḍadiruvike / summaniruvike / mauna
+946,sister (older),noun,a1,N/A,ಅಕ್ಕ / ಸಹೋದರಿ,akka / sahōdari
+947,sister (younger),noun,a1,N/A,ತಂಗಿ / ಸಹೋದರಿ,taṁgi / sahōdari
+948,six,number,a1,N/A,ಆರು,āru
+949,sixteen,number,a1,N/A,ಹದಿನಾರು,hadināru
+950,sixty,number,a1,N/A,ಅರವತ್ತು,aravattu
+951,size (clothing standard),noun,a2,N/A,ಸೈಜು,saiju
+952,sketch (short comedic performance),noun,c1,N/A,ಕಿರುನಾಟಕ / ಹಾಸ್ಯ ಪ್ರಸಂಗ / ಸ್ಕಿಟ್,kirunāṭaka / hāsya prasaṁga / skiṭ
+953,ski,adjective,a2,N/A,ಸ್ಕೀ,skī
+954,ski,noun,a2,N/A,ಸ್ಕೀ,skī
+955,to ski,verb,a2,intransitive,ಸ್ಕೀ ಮಾಡು,skī māḍu
+956,skiing,noun,a2,N/A,ಸ್ಕೀ ಕ್ರೀಡೆ / ಸ್ಕೀಯಿಂಗ್,skī krīḍe / skīyiṁg
+957,"skin (of fruit, vegetable, peel)",noun,a2,N/A,ಸಿಪ್ಪೆ / ತೊಗಟೆ,sippe / togaṭe
+958,to skip rope,verb,c1,intransitive,ಹಗ್ಗ ಜಿಗಿ,hagga jigi
+959,skull,noun,b2,N/A,ತಲೆಬುರುಡೆ,taleburuḍe
+960,slavery,noun,c1,N/A,ಗುಲಾಮಗಿರಿ / ದಾಸ್ಯ,gulāmagiri / dāsya
+961,"slice (share, portion)",noun,b1,N/A,ಪಾಲು / ಭಾಗ / ತುಂಡು,pālu / bhāga / tuṁḍu
+962,slide (playground equipment),noun,b2,N/A,ಜಾರುಬಂಡಿ,jārubaṁḍi
+963,"to slide (move smoothly, slip)",verb,b2,intransitive,ಜಾರು,jāru
+964,to slide (move something across a surface),verb,b2,transitive,ಜಾರಿಸು,jārisu
+965,to smile / to laugh,verb,a2,intransitive,ನಗು,nagu
+966,to smoke (a cigarette),verb,a2,transitive,ಸೇದು,sēdu
+967,"soft (gentle, quiet)",adjective,a2,N/A,ಮೃದುವಾದ / ಮೆತ್ತನೆಯ / ಸೌಮ್ಯವಾದ,mr̥duvāda / mettaneya / saumyavāda
+968,solid (state of matter),noun,b1,N/A,ಘನ,ghana
+969,some,determiner,a1,N/A,ಕೆಲವು / ಸ್ವಲ್ಪ,kelavu / svalpa
+970,sometime (former or erstwhile),adverb,b2,N/A,ಹಿಂದಿನ / ಒಂದು ಕಾಲದಲ್ಲಿ,hiṁdina / oṁdu kāladalli
+971,somewhere (specific but unknown place),adverb,a2,N/A,ಎಲ್ಲೋ,ellō
+972,"somewhere (any place, indefinite)",pronoun,a2,N/A,ಎಲ್ಲಾದರೂ,ellādarū
+973,soon,adverb,a1,N/A,ಬೇಗನೆ / ಶೀಘ್ರದಲ್ಲೇ,bēgane / śīghradallē
+974,"specialist (person, expert)",noun,b2,N/A,ವಿಶೇಷಜ್ಞ / ಪರಿಣತ / ತಜ್ಞ,viśēṣajña / pariṇata / tajña
+975,speech,noun,a2,N/A,ಮಾತು / ಭಾಷಣ / ನುಡಿ,mātu / bhāṣaṇa / nuḍi
+976,to speed (move fast),verb,a2,intransitive,ವೇಗ ಹೆಚ್ಚಿಸು / ವೇಗವಾಗಿ ಚಲಿಸು,vēga heccisu / vēgavāgi calisu
+977,to spell,verb,a1,transitive,ಅಕ್ಷರ ಜೋಡಿಸು / ಅಕ್ಷರ ಹೇಳು,akṣara jōḍisu / akṣara hēḷu
+978,"split (division, schism)",noun,b2,N/A,ಒಡಕು / ವಿಭಜನೆ / ಭಿನ್ನಾಭಿಪ್ರಾಯ,oḍaku / vibhajane / bhinnābhiprāya
+979,"to split (physically, to cleave)",verb,b2,transitive,ಸೀಳು / ಒಡೆ,sīḷu / oḍe
+980,to split (to divide resources or share),verb,b2,transitive,ಹಂಚು / ವಿಭಜಿಸು,haṁcu / vibhajisu
+981,to spoil (to ruin or damage something),verb,b2,transitive,ಹಾಳುಮಾಡು / ಕೆಡಿಸು / ನಾಶಮಾಡು,hāḷumāḍu / keḍisu / nāśamāḍu
+982,to spoil (to pamper a person),verb,b2,transitive,ಮುದ್ದಿಸು / ಅತಿಯಾಗಿ ಪ್ರೀತಿ ತೋರಿಸು,muddisu / atiyāgi prīti tōrisu
+983,"spoken (said, uttered)",adjective,b1,N/A,ಹೇಳಿದ / ನುಡಿದ,hēḷida / nuḍida
+984,spoken (conversational language),adjective,b1,N/A,ಮೌಖಿಕ / ಮಾತಿನ,maukhika / mātina
+985,spokesperson,noun,b2,N/A,ವಕ್ತಾರ / ಪ್ರತಿನಿಧಿ,vaktāra / pratinidhi
+986,spokeswoman,noun,b2,N/A,ವಕ್ತಾರೆ / ಮಹಿಳಾ ಪ್ರತಿನಿಧಿ,vaktāre / mahiḷā pratinidhi
+990,to sponsor (financially),verb,b2,transitive,ಪ್ರಾಯೋಜಿಸು / ಹಣಕಾಸು ಒದಗಿಸು,prāyōjisu / haṇakāsu odagisu
+991,"to sponsor (a bill, legislation)",verb,b2,transitive,ಮಂಡಿಸು / ಪ್ರಸ್ತುತಪಡಿಸು,maṁḍisu / prastutapaḍisu
+992,to sponsor (guaranteeing someone),verb,b2,transitive,ಜವಾಬ್ದಾರಿ ವಹಿಸು / ಖಾತರಿ ನೀಡು,javābdāri vahisu / khātari nīḍu
+993,sponsorship,noun,b2,N/A,ಪ್ರಾಯೋಜಕತ್ವ / ಆಶ್ರಯ,prāyōjakatva / āśraya
+994,spoon,noun,a2,N/A,ಚಮಚ,camaca
+995,sport,noun,a1,N/A,ಕ್ರೀಡೆ / ಆಟ,krīḍe / āṭa
+996,sporting (related to sports),adjective,b2,N/A,ಕ್ರೀಡಾ,krīḍā
+997,"sporting (fair, generous)",adjective,b2,N/A,ಕ್ರೀಡಾ ಮನೋಭಾವದ / ನ್ಯಾಯಯುತ / ಉದಾರ,krīḍā manōbhāvada / nyāyayuta / udāra
+998,spot (mark or stain),noun,b1,N/A,ಕಲೆ / ಚುಕ್ಕೆ,kale / cukke
+999,spot (location),noun,b1,N/A,ಸ್ಥಳ / ಜಾಗ / ನೆಲ,sthaḷa / jāga / nela
+1000,to spot (notice/identify),verb,b2,transitive,ಗುರುತಿಸು / ಕಂಡುಹಿಡಿ / ಗಮನಿಸು / ಪತ್ತೆಹಚ್ಚು,gurutisu / kaṁḍuhiḍi / gamanisu / pattehaccu
+1001,spotlight (physical lamp),noun,c1,N/A,ಸ್ಪಾಟ್ಲೈಟ್ / ಪ್ರಕಾಶ ದೀಪ / ಕೇಂದ್ರ ದೀಪ,spāṭlaiṭ / prakāśa dīpa / kēṁdra dīpa
+1002,"spotlight (attention, focus)",noun,c1,N/A,ಗಮನದ ಕೇಂದ್ರ / ಕೇಂದ್ರಬಿಂದು / ಮುಖ್ಯ ಆಕರ್ಷಣೆ,gamanada kēṁdra / kēṁdrabiṁdu / mukhya ākarṣaṇe
+1003,spouse (husband),noun,c1,N/A,ಗಂಡ / ಪತಿ / ವರ,gaṁḍa / pati / vara
+1004,spouse (wife),noun,c1,N/A,ಹೆಂಡತಿ / ಪತ್ನಿ / ಸತಿ / ಭಾರ್ಯೆ,heṁḍati / patni / sati / bhārye
+1005,spread (food item),noun,b2,N/A,ಸ್ಪ್ರೆಡ್ / ಲೇಪನ,spreḍ / lēpana
+1006,spread (bed covering),noun,b2,N/A,ಹಾಸಿಗೆ ಹೊದಿಕೆ / ಹಾಸಿಗೆ ವಸ್ತ್ರ,hāsige hodike / hāsige vastra
+1007,bedspread,noun,b2,N/A,ಬೆಡ್ ಸ್ಪ್ರೆಡ್ / ಹಾಸಿಗೆ ಹೊದಿಕೆ / ಹಾಸಿಗೆ ವಸ್ತ್ರ,beḍ spreḍ / hāsige hodike / hāsige vastra
+1008,to send,verb,a1,transitive,ಕಳುಹಿಸು / ರವಾನಿಸು / ಅಟ್ಟಿಸು,kaḷuhisu / ravānisu / aṭṭisu
+1009,"senior (older, elder)",adjective,b2,N/A,ಹಿರಿಯ / ಜ್ಯೇಷ್ಠ / ಅಗ್ರ,hiriya / jyēṣṭha / agra
+1010,sensation (feeling or perception),noun,c1,N/A,ಸಂವೇದನೆ / ಅನುಭವ / ಭಾವನೆ,saṁvēdane / anubhava / bhāvane
+1011,sensation (public stir or excitement),noun,c1,N/A,ಸಂಚಲನ / ಕೋಲಾಹಲ / ಗದ್ದಲ,saṁcalana / kōlāhala / gaddala
+1012,sense (faculty),noun,a2,N/A,ಇಂದ್ರಿಯ / ಜ್ಞಾನೇಂದ್ರಿಯ,iṁdriya / jñānēṁdriya
+1013,sense (judgment),noun,a2,N/A,ವಿವೇಚನೆ / ಬುದ್ಧಿ / ಪ್ರಜ್ಞೆ,vivēcane / buddhi / prajñe
+1014,common sense,noun,a2,N/A,ಸಾಮಾನ್ಯ ಜ್ಞಾನ / ಲೋಕಜ್ಞಾನ / ವಿವೇಕ,sāmānya jñāna / lōkajñāna / vivēka
+1015,"sense (feeling, awareness)",noun,a2,N/A,ಅರಿವು / ಪ್ರಜ್ಞೆ / ತಿಳುವಳಿಕೆ,arivu / prajñe / tiḷuvaḷike
+1016,"to sense (intuitively, feel)",verb,b2,transitive,ಗ್ರಹಿಸು / ಅರಿತುಕೋ / ಭಾವಿಸು,grahisu / aritukō / bhāvisu
+1017,"to sense (to detect input, like a sensor)",verb,b2,transitive,ಪತ್ತೆಹಚ್ಚು / ಗುರುತಿಸು / ಕಂಡುಹಿಡಿ,pattehaccu / gurutisu / kaṁḍuhiḍi
+1018,sensible (showing good judgment),adjective,b1,N/A,ವಿವೇಕದ / ಬುದ್ಧಿವಂತ / ಜ್ಞಾನದ,vivēkada / buddhivaṁta / jñānada
+1019,"sensible (practical, utility)",adjective,b1,N/A,ಪ್ರಾಯೋಗಿಕ / ಉಪಯುಕ್ತ / ವಾಸ್ತವಿಕ,prāyōgika / upayukta / vāstavika
+1020,sensitive (confidential or critical),adjective,b2,N/A,ಸೂಕ್ಷ್ಮ / ಗೋಪ್ಯ / ನಿರ್ಣಾಯಕ,sūkṣma / gōpya / nirṇāyaka
+1021,"sensitivity (emotional, social)",noun,c1,N/A,ಸೂಕ್ಷ್ಮತೆ / ಭಾವನಾತ್ಮಕತೆ,sūkṣmate / bhāvanātmakate
+1022,responsiveness to stimulus,noun,c1,N/A,ಸಂವೇದನಶೀಲತೆ / ಪ್ರತಿಕ್ರಿಯಾಶೀಲತೆ,saṁvēdanaśīlate / pratikriyāśīlate
+1023,sentence (judicial punishment),noun,b1,N/A,ಶಿಕ್ಷೆ / ದಂಡನೆ / ತೀರ್ಪು,śikṣe / daṁḍane / tīrpu
+1024,to sentence,verb,b2,transitive,ಶಿಕ್ಷೆ ಹಾಕು / ದಂಡಿಸು / ತೀರ್ಪು ನೀಡು,śikṣe hāku / daṁḍisu / tīrpu nīḍu
+1025,september,noun,a1,N/A,ಸೆಪ್ಟೆಂಬರ್,sepṭeṁbar
+1026,seven,number,a1,N/A,ಏಳು,ēḷu
+1027,seventeen,number,a1,N/A,ಹದಿನೇಳು,hadinēḷu
+1028,seventy,number,a1,N/A,ಎಪ್ಪತ್ತು,eppattu
+1029,sex (gender category),noun,b1,N/A,ಲಿಂಗ,liṁga
+1030,sex (intercourse),noun,b1,N/A,ಸಂಭೋಗ / ಮೈಥುನ / ಲೈಂಗಿಕ ಕ್ರಿಯೆ,saṁbhōga / maithuna / laiṁgika kriye
+1031,sexual (relating to gender or biology),adjective,b1,N/A,ಲೈಂಗಿಕ,laiṁgika
+1033,sexuality (identity or orientation),noun,c1,N/A,ಲೈಂಗಿಕತೆ,laiṁgikate
+1034,"sexy (alluring, attractive)",adjective,b2,N/A,ಆಕರ್ಷಕ / ಮನಮೋಹಕ,ākarṣaka / manamōhaka
+1035,"sexy (provocative, sexually suggestive)",adjective,b2,N/A,ಕಾಮಪ್ರಚೋದಕ / ಸೆಕ್ಸಿ,kāmapracōdaka / seksi
+1036,shade (color hue),noun,b2,N/A,ಛಾಯೆ / ವರ್ಣಛಾಯೆ,chāye / varṇachāye
+1037,shade (area of shadow/coolness),noun,b2,N/A,ನೆರಳು / ಛಾಯೆ,neraḷu / chāye
+1038,lampshade,noun,b2,N/A,ದೀಪದ ಕವಚ,dīpada kavaca
+1039,"shadow (trace, hint)",noun,b2,N/A,ಛಾಯೆ / ಸುಳಿವು,chāye / suḷivu
+1040,shadow (constant follower),noun,b2,N/A,ನೆರಳು / ಹಿಂಬಾಲಕ,neraḷu / hiṁbālaka
+1041,shake (beverage),noun,b1,N/A,ಶೇಕ್,śēk
+1042,to shake (to tremble),verb,a2,intransitive,ನಡುಗು / ಕಂಪಿಸು,naḍugu / kaṁpisu
+1043,"to shake (earthquake, object)",verb,a2,intransitive,ಕಂಪಿಸು / ನಡುಗು,kaṁpisu / naḍugu
+1044,"to shake (an object, person)",verb,a2,transitive,ಅಲ್ಲಾಡಿಸು / ಅಲುಗಾಡಿಸು,allāḍisu / alugāḍisu
+1045,"shall (suggestion, invitation)",modal verb,a2,N/A,-(ವ)ಓಣವೇ? / -ಲಿ,-(va)ōṇavē? / -li
+1046,"shall (formal duty, requirement)",modal verb,b1,N/A,ಕಡ್ಡಾಯವಾಗಿ ಮಾಡಬೇಕು / ಮಾಡಲೇಬೇಕು,kaḍḍāyavāgi māḍabēku / māḍalēbēku
+1047,shallow (physical depth),adjective,b2,N/A,ಆಳವಿಲ್ಲದ / ತಳವಿಲ್ಲದ,āḷavillada / taḷavillada
+1048,shallow (superficial),adjective,b2,N/A,ಮೇಲ್ಮೈಯ / ಸಾರವಿಲ್ಲದ / ಆಳವಿಲ್ಲದ (ಭಾವನಾತ್ಮಕ),mēlmaiya / sāravillada / āḷavillada (bhāvanātmaka)
+1049,shame (feeling of embarrassment),noun,b2,N/A,ನಾಚಿಕೆ / ಲಜ್ಜೆ / ಮುಜುಗರ,nācike / lajje / mujugara
+1051,"shame (a regrettable occurrence, a pity)",noun,b2,N/A,ಖೇದ / ದುಃಖದ ವಿಷಯ / ಅಯ್ಯೋ ಪಾಪ,khēda / duḥkhada viṣaya / ayyō pāpa
+1075,"to shed (skin, leaves, hair)",verb,c1,transitive,ಉದುರಿಸು / ಕಳಚು,udurisu / kaḷacu
+1076,"to shed (a load, burden)",verb,c1,transitive,ಇಳಿಸು / ಕಳೆ,iḷisu / kaḷe
+1077,sheep,noun,a1,N/A,ಕುರಿ,kuri
+1078,storm (figurative: uproar),noun,a2,N/A,ಕೋಲಾಹಲ / ಗದ್ದಲ / ಗೊಂದಲ,kōlāhala / gaddala / goṁdala
+1079,story (level of building),noun,a1,N/A,ಮಹಡಿ / ಅಂತಸ್ತು,mahaḍi / aṁtastu
+1080,"straight (consecutive, uninterrupted)",adjective,b1,N/A,ಸತತ / ನಿರಂತರ / ಅವಿರತ,satata / niraṁtara / avirata
+1081,"straight (immediately, directly)",adverb,a2,N/A,ನೇರವಾಗಿ / ನೇರ,nēravāgi / nēra
+1082,straightforward (uncomplicated),adjective,c1,N/A,ಸರಳವಾದ / ಸುಲಭವಾದ / ಸಾದಾ,saraḷavāda / sulabhavāda / sādā
+1083,"straightforward (direct, frank)",adjective,c1,N/A,ನೇರವಾದ / ಸ್ಪಷ್ಟವಾದ / ನಿಷ್ಕಪಟವಾದ,nēravāda / spaṣṭavāda / niṣkapaṭavāda
+1084,strain (stress or burden),noun,c1,N/A,ಒತ್ತಡ / ಭಾರ / ತೊಂದರೆ,ottaḍa / bhāra / toṁdare
+1085,strain (muscle injury),noun,c1,N/A,ಸೆಳೆತ,seḷeta
+1086,strain (biological type),noun,c1,N/A,ತಳಿ / ಪ್ರಭೇದ / ಜಾತಿ,taḷi / prabhēda / jāti
+1087,strand (thin length),noun,c1,N/A,ಎಳೆ / ನೂಲು / ತಂತಿ,eḷe / nūlu / taṁti
+1088,strand (component),noun,c1,N/A,ಅಂಶ / ಭಾಗ / ಘಟಕ,aṁśa / bhāga / ghaṭaka
+1089,"strange (unusual, odd)",adjective,a2,N/A,ವಿಚಿತ್ರವಾದ / ಅಸಹಜವಾದ / ಅಪೂರ್ವವಾದ,vicitravāda / asahajavāda / apūrvavāda
+1090,"strange (unfamiliar, unknown)",adjective,a2,N/A,ಅಪರಿಚಿತವಾದ / ಪರಿಚಯವಿಲ್ಲದ / ಅಜ್ಞಾತವಾದ,aparicitavāda / paricayavillada / ajñātavāda
+1091,stranger (outsider or newcomer),noun,b1,N/A,ಅಪರಿಚಿತ / ಹೊಸಬ / ಅಪರಿಚಿತ ವ್ಯಕ್ತಿ,aparicita / hosaba / aparicita vyakti
+1092,strategic,adjective,c1,N/A,ಕಾರ್ಯತಂತ್ರದ / ಯೋಜನಾಬದ್ಧವಾದ,kāryataṁtrada / yōjanābaddhavāda
+1093,strategy,noun,a2,N/A,ಕಾರ್ಯತಂತ್ರ / ಯೋಜನೆ / ತಂತ್ರ,kāryataṁtra / yōjane / taṁtra
+1094,stream (digital content),noun,b2,N/A,ಸ್ಟ್ರೀಮ್ / ಪ್ರಸಾರ / ನೇರ ಪ್ರಸಾರ,sṭrīm / prasāra / nēra prasāra
+1095,"stream (academic path, specialization)",noun,b2,N/A,ವಿಭಾಗ / ಶಾಖೆ / ಕ್ಷೇತ್ರ,vibhāga / śākhe / kṣētra
+1096,street (narrow lane),noun,a1,N/A,ಬೀದಿ / ರಸ್ತೆ / ಕಿರಿದಾದ ದಾರಿ,bīdi / raste / kiridāda dāri
+1097,strength (physical might),noun,b1,N/A,ಶಕ್ತಿ / ಬಲ / ಕಸುವು,śakti / bala / kasuvu
+1098,"strength (power, capability)",noun,b1,N/A,ಸಾಮರ್ಥ್ಯ / ಪ್ರಬಲತೆ / ಶಕ್ತಿ,sāmarthya / prabalate / śakti
+1099,"to strengthen (to reinforce, consolidate)",verb,b2,transitive,ಬಲಪಡಿಸು / ದೃಢಪಡಿಸು / ಗಟ್ಟಿಗೊಳಿಸು,balapaḍisu / dr̥ḍhapaḍisu / gaṭṭigoḷisu
+1100,stress (emphasis),noun,a2,N/A,ಒತ್ತು / ಪ್ರಾಮುಖ್ಯತೆ / ಮಹತ್ವ,ottu / prāmukhyate / mahatva
+1101,to stress (to emphasize),verb,a2,transitive,ಒತ್ತಿ ಹೇಳು / ಒತ್ತು ಕೊಡು / ಮಹತ್ವ ನೀಡು,otti hēḷu / ottu koḍu / mahatva nīḍu
+1102,to stress (to cause anxiety),verb,a2,transitive,ಒತ್ತಡ ಹಾಕು / ಚಿಂತೆ ಉಂಟುಮಾಡು,ottaḍa hāku / ciṁte uṁṭumāḍu
+1103,"stretch (of road, land)",noun,b2,N/A,ಪ್ರದೇಶ / ವ್ಯಾಪ್ತಿ / ಭಾಗ,pradēśa / vyāpti / bhāga
+1104,stretch (period of time),noun,b2,N/A,ಅವಧಿ / ಕಾಲಾವಧಿ,avadhi / kālāvadhi
+1105,"to stretch (one's body, limbs)",verb,b2,intransitive,ಕೈಕಾಲು ಚಾಚು / ಮೈ ಚಾಚು,kaikālu cācu / mai cācu
+1106,"to stretch (to pull taut, lengthen material)",verb,b2,transitive,ಎಳೆ / ಚಾಚು / ವಿಸ್ತರಿಸು,eḷe / cācu / vistarisu
+1107,to stretch (to extend over an area),verb,b2,intransitive,ವಿಸ್ತರಿಸು / ಹರಡು / ಚಾಚು,vistarisu / haraḍu / cācu
+1108,strict,adjective,b2,N/A,ಕಟ್ಟುನಿಟ್ಟಾದ / ಕಠಿಣವಾದ / ನಿಷ್ಠುರದ,kaṭṭuniṭṭāda / kaṭhiṇavāda / niṣṭhurada
+1109,strictly (speaking),adverb,b2,N/A,ಕಟ್ಟುನಿಟ್ಟಾಗಿ / ಕಠಿಣವಾಗಿ,kaṭṭuniṭṭāgi / kaṭhiṇavāgi
+1110,strictly speaking,adverb,b2,N/A,ನಿರ್ದಿಷ್ಟವಾಗಿ ಹೇಳುವುದಾದರೆ / ನಿಖರವಾಗಿ ಹೇಳಬೇಕೆಂದರೆ,nirdiṣṭavāgi hēḷuvudādare / nikharavāgi hēḷabēkeṁdare
+1111,strike (industrial action),noun,b2,N/A,ಮುಷ್ಕರ / ಹರತಾಳ,muṣkara / haratāḷa
+1112,to strike (to hit),verb,b2,transitive,ಹೊಡೆ / ಬಡಿ / ತಟ್ಟು,hoḍe / baḍi / taṭṭu
+1113,to strike (as protest),verb,b2,intransitive,ಮುಷ್ಕರ ಮಾಡು / ಹರತಾಳ ಮಾಡು,muṣkara māḍu / haratāḷa māḍu
+1114,to strike (to seem or appear),verb,b2,intransitive,ಅನಿಸು / ತೋರು / ಕಾಣಿಸು,anisu / tōru / kāṇisu
+1115,striking (visually impressive),adjective,c1,N/A,ಬೆರಗುಗೊಳಿಸುವ / ಕಣ್ಮನ ಸೆಳೆಯುವ / ಅದ್ಭುತವಾದ,beragugoḷisuva / kaṇmana seḷeyuva / adbhutavāda
+1116,"striking (remarkable, significant)",adjective,c1,N/A,ಗಮನಾರ್ಹವಾದ / ವಿಶೇಷವಾದ / ಪ್ರಮುಖವಾದ,gamanārhavāda / viśēṣavāda / pramukhavāda
+1117,"string (series, sequence)",noun,b1,N/A,ಸರಣಿ / ಶ್ರೇಣಿ,saraṇi / śrēṇi
+1118,"strip (long, narrow piece)",noun,c1,N/A,ಪಟ್ಟಿ / ಚೂರು / ತುಂಡು,paṭṭi / cūru / tuṁḍu
+1119,strip (team uniform),noun,c1,N/A,ಸಮವಸ್ತ್ರ / ಯೂನಿಫಾರ್ಮ್,samavastra / yūniphārm
+1120,strip (commercial district),noun,c1,N/A,ವಾಣಿಜ್ಯ ಬೀದಿ / ವ್ಯಾಪಾರ ಪ್ರದೇಶ,vāṇijya bīdi / vyāpāra pradēśa
+1121,to strip (to undress or remove covering),verb,c1,transitive,ತೆಗೆ / ಬಿಡಿಸು / ಕಳಚು,tege / biḍisu / kaḷacu
+1122,to strip (to remove paint or wax),verb,c1,transitive,ತೆಗೆ / ಸುಲಿದು ಹಾಕು / ಕೆರೆದು ತೆಗೆ,tege / sulidu hāku / keredu tege
+1123,"to strive (intensely, competing)",verb,c1,intransitive,ಹೋರಾಡು / ಪ್ರಯತ್ನಿಸು / ಶ್ರಮಿಸು,hōrāḍu / prayatnisu / śramisu
+1124,stroke (medical event),noun,b2,N/A,ಪಕ್ಷಾಘಾತ / ಲಕ್ವ,pakṣāghāta / lakva
+1140,task,noun,a2,N/A,ಕೆಲಸ / ಕಾರ್ಯ / ಕರ್ತವ್ಯ,kelasa / kārya / kartavya
+1141,"taste (preference, style)",noun,b1,N/A,ಅಭಿರುಚಿ / ಇಷ್ಟ,abhiruci / iṣṭa
+1142,to taste (have a flavor),verb,a2,intransitive,ರುಚಿಸು / ರುಚಿಯಾಗಿರು,rucisu / ruciyāgiru
+1142,to taste (food/drink),verb,a2,transitive,ರುಚಿ ನೋಡು / ಸವಿ,ruci nōḍu / savi
+1143,tax,noun,b1,N/A,ತೆರಿಗೆ / ಕಂದಾಯ / ಸುಂಕ,terige / kaṁdāya / suṁka
+1144,to tax (financially),verb,b1,transitive,ತೆರಿಗೆ ಹಾಕು / ಕಂದಾಯ ವಿಧಿಸು,terige hāku / kaṁdāya vidhisu
+1145,taxi,noun,a1,N/A,ಟ್ಯಾಕ್ಸಿ / ಬಾಡಿಗೆ ಕಾರು,ṭyāksi / bāḍige kāru
+1146,taxpayer,noun,c1,N/A,ತೆರಿಗೆದಾರ / ಕಂದಾಯದಾರ,terigedāra / kaṁdāyadāra
+1148,teaching,noun,a2,N/A,ಬೋಧನೆ / ಕಲಿಸುವಿಕೆ / ಶಿಕ್ಷಣ,bōdhane / kalisuvike / śikṣaṇa
+1149,team,noun,a1,N/A,ತಂಡ / ಗುಂಪು,taṁḍa / guṁpu
+1150,tear (from the eye),noun,b2,N/A,ಕಣ್ಣೀರು,kaṇṇīru
+1151,"technical (relating to rules, procedure)",adjective,b1,N/A,ತಾಂತ್ರಿಕ,tāṁtrika
+1152,technological,adjective,b2,N/A,ತಾಂತ್ರಿಕ,tāṁtrika
+1153,technology,noun,a2,N/A,ತಂತ್ರಜ್ಞಾನ,taṁtrajñāna
+1154,teenage,adjective,a2,N/A,ಹದಿಹರೆಯದ,hadihareyada
+1155,teens,noun,b2,N/A,ಹದಿಹರೆಯ,hadihareya
+1156,"telephone (formal, standard)",noun,a1,N/A,ಫೋನ್ / ದೂರವಾಣಿ,phōn / dūravāṇi
+1157,to telephone,verb,a1,transitive,ಫೋನ್ ಮಾಡು / ದೂರವಾಣಿ ಮಾಡು,phōn māḍu / dūravāṇi māḍu
+1158,to call (phone),verb,a1,transitive,ಫೋನ್ ಮಾಡು / ದೂರವಾಣಿ ಮಾಡು,phōn māḍu / dūravāṇi māḍu
+1159,television (formal),noun,a1,N/A,ಟಿವಿ / ದೂರದರ್ಶನ,ṭivi / dūradarśana
+1160,to term,verb,b2,transitive,ಕರೆಯು / ಹೆಸರಿಸು / ನಾಮಕರಣ ಮಾಡು,kareyu / hesarisu / nāmakaraṇa māḍu
+1161,surgical (precise; targeted),adjective,c1,N/A,ಶಸ್ತ್ರಚಿಕಿತ್ಸೆಯ / ನಿಖರವಾದ,śastracikitseya / nikharavāda
+1162,"to sweep (move quickly, e.g., wind)",verb,b2,intransitive,ನುಗ್ಗು / ಹರಿಯು,nuggu / hariyu
+1163,"to sweep (glance, sight)",verb,b2,intransitive,ಕಣ್ಣು ಹಾಯಿಸು / ನೋಟ ಬೀರು,kaṇṇu hāyisu / nōṭa bīru
+1164,to sweep (win overwhelmingly),verb,b2,transitive,ಸಂಪೂರ್ಣ ಜಯ ಗಳಿಸು / ಭಾರಿ ಗೆಲುವು ಸಾಧಿಸು / ಸಂಪೂರ್ಣವಾಗಿ ಗೆಲ್ಲು,saṁpūrṇa jaya gaḷisu / bhāri geluvu sādhisu / saṁpūrṇavāgi gellu
+1165,sweet (taste),adjective,a2,N/A,ಸಿಹಿಯಾದ / ಸಿಹಿ / ಮಧುರವಾದ,sihiyāda / sihi / madhuravāda
+1166,"sweet (person, disposition)",adjective,a2,N/A,ಮಧುರವಾದ / ಸಿಹಿಯಾದ / ಸೌಮ್ಯವಾದ,madhuravāda / sihiyāda / saumyavāda
+1167,"sweet (charming, cute)",adjective,a2,N/A,ಮುದ್ದಾದ / ಅಂದವಾದ / ಚೆಲುವಾದ,muddāda / aṁdavāda / celuvāda
+1168,"sweet (taste, disposition)",noun,a2,N/A,ಸಿಹಿ / ಮಧುರತೆ,sihi / madhurate
+1169,"sweet (dessert, candy)",noun,a2,N/A,ಸಿಹಿ / ಮಿಠಾಯಿ / ಸಿಹಿ ತಿಂಡಿ / ಸಿಹಿ ಪದಾರ್ಥ,sihi / miṭhāyi / sihi tiṁḍi / sihi padārtha
+1170,swim,noun,b1,N/A,ಈಜು,īju
+1171,to swim,verb,a1,intransitive,ಈಜು,īju
+1172,swimming,noun,a1,N/A,ಈಜು,īju
+1173,swing (playground equipment),noun,c1,N/A,ತೂಗುಯ್ಯಾಲೆ / ಊಯ್ಯಾಲೆ,tūguyyāle / ūyyāle
+1174,"swing (political, economic shift)",noun,c1,N/A,ಪಲ್ಲಟ / ನಿರ್ಣಾಯಕ ಬದಲಾವಣೆ / ತಿರುವು / ಮತಗಳ ಬದಲಾವಣೆ,pallaṭa / nirṇāyaka badalāvaṇe / tiruvu / matagaḷa badalāvaṇe
+1179,switch (electrical device),noun,b1,N/A,ಸ್ವಿಚ್ / ಗುಂಡಿ,svic / guṁḍi
+1180,to switch off,verb,a1,transitive,ಆಫ್ ಮಾಡು / ಬಂದ್ ಮಾಡು,āph māḍu / baṁd māḍu
+1180,to switch on,verb,a1,transitive,ಆನ್ ಮಾಡು / ಚಾಲೂ ಮಾಡು,ān māḍu / cālū māḍu
+1184,sword (general term),noun,a2,N/A,ಕತ್ತಿ / ಖಡ್ಗ,katti / khaḍga
+1188,sympathetic (compassionate),adjective,b2,N/A,ಸಹಾನುಭೂತಿಯುಳ್ಳ / ಕರುಣೆಯುಳ್ಳ,sahānubhūtiyuḷḷa / karuṇeyuḷḷa
+1199,table (furniture),noun,a1,N/A,ಮೇಜು / ಟೇಬಲ್,mēju / ṭēbal
+1200,"tablet (medicine, pill)",noun,a2,N/A,ಗುಳಿಗೆ / ಮಾತ್ರೆ / ಟ್ಯಾಬ್ಲೆಟ್,guḷige / mātre / ṭyābleṭ
+1201,tablet (electronic device),noun,a2,N/A,ಟ್ಯಾಬ್ಲೆಟ್,ṭyābleṭ
+1202,tackle (equipment),noun,c1,N/A,ಉಪಕರಣ / ಸಾಮಗ್ರಿ / ಸಲಕರಣೆ,upakaraṇa / sāmagri / salakaraṇe
+1203,to tackle (a problem or challenge),verb,b2,transitive,ನಿರ್ವಹಿಸು / ಎದುರಿಸು / ನಿಭಾಯಿಸು / ಟ್ಯಾಕಲ್ ಮಾಡು,nirvahisu / edurisu / nibhāyisu / ṭyākal māḍu
+1204,to tackle (in sports),verb,b2,transitive,ಟ್ಯಾಕಲ್ ಮಾಡು,ṭyākal māḍu
+1205,tactic,noun,c1,N/A,ತಂತ್ರ / ಯುಕ್ತಿ / ಕಾರ್ಯತಂತ್ರ,taṁtra / yukti / kāryataṁtra
+1206,tactical,adjective,c1,N/A,ತಂತ್ರಗಾರಿಕೆಯ / ಯುಕ್ತಿಗೆ ಸಂಬಂಧಿಸಿದ,taṁtragārikeya / yuktige saṁbaṁdhisida
+1207,tag (label attached to an object),noun,b2,N/A,ಚೀಟಿ / ಲೇಬಲ್ / ಟ್ಯಾಗ್ / ಗುರುತುಪಟ್ಟಿ,cīṭi / lēbal / ṭyāg / gurutupaṭṭi
+1208,"tag (digital index, keyword)",noun,b2,N/A,ಟ್ಯಾಗ್,ṭyāg
+1209,to tag (to affix a label),verb,b2,transitive,ಲೇಬಲ್ ಹಾಕು / ಚೀಟಿ ಅಂಟಿಸು / ಟ್ಯಾಗ್ ಮಾಡು,lēbal hāku / cīṭi aṁṭisu / ṭyāg māḍu
+1210,"to tag (digital, social media)",verb,b2,transitive,ಟ್ಯಾಗ್ ಮಾಡು,ṭyāg māḍu
+1211,type,noun,a1,N/A,ಪ್ರಕಾರ / ವಿಧ / ರೀತಿ / ಜಾತಿ,prakāra / vidha / rīti / jāti
+1212,to threaten (to pose danger),verb,b2,transitive,ಬೆದರಿಸು / ಅಪಾಯ ಒಡ್ಡು / ಭಯ ಹುಟ್ಟಿಸು,bedarisu / apāya oḍḍu / bhaya huṭṭisu
+1213,timber (standing trees),noun,c1,N/A,ಮರ / ಮರಮುಟ್ಟು / ಕಾಡು ಮರ,mara / maramuṭṭu / kāḍu mara
+1214,to tip (make something tilt/overturn),verb,b1,transitive,ವಾಲಿಸು / ಉರುಳಿಸು,vālisu / uruḷisu
+1214,to tip (tilt/overturn by itself),verb,b1,intransitive,ವಾಲು / ಉರುಳು,vālu / uruḷu
+1215,to (infinitive marker),infinitive marker,a1,N/A,ಲು,lu
+1216,today,noun,a1,N/A,ಇಂದು,iṁdu
+1217,"toilet (restroom, bathroom, polite)",noun,a1,N/A,ಶೌಚಾಲಯ / ಶೌಚಗೃಹ / ಟಾಯ್ಲೆಟ್ / ಕಕ್ಕಸ್ಸು,śaucālaya / śaucagr̥ha / ṭāyleṭ / kakkassu
+1218,"third (fraction, 1/3)",noun,a2,N/A,ಮೂರನೇ ಒಂದು ಭಾಗ,mūranē oṁdu bhāga
+1219,third,ordinal number,a1,N/A,ಮೂರನೇ,mūranē
+1220,this (pronoun),pronoun,b1,N/A,ಇದು,idu
+1221,this (demonstrative adjective),demonstrative adjective,b1,N/A,ಈ,ī
+1223,worldwide (adjective),adjective,b1,N/A,ಜಗತ್ತಿನಾದ್ಯಂತ / ವಿಶ್ವದಾದ್ಯಂತ,jagattinādyaṁta / viśvadādyaṁta
+1224,worse,adjective,a2,N/A,ಹೆಚ್ಚು ಕೆಟ್ಟ / ಇನ್ನೂ ಕೆಟ್ಟ / ಕೆಟ್ಟದಾದ,heccu keṭṭa / innū keṭṭa / keṭṭadāda
+1225,worse (in a more inferior way),adverb,b1,N/A,ಇನ್ನೂ ಕೆಟ್ಟದಾಗಿ / ಹೆಚ್ಚು ಕೆಟ್ಟದಾಗಿ,innū keṭṭadāgi / heccu keṭṭadāgi
+1226,worst (most inferior),adjective,b1,N/A,ಅತ್ಯಂತ ಕೆಟ್ಟ / ಅತಿ ಕೆಟ್ಟ / ಅತಿ ಹೀನ,atyaṁta keṭṭa / ati keṭṭa / ati hīna
+1227,worst (in the most inferior way),adverb,b1,N/A,ಅತ್ಯಂತ ಕೆಟ್ಟದಾಗಿ / ಅತಿ ಕೆಟ್ಟದಾಗಿ / ತೀರ ಕೆಟ್ಟದಾಗಿ,atyaṁta keṭṭadāgi / ati keṭṭadāgi / tīra keṭṭadāgi
+1228,worst (the most inferior thing),noun,b2,N/A,ಅತ್ಯಂತ ಕೆಟ್ಟದ್ದು / ಅತಿ ಕೆಟ್ಟದ್ದು / ಹೀನಾಯವಾದುದು,atyaṁta keṭṭaddu / ati keṭṭaddu / hīnāyavādudu
+1229,"worth (deserving of, beneficial)",adjective,b1,N/A,ಯೋಗ್ಯ / ಅರ್ಹ / ಬೆಲೆಬಾಳುವ,yōgya / arha / belebāḷuva
+1230,wrong (incorrect),adjective,a1,N/A,ತಪ್ಪು / ಸರಿಯಲ್ಲದ / ದೋಷಪೂರಿತ,tappu / sariyallada / dōṣapūrita
+1231,wrong (incorrectly),adverb,b1,N/A,ತಪ್ಪಾಗಿ / ಅಸರಿಯಾಗಿ,tappāgi / asariyāgi
+1232,"wrong (morally, adverb)",adverb,b1,N/A,ಅನೈತಿಕವಾಗಿ / ಅನ್ಯಾಯವಾಗಿ,anaitikavāgi / anyāyavāgi
+1234,"wrong (an injustice/mistake, noun)",noun,b2,N/A,ಅನ್ಯಾಯ / ತಪ್ಪು / ದೋಷ,anyāya / tappu / dōṣa
+1235,yes (general affirmation),exclamation,a1,N/A,ಹೌದು / ಸರಿ / ಹೂಂ,haudu / sari / hūṁ
+1236,yes (casual),exclamation,a1,N/A,ಹಾ / ಹೂಂ / ಅಹುದು,hā / hūṁ / ahudu
+1237,"to yield (surrender, concede)",verb,c1,intransitive,ಬಿಟ್ಟುಕೊಡು / ಶರಣಾಗು / ಒಪ್ಪಿಕೊ,biṭṭukoḍu / śaraṇāgu / oppiko
+1238,"youngster (colloquial, child/teen)",noun,c1,N/A,ಹುಡುಗ / ಹುಡುಗಿ / ಯುವಕ / ಯುವತಿ,huḍuga / huḍugi / yuvaka / yuvati
+1239,yours (respectful/formal/plural),pronoun,a2,N/A,ನಿಮ್ಮದು / ತಮ್ಮದು,nimmadu / tammadu
+1240,yourself (formal/singular),pronoun,a1,N/A,ನೀವೇ / ನೀವಾಗಿಯೇ,nīvē / nīvāgiyē
+1241,"welcome (gladly received, adjective)",adjective,a1,N/A,ಸ್ವಾಗತ / ಸ್ವಾಗತಾರ್ಹ,svāgata / svāgatārha
+1242,"welcome (greeting, exclamation)",exclamation,a1,N/A,ಸ್ವಾಗತ / ಸುಸ್ವಾಗತ,svāgata / susvāgata
+1243,welcome (noun),noun,a2,N/A,ಸ್ವಾಗತ / ಆದರ,svāgata / ādara
+1244,well (as a filler),exclamation,a1,N/A,ಸರಿ / ಆಹಾ / ಹೂಂ,sari / āhā / hūṁ
+1245,well (indicating realization or resignation),exclamation,a1,N/A,ಪರವಾಗಿಲ್ಲ / ಆಗಲಿ / ಇರಲಿ,paravāgilla / āgali / irali
+1246,"west (adjective, e.g., west side)",adjective,a1,N/A,ಪಶ್ಚಿಮದ / ಪಶ್ಚಿಮ ದಿಕ್ಕಿನ,paścimada / paścima dikkina
+1247,"west (direction, noun)",noun,a1,N/A,ಪಶ್ಚಿಮ / ಪಶ್ಚಿಮ ದಿಕ್ಕು,paścima / paścima dikku
+1248,"western (direction, adjective)",adjective,b1,N/A,ಪಶ್ಚಿಮದ / ಪಶ್ಚಿಮ ದಿಕ್ಕಿನ,paścimada / paścima dikkina
+1249,what (used before a noun),determiner,a1,N/A,ಯಾವ / ಯಾವತ್ತೂ,yāva / yāvattū
+1250,what,pronoun,a1,N/A,ಏನು / ಯಾವುದು,ēnu / yāvudu
+1251,whatever (dismissive interjection),adverb,c1,N/A,ಸರಿ ಬಿಡು / ಅದೇನೋ ಬಿಡು / ಹೋಗಲಿ ಬಿಡು,sari biḍu / adēnō biḍu / hōgali biḍu
+1252,"whatever (things, concepts)",determiner,b1,N/A,ಯಾವದೇ / ಯಾವುದೇ / ಏನೇ,yāvadē / yāvudē / ēnē
+1253,whatever (dismissive),pronoun,b1,N/A,ಅದೇನಾದರೂ / ಏನೇ ಇರಲಿ,adēnādarū / ēnē irali
+1254,when (connecting time),adverb,a1,N/A,ಆಗ / ಆ ಸಮಯದಲ್ಲಿ,āga / ā samayadalli
+1255,when? (interrogative adverb),conjunction,a1,N/A,ಯಾವಾಗ,yāvāga
+1256,where (to),adverb,a1,N/A,ಎಲ್ಲಿಗೆ,ellige
+1257,where (question word),conjunction,a1,N/A,ಎಲ್ಲಿ,elli
+1258,whether,conjunction,b1,N/A,ಅಥವಾ / ಇಲ್ಲವೋ,athavā / illavō
+1259,which (determiner),determiner,a1,N/A,ಯಾವ,yāva
+1260,which (pronoun),determiner,a1,N/A,ಯಾವುದು,yāvudu
+1262,"upset (physically ill, stomach)",adjective,b1,N/A,ಅಸ್ವಸ್ಥ / ಸುಸ್ತಾದ / ಆರೋಗ್ಯವಿಲ್ಲದ,asvastha / sustāda / ārōgyavillada
+1263,upstairs (location or movement),adjective,a2,N/A,ಮೇಲಿನ / ಮೇಲ್ಭಾಗದ,meೕlina / meೕlbhāgada
+1264,"us (inclusive, you and I)",pronoun,a1,N/A,ನಮ್ಮನ್ನು,nammannu
+1266,second-hand,adjective,a2,N/A,ಸೆಕಂಡ್ ಹ್ಯಾಂಡ್ / ಬಳಸಿದ,sekaṁḍ hyāṁḍ / baḷasida
+1267,useless (without benefit),adjective,b1,N/A,ಪ್ರಯೋಜನವಿಲ್ಲದ / ನಿಷ್ಪ್ರಯೋಜಕ / ನಿರುಪಯುಕ್ತ,prayōjanavillada / niṣprayōjaka / nirupayukta
+1268,"holiday, time off",noun,a2,N/A,ರಜೆ / ವಿರಾಮ / ಬಿಡುವು,raje / virāma / biḍuvu
+1269,"vague (unspecified, imprecise)",adjective,c1,N/A,ಅಸ್ಪಷ್ಟ / ಸ್ಪಷ್ಟವಲ್ಲದ / ಗೊಂದಲಮಯ,aspaṣṭa / spaṣṭavallada / goṁdalamaya
+1270,track (path or rail line),noun,a2,N/A,ಮಾರ್ಗ / ದಾರಿ / ಹಾದಿ,mārga / dāri / hādi
+1271,"whole (entire ,  complete)",noun,b1,N/A,ಒಟ್ಟು / ಸಂಪೂರ್ಣತೆ / ಪೂರ್ಣತೆ,oṭṭu / saṁpūrṇate / pūrṇate
+1272,"to whom ,  for whom",pronoun,b2,N/A,ಯಾರಿಗೆ,yārige
+1273,whose,determiner,a2,N/A,ಯಾರ,yāra
+1274,whose,pronoun,a2,N/A,ಯಾರದ್ದು,yāraddu
+1275,"why (for what reason, purpose)",adverb,a1,N/A,ಯಾಕೆ / ಏಕೆ / ಏತಕ್ಕೆ,yāke / ēke / ētakke
+1276,"wife (neutral, literary)",noun,a2,N/A,ಹೆಂಡತಿ / ಪತ್ನಿ / ಸತಿ,heṁḍati / patni / sati
+1277,"wild (reckless, uncontrolled)",adjective,a2,N/A,ದುಡುಕು / ಅನಿಯಂತ್ರಿತ,duḍuku / aniyaṁtrita
+1278,will (determination),noun,b1,N/A,ಸಂಕಲ್ಪ / ಇಚ್ಛೆ,saṁkalpa / icche
+1279,"wine (formal, literary term)",noun,a1,N/A,ವೈನ್ / ದ್ರಾಕ್ಷಾರಸ,vain / drākṣārasa
+1280,winter (cold season),noun,a1,N/A,ಚಳಿಗಾಲ,caḷigāla

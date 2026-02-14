@@ -1,0 +1,10 @@
+fastapi==0.115.6
+uvicorn[standard]==0.24.0
+python-multipart==0.0.6
+google-generativeai==0.3.1
+google-genai==1.59.0
+google-cloud-speech==2.21.0
+google-cloud-texttospeech==2.16.3
+pydantic==2.10.3
+aksharamukha==2.3
+websockets==12.0

@@ -1,0 +1,302 @@
+INFO:     Will watch for changes in these directories: ['/Users/raghavganesh/Documents/Code Projects/Language Learning Project']
+INFO:     Uvicorn running on http://0.0.0.0:5001 (Press CTRL+C to quit)
+INFO:     Started reloader process [37251] using WatchFiles
+/Users/raghavganesh/Documents/Code Projects/Language Learning Project/backend/api_client.py:17: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+INFO:     Started server process [37344]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+Existing vocabulary for telugu detected (9875 rows) - deleting and reloading...
+Loading vocabulary from /Users/raghavganesh/Documents/Code Projects/Language Learning Project/vocab/telugu-oxford-5000.csv...
+Existing vocabulary for kannada detected (9877 rows) - deleting and reloading...
+Loading vocabulary from /Users/raghavganesh/Documents/Code Projects/Language Learning Project/vocab/kannada-oxford-5000.csv...
+Existing vocabulary for urdu detected (9875 rows) - deleting and reloading...
+Loading vocabulary from /Users/raghavganesh/Documents/Code Projects/Language Learning Project/vocab/urdu-oxford-5000.csv...
+Existing vocabulary for malayalam detected (9876 rows) - deleting and reloading...
+Loading vocabulary from /Users/raghavganesh/Documents/Code Projects/Language Learning Project/vocab/malayalam-oxford-5000.csv...
+Existing vocabulary for hindi detected (9875 rows) - deleting and reloading...
+Loading vocabulary from /Users/raghavganesh/Documents/Code Projects/Language Learning Project/vocab/hindi-oxford-5000.csv...
+Existing vocabulary for tamil detected (9877 rows) - deleting and reloading...
+Loading vocabulary from /Users/raghavganesh/Documents/Code Projects/Language Learning Project/vocab/tamil-oxford-5000.csv...
+INFO:     127.0.0.1:50147 - "GET /api/health HTTP/1.1" 200 OK
+Filters received - mastery: None (type: <class 'NoneType'>), word_class: None (type: <class 'NoneType'>), level: None (type: <class 'NoneType'>)
+Filters as strings - mastery: '', word_class: '', level: ''
+INFO:     127.0.0.1:51409 - "GET /api/vocabulary/kannada?limit=50&offset=0 HTTP/1.1" 200 OK
+Getting dashboard data for kannada...
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:51445 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51445 - "GET /api/activity-history/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51445 - "OPTIONS /api/transliterate HTTP/1.1" 200 OK
+[transliterate_text] detected from_scheme=Kannada for language=kannada
+[transliterate_text] detected from_scheme=Kannada for language=kannada
+[transliterate_text] detected from_scheme=Kannada for language=kannada
+[transliterate_text] from=Kannada to=IAST in=ನಾನು ಪ್ರತಿದಿನ ಆಟ ಆಡಲು ಇಷ್ಟಪಡುತ್ತೇನೆ. ಆಟ ಆಡುವುದು ತುಂಬಾ ಖುಷಿ ಕೊಡುತ್ತದೆ. ಆಟ ಶುರು ಮಾಡುವ ಮೊದಲು ನಾವು ನಮ್ಮ ತೋಳುಗಳು ಮತ್ತು ಕಾಲುಗಳನ್ನು ಚಲಿಸಬೇಕು. ಇದರಿಂದ ನಮ್ಮ ದೇಹ ಬಲವಾಗುತ್ತದೆ.\n\nನಮ್ಮ ಶಾಲೆಯಲ್ಲಿ ಕ್ರೀಡಾ ದಿನ ಇದೆ. ಅದಕ್ out=nānu pratidina āṭa āḍalu iṣṭapaḍuttēne. āṭa āḍuvudu tuṁbā khuṣi koḍuttade. āṭa śuru māḍuva modalu nāvu namma tōḷugaḷu mattu kālugaḷannu calisabēku. idariṁda namma dēha balavāguttade.\n\nnamma śāleyalli 
+[transliterate_text] detected from_scheme=Kannada for language=kannada
+[transliterate_text] from=Kannada to=IAST in=ಸಲ್ಲಿಸಿ out=sallisi
+[transliterate_text] detected from_scheme=Kannada for language=kannada
+[transliterate_text] from=Kannada to=IAST in=ಸುಪ್ರಿಯಾ out=supriyā
+INFO:     127.0.0.1:51445 - "POST /api/transliterate HTTP/1.1" 200 OK
+[transliterate_text] from=Kannada to=IAST in=ಆಲಿಸುವಿಕೆ out=ālisuvike
+[transliterate_text] detected from_scheme=Kannada for language=kannada
+[transliterate_text] from=Kannada to=IAST in=female out=fēmalē
+INFO:     127.0.0.1:51473 - "POST /api/transliterate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51475 - "POST /api/transliterate HTTP/1.1" 200 OK
+[transliterate_text] from=Kannada to=IAST in=ಪ್ರಶ್ನೆಗಳು out=praśnegaḷu
+INFO:     127.0.0.1:51470 - "POST /api/transliterate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51477 - "POST /api/transliterate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51472 - "POST /api/transliterate HTTP/1.1" 200 OK
+[transliterate_text] detected from_scheme=Kannada for language=kannada
+[transliterate_text] from=Kannada to=IAST in=ಬೆಂಗಳೂರು out=beṁgaḷūru
+[transliterate_text] detected from_scheme=Kannada for language=kannada
+[transliterate_text] from=Kannada to=IAST in=ಕರ್ನಾಟಕ out=karnāṭaka
+[transliterate_text] detected from_scheme=Kannada for language=kannada
+[transliterate_text] from=Kannada to=IAST in=ಭಾರತ out=bhārata
+INFO:     127.0.0.1:51445 - "POST /api/transliterate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51473 - "POST /api/transliterate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51475 - "POST /api/transliterate HTTP/1.1" 200 OK
+[transliterate_text] detected from_scheme=Kannada for language=kannada
+[transliterate_text] from=Kannada to=IAST in=ಸಾಮಾನ್ಯ ಕನ್ನಡ, ಬೆಂಗಳೂರು ಶೈಲಿ out=sāmānya kannaḍa, beṁgaḷūru śaili
+[transliterate_text] detected from_scheme=Kannada for language=kannada
+[transliterate_text] from=Kannada to=IAST in=ಶಾಲಾ ಶಿಕ್ಷಕಿ out=śālā śikṣaki
+[transliterate_text] detected from_scheme=Kannada for language=kannada
+[transliterate_text] from=Kannada to=IAST in=ಮಾತನಾಡುವವರ ವಿವರಗಳು out=mātanāḍuvavara vivaragaḷu
+INFO:     127.0.0.1:51470 - "POST /api/transliterate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51477 - "POST /api/transliterate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51472 - "POST /api/transliterate HTTP/1.1" 200 OK
+[transliterate_text] detected from_scheme=Kannada for language=kannada
+[transliterate_text] from=Kannada to=IAST in=ಹೆಸರು: out=hesaru:
+[transliterate_text] detected from_scheme=Kannada for language=kannada
+[transliterate_text] from=Kannada to=IAST in=ವಯಸ್ಸು: out=vayassu:
+INFO:     127.0.0.1:51445 - "POST /api/transliterate HTTP/1.1" 200 OK
+[transliterate_text] detected from_scheme=Kannada for language=kannada
+[transliterate_text] from=Kannada to=IAST in=ಲಿಂಗ: out=liṁga:
+INFO:     127.0.0.1:51475 - "POST /api/transliterate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51473 - "POST /api/transliterate HTTP/1.1" 200 OK
+[transliterate_text] detected from_scheme=Kannada for language=kannada
+[transliterate_text] from=Kannada to=IAST in=ದೇಶ: out=dēśa:
+[transliterate_text] detected from_scheme=Kannada for language=kannada
+[transliterate_text] from=Kannada to=IAST in=ರಾಜ್ಯ: out=rājya:
+[transliterate_text] detected from_scheme=Kannada for language=kannada
+[transliterate_text] from=Kannada to=IAST in=ನಗರ: out=nagara:
+INFO:     127.0.0.1:51477 - "POST /api/transliterate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51470 - "POST /api/transliterate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51472 - "POST /api/transliterate HTTP/1.1" 200 OK
+[transliterate_text] detected from_scheme=Kannada for language=kannada
+[transliterate_text] from=Kannada to=IAST in=ಉಪಭಾಷೆ: out=upabhāṣe:
+[transliterate_text] detected from_scheme=Kannada for language=kannada
+[transliterate_text] from=Kannada to=IAST in=ಔಪಚಾರಿಕತೆ: out=aupacārikate:
+[transliterate_text] detected from_scheme=Kannada for language=kannada
+[transliterate_text] from=Kannada to=IAST in=ಹಿನ್ನೆಲೆ: out=hinnele:
+INFO:     127.0.0.1:51445 - "POST /api/transliterate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51473 - "POST /api/transliterate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51475 - "POST /api/transliterate HTTP/1.1" 200 OK
+[transliterate_text] detected from_scheme=Kannada for language=kannada
+[transliterate_text] from=Kannada to=IAST in=ಪಠ್ಯ ತೋರಿಸಿ out=paṭhya tōrisi
+[transliterate_text] detected from_scheme=Kannada for language=kannada
+[transliterate_text] from=Kannada to=IAST in=ಉತ್ತರಗಳನ್ನು ತೋರಿಸಿ out=uttaragaḷannu tōrisi
+[transliterate_text] detected from_scheme=Kannada for language=kannada
+[transliterate_text] from=Kannada to=IAST in=ಪಠ್ಯ ಮರೆಮಾಡಿ out=paṭhya maremāḍi
+INFO:     127.0.0.1:51472 - "POST /api/transliterate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51477 - "POST /api/transliterate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51470 - "POST /api/transliterate HTTP/1.1" 200 OK
+[transliterate_text] detected from_scheme=Kannada for language=kannada
+[transliterate_text] from=Kannada to=IAST in=ಇಲ್ಲಿಂದ ಎಲ್ಲವನ್ನೂ ಕೇಳಿ out=illiṁda ellavannū kēḷi
+[transliterate_text] detected from_scheme=Kannada for language=kannada
+[transliterate_text] from=Kannada to=IAST in=ಉತ್ತರಗಳನ್ನು ಮರೆಮಾಡಿ out=uttaragaḷannu maremāḍi
+[transliterate_text] detected from_scheme=Kannada for language=kannada
+[transliterate_text] from=Kannada to=IAST in=ಸ್ವಯಂ-ಪ್ಲೇ ನಿಲ್ಲಿಸಿ out=svayaṁ-plē nillisi
+INFO:     127.0.0.1:51475 - "POST /api/transliterate HTTP/1.1" 200 OK
+[transliterate_text] detected from_scheme=Kannada for language=kannada
+[transliterate_text] from=Kannada to=IAST in=ಪ್ಯಾರಾಗ್ರಾಫ್ 1 ರ 5 out=pyārāgrāph 1 ra 5
+INFO:     127.0.0.1:51445 - "POST /api/transliterate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51473 - "POST /api/transliterate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51472 - "POST /api/transliterate HTTP/1.1" 200 OK
+[transliterate_text] detected from_scheme=Kannada for language=kannada
+[transliterate_text] from=Kannada to=IAST in=ಪ್ಯಾರಾಗ್ರಾಫ್ 2 ರ 5 out=pyārāgrāph 2 ra 5
+[transliterate_text] detected from_scheme=Kannada for language=kannada
+[transliterate_text] from=Kannada to=IAST in=ಪ್ಯಾರಾಗ್ರಾಫ್ 3 ರ 5 out=pyārāgrāph 3 ra 5
+INFO:     127.0.0.1:51470 - "POST /api/transliterate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51477 - "POST /api/transliterate HTTP/1.1" 200 OK
+[transliterate_text] detected from_scheme=Kannada for language=kannada
+[transliterate_text] from=Kannada to=IAST in=ನಮ್ಮ ಶಾಲೆಯಲ್ಲಿ ಕ್ರೀಡಾ ದಿನ ಇದೆ. ಅದಕ್ಕೆ ಒಬ್ಬ ಒಳ್ಳೆಯ ನಿರ್ವಾಹಕ ಬೇಕು. ಈ ಕ್ರೀಡಾ ದಿನದ ವಿಷಯ ಈಗ ಎಲ್ಲರ ಬಾಯಲ್ಲಿ ಇದೆ. ಮೈದಾನದ ಗಾತ್ರ ದೊಡ್ಡದಾಗಿದೆ, ಅಲ್ಲಿ ಎಲ್ಲರೂ ಆಡಬಹುದು. out=namma śāleyalli krīḍā dina ide. adakke obba oḷḷeya nirvāhaka bēku. ī krīḍā dinada viṣaya īga ellara bāyalli ide. maidānada gātra doḍḍadāgide, alli ellarū āḍabahudu.
+[transliterate_text] detected from_scheme=Kannada for language=kannada
+[transliterate_text] from=Kannada to=IAST in=ಪ್ಯಾರಾಗ್ರಾಫ್ 5 ರ 5 out=pyārāgrāph 5 ra 5
+[transliterate_text] detected from_scheme=Kannada for language=kannada
+[transliterate_text] from=Kannada to=IAST in=ನಾನು ಪ್ರತಿದಿನ ಆಟ ಆಡಲು ಇಷ್ಟಪಡುತ್ತೇನೆ. ಆಟ ಆಡುವುದು ತುಂಬಾ ಖುಷಿ ಕೊಡುತ್ತದೆ. ಆಟ ಶುರು ಮಾಡುವ ಮೊದಲು ನಾವು ನಮ್ಮ ತೋಳುಗಳು ಮತ್ತು ಕಾಲುಗಳನ್ನು ಚಲಿಸಬೇಕು. ಇದರಿಂದ ನಮ್ಮ ದೇಹ ಬಲವಾಗುತ್ತದೆ. out=nānu pratidina āṭa āḍalu iṣṭapaḍuttēne. āṭa āḍuvudu tuṁbā khuṣi koḍuttade. āṭa śuru māḍuva modalu nāvu namma tōḷugaḷu mattu kālugaḷannu calisabēku. idariṁda namma dēha balavāguttade.
+[transliterate_text] detected from_scheme=Kannada for language=kannada
+[transliterate_text] from=Kannada to=IAST in=ಪ್ಯಾರಾಗ್ರಾಫ್ 4 ರ 5 out=pyārāgrāph 4 ra 5
+INFO:     127.0.0.1:51472 - "POST /api/transliterate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51475 - "POST /api/transliterate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51473 - "POST /api/transliterate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51445 - "POST /api/transliterate HTTP/1.1" 200 OK
+[transliterate_text] detected from_scheme=Kannada for language=kannada
+[transliterate_text] from=Kannada to=IAST in=ಕ್ರೀಡೆ ಎಲ್ಲೆಡೆ ಸಂತೋಷವನ್ನು ಹರಡುತ್ತದೆ. ಆಟ ಆಡುವಾಗ ಯಾವುದೇ ಸಂದೇಹ ಇರಬಾರದು, ಸ್ಪಷ್ಟವಾಗಿ ಆಡಬೇಕು. ಆಟದ ಆಡಳಿತ ವರ್ಗ ಸರಿಯಾದ ನಿರ್ಧಾರಗಳನ್ನು ತೆಗೆದುಕೊಳ್ಳುತ್ತದೆ. ಅವರು ಆಟವನ್ನು ಚೆನ್ನಾಗಿ ನಡೆಸುತ್ತಾರೆ. out=krīḍe elleḍe saṁtōṣavannu haraḍuttade. āṭa āḍuvāga yāvudē saṁdēha irabāradu, spaṣṭavāgi āḍabēku. āṭada āḍaḷita varga sariyāda nirdhāragaḷannu tegedukoḷḷuttade. avaru āṭavannu cennāgi naḍesuttāre.
+[transliterate_text] detected from_scheme=Kannada for language=kannada
+[transliterate_text] from=Kannada to=IAST in=ನಾವು ನಿರಂತರವಾದ ಅಭ್ಯಾಸ ಮಾಡಬೇಕು. ಪ್ರತಿದಿನ ಸ್ವಲ್ಪ ಹೊತ್ತು ಆಡಿದರೆ ಒಳ್ಳೆಯದು. ಆಟ ಮುಗಿದ ನಂತರ, ನಾವು ಎಲ್ಲಾ ಚೆಂಡುಗಳನ್ನು ಮತ್ತು ಉಪಕರಣಗಳನ್ನು ಸಂಗ್ರಹಿಸಬೇಕು. ನಿಯಮಗಳನ್ನು ಮುರಿದರೆ ದಂಡ ಬೀಳುತ್ತದೆ, ಆದ್ದರಿಂದ ಎಚ್ಚರಿಕೆಯಿಂದ ಆಡಬ out=nāvu niraṁtaravāda abhyāsa māḍabēku. pratidina svalpa hottu āḍidare oḷḷeyadu. āṭa mugida naṁtara, nāvu ellā ceṁḍugaḷannu mattu upakaraṇagaḷannu saṁgrahisabēku. niyamagaḷannu muridare daṁḍa bīḷuttade, 
+INFO:     127.0.0.1:51477 - "POST /api/transliterate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51470 - "POST /api/transliterate HTTP/1.1" 200 OK
+[transliterate_text] detected from_scheme=Kannada for language=kannada
+[transliterate_text] from=Kannada to=IAST in=ಆಟ ಆಡುವುದು ನಮ್ಮ ಆರೋಗ್ಯಕ್ಕೆ ತುಂಬಾ ಒಳ್ಳೆಯದು. ಇದು ನಮ್ಮ ಸ್ನೇಹಿತರೊಂದಿಗೆ ಒಟ್ಟಿಗೆ ಇರಲು ಸಹಾಯ ಮಾಡುತ್ತದೆ. ಹಾಗಾಗಿ, ಎಲ್ಲರೂ ಆಟ ಆಡಿ, ಆರೋಗ್ಯವಾಗಿರಿ! out=āṭa āḍuvudu namma ārōgyakke tuṁbā oḷḷeyadu. idu namma snēhitaroṁdige oṭṭige iralu sahāya māḍuttade. hāgāgi, ellarū āṭa āḍi, ārōgyavāgiri!
+[transliterate_text] detected from_scheme=Kannada for language=kannada
+[transliterate_text] from=Kannada to=IAST in=ಕ್ರೀಡೆಯ ಖುಷಿ out=krīḍeya khuṣi
+INFO:     127.0.0.1:51472 - "POST /api/transliterate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51445 - "POST /api/transliterate HTTP/1.1" 200 OK
+[transliterate_text] detected from_scheme=Kannada for language=kannada
+[transliterate_text] from=Kannada to=IAST in=ಪಾಠದ ವಿಷಯ ಏನು? out=pāṭhada viṣaya ēnu?
+INFO:     127.0.0.1:51445 - "POST /api/transliterate HTTP/1.1" 200 OK
+[transliterate_text] detected from_scheme=Kannada for language=kannada
+[transliterate_text] from=Kannada to=IAST in=ಅಡುಗೆ out=aḍuge
+INFO:     127.0.0.1:51445 - "POST /api/transliterate HTTP/1.1" 200 OK
+[transliterate_text] detected from_scheme=Kannada for language=kannada
+[transliterate_text] from=Kannada to=IAST in=ಆಟಗಳು out=āṭagaḷu
+INFO:     127.0.0.1:51445 - "POST /api/transliterate HTTP/1.1" 200 OK
+[transliterate_text] detected from_scheme=Kannada for language=kannada
+[transliterate_text] from=Kannada to=IAST in=ಓದುವುದು out=ōduvudu
+INFO:     127.0.0.1:51445 - "POST /api/transliterate HTTP/1.1" 200 OK
+[transliterate_text] detected from_scheme=Kannada for language=kannada
+[transliterate_text] from=Kannada to=IAST in=ನಿದ್ರೆ out=nidre
+INFO:     127.0.0.1:51445 - "POST /api/transliterate HTTP/1.1" 200 OK
+[transliterate_text] detected from_scheme=Kannada for language=kannada
+[transliterate_text] from=Kannada to=IAST in=ಆಟ ಶುರು ಮಾಡುವ ಮೊದಲು ಏನು ಮಾಡಬೇಕು? out=āṭa śuru māḍuva modalu ēnu māḍabēku?
+INFO:     127.0.0.1:51445 - "POST /api/transliterate HTTP/1.1" 200 OK
+[transliterate_text] detected from_scheme=Kannada for language=kannada
+[transliterate_text] from=Kannada to=IAST in=ಊಟ ಮಾಡಬೇಕು out=ūṭa māḍabēku
+INFO:     127.0.0.1:51445 - "POST /api/transliterate HTTP/1.1" 200 OK
+[transliterate_text] detected from_scheme=Kannada for language=kannada
+[transliterate_text] from=Kannada to=IAST in=ನೀರು ಕುಡಿಯಬೇಕು out=nīru kuḍiyabēku
+INFO:     127.0.0.1:51445 - "POST /api/transliterate HTTP/1.1" 200 OK
+[transliterate_text] detected from_scheme=Kannada for language=kannada
+[transliterate_text] from=Kannada to=IAST in=ತೋಳುಗಳು ಮತ್ತು ಕಾಲುಗಳನ್ನು ಚಲಿಸಬೇಕು out=tōḷugaḷu mattu kālugaḷannu calisabēku
+INFO:     127.0.0.1:51445 - "POST /api/transliterate HTTP/1.1" 200 OK
+[transliterate_text] detected from_scheme=Kannada for language=kannada
+[transliterate_text] from=Kannada to=IAST in=ಪುಸ್ತಕ ಓದಬೇಕು out=pustaka ōdabēku
+INFO:     127.0.0.1:51445 - "POST /api/transliterate HTTP/1.1" 200 OK
+[transliterate_text] detected from_scheme=Kannada for language=kannada
+[transliterate_text] from=Kannada to=IAST in=ನಿಯಮಗಳನ್ನು ಮುರಿದರೆ ಏನು ಬೀಳುತ್ತದೆ? out=niyamagaḷannu muridare ēnu bīḷuttade?
+INFO:     127.0.0.1:51445 - "POST /api/transliterate HTTP/1.1" 200 OK
+[transliterate_text] detected from_scheme=Kannada for language=kannada
+[transliterate_text] from=Kannada to=IAST in=ಬಹುಮಾನ out=bahumāna
+INFO:     127.0.0.1:51445 - "POST /api/transliterate HTTP/1.1" 200 OK
+[transliterate_text] detected from_scheme=Kannada for language=kannada
+[transliterate_text] from=Kannada to=IAST in=ದಂಡ out=daṁḍa
+INFO:     127.0.0.1:51445 - "POST /api/transliterate HTTP/1.1" 200 OK
+[transliterate_text] detected from_scheme=Kannada for language=kannada
+[transliterate_text] from=Kannada to=IAST in=ನಗು out=nagu
+INFO:     127.0.0.1:51445 - "POST /api/transliterate HTTP/1.1" 200 OK
+[transliterate_text] detected from_scheme=Kannada for language=kannada
+[transliterate_text] from=Kannada to=IAST in=ಸಂತೋಷ out=saṁtōṣa
+INFO:     127.0.0.1:51445 - "POST /api/transliterate HTTP/1.1" 200 OK
+[transliterate_text] detected from_scheme=Kannada for language=kannada
+[transliterate_text] from=Kannada to=IAST in=ಕ್ರೀಡೆ ಏನು ಹರಡುತ್ತದೆ? out=krīḍe ēnu haraḍuttade?
+INFO:     127.0.0.1:51445 - "POST /api/transliterate HTTP/1.1" 200 OK
+[transliterate_text] detected from_scheme=Kannada for language=kannada
+[transliterate_text] from=Kannada to=IAST in=ದುಃಖ out=duḥkha
+INFO:     127.0.0.1:51445 - "POST /api/transliterate HTTP/1.1" 200 OK
+[transliterate_text] detected from_scheme=Kannada for language=kannada
+[transliterate_text] from=Kannada to=IAST in=ಅಸಮಾಧಾನ out=asamādhāna
+INFO:     127.0.0.1:51445 - "POST /api/transliterate HTTP/1.1" 200 OK
+[transliterate_text] detected from_scheme=Kannada for language=kannada
+[transliterate_text] from=Kannada to=IAST in=ಸಂತೋಷ out=saṁtōṣa
+INFO:     127.0.0.1:51445 - "POST /api/transliterate HTTP/1.1" 200 OK
+[transliterate_text] detected from_scheme=Kannada for language=kannada
+[transliterate_text] from=Kannada to=IAST in=ಭಯ out=bhaya
+INFO:     127.0.0.1:51445 - "POST /api/transliterate HTTP/1.1" 200 OK
+[transliterate_text] detected from_scheme=Kannada for language=kannada
+[transliterate_text] from=Kannada to=IAST in=ಆಟದ ಆಡಳಿತ ವರ್ಗ ಏನು ಮಾಡುತ್ತದೆ? out=āṭada āḍaḷita varga ēnu māḍuttade?
+INFO:     127.0.0.1:51445 - "POST /api/transliterate HTTP/1.1" 200 OK
+[transliterate_text] detected from_scheme=Kannada for language=kannada
+[transliterate_text] from=Kannada to=IAST in=ಕಥೆ ಹೇಳುತ್ತದೆ out=kathe hēḷuttade
+INFO:     127.0.0.1:51445 - "POST /api/transliterate HTTP/1.1" 200 OK
+[transliterate_text] detected from_scheme=Kannada for language=kannada
+[transliterate_text] from=Kannada to=IAST in=ಹಾಡು ಹಾಡುತ್ತದೆ out=hāḍu hāḍuttade
+INFO:     127.0.0.1:51445 - "POST /api/transliterate HTTP/1.1" 200 OK
+[transliterate_text] detected from_scheme=Kannada for language=kannada
+[transliterate_text] from=Kannada to=IAST in=ಸರಿಯಾದ ನಿರ್ಧಾರಗಳನ್ನು ತೆಗೆದುಕೊಳ್ಳುತ್ತದೆ out=sariyāda nirdhāragaḷannu tegedukoḷḷuttade
+INFO:     127.0.0.1:51445 - "POST /api/transliterate HTTP/1.1" 200 OK
+[transliterate_text] detected from_scheme=Kannada for language=kannada
+[transliterate_text] from=Kannada to=IAST in=ನಿದ್ರೆ ಮಾಡುತ್ತದೆ out=nidre māḍuttade
+INFO:     127.0.0.1:51445 - "POST /api/transliterate HTTP/1.1" 200 OK
+Filters received - mastery: None (type: <class 'NoneType'>), word_class: None (type: <class 'NoneType'>), level: None (type: <class 'NoneType'>)
+Filters as strings - mastery: '', word_class: '', level: ''
+Filters received - mastery: None (type: <class 'NoneType'>), word_class: None (type: <class 'NoneType'>), level: None (type: <class 'NoneType'>)
+Filters as strings - mastery: '', word_class: '', level: ''
+INFO:     127.0.0.1:51445 - "GET /api/vocabulary/kannada?limit=50&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51472 - "GET /api/vocabulary/kannada?search=%E0%B2%95%E0%B3%8D%E0%B2%B0%E0%B3%80%E0%B2%A1%E0%B3%86%E0%B2%AF&limit=50&offset=0 HTTP/1.1" 200 OK
+Filters received - mastery: None (type: <class 'NoneType'>), word_class: None (type: <class 'NoneType'>), level: None (type: <class 'NoneType'>)
+Filters as strings - mastery: '', word_class: '', level: ''
+INFO:     127.0.0.1:51472 - "GET /api/vocabulary/kannada?search=%E0%B2%95%E0%B3%8D%E0%B2%B0%E0%B3%80%E0%B2%A1%E0%B3%86&limit=50&offset=0 HTTP/1.1" 200 OK
+Filters received - mastery: None (type: <class 'NoneType'>), word_class: None (type: <class 'NoneType'>), level: None (type: <class 'NoneType'>)
+Filters as strings - mastery: '', word_class: '', level: ''
+Filters received - mastery: None (type: <class 'NoneType'>), word_class: None (type: <class 'NoneType'>), level: None (type: <class 'NoneType'>)
+Filters as strings - mastery: '', word_class: '', level: ''
+INFO:     127.0.0.1:51542 - "GET /api/vocabulary/kannada?limit=50&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51544 - "GET /api/vocabulary/kannada?search=%E0%B2%95%E0%B3%8D%E0%B2%B0%E0%B3%80%E0%B2%A1%E0%B3%86%E0%B2%AF&limit=50&offset=0 HTTP/1.1" 200 OK
+Filters received - mastery: None (type: <class 'NoneType'>), word_class: None (type: <class 'NoneType'>), level: None (type: <class 'NoneType'>)
+Filters as strings - mastery: '', word_class: '', level: ''
+INFO:     127.0.0.1:51544 - "GET /api/vocabulary/kannada?search=b&limit=50&offset=0 HTTP/1.1" 200 OK
+Filters received - mastery: None (type: <class 'NoneType'>), word_class: None (type: <class 'NoneType'>), level: None (type: <class 'NoneType'>)
+Filters as strings - mastery: '', word_class: '', level: ''
+INFO:     127.0.0.1:51544 - "GET /api/vocabulary/kannada?search=ba&limit=50&offset=0 HTTP/1.1" 200 OK
+Filters received - mastery: None (type: <class 'NoneType'>), word_class: None (type: <class 'NoneType'>), level: None (type: <class 'NoneType'>)
+Filters as strings - mastery: '', word_class: '', level: ''
+INFO:     127.0.0.1:51544 - "GET /api/vocabulary/kannada?search=bal&limit=50&offset=0 HTTP/1.1" 200 OK
+Filters received - mastery: None (type: <class 'NoneType'>), word_class: None (type: <class 'NoneType'>), level: None (type: <class 'NoneType'>)
+Filters as strings - mastery: '', word_class: '', level: ''
+INFO:     127.0.0.1:51544 - "GET /api/vocabulary/kannada?search=ball&limit=50&offset=0 HTTP/1.1" 200 OK
+Getting dashboard data for kannada...
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:51583 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
+Getting dashboard data for kannada...
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:51644 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
+Getting dashboard data for kannada...
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:51644 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
+Getting dashboard data for kannada...
+INFO:     127.0.0.1:51678 - "GET /api/profile HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51684 - "GET /api/goals/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51688 - "GET /api/settings?language=kannada HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:51680 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
+Getting dashboard data for kannada...
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:51688 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51680 - "GET /api/languages/learning HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51680 - "GET /api/goals/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51687 - "GET /api/stats/language/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51686 - "GET /api/stats/daily?language=kannada&days=365 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51687 - "GET /api/stats/daily?language=kannada&days=365 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51687 - "GET /api/stats/language/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51687 - "GET /api/settings?language=kannada HTTP/1.1" 200 OK
+Getting dashboard data for kannada...
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:51744 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1769490695.692847 4526558 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.
+Generating speaking activity for kannada with 50 words...
+User CEFR level: A1
+Selected 7 required learning words: ['image (reputation)', 'team', 'special (separate, individual)', 'small (quantity, amount)', 'to transform (change oneself)', 'slavery', 'to devastate (emotionally, to shock deeply)']
+  Saving activity data: 24580 chars, has story: False, has questions: False
+✓ Activity logged: speaking for kannada, score: 0.0, id: 144, data length: 24580
+✓ Activity saved immediately after generation for kannada
+INFO:     127.0.0.1:51744 - "POST /api/activity/speaking/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51897 - "GET /api/activity-history/kannada HTTP/1.1" 200 OK
+Getting dashboard data for kannada...
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:52992 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
+Getting dashboard data for kannada...
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:53002 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53002 - "GET /api/activity-history/kannada HTTP/1.1" 200 OK
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [37344]
+INFO:     Stopping reloader process [37251]

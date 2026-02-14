@@ -1,0 +1,25 @@
+2026-01-22 12:25:43,573 [INFO] --- MODE: PREPARE (Fresh Translation) ---
+2026-01-22 12:25:43,573 [INFO] Created run folder: runs/Telugu_20260122_122543
+2026-01-22 12:25:43,573 [INFO] Input CSV: telugu_truly_missing.csv
+2026-01-22 12:25:43,573 [INFO] Loaded Prompt: prompts/prompt_telugu.txt
+2026-01-22 12:25:43,575 [INFO] Generating batch requests...
+2026-01-22 12:25:43,576 [INFO] SUCCESS: Generated 4 batch requests in runs/Telugu_20260122_122543/batch_input.jsonl
+2026-01-22 12:25:51,264 [INFO] --- MODE: SUBMIT ---
+2026-01-22 12:25:51,264 [WARNING] Both GOOGLE_API_KEY and GEMINI_API_KEY are set. Using GOOGLE_API_KEY.
+2026-01-22 12:25:51,309 [INFO] Uploading file to Google GenAI...
+2026-01-22 12:25:51,874 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files "HTTP/1.1 200 OK"
+2026-01-22 12:25:53,365 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AJRbA5V623ZlfMNb8g7q5c91d4q_NHHobm915Ni1nAfBOuVcXwn9az_BxMOR3vvAOlP1nK5nv3n1WtYj5j1YePX8ItA3ny8G3KKyyGmbDWR8Jc0&upload_protocol=resumable "HTTP/1.1 200 OK"
+2026-01-22 12:25:53,368 [INFO] Creating Batch Job with model gemini-2.5-flash...
+2026-01-22 12:25:54,238 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:batchGenerateContent "HTTP/1.1 200 OK"
+2026-01-22 12:25:54,243 [INFO] JOB STARTED: batches/8oqkdr9fkwnlvgh3zp1d9xpkmxwpfr1eafcq
+2026-01-22 12:37:02,803 [INFO] --- MODE: RETRIEVE ---
+2026-01-22 12:37:02,804 [WARNING] Both GOOGLE_API_KEY and GEMINI_API_KEY are set. Using GOOGLE_API_KEY.
+2026-01-22 12:37:03,113 [INFO] HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/batches/8oqkdr9fkwnlvgh3zp1d9xpkmxwpfr1eafcq "HTTP/1.1 200 OK"
+2026-01-22 12:37:03,114 [INFO] Status: JobState.JOB_STATE_SUCCEEDED
+2026-01-22 12:37:03,115 [INFO] Job Complete. Downloading results...
+2026-01-22 12:37:03,115 [INFO] Retrieving content for: files/batch-8oqkdr9fkwnlvgh3zp1d9xpkmxwpfr1eafcq
+2026-01-22 12:37:03,213 [INFO] HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/files/batch-8oqkdr9fkwnlvgh3zp1d9xpkmxwpfr1eafcq:download?alt=media "HTTP/1.1 302 Found"
+2026-01-22 12:37:03,406 [INFO] HTTP Request: GET https://generativelanguage.googleapis.com/download/v1beta/files/batch-8oqkdr9fkwnlvgh3zp1d9xpkmxwpfr1eafcq:download?alt=media "HTTP/1.1 200 OK"
+2026-01-22 12:37:03,422 [INFO] Saved to runs/Telugu_20260122_122543/batch_output.jsonl
+2026-01-22 12:37:06,700 [INFO] --- MODE: FINALIZE ---
+2026-01-22 12:37:06,754 [INFO] ✅ Final CSV created: runs/Telugu_20260122_122543/final_vocab.csv

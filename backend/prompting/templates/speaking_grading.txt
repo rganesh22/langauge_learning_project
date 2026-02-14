@@ -1,0 +1,75 @@
+Grade a {language} speaking submission.
+
+{script_requirement}
+
+NO markdown (**, *, backticks), NO code fences. Output pure {language} text only in the appropriate script.
+
+CRITICAL SCRIPT REQUIREMENTS:
+- For Kannada: Use only Kannada script (ಕನ್ನಡ ಲಿಪಿ)
+- For Telugu: Use only Telugu script (తెలుగు లిపి)
+- For Malayalam: Use only Malayalam script (മലയാളം ലിപി)
+- For Tamil: Use only Tamil script (தமிழ் எழுத்து)
+- For Hindi: Use only Devanagari script (देवनागरी लिपि)
+- For Urdu: Use ONLY Devanagari script (देवनागरी लिपि) - NOT Nastaliq/Arabic script. The client will handle conversion to Nastaliq.
+- For English: Use only English (Latin script)
+
+NO English, NO Latin letters (except for English language), NO markdown (**, *, backticks), NO code fences. Output pure {language} text only in the appropriate script.
+
+IMPORTANT: The user's current CEFR level is {user_cefr_level}. Evaluate their speaking relative to this level and provide feedback appropriate for {user_cefr_level} level learners.
+
+Speaking Topic: {speaking_topic}
+
+Tasks/Requirements (must be satisfied):
+{tasks_list}
+
+User's Speech Transcript: {user_transcript}
+
+IMPORTANT: If the transcript says "[AUDIO INPUT - Listen to the user's spoken response]", this means you are receiving audio directly. Please:
+1. Listen to the audio and transcribe what the user said in {language} using the correct script
+2. Include the full transcript in your response under "user_transcript" field
+3. Then grade the speech based on what you heard
+
+Required Words (must be used): {required_words_list}
+{learned_context}{learning_context}
+
+Instructions:
+1. Evaluate the user's speech considering their CEFR level ({user_cefr_level}) and vocabulary level (learned/mastered words shown above). Provide feedback appropriate to their {user_cefr_level} level - adjust expectations and feedback complexity accordingly.
+2. Check if all tasks/requirements were satisfied in the speech. Provide feedback on task completion.
+3. Provide scores out of 100 for each category: vocabulary_score, grammar_score, fluency_score, task_completion_score. Score relative to {user_cefr_level} level expectations.
+4. Calculate an overall score (average of the four) and return it as "score" out of 100.
+5. Provide detailed, constructive feedback in {language} using the correct script (as specified above) appropriate for {user_cefr_level} level. Structure feedback with clear paragraphs separated by \\n\\n. Use proper paragraph breaks for transliteration purposes. Avoid markdown/formatting symbols.
+6. For each required word listed above, provide feedback in the "required_words_feedback" object. Use the exact {language} word as the key (from the Required Words list). For each word, indicate:
+   - Whether it was used in the speech
+   - Whether it was used correctly (grammatically and contextually appropriate)
+   - Brief feedback on its usage in {language} using the correct script
+   - Keep feedback brief (1-2 sentences) and constructive
+7. For each task, indicate whether it was completed and provide brief feedback in {language} using the correct script.
+8. Encourage usage of learned/mastered and learning/review words when relevant, but keep feedback appropriate to their current {user_cefr_level} level.
+
+IMPORTANT: Structure the feedback deterministically:
+- First paragraph: Overall assessment and task completion
+- Second paragraph: Vocabulary usage (including required words)
+- Third paragraph: Grammar and accuracy
+- Fourth paragraph: Fluency and clarity
+- Use \\n\\n between paragraphs for proper transliteration chunking
+
+Return ONLY valid JSON (no markdown wrappers) in this exact format:
+{{
+    "user_transcript": "full transcript of what the user said in {language} using the correct script (required if audio input)",
+    "score": 85,
+    "vocabulary_score": 90,
+    "grammar_score": 80,
+    "fluency_score": 85,
+    "task_completion_score": 90,
+    "feedback": "detailed feedback in {language} using the correct script, structured with \\n\\n between paragraphs",
+    "required_words_feedback": {{
+        "{language}_word_1": "text feedback in {language} using the correct script for this word",
+        "{language}_word_2": "text feedback in {language} using the correct script for this word"
+    }},
+    "tasks_feedback": {{
+        "task_0": "text feedback in {language} using the correct script",
+        "task_1": "text feedback in {language} using the correct script"
+    }}
+}}
+
+CRITICAL: In "required_words_feedback", use the EXACT {language} word from the Required Words list as the key. For example, if the required word is in {language} script, use that exact word as the key, not "word1" or any other identifier.

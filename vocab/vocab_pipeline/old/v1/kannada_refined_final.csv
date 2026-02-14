@@ -1,0 +1,100 @@
+﻿id,english_word,word_class,level,verb_transitivity,kannada_translation,transliteration
+0,cafe,noun,a1,N/A,ಕ್ಯಾಫೆ / ಕಾಫಿ ಅಂಗಡಿ / ಕಾಫಿ ಮನೆ,kyāphe / kāphi aṁgaḍi / kāphi mane
+1,cake,noun,a1,N/A,ಕೇಕ್,kēk
+2,to calculate (to estimate or gauge),verb,b2,transitive,ಲೆಕ್ಕ ಹಾಕು / ಅಂದಾಜು ಮಾಡು / ಗಣಿಸು,lekka hāku / aṁdāju māḍu / gaṇisu
+3,to calculate (mathematical),verb,b1,transitive,ಲೆಕ್ಕಾಚಾರ ಮಾಡು / ಲೆಕ್ಕಿಸು / ಗಣಿಸು,lekkācāra māḍu / lekkisu / gaṇisu
+4,calculation (strategic planning),noun,c1,N/A,ಲೆಕ್ಕಾಚಾರ / ಯೋಜನೆ / ತಂತ್ರಗಾರಿಕೆ,lekkācāra / yōjane / taṁtragārike
+5,calculation (mathematical),noun,b1,N/A,ಲೆಕ್ಕಾಚಾರ / ಗಣನೆ / ಲೆಕ್ಕ,lekkācāra / gaṇane / lekka
+6,call (telephone),noun,a1,N/A,ಫೋನ್ ಕರೆ / ಕರೆ / ದೂರವಾಣಿ ಕರೆ,phōn kare / kare / dūravāṇi kare
+7,"call (shout, cry)",noun,a1,N/A,ಕೂಗು / ಕರೆ / ಆಹ್ವಾನ,kūgu / kare / āhvāna
+8,to call (by telephone),verb,a1,transitive,ಫೋನ್ ಮಾಡು / ಕರೆ ಮಾಡು / ದೂರವಾಣಿ ಮಾಡು,phōn māḍu / kare māḍu / dūravāṇi māḍu
+9,to call (to name or summon),verb,a1,transitive,ಕರೆಯು / ಕೂಗು / ಹೆಸರಿಸು / ಆಹ್ವಾನಿಸು,kareyu / kūgu / hesarisu / āhvānisu
+10,"calm (of a person, composed)",adjective,b1,N/A,ಶಾಂತ / ಸಂಯಮದ / ಸಮಾಧಾನದ,śāṁta / saṁyamada / samādhānada
+11,"calm (weather, sea, tranquil)",adjective,b1,N/A,ಶಾಂತ / ಪ್ರಶಾಂತ / ನಿಶ್ಶಬ್ದ,śāṁta / praśāṁta / niśśabda
+12,calm,noun,b1,N/A,ಶಾಂತಿ / ನೆಮ್ಮದಿ / ಸಮಾಧಾನ / ಪ್ರಶಾಂತತೆ,śāṁti / nemmadi / samādhāna / praśāṁtate
+13,"to calm (someone, something)",verb,b1,transitive,ಶಾಂತಗೊಳಿಸು / ಸಮಾಧಾನ ಮಾಡು / ಸಮಾಧಾನ ಪಡಿಸು,śāṁtagoḷisu / samādhāna māḍu / samādhāna paḍisu
+14,"to calm down (oneself, a situation)",verb,b1,intransitive,ಶಾಂತವಾಗು / ಸಮಾಧಾನಪಡು / ನೆಮ್ಮದಿಪಡು,śāṁtavāgu / samādhānapaḍu / nemmadipaḍu
+15,camera,noun,a1,N/A,ಕ್ಯಾಮೆರಾ,kyāmerā
+16,camp,noun,a2,N/A,ಶಿಬಿರ / ಕ್ಯಾಂಪ್,śibira / kyāṁp
+17,to camp,verb,a2,intransitive,ಕ್ಯಾಂಪ್ ಮಾಡು / ಶಿಬಿರ ಹಾಕು / ಶಿಬಿರ ಮಾಡು,kyāṁp māḍu / śibira hāku / śibira māḍu
+18,campaign (military),noun,b1,N/A,ದಂಡಯಾತ್ರೆ / ಯುದ್ಧಾಭಿಯಾನ,daṁḍayātre / yuddhābhiyāna
+19,"campaign (political, advertising)",noun,b1,N/A,ಪ್ರಚಾರ / ಅಭಿಯಾನ,pracāra / abhiyāna
+20,to campaign (politically),verb,b1,intransitive,ಮತ ಪ್ರಚಾರ ಮಾಡು / ಪ್ರಚಾರ ಮಾಡು,mata pracāra māḍu / pracāra māḍu
+21,to campaign (for a cause),verb,b1,intransitive,ಅಭಿಯಾನ ಮಾಡು / ಹೋರಾಟ ಮಾಡು / ಪ್ರಚಾರ ಮಾಡು,abhiyāna māḍu / hōrāṭa māḍu / pracāra māḍu
+22,camping,noun,a2,N/A,ಕ್ಯಾಂಪಿಂಗ್ / ಶಿಬಿರ ವಾಸ / ಶಿಬಿರ,kyāṁpiṁg / śibira vāsa / śibira
+23,campus,noun,b1,N/A,ಕ್ಯಾಂಪಸ್ / ಆವರಣ,kyāṁpas / āvaraṇa
+24,can (for rubbish),noun,a2,N/A,ಕಸದ ತೊಟ್ಟಿ / ಕಸದ ಬುಟ್ಟಿ,kasada toṭṭi / kasada buṭṭi
+25,can (ability),modal verb,a1,N/A,ಸಾಧ್ಯವಾಗು,sādhyavāgu
+26,"can (permission, request)",modal verb,a1,N/A,ಅನುಮತಿ ಕೊಡು / ಅವಕಾಶ ಕೊಡು,anumati koḍu / avakāśa koḍu
+27,canal (anatomical channel),noun,b2,N/A,ನಾಳ,nāḷa
+28,to cancel,verb,b2,transitive,ರದ್ದು ಮಾಡು / ತೆಗೆದುಹಾಕು / ನಿಷೇಧಿಸು,raddu māḍu / tegeduhāku / niṣēdhisu
+29,Cancer (zodiac sign),noun,b2,N/A,ಕರ್ಕಾಟಕ,karkāṭaka
+30,candidate (examinee),noun,b1,N/A,ಪರೀಕ್ಷಾರ್ಥಿ / ಅಭ್ಯರ್ಥಿ,parīkṣārthi / abhyarthi
+31,candle,noun,b2,N/A,ಮೇಣದ ಬತ್ತಿ,mēṇada batti
+32,"cannot (be allowed to , prohibited)",modal verb,a1,N/A,ಅನುಮತಿ ಇಲ್ಲ / ನಿಷಿದ್ಧ,anumati illa / niṣiddha
+33,"canvas (for painting, art)",noun,c1,N/A,ಕ್ಯಾನ್ವಾಸ್ / ಚಿತ್ರಪಟ,kyānvās / citrapaṭa
+34,"canvas (metaphorical framework, scope)",noun,c1,N/A,ವ್ಯಾಪ್ತಿ / ಚೌಕಟ್ಟು / ಕ್ಷೇತ್ರ,vyāpti / caukaṭṭu / kṣētra
+35,cap (headwear),noun,b1,N/A,ಟೋಪಿ / ಕ್ಯಾಪ್,ṭōpi / kyāp
+36,cap (lid for a container),noun,b1,N/A,ಮುಚ್ಚಳ,muccaḷa
+37,capability (strategic resource or function),noun,c1,N/A,ಸಾಮರ್ಥ್ಯ / ಶಕ್ತಿ / ಸಾಮರ್ಥ್ಯತೆ,sāmarthya / śakti / sāmarthyate
+38,capable,adjective,b2,N/A,ಸಮರ್ಥ / ಶಕ್ತ / ಸಾಮರ್ಥ್ಯವುಳ್ಳ,samartha / śakta / sāmarthyavuḷḷa
+39,"capacity (role, function)",noun,b2,N/A,ಪಾತ್ರ / ಸ್ಥಾನ / ಹೊಣೆಗಾರಿಕೆ,pātra / sthāna / hoṇegārike
+40,"capital (chief, of the main city)",adjective,a1,N/A,ರಾಜಧಾನಿಯ / ಮುಖ್ಯ,rājadhāniya / mukhya
+41,capital (letter),adjective,a1,N/A,ದೊಡ್ಡ / ಪ್ರಧಾನ,doḍḍa / pradhāna
+42,capital (city),noun,a1,N/A,ರಾಜಧಾನಿ,rājadhāni
+43,capital (financial assets),noun,a1,N/A,ಬಂಡವಾಳ / ಮೂಲಧನ,baṁḍavāḷa / mūladhana
+44,capitalism,noun,c1,N/A,ಬಂಡವಾಳಶಾಹಿತ್ವ / ಬಂಡವಾಳಶಾಹಿ ಪದ್ಧತಿ,baṁḍavāḷaśāhitva / baṁḍavāḷaśāhi paddhati
+45,capitalist,adjective,c1,N/A,ಬಂಡವಾಳಶಾಹಿ,baṁḍavāḷaśāhi
+46,captain (sports team leader),noun,b1,N/A,ನಾಯಕ / ಕ್ಯಾಪ್ಟನ್,nāyaka / kyāpṭan
+47,captain (female sports team leader),noun,b1,N/A,ನಾಯಕಿ / ಕ್ಯಾಪ್ಟನ್,nāyaki / kyāpṭan
+48,captain (ship or military rank),noun,b1,N/A,ಕ್ಯಾಪ್ಟನ್ / ಸೇನಾನಿ,kyāpṭan / sēnāni
+49,capture (seizure or arrest),noun,b2,N/A,ಸೆರೆಹಿಡಿಯುವಿಕೆ / ಬಂಧನ / ವಶಪಡಿಸಿಕೊಳ್ಳುವಿಕೆ,serehiḍiyuvike / baṁdhana / vaśapaḍisikoḷḷuvike
+50,capture (recording or depiction),noun,b2,N/A,ದಾಖಲೆ / ಚಿತ್ರಣ / ದಾಖಲೀಕರಣ,dākhale / citraṇa / dākhalīkaraṇa
+51,to capture (person or location),verb,b2,transitive,ಸೆರೆಹಿಡಿ / ವಶಪಡಿಸಿಕೊ / ಬಂಧಿಸು / ವಶಪಡಿಸು,serehiḍi / vaśapaḍisiko / baṁdhisu / vaśapaḍisu
+52,to capture (image or data),verb,b2,transitive,ದಾಖಲಿಸು / ಸೆರೆಹಿಡಿ / ಚಿತ್ರೀಕರಿಸು,dākhalisu / serehiḍi / citrīkarisu
+53,car,noun,a1,N/A,ಕಾರು / ಮೋಟಾರು ಗಾಡಿ,kāru / mōṭāru gāḍi
+54,carbon,noun,b2,N/A,ಇಂಗಾಲ,iṁgāla
+55,"card (ID, Bank)",noun,a1,N/A,ಕಾರ್ಡ್ / ಗುರುತಿನ ಚೀಟಿ / ಚೀಟಿ,kārḍ / gurutina cīṭi / cīṭi
+56,"card (greeting, post)",noun,a1,N/A,ಶುಭಾಶಯ ಪತ್ರ / ಕಾರ್ಡ್ / ಪತ್ರ,śubhāśaya patra / kārḍ / patra
+57,greeting card,noun,a1,N/A,ಶುಭಾಶಯ ಪತ್ರ / ಕಾರ್ಡ್,śubhāśaya patra / kārḍ
+58,care (caution),noun,a2,N/A,ಜಾಗರೂಕತೆ / ಎಚ್ಚರಿಕೆ / ಗಮನ,jāgarūkate / eccarike / gamana
+59,care (upkeep),noun,a2,N/A,ಪಾಲನೆ / ಪೋಷಣೆ / ನಿರ್ವಹಣೆ / ಕಾಳಜಿ,pālane / pōṣaṇe / nirvahaṇe / kāḷaji
+60,"to care (about something, someone)",verb,a2,intransitive,ಕಾಳಜಿ ಮಾಡು / ಗಮನಿಸು / ಚಿಂತಿಸು,kāḷaji māḍu / gamanisu / ciṁtisu
+61,"to care (for, to look after)",verb,a2,transitive,ನೋಡಿಕೋ / ಪಾಲಿಸು / ಪೋಷಿಸು / ನಿರ್ವಹಿಸು,nōḍikō / pālisu / pōṣisu / nirvahisu
+62,career,noun,a1,N/A,ವೃತ್ತಿ / ಉದ್ಯೋಗ / ಕೆಲಸ,vr̥tti / udyōga / kelasa
+63,"careful (diligent, detailed)",adjective,a2,N/A,ಜಾಗರೂಕ / ಎಚ್ಚರಿಕೆಯ / ಗಮನವಿಟ್ಟು,jāgarūka / eccarikeya / gamanaviṭṭu
+64,carefully (meticulously),adverb,a2,N/A,ಜಾಗರೂಕತೆಯಿಂದ / ಎಚ್ಚರಿಕೆಯಿಂದ / ಗಮನವಿಟ್ಟು,jāgarūkateyiṁda / eccarikeyiṁda / gamanaviṭṭu
+65,"careless (indifferent, apathetic)",adjective,b1,N/A,ನಿರ್ಲಕ್ಷ್ಯದ / ಅಜಾಗರೂಕ / ಬೇಜವಾಬ್ದಾರಿ,nirlakṣyada / ajāgarūka / bējavābdāri
+66,cargo,noun,c1,N/A,ಸರಕು / ಸಾಮಾನು / ವಸ್ತುಗಳು,saraku / sāmānu / vastugaḷu
+67,carpet,noun,a2,N/A,ಕಾರ್ಪೆಟ್ / ನೆಲಹಾಸು / ಹಾಸಿಗೆ,kārpeṭ / nelahāsu / hāsige
+68,carriage (bearing or posture),noun,c1,N/A,ನಿಲುವು / ಭಂಗಿ / ನಡಿಗೆ,niluvu / bhaṁgi / naḍige
+69,carriage (train coach),noun,c1,N/A,ಬೋಗಿ / ರೈಲು ಬೋಗಿ / ಡಬ್ಬಿ,bōgi / railu bōgi / ḍabbi
+70,carrot,noun,a1,N/A,ಗಜ್ಜರಿ,gajjari
+71,to carry (on the head),verb,a1,transitive,ಹೊರು / ಹೊತ್ತುಕೊಂಡು ಹೋಗು / ತೆಗೆದುಕೊಂಡು ಹೋಗು,horu / hottukoṁḍu hōgu / tegedukoṁḍu hōgu
+72,to carry (a child),verb,a1,transitive,ಹೊತ್ತುಕೊ / ತೆಗೆದುಕೊಂಡು ಹೋಗು / ಕರೆದುಕೊಂಡು ಹೋಗು,hottuko / tegedukoṁḍu hōgu / karedukoṁḍu hōgu
+73,cartoon (satirical drawing),noun,b1,N/A,ವ್ಯಂಗ್ಯಚಿತ್ರ / ಹಾಸ್ಯಚಿತ್ರ / ಚಿತ್ರ,vyaṁgyacitra / hāsyacitra / citra
+74,"to carve (to sculpt, engrave)",verb,c1,transitive,ಕೆತ್ತು / ಕೊರೆ / ಶಿಲ್ಪ ಕೆತ್ತು,kettu / kore / śilpa kettu
+75,to carve (to slice cooked meat),verb,c1,transitive,ಕತ್ತರಿಸು / ತುಂಡರಿಸು / ಸೀಳು,kattarisu / tuṁḍarisu / sīḷu
+76,case (situation or instance),noun,a2,N/A,ಸಂದರ್ಭ / ಪ್ರಕರಣ / ಸ್ಥಿತಿ,saṁdarbha / prakaraṇa / sthiti
+77,case (legal matter),noun,a2,N/A,ಮೊಕದ್ದಮೆ / ಕೇಸು / ದಾವೆ / ಪ್ರಕರಣ,mokaddame / kēsu / dāve / prakaraṇa
+78,case (container or covering),noun,a2,N/A,ಪೆಟ್ಟಿಗೆ / ಕವಚ / ಡಬ್ಬಿ / ಕೋಶ,peṭṭige / kavaca / ḍabbi / kōśa
+79,"cash (loanword, commerce)",noun,a2,N/A,ನಗದು / ಕ್ಯಾಶ್ / ಹಣ,nagadu / kyāś / haṇa
+80,casino,noun,c1,N/A,ಜೂಜಾಟದ ಮನೆ / ಜೂಜುಕಟ್ಟೆ / ಕ್ಯಾಸಿನೋ,jūjāṭada mane / jūjukaṭṭe / kyāsinō
+81,cast (medical),noun,b2,N/A,ಪ್ಲಾಸ್ಟರ್ / ಪ್ಲಾಸ್ಟರ್ ಕಟ್ಟು / ಕಟ್ಟು,plāsṭar / plāsṭar kaṭṭu / kaṭṭu
+82,cast (actors),noun,b2,N/A,ಪಾತ್ರವರ್ಗ / ನಟರು / ಪಾತ್ರಧಾರಿಗಳು,pātravarga / naṭaru / pātradhārigaḷu
+83,to cast (a fishing line or net),verb,b2,transitive,ಬೀಸು / ಎಸೆ / ಹಾಕು,bīsu / ese / hāku
+84,to cast (a shadow or light),verb,b2,transitive,ಚೆಲ್ಲು / ಹರಡು / ಬಿಡು,cellu / haraḍu / biḍu
+85,to cast (molten metal or a sculpture),verb,b2,transitive,ಎರಕ ಹೊಯ್ / ಅಚ್ಚು ಹಾಕು,eraka hoy / accu hāku
+86,to cast (an actor in a role),verb,b2,transitive,ಆಯ್ಕೆ ಮಾಡು / ಆರಿಸು / ಪಾತ್ರಕ್ಕೆ ಆಯ್ಕೆ ಮಾಡು,āyke māḍu / ārisu / pātrakke āyke māḍu
+87,to cast (a vote),verb,b2,transitive,ಮತ ಹಾಕು / ಮತ ಚಲಾಯಿಸು,mata hāku / mata calāyisu
+88,castle (chess piece),noun,b1,N/A,ರುಕ್ / ಕೋಟೆ,ruk / kōṭe
+89,"casual (informal, relaxed)",adjective,b2,N/A,ಅನೌಪಚಾರಿಕ / ಸರಳ / ಸಾಮಾನ್ಯ,anaupacārika / saraḷa / sāmānya
+90,"casual (accidental, chance)",adjective,b2,N/A,ಆಕಸ್ಮಿಕ / ಅನಿರೀಕ್ಷಿತ,ākasmika / anirīkṣita
+91,"casual (temporary, non-permanent)",adjective,b2,N/A,ತಾತ್ಕಾಲಿಕ / ಕ್ಷಣಿಕ / ಅಸ್ಥಿರ,tātkālika / kṣaṇika / asthira
+92,casualty (person injured or killed),noun,c1,N/A,ಸಾವು-ನೋವು / ಬಲಿಪಶು,sāvu-nōvu / balipaśu
+93,casualty (loss or damage),noun,c1,N/A,ನಷ್ಟ / ಹಾನಿ / ಕ್ಷತಿ / ಕಳೆದುಕೊಳ್ಳುವಿಕೆ,naṣṭa / hāni / kṣati / kaḷedukoḷḷuvike
+94,cat,noun,a1,N/A,ಬೆಕ್ಕು,bekku
+95,to catalogue,verb,c1,transitive,ಪಟ್ಟಿಮಾಡು / ದಾಖಲಿಸು / ವರ್ಗೀಕರಿಸು,paṭṭimāḍu / dākhalisu / vargīkarisu
+96,"catch (fastener, latch)",noun,b2,N/A,ಚಿಲಕ / ಬಾಗಿಲ ಚಿಲಕ / ಅಗಲು,cilaka / bāgila cilaka / agalu
+97,"catch (hidden problem, stipulation)",noun,b2,N/A,ತೊಂದರೆ / ಸಮಸ್ಯೆ / ಗುಪ್ತ ಸಮಸ್ಯೆ,toṁdare / samasye / gupta samasye
+98,to catch (an illness),verb,a2,transitive,ಸೋಂಕು ತಗುಲು / ರೋಗ ತಗುಲು / ಬೀಳು,sōṁku tagulu / rōga tagulu / bīḷu

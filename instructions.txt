@@ -1,0 +1,36 @@
+You are an expert Full-Stack Developer and UI/UX Designer. Build a mobile application titled "Language Learning App" that features a Duolingo-inspired aesthetic (sleek, rounded, playful, and minimalist).
+
+1. Technical Stack & Environment
+Frontend: Expo (React Native) using TypeScript or JavaScript.
+
+Backend: Python (FastAPI or Flask) to handle AI logic and data.
+
+Database: Strictly Local SQLite. Store all user progress, streaks, and SRS data locally on the backend.
+
+AI & Credentials: * Use GEMINI_API_KEY for Gemini 2.5 Flash (Text generation and TTS).
+
+Use GOOGLE_APPLICATION_CREDENTIALS for Google Cloud Speech-to-Text (STT).
+
+2. Core Features & UI
+Dashboard: A central screen showing progress for "mylangs" (Kannada, Telugu, Malayalam, Tamil, Hindi, Urdu, Spanish, French, and Welsh).
+
+Constraint: Only Kannada is selectable/active; others are grayed out.
+
+Visuals: Include a "Streak" counter and a daily goal progress bar.
+
+Vocab Library: A dedicated screen to view vocabulary (starting with the Kannada Oxford 5000). It must be searchable and filterable by tags (e.g., "Verbs," "Due for Review").
+
+Profile & Goals: A settings page to configure fine-tuned goals per language (e.g., "2 Reading activities/day for Spanish").
+
+Activities: Four AI-powered activities (Reading, Listening, Writing, and Conversation).
+
+Activities must be generated dynamically based on a Spaced Repetition System (SRS) using the vocab list.
+
+Conversation Grounding: The AI tutor must strictly limit its vocabulary and complexity to the user's current level and "known/learning" words.
+
+3. Implementation Guidelines
+Style: The UI should be sleek and simple. Use high-quality components reminiscent of Duolingo’s "clean" look.
+
+Logic: Previous activities should be logged, allowing the user to view progress or redo them.
+
+Simplicity: The code should be modular and elegant. Avoid over-engineering; focus on a functional, easy-to-use prototype that connects the Expo frontend to the Python backend.

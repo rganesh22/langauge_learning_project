@@ -1,0 +1,47 @@
+2026-01-21 21:15:49,125 [INFO] --- MODE: PREPARE ---
+2026-01-21 21:15:49,126 [INFO] Reading kannada_missing_rows.csv...
+2026-01-21 21:15:49,129 [INFO] Building Global Registry...
+2026-01-21 21:15:49,142 [INFO] Generating JSONL with chunk size 25...
+2026-01-21 21:15:49,161 [INFO] SUCCESS: Generated kannada_missing_batch_input.jsonl with 52 batch requests.
+2026-01-21 21:15:54,464 [INFO] --- MODE: SUBMIT ---
+2026-01-21 21:15:54,464 [WARNING] Both GOOGLE_API_KEY and GEMINI_API_KEY are set. Using GOOGLE_API_KEY.
+2026-01-21 21:15:54,515 [INFO] Uploading file to Google GenAI...
+2026-01-21 21:15:54,945 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files "HTTP/1.1 200 OK"
+2026-01-21 21:15:55,964 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AJRbA5VOqxQ9R_jc3Hnv1JlT1gawgskbPkHqnzmozpSsY0K3ATKBtK4QgTDqGH4gO590frPe60rDeEEOMAexW6Xjj741plnrZA8_vR3pU1xSAg&upload_protocol=resumable "HTTP/1.1 200 OK"
+2026-01-21 21:15:55,969 [INFO] File uploaded: files/9k1h2sf58dn7
+2026-01-21 21:15:55,969 [INFO] Creating Batch Job...
+2026-01-21 21:15:56,894 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:batchGenerateContent "HTTP/1.1 200 OK"
+2026-01-21 21:15:56,901 [INFO] Batch Job Created successfully!
+2026-01-21 21:15:56,901 [INFO] JOB NAME: batches/8vqsu1d801llxh59v7wdpngn7x0bin1b3xhw
+2026-01-21 21:15:56,901 [INFO] STATUS: JobState.JOB_STATE_PENDING
+2026-01-21 21:15:56,902 [INFO] IMPORTANT: Save the JOB NAME above to retrieve results later.
+2026-01-21 21:17:49,543 [INFO] --- MODE: RETRIEVE ---
+2026-01-21 21:17:49,543 [WARNING] Both GOOGLE_API_KEY and GEMINI_API_KEY are set. Using GOOGLE_API_KEY.
+2026-01-21 21:17:49,590 [INFO] Checking status for: batches/8vqsu1d801llxh59v7wdpngn7x0bin1b3xhw
+2026-01-21 21:17:49,859 [INFO] HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/batches/8vqsu1d801llxh59v7wdpngn7x0bin1b3xhw "HTTP/1.1 200 OK"
+2026-01-21 21:17:49,865 [INFO] Current Status: JobState.JOB_STATE_PENDING
+2026-01-21 21:17:49,865 [INFO] Job is still processing. Please check again later.
+2026-01-21 21:21:25,020 [INFO] --- MODE: RETRIEVE ---
+2026-01-21 21:21:25,020 [WARNING] Both GOOGLE_API_KEY and GEMINI_API_KEY are set. Using GOOGLE_API_KEY.
+2026-01-21 21:21:25,072 [INFO] Checking status for: batches/8vqsu1d801llxh59v7wdpngn7x0bin1b3xhw
+2026-01-21 21:21:25,479 [INFO] HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/batches/8vqsu1d801llxh59v7wdpngn7x0bin1b3xhw "HTTP/1.1 200 OK"
+2026-01-21 21:21:25,486 [INFO] Current Status: JobState.JOB_STATE_PENDING
+2026-01-21 21:21:25,486 [INFO] Job is still processing. Please check again later.
+2026-01-21 21:28:44,555 [INFO] --- MODE: RETRIEVE ---
+2026-01-21 21:28:44,556 [WARNING] Both GOOGLE_API_KEY and GEMINI_API_KEY are set. Using GOOGLE_API_KEY.
+2026-01-21 21:28:44,611 [INFO] Checking status for: batches/8vqsu1d801llxh59v7wdpngn7x0bin1b3xhw
+2026-01-21 21:28:45,014 [INFO] HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/batches/8vqsu1d801llxh59v7wdpngn7x0bin1b3xhw "HTTP/1.1 200 OK"
+2026-01-21 21:28:45,020 [INFO] Current Status: JobState.JOB_STATE_SUCCEEDED
+2026-01-21 21:28:45,020 [INFO] Job Complete. Downloading results...
+2026-01-21 21:28:45,021 [INFO] Retrieving content for: files/batch-8vqsu1d801llxh59v7wdpngn7x0bin1b3xhw
+2026-01-21 21:28:45,111 [INFO] HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/files/batch-8vqsu1d801llxh59v7wdpngn7x0bin1b3xhw:download?alt=media "HTTP/1.1 302 Found"
+2026-01-21 21:28:45,403 [INFO] HTTP Request: GET https://generativelanguage.googleapis.com/download/v1beta/files/batch-8vqsu1d801llxh59v7wdpngn7x0bin1b3xhw:download?alt=media "HTTP/1.1 200 OK"
+2026-01-21 21:28:45,679 [INFO] SUCCESS: Results saved to kannada_missing_batch_output.jsonl
+2026-01-21 21:28:45,679 [INFO] Next Step: Run with '--mode finalize'
+2026-01-21 21:28:59,596 [INFO] --- MODE: FINALIZE ---
+2026-01-21 21:28:59,597 [INFO] Parsing batch output file...
+2026-01-21 21:28:59,601 [INFO] Parsed 1052 rows.
+2026-01-21 21:28:59,601 [INFO] Validating Kannada script...
+2026-01-21 21:28:59,603 [INFO] Validation Passed.
+2026-01-21 21:28:59,603 [INFO] Applying Aksharamukha Transliteration...
+2026-01-21 21:28:59,941 [INFO] ✅ SUCCESS! Final dataset saved to: kannada_missing_refined_final.csv

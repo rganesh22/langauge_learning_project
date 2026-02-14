@@ -1,0 +1,210 @@
+2026-01-21 19:13:46,216 [INFO] --- MODE: PREPARE ---
+2026-01-21 19:13:46,216 [INFO] Reading kannada-oxford-5000-test.csv...
+2026-01-21 19:13:46,218 [INFO] Building Global Registry for disambiguation context...
+2026-01-21 19:13:46,219 [INFO] Generating JSONL with chunk size 35...
+2026-01-21 19:13:46,221 [INFO] SUCCESS: Generated kannada_batch_input.jsonl with 3 batch requests.
+2026-01-21 19:13:46,221 [INFO] Next Step: Run with '--mode submit'
+2026-01-21 19:17:25,562 [INFO] --- MODE: PREPARE ---
+2026-01-21 19:17:25,562 [ERROR] Input file kannada-oxford-5000.csv not found.
+2026-01-21 19:17:40,703 [INFO] --- MODE: PREPARE ---
+2026-01-21 19:17:40,703 [INFO] Reading kannada-oxford-5000-test.csv...
+2026-01-21 19:17:40,705 [INFO] Building Global Registry (ignoring parentheticals)...
+2026-01-21 19:17:40,707 [INFO] Generating JSONL with chunk size 35...
+2026-01-21 19:17:40,709 [INFO] SUCCESS: Generated kannada_batch_input.jsonl with 3 batch requests.
+2026-01-21 19:17:40,709 [INFO] Next Step: Run with '--mode submit'
+2026-01-21 19:22:30,186 [INFO] --- MODE: SUBMIT ---
+2026-01-21 19:22:30,186 [INFO] Uploading file to Google GenAI...
+2026-01-21 19:22:30,186 [CRITICAL] Unhandled exception: module 'google.generativeai' has no attribute 'upload_file'
+2026-01-21 19:23:56,126 [INFO] --- MODE: SUBMIT ---
+2026-01-21 19:23:56,127 [INFO] Uploading file to Google GenAI...
+2026-01-21 19:23:56,143 [CRITICAL] Unhandled exception: Unknown mime type: Could not determine the mimetype for your file
+    please set the `mime_type` argument
+2026-01-21 19:25:41,829 [INFO] --- MODE: SUBMIT ---
+2026-01-21 19:25:41,829 [INFO] Uploading file to Google GenAI...
+2026-01-21 19:25:44,095 [INFO] File uploaded: files/dpncf27esbvi
+2026-01-21 19:25:44,096 [INFO] Creating Batch Job...
+2026-01-21 19:25:44,096 [CRITICAL] Unhandled exception: module 'google.generativeai' has no attribute 'batches'
+2026-01-21 19:27:41,166 [INFO] --- MODE: SUBMIT ---
+2026-01-21 19:27:41,166 [WARNING] Both GOOGLE_API_KEY and GEMINI_API_KEY are set. Using GOOGLE_API_KEY.
+2026-01-21 19:27:41,213 [INFO] Uploading file to Google GenAI...
+2026-01-21 19:27:41,881 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files "HTTP/1.1 200 OK"
+2026-01-21 19:27:42,768 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AJRbA5WTdDq8qn6j-jPYwI55qCZ9VNtLp2N2kLBuvJG5G-lmf7hm-iccVFiD1rb8XdhDgHJuwCNSIMcpzh_XrifimvFxTprvFZRAZSf__ZsZTks&upload_protocol=resumable "HTTP/1.1 200 OK"
+2026-01-21 19:27:42,771 [INFO] File uploaded: files/bmgl4v4y08f2
+2026-01-21 19:27:42,772 [INFO] Creating Batch Job...
+2026-01-21 19:27:42,875 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-002:batchGenerateContent "HTTP/1.1 404 Not Found"
+2026-01-21 19:27:42,877 [CRITICAL] Unhandled exception: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/gemini-1.5-flash-002 is not found for API version v1beta, or is not supported for batchGenerateContent. Call ListModels to see the list of available models and their supported methods.', 'status': 'NOT_FOUND'}}
+2026-01-21 19:27:57,762 [INFO] --- MODE: SUBMIT ---
+2026-01-21 19:27:57,762 [WARNING] Both GOOGLE_API_KEY and GEMINI_API_KEY are set. Using GOOGLE_API_KEY.
+2026-01-21 19:27:57,806 [INFO] Uploading file to Google GenAI...
+2026-01-21 19:27:58,471 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files "HTTP/1.1 200 OK"
+2026-01-21 19:27:59,326 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AJRbA5VNh4Dy3F-pr4S7oVwA3bdp1lVijGc0VeKuab9wR1CvdbkhQYEyFe7JG1IfsJUX0gKTTCPZ3xeoV6MLiN1pxxu2WqoKQn9cgEu5VR_JHJU&upload_protocol=resumable "HTTP/1.1 200 OK"
+2026-01-21 19:27:59,339 [INFO] File uploaded: files/aisa8fetvmca
+2026-01-21 19:27:59,339 [INFO] Creating Batch Job...
+2026-01-21 19:27:59,907 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:batchGenerateContent "HTTP/1.1 400 Bad Request"
+2026-01-21 19:27:59,910 [CRITICAL] Unhandled exception: 400 INVALID_ARGUMENT. {'error': {'code': 400, 'message': 'Error on line 1: Only /v1/chat/completions and /v1/embeddings urls are supported, got: /v1beta/models/gemini-2.5-flash:generateContent\nError on line 2: Only /v1/chat/completions and /v1/embeddings urls are supported, got: /v1beta/models/gemini-2.5-flash:generateContent\nError on line 3: Only /v1/chat/completions and /v1/embeddings urls are supported, got: /v1beta/models/gemini-2.5-flash:generateContent', 'status': 'INVALID_ARGUMENT'}}
+2026-01-21 19:30:49,677 [INFO] --- MODE: SUBMIT ---
+2026-01-21 19:30:49,677 [WARNING] Both GOOGLE_API_KEY and GEMINI_API_KEY are set. Using GOOGLE_API_KEY.
+2026-01-21 19:30:49,724 [INFO] Uploading file to Google GenAI...
+2026-01-21 19:30:50,079 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files "HTTP/1.1 200 OK"
+2026-01-21 19:30:50,783 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AJRbA5UwJPH-EN47IcUVyR3WbMGXGL_MdYYnlEd0f9Bpxh6FFaB4JvFKr6178iAqLcCc5xWQsYDuKmfkrldXvTaNNPuckLNwGxA3CBLCriF0UV0&upload_protocol=resumable "HTTP/1.1 200 OK"
+2026-01-21 19:30:50,788 [INFO] File uploaded: files/r2zalccwwct3
+2026-01-21 19:30:50,788 [INFO] Creating Batch Job...
+2026-01-21 19:30:51,218 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:batchGenerateContent "HTTP/1.1 400 Bad Request"
+2026-01-21 19:30:51,220 [CRITICAL] Unhandled exception: 400 INVALID_ARGUMENT. {'error': {'code': 400, 'message': 'Error on line 1: Only /v1/chat/completions and /v1/embeddings urls are supported, got: /v1beta/models/gemini-2.5-flash:generateContent\nError on line 2: Only /v1/chat/completions and /v1/embeddings urls are supported, got: /v1beta/models/gemini-2.5-flash:generateContent\nError on line 3: Only /v1/chat/completions and /v1/embeddings urls are supported, got: /v1beta/models/gemini-2.5-flash:generateContent', 'status': 'INVALID_ARGUMENT'}}
+2026-01-21 19:31:35,865 [INFO] --- MODE: SUBMIT ---
+2026-01-21 19:31:35,865 [WARNING] Both GOOGLE_API_KEY and GEMINI_API_KEY are set. Using GOOGLE_API_KEY.
+2026-01-21 19:31:35,911 [INFO] Uploading file to Google GenAI...
+2026-01-21 19:31:36,479 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files "HTTP/1.1 200 OK"
+2026-01-21 19:31:37,503 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AJRbA5WY6P24wLcIdXKj4EP2VzboLAl9aqg7rnlDizTNpFSS-uDKc5P7yZiuC9UoghdDHAbH6oYv6tp1MaazQbHvY_pUiBKGpfdo0M08eH34bg&upload_protocol=resumable "HTTP/1.1 200 OK"
+2026-01-21 19:31:37,509 [INFO] File uploaded: files/vawoe4wqhdej
+2026-01-21 19:31:37,509 [INFO] Creating Batch Job...
+2026-01-21 19:31:37,969 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:batchGenerateContent "HTTP/1.1 400 Bad Request"
+2026-01-21 19:31:37,971 [CRITICAL] Unhandled exception: 400 INVALID_ARGUMENT. {'error': {'code': 400, 'message': 'Error on line 1: Only /v1/chat/completions and /v1/embeddings urls are supported, got: /v1beta/models/gemini-2.5-flash:generateContent\nError on line 2: Only /v1/chat/completions and /v1/embeddings urls are supported, got: /v1beta/models/gemini-2.5-flash:generateContent\nError on line 3: Only /v1/chat/completions and /v1/embeddings urls are supported, got: /v1beta/models/gemini-2.5-flash:generateContent', 'status': 'INVALID_ARGUMENT'}}
+2026-01-21 19:32:42,023 [INFO] --- MODE: SUBMIT ---
+2026-01-21 19:32:42,023 [WARNING] Both GOOGLE_API_KEY and GEMINI_API_KEY are set. Using GOOGLE_API_KEY.
+2026-01-21 19:32:42,070 [INFO] Uploading file to Google GenAI...
+2026-01-21 19:32:42,509 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files "HTTP/1.1 200 OK"
+2026-01-21 19:32:43,204 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AJRbA5XQqYHjzl8Th-KnfPa4oaEjl4FzycYPXZHz6Xuoma7r_MlEZHZkdsSwM6xnSeRVPWQoiRkhGCy1m1Kz8bcJLUnjSIP30fVMkJOWmAQ_yA&upload_protocol=resumable "HTTP/1.1 200 OK"
+2026-01-21 19:32:43,210 [INFO] File uploaded: files/hmlw8sup2bb8
+2026-01-21 19:32:43,210 [INFO] Creating Batch Job...
+2026-01-21 19:32:43,312 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:batchGenerateContent "HTTP/1.1 404 Not Found"
+2026-01-21 19:32:43,316 [CRITICAL] Unhandled exception: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/gemini-1.5-flash is not found for API version v1beta, or is not supported for batchGenerateContent. Call ListModels to see the list of available models and their supported methods.', 'status': 'NOT_FOUND'}}
+2026-01-21 19:34:14,999 [INFO] --- MODE: PREPARE ---
+2026-01-21 19:34:14,999 [INFO] Reading kannada-oxford-5000-test.csv...
+2026-01-21 19:34:15,001 [INFO] Building Global Registry...
+2026-01-21 19:34:15,003 [INFO] Generating JSONL with chunk size 50...
+2026-01-21 19:34:15,005 [INFO] SUCCESS: Generated kannada_batch_input.jsonl with 2 batch requests.
+2026-01-21 19:34:18,418 [INFO] --- MODE: SUBMIT ---
+2026-01-21 19:34:18,418 [WARNING] Both GOOGLE_API_KEY and GEMINI_API_KEY are set. Using GOOGLE_API_KEY.
+2026-01-21 19:34:18,466 [INFO] Uploading file to Google GenAI...
+2026-01-21 19:34:18,989 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files "HTTP/1.1 200 OK"
+2026-01-21 19:34:19,902 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AJRbA5U5-a5ofV3yw02BmIltcxBqeYnd61Gn--nLr1fAigoLze1uc7teAFhjfZA4oYnxVcvlyza7NtuQqB32iz-Zj8FYFcxnB8OijG1CYnmTJBw&upload_protocol=resumable "HTTP/1.1 200 OK"
+2026-01-21 19:34:19,905 [INFO] File uploaded: files/fsqpr0gmqf5r
+2026-01-21 19:34:19,905 [INFO] Creating Batch Job...
+2026-01-21 19:34:20,806 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:batchGenerateContent "HTTP/1.1 200 OK"
+2026-01-21 19:34:20,812 [INFO] Batch Job Created successfully!
+2026-01-21 19:34:20,813 [INFO] JOB NAME: batches/r7hcj0zuwnhwns3nk5je7gui07y4wdrajcjg
+2026-01-21 19:34:20,813 [INFO] STATUS: JobState.JOB_STATE_PENDING
+2026-01-21 19:34:20,813 [INFO] IMPORTANT: Save the JOB NAME above to retrieve results later.2026-01-21 19:36:14,804 [INFO] --- MODE: RETRIEVE ---
+2026-01-21 19:36:14,804 [WARNING] Both GOOGLE_API_KEY and GEMINI_API_KEY are set. Using GOOGLE_API_KEY.
+2026-01-21 19:36:14,851 [INFO] Checking status for: locations/us-central1/batches/r7hcj0zuwnhwns3nk5je7gui07y4wdrajcjg
+2026-01-21 19:36:14,851 [CRITICAL] Unhandled exception: Invalid batch job name: locations/us-central1/batches/r7hcj0zuwnhwns3nk5je7gui07y4wdrajcjg.
+2026-01-21 19:37:31,869 [INFO] --- MODE: RETRIEVE ---
+2026-01-21 19:37:31,870 [WARNING] Both GOOGLE_API_KEY and GEMINI_API_KEY are set. Using GOOGLE_API_KEY.
+2026-01-21 19:37:31,924 [INFO] Checking status for: batches/r7hcj0zuwnhwns3nk5je7gui07y4wdrajcjg
+2026-01-21 19:37:32,317 [INFO] HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/batches/r7hcj0zuwnhwns3nk5je7gui07y4wdrajcjg "HTTP/1.1 200 OK"
+2026-01-21 19:37:32,323 [INFO] Current Status: JobState.JOB_STATE_PENDING
+2026-01-21 19:37:32,323 [INFO] Job is still processing. Please check again later.
+2026-01-21 19:40:43,507 [INFO] --- MODE: RETRIEVE ---
+2026-01-21 19:40:43,507 [WARNING] Both GOOGLE_API_KEY and GEMINI_API_KEY are set. Using GOOGLE_API_KEY.
+2026-01-21 19:40:43,555 [INFO] Checking status for: batches/r7hcj0zuwnhwns3nk5je7gui07y4wdrajcjg
+2026-01-21 19:40:43,861 [INFO] HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/batches/r7hcj0zuwnhwns3nk5je7gui07y4wdrajcjg "HTTP/1.1 200 OK"
+2026-01-21 19:40:43,866 [INFO] Current Status: JobState.JOB_STATE_PENDING
+2026-01-21 19:40:43,866 [INFO] Job is still processing. Please check again later.
+2026-01-21 19:44:45,999 [INFO] --- MODE: RETRIEVE ---
+2026-01-21 19:44:46,000 [WARNING] Both GOOGLE_API_KEY and GEMINI_API_KEY are set. Using GOOGLE_API_KEY.
+2026-01-21 19:44:46,051 [INFO] Checking status for: batches/r7hcj0zuwnhwns3nk5je7gui07y4wdrajcjg
+2026-01-21 19:44:46,454 [INFO] HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/batches/r7hcj0zuwnhwns3nk5je7gui07y4wdrajcjg "HTTP/1.1 200 OK"
+2026-01-21 19:44:46,459 [INFO] Current Status: JobState.JOB_STATE_RUNNING
+2026-01-21 19:44:46,460 [INFO] Job is still processing. Please check again later.
+2026-01-21 20:05:52,027 [INFO] --- MODE: RETRIEVE ---
+2026-01-21 20:05:52,027 [WARNING] Both GOOGLE_API_KEY and GEMINI_API_KEY are set. Using GOOGLE_API_KEY.
+2026-01-21 20:05:52,076 [INFO] Checking status for: batches/r7hcj0zuwnhwns3nk5je7gui07y4wdrajcjg
+2026-01-21 20:05:52,437 [INFO] HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/batches/r7hcj0zuwnhwns3nk5je7gui07y4wdrajcjg "HTTP/1.1 200 OK"
+2026-01-21 20:05:52,442 [INFO] Current Status: JobState.JOB_STATE_SUCCEEDED
+2026-01-21 20:05:52,442 [INFO] Job is still processing. Please check again later.
+2026-01-21 20:11:41,389 [INFO] --- MODE: RETRIEVE ---
+2026-01-21 20:11:41,389 [WARNING] Both GOOGLE_API_KEY and GEMINI_API_KEY are set. Using GOOGLE_API_KEY.
+2026-01-21 20:11:41,436 [INFO] Checking status for: batches/r7hcj0zuwnhwns3nk5je7gui07y4wdrajcjg
+2026-01-21 20:11:41,775 [INFO] HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/batches/r7hcj0zuwnhwns3nk5je7gui07y4wdrajcjg "HTTP/1.1 200 OK"
+2026-01-21 20:11:41,780 [INFO] Current Status: JobState.JOB_STATE_SUCCEEDED
+2026-01-21 20:11:41,780 [INFO] Job is still processing. Please check again later.
+2026-01-21 20:13:16,260 [INFO] --- MODE: RETRIEVE ---
+2026-01-21 20:13:16,260 [WARNING] Both GOOGLE_API_KEY and GEMINI_API_KEY are set. Using GOOGLE_API_KEY.
+2026-01-21 20:13:16,307 [INFO] Checking status for: batches/r7hcj0zuwnhwns3nk5je7gui07y4wdrajcjg
+2026-01-21 20:13:16,628 [INFO] HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/batches/r7hcj0zuwnhwns3nk5je7gui07y4wdrajcjg "HTTP/1.1 200 OK"
+2026-01-21 20:13:16,634 [INFO] Current Status: JobState.JOB_STATE_SUCCEEDED
+2026-01-21 20:13:16,634 [INFO] Job is still processing. Please check again later.
+2026-01-21 20:15:50,327 [INFO] --- MODE: RETRIEVE ---
+2026-01-21 20:15:50,327 [WARNING] Both GOOGLE_API_KEY and GEMINI_API_KEY are set. Using GOOGLE_API_KEY.
+2026-01-21 20:15:50,378 [INFO] Checking status for: batches/r7hcj0zuwnhwns3nk5je7gui07y4wdrajcjg
+2026-01-21 20:15:50,693 [INFO] HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/batches/r7hcj0zuwnhwns3nk5je7gui07y4wdrajcjg "HTTP/1.1 200 OK"
+2026-01-21 20:15:50,697 [INFO] Current Status: JobState.JOB_STATE_SUCCEEDED
+2026-01-21 20:15:50,697 [INFO] Job Complete. Downloading results...
+2026-01-21 20:15:50,697 [CRITICAL] Unhandled exception: 'BatchJob' object has no attribute 'output_file_name'
+2026-01-21 20:16:33,686 [INFO] --- MODE: RETRIEVE ---
+2026-01-21 20:16:33,686 [WARNING] Both GOOGLE_API_KEY and GEMINI_API_KEY are set. Using GOOGLE_API_KEY.
+2026-01-21 20:16:33,734 [INFO] Checking status for: batches/r7hcj0zuwnhwns3nk5je7gui07y4wdrajcjg
+2026-01-21 20:16:34,048 [INFO] HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/batches/r7hcj0zuwnhwns3nk5je7gui07y4wdrajcjg "HTTP/1.1 200 OK"
+2026-01-21 20:16:34,053 [INFO] Current Status: JobState.JOB_STATE_SUCCEEDED
+2026-01-21 20:16:34,054 [INFO] Job Complete. Downloading results...
+2026-01-21 20:16:34,054 [CRITICAL] Unhandled exception: 'BatchJob' object has no attribute 'output_file'
+2026-01-21 20:18:57,557 [INFO] --- MODE: RETRIEVE ---
+2026-01-21 20:18:57,557 [WARNING] Both GOOGLE_API_KEY and GEMINI_API_KEY are set. Using GOOGLE_API_KEY.
+2026-01-21 20:18:57,604 [INFO] Checking status for: batches/r7hcj0zuwnhwns3nk5je7gui07y4wdrajcjg
+2026-01-21 20:18:57,921 [INFO] HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/batches/r7hcj0zuwnhwns3nk5je7gui07y4wdrajcjg "HTTP/1.1 200 OK"
+2026-01-21 20:18:57,924 [INFO] Current Status: JobState.JOB_STATE_SUCCEEDED
+2026-01-21 20:18:57,924 [INFO] Job Complete. Downloading results...
+2026-01-21 20:18:57,924 [INFO] Retrieving content for: files/batch-r7hcj0zuwnhwns3nk5je7gui07y4wdrajcjg
+2026-01-21 20:18:57,924 [CRITICAL] Unhandled exception: 'Files' object has no attribute 'content'
+2026-01-21 20:20:04,315 [INFO] --- MODE: RETRIEVE ---
+2026-01-21 20:20:04,315 [WARNING] Both GOOGLE_API_KEY and GEMINI_API_KEY are set. Using GOOGLE_API_KEY.
+2026-01-21 20:20:04,366 [INFO] Checking status for: batches/r7hcj0zuwnhwns3nk5je7gui07y4wdrajcjg
+2026-01-21 20:20:04,711 [INFO] HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/batches/r7hcj0zuwnhwns3nk5je7gui07y4wdrajcjg "HTTP/1.1 200 OK"
+2026-01-21 20:20:04,713 [INFO] Current Status: JobState.JOB_STATE_SUCCEEDED
+2026-01-21 20:20:04,713 [INFO] Job Complete. Downloading results...
+2026-01-21 20:20:04,713 [INFO] Retrieving content for: files/batch-r7hcj0zuwnhwns3nk5je7gui07y4wdrajcjg
+2026-01-21 20:20:04,713 [CRITICAL] Unhandled exception: Files.download() got an unexpected keyword argument 'name'
+2026-01-21 20:20:44,979 [INFO] --- MODE: RETRIEVE ---
+2026-01-21 20:20:44,979 [WARNING] Both GOOGLE_API_KEY and GEMINI_API_KEY are set. Using GOOGLE_API_KEY.
+2026-01-21 20:20:45,030 [INFO] Checking status for: batches/r7hcj0zuwnhwns3nk5je7gui07y4wdrajcjg
+2026-01-21 20:20:45,320 [INFO] HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/batches/r7hcj0zuwnhwns3nk5je7gui07y4wdrajcjg "HTTP/1.1 200 OK"
+2026-01-21 20:20:45,323 [INFO] Current Status: JobState.JOB_STATE_SUCCEEDED
+2026-01-21 20:20:45,323 [INFO] Job Complete. Downloading results...
+2026-01-21 20:20:45,323 [INFO] Retrieving content for: files/batch-r7hcj0zuwnhwns3nk5je7gui07y4wdrajcjg
+2026-01-21 20:20:45,410 [INFO] HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/files/batch-r7hcj0zuwnhwns3nk5je7gui07y4wdrajcjg:download?alt=media "HTTP/1.1 302 Found"
+2026-01-21 20:20:45,699 [INFO] HTTP Request: GET https://generativelanguage.googleapis.com/download/v1beta/files/batch-r7hcj0zuwnhwns3nk5je7gui07y4wdrajcjg:download?alt=media "HTTP/1.1 200 OK"
+2026-01-21 20:20:45,769 [INFO] SUCCESS: Results saved to kannada_batch_output.jsonl
+2026-01-21 20:20:45,770 [INFO] Next Step: Run with '--mode finalize'
+2026-01-21 20:23:17,961 [INFO] --- MODE: FINALIZE ---
+2026-01-21 20:23:17,961 [INFO] Parsing batch output file...
+2026-01-21 20:23:17,963 [INFO] Parsed 99 rows.
+2026-01-21 20:23:17,963 [INFO] Validating Kannada script...
+2026-01-21 20:23:17,965 [INFO] Validation Passed.
+2026-01-21 20:23:17,965 [INFO] Applying Aksharamukha Transliteration...
+2026-01-21 20:23:18,058 [INFO] ✅ SUCCESS! Final dataset saved to: kannada_refined_final.csv
+2026-01-21 20:32:00,023 [INFO] --- MODE: PREPARE ---
+2026-01-21 20:32:00,023 [INFO] Reading kannada-oxford-5000.csv...
+2026-01-21 20:32:00,039 [INFO] Building Global Registry...
+2026-01-21 20:32:00,131 [INFO] Generating JSONL with chunk size 50...
+2026-01-21 20:32:00,270 [INFO] SUCCESS: Generated kannada_batch_input.jsonl with 193 batch requests.
+2026-01-21 20:34:11,520 [INFO] --- MODE: SUBMIT ---
+2026-01-21 20:34:11,521 [WARNING] Both GOOGLE_API_KEY and GEMINI_API_KEY are set. Using GOOGLE_API_KEY.
+2026-01-21 20:34:11,568 [INFO] Uploading file to Google GenAI...
+2026-01-21 20:34:12,088 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files "HTTP/1.1 200 OK"
+2026-01-21 20:34:13,725 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AJRbA5Xk-yYAR0a7szQdtT6SzIKpRdjpXpPfd5ZlI6Vn6V2Kf9rqucsv7Kg-B5vBUp5oD5_A5rrcGgrp3K73sUh1qZRZiu__2U_uKHcx_SAY_w&upload_protocol=resumable "HTTP/1.1 200 OK"
+2026-01-21 20:34:13,731 [INFO] File uploaded: files/fv9b75bbzqxz
+2026-01-21 20:34:13,731 [INFO] Creating Batch Job...
+2026-01-21 20:34:14,953 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:batchGenerateContent "HTTP/1.1 200 OK"
+2026-01-21 20:34:14,959 [INFO] Batch Job Created successfully!
+2026-01-21 20:34:14,959 [INFO] JOB NAME: batches/290aazl9tr8poo4hh1jj6f3epkikukymnxca
+2026-01-21 20:34:14,960 [INFO] STATUS: JobState.JOB_STATE_PENDING
+2026-01-21 20:34:14,961 [INFO] IMPORTANT: Save the JOB NAME above to retrieve results later.
+2026-01-21 20:57:03,388 [INFO] --- MODE: RETRIEVE ---
+2026-01-21 20:57:03,388 [WARNING] Both GOOGLE_API_KEY and GEMINI_API_KEY are set. Using GOOGLE_API_KEY.
+2026-01-21 20:57:03,434 [INFO] Checking status for: batches/290aazl9tr8poo4hh1jj6f3epkikukymnxca
+2026-01-21 20:57:03,728 [INFO] HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/batches/290aazl9tr8poo4hh1jj6f3epkikukymnxca "HTTP/1.1 200 OK"
+2026-01-21 20:57:03,731 [INFO] Current Status: JobState.JOB_STATE_SUCCEEDED
+2026-01-21 20:57:03,731 [INFO] Job Complete. Downloading results...
+2026-01-21 20:57:03,731 [INFO] Retrieving content for: files/batch-290aazl9tr8poo4hh1jj6f3epkikukymnxca
+2026-01-21 20:57:03,821 [INFO] HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/files/batch-290aazl9tr8poo4hh1jj6f3epkikukymnxca:download?alt=media "HTTP/1.1 302 Found"
+2026-01-21 20:57:04,071 [INFO] HTTP Request: GET https://generativelanguage.googleapis.com/download/v1beta/files/batch-290aazl9tr8poo4hh1jj6f3epkikukymnxca:download?alt=media "HTTP/1.1 200 OK"
+2026-01-21 20:57:04,568 [INFO] SUCCESS: Results saved to kannada_batch_output.jsonl
+2026-01-21 20:57:04,569 [INFO] Next Step: Run with '--mode finalize'
+2026-01-21 20:57:49,666 [INFO] --- MODE: FINALIZE ---
+2026-01-21 20:57:49,667 [INFO] Parsing batch output file...
+2026-01-21 20:57:49,685 [INFO] Parsed 8695 rows.
+2026-01-21 20:57:49,685 [INFO] Validating Kannada script...
+2026-01-21 20:57:49,688 [INFO] Validation Passed.
+2026-01-21 20:57:49,689 [INFO] Applying Aksharamukha Transliteration...
+2026-01-21 20:57:52,075 [INFO] ✅ SUCCESS! Final dataset saved to: kannada_refined_final.csv

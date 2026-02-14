@@ -1,0 +1,133 @@
+english_word,word_class,kannada_translation,transliteration,verb_transitivity,level
+"hi ,  hey (casual greeting)",exclamation,ಹಾಯ್ / ಹೇ / ನಮಸ್ಕಾರ,hāy / hē / namaskāra,,a1
+to,infinitive marker,ಲು,lu,,a1
+"to smile ,  to laugh",verb,ನಗು / ಮುಗುಳುನಗೆ ಬೀರು,nagu / muguḷunage bīru,intransitive,a2
+alternative (non-conventional),adjective,ಅಸಾಂಪ್ರದಾಯಿಕ / ಬೇರೆ ರೀತಿಯ / ವಿಭಿನ್ನ,asāṁpradāyika / bēre rītiya / vibhinna,,b1
+amazed (awe-struck),adjective,ಆಶ್ಚರ್ಯಚಕಿತ / ವಿಸ್ಮಿತ / ದಿಗ್ಭ್ರಮೆಗೊಂಡ,āścaryacakita / vismita / digbhramegoṁḍa,,b1
+ambition,noun,ಮಹತ್ವಾಕಾಂಕ್ಷೆ / ಆಕಾಂಕ್ಷೆ,mahatvākāṁkṣe / ākāṁkṣe,,b1
+ambitious,adjective,ಮಹತ್ವಾಕಾಂಕ್ಷೆಯುಳ್ಳ / ಮಹತ್ವಾಕಾಂಕ್ಷಿ,mahatvākāṁkṣeyuḷḷa / mahatvākāṁkṣi,,b1
+ambitious (person),adjective,ಮಹತ್ವಾಕಾಂಕ್ಷಿ,mahatvākāṁkṣi,,b1
+analysis,noun,ವಿಶ್ಲೇಷಣೆ,viślēṣaṇe,,b1
+announcement (formal decree),noun,ಘೋಷಣೆ / ಪ್ರಕಟಣೆ / ದಂಡೋರ,ghōṣaṇe / prakaṭaṇe / daṁḍōra,,b1
+"announcement (notice, update)",noun,ಸೂಚನೆ / ಮಾಹಿತಿ / ಪ್ರಕಟಣೆ,sūcane / māhiti / prakaṭaṇe,,b1
+annoyed,adjective,ಕಿರಿಕಿರಿಗೊಂಡ / ಸಿಟ್ಟು ಬಂದ / ಕೋಪಗೊಂಡ,kirikirigoṁḍa / siṭṭu baṁda / kōpagoṁḍa,,b1
+annoying (bothersome; a nuisance),adjective,ಕಿರಿಕಿರಿ ಮಾಡುವ / ತೊಂದರೆ ಕೊಡುವ / ಕಾಡುವ,kirikiri māḍuva / toṁdare koḍuva / kāḍuva,,b1
+apart (into pieces),adverb,ತುಂಡುತುಂಡಾಗಿ / ಚೂರುಚೂರಾಗಿ / ಛಿದ್ರವಾಗಿ,tuṁḍutuṁḍāgi / cūrucūrāgi / chidravāgi,,b1
+apart (separated by distance),adverb,ದೂರದಲ್ಲಿ / ಬೇರೆಯಾಗಿ / ಪ್ರತ್ಯೇಕವಾಗಿ,dūradalli / bēreyāgi / pratyēkavāgi,,b1
+application (formal request),noun,ಅರ್ಜಿ / ಮನವಿ,arji / manavi,,b1
+application (software),noun,ಅಪ್ಲಿಕೇಶನ್ / ಆ್ಯಪ್,aplikēśan / āyap,,b1
+appointment (scheduled meeting),noun,ಭೇಟಿ / ನೇಮಕ,bhēṭi / nēmaka,,b1
+"approximately (as an estimate, roughly)",adverb,ಸುಮಾರು / ಅಂದಾಜು / ಕಡಿಮೆ ಹೆಚ್ಚು,sumāru / aṁdāju / kaḍime heccu,,b1
+"arm (weapon, firearm)",noun,ಆಯುಧ / ಶಸ್ತ್ರ / ಬಂದೂಕು,āyudha / śastra / baṁdūku,,b1
+arrest,noun,ಬಂಧನ / ದಸ್ತಗಿರಿ / ಸೆರೆ,baṁdhana / dastagiri / sere,,b1
+arrival (formal),noun,ಆಗಮನ / ಸಂದರ್ಶನ,āgamana / saṁdarśana,,b1
+arrival (general),noun,ಬರುವಿಕೆ / ಆಗಮನ,baruvike / āgamana,,b1
+assignment (official duty or mission),noun,ಕಾರ್ಯ / ನಿಯೋಜನೆ / ಕೆಲಸ / ಮಿಷನ್,kārya / niyōjane / kelasa / miṣan,,b1
+at worst,adverb,ಕೆಟ್ಟಪಕ್ಷದಲ್ಲಿ / ಕನಿಷ್ಠಪಕ್ಷ,keṭṭapakṣadalli / kaniṣṭhapakṣa,,b1
+"atmosphere (air, gases)",noun,ವಾತಾವರಣ / ಗಾಳಿಮಂಡಲ,vātāvaraṇa / gāḷimaṁḍala,,b1
+"atmosphere (mood, vibe)",noun,ವಾತಾವರಣ / ಪರಿಸರ / ಭಾವ,vātāvaraṇa / parisara / bhāva,,b1
+"attention (military, formal command)",exclamation,ಎಚ್ಚರ / ಸಾವಧಾನ,eccara / sāvadhāna,,b1
+block (building structure),noun,ಬ್ಲಾಕ್ / ವಿಭಾಗ / ಕಟ್ಟಡದ ಭಾಗ,blāk / vibhāga / kaṭṭaḍada bhāga,,b1
+"neither (agreement ,  negative reply)",pronoun,ನಾನೂ ಇಲ್ಲ / ನಾನೂ ಸಹ ಇಲ್ಲ,nānū illa / nānū saha illa,,b1
+suitable (appropriate),adjective,ಸೂಕ್ತವಾದ / ಸರಿಯಾದ / ಯೋಗ್ಯವಾದ,sūktavāda / sariyāda / yōgyavāda,,b1
+summary,noun,ಸಾರಾಂಶ / ಸಂಕ್ಷಿಪ್ತ / ಸಾರಾಂಶೀಕರಣ,sārāṁśa / saṁkṣipta / sārāṁśīkaraṇa,,b1
+supply,noun,ಪೂರೈಕೆ / ಸರಬರಾಜು,pūraike / sarabarāju,,b1
+"supporter (person, advocate)",noun,ಬೆಂಬಲಿಗ / ಅನುಯಾಯಿ / ಸಮರ್ಥಕ,beṁbaliga / anuyāyi / samarthaka,,b1
+"supporter (physical object, brace)",noun,ಆಸರೆ / ಆಧಾರ / ಕಂಬ,āsare / ādhāra / kaṁba,,b1
+surely (expressing mild disbelief or rhetorical question),adverb,ಖಂಡಿತವಾಗಿಯೂ / ನಿಜವಾಗಿಯೂ,khaṁḍitavāgiyū / nijavāgiyū,,b1
+swim,noun,ಈಜು,īju,,b1
+symptom,noun,ಲಕ್ಷಣ / ಚಿಹ್ನೆ,lakṣaṇa / cihne,,b1
+"table (data arrangement, chart)",noun,ಕೋಷ್ಟಕ / ಪಟ್ಟಿ / ಸಾರಣಿ,kōṣṭaka / paṭṭi / sāraṇi,,b1
+tail (of a coin),noun,ಬಾಲ / ಹಿಂಭಾಗ,bāla / hiṁbhāga,,b1
+"tail (rear end, part)",noun,ಬಾಲ,bāla,,b1
+talent,noun,ಪ್ರತಿಭೆ / ಸಾಮರ್ಥ್ಯ / ಕೌಶಲ್ಯ,pratibhe / sāmarthya / kauśalya,,b1
+talented,adjective,ಪ್ರತಿಭೆಯುಳ್ಳ / ಪ್ರತಿಭಾವಂತ / ಕುಶಲ,pratibheyuḷḷa / pratibhāvaṁta / kuśala,,b1
+talented (f),adjective,ಪ್ರತಿಭಾವಂತೆ / ಸಾಮರ್ಥ್ಯವುಳ್ಳ / ಕುಶಲೆ,pratibhāvaṁte / sāmarthyavuḷḷa / kuśale,,b1
+talented (female),adjective,ಪ್ರತಿಭಾವಂತೆ / ಪ್ರತಿಭೆಯುಳ್ಳ,pratibhāvaṁte / pratibheyuḷḷa,,b1
+talented (m),adjective,ಪ್ರತಿಭಾವಂತ / ಸಾಮರ್ಥ್ಯವುಳ್ಳ / ಕುಶಲ,pratibhāvaṁta / sāmarthyavuḷḷa / kuśala,,b1
+talented (male),adjective,ಪ್ರತಿಭಾವಂತ / ಪ್ರತಿಭೆಯುಳ್ಳ,pratibhāvaṁta / pratibheyuḷḷa,,b1
+tape (adhesive),noun,ಟೇಪ್ / ಅಂಟಿಸುವ ಪಟ್ಟಿ,ṭēp / aṁṭisuva paṭṭi,,b1
+tape (measuring device),noun,ಟೇಪ್ / ಅಳತೆ ಪಟ್ಟಿ,ṭēp / aḷate paṭṭi,,b1
+"taste (preference, style)",noun,ಅಭಿರುಚಿ / ಶೈಲಿ,abhiruci / śaili,,b1
+tax,noun,ತೆರಿಗೆ / ಕರ,terige / kara,,b1
+"technical (relating to rules, procedure)",adjective,ತಾಂತ್ರಿಕ,tāṁtrika,,b1
+"technique (method, procedure)",noun,ತಂತ್ರ / ವಿಧಾನ / ಕ್ರಮ,taṁtra / vidhāna / krama,,b1
+"temporarily (for the moment, coll.)",adverb,ಸದ್ಯಕ್ಕೆ / ತಾತ್ಕಾಲಿಕವಾಗಿ,sadyakke / tātkālikavāgi,,b1
+temporary (not permanent),adjective,ತಾತ್ಕಾಲಿಕ / ಅಲ್ಪಾವಧಿ,tātkālika / alpāvadhi,,b1
+will (desire),noun,ಇಚ್ಛೆ / ಮನಸ್ಸು / ಸಂಕಲ್ಪ,icche / manassu / saṁkalpa,,b1
+will (legal document),noun,ಉಯಿಲು / ಮರಣಶಾಸನ,uyilu / maraṇaśāsana,,b1
+"will (strong resolve, determination)",noun,ಸಂಕಲ್ಪ / ದೃಢ ನಿರ್ಧಾರ / ಮನೋಬಲ,saṁkalpa / dr̥ḍha nirdhāra / manōbala,,b1
+win,noun,ಗೆಲುವು / ವಿಜಯ / ಜಯ,geluvu / vijaya / jaya,,b1
+wing (of a building),noun,ಪಾರ್ಶ್ವಭಾಗ / ವಿಭಾಗ,pārśvabhāga / vibhāga,,b1
+wing (political group),noun,ಬಣ / ಗುಂಪು / ಪಕ್ಷ,baṇa / guṁpu / pakṣa,,b1
+within (time limit),preposition,ಒಳಗೆ / ಒಳಗಾಗಿ,oḷage / oḷagāgi,,b1
+wonder (marvel or astonishing thing),noun,ಅದ್ಭುತ / ಆಶ್ಚರ್ಯ,adbhuta / āścarya,,b1
+wooden (stiff or unnatural),adjective,ನಿರ್ಜೀವವಾದ / ಭಾವರಹಿತವಾದ / ಕೃತಕವಾದ,nirjīvavāda / bhāvarahitavāda / kr̥takavāda,,b1
+wool,noun,ಉಣ್ಣೆ,uṇṇe,,b1
+worldwide,adverb,ಜಗತ್ತಿನಾದ್ಯಂತ / ವಿಶ್ವದಾದ್ಯಂತ / ಜಾಗತಿಕವಾಗಿ,jagattinādyaṁta / viśvadādyaṁta / jāgatikavāgi,,b1
+worldwide (adjective),adverb,ವಿಶ್ವವ್ಯಾಪಿ / ಜಾಗತಿಕ,viśvavyāpi / jāgatika,,b1
+"worried (anxious, distressed)",adjective,ಚಿಂತೆಗೀಡಾದ / ಕಳವಳಗೊಂಡ / ಆತಂಕಿತ / ವ್ಯಾಕುಲಗೊಂಡ,ciṁtegīḍāda / kaḷavaḷagoṁḍa / ātaṁkita / vyākulagoṁḍa,,b1
+worry,noun,ಚಿಂತೆ / ಕಳವಳ / ಆತಂಕ,ciṁte / kaḷavaḷa / ātaṁka,,b1
+worse,adverb,ಹೆಚ್ಚು ಕೆಟ್ಟದಾಗಿ / ಇನ್ನೂ ಕೆಟ್ಟದಾಗಿ,heccu keṭṭadāgi / innū keṭṭadāgi,,b1
+worse (comparative adverb),adverb,ಹೆಚ್ಚು ಕೆಟ್ಟದಾಗಿ / ಕೆಟ್ಟದಾಗಿ,heccu keṭṭadāgi / keṭṭadāgi,,b1
+"worst (at worst, at minimum)",adjective,ಕನಿಷ್ಠ ಪಕ್ಷ / ಕೆಟ್ಟ ಪಕ್ಷ,kaniṣṭha pakṣa / keṭṭa pakṣa,,b1
+worst (superlative adjective),adjective,ಅತ್ಯಂತ ಕೆಟ್ಟ / ತೀರ ಕೆಟ್ಟ,atyaṁta keṭṭa / tīra keṭṭa,,b1
+worst (superlative adverb),adverb,ಅತ್ಯಂತ ಕೆಟ್ಟದಾಗಿ / ತೀರ ಕೆಟ್ಟದಾಗಿ,atyaṁta keṭṭadāgi / tīra keṭṭadāgi,,b1
+"worth (deserving of, beneficial)",adjective,ಯೋಗ್ಯ / ಪ್ರಯೋಜನಕಾರಿ / ಅರ್ಹ / ಬೆಲೆಬಾಳುವ,yōgya / prayōjanakāri / arha / belebāḷuva,,b1
+"written (formal, official)",adjective,ಲಿಖಿತ / ಬರೆದ,likhita / bareda,,b1
+"wrong (incorrect, not right)",adverb,ತಪ್ಪಾಗಿ,tappāgi,,b1
+wrong (incorrectly),adverb,ತಪ್ಪಾಗಿ / ಸರಿಯಾಗಿಲ್ಲ,tappāgi / sariyāgilla,,b1
+wrong (morally bad),adverb,ತಪ್ಪು ರೀತಿಯಲ್ಲಿ / ಅನೈತಿಕವಾಗಿ,tappu rītiyalli / anaitikavāgi,,b1
+"wrong (morally bad, unjust)",adverb,ಅನ್ಯಾಯವಾಗಿ / ತಪ್ಪು ರೀತಿಯಲ್ಲಿ,anyāyavāgi / tappu rītiyalli,,b1
+briefly (in short; concisely),adverb,ಸಂಕ್ಷಿಪ್ತವಾಗಿ / ಸಂಕ್ಷೇಪವಾಗಿ / ಸಾರಾಂಶವಾಗಿ,saṁkṣiptavāgi / saṁkṣēpavāgi / sārāṁśavāgi,,b2
+"broad (general, scope)",adjective,ವ್ಯಾಪಕವಾದ / ವಿಸ್ತಾರವಾದ / ಸಾರ್ವತ್ರಿಕವಾದ,vyāpakavāda / vistāravāda / sārvatrikavāda,,b2
+"broad (wide, physical)",adjective,ಅಗಲವಾದ / ವಿಶಾಲವಾದ / ವಿಸ್ತಾರವಾದ,agalavāda / viśālavāda / vistāravāda,,b2
+"broadcaster (company, entity)",noun,ಪ್ರಸಾರ ಸಂಸ್ಥೆ / ಪ್ರಸಾರ ಕೇಂದ್ರ,prasāra saṁsthe / prasāra kēṁdra,,b2
+broadcaster (person),noun,ನಿರೂಪಕ / ಪ್ರಸಾರಕ / ಘೋಷಕ,nirūpaka / prasāraka / ghōṣaka,,b2
+broadly (generally speaking),adverb,ಸಾಮಾನ್ಯವಾಗಿ / ಸ್ಥೂಲವಾಗಿ / ಸಾಮಾನ್ಯಾರ್ಥದಲ್ಲಿ,sāmānyavāgi / sthūlavāgi / sāmānyārthadalli,,b2
+broadly (widely),adverb,ವ್ಯಾಪಕವಾಗಿ / ವಿಸ್ತಾರವಾಗಿ / ಅಗಲವಾಗಿ,vyāpakavāgi / vistāravāgi / agalavāgi,,b2
+budget,noun,ಬಜೆಟ್ / ಆಯವ್ಯಯ / ವೆಚ್ಚದ ಅಂದಾಜು,bajeṭ / āyavyaya / veccada aṁdāju,,b2
+bug (illness),noun,ಸೋಂಕು / ರೋಗ / ವ್ಯಾಧಿ,sōṁku / rōga / vyādhi,,b2
+bug (software error),noun,ದೋಷ / ತಪ್ಪು / ಲೋಪ,dōṣa / tappu / lōpa,,b2
+bullet (typographical mark),noun,ಬುಲೆಟ್ ಗುರುತು / ಚುಕ್ಕೆ,buleṭ gurutu / cukke,,b2
+"bunch (a lot of ,  many - informal)",noun,ಬಹಳಷ್ಟು / ಹೆಚ್ಚು / ಸಾಕಷ್ಟು,bahaḷaṣṭu / heccu / sākaṣṭu,,b2
+"bunch (cluster of grapes, keys, or flowers)",noun,ಗೊಂಚಲು / ಗುಚ್ಛ,goṁcalu / guccha,,b2
+burn,noun,ದಹನ / ಸುಡುವಿಕೆ,dahana / suḍuvike,,b2
+burn (injury),noun,ಸುಟ್ಟ ಗಾಯ,suṭṭa gāya,,b2
+bush (mechanical part),noun,ಬುಷ್ / ಆಧಾರಕ,buṣ / ādhāraka,,b2
+"but (conjunction, contrast)",preposition,ಆದರೆ / ಆದರೂ / ಆದಾಗ್ಯೂ,ādare / ādarū / ādāgyū,,b2
+but (except),preposition,ಹೊರತು / ಅಲ್ಲದೆ,horatu / allade,,b2
+"cabin (aircraft, ship compartment)",noun,ಕ್ಯಾಬಿನ್ / ಕೋಣೆ,kyābin / kōṇe,,b2
+"cabin (small dwelling, hut)",noun,ಗುಡಿಸಲು / ಚಿಕ್ಕ ಮನೆ,guḍisalu / cikka mane,,b2
+"cable (structural rope, hawser)",noun,ಕೇಬಲ್ / ಹಗ್ಗ,kēbal / hagga,,b2
+canal (anatomical channel),noun,ನಾಳ / ಮಾರ್ಗ,nāḷa / mārga,,b2
+Cancer (zodiac sign),noun,ಕರ್ಕಾಟಕ,karkāṭaka,,b2
+candle,noun,ಮೇಣದ ಬತ್ತಿ,mēṇada batti,,b2
+capable,adjective,ಸಮರ್ಥ / ಶಕ್ತ / ಸಾಮರ್ಥ್ಯವುಳ್ಳ,samartha / śakta / sāmarthyavuḷḷa,,b2
+specimen (representative instance),noun,ಮಾದರಿ / ನಮೂನೆ,mādari / namūne,,c1
+specimen (scientific sample),noun,ಮಾದರಿ / ನಮೂನೆ,mādari / namūne,,c1
+spectacle (embarrassing public scene),noun,ನಾಟಕೀಯ ಪ್ರಸಂಗ / ಹಾಸ್ಯಾಸ್ಪದ ಪ್ರಸಂಗ,nāṭakīya prasaṁga / hāsyāspada prasaṁga,,c1
+spectacle (grand visual display),noun,ವೈಭವದ ಪ್ರದರ್ಶನ / ಭವ್ಯ ಪ್ರದರ್ಶನ / ಕಣ್ಮನ ಸೆಳೆಯುವ ದೃಶ್ಯ,vaibhavada pradarśana / bhavya pradarśana / kaṇmana seḷeyuva dr̥śya,,c1
+spectacles (eyeglasses),noun,ಕನ್ನಡಕ,kannaḍaka,,c1
+spectrum (range),noun,ವ್ಯಾಪ್ತಿ / ಶ್ರೇಣಿ / ಪರಿಧಿ,vyāpti / śrēṇi / paridhi,,c1
+spectrum (scientific),noun,ವರ್ಣಪಟಲ,varṇapaṭala,,c1
+spell (magic),noun,ಮಂತ್ರ / ಮಾಟ / ಜಾದೂ,maṁtra / māṭa / jādū,,c1
+spell (period of time),noun,ಅವಧಿ / ಕಾಲಾವಧಿ / ಸಮಯ,avadhi / kālāvadhi / samaya,,c1
+sphere (domain of influence),noun,ಕ್ಷೇತ್ರ / ವ್ಯಾಪ್ತಿ / ಪ್ರಭಾವಲಯ,kṣētra / vyāpti / prabhāvalaya,,c1
+sphere (geometric shape),noun,ಗೋಳ,gōḷa,,c1
+spin (bias or interpretation),noun,ತಿರುಚಿದ ವ್ಯಾಖ್ಯಾನ / ಪಕ್ಷಪಾತ / ತಿರುಚು,tirucida vyākhyāna / pakṣapāta / tirucu,,c1
+spine (of a book),noun,ಪುಸ್ತಕದ ಬೆನ್ನು / ಬೆನ್ನು,pustakada bennu / bennu,,c1
+spine (sharp projection),noun,ಮುಳ್ಳು,muḷḷu,,c1
+"spotlight (attention, focus)",noun,ಗಮನ / ಪ್ರಚಾರ / ಕೇಂದ್ರಬಿಂದು / ಬೆಳಕು,gamana / pracāra / kēṁdrabiṁdu / beḷaku,,c1
+spotlight (physical lamp),noun,ಸ್ಪಾಟ್‌ಲೈಟ್ / ಪ್ರಕಾಶ ದೀಪ / ಕೇಂದ್ರೀಕೃತ ದೀಪ,spāṭlaiṭ / prakāśa dīpa / kēṁdrīkr̥ta dīpa,,c1
+spouse (husband),noun,ಗಂಡ / ಪತಿ,gaṁḍa / pati,,c1
+spouse (wife),noun,ಹೆಂಡತಿ / ಪತ್ನಿ / ಭಾರ್ಯೆ,heṁḍati / patni / bhārye,,c1
+spy,noun,ಗೂಢಚಾರ / ಬೇಹುಗಾರ,gūḍhacāra / bēhugāra,,c1
+"squad (military, police unit)",noun,ದಳ / ತುಕಡಿ / ಪಡೆ,daḷa / tukaḍi / paḍe,,c1
+squad (sports team),noun,ತಂಡ / ಬಳಗ,taṁḍa / baḷaga,,c1
+stability,noun,ಸ್ಥಿರತೆ / ದೃಢತೆ,sthirate / dr̥ḍhate,,c1
+stake (financial interest or share),noun,ಪಾಲು / ಹೂಡಿಕೆ / ಪಾಲಂಶ,pālu / hūḍike / pālaṁśa,,c1
+stake (wooden post),noun,ಗೂಟ / ಕಂಬ,gūṭa / kaṁba,,c1
+standing (permanent),adjective,ಖಾಯಂ / ಶಾಶ್ವತ / ಸ್ಥಿರ,khāyaṁ / śāśvata / sthira,,c1
+"to merge (companies, organizations)",verb,ವಿಲೀನಗೊಳಿಸು / ಒಂದಾಗಿಸು,vilīnagoḷisu / oṁdāgisu,,c1
+to minimize,verb,ಕಡಿಮೆಗೊಳಿಸು / ಕನಿಷ್ಠಗೊಳಿಸು,kaḍimegoḷisu / kaniṣṭhagoḷisu,,c1

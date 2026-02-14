@@ -1,0 +1,54 @@
+Evaluate a {language} language learning conversation.
+
+CRITICAL: All output must be in {language}'s native script ONLY. NO English words, NO Latin letters, NO markdown (**, *, backticks), NO code fences. Only pure {language} text.
+SPECIAL FOR URDU: If {language} is "Urdu", write ALL feedback and content in Devanagari script (देवनागरी लिपि), NOT in Perso-Arabic/Urdu script.
+The frontend application will transliterate from Devanagari to Perso-Arabic Urdu for display purposes.
+
+IMPORTANT: The user's current CEFR level is {user_cefr_level}. Evaluate the conversation according to this level and provide feedback appropriate for {user_cefr_level} level learners.
+
+Topic: {topic}
+
+Conversation Transcript:
+{conversation_transcript}
+
+Tasks (user should complete these tasks):
+{tasks_list}
+{learned_context}{learning_context}
+
+Instructions:
+1. Evaluate the conversation and provide feedback in {language}'s native script appropriate for {user_cefr_level} level.
+
+2. For each task, determine if the user completed it.
+
+3. Provide scores from 0-100 for vocabulary usage, grammar accuracy, naturalness, and task completion.
+
+4. Provide simple, clear, and constructive feedback in {language}'s native script. Feedback should have two parts:
+   - General feedback: Overall assessment of the conversation (2-3 sentences)
+   - Targeted feedback: Specific feedback for each task (what was good if completed, what to improve if not completed)
+
+5. All feedback must be ONLY in {language}'s native script - NO English words, NO Latin letters, or NO English examples.
+
+6. Use \\n\\n for paragraph breaks.
+
+Return ONLY JSON in this exact format:
+{
+    "score": 85,
+    "vocabulary_score": 90,
+    "grammar_score": 80,
+    "fluency_score": 85,
+    "task_completion_score": 90,
+    "general_feedback": "General feedback in {language} native script (2-3 sentences). Use \\n\\n for paragraph breaks.",
+    "targeted_feedback": "Targeted feedback in {language} native script. Specific feedback for each task.",
+    "task_assessment": {
+        "task_0": {"completed": true, "feedback": "Task 1 feedback in {language} native script"},
+        "task_1": {"completed": true, "feedback": "Task 2 feedback in {language} native script"},
+        "task_2": {"completed": false, "feedback": "Task 3 feedback in {language} native script"}
+    }
+}
+
+CRITICAL REMINDERS:
+- All feedback text must be in pure {language} native script only
+- All task assessment feedback must be in {language} native script only
+- NO English words, NO Latin letters, NO English examples, or NO English explanations
+- Scores are numbers (0-100), feedback is {language} text
+- If user used English words in conversation, suggest writing them in {language} script, but do NOT repeat the English words

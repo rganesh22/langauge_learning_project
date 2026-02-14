@@ -1,0 +1,34 @@
+﻿id,english_word,word_class,level,verb_transitivity,target_translation,transliteration
+0,"greetings , hello (respectful standard greeting)",noun,a1,nan,నమస్కారం / నమస్తే,namaskāraṁ / namastē
+1,"hi , hey (casual greeting)",exclamation,a1,nan,హాయ్ / ఏంటి / ఓయ్,hāy / ēṁṭi / ōy
+2,to,infinitive marker,a1,nan,డానికి,ḍāniki
+3,"to smile , to laugh",verb,a2,intransitive,నవ్వు,navvu
+4,global,adjective,b1,nan,ప్రపంచ / ప్రపంచవ్యాప్త / విశ్వ,prapaṁca / prapaṁcavyāpta / viśva
+5,glove (protective or heavy),noun,b1,nan,గ్లవ్ / చేతి తొడుగు,glav / cēti toḍugu
+6,go (a turn),noun,b1,nan,వంతు / సారి,vaṁtu / sāri
+7,go ahead,adverb,b1,nan,ముందుకు / నిరభ్యంతరంగా,muṁduku / nirabhyaṁtaraṁgā
+8,goods (manufactured products),noun,b1,nan,వస్తువులు / ఉత్పత్తులు / సరుకులు,vastuvulu / utpattulu / sarukulu
+9,"goods (merchandise, freight)",noun,b1,nan,సరుకులు / వస్తువులు,sarukulu / vastuvulu
+10,"grade (level, class)",noun,b1,nan,తరగతి / స్థాయి / గ్రేడ్,taragati / sthāyi / grēḍ
+11,"grade (quality, standard)",noun,b1,nan,నాణ్యత / స్థాయి / గ్రేడ్,nāṇyata / sthāyi / grēḍ
+12,"grade (score, mark)",noun,b1,nan,మార్కు / గ్రేడ్ / అంకం,mārku / grēḍ / aṁkaṁ
+13,graduate,noun,b1,nan,గ్రాడ్యుయేట్ / పట్టభద్రుడు,grāḍyuyēṭ / paṭṭabhadruḍu
+14,grain (cereal crops collectively),noun,b1,nan,ధాన్యం / గింజలు / ఆహారధాన్యాలు,dhānyaṁ / giṁjalu / āhāradhānyālu
+15,grain (single seed or small particle),noun,b1,nan,గింజ / కణం / రేణువు,giṁja / kaṇaṁ / rēṇuvu
+16,"grain (small particle, e.g., sand)",noun,b1,nan,రేణువు / కణం / ఇసుక రేణువు,rēṇuvu / kaṇaṁ / isuka rēṇuvu
+17,grateful,adjective,b1,nan,కృతజ్ఞత గల / రుణపడి ఉన్న,kr̥tajñata gala / ruṇapaḍi unna
+18,guard (protective device),noun,b1,nan,రక్షక కవచం / కవచం / గార్డు,rakṣaka kavacaṁ / kavacaṁ / gārḍu
+19,guilty,adjective,b1,nan,దోషి అయిన / అపరాధం చేసిన / తప్పు చేసిన,dōṣi ayina / aparādhaṁ cēsina / tappu cēsina
+20,happiness (contentment),noun,b1,nan,సంతృప్తి / తృప్తి / సంతోషం,saṁtr̥pti / tr̥pti / saṁtōṣaṁ
+21,"happiness (joy, glee)",noun,b1,nan,సంతోషం / ఆనందం / ఆనందభరితం,saṁtōṣaṁ / ānaṁdaṁ / ānaṁdabharitaṁ
+22,hardly,adverb,b1,nan,చాలా తక్కువగా / అరుదుగా / కష్టంగా,cālā takkuvagā / arudugā / kaṣṭaṁgā
+23,hate,noun,b1,nan,ద్వేషం / అసహ్యం / పగ,dvēṣaṁ / asahyaṁ / paga
+24,"headache (problem, nuisance)",noun,b1,nan,సమస్య / తలనొప్పి / ఇబ్బంది,samasya / talanoppi / ibbaṁdi
+25,headline,noun,b1,nan,శీర్షిక / ముఖ్యాంశం / హెడ్‌లైన్,śīrṣika / mukhyāṁśaṁ / heḍlain
+26,heating (building climate control system),noun,b1,nan,హీటింగ్ / వేడిచేసే వ్యవస్థ,hīṭiṁg / vēḍicēsē vyavastha
+27,heating (process of increasing temperature),noun,b1,nan,తాపనం / వేడిచేయుట,tāpanaṁ / vēḍicēyuṭa
+28,"heavily (intensely, a lot)",adverb,b1,nan,తీవ్రంగా / ఎక్కువగా / బలంగా,tīvraṁgā / ekkuvagā / balaṁgā
+29,"neither (agreement , negative reply)",pronoun,b1,nan,రెండూ కాదు / ఏదీ కాదు / కూడా కాదు,reṁḍū kādu / ēdī kādu / kūḍā kādu
+30,"bunch (a lot of , many - informal)",noun,b2,nan,గుంపు / రాశి / కుప్ప,guṁpu / rāśi / kuppa
+31,"to merge (companies, organizations)",verb,c1,nan,విలీనం చేయి / కలుపు / ఒకటి చేయి,vilīnaṁ cēyi / kalupu / okaṭi cēyi
+32,to minimize,verb,c1,nan,తగ్గించు / కుదించు / కనిష్ఠం చేయి,taggiṁcu / kudiṁcu / kaniṣṭhaṁ cēyi

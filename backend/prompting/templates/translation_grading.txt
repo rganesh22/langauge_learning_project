@@ -1,0 +1,50 @@
+Grade the user's translation activity for {target_language}.
+
+{target_script_requirement}
+
+NO markdown (**, *, backticks), NO code fences. Output pure text only.
+
+User's CEFR level: {user_cefr_level}
+
+Translations to grade ({num_sentences} total):
+{translations_formatted}
+
+Grading criteria:
+1) **Accuracy**: How accurately does the user's translation capture the meaning of the source text? (0-100)
+2) **Grammar**: Is the {target_language} grammar correct? (0-100)
+3) **Naturalness**: Does the translation sound natural and idiomatic in {target_language}? (0-100)
+4) **Appropriate Level**: Is the language complexity appropriate for {user_cefr_level} level? (0-100)
+
+Instructions:
+1) Provide scores for each criterion (accuracy, grammar, naturalness, level_appropriateness) as integers 0-100
+2) Calculate an overall score (average of all criteria)
+3) Provide overall feedback in {target_language} (2-3 sentences)
+4) For each sentence, provide:
+   - Individual feedback noting what was good and what could be improved
+   - Be constructive and encouraging
+   - Point out specific errors or awkward phrases
+   - Suggest better alternatives when appropriate
+5) Be lenient with minor errors if the overall meaning is conveyed
+6) Consider the user's CEFR level when grading - don't expect perfection from lower levels
+
+Return ONLY valid JSON (no markdown wrappers) in this exact format:
+{{
+    "overall_score": 85,
+    "scores": {{
+        "accuracy": 85,
+        "grammar": 80,
+        "naturalness": 90,
+        "level_appropriateness": 85
+    }},
+    "feedback": "Overall feedback in {target_language}",
+    "sentence_feedback": [
+        {{
+            "source_text": "original source sentence",
+            "source_language": "language code",
+            "user_translation": "user's translation",
+            "expected_translation": "expected translation",
+            "feedback": "Specific feedback for this sentence"
+        }},
+        // ... one entry for each sentence
+    ]
+}}

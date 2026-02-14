@@ -1,0 +1,26 @@
+2026-01-25 15:49:33,222 [INFO] --- MODE: PREPARE (Fresh Translation) ---
+2026-01-25 15:49:33,222 [INFO] Created run folder: runs/Hindi_Urdu_20260125_154933
+2026-01-25 15:49:33,222 [INFO] Input CSV: kannada-oxford-5000.csv
+2026-01-25 15:49:33,223 [INFO] Loaded Prompt: prompts/prompt_hindi_urdu.txt
+2026-01-25 15:49:33,239 [INFO] Generating batch requests...
+2026-01-25 15:49:33,368 [INFO] SUCCESS: Generated 988 batch requests in runs/Hindi_Urdu_20260125_154933/batch_input.jsonl
+2026-01-25 15:49:41,004 [INFO] --- MODE: SUBMIT ---
+2026-01-25 15:49:41,004 [WARNING] Both GOOGLE_API_KEY and GEMINI_API_KEY are set. Using GOOGLE_API_KEY.
+2026-01-25 15:49:41,054 [INFO] Uploading file to Google GenAI...
+2026-01-25 15:49:41,450 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files "HTTP/1.1 200 OK"
+2026-01-25 15:49:42,507 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AJRbA5XMUJ2cDr_FPNohTXS4v2RriYUoadNfAmzQj65mpy9Xmbykj7srNhj44Ot0dR3NbGJ4eOPgUBoXkQp9OIwzYH9tdnBMmfZideU6xZCemRk&upload_protocol=resumable "HTTP/1.1 200 OK"
+2026-01-25 15:49:42,511 [INFO] Creating Batch Job with model gemini-2.5-flash...
+2026-01-25 15:49:43,649 [INFO] HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:batchGenerateContent "HTTP/1.1 200 OK"
+2026-01-25 15:49:43,654 [INFO] JOB STARTED: batches/veuufa2dh46wiwbecnsy5wqkic9aal5l5d1i
+2026-01-25 16:05:17,484 [INFO] --- MODE: RETRIEVE ---
+2026-01-25 16:05:17,484 [WARNING] Both GOOGLE_API_KEY and GEMINI_API_KEY are set. Using GOOGLE_API_KEY.
+2026-01-25 16:05:17,751 [INFO] HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/batches/veuufa2dh46wiwbecnsy5wqkic9aal5l5d1i "HTTP/1.1 200 OK"
+2026-01-25 16:05:17,753 [INFO] Status: JobState.JOB_STATE_SUCCEEDED
+2026-01-25 16:05:17,753 [INFO] Job Complete. Downloading results...
+2026-01-25 16:05:17,753 [INFO] Retrieving content for: files/batch-veuufa2dh46wiwbecnsy5wqkic9aal5l5d1i
+2026-01-25 16:05:17,804 [INFO] HTTP Request: GET https://generativelanguage.googleapis.com/v1beta/files/batch-veuufa2dh46wiwbecnsy5wqkic9aal5l5d1i:download?alt=media "HTTP/1.1 302 Found"
+2026-01-25 16:05:18,386 [INFO] HTTP Request: GET https://generativelanguage.googleapis.com/download/v1beta/files/batch-veuufa2dh46wiwbecnsy5wqkic9aal5l5d1i:download?alt=media "HTTP/1.1 200 OK"
+2026-01-25 16:05:18,583 [INFO] Saved to runs/Hindi_Urdu_20260125_154933/batch_output.jsonl
+2026-01-25 16:05:23,544 [INFO] --- MODE: FINALIZE ---
+2026-01-25 16:05:23,564 [WARNING] Skipping malformed line: Expecting property name enclosed in double quotes: line 67 column 1 (char 1880)
+2026-01-25 16:05:29,019 [INFO] ✅ Final CSV created: runs/Hindi_Urdu_20260125_154933/final_vocab.csv

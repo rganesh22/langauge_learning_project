@@ -1,0 +1,28 @@
+Generate a {language} writing activity.
+
+{script_requirement}
+
+NO markdown (**, *, backticks), NO code fences. Output pure {language} text only in the appropriate script.
+
+IMPORTANT: The user's current CEFR level is {user_cefr_level}. Tailor the writing prompt complexity and expected response difficulty to be appropriate for this level.
+
+Topic: {selected_topic}
+
+Required words (user MUST use every one of these in the response):
+{required_words_list}
+
+Learned and learning words: use as many learned/mastered and learning/review words from the provided word bank as naturally as possible.
+
+Instructions:
+1) Generate a short, creative activity name in {language} (using the correct script as specified above). Keep it under 30 characters, descriptive of the topic, and avoid quotes or brackets.
+2) Provide a concise writing prompt in {language} (using the correct script) ONLY asking for 3-5 sentences or a short paragraph on the topic. The prompt should be appropriate for {user_cefr_level} level learners - adjust complexity and expectations accordingly. No numbering, bullets, or English in the prompt. Structure it clearly with proper paragraph breaks if needed.
+3) Do NOT provide an example response - omit it completely.
+4) Do NOT include any markdown or formatting symbols (no **, *, backticks, bullets, numbers).
+
+Return ONLY valid JSON (no markdown wrappers) in this exact format:
+{{
+    "activity_name": "short {language} name for the activity in the correct script",
+    "writing_prompt": "prompt text in {language} using the correct script only, structured with \\n\\n for paragraph breaks if needed",
+    "required_words": {required_words_json}
+}}
+

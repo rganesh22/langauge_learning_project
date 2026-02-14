@@ -1,0 +1,43 @@
+Generate a speaker profile for a {language} language learning activity.
+
+Regional Dialect: {selected_region}
+
+Language Style: {formality_instruction}
+
+Formality Level: {formality_level}
+
+Voice Gender: {voice_gender}
+
+Instructions:
+1. Create a realistic speaker profile appropriate for the regional dialect and formality level.
+2. All fields must be in {language} script only - NO English, NO Latin letters (except for JSON field names, gender value, and formality value).
+3. The speaker should match the regional dialect and formality level specified.
+4. Gender MUST be ONLY the native word for "{voice_gender}" in the native script - nothing else, no additional text.
+5. Formality MUST be ONLY the word "{formality_level}" - nothing else, no additional text.
+
+CRITICAL: Return ONLY valid JSON. All text values must be in {language} script except gender and formality. NO English in other values, NO Latin letters in other values, NO markdown.
+
+Return ONLY valid JSON in this exact format:
+{{
+    "name": "{language} name in native script",
+    "gender": "{voice_gender} in native script",
+    "age": "age range in native script (e.g., 25-35)",
+    "city": "city name in native script",
+    "state": "state/province name in native script",
+    "country": "country name in native script",
+    "dialect": "dialect description in native script",
+    "background": "profession/background in native script",
+    "formality": "{formality_level} in native script"
+}}
+
+IMPORTANT:
+- Name should be a realistic name in {language} appropriate for the gender
+- Age should be appropriate for the formality level (formal = older, informal = younger)
+- City should match the regional dialect
+- State/province should be the state/province name in {language} script
+- Country should be the country name in {language} script
+- Dialect description should match the selected region
+- Background/profession should be appropriate for the region and formality level
+- All other text values must be in pure {language} script only
+
+

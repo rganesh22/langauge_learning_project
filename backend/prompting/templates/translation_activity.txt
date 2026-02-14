@@ -1,0 +1,104 @@
+Generate a translation activity for {target_language}.
+
+{target_script_requirement}
+
+NO markdown (**, *, backticks), NO code fences. Output pure text only in the appropriate scripts.
+
+IMPORTANT: The user's current CEFR level in {target_language} is {target_level}. Generate sentences that when translated will be appropriate for this level.
+
+Topic/Theme: {selected_topic}
+
+Generate {total_sentences} sentences from the following source languages:
+{source_languages_text}
+
+Instructions:
+1) Generate a short, creative activity name in {target_language} (using the correct script as specified above). Keep it under 30 characters, descriptive, and avoid quotes or brackets.
+2) Provide brief instructions in {target_language} (using the correct script) explaining that the user should translate each sentence into {target_language}.
+3) Generate exactly {total_sentences} sentences distributed across the specified source languages according to the counts given above.
+4) For each sentence:
+   - Write it in the source language at the appropriate CEFR level
+   - Provide the expected translation in {target_language} at {target_level} level
+   - CRITICAL TRANSLITERATION RULES:
+     * IF source language uses non-Latin script (Telugu: ತ, Kannada: ಕ, Malayalam: മ, Tamil: த, Hindi: ह, Urdu: ا, Bengali: ব), you MUST provide LATIN/ROMAN transliteration
+     * Transliteration must use ONLY Latin alphabet letters (a-z, A-Z) with optional diacritics (ā, ī, ū, etc.)
+     * WRONG: "മലയാളം" as transliteration for Malayalam text - this is the SAME script, not Latin!
+     * CORRECT: "Malayāḷaṁ" - this is Latin letters representing the sound
+     * For Telugu "తెలుగు" → transliteration should be "Telugu" (Latin), NOT "తెలుగు" (same script)
+     * For Kannada "ಕನ್ನಡ" → transliteration should be "Kannaḍa" (Latin), NOT "ಕನ್ನಡ" (same script)
+     * For Malayalam "മലയാളം" → transliteration should be "Malayāḷaṁ" (Latin), NOT "മലയാളം" (same script)
+     * For Tamil "தமிழ்" → transliteration should be "Tamiḻ" (Latin), NOT "தமிழ்" (same script)
+     * For Urdu "اردو" → transliteration should be "Urdu" (Latin), NOT Devanagari "उर्दू"
+     * For Hindi "हिंदी" → transliteration should be "Hindī" (Latin)
+     * If source is English/Spanish/French (already Latin script) → leave "transliteration" as empty string ""
+   - Include a display name for the source language
+5) Ensure sentences are contextually related to the topic "{selected_topic}"
+6) Make translations natural and idiomatic, not word-for-word
+7) Do NOT include any markdown or formatting symbols (no **, *, backticks, bullets, numbers).
+
+Return ONLY valid JSON (no markdown wrappers) in this exact format:
+{{
+    "activity_name": "short {target_language} name for the activity in the correct script",
+    "instructions": "brief instructions in {target_language} using the correct script",
+    "sentences": [
+        {{
+            "text": "source sentence in the source language script",
+            "transliteration": "Latin transliteration if source uses non-Latin script (empty string if not needed)",
+            "language": "language_code",
+            "language_display": "Display name of source language",
+            "expected_translation": "expected translation in {target_language} script"
+        }},
+        // ... more sentences
+    ]
+}}
+
+Example structure (do not copy content, just format):
+{{
+    "activity_name": "अनुवाद अभ्यास",
+    "instructions": "प्रत्येक वाक्य का हिंदी में अनुवाद करें।",
+    "sentences": [
+        {{
+            "text": "I am learning a new language.",
+            "transliteration": "",
+            "language": "english",
+            "language_display": "English",
+            "expected_translation": "मैं एक नई भाषा सीख रहा हूं।"
+        }},
+        {{
+            "text": "ನಾನು ಬೆಂಗಳೂರಿನಲ್ಲಿ ವಾಸಿಸುತ್ತೇನೆ.",
+            "transliteration": "Nānu Beṅgaḷūrinalli vāsisuttēne.",
+            "language": "kannada",
+            "language_display": "Kannada",
+            "expected_translation": "मैं बैंगलोर में रहता हूं।"
+        }},
+        {{
+            "text": "నేను తెలుగు నేర్చుకుంటున్నాను.",
+            "transliteration": "Nēnu Telugu nērcukuṇṭunnānu.",
+            "language": "telugu",
+            "language_display": "Telugu",
+            "expected_translation": "मैं तेलुगु सीख रहा हूं।"
+        }},
+        {{
+            "text": "ഞാൻ മലയാളം പഠിക്കുന്നു.",
+            "transliteration": "Ñān Malayāḷaṁ paṭhikkunnu.",
+            "language": "malayalam",
+            "language_display": "Malayalam",
+            "expected_translation": "मैं मलयालम सीख रहा हूं।"
+        }},
+        {{
+            "text": "நான் தமிழ் கற்றுக்கொண்டிருக்கிறேன்.",
+            "transliteration": "Nāṉ Tamiḻ kaṟṟukkoṇṭirukkiṟēṉ.",
+            "language": "tamil",
+            "language_display": "Tamil",
+            "expected_translation": "मैं तमिल सीख रहा हूं।"
+        }},
+        {{
+            "text": "میں اردو سیکھ رہا ہوں۔",
+            "transliteration": "Main Urdu seekh raha hoon.",
+            "language": "urdu",
+            "language_display": "Urdu",
+            "expected_translation": "मैं उर्दू सीख रहा हूं।"
+        }}
+    ]
+}}
+
+REMEMBER: The "transliteration" field must ALWAYS be in Latin/Roman alphabet (a-z), NEVER in the source script!

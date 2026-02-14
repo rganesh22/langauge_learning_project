@@ -1,0 +1,16 @@
+﻿id,english_word,word_class,level,verb_transitivity,hindi_translation,urdu_translation,hindi_transliteration,urdu_transliteration
+0,"hi , hey (casual greeting)",exclamation,a1,nan,नमस्ते / हैलो / अरे,सलाम / हैलो / अरे,namastē / hailō / arē,salām / hailō / arē
+1,"sandal , slipper (open footwear)",noun,a1,nan,चप्पल (f) / सैंडल (f),चप्पल (f) / सैंडल (f),cappal (f) / saiṁḍal (f),cappal (f) / saiṁḍal (f)
+2,"to smile , to laugh",verb,a2,intransitive,हँसना / मुस्कुराना,हँसना / मुस्कुराना,ham̐sanā / muskurānā,ham̐sanā / muskurānā
+3,"cover (protection, shelter)",noun,b1,nan,पनाह (f) / सुरक्षा (f) / आवरण (m),पनाह (f) / हिफ़ाज़त (f) / तहफ़्फ़ुज़ (m),panāh (f) / surakṣā (f) / āvaraṇa (m),panāh (f) / hifāzat (f) / tahaffuz (m)
+4,"cover (shelter, protection)",noun,b1,nan,पनाह (f) / सुरक्षा (f) / आवरण (m),पनाह (f) / हिफ़ाज़त (f) / तहफ़्फ़ुज़ (m),panāh (f) / surakṣā (f) / āvaraṇa (m),panāh (f) / hifāzat (f) / tahaffuz (m)
+5,covered (insured or protected),adjective,b1,nan,सुरक्षित / बीमाकृत,महफ़ूज़ / बीमाशुदा / ज़ेर-ए-हिफ़ाज़त,surakṣit / bīmākr̥t,mahafūz / bīmāśudā / zēr-ē-hifāzat
+6,covered (topic or area dealt with),adjective,b1,nan,शामिल / सम्मिलित / समाहित,शामिल / मुकम्मल / ज़ेर-ए-बहस,śāmil / sammilit / samāhit,śāmil / mukammal / zēr-ē-bahas
+7,cream (dairy product),adjective,b1,nan,मलाई (f) / क्रीम (f),मलाई (f) / क्रीम (f),malāī (f) / krīm (f),malāī (f) / krīm (f)
+8,cream (lotion),adjective,b1,nan,क्रीम (f) / मलहम (m),क्रीम (f) / मलहम (m),krīm (f) / malaham (m),krīm (f) / malaham (m)
+9,cream-colored,adjective,b1,nan,क्रीम रंग का / मलाई रंग का,क्रीम रंग का / मलाई रंग का,krīm raṁg kā / malāī raṁg kā,krīm raṁg kā / malāī raṁg kā
+10,creamy (dairy product),adjective,b1,N/A,मलाईदार / क्रीमी / गाढ़ा,मलाईदार / क्रीमी / क़्रीमदार,malāīdār / krīmī / gāṛhā,malāīdār / krīmī / qrīmadār
+11,cruel,adjective,b1,N/A,ज़ालिम / निर्दयी / क्रूर,ज़ालिम / बेरहम / संगदिल,zālim / nirdayī / krūr,zālim / bēraham / saṁgadil
+12,cultural,adjective,b1,N/A,सांस्कृतिक / तहज़ीबी,तहज़ीबी / सकाफ़ती,sāṁskr̥tik / tahazībī,tahazībī / sakāfatī
+13,"neither (agreement , negative reply)",pronoun,b1,N/A,न तो / न ही / दोनों में से कोई नहीं,न तो / न ही / दोनों में से कोई नहीं,n tō / n hī / dōnōṁ mēṁ sē kōī nahīṁ,n tō / n hī / dōnōṁ mēṁ sē kōī nahīṁ
+14,"bunch (a lot of , many - informal)",noun,b2,N/A,ढेर (m) / झुंड (m) / समूह (m),ढेर (m) / झुंड (m) / मजमूआ (m),ḍhēr (m) / jhuṁḍa (m) / samūh (m),ḍhēr (m) / jhuṁḍa (m) / majamūā (m)

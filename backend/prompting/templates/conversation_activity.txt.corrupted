@@ -1,0 +1,89 @@
+Create a realistic {langua6. Create a detailed character profile (speaker profile) with:
+   - name (in target language)
+   - gender (use appropriate gender term for {language}: "male"/"female" in English, "ಗಂಡು"/"ಹೆಣ್ಣು" in Kannada, "पुरुष"/"महिला" in Hindi, "مرद"/"औरत" in Urdu - BUT if Urdu, write in Devanagari: "पुरुष"/"महिला", etc.)
+   - age range (e.g., "25-35")
+   - city (in target language - if Urdu, use Devanagari script)
+   - state/province (in target language - if Urdu, use Devanagari script)
+   - country (in target language - if Urdu, use Devanagari script)
+   - dialect description (in target language - if Urdu, use Devanagari script)
+   - background/profession (in target language - if Urdu, use Devanagari script)
+   
+   This character will be the one the learner converses with. All fields must be in the target language's native script only.
+   SPECIAL: If {language} is "Urdu", ALL text content must be in Devanagari script (देवनागरी), NOT Perso-Arabic.ation scenario with a character profile.
+
+IMPORTANT: The user's current CEFR level is {user_cefr_level}.
+
+Topic/Scenario: {topic}
+
+Regional Dialect: {selected_region}
+
+Formality Level: {formality_choice}
+
+Available Vocabulary Words:
+{words_context}
+
+Instructions:
+1. Create a realistic conversation scenario based on the topic. This should be a natural situation where two people would have a conversation (e.g., meeting someone at a coffee shop, discussing work with a colleague, talking about hobbies with a friend).
+
+2. Create 5-7 simple, clear conversation tasks (objectives) appropriate for {user_cefr_level} level learners. Each task should be a simple, actionable goal written in 1-2 sentences that clearly explains what the learner needs to do.
+
+3. Tasks must be written ONLY in the target language's native script ({language}).
+   SPECIAL: If {language} is "Urdu", write ALL content in Devanagari script (देवनागरी लिपि), NOT Perso-Arabic script.
+   The frontend will handle transliteration to Urdu/Perso-Arabic script for display.
+
+4. Tasks should be appropriate for {user_cefr_level} level and encourage use of vocabulary words.
+
+5. Make tasks simple and achievable - each task should be something the learner can complete in 1-2 message exchanges.
+
+6. Create a detailed character profile (speaker profile) with:
+   - name (in target language)
+   - gender (use appropriate gender term for {language}: "male"/"female" in English, "ಗಂಡು"/"ಹೆಣ್ಣು" in Kannada, "पुरुष"/"महिला" in Hindi, "مرد"/"औरत" in Urdu, etc.)
+   - age range (e.g., "25-35")
+   - city (in target language)
+   - state/province (in target language, appropriate for the language's region)
+   - country (in target language)
+   - dialect description (in target language)
+   - background/profession (in target language)
+   
+   This character will be the one the learner converses with. All fields must be in the target language's native script only.
+
+7. The "introduction" should describe the scenario/situation in 2-3 sentences in the target language.
+
+8. Apply appropriate formality based on {formality_choice}:
+   - If "informal": Use casual, friendly, everyday conversational style
+   - If "formal": Use respectful, proper, professional language style
+
+CRITICAL: Return ONLY valid JSON. All text must be in {language}'s native script. NO English (except JSON keys), NO Latin letters in content, NO markdown.
+SPECIAL FOR URDU: If {language} is "Urdu", write ALL content in Devanagari script (देवनागरी लिपि), NOT in Perso-Arabic/Urdu script.
+The frontend application will handle transliteration from Devanagari to Perso-Arabic Urdu script for display purposes.
+
+Return ONLY valid JSON in this exact format (deterministic structure):
+{
+    "tasks": [
+        "Task 1 in {language} native script (1-2 sentences)",
+        "Task 2 in {language} native script (1-2 sentences)",
+        "Task 3 in {language} native script (1-2 sentences)",
+        "Task 4 in {language} native script (1-2 sentences)",
+        "Task 5 in {language} native script (1-2 sentences)"
+    ],
+    "activity_name": "Conversation activity name in {language} native script",
+    "introduction": "Conversation introduction/scenario description in {language} native script (2-3 sentences)",
+    "speaker_profile": {
+        "name": "Name in {language} native script",
+        "gender": "Gender in {language} (male/female or appropriate term)",
+        "age": "Age range (e.g., 25-35)",
+        "city": "City name in {language} native script",
+        "state": "State/province name in {language} native script",
+        "country": "Country name in {language} native script",
+        "dialect": "Dialect description in {language} native script",
+        "background": "Profession/background in {language} native script"
+    }
+}
+
+IMPORTANT FORMATTING RULES:
+- All content strings must be in pure {language} native script only
+- No English words or Latin letters in content (JSON keys can be English)
+- No markdown formatting (**, *, backticks)
+- Introduction should describe the conversation scenario/context
+- Tasks should be clear, actionable goals in {language}
+- Gender term should match the language (e.g., Kannada: "ಗಂಡು"/"ಹೆಣ್ಣು", Hindi: "पुरुष"/"महिला", Urdu: "مرد"/"औरत", English: "male"/"female")

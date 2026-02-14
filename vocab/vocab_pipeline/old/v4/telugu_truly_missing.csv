@@ -1,0 +1,34 @@
+english_word,word_class,kannada_translation,transliteration,verb_transitivity,level
+"greetings ,  hello (respectful standard greeting)",noun,ನಮಸ್ಕಾರ / ನಮಸ್ತೆ,namaskāra / namaste,,a1
+"hi ,  hey (casual greeting)",exclamation,ಹಾಯ್ / ಹೇ / ನಮಸ್ಕಾರ,hāy / hē / namaskāra,,a1
+to,infinitive marker,ಲು,lu,,a1
+"to smile ,  to laugh",verb,ನಗು / ಮುಗುಳುನಗೆ ಬೀರು,nagu / muguḷunage bīru,intransitive,a2
+global,adjective,ಜಾಗತಿಕ / ವಿಶ್ವವ್ಯಾಪಿ,jāgatika / viśvavyāpi,,b1
+glove (protective or heavy),noun,ಕೈಗವಸು,kaigavasu,,b1
+go (a turn),noun,ಪಾಳಿ / ಸರದಿ,pāḷi / saradi,,b1
+go ahead,adverb,ಮುಂದುವರಿ / ಸಾಗು,muṁduvari / sāgu,,b1
+goods (manufactured products),noun,ಉತ್ಪನ್ನಗಳು / ವಸ್ತುಗಳು,utpannagaḷu / vastugaḷu,,b1
+"goods (merchandise, freight)",noun,ಸರಕು / ಮಾಲು,saraku / mālu,,b1
+"grade (level, class)",noun,ತರಗತಿ / ಮಟ್ಟ / ದರ್ಜೆ,taragati / maṭṭa / darje,,b1
+"grade (quality, standard)",noun,ದರ್ಜೆ / ಗುಣಮಟ್ಟ / ಮಟ್ಟ,darje / guṇamaṭṭa / maṭṭa,,b1
+"grade (score, mark)",noun,ಅಂಕ / ಶ್ರೇಣಿ / ದರ್ಜೆ,aṁka / śrēṇi / darje,,b1
+graduate,noun,ಪದವೀಧರ / ಪದವಿ ಪಡೆದವನು,padavīdhara / padavi paḍedavanu,,b1
+grain (cereal crops collectively),noun,ಧಾನ್ಯ / ಕಾಳು,dhānya / kāḷu,,b1
+grain (single seed or small particle),noun,ಕಾಳು / ಕಣ / ಧಾನ್ಯ,kāḷu / kaṇa / dhānya,,b1
+"grain (small particle, e.g., sand)",noun,ಕಣ / ರೇಣು,kaṇa / rēṇu,,b1
+grateful,adjective,ಕೃತಜ್ಞ / ಆಭಾರಿ,kr̥tajña / ābhāri,,b1
+guard (protective device),noun,ಕವಚ / ರಕ್ಷಾ ಕವಚ,kavaca / rakṣā kavaca,,b1
+guilty,adjective,ಅಪರಾಧಿ / ದೋಷಿ,aparādhi / dōṣi,,b1
+happiness (contentment),noun,ಸುಖ / ಸಂತೋಷ / ನೆಮ್ಮದಿ,sukha / saṁtōṣa / nemmadi,,b1
+"happiness (joy, glee)",noun,ಖುಷಿ / ಆನಂದ / ಸಂತೋಷ,khuṣi / ānaṁda / saṁtōṣa,,b1
+hardly,adverb,ವಿರಳವಾಗಿ / ಬಹುತೇಕ ಇಲ್ಲ / ಕಷ್ಟದಿಂದ,viraḷavāgi / bahutēka illa / kaṣṭadiṁda,,b1
+hate,noun,ದ್ವೇಷ / ಅಸಹ್ಯ,dvēṣa / asahya,,b1
+"headache (problem, nuisance)",noun,ತಲೆಬಿಸಿ / ಕಿರಿಕಿರಿ,talebisi / kirikiri,,b1
+headline,noun,ಶೀರ್ಷಿಕೆ / ಮುಖ್ಯಾಂಶ,śīrṣike / mukhyāṁśa,,b1
+heating (building climate control system),noun,ಹೀಟಿಂಗ್ / ಶಾಖ ವ್ಯವಸ್ಥೆ,hīṭiṁg / śākha vyavasthe,,b1
+heating (process of increasing temperature),noun,ಬಿಸಿಮಾಡುವಿಕೆ / ಶಾಖಗೊಳಿಸುವಿಕೆ,bisimāḍuvike / śākhagoḷisuvike,,b1
+"heavily (intensely, a lot)",adverb,ಬಹಳ / ತುಂಬಾ / ಹೆಚ್ಚಾಗಿ / ಅಧಿಕವಾಗಿ,bahaḷa / tuṁbā / heccāgi / adhikavāgi,,b1
+"neither (agreement ,  negative reply)",pronoun,ನಾನೂ ಇಲ್ಲ / ನಾನೂ ಸಹ ಇಲ್ಲ,nānū illa / nānū saha illa,,b1
+"bunch (a lot of ,  many - informal)",noun,ಬಹಳಷ್ಟು / ಹೆಚ್ಚು / ಸಾಕಷ್ಟು,bahaḷaṣṭu / heccu / sākaṣṭu,,b2
+"to merge (companies, organizations)",verb,ವಿಲೀನಗೊಳಿಸು / ಒಂದಾಗಿಸು,vilīnagoḷisu / oṁdāgisu,,c1
+to minimize,verb,ಕಡಿಮೆಗೊಳಿಸು / ಕನಿಷ್ಠಗೊಳಿಸು,kaḍimegoḷisu / kaniṣṭhagoḷisu,,c1
