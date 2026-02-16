@@ -15,7 +15,7 @@ AC_BACKEND_CMD_ENV="${AC_BACKEND_CMD:-}"
 AC_FRONTEND_CMD_ENV="${AC_FRONTEND_CMD:-}"
 
 # Default commands (can be overridden via env or flags)
-LL_BACKEND_CMD_DEFAULT=(python3 -m uvicorn backend.main:app --host 0.0.0.0 --port 8080 --reload)
+LL_BACKEND_CMD_DEFAULT=(python3 -m uvicorn backend.main:app --host 0.0.0.0 --port 8081 --reload)
 LL_FRONTEND_CMD_DEFAULT=(npm start)
 AC_BACKEND_CMD_DEFAULT=(python3 -m uvicorn agentic_curriculum/backend.main:app --host 0.0.0.0 --port 8000 --reload)
 AC_FRONTEND_CMD_DEFAULT=(bash -c "cd agentic_curriculum/ui && npm start")
