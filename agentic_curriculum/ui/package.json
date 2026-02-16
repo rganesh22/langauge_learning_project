@@ -1,0 +1,38 @@
+{
+  "name": "agentic-curriculum-ui",
+  "version": "1.0.0",
+  "description": "Electron UI for Agentic Curriculum System",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron . --dev",
+    "build": "electron-builder"
+  },
+  "keywords": ["electron", "react", "ai", "curriculum"],
+  "author": "Raghav Ganesh",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^28.1.0",
+    "electron-builder": "^24.9.1"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "axios": "^1.6.5"
+  },
+  "build": {
+    "appId": "com.agenticcurriculum.app",
+    "productName": "Agentic Curriculum",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "main.js",
+      "src/**/*",
+      "index.html"
+    ],
+    "mac": {
+      "category": "public.app-category.education"
+    }
+  }
+}

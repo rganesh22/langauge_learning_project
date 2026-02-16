@@ -1,0 +1,208 @@
+{
+  "lesson_id": "ml_12_diphthongs",
+  "language": "Malayalam",
+  "title": "The Diphthongs",
+  "subtitle": "ഐ, ൈ, ഔ, ൗ - Gliding Vowel Sounds",
+  "description": "Learn to read and pronounce Malayalam vowel characters. Master the visual recognition and phonetic sounds of these essential letters.",
+  "estimated_minutes": 26,
+  "cefr_level": "A0",
+  "tags": [
+    "script",
+    "vowels",
+    "diphthongs",
+    "modifiers"
+  ],
+  "steps": [
+    {
+      "type": "content",
+      "content_markdown": "# The Gliding Sounds 🎢\n\n## Final Vowel Chapter!\n\nYou've mastered: A, I, U, E, O (short and long)\n**110 words** and **39 symbols**!\n\n## Today: Diphthongs\n\n**What's a diphthong?**\nA vowel sound that GLIDES from one position to another within one syllable.\n\nEnglish examples:\n- \"boy\" - glides from 'o' to 'i'\n- \"cow\" - glides from 'a' to 'u'\n\n### Malayalam Diphthongs:\n\n**AI Sound (like 'eye'):**\n- **ഐ** - Independent form\n- **ൈ** - Dependent modifier\n\n**AU Sound (like 'cow'):**\n- **ഔ** - Independent form\n- **ൗ** - Dependent modifier\n\n### Why Learn These?\nDiphthongs appear in:\n- Common everyday words\n- Names and places\n- Sanskrit-derived vocabulary\n\n### Words You'll Learn:\n- **ൈവദ്യം** (vaidyam) = Medicine\n- **ൗഷധം** (aushadham) = Drug/Medicine\n- **ൈകയ്യ** (kaiyy) = Hand (casual)\n\nLet's master the glides! 🎯",
+      "step_title": "The Gliding Sounds"
+    },
+    {
+      "type": "content",
+      "content_markdown": "## The 'AI' Sound: ഐ (Independent)\n\n### Sound\n**ഐ** sounds like the 'i' in \"*ice*\" or the word \"*eye*\" - a gliding sound from 'a' to 'i'.\n\nIt's ONE sound that glides: **a → i → ai**\n\n### When to Use\nUse **ഐ** when the 'ai' sound **starts a word**.\n\n**Examples:**\n- **ഐസ്** (ais) = Ice (loanword)\n- **ഐക്യം** (aikyam) = Unity\n\n### Visual Recognition\n**ഐ** has a complex shape - indicating the compound nature of the sound.\n\n### Pronunciation Tip:\nDon't say \"ah-ee\" as two syllables!\nGlide smoothly: \"ahhhi\" in one beat.\n\n### Cultural Note:\nThe prefix **ഐ-** appears in many Sanskrit-derived words expressing concepts of unity, agreement, or completeness.",
+      "step_title": "'AI' Sound: ഐ (Independent)"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q1",
+      "question": "What sound does **ഐ** make?",
+      "options": [
+        "A gliding 'ai' sound like 'eye' or 'ice'",
+        "Two separate sounds: 'a' then 'i'",
+        "Long 'a' sound",
+        "Short 'i' sound"
+      ],
+      "correct_answer": "A gliding 'ai' sound like 'eye' or 'ice'",
+      "feedback": "Perfect! Diphthongs are GLIDING sounds - smooth transitions in one syllable!",
+      "step_title": "**ഐ** Sound"
+    },
+    {
+      "type": "content",
+      "content_markdown": "## The 'AI' Modifier: ൈ (Dependent)\n\n### How It Works\n**ൈ** attaches to consonants to create the 'ai' sound.\n\n### Positioning\nThe **ൈ** modifier appears to the **LEFT and ABOVE** the consonant - complex positioning!\n\n### Transformation Examples:\n**Without modifier:**\n- **ക** (ka) → **ൈക** (kai)\n- **വ** (va) → **ൈവ** (vai)  \n- **ത** (tha) → **ൈത** (thai)\n\n### Full Words:\n- **ൈകയ്യ** (kaiyy) = Hand (colloquial)\n- **ൈവദ്യം** (vaidyam) = Medicine\n- **ൈതര** (vaithara) = Variation\n\n### Visual Pattern:\n**ൈ** looks like a curved mark above and to the left - distinctive!\n\n### Reading Rule:\nSee ൈ above? Read the consonant with gliding 'ai' sound!",
+      "step_title": "'AI' Modifier: ൈ (Dependent)"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q2",
+      "question": "Where does the **ൈ** modifier appear?",
+      "options": [
+        "Above and to the left of the consonant",
+        "Below the consonant",
+        "To the right of the consonant",
+        "It doesn't attach to consonants"
+      ],
+      "correct_answer": "Above and to the left of the consonant",
+      "feedback": "Excellent! ൈ has unique positioning - above and left!",
+      "step_title": "Where does **ൈ** modifier"
+    },
+    {
+      "type": "content",
+      "content_markdown": "## The 'AU' Sound: ഔ (Independent)\n\n### Sound\n**ഔ** sounds like the 'ow' in \"*cow*\" or \"*how*\" - a gliding sound from 'a' to 'u'.\n\nIt glides: **a → u → au**\n\n### When to Use\nUse **ഔ** when the 'au' sound **starts a word**.\n\n**Examples:**\n- **ഔഷധം** (aushadham) = Drug/Medicine\n- **ഔദാര്യം** (audhaaryam) = Generosity\n\n### Visual Recognition\n**ഔ** has an elaborate shape - befitting its compound sound.\n\n### Pronunciation Tip:\nGlide smoothly from 'a' to 'u' - don't pause!\nThink: \"ahhhu\" in one syllable.\n\n### Usage Context:\n**ഔ** appears mainly in:\n- Sanskrit-derived words\n- Formal/literary vocabulary\n- Less common than ഐ",
+      "step_title": "'AU' Sound: ഔ (Independent)"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q3",
+      "question": "What sound does **ഔ** make?",
+      "options": [
+        "A gliding 'au' sound like 'cow' or 'how'",
+        "Two separate sounds: 'a' then 'u'",
+        "Long 'o' sound",
+        "Short 'u' sound"
+      ],
+      "correct_answer": "A gliding 'au' sound like 'cow' or 'how'",
+      "feedback": "Perfect! ഔ is the second diphthong - smooth a-to-u glide!",
+      "step_title": "**ഔ** Sound"
+    },
+    {
+      "type": "content",
+      "content_markdown": "## The 'AU' Modifier: ൗ (Dependent)\n\n### How It Works\n**ൗ** attaches to consonants to create the 'au' sound.\n\n### Positioning\nThe **ൗ** modifier appears **ABOVE** the consonant - elevated position!\n\n### Transformation Examples:\n**Without modifier:**\n- **പ** (pa) → **പൗ** (pau)\n- **ര** (ra) → **രൗ** (rau)\n- **ദ** (da) → **ദൗ** (dau)\n\n### Full Words:\n- **പൗരൻ** (pauran) = Citizen\n- **െകൗതുകം** (kauthukam) = Curiosity\n\n### Visual Pattern:\n**ൗ** looks like a mark ABOVE the consonant - easy to spot!\n\n### Reading Rule:\nSee ൗ above? Read the consonant with gliding 'au' sound!\n\n### Comparison:\n- **ൈ** = Above/left for 'ai'\n- **ൗ** = Above for 'au'\n- Both elevated positions!",
+      "step_title": "'AU' Modifier: ൗ (Dependent)"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q4",
+      "question": "Where does the **ൗ** modifier appear?",
+      "options": [
+        "Above the consonant",
+        "Below the consonant",
+        "To the left of the consonant",
+        "To the right of the consonant"
+      ],
+      "correct_answer": "Above the consonant",
+      "feedback": "Correct! ൗ sits above - unique elevated positioning for diphthongs!",
+      "step_title": "Where does **ൗ** modifier"
+    },
+    {
+      "type": "content",
+      "content_markdown": "## Complete Vowel System FINALE! 🎉\n\n### ALL Malayalam Vowels:\n\n**Simple Vowels (10):**\n| Short | Long |\n|-------|------|\n| അ (a) | ആ (aa) |\n| ഇ (i) | ഈ (ee) |\n| ഉ (u) | ഊ (oo) |\n| എ (e) | ഏ (e:) |\n| ഒ (o) | ഓ (o:) |\n\n**Diphthongs (2):**\n| Sound | Independent |\n|-------|-------------|\n| ai | **ഐ** |\n| au | **ഔ** |\n\n### ALL Dependent Modifiers:\n\n| Vowel | Modifier | Position |\n|-------|----------|----------|\n| aa | ാ | Right |\n| i | ി | Left |\n| ee | ീ | Right |\n| u | ു | Below |\n| oo | ൂ | Below |\n| e | െ | Left |\n| e: | േ | Left |\n| o | െ+ാ | Wrap |\n| o: | ോ | Wrap |\n| ai | **ൈ** | Above/Left |\n| au | **ൗ** | Above |\n\n### You Can Now Read ANY Vowel in Malayalam! 🏆",
+      "step_title": "Complete Vowel System FINALE!"
+    },
+    {
+      "type": "free_response",
+      "id": "q5",
+      "question": "Write the word for 'medicine' (vaidyam) in English letters",
+      "ai_grading": false,
+      "accepted_responses": [
+        "vaidyam",
+        "Vaidyam",
+        "VAIDYAM",
+        "vaidhyam"
+      ],
+      "hint": "It's വൈദ്യം - vai (with diphthong ൈ) + dyam. Traditional medicine!",
+      "step_title": "Write word 'medicine' (v"
+    },
+    {
+      "type": "content",
+      "content_markdown": "## Your 10 New Words 📚\n\n| Malayalam | Pronunciation | Meaning | Diphthong |\n|-----------|--------------|---------|----------|\n| **ൈവദ്യം** | vaidyam | medicine | ൈ (vai) |\n| **ൈകയ്യ** | kaiyy | hand (casual) | ൈ (kai) |\n| **ഐക്യം** | aikyam | unity | ഐ (ai-) |\n| **ൈതര** | vaithara | variation | ൈ (vai) |\n| **ഔഷധം** | aushadham | drug/medicine | ഔ (au-) |\n| **പൗരൻ** | pauran | citizen | ൗ (pau) |\n| **െകൗതുകം** | kauthukam | curiosity | ൗ (kau) |\n| **ഐശ്വര്യം** | aishwaryam | prosperity | ഐ (ai-) |\n| **ഭൈരവം** | bhaairavam | fierce (deity) | ൈ (bhai) |\n| **പൗർണമി** | paurNami | full moon | ൗ (pau) |\n\n### New Letters Appearing:\n- **ഭ** (bha) - Aspirated 'bh' (Sanskrit)\n- **ദ** (da) - Dental 'd'\n- **യ** (ya) - Semivowel 'y'\n\n### Sound Symbols:\n- **$ai$** = Diphthong 'ai' (ഐ, ൈ)\n- **$au$** = Diphthong 'au' (ഔ, ൗ)",
+      "step_title": "Your 10 New Words"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q6",
+      "question": "How do you pronounce **വൈദ്യം**?",
+      "options": [
+        "vaidyam",
+        "vaaidyaam",
+        "vaidyam-a",
+        "vaidyam3"
+      ],
+      "correct_answer": "vaidyam",
+      "feedback": "Correct! വൈദ്യം (vaidyam) = medicine. Traditional healing knowledge!",
+      "step_title": "**വൈദ്യം**? Pronunciation"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q7",
+      "question": "How do you write 'unity' in Malayalam?",
+      "options": [
+        "ഐക്യം",
+        "വൈദ്യം",
+        "ഔഷധം",
+        "കൈയ്യ"
+      ],
+      "correct_answer": "ഐക്യം",
+      "feedback": "Perfect! ഐക്യം (aikyam) = unity. Political/philosophical vocabulary!",
+      "step_title": "How do you write"
+    },
+    {
+      "type": "free_response",
+      "id": "q8",
+      "question": "How do you pronounce **പൗരൻ**?",
+      "ai_grading": false,
+      "accepted_responses": [
+        "pauran",
+        "Pauran",
+        "PAURAN",
+        "pauran"
+      ],
+      "hint": "It's a civic/political term. പൗരൻ uses the au diphthong ൗ and chillu ൻ.",
+      "step_title": "**പൗരൻ**? Pronunciation"
+    },
+    {
+      "type": "content",
+      "content_markdown": "## Reading Complex Words 🎯\n\n### Diphthong Recognition Drill:\n\n**Spot the diphthongs:**\n\n1. **വൈദ്യം** → ൈ in വൈ (vai)\n2. **ഔഷധം** → ഔ starts word (au-)\n3. **കൈയ്യ** → ൈ in കൈ (kai)\n4. **പൗരൻ** → ൗ in പൗ (pau)\n\n### Complex Conjuncts Preview:\nYou might notice **്യ** (ya) and **്ധ** (dha) - these are conjunct consonants!\n\nNext lessons will teach these systematically.\n\n### Sound Patterns:\n- Diphthongs add sophistication\n- Often in Sanskrit-derived words\n- Literary and formal vocabulary\n\n### Your Turn:\nWhich word means 'prosperity'?",
+      "step_title": "Reading Complex Words"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q9",
+      "question": "Which word means 'prosperity'?",
+      "options": [
+        "ഐശ്വര്യം (aishwaryam)",
+        "ഐക്യം (aikyam)",
+        "വൈദ്യം (vaidyam)",
+        "െകൗതുകം (kauthukam)"
+      ],
+      "correct_answer": "ഐശ്വര്യം (aishwaryam)",
+      "feedback": "Excellent! ഐശ്വര്യം (aishwaryam) = prosperity. Wealth vocabulary!",
+      "step_title": "Which word means 'prosperity'?"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q10",
+      "question": "How do you pronounce **പൗർണമി**?",
+      "options": [
+        "paurNami",
+        "paaurNaami",
+        "paurNami-a",
+        "paurNami3"
+      ],
+      "correct_answer": "paurNami",
+      "feedback": "Perfect! പൗർണമി (paurNami) = full moon. Astronomical/calendar term!",
+      "step_title": "**പൗർണമി**? Pronunciation"
+    },
+    {
+      "type": "content",
+      "content_markdown": "## 🎊 Lesson 12 Complete - Phase 2 TRULY DONE!\n\n### COMPLETE VOWEL MASTERY ACHIEVED! 🏆\n\n**✅ Total Symbols: 43**\n- **All 12 independent vowels:** അ, ആ, ഇ, ഈ, ഉ, ഊ, എ, ഏ, ഒ, ഓ, ഐ, ഔ\n- **All 11 modifiers:** ാ, ി, ീ, ു, ൂ, െ, േ, ൊ, ോ, ൈ, ൗ, ം\n- **Sibilants:** സ, ശ, ഷ, ഹ\n- **Consonants:** 20+ learned\n- **Chillus:** All 5\n\n**✅ Total Words: 120!**\n- 20% more than the 100 milestone!\n\n**✅ Complete Phonetic System:**\n1. **All simple vowels** - Short and long\n2. **All diphthongs** - Gliding sounds\n3. **All positions** - Right, left, below, wrap, above\n4. **Can read ANY syllable structure now!**\n\n### Cumulative Reinforcement Check ✓\n**Previous lesson letters in today's words:**\n- **ക:** appears in 3 words (കൈയ്യ, ഐക്യം, െകൗതുകം)\n- **വ:** appears in 3 words (വൈദ്യം, വൈതര, ഭൈരവം)\n- **പ:** appears in 2 words (പൗരൻ, പൗർണമി)\n- **ം (anusvara):** appears in 8 words!\n- **സ/ശ sibilants:** Present in multiple words\n- **ർ chillu:** appears in 2 words\n- **ൻ chillu:** appears in 1 word\n- **Long vowels:** Heavily used throughout\n\nRequirement exceeded! ✅\n\n### What's Next?\n**Phase 3: The LIGATURE JUNGLE begins FOR REAL!**\n\nLesson 13: **Double Stops** - ക്ക, ച്ച, ട്ട, പ്പ\n\nConjunct consonants where letters:\n- **STACK** on top of each other\n- **MERGE** into new shapes\n- **DOUBLE** their sound\n\nExample: ക + ക = **ക്ക** (kka)\n\nThis is where Malayalam script gets truly complex and beautiful! 🚀",
+      "step_title": "Lesson 12 Complete -"
+    }
+  ],
+  "skills_learned": [
+    "Reading Malayalam vowels",
+    "Reading Malayalam script",
+    "Pronouncing diphthongs",
+    "Reading 14+ Malayalam words"
+  ]
+}

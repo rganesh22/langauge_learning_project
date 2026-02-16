@@ -1,225 +1,113 @@
-import React, { useEffect, useMemo, useState, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import {
   View,
   Text,
   StyleSheet,
+  FlatList,
   TouchableOpacity,
+  ActivityIndicator,
+  Platform,
   Modal,
-  ScrollView,
-  TextInput,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import LessonRenderer from '../components/LessonRenderer';
+import SafeText from '../components/SafeText';
+import { LanguageContext, LANGUAGES } from '../contexts/LanguageContext';
 
-const API_BASE_URL = __DEV__ ? 'http://localhost:5001' : 'http://localhost:5001';
+const API_BASE_URL = __DEV__ ? 'http://localhost:8080' : 'http://localhost:8080';
 
-import { LANGUAGES, LanguageContext } from '../contexts/LanguageContext';
-
-// Helpers to build grouped lessons of ~5 items.
-const chunk = (arr, size) => {
-  const out = [];
-  for (let i = 0; i < arr.length; i += size) {
-    out.push(arr.slice(i, i + size));
-  }
-  return out;
-};
-
-const makeLessonArticle = ({ title, type, chars = [], diacritics = [] }) => {
-  const list = [...chars, ...diacritics].join(', ');
-  const what = type === 'vowel'
-    ? 'These are open sounds; keep the mouth relaxed and clear.'
-    : type === 'consonant'
-      ? 'Pair each with a vowel sign later; keep the base sound crisp.'
-      : type === 'matra'
-        ? 'These marks latch onto consonants to supply the vowel sound.'
-        : type === 'numeral'
-          ? 'Digits you will meet in prices, dates, and addresses.'
-          : 'Blend everything you have learned so far.';
-
-  const how = type === 'vowel'
-    ? 'Hold each vowel cleanly—no schwa drift. Say them slowly first, then in quick succession.'
-    : type === 'consonant'
-      ? 'Most Kannada consonants carry an inherent “a” unless a vowel sign changes it. Listen for aspiration (h puff) in ಖ, ಛ, ಠ, ಥ, ಫ.'
-      : type === 'matra'
-        ? 'Signs can appear before, after, above, or around the consonant. Read left-to-right even when the mark wraps.'
-        : type === 'numeral'
-          ? 'Numbers flow the same direction as text. Practice reading phone numbers and years.'
-          : 'Read whole words out loud: consonant + vowel sign + nasal/visarga if present.';
-
-  const feel = type === 'vowel'
-    ? 'Aim for pure tones: ಅ (a), ಆ (aa), ಇ (i), ಈ (ii), ಉ (u), ಊ (uu), ಋ (ri), ಎ (e), ಏ (ee), ಐ (ai), ಒ (o), ಓ (oo), ಔ (au), ಅಂ (am), ಅಃ (ah).'
-    : type === 'consonant'
-      ? 'Group similar sounds: ಕ-ಖ, ಗ-ಘ, ಚ-ಛ, ಜ-ಝ, ಟ-ಠ, ಡ-ಢ, ತ-ಥ, ದ-ಧ, ಪ-ಫ, ಬ-ಭ. Notice retroflex vs. dental pairs.'
-      : type === 'matra'
-        ? 'Try mapping: ಾ (aa), ಿ (i), ೀ (ii), ು (u), ೂ (uu), ೃ (r̥), ೆ (e), ೇ (ee), ೈ (ai), ೊ (o), ೋ (oo), ೌ (au), ಂ (nasal), ಃ (breathy end).'
-        : type === 'numeral'
-          ? 'Read aloud like phone numbers: ೧೨೩ (one two three), ೪೫೬ (four five six).'
-          : 'Mix easy words first (two or three syllables). Keep a steady rhythm and avoid inserting extra vowels.';
-
-  const practice = `Say these out loud: ${list || title}. Then trace them with your finger or stylus.`;
-
-  return [
-    `${title}: ${list || '—'}`,
-    what,
-    how,
-    feel,
-    practice,
-  ];
-};
-
-const VOWELS = ['ಅ', 'ಆ', 'ಇ', 'ಈ', 'ಉ', 'ಊ', 'ಋ', 'ಎ', 'ಏ', 'ಐ', 'ಒ', 'ಓ', 'ಔ', 'ಅಂ', 'ಅಃ'];
-const CONSONANTS = ['ಕ', 'ಖ', 'ಗ', 'ಘ', 'ಙ', 'ಚ', 'ಛ', 'ಜ', 'ಝ', 'ಞ', 'ಟ', 'ಠ', 'ಡ', 'ಢ', 'ಣ', 'ತ', 'ಥ', 'ದ', 'ಧ', 'ನ', 'ಪ', 'ಫ', 'ಬ', 'ಭ', 'ಮ', 'ಯ', 'ರ', 'ಲ', 'ವ', 'ಶ', 'ಷ', 'ಸ', 'ಹ', 'ಳ', 'ಕ್ಷ', 'ಜ್ಞ'];
-const MATRAS = ['ಾ', 'ಿ', 'ೀ', 'ು', 'ೂ', 'ೃ', 'ೆ', 'ೇ', 'ೈ', 'ೊ', 'ೋ', 'ೌ', 'ಂ', 'ಃ'];
-const NUMERALS = ['೦', '೧', '೨', '೩', '೪', '೫', '೬', '೭', '೮', '೯'];
-
-const ITRANS_CHART = {
-  vowels: [
-    ['ಅ', 'a'], ['ಆ', 'aa'], ['ಇ', 'i'], ['ಈ', 'ii'], ['ಉ', 'u'], ['ಊ', 'uu'],
-    ['ಋ', 'r'], ['ಎ', 'e'], ['ಏ', 'ee'], ['ಐ', 'ai'], ['ಒ', 'o'], ['ಓ', 'oo'], ['ಔ', 'au'],
-    ['ಅಂ', 'am'], ['ಅಃ', 'ah'],
-  ],
-  consonants: [
-    ['ಕ', 'ka'], ['ಖ', 'kha'], ['ಗ', 'ga'], ['ಘ', 'gha'], ['ಙ', 'nga'],
-    ['ಚ', 'cha'], ['ಛ', 'chha'], ['ಜ', 'ja'], ['ಝ', 'jha'], ['ಞ', 'nya'],
-    ['ಟ', 'ta'], ['ಠ', 'tha'], ['ಡ', 'da'], ['ಢ', 'dha'], ['ಣ', 'na'],
-    ['ತ', 'ta'], ['ಥ', 'tha'], ['ದ', 'da'], ['ಧ', 'dha'], ['ನ', 'na'],
-    ['ಪ', 'pa'], ['ಫ', 'pha'], ['ಬ', 'ba'], ['ಭ', 'bha'], ['ಮ', 'ma'],
-    ['ಯ', 'ya'], ['ರ', 'ra'], ['ಲ', 'la'], ['ವ', 'va'],
-    ['ಶ', 'sha'], ['ಷ', 'ssa'], ['ಸ', 'sa'], ['ಹ', 'ha'], ['ಳ', 'la'], ['ಕ್ಷ', 'ksha'], ['ಜ್ಞ', 'jna'],
-  ],
-  matras: [
-    ['ಾ', 'aa'], ['ಿ', 'i'], ['ೀ', 'ii'], ['ು', 'u'], ['ೂ', 'uu'], ['ೃ', 'r'],
-    ['ೆ', 'e'], ['ೇ', 'ee'], ['ೈ', 'ai'], ['ೊ', 'o'], ['ೋ', 'oo'], ['ೌ', 'au'],
-    ['ಂ', 'm'], ['ಃ', 'h'],
-  ],
-  numerals: [
-    ['೦', '0'], ['೧', '1'], ['೨', '2'], ['೩', '3'], ['೪', '4'],
-    ['೫', '5'], ['೬', '6'], ['೭', '7'], ['೮', '8'], ['೯', '9'],
-  ],
-};
-
-const buildKannadaModules = () => {
-  const vowelLessons = chunk(VOWELS, 5).map((chars, idx) => ({
-    id: `kn-vowels-${idx + 1}`,
-    title: `Vowels ${idx + 1}`,
-    subtitle: 'Learn base vowels',
-    level: 'A1',
-    characters: chars,
-    diacritics: [],
-    focus: 'Practice sounds and shapes.',
-    article: makeLessonArticle({ title: `Vowels ${idx + 1}`, type: 'vowel', chars }),
-  }));
-
-  const consonantLessons = chunk(CONSONANTS, 5).map((chars, idx) => ({
-    id: `kn-cons-${idx + 1}`,
-    title: `Consonants ${idx + 1}`,
-    subtitle: 'Core letters',
-    level: 'A1',
-    characters: chars,
-    diacritics: [],
-    focus: 'Attach vowels later with matras.',
-    article: makeLessonArticle({ title: `Consonants ${idx + 1}`, type: 'consonant', chars }),
-  }));
-
-  const matraLessons = chunk(MATRAS, 5).map((chars, idx) => ({
-    id: `kn-matra-${idx + 1}`,
-    title: `Vowel Signs ${idx + 1}`,
-    subtitle: 'Build syllables',
-    level: 'A2',
-    characters: [],
-    diacritics: chars,
-    focus: 'Combine with consonants to form syllables.',
-    article: makeLessonArticle({ title: `Vowel Signs ${idx + 1}`, type: 'matra', diacritics: chars }),
-  }));
-
-  const numeralLessons = chunk(NUMERALS, 5).map((chars, idx) => ({
-    id: `kn-num-${idx + 1}`,
-    title: `Numerals ${idx + 1}`,
-    subtitle: 'Digits',
-    level: 'A1',
-    characters: chars,
-    diacritics: [],
-    focus: 'Use in prices, dates, addresses.',
-    article: makeLessonArticle({ title: `Numerals ${idx + 1}`, type: 'numeral', chars }),
-  }));
-
-  const practiceLesson = {
-    id: 'kn-practice',
-    title: 'Whole-Word Practice',
-    subtitle: 'Blend everything',
-    level: 'A2',
-    characters: [],
-    diacritics: [],
-    focus: 'Read full words with all learned pieces.',
-    article: makeLessonArticle({ title: 'Whole-Word Practice', type: 'practice', chars: [], diacritics: [] }),
-  };
-
-  // Interleave lessons to accelerate reading: vowel, consonant, vowel, consonant, then matras, numerals, practice.
-  const interleaved = [];
-  const maxLen = Math.max(vowelLessons.length, consonantLessons.length);
-  for (let i = 0; i < maxLen; i++) {
-    if (vowelLessons[i]) interleaved.push(vowelLessons[i]);
-    if (consonantLessons[i]) interleaved.push(consonantLessons[i]);
-  }
-  interleaved.push(...matraLessons, ...numeralLessons, practiceLesson);
-
-  // Apply a global prereq chain based on the interleaved order.
-  interleaved.forEach((lesson, idx) => {
-    lesson.prereq = idx === 0 ? null : interleaved[idx - 1].id;
-  });
-
-  return [
-    {
-      id: 'kn-mod-script',
-      title: 'Learning the Script',
-      lessons: interleaved,
-    },
-  ];
-};
-
-const SCRIPT_MODULES = {
-  kannada: buildKannadaModules(),
-};
-
-// Practice bank: only shows items whose required chars/diacritics are all known.
-const SCRIPT_PRACTICE_BANK = [
-  { id: 'w1', language: 'kannada', text: 'ಅಮರ', gloss: 'immortal', requires: ['ಅ', 'ಮ', 'ರ'] },
-  { id: 'w2', language: 'kannada', text: 'ಕಲಾ', gloss: 'art', requires: ['ಕ', 'ಲ', 'ಾ'] },
-  { id: 'w3', language: 'kannada', text: 'ಮನೆ', gloss: 'house', requires: ['ಮ', 'ನ', 'ೆ'] },
-  { id: 'w4', language: 'kannada', text: 'ಭಾಷೆ', gloss: 'language', requires: ['ಭ', 'ಾ', 'ಷ', 'ೆ'] },
-  { id: 'w5', language: 'kannada', text: 'ಪುಸ್ತಕ', gloss: 'book', requires: ['ಪ', 'ು', 'ಸ', '್', 'ತ', 'ಕ'] },
-  { id: 'w6', language: 'kannada', text: 'ಕಾಫಿ', gloss: 'coffee', requires: ['ಕ', 'ಾ', 'ಫ', 'ಿ'] },
-  { id: 'w7', language: 'kannada', text: 'ಸ್ನೇಹ', gloss: 'friendship', requires: ['ಸ', '್', 'ನ', 'ೇ', 'ಹ'] },
-  { id: 'w8', language: 'kannada', text: '೧೨೩', gloss: '123', requires: ['೧', '೨', '೩'] },
-  { id: 'w9', language: 'kannada', text: 'ಬೆಳೆ', gloss: 'crop', requires: ['ಬ', 'ೆ', 'ಳ', 'ೆ'] },
-  { id: 'w10', language: 'kannada', text: 'ಹೊಸ', gloss: 'new', requires: ['ಹ', 'ೊ', 'ಸ'] },
-  { id: 'w11', language: 'kannada', text: 'ಮಾವು', gloss: 'mango tree', requires: ['ಮ', 'ಾ', 'ವ', 'ು'] },
-  { id: 'w12', language: 'kannada', text: 'ಪ್ರತಿ', gloss: 'every', requires: ['ಪ', '್', 'ರ', 'ತ', 'ಿ'] },
-  { id: 'w13', language: 'kannada', text: 'ಶಕ್ತಿ', gloss: 'strength', requires: ['ಶ', 'ಕ', '್', 'ತ', 'ಿ'] },
-];
-
-const LOCK_COLOR = '#E0E0E0';
-
-// Basic transliteration map for quick pronunciation hints (approximate).
-// ITRANS transliteration will be fetched via API
-
-export default function LessonsScreen() {
-  const { selectedLanguage: ctxLanguage, setSelectedLanguage: setCtxLanguage, availableLanguages } = React.useContext(LanguageContext);
+const LessonsScreen = ({ route }) => {
+  const { selectedLanguage: ctxLanguage, setSelectedLanguage: setCtxLanguage, availableLanguages } = useContext(LanguageContext);
   const selectedLanguage = ctxLanguage || 'kannada';
   const setSelectedLanguage = (l) => setCtxLanguage(l);
   const [languageMenuVisible, setLanguageMenuVisible] = useState(false);
   const [allLanguagesSrsStats, setAllLanguagesSrsStats] = useState({});
-  const [activeLessonId, setActiveLessonId] = useState(null);
-  const [activeModuleId, setActiveModuleId] = useState(null);
-  const [viewMode, setViewMode] = useState('modules'); // modules -> lessons -> lesson
-  const [completedLessons, setCompletedLessons] = useState(new Set());
-  const [quizWords, setQuizWords] = useState([]);
-  const [quizLoading, setQuizLoading] = useState(false);
-  const [quizIndex, setQuizIndex] = useState(0);
-  const [quizInput, setQuizInput] = useState('');
-  const [quizShowAnswer, setQuizShowAnswer] = useState(false);
-  const [quizTransliterations, setQuizTransliterations] = useState({});
-  const [lessonTransliterations, setLessonTransliterations] = useState({});
-  const [showTranslitGuide, setShowTranslitGuide] = useState(false);
+  
+  // State management
+  const [units, setUnits] = useState([]);
+  const [lessons, setLessons] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [selectedLesson, setSelectedLesson] = useState(null);
+  const [selectedUnit, setSelectedUnit] = useState(null);
+  const [viewMode, setViewMode] = useState('units'); // 'units', 'lessons', or 'lesson'
+  const [inProgressLessons, setInProgressLessons] = useState({});
+  const [lessonProgress, setLessonProgress] = useState({}); // Store progress percentage for each lesson
+  const [reviewMode, setReviewMode] = useState(false);
+
+  const userCefrLevel = route?.params?.userCefrLevel || 'B1';
+
+  useEffect(() => {
+    loadUnits();
+    loadAllLanguagesSrsStats();
+  }, [selectedLanguage]);
+
+  // Handle openLessonId parameter from navigation
+  useEffect(() => {
+    const { openLessonId, language } = route?.params || {};
+    if (openLessonId) {
+      console.log('Opening lesson from navigation:', openLessonId, 'language:', language);
+      // Switch language if provided
+      if (language && language !== selectedLanguage) {
+        console.log('Switching language to:', language);
+        setSelectedLanguage(language);
+        return; // Let the language change trigger reload
+      }
+      // Open the lesson once units are loaded
+      if (!loading && units.length > 0) {
+        console.log('Units loaded, opening lesson:', openLessonId);
+        openLessonById(openLessonId);
+        // Clear the params after handling to prevent re-triggering
+        if (route?.params) {
+          route.params.openLessonId = undefined;
+        }
+      } else {
+        console.log('Waiting for units to load. Loading:', loading, 'Units:', units.length);
+      }
+    }
+  }, [route?.params, loading, units, selectedLanguage]);
+
+  const openLessonById = async (lessonId) => {
+    try {
+      console.log('Fetching lesson by ID:', lessonId);
+      // First, fetch the lesson data
+      const response = await fetch(`${API_BASE_URL}/api/lessons/by-id/${lessonId}`);
+      if (response.ok) {
+        const data = await response.json();
+        const lesson = data.lesson;
+        console.log('Lesson fetched:', lesson.title, 'Unit ID:', lesson.unit_id);
+        
+        if (lesson.unit_id) {
+          // Find the unit
+          const unit = units.find(u => u.unit_id === lesson.unit_id);
+          console.log('Looking for unit:', lesson.unit_id, 'Found:', !!unit);
+          if (unit) {
+            setSelectedUnit(unit);
+            setViewMode('lessons');
+            // Load all lessons in the unit
+            console.log('Loading lessons for unit:', unit.unit_id);
+            await loadLessonsForUnit(unit.unit_id);
+            // Wait a bit for state to update, then select the lesson
+            setTimeout(() => {
+              console.log('Opening lesson:', lesson.title);
+              setSelectedLesson(lesson);
+              setViewMode('lesson');
+            }, 100);
+          } else {
+            console.warn('Unit not found:', lesson.unit_id, 'Available units:', units.map(u => u.unit_id));
+          }
+        } else {
+          // No unit, set lesson directly
+          console.log('No unit, opening lesson directly');
+          setSelectedLesson(lesson);
+          setViewMode('lesson');
+        }
+      } else {
+        console.error('Failed to fetch lesson:', response.status);
+      }
+    } catch (error) {
+      console.error('Error opening lesson by ID:', error);
+    }
+  };
 
   const loadAllLanguagesSrsStats = async () => {
     try {
@@ -251,254 +139,498 @@ export default function LessonsScreen() {
     }
   };
 
-  useEffect(() => {
-    loadAllLanguagesSrsStats();
-  }, [selectedLanguage]);
-
-  const modules = SCRIPT_MODULES[selectedLanguage] || [];
-  const lessons = useMemo(() => {
-    const arr = [];
-    modules.forEach((m) => m.lessons.forEach((l) => arr.push({ ...l, moduleId: m.id, moduleTitle: m.title })));
-    return arr;
-  }, [modules]);
-  const currentLanguage = LANGUAGES.find(lang => lang.code === selectedLanguage) || LANGUAGES[0];
-
-  // Unlock all lessons for now
-  const isUnlocked = (_lesson) => true;
-
-  const knownChars = useMemo(() => {
-    const collected = new Set();
-    const addFrom = (lessonId) => {
-      const lesson = lessons.find(l => l.id === lessonId);
-      if (!lesson) return;
-      lesson.characters?.forEach(ch => collected.add(ch));
-      lesson.diacritics?.forEach(ch => collected.add(ch));
-    };
-    lessons.forEach((lesson) => {
-      if (completedLessons.has(lesson.id)) addFrom(lesson.id);
-      if (lesson.id === activeLessonId) addFrom(lesson.id);
-    });
-    return collected;
-  }, [lessons, completedLessons, activeLessonId]);
-
-  // Get cumulative known characters up to and including current lesson
-  const cumulativeKnownChars = useMemo(() => {
-    const collected = new Set();
-    if (!activeLessonId) return collected;
-    
-    // Find current lesson index
-    const currentIndex = lessons.findIndex(l => l.id === activeLessonId);
-    if (currentIndex === -1) return collected;
-    
-    // Collect all characters from lessons up to and including current
-    for (let i = 0; i <= currentIndex; i++) {
-      const lesson = lessons[i];
-      if (lesson) {
-        lesson.characters?.forEach(ch => collected.add(ch));
-        lesson.diacritics?.forEach(ch => collected.add(ch));
-      }
-    }
-    return collected;
-  }, [lessons, activeLessonId]);
-
-  const toggleComplete = (lessonId) => {
-    const updated = new Set(completedLessons);
-    if (updated.has(lessonId)) {
-      updated.delete(lessonId);
-    } else {
-      updated.add(lessonId);
-    }
-    setCompletedLessons(updated);
-  };
-
-  const activeLesson = lessons.find(l => l.id === activeLessonId) || lessons[0];
-  const activeModule = modules.find(m => m.id === activeModuleId) || modules[0];
-  const lessonsInModule = lessons.filter(l => l.moduleId === (activeModule?.id || modules[0]?.id));
-  const completedCount = completedLessons.size;
-
-  // Utility: check if word only uses known characters/diacritics (ignores spaces/punctuation)
-  const hasOnlyKnownChars = (text, allowedSet) => {
-    if (!text || typeof text !== 'string') return false;
-    const clean = text.replace(/[\s0-9.,;:'"!?()-]/g, '');
-    if (!clean.length) return false;
-    for (const ch of clean) {
-      if (!allowedSet.has(ch)) return false;
-    }
-    return true;
-  };
-
-  const loadQuizWords = async () => {
-    if (!activeLesson) return;
-    setQuizLoading(true);
+  const loadUnits = async () => {
+    setLoading(true);
     try {
-      const allowedChars = Array.from(cumulativeKnownChars);
-      const resp = await fetch(`${API_BASE_URL}/api/lesson-words/${selectedLanguage}/${activeLesson.id}`, {
+      const response = await fetch(`${API_BASE_URL}/api/units/${selectedLanguage}`);
+      if (response.ok) {
+        const data = await response.json();
+        if (data.units && data.units.length > 0) {
+          setUnits(data.units);
+        } else {
+          // Fallback to loading lessons directly if no units
+          setUnits([]);
+          loadLessonsDirectly();
+          return;
+        }
+      } else {
+        console.error('Failed to fetch units');
+        setUnits([]);
+        loadLessonsDirectly();
+      }
+    } catch (error) {
+      console.error('Error loading units:', error);
+      setUnits([]);
+      loadLessonsDirectly();
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const loadLessonsDirectly = async () => {
+    // Fallback for languages without units
+    setLoading(true);
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/lessons/${selectedLanguage}`);
+      if (response.ok) {
+        const data = await response.json();
+        if (data.lessons && data.lessons.length > 0) {
+          const lessonsWithProgress = await loadLessonProgress(data.lessons);
+          setLessons(lessonsWithProgress);
+          setViewMode('lessons');
+        } else {
+          setLessons([]);
+        }
+      }
+    } catch (error) {
+      console.error('Error loading lessons:', error);
+      setLessons([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const loadLessonsForUnit = async (unitId) => {
+    setLoading(true);
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/units/${unitId}/lessons`);
+      if (response.ok) {
+        const data = await response.json();
+        if (data.lessons && data.lessons.length > 0) {
+          const lessonsWithProgress = await loadLessonProgress(data.lessons);
+          setLessons(lessonsWithProgress);
+        } else {
+          setLessons([]);
+        }
+      } else {
+        console.error('Failed to fetch lessons for unit');
+        setLessons([]);
+      }
+    } catch (error) {
+      console.error('Error loading lessons for unit:', error);
+      setLessons([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const loadLessonProgress = async (lessonsList) => {
+    const progressMap = {};
+    const inProgressMap = {};
+    
+    const lessonsWithProgress = await Promise.all(
+      lessonsList.map(async (lesson) => {
+        try {
+          const progressResponse = await fetch(`${API_BASE_URL}/api/lessons/progress/${lesson.lesson_id}`);
+          if (progressResponse.ok) {
+            const progressData = await progressResponse.json();
+            const totalSteps = lesson.steps?.length || 1;
+            const completedSteps = progressData.completed_steps?.length || 0;
+            const progressPercentage = (completedSteps / totalSteps) * 100;
+            
+            progressMap[lesson.lesson_id] = progressPercentage;
+            
+            const hasProgress = progressData.current_step > 0 || completedSteps > 0;
+            if (hasProgress && !lesson.completed) {
+              inProgressMap[lesson.lesson_id] = true;
+            }
+            
+            return {
+              ...lesson,
+              inProgress: hasProgress && !lesson.completed,
+              progressPercentage: lesson.completed ? 100 : progressPercentage
+            };
+          }
+        } catch (error) {
+          console.error(`Error loading progress for ${lesson.lesson_id}:`, error);
+        }
+        return {
+          ...lesson,
+          progressPercentage: lesson.completed ? 100 : 0
+        };
+      })
+    );
+    
+    setLessonProgress(progressMap);
+    setInProgressLessons(inProgressMap);
+    return lessonsWithProgress;
+  };
+
+  const loadLessons = async () => {
+    setLoading(true);
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/lessons/${selectedLanguage}`);
+      if (response.ok) {
+        const data = await response.json();
+        if (data.lessons && data.lessons.length > 0) {
+          // Load progress for all lessons to determine in-progress state
+          const lessonsWithProgress = await Promise.all(
+            data.lessons.map(async (lesson) => {
+              // Check if lesson has progress (in-progress)
+              try {
+                const progressResponse = await fetch(`${API_BASE_URL}/api/lessons/progress/${lesson.lesson_id}`);
+                if (progressResponse.ok) {
+                  const progressData = await progressResponse.json();
+                  // If there's progress and it's not at the start, mark as in-progress
+                  const hasProgress = progressData.current_step > 0 || (progressData.completed_steps && progressData.completed_steps.length > 0);
+                  return {
+                    ...lesson,
+                    inProgress: hasProgress && !lesson.completed
+                  };
+                }
+              } catch (error) {
+                console.error(`Error loading progress for ${lesson.lesson_id}:`, error);
+              }
+              return lesson;
+            })
+          );
+          
+          setLessons(lessonsWithProgress);
+          
+          // Build inProgressLessons map
+          const inProgressMap = {};
+          lessonsWithProgress.forEach(lesson => {
+            if (lesson.inProgress) {
+              inProgressMap[lesson.lesson_id] = true;
+            }
+          });
+          setInProgressLessons(inProgressMap);
+        } else {
+          setLessons([]);
+        }
+      } else {
+        console.error('Failed to fetch lessons');
+        setLessons([]);
+      }
+    } catch (error) {
+      console.error('Error loading lessons:', error);
+      setLessons([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleUnitSelect = (unit) => {
+    setSelectedUnit(unit);
+    setViewMode('lessons');
+    loadLessonsForUnit(unit.unit_id);
+  };
+
+  const handleLessonSelect = (lessonId, openInReviewMode = false) => {
+    const lesson = lessons.find(l => l.lesson_id === lessonId);
+    if (lesson) {
+      // Set review mode if lesson is completed and being reviewed
+      setReviewMode(openInReviewMode || lesson.completed);
+      
+      // Mark as in progress if not completed and not in review mode
+      if (!lesson.completed && !openInReviewMode) {
+        setInProgressLessons(prev => ({
+          ...prev,
+          [lessonId]: true
+        }));
+      }
+      setSelectedLesson(lesson);
+      setViewMode('lesson');
+    }
+  };
+
+  const handleLessonComplete = async (completionData) => {
+    console.log('Lesson completed:', completionData);
+    
+    // Save completion data to backend
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/lessons/complete`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          allowed_chars: allowedChars,
-          target_count: 60,
-          max_count: 70,
+          lesson_id: completionData.lessonId,
+          answers: completionData.answers,
+          feedback: completionData.feedback,
+          total_score: completionData.totalScore || null,
         }),
       });
 
-      if (!resp.ok) {
-        throw new Error(`Failed to load lesson words: ${resp.status}`);
-      }
-
-      const data = await resp.json();
-      const words = data.words || [];
-
-      setQuizWords(words);
-      setQuizIndex(0);
-      setQuizInput('');
-      setQuizShowAnswer(false);
-      
-      // Pre-load transliterations for all quiz words
-      const translitPromises = words.map(async (item) => {
-        try {
-          const resp = await fetch(`${API_BASE_URL}/api/transliterate`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ text: item.text, language: selectedLanguage, to_script: 'ITRANS' }),
-          });
-          if (resp.ok) {
-            const data = await resp.json();
-            return { id: item.id, translit: simplifyDisplayTranslit(data.transliteration || '') };
+      if (response.ok) {
+        console.log('Lesson completion saved successfully');
+        
+        // Update unit progress if in a unit
+        if (selectedUnit) {
+          try {
+            await fetch(`${API_BASE_URL}/api/units/${selectedUnit.unit_id}/update-progress`, {
+              method: 'POST'
+            });
+            // Reload units to get updated progress
+            await loadUnits();
+            
+            // Update the selectedUnit with fresh data from the reloaded units
+            // This ensures the progress bar shows the updated count
+            const unitsResponse = await fetch(`${API_BASE_URL}/api/units/${selectedLanguage}`);
+            if (unitsResponse.ok) {
+              const unitsData = await unitsResponse.json();
+              const updatedUnit = unitsData.units.find(u => u.unit_id === selectedUnit.unit_id);
+              if (updatedUnit) {
+                setSelectedUnit(updatedUnit);
+              }
+            }
+          } catch (error) {
+            console.error('Error updating unit progress:', error);
           }
-        } catch (err) {
-          console.error(`Error transliterating ${item.text}:`, err);
         }
-        return { id: item.id, translit: '' };
-      });
-      
-      const translitResults = await Promise.all(translitPromises);
-      const translitMap = {};
-      translitResults.forEach(r => {
-        translitMap[r.id] = r.translit;
-      });
-      setQuizTransliterations(translitMap);
-    } catch (err) {
-      console.error('Error loading quiz words:', err);
-    } finally {
-      setQuizLoading(false);
+        
+        // Remove from in-progress
+        setInProgressLessons(prev => {
+          const updated = { ...prev };
+          delete updated[completionData.lessonId];
+          return updated;
+        });
+        
+        // Reload lessons to get updated completion status
+        if (selectedUnit) {
+          await loadLessonsForUnit(selectedUnit.unit_id);
+        } else {
+          await loadLessons();
+        }
+      } else {
+        console.error('Failed to save lesson completion');
+      }
+    } catch (error) {
+      console.error('Error saving lesson completion:', error);
     }
-  };
-
-  useEffect(() => {
-    if (!activeModuleId && modules[0]) setActiveModuleId(modules[0].id);
-    if (!activeLessonId && lessonsInModule[0]) setActiveLessonId(lessonsInModule[0].id);
-    if (!activeModuleId) setViewMode('modules');
-    else if (!activeLessonId) setViewMode('lessons');
-  }, [modules, lessonsInModule, activeModuleId, activeLessonId]);
-
-  useEffect(() => {
-    loadQuizWords();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeLessonId, selectedLanguage, cumulativeKnownChars]);
-
-  // Load ITRANS transliterations for lesson characters/marks
-  useEffect(() => {
-    const loadLessonTransliterations = async () => {
-      if (!activeLesson) return;
-      const chars = [...(activeLesson.characters || []), ...(activeLesson.diacritics || [])];
-      if (chars.length === 0) return;
-      setShowTranslitGuide(false);
-      
-      const translitMap = {};
-      for (const ch of chars) {
-        try {
-          const resp = await fetch(`${API_BASE_URL}/api/transliterate`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ text: ch, language: selectedLanguage, to_script: 'ITRANS' }),
-          });
-          if (resp.ok) {
-            const data = await resp.json();
-            translitMap[ch] = simplifyDisplayTranslit(data.transliteration || '');
-          }
-        } catch (err) {
-          console.error(`Error transliterating ${ch}:`, err);
-        }
-      }
-      setLessonTransliterations(translitMap);
-    };
     
-    loadLessonTransliterations();
-  }, [activeLesson, selectedLanguage]);
+    // Return to lesson list
+    setViewMode('lessons');
+    setSelectedLesson(null);
+    setReviewMode(false);
+  };
 
-  const currentQuizWord = quizWords[quizIndex] || null;
-  const currentTranslit = currentQuizWord ? quizTransliterations[currentQuizWord.id] || '' : '';
-  const simplifyDisplayTranslit = (val) => {
-    if (!val) return '';
-    let out = val;
-    // Convert diacritics to double letters
-    out = out
-      .replace(/ā/g, 'aa')
-      .replace(/ī/g, 'ii')
-      .replace(/ū/g, 'uu')
-      .replace(/ē/g, 'ee')
-      .replace(/ō/g, 'oo');
-    // Convert capital vowel markers (ITRANS style) to double letters
-    out = out
-      .replace(/A/g, 'aa')
-      .replace(/I/g, 'ii')
-      .replace(/U/g, 'uu')
-      .replace(/E/g, 'ee')
-      .replace(/O/g, 'oo')
-      .replace(/RRi/g, 'rri')
-      .replace(/RRI/g, 'rrri')
-      .replace(/LLi/g, 'lli')
-      .replace(/LLI/g, 'llli');
-    return out.toLowerCase();
-  };
-  const normalizeTranslit = (val) => {
-    if (!val) return '';
-    let out = val.trim().toLowerCase();
-    // Allow double vowels and simple ASCII
-    out = out
-      .replace(/ā/g, 'aa')
-      .replace(/ī/g, 'ii')
-      .replace(/ū/g, 'uu')
-      .replace(/ṛ/g, 'r')
-      .replace(/ṝ/g, 'rr')
-      .replace(/ḷ/g, 'l')
-      .replace(/ḹ/g, 'll')
-      .replace(/[ṃṁ]/g, 'm')
-      .replace(/ḥ/g, 'h')
-      .replace(/ē/g, 'ee')
-      .replace(/ō/g, 'oo')
-      .replace(/ç/g, 'ch'); // fallback
-    return out;
-  };
-  
-  const handleQuizNext = () => {
-    if (quizIndex < quizWords.length - 1) {
-      setQuizIndex(quizIndex + 1);
-      setQuizInput('');
-      setQuizShowAnswer(false);
+  const handleBackToList = () => {
+    if (viewMode === 'lesson') {
+      setViewMode('lessons');
+      setSelectedLesson(null);
+      setReviewMode(false);
+    } else if (viewMode === 'lessons') {
+      setViewMode('units');
+      setSelectedUnit(null);
+      setLessons([]);
     }
   };
-  
-  const handleQuizCheck = () => {
-    setQuizShowAnswer(true);
+
+  const handleRedoLesson = async (lessonId) => {
+    try {
+      // Clear progress from backend
+      const response = await fetch(`${API_BASE_URL}/api/lessons/progress/${lessonId}`, {
+        method: 'DELETE',
+      });
+
+      if (response.ok) {
+        console.log('Lesson progress cleared successfully');
+        
+        // Remove from in-progress
+        setInProgressLessons(prev => {
+          const updated = { ...prev };
+          delete updated[lessonId];
+          return updated;
+        });
+        
+        // Reload lessons to get updated status (will still show as completed in completions table)
+        await loadLessons();
+        
+        // Optionally, start the lesson again
+        handleLessonSelect(lessonId);
+      } else {
+        console.error('Failed to clear lesson progress');
+      }
+    } catch (error) {
+      console.error('Error clearing lesson progress:', error);
+    }
   };
-  
-  const isQuizCorrect = quizShowAnswer && currentTranslit &&
-    normalizeTranslit(quizInput) === normalizeTranslit(currentTranslit);
+
+  const currentLanguage = LANGUAGES.find(lang => lang.code === selectedLanguage) || LANGUAGES.find(l => l.code === 'kannada');
+  const languageColor = currentLanguage?.color || '#F97316';
+
+  const getLevelColor = (level) => {
+    const levelColors = {
+      A1: '#10B981',
+      A2: '#3B82F6',
+      B1: '#F59E0B',
+      B2: '#EF4444',
+      C1: '#8B5CF6',
+      C2: '#EC4899',
+    };
+    return levelColors[level] || '#6B7280';
+  };
+
+  const renderUnitCard = ({ item }) => {
+    const progress = item.lesson_count > 0 ? (item.lessons_completed || 0) / item.lesson_count : 0;
+    const isCompleted = item.is_completed || false;
+
+    return (
+      <TouchableOpacity
+        style={[styles.unitCard, { borderLeftColor: languageColor, borderLeftWidth: 4 }]}
+        onPress={() => handleUnitSelect(item)}
+      >
+        <View style={styles.unitHeader}>
+          <View style={styles.unitTitleContainer}>
+            <SafeText style={styles.unitNumber}>Unit {item.unit_number}</SafeText>
+            <SafeText style={styles.unitTitle}>{item.title}</SafeText>
+            {item.subtitle && (
+              <SafeText style={styles.unitSubtitle}>{item.subtitle}</SafeText>
+            )}
+          </View>
+          {isCompleted && (
+            <View style={styles.completedBadge}>
+              <Ionicons name="checkmark-circle" size={28} color="#10B981" />
+            </View>
+          )}
+        </View>
+
+        <View style={styles.unitProgressContainer}>
+          <View style={styles.unitProgressBar}>
+            <View style={[styles.unitProgressFill, { width: `${progress * 100}%`, backgroundColor: languageColor }]} />
+          </View>
+          <SafeText style={styles.unitProgressText}>
+            {item.lessons_completed || 0} / {item.lesson_count} lessons completed
+          </SafeText>
+        </View>
+
+        <View style={styles.unitFooter}>
+          <View style={styles.unitLessonCount}>
+            <Ionicons name="book-outline" size={16} color="#6B7280" />
+            <SafeText style={styles.unitLessonCountText}>
+              {item.lesson_count} {item.lesson_count === 1 ? 'lesson' : 'lessons'}
+            </SafeText>
+          </View>
+          <View style={styles.startButton}>
+            <SafeText style={[styles.startButtonText, { color: languageColor }]}>
+              {isCompleted ? 'Review' : progress > 0 ? 'Continue' : 'Start'}
+            </SafeText>
+            <Ionicons name="arrow-forward" size={16} color={languageColor} />
+          </View>
+        </View>
+      </TouchableOpacity>
+    );
+  };
+
+  const renderLessonCard = ({ item }) => {
+    const levelColor = getLevelColor(item.level);
+    const stepCount = item.steps?.length || 0;
+    const isCompleted = item.completed || false;
+    const isInProgress = item.inProgress || (!isCompleted && inProgressLessons[item.lesson_id]);
+    const progressPercentage = item.progressPercentage || 0;
+
+    return (
+      <TouchableOpacity
+        style={[styles.lessonCard, { borderLeftColor: languageColor, borderLeftWidth: 4 }]}
+        onPress={() => handleLessonSelect(item.lesson_id)}
+      >
+        <View style={styles.lessonHeader}>
+          <View style={styles.lessonTitleContainer}>
+            {item.lesson_number && (
+              <SafeText style={styles.lessonNumber}>Lesson {item.lesson_number}</SafeText>
+            )}
+            <SafeText style={styles.lessonTitle}>{item.title}</SafeText>
+            <View style={[styles.levelBadge, { backgroundColor: levelColor }]}>
+              <SafeText style={styles.levelText}>{item.level}</SafeText>
+            </View>
+          </View>
+          <View style={styles.lessonBadges}>
+            {isCompleted && (
+              <View style={styles.completedBadge}>
+                <Ionicons name="checkmark-circle" size={24} color="#10B981" />
+              </View>
+            )}
+            {isInProgress && !isCompleted && (
+              <View style={styles.inProgressBadge}>
+                <Ionicons name="ellipsis-horizontal-circle" size={24} color="#F59E0B" />
+              </View>
+            )}
+          </View>
+        </View>
+
+        {/* Progress bar for in-progress lessons */}
+        {isInProgress && !isCompleted && progressPercentage > 0 && (
+          <View style={styles.lessonProgressContainer}>
+            <View style={styles.lessonProgressBar}>
+              <View style={[styles.lessonProgressFill, { width: `${progressPercentage}%`, backgroundColor: languageColor }]} />
+            </View>
+            <SafeText style={styles.lessonProgressText}>{Math.round(progressPercentage)}% complete</SafeText>
+          </View>
+        )}
+
+        <View style={styles.lessonFooter}>
+          <View style={styles.stepInfo}>
+            <Ionicons name="list-outline" size={16} color="#6B7280" />
+            <SafeText style={styles.stepCount}>{stepCount}{' '}steps</SafeText>
+          </View>
+          <View style={styles.lessonActions}>
+            {isCompleted && (
+              <TouchableOpacity 
+                style={styles.redoButton}
+                onPress={(e) => {
+                  e.stopPropagation();
+                  handleRedoLesson(item.lesson_id);
+                }}
+              >
+                <Ionicons name="refresh" size={16} color="#6B7280" />
+                <SafeText style={styles.redoButtonText}>Redo</SafeText>
+              </TouchableOpacity>
+            )}
+            <View style={styles.startButton}>
+              <SafeText style={[styles.startButtonText, { color: languageColor }]}>
+                {isCompleted ? 'Review' : isInProgress ? 'Continue' : 'Start'}
+              </SafeText>
+              <Ionicons name="arrow-forward" size={16} color={languageColor} />
+            </View>
+          </View>
+        </View>
+      </TouchableOpacity>
+    );
+  };
+
+  if (viewMode === 'lesson' && selectedLesson) {
+    return (
+      <View style={styles.container}>
+        <View style={[styles.lessonNavHeader, { backgroundColor: languageColor }]}>
+          <TouchableOpacity onPress={handleBackToList} style={styles.backButton}>
+            <Ionicons name="arrow-back" size={24} color="#FFFFFF" />
+            <SafeText style={styles.backButtonText}>
+              {selectedUnit ? 'Lessons' : 'Back'}
+            </SafeText>
+          </TouchableOpacity>
+        </View>
+        <LessonRenderer
+          lessonData={selectedLesson}
+          language={selectedLanguage}
+          onComplete={handleLessonComplete}
+          userCefrLevel={userCefrLevel}
+          languageColor={languageColor}
+          reviewMode={reviewMode}
+        />
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>
+      {/* Header */}
       <View style={styles.header}>
         <View style={styles.headerLeft}>
           <Ionicons name="school" size={24} color="#4A90E2" style={styles.appIcon} />
-          <Text style={styles.appTitle}>Lessons</Text>
+          <Text style={styles.appTitle}>
+            {viewMode === 'units' ? 'Units' : selectedUnit ? selectedUnit.title : 'Lessons'}
+          </Text>
         </View>
-        <TouchableOpacity style={styles.languageButton} onPress={() => setLanguageMenuVisible(true)}>
+        <TouchableOpacity
+          style={styles.languageButton}
+          onPress={() => setLanguageMenuVisible(true)}
+        >
           {(currentLanguage?.nativeChar || currentLanguage?.langCode) && (
             <View style={[styles.countryCodeBox, { backgroundColor: currentLanguage?.color || '#F5F5F5' }]}>
               {currentLanguage?.nativeChar ? (
-                <Text style={[styles.nativeCharText, currentLanguage.code === 'urdu' && { fontFamily: 'Noto Nastaliq Urdu' }]}>{currentLanguage.nativeChar}</Text>
+                <Text style={[
+                  styles.nativeCharText,
+                  currentLanguage.code === 'urdu' && { fontFamily: 'Noto Nastaliq Urdu' }
+                ]}>{currentLanguage.nativeChar}</Text>
               ) : (
                 <Text style={styles.countryCodeText}>{currentLanguage?.countryCode}</Text>
               )}
@@ -507,346 +639,84 @@ export default function LessonsScreen() {
           <View style={styles.languageButtonContent}>
             <Text style={styles.languageName}>{currentLanguage?.name}</Text>
             {currentLanguage?.nativeName && (
-              <Text style={[styles.languageNativeName, currentLanguage.code === 'urdu' && { fontFamily: 'Noto Nastaliq Urdu', textAlign: 'left' }]}>
-                {currentLanguage.nativeName}
-              </Text>
+              <Text style={[
+                styles.languageNativeName,
+                currentLanguage.code === 'urdu' && { fontFamily: 'Noto Nastaliq Urdu', textAlign: 'left' }
+              ]}>{currentLanguage.nativeName}</Text>
             )}
           </View>
           <Ionicons name="chevron-down" size={16} color="#666" />
         </TouchableOpacity>
       </View>
 
-      <View style={styles.progressSummary}>
-        <View style={styles.progressCircle}>
-          <Text style={styles.progressCircleText}>{Math.round((completedCount / Math.max(1, lessons.length)) * 100)}%</Text>
+      {loading ? (
+        <View style={styles.loadingContainer}>
+          <ActivityIndicator size="large" color="#3B82F6" />
+          <SafeText style={styles.loadingText}>Loading...</SafeText>
         </View>
-        <View style={styles.progressMetaRight}>
-          <Text style={styles.progressLabel}>{completedCount}/{lessons.length} Lessons Completed</Text>
-        </View>
-      </View>
-
-      {/* VIEW: MODULES */}
-      {viewMode === 'modules' && (
-        <ScrollView style={styles.fullPane} contentContainerStyle={{ padding: 16, gap: 12 }}>
-          <Text style={styles.sectionLabel}>Modules</Text>
-          <View style={styles.moduleGrid}>
-            {modules.map((mod) => {
-              const moduleCompleted = mod.lessons.every(l => completedLessons.has(l.id));
-              return (
-                <TouchableOpacity
-                  key={mod.id}
-                  style={[styles.moduleCardLarge, moduleCompleted && styles.moduleCardCompleted]}
-                  onPress={() => {
-                    setActiveModuleId(mod.id);
-                    const firstLesson = lessons.filter(l => l.moduleId === mod.id)[0];
-                    if (firstLesson) setActiveLessonId(firstLesson.id);
-                    setViewMode('lessons');
-                  }}
-                >
-                  <View style={styles.moduleIconCircle}>
-                    <Text style={styles.moduleIconText}>ಕ</Text>
-                  </View>
-                  <View style={styles.moduleHeader}>
-                    <Text style={styles.moduleTitle}>{mod.title}</Text>
-                    {moduleCompleted && <Ionicons name="checkmark-circle" size={18} color="#4CAF50" />}
-                  </View>
-                  <Text style={styles.moduleMeta}>{mod.lessons.length} lessons • Tap to open</Text>
-                </TouchableOpacity>
-              );
-            })}
+      ) : viewMode === 'units' ? (
+        units.length === 0 ? (
+          <View style={styles.emptyContainer}>
+            <Ionicons name="book-outline" size={64} color="#D1D5DB" />
+            <SafeText style={styles.emptyText}>No units available</SafeText>
+            <SafeText style={styles.emptySubtext}>
+              Check back later for new content
+            </SafeText>
           </View>
-        </ScrollView>
-      )}
-
-      {/* VIEW: LESSON LIST IN MODULE */}
-      {viewMode === 'lessons' && (
-        <ScrollView style={styles.fullPane} contentContainerStyle={{ padding: 16, paddingBottom: 120 }}>
-          <View style={styles.topRow}>
-            <TouchableOpacity style={styles.backBtn} onPress={() => setViewMode('modules')}>
-              <Ionicons name="arrow-back" size={16} color="#1A1A1A" />
-              <Text style={styles.backText}>Modules</Text>
-            </TouchableOpacity>
-            <Text style={styles.sectionLabel}>Lessons in {activeModule?.title}</Text>
+        ) : (
+          <FlatList
+            data={units}
+            renderItem={renderUnitCard}
+            keyExtractor={(item) => item.unit_id}
+            contentContainerStyle={styles.listContent}
+            showsVerticalScrollIndicator={false}
+          />
+        )
+      ) : viewMode === 'lessons' ? (
+        lessons.length === 0 ? (
+          <View style={styles.emptyContainer}>
+            <Ionicons name="book-outline" size={64} color="#D1D5DB" />
+            <SafeText style={styles.emptyText}>No lessons available</SafeText>
+            <SafeText style={styles.emptySubtext}>
+              Check back later for new content
+            </SafeText>
           </View>
-          {lessonsInModule.map((lesson) => {
-            const unlocked = isUnlocked(lesson);
-            const completed = completedLessons.has(lesson.id);
-            return (
-              <TouchableOpacity
-                key={lesson.id}
-                style={[styles.lessonCardWide, !unlocked && styles.lessonCardLocked]}
-                onPress={() => {
-                  if (unlocked) {
-                    setActiveLessonId(lesson.id);
-                    setViewMode('lesson');
-                  }
-                }}
-                disabled={!unlocked}
+        ) : (
+          <>
+            {selectedUnit && (
+              <TouchableOpacity 
+                style={styles.backToUnitsButton}
+                onPress={handleBackToList}
               >
-                <View style={styles.lessonCardHeader}>
-                  <View>
-                    <Text style={styles.lessonTitle}>{lesson.title}</Text>
-                    <Text style={styles.lessonSubtitle}>{lesson.subtitle}</Text>
-                  </View>
-                </View>
-                <Text style={styles.lessonFocus}>{lesson.focus}</Text>
-                <View style={styles.lessonMetaRow}>
-                  <Text style={styles.lessonMetaText}>
-                    {lesson.characters.length} chars • {lesson.diacritics.length} marks
-                  </Text>
-                  {completed && <Text style={styles.completedTag}>Completed</Text>}
-                </View>
+                <Ionicons name="arrow-back" size={20} color={languageColor} />
+                <SafeText style={[styles.backToUnitsText, { color: languageColor }]}>
+                  Back to Units
+                </SafeText>
               </TouchableOpacity>
-            );
-          })}
-        </ScrollView>
-      )}
-
-      {/* VIEW: LESSON DETAIL */}
-      {viewMode === 'lesson' && (
-        <ScrollView style={styles.detailPanel} contentContainerStyle={{ paddingBottom: 120 }}>
-          <View style={styles.topRow}>
-            <TouchableOpacity style={styles.backBtn} onPress={() => setViewMode('lessons')}>
-              <Ionicons name="arrow-back" size={16} color="#1A1A1A" />
-              <Text style={styles.backText}>Lessons</Text>
-            </TouchableOpacity>
-            <Text style={styles.sectionLabel}>{activeModule?.title}</Text>
-          </View>
-
-          {activeLesson ? (
-            <>
-              <Text style={styles.detailTitle}>{activeLesson.title}</Text>
-              <Text style={styles.detailSubtitle}>{activeLesson.subtitle}</Text>
-              <Text style={styles.detailHint}>{activeLesson.focus}</Text>
-
-              {/* Pronunciation & reading hints */}
-              <View style={styles.hintCard}>
-                <Text style={styles.hintTitle}>Pronunciation & Reading Tips</Text>
-                <Text style={styles.hintBody}>• Break the syllable: consonant + vowel sign (ಮ + ಾ = ಮಾ).</Text>
-                <Text style={styles.hintBody}>• Nasal marks: "ಂ" (ṁ) adds nasal sound; "ಃ" (ḥ) adds breathy end.</Text>
-                <Text style={styles.hintBody}>• Read left to right; vowel signs wrap around consonants.</Text>
-              </View>
-
-              {(activeLesson.characters?.length || activeLesson.diacritics?.length) ? (
-                <View style={styles.pillSection}>
-                  {activeLesson.characters?.length > 0 && (
-                    <>
-                      <Text style={styles.sectionLabel}>Characters</Text>
-                      <View style={styles.pillWrap}>
-                        {activeLesson.characters.map((ch) => (
-                          <View key={ch} style={styles.pill}>
-                            <Text style={styles.pillText}>{ch}</Text>
-                          </View>
-                        ))}
-                      </View>
-                    </>
-                  )}
-                  {activeLesson.diacritics?.length > 0 && (
-                    <>
-                      <Text style={styles.sectionLabel}>Vowel Signs / Marks</Text>
-                      <View style={styles.pillWrap}>
-                        {activeLesson.diacritics.map((ch) => (
-                          <View key={ch} style={[styles.pill, { backgroundColor: '#FFF7E6', borderColor: '#FFB347' }]}>
-                            <Text style={[styles.pillText, { color: '#B25900' }]}>{ch}</Text>
-                          </View>
-                        ))}
-                      </View>
-                    </>
-                  )}
-                </View>
-              ) : null}
-
-              {/* Blog-style lesson notes */}
-              {activeLesson.article?.length ? (
-                <View style={styles.blogCard}>
-                  <Text style={styles.blogTitle}>How to read these</Text>
-                  {activeLesson.article.map((para, idx) => {
-                    const parts = para.split(': ');
-                    const hasLabel = parts.length > 1;
-                    const label = hasLabel ? parts[0] : '';
-                    const rest = hasLabel ? parts.slice(1).join(': ') : para;
-                    return (
-                      <Text key={idx} style={styles.blogParagraph}>
-                        {hasLabel ? (
-                          <>
-                            <Text style={styles.blogEmph}>{label}:</Text>{' '}
-                            <Text>{rest}</Text>
-                          </>
-                        ) : (
-                          para
-                        )}
-                      </Text>
-                    );
-                  })}
-                </View>
-              ) : null}
-
-              {/* Lesson characters transliteration (current lesson only) */}
-              {(activeLesson.characters?.length || activeLesson.diacritics?.length) ? (
-                <View style={styles.hintCard}>
-                  <Text style={styles.hintTitle}>This lesson: how to read these</Text>
-                  {[...(activeLesson.characters || []), ...(activeLesson.diacritics || [])].map((ch) => (
-                    <View key={ch} style={styles.translitRow}>
-                      <Text style={styles.translitChar}>{ch}</Text>
-                      <Text style={styles.translitText}>{lessonTransliterations[ch] || '...'}</Text>
-                    </View>
-                  ))}
-                </View>
-              ) : null}
-
-              {/* Transliteration guide - full chart only (below characters) */}
-              <View style={styles.hintCard}>
-                <TouchableOpacity onPress={() => setShowTranslitGuide((v) => !v)} style={styles.translitToggle}>
-                  <Text style={styles.hintTitle}>Transliteration Guide</Text>
-                  <Ionicons name={showTranslitGuide ? 'chevron-up' : 'chevron-down'} size={18} color="#1A1A1A" />
-                </TouchableOpacity>
-                {showTranslitGuide && (
-                  <View style={styles.translitGrid}>
-                    <Text style={styles.translitGridHeader}>Full Chart</Text>
-                    <View style={styles.translitGridSection}>
-                      <Text style={styles.translitGridTitle}>Vowels</Text>
-                      <View style={styles.translitGridWrap}>
-                        {ITRANS_CHART.vowels.map(([kn, itr]) => (
-                          <View key={`${kn}-${itr}`} style={styles.translitCell}>
-                            <Text style={styles.translitCellChar}>{kn}</Text>
-                            <Text style={styles.translitCellText}>{itr}</Text>
-                          </View>
-                        ))}
-                      </View>
-                    </View>
-                    <View style={styles.translitGridSection}>
-                      <Text style={styles.translitGridTitle}>Consonants</Text>
-                      <View style={styles.translitGridWrap}>
-                        {ITRANS_CHART.consonants.map(([kn, itr]) => (
-                          <View key={`${kn}-${itr}`} style={styles.translitCell}>
-                            <Text style={styles.translitCellChar}>{kn}</Text>
-                            <Text style={styles.translitCellText}>{itr}</Text>
-                          </View>
-                        ))}
-                      </View>
-                    </View>
-                    <View style={styles.translitGridSection}>
-                      <Text style={styles.translitGridTitle}>Matras / Marks</Text>
-                      <View style={styles.translitGridWrap}>
-                        {ITRANS_CHART.matras.map(([kn, itr]) => (
-                          <View key={`${kn}-${itr}`} style={styles.translitCell}>
-                            <Text style={styles.translitCellChar}>{kn}</Text>
-                            <Text style={styles.translitCellText}>{itr}</Text>
-                          </View>
-                        ))}
-                      </View>
-                    </View>
-                    <View style={styles.translitGridSection}>
-                      <Text style={styles.translitGridTitle}>Numbers</Text>
-                      <View style={styles.translitGridWrap}>
-                        {ITRANS_CHART.numerals.map(([kn, itr]) => (
-                          <View key={`${kn}-${itr}`} style={styles.translitCell}>
-                            <Text style={styles.translitCellChar}>{kn}</Text>
-                            <Text style={styles.translitCellText}>{itr}</Text>
-                          </View>
-                        ))}
-                      </View>
-                    </View>
-                  </View>
-                )}
-              </View>
-
-              <View style={styles.actionsRow}>
-                <TouchableOpacity
-                  style={[
-                    styles.actionButton,
-                    isUnlocked(activeLesson) ? styles.actionButtonPrimary : styles.actionButtonDisabled,
-                  ]}
-                  onPress={() => isUnlocked(activeLesson) && toggleComplete(activeLesson.id)}
-                  disabled={!isUnlocked(activeLesson)}
-                >
-                  <Ionicons name={completedLessons.has(activeLesson.id) ? 'checkmark-circle' : 'play'} size={18} color="#FFFFFF" style={{ marginRight: 8 }} />
-                  <Text style={styles.actionButtonText}>
-                    {completedLessons.has(activeLesson.id) ? 'Mark as Incomplete' : 'Mark Complete'}
-                  </Text>
-                </TouchableOpacity>
-                {activeLesson.prereq && !isUnlocked(activeLesson) && (
-                  <View style={styles.lockNotice}>
-                    <Ionicons name="lock-closed" size={14} color="#888" />
-                    <Text style={styles.lockNoticeText}>Finish previous lesson to unlock</Text>
-                  </View>
-                )}
-              </View>
-            </>
-          ) : (
-            <Text style={styles.practiceEmpty}>Select a lesson to view details.</Text>
-          )}
-
-          {/* Lesson-end quiz: type transliteration to self-check - one word at a time */}
-          <View style={styles.practiceSection}>
-            <View style={styles.practiceHeader}>
-              <Text style={styles.sectionLabel}>Check Yourself</Text>
-              <Text style={styles.practiceCount}>{quizIndex + 1} / {quizWords.length}</Text>
-            </View>
-            {quizLoading ? (
-              <Text style={styles.practiceEmpty}>Loading quiz words...</Text>
-            ) : quizWords.length === 0 ? (
-              <Text style={styles.practiceEmpty}>No quiz words available yet.</Text>
-            ) : currentQuizWord ? (
-              <>
-                <View style={styles.quizCard}>
-                  <Text style={styles.practiceWord}>{currentQuizWord.text}</Text>
-                  <Text style={styles.practiceGloss}>{currentQuizWord.gloss || 'English definition'}</Text>
-                  {quizShowAnswer && (
-                    <View style={styles.quizAnswerBox}>
-                      <Text style={styles.quizAnswerLabel}>Correct transliteration:</Text>
-                      <Text style={[styles.quizAnswerText, isQuizCorrect && { color: '#4CAF50' }]}>
-                        {currentTranslit || 'Loading...'}
-                      </Text>
-                    </View>
-                  )}
-                </View>
-                <TextInput
-                  style={[
-                    styles.quizInputLarge,
-                    quizShowAnswer && isQuizCorrect && { borderColor: '#4CAF50', backgroundColor: '#F0FDF4' },
-                    quizShowAnswer && !isQuizCorrect && { borderColor: '#FF6B6B', backgroundColor: '#FEF2F2' },
-                  ]}
-                  placeholder="Type ITRANS transliteration (e.g. amara)"
-                  value={quizInput}
-                  onChangeText={setQuizInput}
-                  autoCorrect={false}
-                  editable={!quizShowAnswer}
-                />
-                <View style={styles.quizButtons}>
-                  {!quizShowAnswer ? (
-                    <TouchableOpacity style={styles.quizCheckBtn} onPress={handleQuizCheck}>
-                      <Ionicons name="checkmark-done" size={16} color="#FFFFFF" style={{ marginRight: 6 }} />
-                      <Text style={styles.quizButtonText}>Check Answer</Text>
-                    </TouchableOpacity>
-                  ) : (
-                    <TouchableOpacity 
-                      style={styles.quizNextBtn} 
-                      onPress={handleQuizNext}
-                      disabled={quizIndex >= quizWords.length - 1}
-                    >
-                      <Ionicons name="arrow-forward" size={16} color="#FFFFFF" style={{ marginRight: 6 }} />
-                      <Text style={styles.quizButtonText}>
-                        {quizIndex < quizWords.length - 1 ? 'Next Word' : 'Done'}
-                      </Text>
-                    </TouchableOpacity>
-                  )}
-                </View>
-              </>
-            ) : (
-              <Text style={styles.practiceEmpty}>Quiz complete!</Text>
             )}
-          </View>
-        </ScrollView>
-      )}
+            <FlatList
+              data={lessons}
+              renderItem={renderLessonCard}
+              keyExtractor={(item) => item.lesson_id}
+              contentContainerStyle={styles.listContent}
+              showsVerticalScrollIndicator={false}
+            />
+          </>
+        )
+      ) : null}
 
+      {/* Language Selector Modal */}
       <Modal
         visible={languageMenuVisible}
         transparent={true}
         animationType="fade"
         onRequestClose={() => setLanguageMenuVisible(false)}
       >
-        <TouchableOpacity style={styles.modalOverlay} activeOpacity={1} onPress={() => setLanguageMenuVisible(false)}>
+        <TouchableOpacity
+          style={styles.modalOverlay}
+          activeOpacity={1}
+          onPress={() => setLanguageMenuVisible(false)}
+        >
           <View style={styles.languageMenu}>
             <Text style={styles.menuTitle}>Select Language</Text>
             {availableLanguages.map((lang) => {
@@ -862,19 +732,15 @@ export default function LessonsScreen() {
                 onPress={() => {
                   setSelectedLanguage(lang.code);
                   setLanguageMenuVisible(false);
-                  const firstModule = SCRIPT_MODULES[lang.code]?.[0];
-                  const firstLesson = firstModule?.lessons?.[0];
-                  setActiveModuleId(firstModule?.id || null);
-                  setActiveLessonId(firstLesson?.id || null);
-                  setCompletedLessons(new Set());
-                  setPracticeCorrect(0);
-                  setPracticeIndex(0);
                 }}
               >
                 {(lang.nativeChar || lang.langCode) && (
                   <View style={[styles.countryCodeBox, { backgroundColor: lang.color }]}>
                     {lang.nativeChar ? (
-                      <Text style={[styles.nativeCharText, lang.code === 'urdu' && { fontFamily: 'Noto Nastaliq Urdu' }]}>{lang.nativeChar}</Text>
+                      <Text style={[
+                        styles.nativeCharText,
+                        lang.code === 'urdu' && { fontFamily: 'Noto Nastaliq Urdu' }
+                      ]}>{lang.nativeChar}</Text>
                     ) : (
                       <Text style={styles.countryCodeText}>{lang.countryCode}</Text>
                     )}
@@ -922,7 +788,9 @@ export default function LessonsScreen() {
                     </Text>
                   </View>
                 </View>
-                {!lang.active && <Ionicons name="lock-closed" size={16} color="#CCC" />}
+                {!lang.active && (
+                  <Ionicons name="lock-closed" size={16} color="#CCC" />
+                )}
               </TouchableOpacity>
               );
             })}
@@ -931,351 +799,246 @@ export default function LessonsScreen() {
       </Modal>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#FFFFFF' },
+  container: {
+    flex: 1,
+    backgroundColor: '#FFFFFF',
+  },
   header: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingTop: 60,
-    paddingBottom: 16,
+    paddingBottom: 20,
     paddingHorizontal: 20,
+    backgroundColor: '#FFFFFF',
     borderBottomWidth: 1,
     borderBottomColor: '#E5E5E5',
   },
-  headerLeft: { flexDirection: 'row', alignItems: 'center' },
-  appIcon: { marginRight: 8 },
-  appTitle: { fontSize: 26, fontWeight: 'bold', color: '#1A1A1A' },
+  headerLeft: {
+    flex: 1,
+    flexShrink: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  appIcon: {
+    marginRight: 8,
+  },
+  appTitle: {
+    fontSize: 28,
+    fontWeight: 'bold',
+    color: '#1A1A1A',
+  },
   languageButton: {
     flexDirection: 'row',
     alignItems: 'center',
     paddingHorizontal: 12,
     paddingVertical: 8,
-    borderRadius: 10,
+    borderRadius: 8,
     backgroundColor: '#F5F5F5',
+    flexShrink: 0,
   },
   countryCodeBox: {
-    width: 40, height: 40, borderRadius: 8, justifyContent: 'center', alignItems: 'center', marginRight: 8,
-  },
-  nativeCharText: { fontSize: 18, color: '#FFFFFF', fontWeight: '600' },
-  countryCodeText: { fontSize: 12, color: '#FFFFFF', fontWeight: 'bold' },
-  languageButtonContent: { flexDirection: 'column', alignItems: 'flex-start', marginRight: 4 },
-  languageName: { fontSize: 14, fontWeight: '700', color: '#1A1A1A' },
-  languageNativeName: { fontSize: 12, color: '#666', marginTop: 2 },
-
-  progressSummary: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingHorizontal: 20,
-    paddingVertical: 14,
-    backgroundColor: '#F8FBFF',
-    borderBottomWidth: 1,
-    borderBottomColor: '#E5F0FF',
-  },
-  progressCircle: {
-    width: 70,
-    height: 70,
-    borderRadius: 35,
-    backgroundColor: '#E6F0FF',
-    borderWidth: 2,
-    borderColor: '#4A90E2',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginRight: 12,
-  },
-  progressCircleText: { fontSize: 18, fontWeight: '800', color: '#1A1A1A' },
-  progressMetaRight: { flex: 1, alignItems: 'flex-end' },
-  progressLabel: { fontSize: 13, color: '#1A1A1A', fontWeight: '700' },
-
-  fullPane: { flex: 1, backgroundColor: '#F5F7FB' },
-  contentRow: { flex: 1, flexDirection: 'row' },
-  moduleColumn: { width: 360, paddingHorizontal: 12, paddingTop: 12, backgroundColor: '#F9FBFE' },
-  lessonList: { flex: 1.1, backgroundColor: '#F9FBFE', paddingHorizontal: 16, paddingTop: 16 },
-  detailPanel: { flex: 1.5, paddingHorizontal: 16, paddingTop: 16, backgroundColor: '#FFFFFF' },
-  moduleGrid: { flexDirection: 'column', gap: 14 },
-  moduleCardLarge: {
-    backgroundColor: '#FFFFFF',
-    borderRadius: 18,
-    padding: 18,
-    borderWidth: 1,
-    borderColor: '#E6ECF5',
-    marginBottom: 16,
-    shadowColor: '#000',
-    shadowOpacity: 0.08,
-    shadowRadius: 10,
-    shadowOffset: { width: 0, height: 3 },
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 14,
-  },
-  moduleCardCompleted: { borderColor: '#4CAF50', shadowOpacity: 0.1 },
-  moduleCard: {
-    backgroundColor: '#FFFFFF',
-    borderRadius: 12,
-    padding: 12,
-    borderWidth: 1,
-    borderColor: '#E6ECF5',
-    marginBottom: 10,
-  },
-  moduleCardActive: {
-    borderColor: '#4A90E2',
-    shadowColor: '#000',
-    shadowOpacity: 0.06,
-    shadowRadius: 6,
-    shadowOffset: { width: 0, height: 2 },
-  },
-  moduleHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
-  moduleTitle: { fontSize: 15, fontWeight: '700', color: '#1A1A1A' },
-  moduleMeta: { fontSize: 12, color: '#666', marginTop: 4 },
-  moduleIconCircle: {
-    width: 56,
-    height: 56,
-    borderRadius: 28,
-    backgroundColor: '#F5F8FF',
-    borderWidth: 1,
-    borderColor: '#D9E6FF',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  moduleIconText: { fontSize: 28, fontWeight: '800', color: '#1A1A1A' },
-  topRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 12 },
-  backBtn: { flexDirection: 'row', alignItems: 'center', paddingVertical: 6, paddingHorizontal: 10, borderRadius: 10, backgroundColor: '#EFF3FB' },
-  backText: { fontSize: 13, color: '#1A1A1A', marginLeft: 6, fontWeight: '600' },
-
-  lessonNode: { marginBottom: 20 },
-  nodeRow: { flexDirection: 'row', alignItems: 'flex-start' },
-  nodeIcon: {
-    width: 32,
-    height: 32,
-    borderRadius: 16,
+    width: 40,
+    height: 40,
+    borderRadius: 8,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 4,
-    marginRight: 12,
-    borderWidth: 1,
+    marginRight: 8,
   },
-  nodeIconCompleted: { backgroundColor: '#4CAF50', borderColor: '#4CAF50' },
-  nodeIconActive: { backgroundColor: '#4A90E2', borderColor: '#4A90E2' },
-  nodeIconLocked: { backgroundColor: '#F7F7F7', borderColor: LOCK_COLOR },
-
-  connector: {
-    height: 22,
-    width: 2,
-    backgroundColor: '#E0E0E0',
-    marginLeft: 15,
+  nativeCharText: {
+    fontSize: 18,
+    color: '#FFFFFF',
+    fontWeight: '500',
+  },
+  countryCodeText: {
+    fontSize: 12,
+    color: '#FFFFFF',
+    fontWeight: 'bold',
+  },
+  languageButtonContent: {
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+    marginRight: 4,
+  },
+  languageName: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#1A1A1A',
+  },
+  languageNativeName: {
+    fontSize: 12,
+    color: '#666',
     marginTop: 2,
   },
-
-  lessonCard: {
+  loadingContainer: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
-    borderRadius: 12,
-    padding: 14,
-    borderWidth: 1,
-    borderColor: '#E6ECF5',
-    shadowColor: '#000',
-    shadowOpacity: 0.04,
-    shadowRadius: 8,
-    shadowOffset: { width: 0, height: 2 },
-  },
-  lessonCardActive: { borderColor: '#4A90E2', shadowOpacity: 0.08 },
-  lessonCardLocked: { opacity: 0.6 },
-  lessonCardHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start' },
-  lessonTitle: { fontSize: 16, fontWeight: '700', color: '#1A1A1A' },
-  lessonSubtitle: { fontSize: 13, color: '#555', marginTop: 2 },
-  lessonFocus: { fontSize: 13, color: '#444', marginTop: 8, lineHeight: 18 },
-  lessonMetaRow: { flexDirection: 'row', justifyContent: 'space-between', marginTop: 10, alignItems: 'center' },
-  lessonMetaText: { fontSize: 12, color: '#666' },
-  completedTag: { fontSize: 12, color: '#4CAF50', fontWeight: '700' },
-  lessonCardWide: {
-    backgroundColor: '#FFFFFF',
-    borderRadius: 14,
-    padding: 16,
-    borderWidth: 1,
-    borderColor: '#E6ECF5',
-    shadowColor: '#000',
-    shadowOpacity: 0.05,
-    shadowRadius: 8,
-    shadowOffset: { width: 0, height: 2 },
-    marginBottom: 14,
-  },
-  hintCard: {
-    backgroundColor: '#FFFFFF',
-    borderRadius: 12,
-    padding: 14,
-    borderWidth: 1,
-    borderColor: '#E6ECF5',
-    shadowColor: '#000',
-    shadowOpacity: 0.04,
-    shadowRadius: 6,
-    shadowOffset: { width: 0, height: 2 },
-    marginTop: 12,
-  },
-  hintTitle: { fontSize: 14, fontWeight: '700', color: '#1A1A1A', marginBottom: 6 },
-  hintBody: { fontSize: 13, color: '#555', lineHeight: 18, marginBottom: 4 },
-  translitRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingVertical: 4 },
-  translitChar: { fontSize: 18, fontWeight: '700', color: '#1A1A1A' },
-  translitText: { fontSize: 14, color: '#444' },
-  translitToggle: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
-  translitHint: { fontSize: 12, color: '#666', marginTop: 8 },
-  translitGrid: { marginTop: 10, borderTopWidth: 1, borderTopColor: '#E6ECF5', paddingTop: 10 },
-  translitGridHeader: { fontSize: 13, fontWeight: '700', color: '#1A1A1A', marginBottom: 6 },
-  translitGridSection: { marginBottom: 8 },
-  translitGridTitle: { fontSize: 12, fontWeight: '700', color: '#4A90E2', marginBottom: 4 },
-  translitGridWrap: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
-  translitCell: {
-    paddingHorizontal: 10,
-    paddingVertical: 6,
-    borderRadius: 10,
-    borderWidth: 1,
-    borderColor: '#E6ECF5',
-    backgroundColor: '#FFFFFF',
-  },
-  translitCellChar: { fontSize: 16, fontWeight: '700', color: '#1A1A1A', textAlign: 'center' },
-  translitCellText: { fontSize: 12, color: '#444', textAlign: 'center' },
-  levelPill: {
-    paddingHorizontal: 10,
-    paddingVertical: 4,
-    borderRadius: 12,
-    borderWidth: 1,
-  },
-  levelPillText: { fontSize: 12, fontWeight: '700', color: '#4A90E2' },
-
-  detailTitle: { fontSize: 20, fontWeight: '800', color: '#1A1A1A' },
-  detailSubtitle: { fontSize: 14, color: '#555', marginTop: 4 },
-  detailHint: { fontSize: 13, color: '#4A90E2', marginTop: 6 },
-
-  pillSection: { marginTop: 16 },
-  sectionLabel: { fontSize: 13, color: '#777', marginBottom: 6, textTransform: 'uppercase', fontWeight: '700' },
-  pillWrap: { flexDirection: 'row', flexWrap: 'wrap' },
-  pill: {
-    paddingHorizontal: 10,
-    paddingVertical: 8,
-    borderRadius: 10,
-    backgroundColor: '#F5F8FF',
-    borderWidth: 1,
-    borderColor: '#E6ECF5',
-    marginRight: 8,
-    marginBottom: 8,
-  },
-  pillText: { fontSize: 16, fontWeight: '700', color: '#1A1A1A' },
-
-  practiceSection: {
-    marginTop: 20,
-    backgroundColor: '#FFFFFF',
-    borderRadius: 12,
-    borderWidth: 1,
-    borderColor: '#E6ECF5',
-    padding: 12,
-    shadowColor: '#000',
-    shadowOpacity: 0.04,
-    shadowRadius: 6,
-    shadowOffset: { width: 0, height: 2 },
-  },
-  practiceHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
-  practiceCount: { fontSize: 12, color: '#4A90E2', fontWeight: '700' },
-  practiceEmpty: { fontSize: 13, color: '#666', marginTop: 12, lineHeight: 18 },
-  practiceCard: {
-    paddingVertical: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: '#F0F0F0',
-  },
-  practiceWord: { fontSize: 18, fontWeight: '800', color: '#1A1A1A' },
-  practiceGloss: { fontSize: 13, color: '#666', marginTop: 2 },
-  quizRow: {
-    flexDirection: 'row',
+    justifyContent: 'center',
     alignItems: 'center',
-    paddingVertical: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: '#F0F0F0',
+    backgroundColor: '#F9FAFB',
   },
-  quizCard: {
-    backgroundColor: '#F8FBFF',
+  loadingText: {
+    marginTop: 12,
+    fontSize: 16,
+    color: '#6B7280',
+  },
+  emptyContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 40,
+    backgroundColor: '#F9FAFB',
+  },
+  emptyText: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: '#6B7280',
+    marginTop: 16,
+    textAlign: 'center',
+  },
+  emptySubtext: {
+    fontSize: 14,
+    color: '#9CA3AF',
+    marginTop: 8,
+    textAlign: 'center',
+  },
+  listContent: {
+    padding: 16,
+    backgroundColor: '#F9FAFB',
+  },
+  lessonCard: {
+    backgroundColor: '#FFFFFF',
     borderRadius: 12,
     padding: 16,
     marginBottom: 16,
-    borderWidth: 1,
-    borderColor: '#E6ECF5',
+    ...Platform.select({
+      ios: {
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 4,
+      },
+      android: {
+        elevation: 3,
+      },
+      web: {
+        boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+      },
+    }),
   },
-  quizInputLarge: {
-    width: '100%',
-    borderWidth: 2,
-    borderColor: '#E6ECF5',
-    borderRadius: 12,
-    paddingHorizontal: 14,
-    paddingVertical: 12,
-    backgroundColor: '#FFFFFF',
-    fontSize: 16,
+  lessonHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
     marginBottom: 12,
   },
-  quizAnswerBox: {
-    marginTop: 12,
-    padding: 12,
-    backgroundColor: '#F0F7FF',
-    borderRadius: 8,
-    borderWidth: 1,
-    borderColor: '#E6ECF5',
+  lessonTitleContainer: {
+    flex: 1,
+    marginRight: 12,
   },
-  quizAnswerLabel: { fontSize: 12, color: '#666', marginBottom: 4, fontWeight: '600' },
-  quizAnswerText: { fontSize: 16, color: '#1A1A1A', fontWeight: '700' },
-  quizButtons: { flexDirection: 'row', justifyContent: 'center' },
-  quizCheckBtn: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-    borderRadius: 12,
-    backgroundColor: '#4A90E2',
-  },
-  quizNextBtn: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-    borderRadius: 12,
-    backgroundColor: '#4CAF50',
-  },
-
-  blogCard: {
-    backgroundColor: '#FFFDF8',
-    borderRadius: 14,
-    padding: 14,
-    borderWidth: 1,
-    borderColor: '#F2E8D9',
-    marginTop: 12,
+  lessonTitle: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: '#1F2937',
     marginBottom: 8,
   },
-  blogTitle: {
-    fontSize: 16,
-    fontWeight: '700',
-    color: '#1A1A1A',
-    marginBottom: 6,
-  },
-  blogParagraph: {
+  lessonLanguage: {
     fontSize: 14,
-    color: '#333',
-    lineHeight: 20,
-    marginBottom: 6,
+    color: '#6B7280',
   },
-  blogEmph: { fontWeight: '700', color: '#1A1A1A' },
-
-  actionsRow: { flexDirection: 'row', alignItems: 'center', marginTop: 16 },
-  actionButton: {
+  lessonBadges: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingHorizontal: 14,
-    paddingVertical: 10,
-    borderRadius: 12,
+    gap: 8,
   },
-  actionButtonPrimary: { backgroundColor: '#4A90E2' },
-  actionButtonDisabled: { backgroundColor: '#B0BEC5' },
-  actionButtonText: { color: '#FFFFFF', fontWeight: '700', fontSize: 14 },
-  lockNotice: { flexDirection: 'row', alignItems: 'center', marginLeft: 10 },
-  lockNoticeText: { fontSize: 12, color: '#777', marginLeft: 4 },
-
-  modalOverlay: { flex: 1, backgroundColor: 'rgba(0,0,0,0.5)', justifyContent: 'center', alignItems: 'center' },
+  levelBadge: {
+    paddingHorizontal: 8,
+    paddingVertical: 3,
+    borderRadius: 8,
+    alignSelf: 'flex-start',
+    marginTop: 2,
+  },
+  levelText: {
+    fontSize: 11,
+    fontWeight: '600',
+    color: '#FFFFFF',
+    letterSpacing: 0.5,
+  },
+  completedBadge: {
+    marginLeft: 4,
+  },
+  inProgressBadge: {
+    marginLeft: 4,
+  },
+  lessonFooter: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingTop: 12,
+    borderTopWidth: 1,
+    borderTopColor: '#F3F4F6',
+  },
+  stepInfo: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  stepCount: {
+    fontSize: 14,
+    color: '#6B7280',
+    marginLeft: 6,
+  },
+  lessonActions: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+  },
+  redoButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 6,
+    backgroundColor: '#F3F4F6',
+  },
+  redoButtonText: {
+    fontSize: 13,
+    color: '#6B7280',
+    marginLeft: 4,
+    fontWeight: '500',
+  },
+  startButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  startButtonText: {
+    fontSize: 14,
+    fontWeight: '600',
+    marginRight: 4,
+  },
+  lessonNavHeader: {
+    paddingTop: Platform.OS === 'ios' ? 60 : 20,
+    paddingBottom: 12,
+    paddingHorizontal: 12,
+  },
+  backButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 8,
+  },
+  backButtonText: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#FFFFFF',
+    marginLeft: 8,
+  },
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   languageMenu: {
     backgroundColor: '#FFFFFF',
     borderRadius: 16,
@@ -1283,17 +1046,51 @@ const styles = StyleSheet.create({
     width: '85%',
     maxWidth: 400,
   },
-  menuTitle: { fontSize: 18, fontWeight: 'bold', color: '#1A1A1A', marginBottom: 16 },
-  languageOption: { flexDirection: 'row', alignItems: 'center', padding: 12, borderRadius: 8, marginBottom: 8 },
-  languageOptionSelected: { backgroundColor: '#F0F7FF' },
-  languageOptionDisabled: { opacity: 0.5 },
-  languageOptionContent: { flex: 1, flexDirection: 'column' },
-  languageOptionText: { fontSize: 16, color: '#1A1A1A' },
-  languageOptionTextSelected: { fontWeight: '700', color: '#4A90E2' },
-  languageOptionTextDisabled: { color: '#999' },
-  languageOptionNativeName: { fontSize: 14, color: '#666', marginTop: 2 },
-  languageOptionNativeNameSelected: { color: '#4A90E2' },
-  languageOptionNativeNameDisabled: { color: '#999' },
+  menuTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#1A1A1A',
+    marginBottom: 16,
+  },
+  languageOption: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 12,
+    borderRadius: 8,
+    marginBottom: 8,
+  },
+  languageOptionSelected: {
+    backgroundColor: '#F0F7FF',
+  },
+  languageOptionDisabled: {
+    opacity: 0.5,
+  },
+  languageOptionContent: {
+    flex: 1,
+    flexDirection: 'column',
+  },
+  languageOptionText: {
+    fontSize: 16,
+    color: '#1A1A1A',
+  },
+  languageOptionTextSelected: {
+    fontWeight: '600',
+    color: '#4A90E2',
+  },
+  languageOptionTextDisabled: {
+    color: '#999',
+  },
+  languageOptionNativeName: {
+    fontSize: 14,
+    color: '#666',
+    marginTop: 2,
+  },
+  languageOptionNativeNameSelected: {
+    color: '#4A90E2',
+  },
+  languageOptionNativeNameDisabled: {
+    color: '#999',
+  },
   languageNameRow: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -1333,4 +1130,140 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     color: '#FF6B6B',
   },
+  // Unit card styles
+  unitCard: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 12,
+    padding: 20,
+    marginBottom: 16,
+    ...Platform.select({
+      ios: {
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 4,
+      },
+      android: {
+        elevation: 3,
+      },
+      web: {
+        boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+      },
+    }),
+  },
+  unitHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
+    marginBottom: 16,
+  },
+  unitTitleContainer: {
+    flex: 1,
+    marginRight: 12,
+  },
+  unitNumber: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#6B7280',
+    marginBottom: 4,
+  },
+  unitTitle: {
+    fontSize: 20,
+    fontWeight: '700',
+    color: '#1F2937',
+    marginBottom: 4,
+  },
+  unitSubtitle: {
+    fontSize: 14,
+    color: '#6B7280',
+    marginTop: 2,
+  },
+  unitProgressContainer: {
+    marginBottom: 16,
+  },
+  unitProgressBar: {
+    height: 8,
+    backgroundColor: '#E5E7EB',
+    borderRadius: 4,
+    overflow: 'hidden',
+    marginBottom: 8,
+  },
+  unitProgressFill: {
+    height: '100%',
+    borderRadius: 4,
+  },
+  unitProgressText: {
+    fontSize: 13,
+    color: '#6B7280',
+    textAlign: 'center',
+  },
+  unitFooter: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingTop: 12,
+    borderTopWidth: 1,
+    borderTopColor: '#F3F4F6',
+  },
+  unitLessonCount: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  unitLessonCountText: {
+    fontSize: 14,
+    color: '#6B7280',
+    marginLeft: 6,
+  },
+  unitTimeInfo: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  unitTimeText: {
+    fontSize: 14,
+    color: '#6B7280',
+    marginLeft: 6,
+  },
+  // Updated lesson card styles
+  lessonNumber: {
+    fontSize: 12,
+    fontWeight: '600',
+    color: '#6B7280',
+    marginBottom: 4,
+    textTransform: 'uppercase',
+  },
+  lessonProgressContainer: {
+    marginTop: 8,
+    marginBottom: 8,
+  },
+  lessonProgressBar: {
+    height: 6,
+    backgroundColor: '#E5E7EB',
+    borderRadius: 3,
+    overflow: 'hidden',
+    marginBottom: 6,
+  },
+  lessonProgressFill: {
+    height: '100%',
+    borderRadius: 3,
+  },
+  lessonProgressText: {
+    fontSize: 12,
+    color: '#6B7280',
+    textAlign: 'right',
+  },
+  backToUnitsButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 12,
+    marginBottom: 8,
+    marginHorizontal: 16,
+    marginTop: 8,
+  },
+  backToUnitsText: {
+    fontSize: 15,
+    fontWeight: '600',
+    marginLeft: 8,
+  },
 });
+
+export default LessonsScreen;

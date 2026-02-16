@@ -35,8 +35,8 @@ Required Words (must be used): {required_words_list}
 Instructions:
 1. Evaluate the user's speech considering their CEFR level ({user_cefr_level}) and vocabulary level (learned/mastered words shown above). Provide feedback appropriate to their {user_cefr_level} level - adjust expectations and feedback complexity accordingly.
 2. Check if all tasks/requirements were satisfied in the speech. Provide feedback on task completion.
-3. Provide scores out of 100 for each category: vocabulary_score, grammar_score, fluency_score, task_completion_score. Score relative to {user_cefr_level} level expectations.
-4. Calculate an overall score (average of the four) and return it as "score" out of 100.
+3. Provide scores out of 100 for each category: vocabulary_score, grammar_score, fluency_score, task_completion_score. Score relative to {user_cefr_level} level expectations. IMPORTANT: All scores must be non-zero integers (1-100). Even if the user's performance is poor, provide a score between 1-100, never 0.
+4. Calculate an overall score (average of the four) and return it as "score" out of 100. This must also be a non-zero integer (1-100).
 5. Provide detailed, constructive feedback in {language} using the correct script (as specified above) appropriate for {user_cefr_level} level. Structure feedback with clear paragraphs separated by \\n\\n. Use proper paragraph breaks for transliteration purposes. Avoid markdown/formatting symbols.
 6. For each required word listed above, provide feedback in the "required_words_feedback" object. Use the exact {language} word as the key (from the Required Words list). For each word, indicate:
    - Whether it was used in the speech
@@ -45,6 +45,12 @@ Instructions:
    - Keep feedback brief (1-2 sentences) and constructive
 7. For each task, indicate whether it was completed and provide brief feedback in {language} using the correct script.
 8. Encourage usage of learned/mastered and learning/review words when relevant, but keep feedback appropriate to their current {user_cefr_level} level.
+
+CRITICAL SCORING REQUIREMENTS:
+- ALL scores (score, vocabulary_score, grammar_score, fluency_score, task_completion_score) MUST be integers between 1 and 100
+- NEVER return 0 for any score
+- If the user attempted to speak but made mistakes, give a low score (e.g., 20-40) rather than 0
+- Only give 0 if there is absolutely no audio or no speech detected
 
 IMPORTANT: Structure the feedback deterministically:
 - First paragraph: Overall assessment and task completion

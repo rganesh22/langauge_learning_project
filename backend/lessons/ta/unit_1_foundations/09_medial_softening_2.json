@@ -1,0 +1,140 @@
+{
+  "lesson_id": "ta_09_medial_softening_2",
+  "language": "Tamil",
+  "title": "Medial Softening II",
+  "subtitle": "D, Dh, and B sounds",
+  "description": "Complete your understanding of how hard consonants soften between vowels, focusing on T, Th, and P.",
+  "estimated_minutes": 25,
+  "cefr_level": "A0",
+  "tags": ["script", "phonology", "pronunciation"],
+  "skills_learned": [
+    "Pronouncing ட as 'da' between vowels",
+    "Pronouncing த as 'dha' between vowels",
+    "Pronouncing ப as 'ba' between vowels",
+    "Applying the softening rule to all Vallinam letters"
+  ],
+  "steps": [
+    {
+      "type": "content",
+      "step_title": "Continuing the Rule",
+      "content_markdown": "## More Softening\n\nWe've seen how **க** (k) becomes 'g' and **ச** (ch) becomes 's'. Now let's look at the remaining three hard consonants: **ட**, **த**, and **ப**."
+    },
+    {
+      "type": "content",
+      "step_title": "Softening ட (Ta)",
+      "content_markdown": "## ட: From 'T' to 'D'\n\nSince **ட** never starts a word, it is almost always softened to a 'd' sound unless it is doubled.\n\nExample: **ப** (pa) + **ட** (Ta) + **ம்** (m) = **படம்** (padam)\n*Meaning: Picture*"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q1",
+      "step_title": "Pronounce படம்",
+      "question": "How is the word **படம்** pronounced?",
+      "options": ["patam", "padam", "batam", "badam"],
+      "correct_answer": "padam",
+      "feedback": "Correct! The **ப** is at the start (p) and the **ட** is between vowels (d)."
+    },
+    {
+      "type": "content",
+      "step_title": "Softening த (Tha)",
+      "content_markdown": "## த: From 'Th' to 'Dh'\n\nAt the **start** of a word, **த** is a dental 'th' (as in **thanks**).\n**Between vowels**, it sounds like 'th' in **the** or **this** (voiced dental fricative).\n\nExample: **ம** (ma) + **த** (tha) + **ம்** (m) = **மதம்** (madham)\n*Meaning: Religion/Opinion*"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q2",
+      "step_title": "Pronounce மதம்",
+      "question": "How is **மதம்** pronounced?",
+      "options": ["matham (as in thanks)", "madham (as in the)", "matam", "madam"],
+      "correct_answer": "madham (as in the)",
+      "feedback": "Perfect! The **த** softens when placed between vowels."
+    },
+    {
+      "type": "content",
+      "step_title": "Softening ப (Pa)",
+      "content_markdown": "## ப: From 'P' to 'B'\n\nAt the **start** of a word, **ப** is 'p'.\n**Between vowels**, it sounds like 'b' as in **boy**.\n\nExample: **அ** (a) + **ப** (pa) + **ம்** (m) = **அபம்** (abam)"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q3",
+      "step_title": "Pronounce அபம்",
+      "question": "How is **அபம்** pronounced?",
+      "options": ["apam", "abam", "bam", "pam"],
+      "correct_answer": "abam",
+      "feedback": "Excellent! The **ப** softens to 'b' between vowels."
+    },
+    {
+      "type": "content",
+      "step_title": "Full Softening Table",
+      "content_markdown": "## Vallinam Softening Summary\n\n| Letter | Start Sound | Medial Sound |\n|--------|-------------|--------------|\n| **க** | k | g |\n| **ச** | s / ch | s |\n| **ட** | - | d |\n| **த** | th (thanks) | dh (the) |\n| **ப** | p | b |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q4",
+      "step_title": "Read பக",
+      "question": "How do you read **பக**?",
+      "options": ["paka", "paga", "baka", "baga"],
+      "correct_answer": "paga",
+      "feedback": "Correct! **ப** is at the start (p), **க** is between vowels (g)."
+    },
+    {
+      "type": "free_response",
+      "id": "q5",
+      "step_title": "Identify the Sound",
+      "question": "In the word **மத** (madha), what sound does the **த** make?",
+      "ai_grading": false,
+      "accepted_responses": ["dha", "dh"],
+      "hint": "Think of the 'th' sound in the word 'the'."
+    },
+    {
+      "type": "free_response",
+      "id": "q6",
+      "step_title": "Identify the Sound",
+      "question": "In the word **தப** (thaba), what sound does the **ப** make?",
+      "ai_grading": false,
+      "accepted_responses": ["ba", "b"],
+      "hint": "It's between vowels."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q7",
+      "step_title": "Read தத",
+      "question": "How is **தத** pronounced?",
+      "options": ["thatha", "thadha", "dhatha", "dhadha"],
+      "correct_answer": "thadha",
+      "feedback": "Correct! First one is 'th', second one is 'dh'.",
+      "step_title": "Read தத"
+    },
+    {
+      "type": "free_response",
+      "id": "q8",
+      "step_title": "Identify ட Sound",
+      "question": "What is the sound of **ட** in **கட**?",
+      "ai_grading": false,
+      "accepted_responses": ["da", "d"],
+      "hint": "It's between vowels!",
+      "step_title": "Identify ட Sound"
+    },
+    {
+      "type": "content",
+      "step_title": "Exception: Doubling",
+      "content_markdown": "## What Stops Softening?\n\nIf you want to keep the 'hard' sound (like 'k', 'p', or 't') in the middle of a word, you must **double** the consonant.\n\nExample: \n- **ப** + **ப** = **ப்ப** (ppa as in apple)\n- **க** + **க** = **க்க** (kka as in lucky)\n\nWe will explore this more in Lesson 14!"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q9",
+      "step_title": "Final Check",
+      "question": "Which of these words is pronounced with a 'b' sound?",
+      "options": ["பக", "அப", "பப", "தப"],
+      "correct_answer": "அப",
+      "feedback": "Perfect! **அப** is 'aba'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q10",
+      "step_title": "Review Vallinam",
+      "question": "Which group of consonants undergoes softening?",
+      "options": ["Vallinam (Hard)", "Mellinam (Soft)", "Idaiyinam (Medium)", "Vowels"],
+      "correct_answer": "Vallinam (Hard)",
+      "feedback": "Correct! Only the hard consonants have this behavior."
+    }
+  ]
+}

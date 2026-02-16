@@ -23,7 +23,7 @@ import { MASTERY_FILTERS, WORD_CLASSES, LEVELS, LEVEL_COLORS } from '../../../..
 import { getSearchVocabularyLabel } from '../../../../constants/ui_labels';
 import { LANGUAGES } from '../../../../contexts/LanguageContext';
 
-const API_BASE_URL = __DEV__ ? 'http://localhost:5001' : 'http://localhost:5001';
+const API_BASE_URL = __DEV__ ? 'http://localhost:8080' : 'http://localhost:8080';
 
 export default function VocabularyDictionary({ 
   visible, 
@@ -200,6 +200,9 @@ export default function VocabularyDictionary({
     const transliteration = transliterations[item.id] || item.transliteration || '';
     const english = String(item.english_word ?? '');
     const translationText = String(item.translation ?? '');
+    
+    // Check if word is due for review
+    const isDue = item.next_review_date && new Date(item.next_review_date) <= new Date();
 
     return (
       <TouchableOpacity onPress={() => handleWordPress(item)} activeOpacity={0.7}>
@@ -212,15 +215,23 @@ export default function VocabularyDictionary({
               <SafeText style={styles.transliteration}>{transliteration}</SafeText>
             )}
           </View>
-          <View
-            style={[
-              styles.masteryBadge,
-              { backgroundColor: getMasteryColor(item.mastery_level) },
-            ]}
-          >
-            <SafeText style={styles.masteryText}>
-              {getMasteryEmoji(item.mastery_level)} {String(item.mastery_level?.toUpperCase() || 'NEW')}
-            </SafeText>
+          <View style={styles.masteryBadgeContainer}>
+            <View
+              style={[
+                styles.masteryBadge,
+                { backgroundColor: getMasteryColor(item.mastery_level) },
+              ]}
+            >
+              <SafeText style={styles.masteryText}>
+                {getMasteryEmoji(item.mastery_level)}{' '}{String(item.mastery_level?.toUpperCase() || 'NEW')}
+              </SafeText>
+            </View>
+            {isDue && (
+              <View style={styles.dueBadge}>
+                <Ionicons name="time-outline" size={11} color="#FFFFFF" />
+                <SafeText style={styles.dueText}>DUE</SafeText>
+              </View>
+            )}
           </View>
         </View>
         <View style={styles.wordMeta}>
@@ -248,16 +259,16 @@ export default function VocabularyDictionary({
             <View style={[
               styles.tag,
               {
-                backgroundColor: LEVEL_COLORS[item.level.toUpperCase()]?.bg || '#E8F4FD',
+                backgroundColor: LEVEL_COLORS[item.level?.toUpperCase()]?.bg || '#E8F4FD',
               }
             ]}>
               <SafeText style={[
                 styles.tagText,
                 {
-                  color: LEVEL_COLORS[item.level.toUpperCase()]?.text || '#666',
+                  color: LEVEL_COLORS[item.level?.toUpperCase()]?.text || '#666',
                 }
               ]}>
-                {String(item.level.toUpperCase())}
+                {String(item.level?.toUpperCase() || '')}
               </SafeText>
             </View>
           ) : null}
@@ -406,15 +417,31 @@ export default function VocabularyDictionary({
                             }
                           }}
                         >
-                          <SafeText
-                            style={[
-                              styles.filterChipText,
-                              {
-                                color: isSelected ? filter.color.text : filter.color.bg,
-                                fontWeight: isSelected ? '600' : '500',
-                              },
-                            ]}
-                          >{`${filter.emoji} ${String(filter.label)}`}</SafeText>
+                          {filter.icon ? (
+                            <View style={styles.filterChipContent}>
+                              <Ionicons name={filter.icon} size={14} color={isSelected ? filter.color.text : filter.color.bg} />
+                              <SafeText
+                                style={[
+                                  styles.filterChipText,
+                                  {
+                                    color: isSelected ? filter.color.text : filter.color.bg,
+                                    fontWeight: isSelected ? '600' : '500',
+                                    marginLeft: 4,
+                                  },
+                                ]}
+                              >{String(filter.label)}</SafeText>
+                            </View>
+                          ) : (
+                            <SafeText
+                              style={[
+                                styles.filterChipText,
+                                {
+                                  color: isSelected ? filter.color.text : filter.color.bg,
+                                  fontWeight: isSelected ? '600' : '500',
+                                },
+                              ]}
+                            >{`${filter.emoji} ${String(filter.label)}`}</SafeText>
+                          )}
                         </TouchableOpacity>
                       );
                     })}
@@ -671,7 +698,7 @@ export default function VocabularyDictionary({
                       { backgroundColor: getMasteryColor(reviewHistory.current_state?.mastery_level) }
                     ]}>
                       <SafeText style={styles.masteryText}>
-                        {getMasteryEmoji(reviewHistory.current_state?.mastery_level)} {reviewHistory.current_state?.mastery_level?.toUpperCase() || 'NEW'}
+                        {getMasteryEmoji(reviewHistory.current_state?.mastery_level)}{' '}{reviewHistory.current_state?.mastery_level?.toUpperCase() || 'NEW'}
                       </SafeText>
                     </View>
                   </View>
@@ -745,7 +772,7 @@ export default function VocabularyDictionary({
                         <View key={index} style={styles.historyItem}>
                           <View style={styles.historyItemHeader}>
                             <SafeText style={styles.historyDate}>
-                              {dateStr} {timeStr}
+                              {dateStr}{' '}{timeStr}
                             </SafeText>
                             <View style={[
                               styles.ratingBadge,
@@ -885,6 +912,10 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     borderWidth: 1,
   },
+  filterChipContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
   filterChipText: {
     fontSize: 12,
   },
@@ -947,12 +978,30 @@ const styles = StyleSheet.create({
     color: '#666',
     fontStyle: 'italic',
   },
+  masteryBadgeContainer: {
+    alignItems: 'flex-end',
+  },
   masteryBadge: {
     paddingHorizontal: 10,
     paddingVertical: 4,
     borderRadius: 12,
   },
   masteryText: {
+    fontSize: 11,
+    fontWeight: '600',
+    color: '#FFFFFF',
+  },
+  dueBadge: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+    borderRadius: 12,
+    backgroundColor: '#FF6B6B',
+    marginTop: 4,
+  },
+  dueText: {
     fontSize: 11,
     fontWeight: '600',
     color: '#FFFFFF',

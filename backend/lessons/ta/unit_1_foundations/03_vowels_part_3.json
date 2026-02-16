@@ -1,0 +1,126 @@
+{
+  "lesson_id": "ta_03_vowels_part_3",
+  "language": "Tamil",
+  "title": "The Final Vowels",
+  "subtitle": "Meet ஒ, ஓ, ஔ, and ஃ",
+  "description": "Complete your knowledge of Tamil vowels and learn about the unique 'Aayutha Ezhuthu'.",
+  "estimated_minutes": 20,
+  "cefr_level": "A0",
+  "tags": ["script", "vowels", "basics"],
+  "skills_learned": [
+    "Recognizing the letter ஒ (o)",
+    "Recognizing the letter ஓ (oo)",
+    "Recognizing the diphthong ஔ (au)",
+    "Understanding the special letter ஃ (akh)",
+    "Recalling all 12 Tamil vowels"
+  ],
+  "steps": [
+    {
+      "type": "content",
+      "step_title": "The Last Vowels",
+      "content_markdown": "## Finishing the Vowels\n\nWe have only three vowels left, plus one very special character. Let's finish the set!"
+    },
+    {
+      "type": "content",
+      "step_title": "The Letter ஒ",
+      "content_markdown": "## The Short 'O'\n\n**ஒ** makes a short 'o' sound, like the 'o' in **on** or **hot**.\n\n| Tamil | Sound | Example |\n|-------|-------|---------|\n| **ஒ** | o | **o**n |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q1",
+      "step_title": "Identify ஒ Sound",
+      "question": "Which sound does **ஒ** represent?",
+      "options": ["o as in on", "o as in go", "au as in out", "u as in put"],
+      "correct_answer": "o as in on",
+      "feedback": "Correct! **ஒ** is the short 'o' sound."
+    },
+    {
+      "type": "content",
+      "step_title": "The Letter ஓ",
+      "content_markdown": "## The Long 'OO'\n\n**ஓ** is the long version of 'o'. It sounds like the 'o' in **go** or **boat**.\n\n| Tamil | Sound | Example |\n|-------|-------|---------|\n| **ஓ** | oo | g**o** |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q2",
+      "step_title": "Recognize ஓ",
+      "question": "Which of these is the long 'oo' sound?",
+      "options": ["ஒ", "ஓ", "ஔ", "ஃ"],
+      "correct_answer": "ஓ",
+      "feedback": "Perfect! **ஓ** is the long 'oo'. Notice the loop at the bottom left that distinguishes it from **ஒ**."
+    },
+    {
+      "type": "content",
+      "step_title": "The Diphthong ஔ",
+      "content_markdown": "## The Sound 'AU'\n\n**ஔ** is a diphthong that sounds like the 'ou' in **out** or the 'ow' in **now**.\n\n| Tamil | Sound | Example |\n|-------|-------|---------|\n| **ஔ** | au | **ou**t |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q3",
+      "step_title": "Identify ஔ Sound",
+      "question": "Which sound does **ஔ** represent?",
+      "options": ["au as in out", "ai as in aisle", "o as in go", "oo as in moon"],
+      "correct_answer": "au as in out",
+      "feedback": "Excellent! **ஔ** is the 'au' sound."
+    },
+    {
+      "type": "content",
+      "step_title": "Special Letter ஃ",
+      "content_markdown": "## The Aayutha Ezhuthu\n\n**ஃ** is called 'Aayutha Ezhuthu'. It is not a vowel or a consonant. It's a special character that usually makes a soft 'h' or 'kh' sound.\n\nIn modern Tamil, it is often used with other letters to create sounds like 'f' (e.g., **ஃபா** for 'fa')."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q4",
+      "step_title": "Identify ஃ Name",
+      "question": "What is the name of the special character **ஃ**?",
+      "options": ["Aayutha Ezhuthu", "Uyir Ezhuthu", "Mei Ezhuthu", "Pulli"],
+      "correct_answer": "Aayutha Ezhuthu",
+      "feedback": "Correct! It is a unique character in the Tamil script."
+    },
+    {
+      "type": "content",
+      "step_title": "Vowel Summary Table",
+      "content_markdown": "## All 12 Tamil Vowels\n\n| Short | Long | Diphthong |\n|-------|------|-----------|\n| அ (a) | ஆ (aa) | ஐ (ai) |\n| இ (i) | ஈ (ii) | ஔ (au) |\n| உ (u) | ஊ (uu) | |\n| எ (e) | ஏ (ee) | |\n| ஒ (o) | ஓ (oo) | |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q5",
+      "step_title": "Count the Vowels",
+      "question": "How many vowels (Uyir Ezhuthu) are there in Tamil?",
+      "options": ["10", "12", "13", "18"],
+      "correct_answer": "12",
+      "feedback": "Perfect! There are 12 vowels. The 13th letter (ஃ) is the special Aayutha Ezhuthu."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q6",
+      "step_title": "Match the Sound",
+      "question": "Which letter represents the sound in 'boat'?",
+      "options": ["ஒ", "ஓ", "ஔ", "எ"],
+      "correct_answer": "ஓ",
+      "feedback": "Correct! **ஓ** is the long 'oo' sound."
+    },
+    {
+      "type": "free_response",
+      "id": "q7",
+      "step_title": "Identify the Letter",
+      "question": "Which letter represents the sound in 'hot'?",
+      "ai_grading": false,
+      "accepted_responses": ["ஒ"],
+      "hint": "It's the short 'o' vowel."
+    },
+    {
+      "type": "free_response",
+      "id": "q8",
+      "step_title": "Identify the Letter",
+      "question": "Which letter represents the sound in 'out'?",
+      "ai_grading": false,
+      "accepted_responses": ["ஔ"],
+      "hint": "It's the diphthong that looks like a combination of two shapes."
+    },
+    {
+      "type": "content",
+      "step_title": "Ready for Consonants",
+      "content_markdown": "## Congratulations!\n\nYou have mastered the vowels. In the next lesson, we will begin learning consonants. Consonants in Tamil are inherently paired with the 'a' sound (அ)."
+    }
+  ]
+}

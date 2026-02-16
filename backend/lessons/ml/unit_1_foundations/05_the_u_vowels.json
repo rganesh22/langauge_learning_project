@@ -1,0 +1,206 @@
+{
+  "lesson_id": "ml_05_the_u_vowels",
+  "language": "Malayalam",
+  "title": "The 'U' Vowels",
+  "subtitle": "ഉ, ു, ഊ, ൂ - Rounded Vowel Sounds",
+  "description": "Learn to read and pronounce Malayalam vowel characters. Master the visual recognition and phonetic sounds of these essential letters.",
+  "estimated_minutes": 26,
+  "cefr_level": "A0",
+  "tags": [
+    "script",
+    "vowels",
+    "modifiers",
+    "u-vowels"
+  ],
+  "steps": [
+    {
+      "type": "content",
+      "content_markdown": "# Round Your Lips! 👄\n\n## Cumulative Review\nQuick recognition test!\n- **അരി** (ari) = Rice ← Lesson 4\n- **നീ** (nee) = You ← Lesson 4\n- **കവി** (kavi) = Poet ← Lesson 4\n\nExcellent! You're at **40 words** and **15 symbols**!\n\n## Today's Mission\nComplete the vowel trinity with **'U' sounds** (4 symbols):\n\n### Short 'U' (like 'u' in 'put'):\n- **ഉ** - Independent form\n- **ു** - Dependent form (goes BELOW!)\n\n### Long 'U' (like 'oo' in 'food'):\n- **ഊ** - Independent form  \n- **ൂ** - Dependent form (goes BELOW!)\n\n### Key Difference\nUnlike ാ (right) or ി (left), the U modifiers appear **BELOW** the consonant!\n\n### Today's Rewards\n10 amazing words including:\n- **പുലി** (puli) = Tiger 🐅\n- **പൂ** (poo) = Flower 🌸\n- **മൂന്നു** (moonnu) = Three\n\nLet's master the rounded vowels! 💪",
+      "step_title": "Round Your Lips!"
+    },
+    {
+      "type": "content",
+      "content_markdown": "## Short 'U': ഉ (Independent)\n\n### Sound\n**ഉ** sounds like the 'u' in \"*put*\" or \"*foot*\" - short and rounded.\n\n**NOT** like 'u' in \"*cut*\" (that's more like അ)!\n\n### Lip Position\nRound your lips slightly - like you're about to whistle, but relaxed.\n\n### When to Use\nUse **ഉ** when the short 'u' sound **starts a word**.\n\n**Examples:**\n- **ഉമ** (uma) = Uma (name)\n- **ഉത്തരം** (utharam) = Answer\n\n### Visual Recognition\n**ഉ** has a **rounded, curved shape** - matches the rounded lips!",
+      "step_title": "Short 'U': ഉ (Independent)"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q1",
+      "question": "What sound does **ഉ** make?",
+      "options": [
+        "Short 'u' like in 'put' (rounded)",
+        "Like 'u' in 'cut'",
+        "Long 'oo' like in 'food'",
+        "Like 'a' in 'about'"
+      ],
+      "correct_answer": "Short 'u' like in 'put' (rounded)",
+      "feedback": "Perfect! ഉ is the short rounded 'u' - lips slightly rounded!",
+      "step_title": "**ഉ** Sound"
+    },
+    {
+      "type": "content",
+      "content_markdown": "## Short 'U' Modifier: ു (Dependent)\n\n### Revolutionary Placement!\nThe **ു** modifier appears **BELOW** the consonant - not left or right!\n\nThis is NEW positioning!\n\n### How It Works\n**Without modifier:**\n- **പ** (pa) → **പു** (pu)\n- **ക** (ka) → **കു** (ku)  \n- **മ** (ma) → **മു** (mu)\n\n**The ു sits underneath!**\n\n### In Real Words:\n- **പുലി** (puli) = Tiger\n- **പുതു** (puthu) = New\n- **കുതി** (kuthi) = Jump\n- **മുറി** (muRi) = Room\n\n### Visual Pattern\n**ു** looks like a **small hook or tail** beneath the letter:\n- പ + ു → പു\n- ക + ു → കു\n\n### Reading Rule\nSee something under a consonant? Check if it's ു!",
+      "step_title": "Short 'U' Modifier: ു"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q2",
+      "question": "Where does the **ു** modifier appear?",
+      "options": [
+        "BELOW the consonant",
+        "To the right of the consonant",
+        "To the left of the consonant",
+        "Above the consonant"
+      ],
+      "correct_answer": "BELOW the consonant",
+      "feedback": "Excellent! This is Malayalam's third directional pattern - below for U vowels!",
+      "step_title": "Where does **ു** modifier"
+    },
+    {
+      "type": "content",
+      "content_markdown": "## Long 'U': ഊ (Independent)\n\n### Sound\n**ഊ** sounds like the 'oo' in \"*food*\" or \"*moon*\" - held longer than ഉ.\n\n### Length Distinction\nFeel the difference:\n- **ഉ** (u) = Quick, like 'put'\n- **ഊ** (oo) = Longer, like 'fooood'\n\n### When to Use\nUse **ഊ** when the long 'oo' sound **starts a word**.\n\n**Examples:**\n- **ഊത** (ootha) = Blow (verb)\n- **ഊർജം** (oorjam) = Energy\n\n### Visual Recognition\n**ഊ** looks like **ഉ** with an **additional mark** on top:\n- **ഉ** → Short u (simpler)\n- **ഊ** → Long oo (more elaborate)\n\nSame pattern as all vowels!",
+      "step_title": "Long 'U': ഊ (Independent)"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q3",
+      "question": "What's the difference between ഉ and ഊ?",
+      "options": [
+        "ഉ is short 'u' (put), ഊ is long 'oo' (food)",
+        "They're the same sound",
+        "ഉ is consonant, ഊ is vowel",
+        "ഉ is uppercase, ഊ is lowercase"
+      ],
+      "correct_answer": "ഉ is short 'u' (put), ഊ is long 'oo' (food)",
+      "feedback": "Perfect! Vowel length is always significant - short vs long!",
+      "step_title": "ഉ  Difference"
+    },
+    {
+      "type": "content",
+      "content_markdown": "## Long 'U' Modifier: ൂ (Dependent)\n\n### Still Below!\nJust like **ു**, the long version **ൂ** also appears **BELOW** consonants.\n\n### Transformation Examples:\n**Without modifier:**\n- **പ** (pa) → **പൂ** (poo) = Flower!\n- **ക** (ka) → **കൂ** (koo)\n- **മ** (ma) → **മൂ** (moo)\n\n**Full Words:**\n- **പൂ** (poo) = Flower 🌸\n- **രൂപ** (roopa) = Form/Shape\n- **മൂന്നു** (moonnu) = Three\n- **പൂര** (poora) = Festival\n\n### Visual Difference\n- **ു** = Short u (smaller mark below)\n- **ൂ** = Long oo (longer mark below)\n\nBoth underneath, but **ൂ extends further**!",
+      "step_title": "Long 'U' Modifier: ൂ"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q4",
+      "question": "Where does the **ൂ** modifier appear?",
+      "options": [
+        "BELOW the consonant (like ു but longer)",
+        "To the right of the consonant",
+        "To the left of the consonant",
+        "Above the consonant"
+      ],
+      "correct_answer": "BELOW the consonant (like ു but longer)",
+      "feedback": "Correct! Both U modifiers (short and long) appear below consonants.",
+      "step_title": "Where does **ൂ** modifier"
+    },
+    {
+      "type": "content",
+      "content_markdown": "## All Vowel Modifiers Summary 📊\n\n### Directional Map:\n\n| Vowel | Short Modifier | Position | Long Modifier | Position |\n|-------|----------------|----------|---------------|----------|\n| **A** | (inherent) | - | **ാ** | RIGHT |\n| **I** | **ി** | LEFT | **ീ** | RIGHT |\n| **U** | **ು** | BELOW | **ൂ** | BELOW |\n\n### Example with ക (ka):\n\n```\n     ി\n    ക    →  കി (ki)\n```\n```\n    ക  ാ  →  കാ (kaa)\n```\n```\n    ക      →  കു (ku)\n    ു\n```\n```\n    ക      →  കൂ (koo)\n    ൂ\n```\n\n### Practice Reading:\n1. **പു** → pu (short u below)\n2. **പൂ** → poo (long oo below)\n3. **പി** → pi (short i left)\n4. **പീ** → pee (long ee right)",
+      "step_title": "All Vowel Modifiers Summary"
+    },
+    {
+      "type": "free_response",
+      "id": "q5",
+      "question": "Write the Malayalam word for 'tiger' in English letters",
+      "ai_grading": false,
+      "accepted_responses": [
+        "puli",
+        "Puli",
+        "PULI"
+      ],
+      "hint": "It's പുലി - starts with പു (pu with ു below), then ലി. Sounds like 'puli'.",
+      "step_title": "Write Malayalam Word"
+    },
+    {
+      "type": "content",
+      "content_markdown": "## Your 10 New Words 📚\n\nToday's essential vocabulary:\n\n| Malayalam | Pronunciation | Meaning | Notes |\n|-----------|--------------|---------|--------|\n| **പുലി** | puli | tiger | Short ു modifier |\n| **പൂ** | poo | flower | Long ൂ modifier |\n| **മുറി** | muRi | room | ു + hard R! |\n| **കറി** | kaRi | curry | From L4 + today |\n| **കുതി** | kuthi | jump | Short ു usage |\n| **രൂപ** | roopa | form/shape | Long ൂ pattern |\n| **മൂന്നു** | moonnu | three | Double ൂ + ന്നു! |\n| **പുതു** | puthu | new | Dental th + ു |\n| **പൂര** | poora | festival | Long ൂ + ര |\n| **ഊത** | ootha | blow (verb) | Independent ഊ |\n\n### Sound Symbols:\n- **$R$** = Hard trilled 'r' (റ)\n- **$th$** = Dental 't' (ത)\n- **$n$** = Dental 'n' (ന)",
+      "step_title": "Your 10 New Words"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q6",
+      "question": "How do you pronounce **പൂ**?",
+      "options": [
+        "poo",
+        "poo-a",
+        "poo2",
+        "poo3"
+      ],
+      "correct_answer": "poo",
+      "feedback": "Correct! പൂ (poo) = flower. Notice the long ൂ below! 🌸",
+      "step_title": "**പൂ**? Pronunciation"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q7",
+      "question": "How do you write 'three' in Malayalam?",
+      "options": [
+        "മൂന്നു",
+        "പുലി",
+        "കുതി",
+        "രൂപ"
+      ],
+      "correct_answer": "മൂന്നു",
+      "feedback": "Perfect! മൂന്നു (moonnu) = three. It has complex conjuncts we'll learn later!",
+      "step_title": "How do you write"
+    },
+    {
+      "type": "free_response",
+      "id": "q8",
+      "question": "How do you pronounce **കുതി**?",
+      "ai_grading": false,
+      "accepted_responses": [
+        "kuthi",
+        "Kuthi",
+        "KUTHI",
+        "kuthi"
+      ],
+      "hint": "It's an action verb. കുതി uses the short ു modifier below ക.",
+      "step_title": "**കുതി**? Pronunciation"
+    },
+    {
+      "type": "content",
+      "content_markdown": "## Complete Vowel System Review 🎯\n\n### All Independent Vowels You Know:\n\n| Short | Sound | Long | Sound |\n|-------|-------|------|-------|\n| **അ** | a (about) | **ആ** | aa (father) |\n| **ഇ** | i (bit) | **ഈ** | ee (see) |\n| **ഉ** | u (put) | **ഊ** | oo (food) |\n\n### All Dependent Modifiers:\n\n| Vowel | Short | Position | Long | Position |\n|-------|-------|----------|------|----------|\n| A | (inherent) | - | **ാ** | right |\n| I | **ി** | left | **ീ** | right |\n| U | **ു** | below | **ൂ** | below |\n\n### Reading Challenge\nCan you identify the vowel modifier in **പുലി**?",
+      "step_title": "Complete Vowel System Review"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q9",
+      "question": "Which word means 'curry'?",
+      "options": [
+        "കറി (kaRi)",
+        "പുലി (puli)",
+        "പൂ (poo)",
+        "മുറി (muRi)"
+      ],
+      "correct_answer": "കറി (kaRi)",
+      "feedback": "Excellent! കറി (kaRi) = curry. Essential food vocabulary! 🍛",
+      "step_title": "Which word means 'curry'?"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q10",
+      "question": "How do you pronounce **പുതു**?",
+      "options": [
+        "puthu",
+        "puthu-a",
+        "puthu2",
+        "puthu3"
+      ],
+      "correct_answer": "puthu",
+      "feedback": "Perfect! പുതു (puthu) = new. Notice the dental ത with ു below!",
+      "step_title": "**പുതു**? Pronunciation"
+    },
+    {
+      "type": "content",
+      "content_markdown": "## 🎊 Lesson 5 Complete!\n\n### Your Vowel Mastery:\n\n**✅ Total Symbols: 19**\n- Independent vowels: അ, ആ, ഇ, ഈ, ഉ, ഊ\n- Dependent modifiers: ാ, ി, ീ, ു, ൂ, ം\n- Consonants: ക, റ, മ, പ, വ, ത, ന, ര, ല\n\n**✅ Total Words: 50!**\n- Halfway to 100 words!\n- Strong vocabulary foundation\n\n**✅ Directional Mastery:**\n1. **Right** - ാ, ീ (long vowels)\n2. **Left** - ി (short i only!)\n3. **Below** - ു, ൂ (all u vowels)\n\n### Cumulative Reinforcement Check ✓\n**Previous lesson letters in today's words:**\n- **പ:** appears in 4 words (പുലി, പൂ, പുതു, പൂര)\n- **മ:** appears in 2 words (മുറി, മൂന്നു)\n- **ക:** appears in 2 words (കറി, കുതി)\n- **റ:** appears in 2 words (മുറി, കറി)\n- **ി:** appears in 2 words (പുലി, കറി, കുതി, മുറി)\n\nRequirement exceeded! ✅ Strong cumulative retention.\n\n### What's Next?\nLesson 6 introduces **chillus** - special ending consonants: ൻ, ർ, ൽ\n\nWords like:\n- **അവൻ** (avan) = He\n- **കാർ** (kaar) = Car\n- **പാൽ** (paal) = Milk\n\nThese unlock natural Malayalam word endings! 🚀",
+      "step_title": "Lesson 5 Complete!"
+    }
+  ],
+  "skills_learned": [
+    "Reading Malayalam vowels",
+    "Reading Malayalam script",
+    "Reading 29+ Malayalam words"
+  ]
+}

@@ -34,7 +34,7 @@ import {
 } from '../constants/ui_labels';
 import { Audio } from 'expo-av';
 
-const API_BASE_URL = __DEV__ ? 'http://localhost:5001' : 'http://localhost:5001';
+const API_BASE_URL = __DEV__ ? 'http://localhost:8080' : 'http://localhost:8080';
 
 const ACTIVITY_COLORS = {
   reading: { primary: '#4A90E2', light: '#E8F4FD' },
@@ -793,7 +793,7 @@ export default function ActivityHistoryScreen({ route, navigation }) {
                       <SafeText style={styles.gradingScore}>
                         {language === 'urdu' && nativeRenderings.overallScore
                           ? nativeRenderings.overallScore
-                          : getOverallScoreLabel(language)} {Math.round(submission.overall_score || 0)}%
+                          : getOverallScoreLabel(language)}{' '}{Math.round(submission.overall_score || 0)}%
                       </SafeText>
                     )}
                   </View>

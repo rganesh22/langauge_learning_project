@@ -16,6 +16,7 @@ from . import api_client
 from . import config
 from . import transliteration
 from .websocket_conversation import handle_websocket_conversation
+from .prompting.lesson_prompts import LESSON_FREE_RESPONSE_GRADING_PROMPT
 
 # ============================================================================
 # FastAPI App Setup
@@ -55,6 +56,7 @@ async def startup_event():
     # Only initialize schema, don't reload vocabulary
     db.init_db_schema()
     print("[Startup] Database initialization complete")
+    print("[Startup] Note: Run 'python3 reload_lessons.py' to load lessons into database")
 
 # ============================================================================
 # Progress Tracking for TTS Generation
@@ -404,6 +406,343 @@ def transliterate_endpoint(request: TransliterationRequest):
         "requested_to": request.to_script,
         "language": request.language,
     }
+
+
+# ============================================================================
+# Lesson Endpoints
+# ============================================================================
+
+@app.get("/api/lessons/{language}")
+def get_lessons(language: str, user_id: int = 1):
+    """Get all available lessons for a language with completion status"""
+    try:
+        # Get lessons from database
+        lessons = db.get_lessons_by_language(language)
+        
+        # Get all completion records for this user
+        all_completions = db.get_lesson_completions(user_id)
+        
+        # Create a map of lesson completions and progress
+        completion_map = {}
+        for completion in all_completions:
+            lesson_id = completion['lesson_id']
+            if lesson_id not in completion_map:
+                completion_map[lesson_id] = {
+                    'completed': True,
+                    'completed_at': completion['completed_at'],
+                    'total_score': completion['total_score']
+                }
+        
+        # Add completion status to each lesson
+        for lesson in lessons:
+            lesson_id = lesson['lesson_id']
+            if lesson_id in completion_map:
+                lesson['completed'] = True
+                lesson['completed_at'] = completion_map[lesson_id]['completed_at']
+                lesson['total_score'] = completion_map[lesson_id]['total_score']
+            else:
+                lesson['completed'] = False
+                lesson['in_progress'] = False  # Will be updated by frontend tracking
+        
+        return {"lessons": lessons}
+    except Exception as e:
+        print(f"Error fetching lessons: {str(e)}")
+        return {"lessons": []}
+
+
+class LessonFreeResponseRequest(BaseModel):
+    language: str
+    user_cefr_level: str
+    question: str
+    user_answer: str
+    lesson_context: Optional[Dict] = None
+
+
+@app.post("/api/lessons/grade-free-response")
+def grade_lesson_free_response(request: LessonFreeResponseRequest):
+    """Grade a free response answer from a lesson using AI"""
+    try:
+        # Use the prompt from prompting folder
+        prompt = LESSON_FREE_RESPONSE_GRADING_PROMPT.format(
+            language=request.language,
+            user_cefr_level=request.user_cefr_level,
+            question=request.question,
+            user_answer=request.user_answer
+        )
+        
+        # Generate with Gemini
+        response_text, response_time, token_info, is_truncated, _ = api_client.generate_text_with_gemini(prompt)
+        
+        if not response_text:
+            raise HTTPException(status_code=500, detail="Failed to generate feedback")
+        
+        # Parse JSON response
+        result = api_client.parse_json_response(response_text, is_truncated)
+        
+        if "_parse_error" in result:
+            # Fallback: provide basic feedback
+            return {
+                "score": 50,
+                "feedback": "Your response has been received. Keep practicing!"
+            }
+        
+        return {
+            "score": result.get("score", 50),
+            "feedback": result.get("feedback", "Good effort! Keep practicing."),
+            "_response_time": response_time,
+            "_token_info": token_info
+        }
+        
+    except Exception as e:
+        print(f"Error grading free response: {e}")
+        import traceback
+        traceback.print_exc()
+        # Return a graceful fallback instead of error
+        return {
+            "score": 50,
+            "feedback": "Thank you for your response. Your effort is appreciated!"
+        }
+
+
+class LessonCompletionRequest(BaseModel):
+    lesson_id: str
+    answers: Dict
+    feedback: Dict
+    total_score: Optional[float] = None
+
+
+@app.post("/api/lessons/complete")
+def complete_lesson(request: LessonCompletionRequest):
+    """Record a lesson completion"""
+    try:
+        user_id = 1  # Default user
+        success = db.record_lesson_completion(
+            user_id=user_id,
+            lesson_id=request.lesson_id,
+            answers=request.answers,
+            feedback=request.feedback,
+            total_score=request.total_score
+        )
+        
+        if success:
+            return {"success": True, "message": "Lesson completion recorded"}
+        else:
+            raise HTTPException(status_code=500, detail="Failed to record completion")
+    except Exception as e:
+        print(f"Error recording lesson completion: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/api/lessons/completions/{lesson_id}")
+def get_lesson_completion_history(lesson_id: str):
+    """Get completion history for a specific lesson"""
+    try:
+        user_id = 1  # Default user
+        completions = db.get_lesson_completions(user_id, lesson_id)
+        return {"completions": completions}
+    except Exception as e:
+        print(f"Error getting lesson completions: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+class LessonProgressRequest(BaseModel):
+    lesson_id: str
+    current_step: int
+    completed_steps: List[int]
+
+
+@app.post("/api/lessons/progress")
+def save_progress(request: LessonProgressRequest):
+    """Save lesson progress (current step and completed steps)"""
+    try:
+        user_id = 1  # Default user
+        success = db.save_lesson_progress(
+            user_id=user_id,
+            lesson_id=request.lesson_id,
+            current_step=request.current_step,
+            completed_steps=request.completed_steps
+        )
+        
+        if success:
+            return {"success": True, "message": "Progress saved"}
+        else:
+            raise HTTPException(status_code=500, detail="Failed to save progress")
+    except Exception as e:
+        print(f"Error saving lesson progress: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/api/lessons/progress/{lesson_id}")
+def get_progress(lesson_id: str):
+    """Get lesson progress"""
+    try:
+        user_id = 1  # Default user
+        progress = db.get_lesson_progress(user_id, lesson_id)
+        if progress:
+            return progress
+        else:
+            return {"lesson_id": lesson_id, "current_step": 0, "completed_steps": []}
+    except Exception as e:
+        print(f"Error getting lesson progress: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.delete("/api/lessons/progress/{lesson_id}")
+def clear_progress(lesson_id: str):
+    """Clear lesson progress (for redo functionality)"""
+    try:
+        user_id = 1  # Default user
+        success = db.clear_lesson_progress(user_id, lesson_id)
+        
+        if success:
+            return {"success": True, "message": "Progress cleared"}
+        else:
+            raise HTTPException(status_code=500, detail="Failed to clear progress")
+    except Exception as e:
+        print(f"Error clearing lesson progress: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/api/lessons/by-id/{lesson_id}")
+def get_lesson_by_id(lesson_id: str, user_id: int = 1):
+    """Get a specific lesson by ID with completion status"""
+    try:
+        conn = db.sqlite3.connect(db.config.DB_PATH)
+        conn.row_factory = db.sqlite3.Row
+        cursor = conn.cursor()
+        
+        cursor.execute('SELECT * FROM lessons WHERE lesson_id = ?', (lesson_id,))
+        row = cursor.fetchone()
+        conn.close()
+        
+        if not row:
+            raise HTTPException(status_code=404, detail="Lesson not found")
+        
+        # Check if lesson is completed
+        completions = db.get_lesson_completions(user_id)
+        completed = any(c['lesson_id'] == lesson_id for c in completions)
+        
+        lesson = {
+            'lesson_id': row['lesson_id'],
+            'title': row['title'],
+            'language': row['language'],
+            'level': row['level'],
+            'steps': json.loads(row['steps_json']) if row['steps_json'] else [],
+            'unit_id': row['unit_id'] if row['unit_id'] else None,
+            'lesson_number': row['lesson_number'] if row['lesson_number'] else None,
+            'completed': completed,
+        }
+        
+        return {"lesson": lesson}
+    except HTTPException:
+        raise
+    except Exception as e:
+        print(f"Error getting lesson by ID: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+# ============================================================================
+# Units API
+# ============================================================================
+
+@app.get("/api/units/{language}")
+def get_units(language: str, user_id: int = 1):
+    """Get all units for a language with progress"""
+    try:
+        units = db.get_units_by_language(language)
+        return {"units": units}
+    except Exception as e:
+        print(f"Error getting units: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/api/units/{unit_id}/lessons")
+def get_unit_lessons(unit_id: str, user_id: int = 1):
+    """Get all lessons in a unit with completion status"""
+    try:
+        # Get all lessons for this unit
+        conn = db.sqlite3.connect(db.config.DB_PATH)
+        conn.row_factory = db.sqlite3.Row
+        cursor = conn.cursor()
+        
+        cursor.execute('''
+            SELECT * FROM lessons 
+            WHERE unit_id = ?
+            ORDER BY lesson_number
+        ''', (unit_id,))
+        
+        rows = cursor.fetchall()
+        conn.close()
+        
+        lessons = []
+        all_completions = db.get_lesson_completions(user_id)
+        completion_map = {c['lesson_id']: c for c in all_completions}
+        
+        for row in rows:
+            lesson = {
+                'lesson_id': row['lesson_id'],
+                'title': row['title'],
+                'language': row['language'],
+                'level': row['level'],
+                'lesson_number': row['lesson_number'],
+                'steps': db.json.loads(row['steps_json']),
+                'created_at': row['created_at'],
+                'updated_at': row['updated_at'],
+            }
+            
+            # Add completion status
+            if lesson['lesson_id'] in completion_map:
+                lesson['completed'] = True
+                lesson['completed_at'] = completion_map[lesson['lesson_id']]['completed_at']
+                lesson['total_score'] = completion_map[lesson['lesson_id']]['total_score']
+            else:
+                lesson['completed'] = False
+            
+            # Check for in-progress
+            progress = db.get_lesson_progress(user_id, lesson['lesson_id'])
+            lesson['inProgress'] = bool(progress and (progress['current_step'] > 0 or progress['completed_steps']))
+            
+            lessons.append(lesson)
+        
+        return {"lessons": lessons}
+    except Exception as e:
+        print(f"Error getting unit lessons: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.post("/api/units/{unit_id}/update-progress")
+def update_unit_progress_endpoint(unit_id: str, user_id: int = 1):
+    """Update unit progress based on lesson completions"""
+    try:
+        success = db.update_unit_progress(user_id, unit_id)
+        if success:
+            return {"success": True, "message": "Unit progress updated"}
+        else:
+            raise HTTPException(status_code=500, detail="Failed to update unit progress")
+    except Exception as e:
+        print(f"Error updating unit progress: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+# ============================================================================
+# Continue with rest of API...
+# ============================================================================
+
+    except Exception as e:
+        print(f"Error clearing lesson progress: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.post("/api/lessons/admin/reload")
+def reload_lessons_from_files():
+    """Admin endpoint to reload lessons from JSON files"""
+    try:
+        from .load_lessons import load_lessons_from_files
+        loaded_count = load_lessons_from_files()
+        return {"success": True, "loaded_count": loaded_count, "message": "Lessons reloaded successfully"}
+    except Exception as e:
+        print(f"Error reloading lessons: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
 
 
 class LessonWordsRequest(BaseModel):
@@ -3252,7 +3591,7 @@ def get_weekly_stats(days: int = 7, offset: int = 0):
         days: Number of days to retrieve (default 7)
         offset: Number of days to offset from today (default 0 for current week, 7 for last week, etc.)
     
-    Returns daily aggregates of activities completed and words learned
+    Returns daily aggregates of activities completed, words learned, and lessons completed
     """
     import sqlite3
     from datetime import datetime, timedelta
@@ -3279,6 +3618,21 @@ def get_weekly_stats(days: int = 7, offset: int = 0):
     ''', (start_date.strftime('%Y-%m-%d'),))
     
     activity_counts = {row['date']: row['activity_count'] for row in cursor.fetchall()}
+    
+    # Get lesson counts by date
+    cursor.execute('''
+        SELECT 
+            DATE(completed_at) as date,
+            COUNT(*) as lesson_count
+        FROM lesson_completions
+        WHERE user_id = 1 
+        AND completed_at IS NOT NULL
+        AND completed_at >= ?
+        GROUP BY DATE(completed_at)
+        ORDER BY date ASC
+    ''', (start_date.strftime('%Y-%m-%d'),))
+    
+    lesson_counts = {row['date']: row['lesson_count'] for row in cursor.fetchall()}
     
     # Get word counts by date (from activity_data JSON)
     cursor.execute('''
@@ -3322,6 +3676,7 @@ def get_weekly_stats(days: int = 7, offset: int = 0):
             'date': date_str,
             'day': current_date.strftime('%a'),  # Mon, Tue, etc.
             'activities': activity_counts.get(date_str, 0),
+            'lessons': lesson_counts.get(date_str, 0),
             'words': word_counts.get(date_str, 0)
         })
         current_date += timedelta(days=1)
@@ -3360,13 +3715,13 @@ def get_activity_by_id(activity_id: int):
 
 @app.get("/api/daily-activities")
 def get_daily_activities(date: str):
-    """Get all activities completed on a specific date
+    """Get all activities and lessons completed on a specific date
     
     Args:
         date: Date in YYYY-MM-DD format
         
     Returns:
-        List of activities with id, activity_type, language, timestamp, score, title
+        List of activities and lessons with id, activity_type, language, timestamp, score, title
     """
     import sqlite3
     
@@ -3374,6 +3729,7 @@ def get_daily_activities(date: str):
     conn.row_factory = sqlite3.Row
     cursor = conn.cursor()
     
+    # Get regular activities
     cursor.execute('''
         SELECT 
             id,
@@ -3423,6 +3779,57 @@ def get_daily_activities(date: str):
                 pass
         
         activities.append(activity)
+    
+    # Get lessons completed on this date
+    cursor.execute('''
+        SELECT 
+            lc.id,
+            lc.lesson_id,
+            lc.completed_at as timestamp,
+            lc.total_score,
+            l.title,
+            l.language
+        FROM lesson_completions lc
+        LEFT JOIN lessons l ON lc.lesson_id = l.lesson_id
+        WHERE lc.user_id = 1 
+        AND DATE(lc.completed_at) = ?
+        ORDER BY lc.completed_at DESC
+    ''', (date,))
+    
+    # Map full language names to language codes
+    language_code_map = {
+        'Malayalam': 'ml',
+        'Kannada': 'kn',
+        'Tamil': 'ta',
+        'Telugu': 'te',
+        'Hindi': 'hi',
+        'Marathi': 'mr',
+        'Bengali': 'bn',
+        'Gujarati': 'gu',
+        'Punjabi': 'pa',
+        'Urdu': 'ur'
+    }
+    
+    for row in cursor.fetchall():
+        language_full = row['language']
+        language_code = language_code_map.get(language_full, language_full.lower() if language_full else None)
+        
+        lesson = {
+            'id': row['id'],
+            'activity_type': 'lesson',  # Mark as lesson type
+            'language': language_code,
+            'timestamp': row['timestamp'],
+            'title': row['title'] or 'Lesson',
+            'lesson_id': row['lesson_id']
+        }
+        
+        if row['total_score'] is not None:
+            lesson['score'] = row['total_score']
+        
+        activities.append(lesson)
+    
+    # Sort all activities by timestamp (most recent first)
+    activities.sort(key=lambda x: x['timestamp'], reverse=True)
     
     conn.close()
     

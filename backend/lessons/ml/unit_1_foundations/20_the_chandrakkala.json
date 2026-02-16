@@ -1,0 +1,192 @@
+{
+  "lesson_id": "ml_20_the_chandrakkala",
+  "language": "Malayalam",
+  "title": "The Chandrakkala Deepdive",
+  "subtitle": "് - Vowel-Killing and the 'Half-U' Sound",
+  "description": "Learn to read and pronounce Malayalam vowel characters. Master the visual recognition and phonetic sounds of these essential letters.",
+  "estimated_minutes": 25,
+  "cefr_level": "A0",
+  "tags": [
+    "script",
+    "chandrakkala",
+    "virama",
+    "orthography"
+  ],
+  "steps": [
+    {
+      "type": "content",
+      "content_markdown": "# Phase 4: Nuance & Logic! 🧠\n\n**190 words** mastered!\n\n## The Mysterious ്\n\nYou've used **chandrakkala** (്) in conjuncts:\n- ക + ് + ക = ക്ക\n\nBut chandrakkala has TWO functions:\n\n### 1. Vowel Killer (in conjuncts)\nRemoves inherent 'a' sound\n\n### 2. 'Half-U' Maker (at word end)\nCreates a subtle 'u' sound!\n\n## Examples:\n- **അവൻ** (avan) - He (chillu)\n- **കാൽ** (kaal) - Leg (chillu)\n- **പത്ത്** (paththu) - Ten (half-u!)\n\nLet's master this nuance! 🎯",
+      "step_title": "Nuance & Logic!"
+    },
+    {
+      "type": "content",
+      "content_markdown": "## Function 1: Vowel Killer\n\n### In Conjuncts:\nക (ka) + ് → ക് (k - no vowel!)\nക് + ക → ക്ക (kka)\n\n### Why It's Needed:\nMalayalam consonants have **inherent 'a'**\n- ക = 'ka' (not just 'k')\n- To get pure 'k', use chandrakkala!\n\n### Examples:\n- പക്ഷി (pa-**k**-shi) = Bird\n- സത്യം (sa-**th**-yam) = Truth\n- കുറ്റം (ku-**RR**-am) = Fault\n\nNo 'a' sound in the marked positions!",
+      "step_title": "Function 1: Vowel Killer"
+    },
+    {
+      "type": "content",
+      "content_markdown": "## Function 2: The 'Half-U' Sound\n\n### At Word End:\nWhen chandrakkala ends a word, it creates a **subtle 'u' sound**!\n\n### Examples:\n- **പത്ത്** = paththu (not 'pathth')\n- **നാല്** = naalu (not 'naal')\n- **മുക്ക്** = mukku (not 'mukk')\n- **നല്ല്** = nallu (not 'nall')\n\n### The Rule:\n**Word-final chandrakkala = add 'u' sound**\n\nThis is uniquely Malayalam!",
+      "step_title": "Function 2: 'Half-U' Sound"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q1",
+      "question": "What are the TWO functions of chandrakkala (്)?",
+      "options": [
+        "Remove vowels in conjuncts AND create 'u' sound at word end",
+        "Only remove vowels",
+        "Only create 'u' sound",
+        "It's decorative"
+      ],
+      "correct_answer": "Remove vowels in conjuncts AND create 'u' sound at word end",
+      "feedback": "Perfect! Chandrakkala has dual functions - context-dependent!",
+      "step_title": "What are TWO functions"
+    },
+    {
+      "type": "free_response",
+      "id": "q2",
+      "question": "How do you pronounce **പത്ത്**?",
+      "ai_grading": false,
+      "accepted_responses": [
+        "paththu",
+        "Paththu",
+        "PATHTHU",
+        "pathu"
+      ],
+      "hint": "Final chandrakkala adds 'u' sound!",
+      "step_title": "**പത്ത്**? Pronunciation"
+    },
+    {
+      "type": "content",
+      "content_markdown": "## Chandrakkala vs. Chillus\n\n### Chillus (Pure Consonants):\n- **ൻ** (pure n)\n- **ർ** (pure r)\n- **ൽ** (pure l)\n- **ൾ** (pure L)\n- **ൺ** (pure N)\n\n### When to Use Each:\n\n**Chillus:** Pure consonant, NO 'u' sound\n- അവൻ (avan) = He\n- കാർ (kaar) = Car\n\n**Chandrakkala:** Adds 'u' sound\n- പത്ത് (paththu) = Ten\n- മുക്ക് (mukku) = Corner\n\n### Why Both Exist:\nMalayalam needs both pure endings and 'u' endings!",
+      "step_title": "Chandrakkala vs. Chillus"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q3",
+      "question": "What's the difference between **കാർ** and **നാല്**?",
+      "options": [
+        "കാർ uses chillu (pure 'r'), നാല് ends with chandrakkala ('lu' sound)",
+        "They're the same",
+        "കാർ is wrong",
+        "നാല് is silent"
+      ],
+      "correct_answer": "കാർ uses chillu (pure 'r'), നാല് ends with chandrakkala ('lu' sound)",
+      "feedback": "Excellent! Chillus vs chandrakkala - important distinction!",
+      "step_title": "** Difference"
+    },
+    {
+      "type": "content",
+      "content_markdown": "## Your 10 New Words 📚\n\n| Malayalam | Pronunciation | Meaning | Ending |\n|-----------|--------------|---------|----------|\n| **പത്ത്** | paththu | ten | ്  (u) |\n| **നാല്** | naalu | four | ് (u) |\n| **മുക്ക്** | mukku | corner | ് (u) |\n| **നല്ല്** | nallu | good | ് (u) |\n| **അവൻ** | avan | he | ൻ (pure) |\n| **അവൾ** | avaL | she | ൾ (pure) |\n| **കാർ** | kaar | car | ർ (pure) |\n| **പാൽ** | paal | milk | ൽ (pure) |\n| **ചുക്ക്** | chukku | helm | ് (u) |\n| **മൂക്ക്** | muukku | nose | ് (u) |\n\n### Pattern Recognition:\nAll review words + new examples!",
+      "step_title": "Your 10 New Words"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q4",
+      "question": "How do you pronounce **നാല്**?",
+      "options": [
+        "naalu",
+        "naaaalu",
+        "naalu-a",
+        "naalu3"
+      ],
+      "correct_answer": "naalu",
+      "feedback": "Perfect! നാല് (naalu) = four. Essential number!",
+      "step_title": "**നാല്**? Pronunciation"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q5",
+      "question": "How do you pronounce **മൂക്ക്**?",
+      "options": [
+        "muukku",
+        "muukku-a",
+        "muukku2",
+        "muukku3"
+      ],
+      "correct_answer": "muukku",
+      "feedback": "Correct! മൂക്ക് (muukku) = nose. Body part!",
+      "step_title": "**മൂക്ക്**? Pronunciation"
+    },
+    {
+      "type": "free_response",
+      "id": "q6",
+      "question": "How do you pronounce **അവൾ**?",
+      "ai_grading": false,
+      "accepted_responses": [
+        "avaL",
+        "AvaL",
+        "AVAL",
+        "aval"
+      ],
+      "hint": "Uses retroflex L chillu - pure 'L', no 'u'!",
+      "step_title": "**അവൾ**? Pronunciation"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q7",
+      "question": "Why does **മുക്ക്** (mukku) have an 'u' sound at the end?",
+      "options": [
+        "Word-final chandrakkala creates 'u' sound",
+        "There's a ു modifier",
+        "It's a chillu",
+        "It's silent"
+      ],
+      "correct_answer": "Word-final chandrakkala creates 'u' sound",
+      "feedback": "Excellent! Chandrakkala's second function - 'half-u'!",
+      "step_title": "Why does **മുക്ക്** (mukku)"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q8",
+      "question": "How do you pronounce **നല്ല്**?",
+      "options": [
+        "nallu",
+        "naallu",
+        "nallu-a",
+        "nallu3"
+      ],
+      "correct_answer": "nallu",
+      "feedback": "Perfect! നല്ല് (nallu) = good. Essential adjective!",
+      "step_title": "**നല്ല്**? Pronunciation"
+    },
+    {
+      "type": "free_response",
+      "id": "q9",
+      "question": "What's the Malayalam word for 'she'?",
+      "ai_grading": false,
+      "accepted_responses": [
+        "avaL",
+        "AvaL",
+        "AVAL",
+        "aval"
+      ],
+      "hint": "അവൾ - uses retroflex L chillu!",
+      "step_title": "What's Malayalam word 's"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q10",
+      "question": "When does chandrakkala remove vowels vs. add 'u'?",
+      "options": [
+        "In conjuncts it removes, at word end it adds 'u'",
+        "Always removes",
+        "Always adds 'u'",
+        "Random"
+      ],
+      "correct_answer": "In conjuncts it removes, at word end it adds 'u'",
+      "feedback": "Excellent! Context determines function - key Malayalam concept!",
+      "step_title": "When does chandrakkala remove"
+    },
+    {
+      "type": "content",
+      "content_markdown": "## 🎊 Lesson 20 Complete!\n\n**✅ Chandrakkala Mastery:**\n- Vowel-killing in conjuncts\n- 'Half-u' at word endings\n- Distinction from chillus\n\n**✅ Total Words: 200!** 🎉\n\n**✅ Cumulative Reinforcement:**\n- **പ:** 2 words (പത്ത്, പാൽ)\n- **ക:** 3 words (മുക്ക്, ചുക്ക്, മൂക്ക്)\n- **ം:** Review words\n- **അ:** 3 words (അവൻ, അവൾ, നാല്)\n- **വ:** 2 words (അവൻ, അവൾ)\n\nRequirement met! ✅\n\n### What's Next?\nLesson 21: **Sanskrit Heavy Breath** - ഖ, ഘ, ഛ, ജ്ഞ\n\nAspirated consonants! 🚀",
+      "step_title": "Lesson 20 Complete!"
+    }
+  ],
+  "skills_learned": [
+    "Reading Malayalam script",
+    "Reading 10+ Malayalam words",
+    "Understanding Malayalam phonetics"
+  ]
+}

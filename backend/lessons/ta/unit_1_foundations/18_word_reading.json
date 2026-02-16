@@ -1,0 +1,146 @@
+{
+  "lesson_id": "ta_18_word_reading",
+  "language": "Tamil",
+  "title": "Reading Words",
+  "subtitle": "Putting It All Together",
+  "description": "Practice reading multi-syllabic Tamil words using all the rules you've learned so far.",
+  "estimated_minutes": 25,
+  "cefr_level": "A0",
+  "tags": ["script", "reading-practice", "basics"],
+  "skills_learned": [
+    "Reading words with multiple vowel markers",
+    "Applying softening rules in long words",
+    "Recognizing common word endings",
+    "Building reading speed and confidence"
+  ],
+  "steps": [
+    {
+      "type": "content",
+      "step_title": "Ready to Read",
+      "content_markdown": "## The Big Picture\n\nYou've learned the vowels, the consonants, the markers, and the phonology rules. Now, let's practice reading real Tamil words!"
+    },
+    {
+      "type": "content",
+      "step_title": "Step-by-Step Reading",
+      "content_markdown": "## How to Read a Word\n\n1. Identify each syllable (Consonant + Marker).\n2. Check for Pulli (pure consonants).\n3. Apply softening rules (is it between vowels? following a nasal?).\n4. Blend the sounds together."
+    },
+    {
+      "type": "content",
+      "step_title": "Word 1: பழக்கம்",
+      "content_markdown": "## Let's Read: பழக்கம்\n\n1. **ப** (pa) - Start of word.\n2. **ழ** (zha) - Between vowels.\n3. **க்** (k) - Pure consonant (stop).\n4. **க** (ka) - Hard because it follows க்.\n5. **ம்** (m) - Final pure consonant.\n\nResult: **pazhakkam** (habit/practice)"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q1",
+      "step_title": "Pronounce பழக்கம்",
+      "question": "How is **பழக்கம்** pronounced?",
+      "options": ["pazhakam", "pazhakkam", "pazhagam", "pazhaggam"],
+      "correct_answer": "pazhakkam",
+      "feedback": "Correct! The doubled 'k' makes it a sharp 'kk' sound."
+    },
+    {
+      "type": "content",
+      "step_title": "Word 2: உலகம்",
+      "content_markdown": "## Let's Read: உலகம்\n\n1. **உ** (u) - Initial vowel.\n2. **ல** (la) - Between vowels.\n3. **க** (ka -> ga) - Between vowels (softens!).\n4. **ம்** (m) - Final.\n\nResult: **ulagam** (world)"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q2",
+      "step_title": "Pronounce உலகம்",
+      "question": "How is **உலகம்** pronounced?",
+      "options": ["ulakam", "ulagam", "ulakamu", "ulukam"],
+      "correct_answer": "ulagam",
+      "feedback": "Perfect! The **க** softens to 'g' because it is between vowels."
+    },
+    {
+      "type": "content",
+      "step_title": "Word 3: தங்கம்",
+      "content_markdown": "## Let's Read: தங்கம்\n\n1. **த** (tha) - Start (dental th).\n2. **ங்** (ng) - Nasal.\n3. **க** (ka -> ga) - Following nasal (softens!).\n4. **ம்** (m) - Final.\n\nResult: **thangam** (gold)"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q3",
+      "step_title": "Pronounce தங்கம்",
+      "question": "How is **தங்கம்** pronounced?",
+      "options": ["thankam", "thangam", "dhangam", "tangam"],
+      "correct_answer": "thangam",
+      "feedback": "Excellent! The nasal **ங்** voices the following **க** to 'g'."
+    },
+    {
+      "type": "content",
+      "step_title": "Word 4: வானொலி",
+      "content_markdown": "## Let's Read: வானொலி\n\n1. **வா** (vaa) - Long aa.\n2. **ன** (na) - Alveolar n.\n3. **ொ** (o) - Short o marker.\n4. **லி** (li) - Short i.\n\nResult: **vaanoli** (radio)"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q4",
+      "step_title": "Pronounce வானொலி",
+      "question": "How is **வானொலி** pronounced?",
+      "options": ["vaanoli", "vanoli", "vaanooli", "vaaneli"],
+      "correct_answer": "vaanoli",
+      "feedback": "Correct! **வா** (vaa) + **னொ** (no) + **லி** (li)."
+    },
+    {
+      "type": "free_response",
+      "id": "q5",
+      "step_title": "Read the word",
+      "question": "Read this word: **பட்டம்** (pa + TTa + m)",
+      "ai_grading": false,
+      "accepted_responses": ["pattam"],
+      "hint": "It's the retroflex T, doubled."
+    },
+    {
+      "type": "free_response",
+      "id": "q6",
+      "step_title": "Read the word",
+      "question": "Read this word: **சிங்கம்** (si + ngga + m)",
+      "ai_grading": false,
+      "accepted_responses": ["singam"],
+      "hint": "It means Lion."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q7",
+      "step_title": "Read மரம்",
+      "question": "How is **மரம்** pronounced?",
+      "options": ["maram", "madam", "malam", "maramu"],
+      "correct_answer": "maram",
+      "feedback": "Correct! **ம** (ma) + **ர** (ra) + **ம்** (m).",
+      "step_title": "Read மரம்"
+    },
+    {
+      "type": "free_response",
+      "id": "q8",
+      "step_title": "Read காகம்",
+      "question": "Type the sound of **காகம்**",
+      "ai_grading": false,
+      "accepted_responses": ["kaagam"],
+      "hint": "Crow. Remember softening of middle k!",
+      "step_title": "Read காகம்"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q9",
+      "step_title": "Read சக்கரம்",
+      "question": "How is **சக்கரம்** pronounced?",
+      "options": ["sakaram", "sagaram", "sakkaram", "saggaram"],
+      "correct_answer": "sakkaram",
+      "feedback": "Excellent! The doubled **க்க** stays hard.",
+      "step_title": "Read சக்கரம்"
+    },
+    {
+      "type": "content",
+      "step_title": "Common Endings",
+      "content_markdown": "## Notice the Pattern\n\nMany Tamil nouns end in **-ம்** (-m). When reading, this final 'm' is often very soft, almost like a nasalized vowel, but for now, just pronounce it as a clear 'm'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q10",
+      "step_title": "Final Check",
+      "question": "Which of these words has a doubled consonant?",
+      "options": ["உலகம்", "பழக்கம்", "தங்கம்", "வானொலி"],
+      "correct_answer": "பழக்கம்",
+      "feedback": "Correct! The **க்க** is a doubled consonant."
+    }
+  ]
+}

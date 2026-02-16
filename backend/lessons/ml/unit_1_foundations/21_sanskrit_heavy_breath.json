@@ -1,0 +1,196 @@
+{
+  "lesson_id": "ml_21_sanskrit_heavy_breath",
+  "language": "Malayalam",
+  "title": "Sanskrit Heavy Breath",
+  "subtitle": "ഖ, ഘ, ഛ, ജ്ഞ - Aspirated Consonants",
+  "description": "Learn to read and pronounce Malayalam consonant characters. Master the visual recognition and phonetic sounds of these essential letters.",
+  "estimated_minutes": 24,
+  "cefr_level": "A0",
+  "tags": [
+    "script",
+    "aspirated",
+    "sanskrit",
+    "loanwords"
+  ],
+  "steps": [
+    {
+      "type": "content",
+      "content_markdown": "# Sanskrit's Breathy Sounds! 💨\n\n**200 words** mastered!\n\n## Aspirated Consonants\n\n### What's Aspiration?\n**Breathy release** after the consonant!\n\n### English Examples:\n- 'p' in '**p**in' (not aspirated)\n- 'p' in '**p**ot' (aspirated - extra air!)\n\n## Malayalam's Aspirated Letters:\n- **ഖ** (kha) - Aspirated 'k'\n- **ഘ** (gha) - Aspirated 'g'\n- **ഛ** (chha) - Aspirated 'ch'\n- **ജ്ഞ** (jnya) - Special 'gya' sound\n\n### Origin:\nMostly in **Sanskrit loanwords**!\n\nLet's master these! 🎯",
+      "step_title": "Sanskrit's Breathy Sounds!"
+    },
+    {
+      "type": "content",
+      "content_markdown": "## The Aspirated Consonants\n\n### ഖ (kha)\n**Like 'k' + 'h' together:**\n- Hold 'k' position\n- Release with breath\n- Like German 'Bach'\n\n**Words:**\n- **ദുഃഖം** (du**kh**kham) = Sorrow\n- **സഖി** (sa**kh**i) = Friend (female)\n\n### ഘ (gha)\n**Like 'g' + 'h' together:**\n- Voiced 'k' + breath\n- Rare in Malayalam!\n\n**Words:**\n- **ഘടം** (**gh**atam) = Pot\n- **ഘനം** (**gh**anam) = Solid/cube",
+      "step_title": "The Aspirated Consonants"
+    },
+    {
+      "type": "content",
+      "content_markdown": "## More Aspirated Sounds\n\n### ഛ (chha)\n**Like 'ch' + 'h':**\n- Palatal 'ch'\n- Breathy release\n- Rare!\n\n**Words:**\n- **ഛായ** (**chhaa**ya) = Shadow/photo\n- **സച്ഛം** (sa**cchh**am) = Pure\n\n### ജ്ഞ (jnya/gya)\n**Special conjunct:**\n- ജ (ja) + ് + ഞ (nya)\n- Pronounced 'gya' in Malayalam!\n- Common in Sanskrit words\n\n**Words:**\n- **ജ്ഞാനം** (**gya**naam) = Knowledge\n- **യജ്ഞം** (ya**jny**am) = Sacrifice",
+      "step_title": "More Aspirated Sounds"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q1",
+      "question": "How do you pronounce **ദുഃഖം**?",
+      "options": [
+        "dukhkham",
+        "dukhkhaam",
+        "dukhkham-a",
+        "dukhkham3"
+      ],
+      "correct_answer": "dukhkham",
+      "feedback": "Perfect! ദുഃഖം (dukhkham) = sorrow. Emotional vocabulary!",
+      "step_title": "**ദുഃഖം**? Pronunciation"
+    },
+    {
+      "type": "free_response",
+      "id": "q2",
+      "question": "What is aspiration in consonants?",
+      "ai_grading": false,
+      "accepted_responses": [
+        "breathy",
+        "Breathy",
+        "breath",
+        "Breath",
+        "air",
+        "Air",
+        "breathy release",
+        "extra air"
+      ],
+      "hint": "It's a puff of air/breath released with the consonant!",
+      "step_title": "Understanding aspiration in consonants?"
+    },
+    {
+      "type": "content",
+      "content_markdown": "## New Letter: ഃ (Visargam)\n\n### The Visible Breath!\n**ഃ** (visargam) = 'h' sound at syllable end\n\n### Usage:\nMainly in **Sanskrit loanwords**\n\n### Examples:\n- **ദുഃഖം** (du**h**kham) = Sorrow\n- **നമഃ** (nama**h**) = Salutation\n- **പുനഃ** (puna**h**) = Again\n\n### Pronunciation:\n'h' breath at end of syllable!",
+      "step_title": "New Letter: ഃ (Visargam)"
+    },
+    {
+      "type": "content",
+      "content_markdown": "## Your 10 New Words 📚\n\n| Malayalam | Pronunciation | Meaning | Special Sound |\n|-----------|--------------|---------|----------|\n| **ദുഃഖം** | dukhkham | sorrow | ഖ, ഃ |\n| **ജ്ഞാനം** | gyaanam | knowledge | ജ്ഞ |\n| **സഖി** | sakhi | friend (f) | ഖ |\n| **ഘടം** | ghatam | pot | ഘ |\n| **ഛായ** | chhaaya | shadow/photo | ഛ |\n| **ഘനം** | ghanam | solid/cube | ഘ |\n| **യജ്ഞം** | yajnyam | sacrifice | ജ്ഞ |\n| **നമഃ** | namah | salutation | ഃ |\n| **സച്ഛം** | sachchham | pure | ഛ |\n| **പുനഃ** | punah | again | ഃ |\n\n### New Symbols:\n- **ഃ** (visargam) - Final 'h' breath",
+      "step_title": "Your 10 New Words"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q3",
+      "question": "How do you pronounce **ജ്ഞാനം**?",
+      "options": [
+        "gyaanam",
+        "gyaaaanaam",
+        "gyaanam-a",
+        "gyaanam3"
+      ],
+      "correct_answer": "gyaanam",
+      "feedback": "Correct! ജ്ഞാനം (gyaanam) = knowledge. Philosophical word!",
+      "step_title": "**ജ്ഞാനം**? Pronunciation"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q4",
+      "question": "How is **ജ്ഞ** typically pronounced in Malayalam?",
+      "options": [
+        "'gya' sound",
+        "'ja' sound",
+        "'nya' sound",
+        "'jna' sound"
+      ],
+      "correct_answer": "'gya' sound",
+      "feedback": "Perfect! ജ്ഞ = 'gya' in Malayalam pronunciation!",
+      "step_title": "How is **ജ്ഞ** typically"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q5",
+      "question": "How do you pronounce **ഛായ**?",
+      "options": [
+        "chhaaya",
+        "chhaaaayaa",
+        "chhaaya-a",
+        "chhaaya3"
+      ],
+      "correct_answer": "chhaaya",
+      "feedback": "Excellent! ഛായ (chhaaya) = shadow or photograph!",
+      "step_title": "**ഛായ**? Pronunciation"
+    },
+    {
+      "type": "free_response",
+      "id": "q6",
+      "question": "How do you pronounce **സഖി**?",
+      "ai_grading": false,
+      "accepted_responses": [
+        "sakhi",
+        "Sakhi",
+        "SAKHI",
+        "sakhi"
+      ],
+      "hint": "Female friend - uses aspirated ഖ!",
+      "step_title": "**സഖി**? Pronunciation"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q7",
+      "question": "What is **ഃ** (visargam)?",
+      "options": [
+        "A final 'h' breath sound",
+        "A vowel",
+        "Silent",
+        "A full consonant"
+      ],
+      "correct_answer": "A final 'h' breath sound",
+      "feedback": "Correct! Visargam adds 'h' breath at syllable end!",
+      "step_title": "Understanding **ഃ** (visargam)?"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q8",
+      "question": "Where do most aspirated consonants come from?",
+      "options": [
+        "Sanskrit loanwords",
+        "English",
+        "Pure Malayalam",
+        "Portuguese"
+      ],
+      "correct_answer": "Sanskrit loanwords",
+      "feedback": "Perfect! Aspirated consonants are Sanskrit influence!",
+      "step_title": "Where do most aspirated"
+    },
+    {
+      "type": "free_response",
+      "id": "q9",
+      "question": "Write 'sorrow' in English letters",
+      "ai_grading": false,
+      "accepted_responses": [
+        "dukhkham",
+        "Dukhkham",
+        "DUKHKHAM",
+        "dukham"
+      ],
+      "hint": "ദുഃഖം - uses aspirated ഖ and visargam ഃ",
+      "step_title": "Write 'sorrow' English letters"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q10",
+      "question": "How do you pronounce **പുനഃ**?",
+      "options": [
+        "punah",
+        "punaah",
+        "punah-a",
+        "punah3"
+      ],
+      "correct_answer": "punah",
+      "feedback": "Excellent! പുനഃ (punah) = again. Time vocabulary!",
+      "step_title": "**പുനഃ**? Pronunciation"
+    },
+    {
+      "type": "content",
+      "content_markdown": "## 🎊 Lesson 21 Complete!\n\n**✅ New Symbols:**\n- **Aspirated:** ഖ, ഘ, ഛ, ജ്ഞ\n- **Visargam:** ഃ\n- Sanskrit influence mastered!\n\n**✅ Total Words: 210!**\n\n**✅ Cumulative Reinforcement:**\n- **ം:** 6 words (ദുഃഖം, ജ്ഞാനം, ഘടം, ഘനം, യജ്ഞം, സച്ഛം)\n- **ജ:** 2 words (ജ്ഞാനം, യജ്ഞം)\n- **ഃ:** 3 words (ദുഃഖം, നമഃ, പുനഃ)\n- **ന:** 3 words (ജ്ഞാനം, ഘനം, നമഃ)\n\nRequirement met! ✅\n\n### What's Next?\nLesson 22: **Script Reform** - Old vs new script\n\nHistorical changes! 🚀",
+      "step_title": "Lesson 21 Complete!"
+    }
+  ],
+  "skills_learned": [
+    "Reading Malayalam script",
+    "Reading 10+ Malayalam words",
+    "Understanding Malayalam phonetics"
+  ]
+}

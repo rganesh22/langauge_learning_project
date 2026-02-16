@@ -13,7 +13,7 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import { LANGUAGES } from '../contexts/LanguageContext';
 
-const API_BASE_URL = __DEV__ ? 'http://localhost:5001' : 'http://localhost:5001';
+const API_BASE_URL = __DEV__ ? 'http://localhost:8080' : 'http://localhost:8080';
 
 const ACTIVITIES = ['flashcards', 'reading', 'listening', 'writing', 'speaking', 'translation', 'conversation'];
 const ACTIVITY_COLORS = {

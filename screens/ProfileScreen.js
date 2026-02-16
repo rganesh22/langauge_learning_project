@@ -18,7 +18,7 @@ import { Ionicons } from '@expo/vector-icons';
 import WeeklyGoalsSection from '../components/WeeklyGoalsSection';
 import WeeklyOverviewSection from '../components/WeeklyOverviewSection';
 
-const API_BASE_URL = __DEV__ ? 'http://localhost:5001' : 'http://localhost:5001';
+const API_BASE_URL = __DEV__ ? 'http://localhost:8080' : 'http://localhost:8080';
 
 const ACTIVITIES = ['reading', 'listening', 'writing', 'speaking', 'translation', 'conversation', 'flashcards'];
 const ACTIVITY_COLORS = {
@@ -1411,9 +1411,17 @@ export default function ProfileScreen() {
             <Text style={styles.sectionTitle}>Languages</Text>
           </View>
           <View style={styles.streakContainer}>
-            <View style={styles.streakChipSmall}>
-              <Ionicons name="flame" size={16} color="#FF6B6B" />
-              <Text style={styles.streakChipSmallText}>{streakInfo.current_streak} Day{streakInfo.current_streak !== 1 ? 's' : ''}</Text>
+            <View style={[
+              styles.streakChipSmall, 
+              streakInfo.current_streak === 0 && styles.streakChipGrey
+            ]}>
+              <Ionicons name="flame" size={16} color={streakInfo.current_streak === 0 ? "#999" : "#FF6B6B"} />
+              <Text style={[
+                styles.streakChipSmallText,
+                streakInfo.current_streak === 0 && styles.streakChipTextGrey
+              ]}>
+                {streakInfo.current_streak} Day{streakInfo.current_streak !== 1 ? 's' : ''}
+              </Text>
             </View>
             {streakInfo.longest_streak > streakInfo.current_streak && (
               <Text style={styles.longestStreakText}>Best: {streakInfo.longest_streak}</Text>
@@ -1423,51 +1431,37 @@ export default function ProfileScreen() {
         
         {/* Language Chips with Levels - Collapsible */}
         {languagesExpanded && (
-          <View style={styles.languageChipsContainer}>
-            {(() => {
-              // Group languages by CEFR level
-              const levelOrder = ['C2', 'C1', 'B2', 'B1', 'A2', 'A1', 'A0'];
-              const languagesByLevel = {};
-              
-              learningLanguages.forEach((item) => {
-                const lang = LANGUAGES.find(l => l.code === item.language);
-                if (!lang) return;
-                
-                const level = item.level || 'A0';
-                if (!languagesByLevel[level]) {
-                  languagesByLevel[level] = [];
-                }
-                languagesByLevel[level].push({ ...item, lang });
-              });
-              
-              // Render categories from highest to lowest, only if they have languages
-              return levelOrder.map((level) => {
-                const langs = languagesByLevel[level];
-                if (!langs || langs.length === 0) return null;
-                
-                return (
-                  <View key={level} style={styles.cefrCategory}>
-                    <View style={[styles.cefrCategoryHeader, { backgroundColor: LEVEL_COLORS[level]?.bg || '#6C757D' }]}>
-                      <Text style={styles.cefrCategoryText}>{level}</Text>
+          <View style={styles.languagesCard}>
+            <View style={styles.languageIconsGrid}>
+              {learningLanguages
+                .sort((a, b) => {
+                  // Sort by level: highest to lowest
+                  const levelOrder = { 'C2': 7, 'C1': 6, 'B2': 5, 'B1': 4, 'A2': 3, 'A1': 2, 'A0': 1 };
+                  return (levelOrder[b.level] || 0) - (levelOrder[a.level] || 0);
+                })
+                .map((item) => {
+                  const lang = LANGUAGES.find(l => l.code === item.language);
+                  if (!lang) return null;
+                  
+                  return (
+                    <View key={lang.code} style={styles.languageIconWithLevel}>
+                      <View style={[styles.languageIconLarge, { backgroundColor: lang.color }]}>
+                        {lang.nativeChar ? (
+                          <Text style={[
+                            styles.languageIconChar,
+                            lang.code === 'urdu' && { fontFamily: 'Noto Nastaliq Urdu' }
+                          ]}>{lang.nativeChar}</Text>
+                        ) : (
+                          <Text style={styles.languageIconCode}>{lang.langCode?.toUpperCase() || lang.countryCode}</Text>
+                        )}
+                      </View>
+                      <View style={[styles.levelBadgeSmall, { backgroundColor: LEVEL_COLORS[item.level]?.bg || '#6C757D' }]}>
+                        <Text style={styles.levelBadgeSmallText}>{item.level}</Text>
+                      </View>
                     </View>
-                    <View style={styles.cefrLanguageIcons}>
-                      {langs.map((item) => (
-                        <View key={item.lang.code} style={[styles.cefrLanguageIcon, { backgroundColor: item.lang.color }]}>
-                          {item.lang.nativeChar ? (
-                            <Text style={[
-                              styles.cefrLanguageChar,
-                              item.lang.code === 'urdu' && { fontFamily: 'Noto Nastaliq Urdu' }
-                            ]}>{item.lang.nativeChar}</Text>
-                          ) : (
-                            <Text style={styles.cefrLanguageCode}>{item.lang.langCode?.toUpperCase() || item.lang.countryCode}</Text>
-                          )}
-                        </View>
-                      ))}
-                    </View>
-                  </View>
-                );
-              });
-            })()}
+                  );
+                })}
+            </View>
           </View>
         )}
       </View>
@@ -4145,10 +4139,17 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#FFE5E5',
   },
+  streakChipGrey: {
+    backgroundColor: '#F5F5F5',
+    borderColor: '#E0E0E0',
+  },
   streakChipSmallText: {
     fontSize: 13,
     fontWeight: '700',
     color: '#FF6B6B',
+  },
+  streakChipTextGrey: {
+    color: '#999',
   },
   streakContainer: {
     flexDirection: 'column',
@@ -4169,6 +4170,55 @@ const styles = StyleSheet.create({
     marginTop: 12,
     gap: 12,
     paddingHorizontal: 4,
+  },
+  // Single card for all languages
+  languagesCard: {
+    backgroundColor: '#F5F5F5',
+    borderRadius: 12,
+    padding: 16,
+    marginTop: 12,
+    marginHorizontal: 4,
+  },
+  languageIconsGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 16,
+    justifyContent: 'flex-start',
+  },
+  languageIconWithLevel: {
+    alignItems: 'center',
+    gap: 6,
+  },
+  languageIconLarge: {
+    width: 40,
+    height: 40,
+    borderRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  languageIconChar: {
+    fontSize: 18,
+    color: '#FFFFFF',
+    fontWeight: '700',
+  },
+  languageIconCode: {
+    fontSize: 12,
+    color: '#FFFFFF',
+    fontWeight: '700',
+    letterSpacing: 0.5,
+  },
+  levelBadgeSmall: {
+    paddingHorizontal: 8,
+    paddingVertical: 3,
+    borderRadius: 8,
+    minWidth: 32,
+    alignItems: 'center',
+  },
+  levelBadgeSmallText: {
+    fontSize: 10,
+    fontWeight: '700',
+    color: '#FFFFFF',
+    letterSpacing: 0.5,
   },
   languageChip: {
     flexDirection: 'row',

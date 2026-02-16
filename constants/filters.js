@@ -4,6 +4,7 @@ export const MASTERY_FILTERS = [
   { label: 'Learning', value: 'learning', emoji: '▶', color: { bg: '#4A90E2', text: '#FFFFFF' } },
   { label: 'Review', value: 'review', emoji: '↻', color: { bg: '#FF9500', text: '#FFFFFF' } },
   { label: 'Mastered', value: 'mastered', emoji: '✓', color: { bg: '#50C878', text: '#FFFFFF' } },
+  { label: 'Due', value: 'due', icon: 'time-outline', color: { bg: '#FF6B6B', text: '#FFFFFF' } },
 ];
 
 export const WORD_CLASSES = [

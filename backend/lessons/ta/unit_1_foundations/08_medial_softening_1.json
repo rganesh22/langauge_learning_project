@@ -1,0 +1,144 @@
+{
+  "lesson_id": "ta_08_medial_softening_1",
+  "language": "Tamil",
+  "title": "Medial Softening I",
+  "subtitle": "When 'K' becomes 'G'",
+  "description": "Discover the first rule of Tamil phonology: how hard consonants soften when they appear between two vowels.",
+  "estimated_minutes": 25,
+  "cefr_level": "A0",
+  "tags": ["script", "phonology", "pronunciation"],
+  "skills_learned": [
+    "Understanding the concept of medial softening",
+    "Pronouncing க as 'g' or 'h' between vowels",
+    "Pronouncing ச as 's' or 'j' between vowels",
+    "Reading simple words with softened consonants"
+  ],
+  "steps": [
+    {
+      "type": "content",
+      "step_title": "The Magic Rule",
+      "content_markdown": "## Location Matters!\n\nIn Tamil, the sound of a 'hard' consonant (Vallinam) changes depending on where it is in a word. \n\nWhen a hard consonant sits **between two vowels**, it 'softens'. It loses its hard edge.",
+      "step_title": "The Magic Rule"
+    },
+    {
+      "type": "content",
+      "step_title": "Softening க (Ka)",
+      "content_markdown": "## க: From 'K' to 'G'\n\nAt the **start** of a word, **க** is 'k'.\n**Between vowels**, **க** sounds like 'g' (as in **go**) or a soft 'h'.\n\nExample: **அ** (a) + **க** (ka) + **ம்** (m) = **அகம்** (agam)\n*Meaning: Inside*",
+      "step_title": "Softening க (Ka)"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q1",
+      "question": "How is the word **அகம்** pronounced?",
+      "options": ["akam", "agam", "aham", "gam"],
+      "correct_answer": "agam",
+      "feedback": "Correct! Since **க** is between the vowels **அ** and the inherent 'a' in **க**, it softens to 'g'.",
+      "step_title": "Pronounce அகம்"
+    },
+    {
+      "type": "content",
+      "step_title": "Softening ச (Ca)",
+      "content_markdown": "## ச: From 'Ch' to 'S'\n\nAt the **start** of a word, **ச** is 's' or 'ch'.\n**Between vowels**, **ச** almost always sounds like 's' (as in **sun**) or sometimes a soft 'j'.\n\nExample: **அ** (a) + **ச** (ca) + **ம்** (m) = **அசம்** (asam)",
+      "step_title": "Softening ச (Ca)"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q2",
+      "question": "How is **அசம்** pronounced?",
+      "options": ["acham", "asam", "ajam", "sam"],
+      "correct_answer": "asam",
+      "feedback": "Perfect! The **ச** softens to an 's' sound between vowels.",
+      "step_title": "Pronounce அசம்"
+    },
+    {
+      "type": "content",
+      "step_title": "Why Soften?",
+      "content_markdown": "## Ease of Speech\n\nSoftening happens because it's easier to keep your vocal cords vibrating between two vowels than to stop them for a hard 'k' or 'ch' sound. \n\nTamil script uses one letter for both sounds, and you choose the pronunciation based on the position!",
+      "step_title": "Why Soften?"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q3",
+      "question": "When does a hard consonant soften in Tamil?",
+      "options": ["At the start of a word", "At the end of a word", "Between two vowels", "When it has a Pulli"],
+      "correct_answer": "Between two vowels",
+      "feedback": "Excellent! This is the core rule of Tamil phonology.",
+      "step_title": "Identify the Rule"
+    },
+    {
+      "type": "content",
+      "step_title": "Practice: க and ச",
+      "content_markdown": "## Compare Sounds\n\n| Position | க (ka) | ச (ca) |\n|----------|--------|--------|\n| Start | **k**a | **s**a / **ch**a |\n| Middle | **g**a | **s**a |",
+      "step_title": "Practice: க and ச"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q4",
+      "question": "How would you read the sequence **கக** (if it were a word)?",
+      "options": ["kaka", "kaga", "gaga", "gaka"],
+      "correct_answer": "kaga",
+      "feedback": "Correct! The first **க** is at the start (k), the second is between vowels (g).",
+      "step_title": "Read கக"
+    },
+    {
+      "type": "free_response",
+      "id": "q5",
+      "question": "In the word **நக** (naga), what sound does the **க** make?",
+      "ai_grading": false,
+      "accepted_responses": ["ga", "g"],
+      "hint": "It is between the inherent 'a' of 'na' and the inherent 'a' of 'ka'.",
+      "step_title": "Identify the Sound"
+    },
+    {
+      "type": "free_response",
+      "id": "q6",
+      "question": "In the word **நிச** (nisa), what sound does the **ச** make?",
+      "ai_grading": false,
+      "accepted_responses": ["sa", "s"],
+      "hint": "It is between the vowel 'i' and the inherent 'a' of 'ca'.",
+      "step_title": "Identify the Sound"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q7",
+      "question": "Does the letter change its shape when it softens?",
+      "options": ["Yes, it gets a dot", "Yes, it changes completely", "No, the shape stays the same", "Only for long vowels"],
+      "correct_answer": "No, the shape stays the same",
+      "feedback": "Correct! The script stays the same; only the pronunciation changes based on context.",
+      "step_title": "Shape and Softening"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q8",
+      "question": "What is the starting sound of **சகம்**?",
+      "options": ["sa", "cha", "ga", "ja"],
+      "correct_answer": "sa",
+      "feedback": "Perfect! **ச** often starts as 's' or 'ch'.",
+      "step_title": "Start of சகம்"
+    },
+    {
+      "type": "free_response",
+      "id": "q9",
+      "question": "Type the sound of the middle letter in **சக** (saga)",
+      "ai_grading": false,
+      "accepted_responses": ["ga", "g"],
+      "hint": "It's between vowels!",
+      "step_title": "Middle of சக"
+    },
+    {
+      "type": "content",
+      "step_title": "Summary of k/g",
+      "content_markdown": "## Recap\n\n- **க** = 'k' (start) or 'g' (middle)\n- **ச** = 's/ch' (start) or 's' (middle)\n\nNext, we'll see how this rule applies to the other hard consonants: T, th, and P.",
+      "step_title": "Summary of k/g"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q10",
+      "question": "True or False: Softening makes Tamil easier to speak.",
+      "options": ["True", "False"],
+      "correct_answer": "True",
+      "feedback": "Exactly! It's all about phonetic economy.",
+      "step_title": "Phonetic Economy"
+    }
+  ]
+}

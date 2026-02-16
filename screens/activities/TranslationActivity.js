@@ -408,7 +408,7 @@ export default function TranslationActivity({ route, navigation }) {
           <>
             {/* AI-Generated Activity Title */}
             {activity?.activity_name && (
-              <View style={styles.activityTitleCard}>
+              <View style={[styles.activityTitleCard, { marginBottom: hasSubmissions ? 20 : 12 }]}>
                 <SafeText style={[
                   styles.activityTitleText,
                   language === 'urdu' && { fontFamily: 'Noto Nastaliq Urdu', textAlign: 'center' }
@@ -804,11 +804,11 @@ export default function TranslationActivity({ route, navigation }) {
                             { color: colors.primary },
                             language === 'urdu' && { fontFamily: 'Noto Nastaliq Urdu' }
                           ]}>
-                            {transliteration.nativeScriptRenderings.submissionNumber || getSubmissionNumberLabel(language)} {index + 1}
+                            {transliteration.nativeScriptRenderings.submissionNumber || getSubmissionNumberLabel(language)}{' '}{index + 1}
                           </SafeText>
-                          {isExpanded && transliteration.showTransliterations && transliteration.transliterations.submissionNumber && (
+                          {transliteration.showTransliterations && transliteration.transliterations.submissionNumber && (
                             <SafeText style={styles.translitText}>
-                              {transliteration.transliterations.submissionNumber} {index + 1}
+                              {transliteration.transliterations.submissionNumber}{' '}{index + 1}
                             </SafeText>
                           )}
                           {isExpanded && (
@@ -818,11 +818,11 @@ export default function TranslationActivity({ route, navigation }) {
                                 { color: colors.primary },
                                 language === 'urdu' && { fontFamily: 'Noto Nastaliq Urdu' }
                               ]}>
-                                {transliteration.nativeScriptRenderings.overallScore || getOverallScoreLabel(language)} {Math.round(submission.overall_score || 0)}%
+                                {transliteration.nativeScriptRenderings.overallScore || getOverallScoreLabel(language)}{' '}{Math.round(submission.overall_score || 0)}%
                               </SafeText>
                               {transliteration.showTransliterations && transliteration.transliterations.overallScore && (
                                 <SafeText style={styles.translitText}>
-                                  {transliteration.transliterations.overallScore} {Math.round(submission.overall_score || 0)}%
+                                  {transliteration.transliterations.overallScore}{' '}{Math.round(submission.overall_score || 0)}%
                                 </SafeText>
                               )}
                             </View>
@@ -848,7 +848,7 @@ export default function TranslationActivity({ route, navigation }) {
                                 {transliteration.nativeScriptRenderings.feedback || getFeedbackLabel(language)}
                               </SafeText>
                               {transliteration.showTransliterations && transliteration.transliterations.feedback && (
-                                <SafeText style={styles.translitText}>
+                                <SafeText style={[styles.translitText, { marginBottom: 8 }]}>
                                   {transliteration.transliterations.feedback}
                                 </SafeText>
                               )}
@@ -863,7 +863,7 @@ export default function TranslationActivity({ route, navigation }) {
                               )}
                               {transliteration.showTransliterations && transliteration.transliterations[`submission_${index}_feedback`] && renderText(
                                 transliteration.transliterations[`submission_${index}_feedback`],
-                                styles.translitText,
+                                [styles.translitText, { marginTop: 8 }],
                                 true,
                                 language
                               )}
@@ -881,21 +881,38 @@ export default function TranslationActivity({ route, navigation }) {
                                 {transliteration.nativeScriptRenderings.sentenceAnalysis || getSentenceAnalysisLabel(language)}
                               </SafeText>
                               {transliteration.showTransliterations && transliteration.transliterations.sentenceAnalysis && (
-                                <SafeText style={styles.translitText}>
+                                <SafeText style={[styles.translitText, { marginBottom: 12 }]}>
                                   {transliteration.transliterations.sentenceAnalysis}
                                 </SafeText>
                               )}
                               {submission.sentence_feedback.map((sentenceFb, sentenceIdx) => (
                                 <View key={sentenceIdx} style={styles.sentenceFeedbackItem}>
-                                  <SafeText style={[
-                                    styles.sentenceFeedbackNumber,
-                                    language === 'urdu' && { fontFamily: 'Noto Nastaliq Urdu' }
-                                  ]}>
-                                    {transliteration.nativeScriptRenderings.sentenceLabel || getSentenceLabel(language)} {sentenceIdx + 1}
-                                  </SafeText>
+                                  <View style={styles.sentenceFeedbackHeader}>
+                                    <SafeText style={[
+                                      styles.sentenceFeedbackNumber,
+                                      language === 'urdu' && { fontFamily: 'Noto Nastaliq Urdu' }
+                                    ]}>
+                                      {transliteration.nativeScriptRenderings.sentenceLabel || getSentenceLabel(language)}{' '}{sentenceIdx + 1}
+                                    </SafeText>
+                                    {sentenceFb.score !== undefined && (
+                                      <View style={styles.sentenceScoreIndicator}>
+                                        <Ionicons 
+                                          name={sentenceFb.score >= 70 ? "checkmark-circle" : "close-circle"} 
+                                          size={20} 
+                                          color={sentenceFb.score >= 70 ? "#10B981" : "#EF4444"} 
+                                        />
+                                        <SafeText style={[
+                                          styles.sentenceScoreText,
+                                          { color: sentenceFb.score >= 70 ? "#10B981" : "#EF4444" }
+                                        ]}>
+                                          {Math.round(sentenceFb.score)}%
+                                        </SafeText>
+                                      </View>
+                                    )}
+                                  </View>
                                   {transliteration.showTransliterations && transliteration.transliterations.sentenceLabel && (
                                     <SafeText style={styles.translitText}>
-                                      {transliteration.transliterations.sentenceLabel} {sentenceIdx + 1}
+                                      {transliteration.transliterations.sentenceLabel}{' '}{sentenceIdx + 1}
                                     </SafeText>
                                   )}
                                   
@@ -908,7 +925,7 @@ export default function TranslationActivity({ route, navigation }) {
                                       {transliteration.nativeScriptRenderings.source || getSourceLabel(language)}:
                                     </SafeText>
                                     {transliteration.showTransliterations && transliteration.transliterations.source && (
-                                      <SafeText style={styles.translitText}>
+                                      <SafeText style={[styles.translitText, { marginBottom: 4 }]}>
                                         {transliteration.transliterations.source}:
                                       </SafeText>
                                     )}
@@ -932,7 +949,7 @@ export default function TranslationActivity({ route, navigation }) {
                                       {transliteration.nativeScriptRenderings.yourTranslationSingle || getYourTranslationSingleLabel(language)}:
                                     </SafeText>
                                     {transliteration.showTransliterations && transliteration.transliterations.yourTranslationSingle && (
-                                      <SafeText style={styles.translitText}>
+                                      <SafeText style={[styles.translitText, { marginBottom: 4 }]}>
                                         {transliteration.transliterations.yourTranslationSingle}:
                                       </SafeText>
                                     )}
@@ -956,7 +973,7 @@ export default function TranslationActivity({ route, navigation }) {
                                       {transliteration.nativeScriptRenderings.expected || getExpectedLabel(language)}:
                                     </SafeText>
                                     {transliteration.showTransliterations && transliteration.transliterations.expected && (
-                                      <SafeText style={styles.translitText}>
+                                      <SafeText style={[styles.translitText, { marginBottom: 4 }]}>
                                         {transliteration.transliterations.expected}:
                                       </SafeText>
                                     )}
@@ -981,7 +998,7 @@ export default function TranslationActivity({ route, navigation }) {
                                         {transliteration.nativeScriptRenderings.feedback || getFeedbackLabel(language)}:
                                       </SafeText>
                                       {transliteration.showTransliterations && transliteration.transliterations.feedback && (
-                                        <SafeText style={styles.translitText}>
+                                        <SafeText style={[styles.translitText, { marginBottom: 4 }]}>
                                           {transliteration.transliterations.feedback}:
                                         </SafeText>
                                       )}
@@ -996,7 +1013,7 @@ export default function TranslationActivity({ route, navigation }) {
                                       )}
                                       {transliteration.showTransliterations && transliteration.transliterations[`submission_${index}_sentence_${sentenceIdx}_feedback`] && renderText(
                                         transliteration.transliterations[`submission_${index}_sentence_${sentenceIdx}_feedback`],
-                                        styles.translitText,
+                                        [styles.translitText, { marginTop: 4 }],
                                         true,
                                         language
                                       )}
@@ -1157,8 +1174,8 @@ const styles = StyleSheet.create({
   activityTitleCard: {
     backgroundColor: '#FFF',
     borderRadius: 12,
-    padding: 20,
-    marginBottom: 16,
+    padding: 16,
+    marginBottom: 12,
     alignItems: 'center',
   },
   activityTitleText: {
@@ -1170,7 +1187,7 @@ const styles = StyleSheet.create({
   activityTitleTranslit: {
     fontSize: 16,
     color: '#666',
-    marginTop: 0,
+    marginTop: 4,
     fontStyle: 'italic',
     textAlign: 'center',
   },
@@ -1178,7 +1195,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFF',
     borderRadius: 12,
     padding: 16,
-    marginBottom: 16,
+    marginBottom: 12,
   },
   instructionsTitle: {
     fontSize: 18,
@@ -1194,20 +1211,20 @@ const styles = StyleSheet.create({
   translitText: {
     fontSize: 14,
     color: '#666',
-    marginTop: 0,
+    marginTop: 4,
     fontStyle: 'italic',
   },
   progressCard: {
     backgroundColor: '#FFF',
     borderRadius: 12,
     padding: 16,
-    marginBottom: 16,
+    marginBottom: 12,
   },
   progressHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 12,
+    marginBottom: 8,
   },
   progressTitle: {
     fontSize: 16,
@@ -1233,13 +1250,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFF',
     borderRadius: 12,
     padding: 16,
-    marginBottom: 16,
+    marginBottom: 12,
   },
   sentenceHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 16,
+    marginBottom: 12,
   },
   sentenceNumber: {
     fontSize: 14,
@@ -1259,10 +1276,10 @@ const styles = StyleSheet.create({
     fontSize: 10,
     opacity: 0.8,
     fontStyle: 'italic',
-    marginTop: 0,
+    marginTop: 2,
   },
   sourceSentenceContainer: {
-    marginBottom: 20,
+    marginBottom: 16,
     padding: 16,
     backgroundColor: '#F9F9F9',
     borderRadius: 8,
@@ -1285,7 +1302,7 @@ const styles = StyleSheet.create({
     fontStyle: 'italic',
   },
   translationInputContainer: {
-    marginBottom: 20,
+    marginBottom: 16,
   },
   translationInputLabel: {
     fontSize: 14,
@@ -1339,19 +1356,19 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFF',
     borderRadius: 12,
     padding: 16,
-    marginBottom: 16,
+    marginBottom: 12,
   },
   overviewHeaderButton: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 12,
+    marginBottom: 8,
   },
   overviewTitle: {
     fontSize: 18,
     fontWeight: '600',
     color: '#1A1A1A',
-    marginBottom: 12,
+    marginBottom: 8,
   },
   overviewItem: {
     flexDirection: 'row',
@@ -1393,7 +1410,7 @@ const styles = StyleSheet.create({
     fontSize: 11,
     color: '#666',
     fontStyle: 'italic',
-    marginTop: 0,
+    marginTop: 2,
   },
   submitButton: {
     flexDirection: 'row',
@@ -1401,7 +1418,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 16,
     borderRadius: 12,
-    marginBottom: 16,
+    marginBottom: 12,
     gap: 8,
   },
   submitButtonDisabled: {
@@ -1435,7 +1452,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFF',
     borderRadius: 12,
     padding: 16,
-    marginBottom: 16,
+    marginBottom: 12,
   },
   submissionHeader: {
     flexDirection: 'row',
@@ -1462,6 +1479,7 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     backgroundColor: '#F0FDFA',
     borderRadius: 12,
+    marginTop: 12,
   },
   scoreText: {
     fontSize: 20,
@@ -1522,11 +1540,25 @@ const styles = StyleSheet.create({
     backgroundColor: '#F9F9F9',
     borderRadius: 8,
   },
+  sentenceFeedbackHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 8,
+  },
+  sentenceScoreIndicator: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+  },
+  sentenceScoreText: {
+    fontSize: 14,
+    fontWeight: '600',
+  },
   sentenceFeedbackNumber: {
     fontSize: 12,
     fontWeight: '600',
     color: '#666',
-    marginBottom: 8,
   },
   sentenceFeedbackRow: {
     marginBottom: 8,

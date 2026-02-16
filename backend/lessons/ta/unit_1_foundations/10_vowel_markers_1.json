@@ -1,0 +1,141 @@
+{
+  "lesson_id": "ta_10_vowel_markers_1",
+  "language": "Tamil",
+  "title": "Vowel Markers I",
+  "subtitle": "Aa, I, and Ii",
+  "description": "Learn how to combine consonants with the first three vowel markers to create new sounds.",
+  "estimated_minutes": 25,
+  "cefr_level": "A0",
+  "tags": ["script", "vowel-markers", "basics"],
+  "skills_learned": [
+    "Identifying the long 'aa' marker (கால்)",
+    "Identifying the short 'i' marker",
+    "Identifying the long 'ii' marker",
+    "Reading syllables like கா, கி, and கீ"
+  ],
+  "steps": [
+    {
+      "type": "content",
+      "step_title": "Combining Sounds",
+      "content_markdown": "## Uyir Mei\n\nWhen a vowel follows a consonant, we don't write the full vowel letter. Instead, we add a **marker** (or sign) to the consonant. This combination is called **Uyir Mei** (Life-Body)."
+    },
+    {
+      "type": "content",
+      "step_title": "The 'Aa' Marker",
+      "content_markdown": "## The Long 'Aa' Marker: ா\n\nTo add the long 'aa' sound (ஆ), we add a vertical stroke **ா** after the consonant. This stroke is called a 'kaal'.\n\n| Combination | Result | Sound |\n|-------------|--------|-------|\n| **க** + **ஆ** | **கா** | kaa |\n| **ம** + **ஆ** | **மா** | maa |\n| **ப** + **ஆ** | **பா** | paa |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q1",
+      "step_title": "Identify கா Sound",
+      "question": "How is **கா** pronounced?",
+      "options": ["ka", "kaa", "ki", "ke"],
+      "correct_answer": "kaa",
+      "feedback": "Correct! The **ா** marker adds the long 'aa' sound."
+    },
+    {
+      "type": "content",
+      "step_title": "The 'I' Marker",
+      "content_markdown": "## The Short 'I' Marker: ி\n\nTo add the short 'i' sound (இ), we add a small hook **ி** on top of the consonant.\n\n| Combination | Result | Sound |\n|-------------|--------|-------|\n| **க** + **இ** | **கி** | ki |\n| **ம** + **இ** | **மி** | mi |\n| **ப** + **இ** | **பி** | pi |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q2",
+      "step_title": "Identify மி Sound",
+      "question": "How is **மி** pronounced?",
+      "options": ["mi", "mii", "ma", "me"],
+      "correct_answer": "mi",
+      "feedback": "Perfect! The hook on top adds the short 'i' sound."
+    },
+    {
+      "type": "content",
+      "step_title": "The 'Ii' Marker",
+      "content_markdown": "## The Long 'Ii' Marker: ீ\n\nTo add the long 'ii' sound (ஈ), we add a hook with a small loop **ீ** on top of the consonant.\n\n| Combination | Result | Sound |\n|-------------|--------|-------|\n| **க** + **ஈ** | **கீ** | kii |\n| **ம** + **ஈ** | **மீ** | mii |\n| **ப** + **ஈ** | **பீ** | pii |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q3",
+      "step_title": "Identify பீ Sound",
+      "question": "How is **பீ** pronounced?",
+      "options": ["pi", "pii", "pa", "pu"],
+      "correct_answer": "pii",
+      "feedback": "Excellent! The looped hook adds the long 'ii' sound."
+    },
+    {
+      "type": "content",
+      "step_title": "Reading Practice",
+      "content_markdown": "## Read the Words\n\nTry reading these simple combinations:\n\n1. **பா** (paa) + **ப** (pa) = **பாப** (paaba - remember softening!)\n2. **கி** (ki) + **ரி** (ri) = **கிரி** (kiri)\n3. **மீ** (mii) + **ன** (na) = **மீன** (miina)"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q4",
+      "step_title": "Read கிரி",
+      "question": "How is **கிரி** pronounced?",
+      "options": ["kiri", "giri", "kira", "gira"],
+      "correct_answer": "kiri",
+      "feedback": "Correct! At the start of a word, it stays 'k'."
+    },
+    {
+      "type": "free_response",
+      "id": "q5",
+      "step_title": "Write the Sound",
+      "question": "Write the sound of **மா** in English letters.",
+      "ai_grading": false,
+      "accepted_responses": ["maa"],
+      "hint": "It's 'ma' with a long 'aa' marker."
+    },
+    {
+      "type": "free_response",
+      "id": "q6",
+      "step_title": "Write the Sound",
+      "question": "Write the sound of **நி** in English letters.",
+      "ai_grading": false,
+      "accepted_responses": ["ni"],
+      "hint": "It's the dental 'n' with a short 'i' marker."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q7",
+      "step_title": "Identify சா",
+      "question": "What sound does **சா** make?",
+      "options": ["sa", "saa", "si", "su"],
+      "correct_answer": "saa",
+      "feedback": "Correct! **சா** is 'saa'.",
+      "step_title": "Identify சா"
+    },
+    {
+      "type": "free_response",
+      "id": "q8",
+      "step_title": "Identify சி",
+      "question": "Type the sound of **சி**",
+      "ai_grading": false,
+      "accepted_responses": ["si"],
+      "hint": "It's 'sa' with an 'i' hook.",
+      "step_title": "Identify சி"
+    },
+    {
+      "type": "content",
+      "step_title": "Visual Summary",
+      "content_markdown": "## Marker Recap\n\n- **ா** = aa (after)\n- **ி** = i (top)\n- **ீ** = ii (top with loop)"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q9",
+      "step_title": "Final Check",
+      "question": "Which of these represents the sound 'kii'?",
+      "options": ["கி", "கீ", "கா", "கு"],
+      "correct_answer": "கீ",
+      "feedback": "Correct! **கீ** is 'kii'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q10",
+      "step_title": "Review Markers",
+      "question": "Which marker is placed *after* the consonant?",
+      "options": ["ா (aa)", "ி (i)", "ீ (ii)", "None of them"],
+      "correct_answer": "ா (aa)",
+      "feedback": "Correct! The 'aa' marker follows the letter.",
+      "step_title": "Review Markers"
+    }
+  ]
+}

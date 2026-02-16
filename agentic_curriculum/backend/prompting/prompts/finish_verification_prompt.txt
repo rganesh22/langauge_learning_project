@@ -1,0 +1,34 @@
+
+[TASK COMPLETION VERIFICATION]
+You have indicated that you want to FINISH. Before I accept this, please verify:
+
+**Original Task:** {task}
+
+**Your Completion Summary:** {completion_summary}
+
+**Plan Status:** {plan_status}
+
+**Verification Checklist:**
+1. Have I FULLY completed every part of the original task?
+2. Did I actually execute all necessary actions (not just plan them)?
+3. Did I validate any lessons I created using validate_lesson?
+4. Did I load any created lessons into the database using load_lesson_to_db?
+5. Are ALL plan steps marked as "complete"? If not, I MUST complete them first.
+6. Are there any edge cases or requirements I overlooked?
+
+⚠️ CRITICAL: If ANY plan steps are NOT marked as "complete", you MUST continue working.
+Use mark_step_complete to update steps as you finish them.
+Use get_plan_status to verify all steps are complete.
+
+**If you realize you're not actually done:**
+- Continue working with Thought -> Action
+- Complete the remaining work
+- Mark remaining plan steps as complete
+
+**If you are CERTAIN everything is done AND all plan steps are complete:**
+- Respond with: Finish: [brief confirmation that all requirements are met]
+
+This is your ONE verification check. Your next Finish: will be accepted immediately.
+
+Iterations: {iterations}/{max_iterations}
+Cost: ${total_cost:.4f}

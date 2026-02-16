@@ -16,7 +16,7 @@ import { Ionicons } from '@expo/vector-icons';
 import SafeText from '../components/SafeText';
 import { LanguageContext, LANGUAGES } from '../contexts/LanguageContext';
 
-const API_BASE_URL = __DEV__ ? 'http://localhost:5001' : 'http://localhost:5001';
+const API_BASE_URL = __DEV__ ? 'http://localhost:8080' : 'http://localhost:8080';
 
 const ACTIVITY_ORDER = ['flashcards', 'reading', 'listening', 'writing', 'speaking', 'translation', 'conversation'];
 
@@ -358,9 +358,17 @@ export default function DashboardScreen({ navigation }) {
         <View style={styles.headerLeft}>
           <Ionicons name="language" size={24} color="#4A90E2" style={styles.appIcon} />
           <Text style={styles.appTitle}>Fluo</Text>
-          <View style={styles.streakChip}>
-            <Ionicons name="flame" size={16} color="#FF6B6B" />
-            <Text style={styles.streakChipText}>{streak} Day Streak</Text>
+          <View style={[
+            styles.streakChip,
+            streak === 0 && styles.streakChipGrey
+          ]}>
+            <Ionicons name="flame" size={16} color={streak === 0 ? "#999" : "#FF6B6B"} />
+            <Text style={[
+              styles.streakChipText,
+              streak === 0 && styles.streakChipTextGrey
+            ]}>
+              {streak} Day{streak !== 1 ? 's' : ''}
+            </Text>
           </View>
         </View>
       </View>
@@ -420,12 +428,14 @@ export default function DashboardScreen({ navigation }) {
                 {...panResponder.panHandlers}
               >
                 {weeklyStats.map((day, index) => {
-                  const maxActivities = Math.max(...weeklyStats.map(d => d.activities), 1);
+                  // Combine activities and lessons for total count
+                  const totalCount = (day.activities || 0) + (day.lessons || 0);
+                  const maxTotal = Math.max(...weeklyStats.map(d => (d.activities || 0) + (d.lessons || 0)), 1);
                   // Calculate height in pixels (max height = 100px)
                   const maxBarHeight = 100;
-                  const activityHeight = day.activities === 0 
+                  const barHeight = totalCount === 0 
                     ? 4 
-                    : Math.max((day.activities / maxActivities) * maxBarHeight, 10);
+                    : Math.max((totalCount / maxTotal) * maxBarHeight, 10);
                   const isToday = weekOffset === 0 && index === weeklyStats.length - 1;
                   
                   // Format date as M/D/YY (e.g., 1/2/26)
@@ -439,14 +449,14 @@ export default function DashboardScreen({ navigation }) {
                     <TouchableOpacity
                       key={day.date}
                       style={styles.barColumn}
-                      onPress={() => openDayActivities(day.date, day.activities)}
-                      disabled={day.activities === 0}
+                      onPress={() => openDayActivities(day.date, totalCount)}
+                      disabled={totalCount === 0}
                       activeOpacity={0.7}
                     >
                       {/* Count bubble above bar */}
-                      {day.activities > 0 && (
+                      {totalCount > 0 && (
                         <View style={styles.countBubble}>
-                          <Text style={styles.countBubbleText}>{day.activities}</Text>
+                          <Text style={styles.countBubbleText}>{totalCount}</Text>
                         </View>
                       )}
                       {/* Bar */}
@@ -454,8 +464,8 @@ export default function DashboardScreen({ navigation }) {
                         style={[
                           styles.bar,
                           { 
-                            height: activityHeight,
-                            backgroundColor: day.activities === 0 
+                            height: barHeight,
+                            backgroundColor: totalCount === 0 
                               ? '#E8E8E8' 
                               : (isToday ? '#4A90E2' : '#A8D5FF')
                           }
@@ -479,14 +489,21 @@ export default function DashboardScreen({ navigation }) {
                 <View style={styles.statItem}>
                   <Ionicons name="checkmark-circle" size={20} color="#50C878" />
                   <Text style={styles.statValue}>
-                    {weeklyStats.reduce((sum, day) => sum + day.activities, 0)}
+                    {weeklyStats.reduce((sum, day) => sum + (day.activities || 0), 0)}
                   </Text>
                   <Text style={styles.statLabel}>Activities</Text>
                 </View>
                 <View style={styles.statItem}>
+                  <Ionicons name="school" size={20} color="#F97316" />
+                  <Text style={styles.statValue}>
+                    {weeklyStats.reduce((sum, day) => sum + (day.lessons || 0), 0)}
+                  </Text>
+                  <Text style={styles.statLabel}>Lessons</Text>
+                </View>
+                <View style={styles.statItem}>
                   <Ionicons name="book" size={20} color="#4A90E2" />
                   <Text style={styles.statValue}>
-                    {weeklyStats.reduce((sum, day) => sum + day.words, 0)}
+                    {weeklyStats.reduce((sum, day) => sum + (day.words || 0), 0)}
                   </Text>
                   <Text style={styles.statLabel}>Words</Text>
                 </View>
@@ -686,12 +703,12 @@ export default function DashboardScreen({ navigation }) {
             <View style={styles.modalHeader}>
               <Text style={styles.modalTitle}>
                 {selectedDayActivities?.date ? 
-                  `Activities on ${new Date(selectedDayActivities.date).toLocaleDateString('en-US', { 
+                  `Learning on ${new Date(selectedDayActivities.date).toLocaleDateString('en-US', { 
                     month: 'short', 
                     day: 'numeric', 
                     year: 'numeric' 
                   })}` : 
-                  'Activities'
+                  'Learning'
                 }
               </Text>
               <TouchableOpacity onPress={closeDayActivitiesModal}>
@@ -715,17 +732,32 @@ export default function DashboardScreen({ navigation }) {
                     translation: { primary: '#8B5CF6', light: '#F3E8FF' },
                     conversation: { primary: '#9B59B6', light: '#F4E6FF' },
                     flashcard: { primary: '#14B8A6', light: '#E0F7F4' },
+                    lesson: { primary: '#F97316', light: '#FFF7ED' },  // Orange for lessons
                   };
                   const colors = activityColors[activityType] || { primary: '#666', light: '#F5F5F5' };
                   
-                  // Get language info
-                  const language = LANGUAGES.find(l => l.code === activity.language);
+                  // Get language info - check both code and langCode
+                  const language = LANGUAGES.find(l => l.code === activity.language || l.langCode === activity.language);
+
 
                   return (
                     <TouchableOpacity
                       key={`${activity.id}-${index}`}
                       style={styles.historicalActivityCard}
-                      onPress={() => openHistoricalActivity(activity.id, activityType)}
+                      onPress={() => {
+                        if (activityType === 'lesson' && activity.lesson_id) {
+                          closeDayActivitiesModal();
+                          // Pass the full language code (e.g., 'malayalam') not just langCode ('ml')
+                          const languageCode = language?.code || activity.language;
+                          navigation.navigate('Lessons', { 
+                            openLessonId: activity.lesson_id,
+                            language: languageCode
+                          });
+                        } else if (activityType !== 'lesson') {
+                          openHistoricalActivity(activity.id, activityType);
+                        }
+                      }}
+                      disabled={activityType === 'lesson' && !activity.lesson_id}
                     >
                       {/* Language icon on the left */}
                       <View style={[styles.historicalLanguageIcon, { backgroundColor: language?.color || '#4A90E2' }]}>
@@ -768,6 +800,7 @@ export default function DashboardScreen({ navigation }) {
                             activityType === 'speaking' ? 'mic' : 
                             activityType === 'translation' ? 'language' :
                             activityType === 'conversation' ? 'chatbubbles' : 
+                            activityType === 'lesson' ? 'school' :
                             'albums'
                           } 
                           size={18} 
@@ -781,7 +814,7 @@ export default function DashboardScreen({ navigation }) {
             ) : (
               <View style={styles.modalEmptyContainer}>
                 <Ionicons name="calendar-outline" size={48} color="#CCC" />
-                <Text style={styles.modalEmptyText}>No activities completed this day</Text>
+                <Text style={styles.modalEmptyText}>No learning completed this day</Text>
               </View>
             )}
           </View>
@@ -835,10 +868,16 @@ const styles = StyleSheet.create({
     marginLeft: 12,
     gap: 4,
   },
+  streakChipGrey: {
+    backgroundColor: '#F5F5F5',
+  },
   streakChipText: {
     fontSize: 14,
     fontWeight: '700',
     color: '#FF6B6B',
+  },
+  streakChipTextGrey: {
+    color: '#999',
   },
   streakBanner: {
     backgroundColor: '#FFF5F5',

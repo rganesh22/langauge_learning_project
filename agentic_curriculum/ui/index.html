@@ -1,0 +1,2862 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agentic Curriculum Studio</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+      background: #0a0e1a;
+      color: #e2e8f0;
+      overflow: hidden;
+    }
+    
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+    #app {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Header - Sleek Design with Black & Yellow Theme */
+    .header {
+      background: linear-gradient(90deg, #1a1a1a 0%, #000000 100%);
+      padding: 14px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid #ffd700;
+      -webkit-app-region: drag;
+      z-index: 1000;
+      position: relative;
+    }
+
+    .header h1 {
+      font-size: 18px;
+      font-weight: 600;
+      color: #ffd700;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      letter-spacing: -0.3px;
+      -webkit-app-region: no-drag;
+      cursor: default;
+    }
+
+    .header h1 i {
+      color: #ffd700;
+      font-size: 20px;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 8px;
+      -webkit-app-region: no-drag;
+    }
+
+    .btn {
+      padding: 8px 14px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 500;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255, 215, 0, 0.1);
+      color: #ffd700;
+      border: 1px solid rgba(255, 215, 0, 0.3);
+    }
+
+    .btn:hover {
+      background: rgba(255, 215, 0, 0.2);
+      border-color: #ffd700;
+      color: #fff;
+      transform: translateY(-1px);
+    }
+
+    .btn i {
+      font-size: 13px;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+      color: #000;
+      border: none;
+      font-weight: 600;
+    }
+
+    .btn-primary:hover {
+      background: linear-gradient(135deg, #ffed4e 0%, #fff59d 100%);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(255, 215, 0, 0.4);
+    }
+
+    /* Main Content */
+    .main-content {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+    }
+
+    /* Left Panel - Task Creation */
+    .left-panel {
+      width: 420px;
+      background: #0f1420;
+      border-right: 1px solid rgba(255, 215, 0, 0.15);
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
+
+    .left-panel::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .left-panel::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .left-panel::-webkit-scrollbar-thumb {
+      background: rgba(255, 215, 0, 0.3);
+      border-radius: 3px;
+    }
+
+    .panel-section-title {
+      font-size: 11px;
+      font-weight: 600;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      padding: 20px 20px 10px 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .panel-section-title i {
+      color: #ffd700;
+      font-size: 13px;
+    }
+
+    .task-input-section {
+      padding: 0 20px 16px 20px;
+    }
+
+    .input-label {
+      display: block;
+      margin-bottom: 8px;
+      color: #94a3b8;
+      font-size: 11px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 110px;
+      padding: 12px;
+      background: rgba(15, 23, 42, 0.5);
+      border: 1px solid rgba(255, 215, 0, 0.2);
+      border-radius: 6px;
+      color: #e2e8f0;
+      font-family: inherit;
+      font-size: 13px;
+      line-height: 1.6;
+      resize: vertical;
+      transition: all 0.2s ease;
+    }
+
+    textarea:focus {
+      outline: none;
+      border-color: #ffd700;
+      background: rgba(15, 23, 42, 0.8);
+      box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.1);
+    }
+
+    textarea::placeholder {
+      color: #475569;
+    }
+
+    /* Collapsible Task Settings */
+    .task-settings {
+      border-top: 1px solid rgba(255, 215, 0, 0.15);
+      background: rgba(255, 215, 0, 0.02);
+    }
+
+    .settings-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 20px;
+      cursor: pointer;
+      user-select: none;
+      transition: background 0.2s ease;
+    }
+
+    .settings-header:hover {
+      background: rgba(255, 215, 0, 0.05);
+    }
+
+    .settings-header-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .settings-header-left i {
+      color: #ffd700;
+      font-size: 13px;
+    }
+
+    .settings-header-title {
+      font-size: 12px;
+      font-weight: 600;
+      color: #cbd5e1;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .settings-collapse-icon {
+      color: #64748b;
+      font-size: 11px;
+      transition: transform 0.2s ease;
+    }
+
+    .settings-header.expanded .settings-collapse-icon {
+      transform: rotate(180deg);
+    }
+
+    .settings-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+
+    .settings-content.expanded {
+      max-height: 2000px; /* Increased for context summarization section */
+    }
+
+    .settings-body {
+      padding: 16px 20px 20px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    /* Subsetting (Nested Collapsible) Styles */
+    .subsetting-container {
+      background: rgba(15, 23, 42, 0.3);
+      border: 1px solid rgba(255, 215, 0, 0.1);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .subsetting-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 14px;
+      cursor: pointer;
+      background: rgba(255, 215, 0, 0.03);
+      transition: all 0.2s ease;
+    }
+
+    .subsetting-header:hover {
+      background: rgba(255, 215, 0, 0.08);
+    }
+
+    .subsetting-header-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+      font-weight: 500;
+      color: #cbd5e1;
+    }
+
+    .subsetting-header-left i {
+      color: #ffd700;
+      font-size: 13px;
+    }
+
+    .subsetting-collapse-icon {
+      transition: transform 0.3s ease;
+      color: #94a3b8;
+      font-size: 12px;
+    }
+
+    .subsetting-header.expanded .subsetting-collapse-icon {
+      transform: rotate(180deg);
+    }
+
+    .subsetting-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+
+    .subsetting-content.expanded {
+      max-height: 800px;
+    }
+
+    .subsetting-body {
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      background: rgba(0, 0, 0, 0.2);
+    }
+
+    .setting-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .setting-item label {
+      display: block;
+      margin-bottom: 6px;
+      color: #94a3b8;
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    select, input[type="number"] {
+      width: 100%;
+      padding: 9px 11px;
+      background: rgba(15, 23, 42, 0.5);
+      border: 1px solid rgba(255, 215, 0, 0.2);
+      border-radius: 6px;
+      color: #e2e8f0;
+      font-family: inherit;
+      font-size: 12px;
+      transition: all 0.2s ease;
+    }
+
+    select:focus, input:focus {
+      outline: none;
+      border-color: #ffd700;
+      background: rgba(15, 23, 42, 0.8);
+      box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.1);
+    }
+
+    select option {
+      background: #1a1f35;
+      color: #e2e8f0;
+    }
+
+    /* Toggle Container */
+    .toggle-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px;
+      background: rgba(15, 23, 42, 0.4);
+      border: 1px solid rgba(255, 215, 0, 0.15);
+      border-radius: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .toggle-container:hover {
+      background: rgba(15, 23, 42, 0.6);
+    }
+
+    .toggle-label-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      flex: 1;
+    }
+
+    .toggle-title {
+      font-size: 12px;
+      font-weight: 500;
+      color: #cbd5e1;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .toggle-title i {
+      font-size: 11px;
+      color: #ffd700;
+    }
+
+    .toggle-desc {
+      font-size: 10px;
+      color: #64748b;
+      line-height: 1.4;
+    }
+
+    .toggle-switch {
+      position: relative;
+      width: 40px;
+      height: 22px;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .toggle-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .toggle-slider {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(71, 85, 105, 0.5);
+      border-radius: 22px;
+      transition: 0.2s;
+      border: 1px solid rgba(71, 85, 105, 0.3);
+    }
+
+    .toggle-slider:before {
+      position: absolute;
+      content: "";
+      height: 16px;
+      width: 16px;
+      left: 2px;
+      bottom: 2px;
+      background: white;
+      border-radius: 50%;
+      transition: 0.2s;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    }
+
+    .toggle-switch input:checked + .toggle-slider {
+      background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+      border-color: transparent;
+    }
+
+    .toggle-switch input:checked + .toggle-slider:before {
+      transform: translateX(18px);
+    }
+
+    /* View Link */
+    .view-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 10px;
+      color: #ffd700;
+      cursor: pointer;
+      text-decoration: none;
+      margin-top: 6px;
+      transition: color 0.2s ease;
+    }
+
+    .view-link:hover {
+      color: #ffed4e;
+    }
+
+    .view-link i {
+      font-size: 9px;
+    }
+
+    /* Start Task Button */
+    .start-task-container {
+      padding: 16px 20px;
+      border-top: 1px solid rgba(255, 215, 0, 0.15);
+      background: rgba(255, 215, 0, 0.02);
+    }
+
+    #startTaskBtn {
+      width: 100%;
+      padding: 12px;
+      font-size: 13px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    #startTaskBtn i {
+      font-size: 14px;
+    }
+
+    /* Right Panel - Task List */
+    .right-panel {
+      flex: 1;
+      background: #0a0e1a;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      padding-top: 12px;
+    }
+
+    .tasks-header {
+      padding: 16px 24px;
+      border-bottom: 1px solid rgba(255, 215, 0, 0.15);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .tasks-header-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .tasks-header-left i {
+      color: #ffd700;
+      font-size: 16px;
+    }
+
+    .tasks-header h2 {
+      font-size: 14px;
+      font-weight: 600;
+      color: #e2e8f0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .tasks-count {
+      font-size: 11px;
+      color: #64748b;
+      background: rgba(255, 215, 0, 0.1);
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-weight: 600;
+    }
+
+    /* Task Controls - Filters and Batch Actions */
+    .tasks-controls {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 24px;
+      border-bottom: 1px solid rgba(255, 215, 0, 0.1);
+      background: rgba(15, 23, 42, 0.3);
+      gap: 16px;
+    }
+
+    .tasks-filters {
+      display: flex;
+      align-items: center;
+    }
+
+    .batch-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-batch {
+      padding: 6px 12px;
+      border-radius: 6px;
+      border: 1px solid;
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-batch-cancel {
+      background: rgba(239, 68, 68, 0.1);
+      border-color: rgba(239, 68, 68, 0.3);
+      color: #ef4444;
+    }
+
+    .btn-batch-cancel:hover {
+      background: rgba(239, 68, 68, 0.2);
+      border-color: rgba(239, 68, 68, 0.5);
+    }
+
+    .btn-batch-delete {
+      background: rgba(220, 38, 38, 0.1);
+      border-color: rgba(220, 38, 38, 0.3);
+      color: #dc2626;
+    }
+
+    .btn-batch-delete:hover {
+      background: rgba(220, 38, 38, 0.2);
+      border-color: rgba(220, 38, 38, 0.5);
+    }
+
+    .btn-batch-clear {
+      background: rgba(148, 163, 184, 0.1);
+      border-color: rgba(148, 163, 184, 0.3);
+      color: #94a3b8;
+    }
+
+    .btn-batch-clear:hover {
+      background: rgba(148, 163, 184, 0.2);
+      border-color: rgba(148, 163, 184, 0.5);
+    }
+
+    #tasksList {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px 24px;
+    }
+
+    #tasksList::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    #tasksList::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    #tasksList::-webkit-scrollbar-thumb {
+      background: rgba(255, 215, 0, 0.3);
+      border-radius: 3px;
+    }
+
+    /* Task Cards */
+    .task-card {
+      background: rgba(15, 20, 32, 0.6);
+      border: 1px solid rgba(255, 215, 0, 0.15);
+      border-radius: 8px;
+      padding: 14px;
+      margin-bottom: 12px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      position: relative;
+    }
+
+    .task-card:hover {
+      background: rgba(15, 20, 32, 0.8);
+      border-color: rgba(255, 215, 0, 0.3);
+      transform: translateX(4px);
+    }
+
+    .task-card.selected {
+      border-color: #3b82f6;
+      background: rgba(59, 130, 246, 0.1);
+    }
+
+    .task-checkbox {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+      z-index: 10;
+    }
+
+    .task-card.running {
+      border-left: 3px solid #ffd700;
+      background: rgba(255, 215, 0, 0.05);
+    }
+
+    .task-card.complete {
+      border-left: 3px solid #10b981;
+    }
+
+    .task-card.failed {
+      border-left: 3px solid #ef4444;
+    }
+
+    .task-card.cancelled {
+      border-left: 3px solid #eab308;
+    }
+
+    .task-card.warning {
+      border-left: 3px solid #eab308;
+    }
+
+    .task-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+      margin-bottom: 10px;
+      gap: 10px;
+    }
+
+    .task-prompt {
+      font-size: 13px;
+      font-weight: 500;
+      color: #cbd5e1;
+      line-height: 1.5;
+      flex: 1;
+    }
+
+    .task-status {
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .task-status.running {
+      background: rgba(255, 215, 0, 0.15);
+      color: #a5b4fc;
+    }
+
+    .task-status.complete {
+      background: rgba(16, 185, 129, 0.15);
+      color: #6ee7b7;
+    }
+
+    .task-status.failed {
+      background: rgba(239, 68, 68, 0.15);
+      color: #fca5a5;
+    }
+
+    .task-status.cancelled {
+      background: rgba(234, 179, 8, 0.15);
+      color: #fde047;
+    }
+
+    .task-status.warning {
+      background: rgba(234, 179, 8, 0.15);
+      color: #fde047;
+    }
+
+    .task-meta {
+      display: flex;
+      gap: 14px;
+      font-size: 11px;
+      color: #64748b;
+      margin-top: 8px;
+      font-weight: 500;
+    }
+
+    .task-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .task-meta-item i {
+      font-size: 10px;
+      color: #ffd700;
+    }
+
+    .spinner {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      border: 2px solid rgba(255, 215, 0, 0.2);
+      border-top-color: #ffd700;
+      border-radius: 50%;
+      animation: spin 0.6s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes slideInRight {
+      from {
+        transform: translateX(400px);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+
+    @keyframes slideOutRight {
+      from {
+        transform: translateX(0);
+        opacity: 1;
+      }
+      to {
+        transform: translateX(400px);
+        opacity: 0;
+      }
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 80px 20px;
+      color: #64748b;
+    }
+
+    .empty-state i {
+      font-size: 48px;
+      margin-bottom: 16px;
+      opacity: 0.3;
+      color: #ffd700;
+    }
+
+    .empty-state-text {
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    /* Modals */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(4px);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal.show {
+      display: flex;
+    }
+
+    .modal-content {
+      background: #1a1f35;
+      border-radius: 12px;
+      width: 90%;
+      max-width: 900px;
+      max-height: 85vh;
+      display: flex;
+      flex-direction: column;
+      border: 1px solid rgba(255, 215, 0, 0.2);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 24px;
+      border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+    }
+
+    .modal-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: #e2e8f0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .modal-title i {
+      color: #ffd700;
+    }
+
+    .close-btn {
+      background: none;
+      border: none;
+      color: #64748b;
+      font-size: 24px;
+      cursor: pointer;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .close-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: #e2e8f0;
+    }
+
+    .modal-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px 24px;
+    }
+
+    .modal-body::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .modal-body::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .modal-body::-webkit-scrollbar-thumb {
+      background: rgba(255, 215, 0, 0.3);
+      border-radius: 3px;
+    }
+
+    /* Toolbox Specific Styles */
+    .tool-card {
+      background: rgba(15, 23, 42, 0.4);
+      border: 1px solid rgba(255, 215, 0, 0.15);
+      border-radius: 8px;
+      margin-bottom: 10px;
+      overflow: hidden;
+      transition: all 0.2s ease;
+    }
+
+    .tool-card:hover {
+      border-color: rgba(255, 215, 0, 0.3);
+    }
+
+    .tool-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 16px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .tool-header:hover {
+      background: rgba(255, 215, 0, 0.05);
+    }
+
+    .tool-header-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex: 1;
+    }
+
+    .tool-icon {
+      width: 32px;
+      height: 32px;
+      background: rgba(255, 215, 0, 0.15);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffd700;
+      font-size: 14px;
+    }
+
+    .tool-name {
+      font-size: 13px;
+      font-weight: 600;
+      color: #cbd5e1;
+      font-family: 'Monaco', 'Courier New', monospace;
+    }
+
+    .tool-collapse-icon {
+      color: #64748b;
+      font-size: 12px;
+      transition: transform 0.2s ease;
+    }
+
+    .tool-header.expanded .tool-collapse-icon {
+      transform: rotate(180deg);
+    }
+
+    .tool-body {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+
+    .tool-body.expanded {
+      max-height: 600px;
+    }
+
+    .tool-content {
+      padding: 16px;
+      border-top: 1px solid rgba(255, 215, 0, 0.1);
+    }
+
+    .tool-description {
+      color: #94a3b8;
+      font-size: 12px;
+      line-height: 1.6;
+      margin-bottom: 14px;
+    }
+
+    .tool-params-title {
+      font-size: 11px;
+      font-weight: 600;
+      color: #ffd700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 10px;
+    }
+
+    .tool-param {
+      background: rgba(15, 23, 42, 0.6);
+      padding: 10px;
+      border-radius: 6px;
+      margin-bottom: 8px;
+      border-left: 2px solid #ffd700;
+    }
+
+    .param-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 4px;
+    }
+
+    .param-name {
+      font-weight: 600;
+      color: #ffed4e;
+      font-family: 'Monaco', 'Courier New', monospace;
+      font-size: 12px;
+    }
+
+    .param-type {
+      background: rgba(255, 215, 0, 0.2);
+      color: #a5b4fc;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 10px;
+      font-family: 'Monaco', 'Courier New', monospace;
+      font-weight: 500;
+    }
+
+    .param-required {
+      background: rgba(239, 68, 68, 0.2);
+      color: #fca5a5;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 9px;
+      text-transform: uppercase;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+    }
+
+    .param-description {
+      color: #64748b;
+      font-size: 11px;
+      line-height: 1.5;
+    }
+
+    /* Config Modal Specific */
+    .config-section {
+      margin-bottom: 20px;
+    }
+
+    .config-section-title {
+      font-size: 11px;
+      font-weight: 600;
+      color: #ffd700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .config-section-title i {
+      font-size: 12px;
+    }
+
+    .config-field {
+      margin-bottom: 14px;
+    }
+
+    .config-field label {
+      display: block;
+      margin-bottom: 6px;
+      color: #94a3b8;
+      font-size: 11px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+
+    .config-field input,
+    .config-field select {
+      width: 100%;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .btn-block {
+      flex: 1;
+      justify-content: center;
+    }
+
+    /* Stats Modal */
+    .stat-card {
+      background: rgba(15, 23, 42, 0.4);
+      border: 1px solid rgba(255, 215, 0, 0.15);
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 12px;
+    }
+
+    .stat-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+
+    .stat-icon {
+      width: 36px;
+      height: 36px;
+      background: rgba(255, 215, 0, 0.15);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffd700;
+      font-size: 16px;
+    }
+
+    .stat-label {
+      font-size: 11px;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-weight: 600;
+    }
+
+    .stat-value {
+      font-size: 24px;
+      font-weight: 700;
+      color: #e2e8f0;
+    }
+
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    /* README Modal */
+    .readme-content {
+      background: rgba(15, 23, 42, 0.4);
+      border: 1px solid rgba(255, 215, 0, 0.15);
+      border-radius: 8px;
+      padding: 20px;
+    }
+
+    .readme-content h1,
+    .readme-content h2,
+    .readme-content h3 {
+      color: #e2e8f0;
+      margin-top: 20px;
+      margin-bottom: 10px;
+    }
+
+    .readme-content h1 {
+      font-size: 20px;
+      border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+      padding-bottom: 10px;
+    }
+
+    .readme-content h2 {
+      font-size: 16px;
+    }
+
+    .readme-content h3 {
+      font-size: 14px;
+    }
+
+    .readme-content p {
+      color: #94a3b8;
+      line-height: 1.6;
+      margin-bottom: 12px;
+    }
+
+    .readme-content code {
+      background: rgba(0, 0, 0, 0.3);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: 'Monaco', 'Courier New', monospace;
+      font-size: 12px;
+      color: #ffed4e;
+    }
+
+    .readme-content pre {
+      background: rgba(0, 0, 0, 0.3);
+      padding: 12px;
+      border-radius: 6px;
+      overflow-x: auto;
+      margin: 12px 0;
+    }
+
+    .readme-content pre code {
+      background: none;
+      padding: 0;
+    }
+
+    /* Enhanced Task Detail View */
+    .task-detail-container {
+      padding: 0;
+    }
+
+    .task-header-stats {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+    
+    @media (max-width: 1400px) {
+      .task-header-stats {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+    
+    @media (max-width: 800px) {
+      .task-header-stats {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .task-stat-card {
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid rgba(255, 215, 0, 0.15);
+      border-radius: 12px;
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      transition: all 0.2s ease;
+    }
+
+    .task-stat-card:hover {
+      border-color: rgba(255, 215, 0, 0.3);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(255, 215, 0, 0.1);
+    }
+
+    .task-stat-card.status-success {
+      border-color: rgba(16, 185, 129, 0.3);
+    }
+
+    .task-stat-card.status-error {
+      border-color: rgba(239, 68, 68, 0.3);
+    }
+
+    .task-stat-card.status-running {
+      border-color: rgba(59, 130, 246, 0.3);
+    }
+
+    .task-stat-card.status-warning {
+      border-color: rgba(234, 179, 8, 0.3);
+    }
+
+    .stat-icon-large {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+
+    .status-success .stat-icon-large {
+      background: rgba(16, 185, 129, 0.1);
+      color: #10b981;
+    }
+
+    .status-error .stat-icon-large {
+      background: rgba(239, 68, 68, 0.1);
+      color: #ef4444;
+    }
+
+    .status-running .stat-icon-large {
+      background: rgba(59, 130, 246, 0.1);
+      color: #3b82f6;
+    }
+
+    .status-warning .stat-icon-large {
+      background: rgba(234, 179, 8, 0.1);
+      color: #eab308;
+    }
+
+    .stat-info {
+      flex: 1;
+    }
+
+    .task-prompt-card {
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid rgba(255, 215, 0, 0.15);
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 24px;
+    }
+
+    .task-prompt-card .card-header {
+      background: rgba(255, 215, 0, 0.05);
+      padding: 12px 16px;
+      border-bottom: 1px solid rgba(255, 215, 0, 0.15);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #ffd700;
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .task-prompt-card .card-content {
+      padding: 16px;
+      color: #e2e8f0;
+      line-height: 1.6;
+      font-size: 14px;
+    }
+
+    /* Task Configuration Section */
+    .task-config-section {
+      margin-bottom: 24px;
+    }
+
+    .config-card {
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid rgba(255, 215, 0, 0.1);
+      border-radius: 8px;
+      margin-bottom: 12px;
+      overflow: hidden;
+    }
+
+    .config-card-header {
+      background: rgba(255, 215, 0, 0.05);
+      padding: 10px 14px;
+      border-bottom: 1px solid rgba(255, 215, 0, 0.1);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 600;
+      font-size: 13px;
+      color: #e2e8f0;
+    }
+
+    .config-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+      padding: 14px;
+    }
+
+    .config-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .config-label {
+      font-size: 11px;
+      color: #94a3b8;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-weight: 500;
+    }
+
+    .config-value {
+      font-size: 13px;
+      color: #e2e8f0;
+      font-weight: 500;
+    }
+
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 8px;
+      padding: 14px;
+    }
+
+    .tool-badge {
+      background: rgba(59, 130, 246, 0.1);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      color: #3b82f6;
+      padding: 6px 10px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .config-content-text {
+      padding: 14px;
+    }
+
+    .timeline-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+      color: #ffd700;
+      font-weight: 600;
+      font-size: 15px;
+    }
+
+    .timeline-badge {
+      background: rgba(255, 215, 0, 0.15);
+      color: #ffd700;
+      padding: 4px 12px;
+      border-radius: 12px;
+      font-size: 12px;
+      margin-left: auto;
+    }
+
+    .timeline-container {
+      position: relative;
+      padding: 8px 0;
+      transition: all 0.3s ease;
+    }
+
+    .empty-timeline {
+      text-align: center;
+      padding: 60px 20px;
+      color: #64748b;
+    }
+
+    .empty-timeline i {
+      font-size: 48px;
+      margin-bottom: 16px;
+      opacity: 0.3;
+    }
+
+    .timeline-item {
+      position: relative;
+      padding-left: 40px;
+      margin-bottom: 16px;
+    }
+
+    .timeline-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .timeline-dot {
+      position: absolute;
+      left: 0;
+      top: 8px;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      border: 3px solid #0a0e1a;
+      z-index: 10;
+    }
+
+    .timeline-dot.start {
+      background: #3b82f6;
+      box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.2);
+    }
+
+    .timeline-dot.iteration {
+      background: #94a3b8;
+      box-shadow: 0 0 0 4px rgba(148, 163, 184, 0.2);
+    }
+
+    .timeline-dot.thought {
+      background: #a855f7;
+      box-shadow: 0 0 0 4px rgba(168, 85, 247, 0.2);
+    }
+
+    .timeline-dot.action {
+      background: #ffd700;
+      box-shadow: 0 0 0 4px rgba(255, 215, 0, 0.2);
+    }
+
+    .timeline-dot.observation {
+      background: #10b981;
+      box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.2);
+    }
+
+    .timeline-dot.cost {
+      background: #eab308;
+      box-shadow: 0 0 0 4px rgba(234, 179, 8, 0.2);
+    }
+
+    .timeline-dot.complete {
+      background: #10b981;
+      box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.2);
+    }
+
+    .timeline-dot.error {
+      background: #ef4444;
+      box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.2);
+    }
+
+    .timeline-dot.default {
+      background: #64748b;
+      box-shadow: 0 0 0 4px rgba(100, 116, 139, 0.2);
+    }
+
+    .timeline-dot.pulsing {
+      background: #3b82f6;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.2);
+      }
+      50% {
+        box-shadow: 0 0 0 8px rgba(59, 130, 246, 0.4);
+      }
+    }
+
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: 7px;
+      top: 24px;
+      bottom: -16px;
+      width: 2px;
+      background: linear-gradient(180deg, rgba(255, 215, 0, 0.2) 0%, rgba(255, 215, 0, 0) 100%);
+    }
+
+    .timeline-item:last-child::before {
+      display: none;
+    }
+
+    .timeline-card {
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid rgba(255, 215, 0, 0.15);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: all 0.2s ease;
+    }
+
+    .timeline-card:hover {
+      border-color: rgba(255, 215, 0, 0.3);
+      transform: translateX(4px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    .timeline-card .card-body {
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .timeline-card .card-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+      float: left;
+      margin-right: 12px;
+    }
+
+    .timeline-card .card-title {
+      color: #ffd700;
+      font-weight: 600;
+      font-size: 14px;
+      margin: 0;
+    }
+
+    .timeline-card .card-title code {
+      background: rgba(255, 215, 0, 0.1);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 13px;
+      color: #ffd700;
+    }
+
+    .timeline-card .card-text {
+      color: #94a3b8;
+      font-size: 13px;
+      line-height: 1.6;
+      clear: both;
+    }
+
+    .timeline-card .thought-text {
+      color: #e2e8f0;
+      font-style: italic;
+      padding: 8px 12px;
+      background: rgba(168, 85, 247, 0.05);
+      border-left: 3px solid #a855f7;
+      border-radius: 4px;
+    }
+
+    .timeline-card .error-text {
+      color: #fca5a5;
+      padding: 8px 12px;
+      background: rgba(239, 68, 68, 0.1);
+      border-left: 3px solid #ef4444;
+      border-radius: 4px;
+      font-family: 'Monaco', 'Courier New', monospace;
+      font-size: 12px;
+    }
+
+    .timeline-card .card-time {
+      color: #64748b;
+      font-size: 11px;
+      margin-top: 4px;
+    }
+
+    .iteration-card {
+      background: rgba(148, 163, 184, 0.1);
+      border: 1px dashed rgba(148, 163, 184, 0.3);
+      padding: 8px 16px;
+      text-align: center;
+    }
+
+    .iteration-badge {
+      color: #94a3b8;
+      font-weight: 600;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* Iteration Group Styles */
+    .iteration-group {
+      margin-bottom: 8px;
+      border: 1px solid rgba(148, 163, 184, 0.15);
+      border-radius: 12px;
+      overflow: hidden;
+      background: rgba(15, 23, 42, 0.3);
+    }
+
+    .iteration-group-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 16px;
+      background: rgba(148, 163, 184, 0.08);
+      cursor: pointer;
+      user-select: none;
+      transition: background 0.2s ease;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+    }
+
+    .iteration-group-header:hover {
+      background: rgba(148, 163, 184, 0.15);
+    }
+
+    .iteration-chevron {
+      color: #94a3b8;
+      font-size: 12px;
+      transition: transform 0.2s ease;
+    }
+
+    .iteration-group.collapsed .iteration-chevron {
+      transform: rotate(-90deg);
+    }
+
+    .iteration-group-header .iteration-label {
+      color: #e2e8f0;
+      font-weight: 600;
+      font-size: 13px;
+    }
+
+    .iteration-group-header .iteration-event-count {
+      color: #64748b;
+      font-size: 11px;
+      margin-left: auto;
+    }
+
+    .iteration-group-body {
+      padding: 12px 16px;
+    }
+
+    .iteration-group.collapsed .iteration-group-body {
+      display: none;
+    }
+
+    /* Pretty tool params styles */
+    .tool-pretty {
+      margin-top: 8px;
+    }
+
+    .tool-pretty .goal-box {
+      background: rgba(59, 130, 246, 0.08);
+      border: 1px solid rgba(59, 130, 246, 0.2);
+      border-radius: 8px;
+      padding: 10px 14px;
+      margin-bottom: 10px;
+    }
+
+    .tool-pretty .goal-box .goal-label {
+      color: #3b82f6;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+    }
+
+    .tool-pretty .goal-box .goal-text {
+      color: #e2e8f0;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .tool-pretty .steps-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .tool-pretty .steps-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      padding: 6px 10px;
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 6px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .tool-pretty .step-num {
+      background: rgba(255, 215, 0, 0.15);
+      color: #ffd700;
+      font-size: 10px;
+      font-weight: 700;
+      min-width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .tool-pretty .step-text {
+      color: #cbd5e1;
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .tool-pretty .file-path-display {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 6px;
+      margin-bottom: 8px;
+    }
+
+    .tool-pretty .file-path-display i {
+      color: #ffd700;
+      font-size: 14px;
+    }
+
+    .tool-pretty .file-path-display code {
+      color: #e2e8f0;
+      font-size: 12px;
+      font-family: 'Monaco', 'Courier New', monospace;
+    }
+
+    .tool-pretty .param-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 8px;
+    }
+
+    .tool-pretty .param-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .tool-pretty .param-pill.blue {
+      background: rgba(59, 130, 246, 0.15);
+      color: #93c5fd;
+      border: 1px solid rgba(59, 130, 246, 0.25);
+    }
+
+    .tool-pretty .param-pill.green {
+      background: rgba(16, 185, 129, 0.15);
+      color: #6ee7b7;
+      border: 1px solid rgba(16, 185, 129, 0.25);
+    }
+
+    .tool-pretty .param-pill.amber {
+      background: rgba(245, 158, 11, 0.15);
+      color: #fcd34d;
+      border: 1px solid rgba(245, 158, 11, 0.25);
+    }
+
+    .tool-pretty .param-pill.purple {
+      background: rgba(168, 85, 247, 0.15);
+      color: #c4b5fd;
+      border: 1px solid rgba(168, 85, 247, 0.25);
+    }
+
+    .tool-pretty .kv-grid {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 4px 12px;
+      font-size: 12px;
+    }
+
+    .tool-pretty .kv-grid .kv-key {
+      color: #94a3b8;
+      font-weight: 600;
+      text-align: right;
+    }
+
+    .tool-pretty .kv-grid .kv-val {
+      color: #e2e8f0;
+      word-break: break-word;
+    }
+
+    /* Observation pretty styles */
+    .obs-pretty .plan-steps {
+      list-style: none;
+      padding: 0;
+      margin: 8px 0 0 0;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .obs-pretty .plan-steps li {
+      display: flex;
+      align-items: flex-start;
+      gap: 6px;
+      padding: 4px 8px;
+      font-size: 12px;
+      color: #cbd5e1;
+    }
+
+    .obs-pretty .plan-steps li .step-icon {
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .obs-pretty .result-icon {
+      font-size: 18px;
+      margin-right: 6px;
+    }
+
+    .obs-pretty .dir-items {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      margin-top: 8px;
+    }
+
+    .obs-pretty .dir-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: #cbd5e1;
+    }
+
+    .obs-pretty .dir-item i {
+      font-size: 10px;
+      color: #94a3b8;
+    }
+
+    /* Raw/Pretty toggle */
+    .view-toggle-btn {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #94a3b8;
+      font-size: 10px;
+      padding: 2px 8px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      margin-left: auto;
+    }
+
+    .view-toggle-btn:hover {
+      background: rgba(255, 215, 0, 0.1);
+      color: #ffd700;
+      border-color: rgba(255, 215, 0, 0.2);
+    }
+
+    /* Expand link for long content */
+    .expand-link {
+      display: inline-block;
+      margin-top: 8px;
+      color: #3b82f6;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .expand-link:hover {
+      color: #60a5fa;
+      text-decoration: underline;
+    }
+
+    /* System prompt section */
+    .system-prompt-section {
+      margin-bottom: 16px;
+    }
+
+    .system-prompt-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 16px;
+      background: rgba(168, 85, 247, 0.05);
+      border: 1px solid rgba(168, 85, 247, 0.2);
+      border-radius: 10px;
+      cursor: pointer;
+      user-select: none;
+      transition: all 0.2s ease;
+    }
+
+    .system-prompt-header:hover {
+      background: rgba(168, 85, 247, 0.1);
+    }
+
+    .system-prompt-header i.fa-chevron-right {
+      color: #a855f7;
+      font-size: 12px;
+      transition: transform 0.2s ease;
+    }
+
+    .system-prompt-header .sp-label {
+      color: #c4b5fd;
+      font-weight: 600;
+      font-size: 13px;
+    }
+
+    .system-prompt-header .sp-chars {
+      color: #64748b;
+      font-size: 11px;
+      margin-left: auto;
+    }
+
+    .system-prompt-body {
+      display: none;
+      margin-top: 8px;
+      padding: 16px;
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(168, 85, 247, 0.15);
+      border-radius: 10px;
+      max-height: 400px;
+      overflow-y: auto;
+    }
+
+    .system-prompt-body.open {
+      display: block;
+    }
+
+    .system-prompt-body pre {
+      margin: 0;
+      white-space: pre-wrap;
+      word-break: break-word;
+      font-family: 'Monaco', 'Courier New', monospace;
+      font-size: 11px;
+      line-height: 1.6;
+      color: #cbd5e1;
+    }
+
+    /* Tool category styles in config/toolbox */
+    .tool-category-group {
+      margin-bottom: 12px;
+    }
+
+    .tool-category-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      user-select: none;
+      transition: background 0.2s ease;
+      margin-bottom: 4px;
+    }
+
+    .tool-category-header:hover {
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .tool-category-header i.category-chevron {
+      color: #64748b;
+      font-size: 10px;
+      transition: transform 0.2s ease;
+    }
+
+    .tool-category-header .category-icon {
+      font-size: 14px;
+    }
+
+    .tool-category-header .category-name {
+      font-weight: 600;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .tool-category-header .category-count {
+      color: #64748b;
+      font-size: 11px;
+      margin-left: auto;
+    }
+
+    .tool-category-body {
+      padding-left: 16px;
+    }
+
+    .tool-category-group.collapsed .tool-category-body {
+      display: none;
+    }
+
+    .tool-category-group.collapsed .category-chevron {
+      transform: rotate(-90deg);
+    }
+
+    .action-card:hover {
+      border-color: rgba(255, 215, 0, 0.5);
+    }
+
+    .observation-card:hover {
+      border-color: rgba(16, 185, 129, 0.3);
+    }
+
+    .cost-card {
+      background: rgba(234, 179, 8, 0.05);
+    }
+
+    .complete-card {
+      background: rgba(16, 185, 129, 0.05);
+      border-color: rgba(16, 185, 129, 0.3);
+    }
+
+    .error-card {
+      background: rgba(239, 68, 68, 0.05);
+      border-color: rgba(239, 68, 68, 0.3);
+    }
+
+    .running-card {
+      background: rgba(59, 130, 246, 0.05);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      display: flex;
+      align-items: center;
+      padding: 16px;
+    }
+
+    .code-block {
+      margin-top: 8px;
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .code-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 12px;
+      background: rgba(0, 0, 0, 0.2);
+      border-bottom: 1px solid rgba(255, 215, 0, 0.1);
+    }
+
+    .code-header span {
+      color: #94a3b8;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .copy-btn {
+      background: none;
+      border: none;
+      color: #64748b;
+      cursor: pointer;
+      padding: 4px 8px;
+      border-radius: 4px;
+      transition: all 0.2s ease;
+      font-size: 12px;
+    }
+
+    .copy-btn:hover {
+      background: rgba(255, 215, 0, 0.1);
+      color: #ffd700;
+    }
+
+    .code-block pre {
+      margin: 0;
+      padding: 12px;
+      overflow-x: auto;
+      font-family: 'Monaco', 'Courier New', monospace;
+      font-size: 12px;
+      line-height: 1.5;
+      color: #e2e8f0;
+    }
+
+    .spinner-large {
+      width: 32px;
+      height: 32px;
+      border: 3px solid rgba(59, 130, 246, 0.2);
+      border-top-color: #3b82f6;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    .result-card {
+      margin-top: 24px;
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid rgba(255, 215, 0, 0.15);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .result-card.success {
+      border-color: rgba(16, 185, 129, 0.3);
+      background: rgba(16, 185, 129, 0.05);
+    }
+
+    .result-card.error {
+      border-color: rgba(239, 68, 68, 0.3);
+      background: rgba(239, 68, 68, 0.05);
+    }
+
+    .result-card .card-header {
+      padding: 12px 16px;
+      background: rgba(0, 0, 0, 0.2);
+      border-bottom: 1px solid rgba(255, 215, 0, 0.15);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #ffd700;
+      font-weight: 600;
+    }
+
+    .result-card.success .card-header {
+      color: #10b981;
+      border-bottom-color: rgba(16, 185, 129, 0.2);
+    }
+
+    .result-card.error .card-header {
+      color: #ef4444;
+      border-bottom-color: rgba(239, 68, 68, 0.2);
+    }
+
+    .result-card .card-content {
+      padding: 16px;
+    }
+
+    .result-card pre {
+      background: rgba(0, 0, 0, 0.3);
+      padding: 12px;
+      border-radius: 6px;
+      overflow-x: auto;
+      margin: 0;
+      font-family: 'Monaco', 'Courier New', monospace;
+      font-size: 12px;
+      line-height: 1.5;
+      color: #e2e8f0;
+    }
+
+    /* Modal adjustments for wider task details */
+    #taskModal .modal-content {
+      max-width: 900px;
+      width: 90%;
+    }
+
+    /* Task Actions */
+    .task-actions {
+      display: flex;
+      gap: 12px;
+      margin-top: 24px;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255, 215, 0, 0.15);
+      justify-content: flex-end;
+    }
+
+    .action-btn {
+      padding: 12px 24px;
+      border-radius: 8px;
+      border: 1px solid;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .action-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    .retry-btn {
+      background: rgba(59, 130, 246, 0.1);
+      border-color: #3b82f6;
+      color: #3b82f6;
+    }
+
+    .retry-btn:hover {
+      background: rgba(59, 130, 246, 0.2);
+      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+    }
+
+    .cancel-btn {
+      background: rgba(234, 179, 8, 0.1);
+      border-color: #eab308;
+      color: #eab308;
+    }
+
+    .cancel-btn:hover {
+      background: rgba(234, 179, 8, 0.2);
+      box-shadow: 0 4px 12px rgba(234, 179, 8, 0.3);
+    }
+
+    .delete-btn {
+      background: rgba(239, 68, 68, 0.1);
+      border-color: #ef4444;
+      color: #ef4444;
+    }
+
+    .delete-btn:hover {
+      background: rgba(239, 68, 68, 0.2);
+      box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <!-- Header -->
+    <div class="header">
+      <h1>
+        <i class="fas fa-brain"></i>
+        Agentic Curriculum Studio
+      </h1>
+      <div class="header-actions">
+        <button class="btn" id="toolboxBtn">
+          <i class="fas fa-toolbox"></i>
+          Toolbox
+        </button>
+        <button class="btn" id="statsBtn">
+          <i class="fas fa-chart-line"></i>
+          Global Stats
+        </button>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <!-- Left Panel - Task Creation -->
+      <div class="left-panel">
+        <!-- Task Prompt -->
+        <div class="panel-section-title">
+          <i class="fas fa-edit"></i>
+          New Task
+        </div>
+        <div class="task-input-section">
+          <label class="input-label">Task Prompt</label>
+          <textarea id="promptInput" placeholder="Example: Create a lesson plan for teaching Malayalam greetings and introductions, including vocabulary, example sentences, and practice exercises"></textarea>
+        </div>
+
+        <!-- Collapsible Task Settings -->
+        <div class="task-settings">
+          <div class="settings-header" id="settingsToggle">
+            <div class="settings-header-left">
+              <i class="fas fa-sliders-h"></i>
+              <span class="settings-header-title">Task Settings</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <button class="btn" id="manageProfilesBtn" style="padding: 4px 10px; font-size: 11px; background: rgba(139, 92, 246, 0.15); color: #a78bfa; border: 1px solid rgba(139, 92, 246, 0.3);">
+                <i class="fas fa-user-cog"></i> Profiles
+              </button>
+              <i class="fas fa-chevron-down settings-collapse-icon"></i>
+            </div>
+          </div>
+          <div class="settings-content" id="settingsContent">
+            <div class="settings-body">
+              <!-- Model and Iterations -->
+              <div class="setting-row">
+                <div class="setting-item">
+                  <label>Model</label>
+                  <select id="modelSelect">
+                    <option value="gemini-2.5-flash-lite">Gemini 2.5 Flash Lite</option>
+                    <option value="gemini-2.5-flash">Gemini 2.5 Flash</option>
+                    <option value="gemini-2.5-pro">Gemini 2.5 Pro</option>
+                    <option value="gemini-3-flash-preview">Gemini 3 Flash Preview</option>
+                    <option value="gemini-3-pro-preview">Gemini 3 Pro Preview</option>
+                  </select>
+                </div>
+                <div class="setting-item">
+                  <label>Max Iterations</label>
+                  <input type="number" id="maxIterInput" value="10" min="1" max="50">
+                </div>
+              </div>
+
+              <!-- Max Cost -->
+              <div class="setting-item">
+                <label>Maximum Cost Limit ($)</label>
+                <input type="number" id="maxCostInput" value="10" min="0" step="0.5">
+              </div>
+
+              <!-- Language Spec Toggle -->
+              <div class="toggle-container">
+                <div class="toggle-label-wrapper">
+                  <div class="toggle-title">
+                    <i class="fas fa-file-alt"></i>
+                    Include Lesson README Spec
+                  </div>
+                  <div class="toggle-desc">Attach lesson format guidelines to agent context</div>
+                  <a href="#" class="view-link" id="viewReadmeLink">
+                    <i class="fas fa-external-link-alt"></i>
+                    View README
+                  </a>
+                </div>
+                <label class="toggle-switch">
+                  <input type="checkbox" id="includeReadmeToggle" checked>
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
+
+              <!-- Tools Enabled -->
+              <div class="setting-item">
+                <label style="display: flex; justify-content: space-between; align-items: center;">
+                  <span>Tools Enabled</span>
+                  <button class="btn btn-small" id="configureToolsBtn" style="padding: 4px 12px; font-size: 12px;">
+                    <i class="fas fa-cog"></i> Configure
+                  </button>
+                </label>
+                <div id="toolsSummary" style="color: #64748b; font-size: 13px; margin-top: 4px;">
+                  Loading tools...
+                </div>
+              </div>
+
+              <!-- System Prompt Section -->
+              <div class="setting-item">
+                <label style="display: flex; justify-content: space-between; align-items: center;">
+                  <span>System Prompt</span>
+                  <button class="btn btn-small" id="editSystemPromptBtn" style="padding: 4px 12px; font-size: 12px;">
+                    <i class="fas fa-edit"></i> Edit
+                  </button>
+                </label>
+                <div style="color: #64748b; font-size: 13px; margin-top: 4px;">
+                  Customize the agent's role and instructions
+                </div>
+              </div>
+
+              <!-- Context Summarization Section (Collapsible) -->
+              <div class="subsetting-container">
+                <div class="subsetting-header" id="contextSummarizationToggle">
+                  <div class="subsetting-header-left">
+                    <i class="fas fa-compress-alt"></i>
+                    <span>Context Summarization</span>
+                  </div>
+                  <i class="fas fa-chevron-down subsetting-collapse-icon"></i>
+                </div>
+                <div class="subsetting-content" id="contextSummarizationContent">
+                  <div class="subsetting-body">
+                    <!-- Enable/Disable Toggle -->
+                    <div class="setting-item">
+                      <label style="display: flex; justify-content: space-between; align-items: center;">
+                        <span>Enable Context Summarization</span>
+                        <label class="toggle-switch" style="margin: 0;">
+                          <input type="checkbox" id="enableContextSummarizationToggle" checked>
+                          <span class="toggle-slider"></span>
+                        </label>
+                      </label>
+                      <div style="color: #64748b; font-size: 12px; margin-top: 4px;">
+                        Automatically summarize long conversations using map-reduce strategy
+                      </div>
+                    </div>
+
+                    <!-- Token Threshold -->
+                    <div class="setting-item">
+                      <label>Token Threshold</label>
+                      <input type="number" id="contextTokenThreshold" value="100000" min="10000" max="500000" step="10000">
+                      <div style="color: #64748b; font-size: 12px; margin-top: 4px;">
+                        Summarize when conversation exceeds this many tokens
+                      </div>
+                    </div>
+
+                    <!-- Target Token Count -->
+                    <div class="setting-item">
+                      <label>Target Token Count</label>
+                      <input type="number" id="contextTargetTokens" value="50000" min="5000" max="250000" step="5000">
+                      <div style="color: #64748b; font-size: 12px; margin-top: 4px;">
+                        Compress conversation to approximately this size
+                      </div>
+                    </div>
+
+                    <!-- Compression Ratio -->
+                    <div class="setting-item">
+                      <label>Compression Ratio (%)</label>
+                      <input type="number" id="contextCompressionRatio" value="50" min="30" max="90" step="5">
+                      <div style="color: #64748b; font-size: 12px; margin-top: 4px;">
+                        Target compression percentage (40-60% recommended)
+                      </div>
+                    </div>
+
+                    <!-- Min Messages -->
+                    <div class="setting-item">
+                      <label>Minimum Messages Before Summarizing</label>
+                      <input type="number" id="contextMinMessages" value="15" min="5" max="100" step="5">
+                      <div style="color: #64748b; font-size: 12px; margin-top: 4px;">
+                        Don't summarize if conversation has fewer messages
+                      </div>
+                    </div>
+
+                    <!-- Summarization Model -->
+                    <div class="setting-item">
+                      <label>Summarization Model</label>
+                      <select id="contextSummarizationModel">
+                        <option value="gemini-2.5-flash-lite">Gemini 2.5 Flash Lite</option>
+                        <option value="gemini-2.5-flash" selected>Gemini 2.5 Flash</option>
+                        <option value="gemini-2.5-pro">Gemini 2.5 Pro</option>
+                        <option value="gemini-3-flash-preview">Gemini 3 Flash Preview</option>
+                        <option value="gemini-3-pro-preview">Gemini 3 Pro Preview</option>
+                      </select>
+                      <div style="color: #64748b; font-size: 12px; margin-top: 4px;">
+                        Model used for generating summaries
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- YAML Preview Section -->
+        <div class="task-settings" style="margin-top: 16px;">
+          <div class="settings-header" id="yamlPreviewToggle">
+            <div class="settings-header-left">
+              <i class="fas fa-file-code"></i>
+              <span class="settings-header-title">Task Config (YAML)</span>
+            </div>
+            <i class="fas fa-chevron-down settings-collapse-icon"></i>
+          </div>
+          <div class="settings-content" id="yamlPreviewContent">
+            <div class="settings-body">
+              <pre id="yamlPreview" style="background: #0a0e1a; padding: 12px; border-radius: 8px; color: #ffd700; font-family: 'Courier New', monospace; font-size: 13px; overflow-x: auto; margin: 0;">task_id: auto-generated
+prompt: Enter a task prompt above
+model: gemini-2.5-flash
+max_iterations: 10
+max_cost: 10
+include_readme: true
+enabled_tools: all
+context_summarization:
+  enabled: true
+  token_threshold: 100000
+  target_tokens: 50000
+  compression_ratio: 50
+  min_messages: 15
+  model: gemini-2.5-flash</pre>
+            </div>
+          </div>
+        </div>
+
+        <!-- System Prompt Preview Section -->
+        <div class="task-settings" style="margin-top: 16px;">
+          <div class="settings-header" id="systemPromptPreviewToggle">
+            <div class="settings-header-left">
+              <i class="fas fa-robot"></i>
+              <span class="settings-header-title">System Prompt Preview</span>
+            </div>
+            <i class="fas fa-chevron-down settings-collapse-icon"></i>
+          </div>
+          <div class="settings-content" id="systemPromptPreviewContent">
+            <div class="settings-body">
+              <div style="margin-bottom: 12px; padding: 10px; background: rgba(255, 215, 0, 0.08); border-left: 3px solid #ffd700; border-radius: 4px; font-size: 12px; color: #94a3b8;">
+                <i class="fas fa-info-circle" style="color: #ffd700;"></i>
+                This shows the EXACT system prompt that will be sent to the model. Click the expand button to see full prompt in a modal.
+              </div>
+              <div style="margin-bottom: 8px;">
+                <button id="expandSystemPromptBtn" style="width: 100%; background: rgba(139, 92, 246, 0.2); border: 1px solid rgba(139, 92, 246, 0.4); color: #a78bfa; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: 500; transition: all 0.2s;">
+                  <i class="fas fa-expand"></i> Expand Full Prompt
+                </button>
+              </div>
+              <div style="position: relative;">
+                <pre id="systemPromptPreview" style="background: #0a0e1a; padding: 12px; border-radius: 8px; color: #e2e8f0; font-family: 'Courier New', monospace; font-size: 11px; overflow-x: auto; margin: 0; max-height: 400px; overflow-y: auto; white-space: pre-wrap; word-wrap: break-word;">Loading system prompt...</pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Start Task Button -->
+        <div class="start-task-container">
+          <button class="btn btn-primary" id="startTaskBtn">
+            <i class="fas fa-play"></i>
+            Start Task
+          </button>
+        </div>
+      </div>
+
+      <!-- Right Panel - Task List -->
+      <div class="right-panel">
+        <div class="tasks-header">
+          <div class="tasks-header-left">
+            <i class="fas fa-tasks"></i>
+            <h2>Tasks</h2>
+          </div>
+          <div class="tasks-count" id="tasksCount">0</div>
+        </div>
+        
+        <!-- Task Filters and Batch Actions -->
+        <div class="tasks-controls">
+          <div class="tasks-filters">
+            <label style="font-size: 12px; color: #94a3b8; margin-right: 8px;">Filter:</label>
+            <select id="statusFilter" style="padding: 6px 12px; background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255, 215, 0, 0.2); border-radius: 6px; color: #e2e8f0; font-size: 12px;">
+              <option value="all">All Tasks</option>
+              <option value="running">Running</option>
+              <option value="complete">Complete</option>
+              <option value="error">Error</option>
+              <option value="cancelled">Cancelled</option>
+              <option value="pending">Pending</option>
+            </select>
+          </div>
+          <div class="batch-actions" id="batchActions" style="display: none;">
+            <span id="selectedCount" style="font-size: 12px; color: #94a3b8; margin-right: 12px;">0 selected</span>
+            <button class="btn-batch btn-batch-cancel" id="batchCancelBtn" onclick="batchCancelTasks()">
+              <i class="fas fa-ban"></i> Cancel
+            </button>
+            <button class="btn-batch btn-batch-delete" id="batchDeleteBtn" onclick="batchDeleteTasks()">
+              <i class="fas fa-trash"></i> Delete
+            </button>
+            <button class="btn-batch btn-batch-clear" onclick="clearSelection()">
+              <i class="fas fa-times"></i> Clear
+            </button>
+          </div>
+        </div>
+        
+        <div id="tasksList">
+          <div class="empty-state">
+            <i class="fas fa-inbox"></i>
+            <div class="empty-state-text">No tasks yet. Create one to get started!</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Task Detail Modal -->
+    <div class="modal" id="taskModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div class="modal-title" id="modalTitle">
+            <i class="fas fa-info-circle"></i>
+            Task Details
+          </div>
+          <button class="close-btn" id="closeModalBtn">&times;</button>
+        </div>
+        <div class="modal-body" id="modalBody">
+          <!-- Task details will be inserted here -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Toolbox Modal -->
+    <div class="modal" id="toolboxModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div class="modal-title">
+            <i class="fas fa-toolbox"></i>
+            Available Tools
+          </div>
+          <button class="close-btn" id="closeToolboxBtn">&times;</button>
+        </div>
+        <div class="modal-body" id="toolsList">
+          <div style="text-align: center; padding: 40px; color: #64748b;">
+            <i class="fas fa-spinner fa-spin" style="font-size: 32px; margin-bottom: 12px;"></i>
+            <div>Loading tools...</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Config Modal -->
+    <div class="modal" id="configModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div class="modal-title">
+            <i class="fas fa-cog"></i>
+            Global Configuration
+          </div>
+          <button class="close-btn" id="closeConfigBtn">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="config-section">
+            <div class="config-section-title">
+              <i class="fas fa-robot"></i>
+              Model Settings
+            </div>
+            <div class="config-field">
+              <label>Default Model</label>
+              <select id="configModel">
+                <option value="gemini-2.5-flash">Gemini 2.5 Flash ($0.075/$0.30 per 1M)</option>
+                <option value="gemini-2.5-pro">Gemini 2.5 Pro ($1.25/$5.00 per 1M)</option>
+                <option value="gemini-3.0-flash-preview">Gemini 3.0 Flash Preview ($0.50/$3.00 per 1M)</option>
+                <option value="gemini-3.0-pro-preview">Gemini 3.0 Pro Preview ($2.00/$12.00 per 1M)</option>
+              </select>
+            </div>
+            <div class="setting-row">
+              <div class="config-field">
+                <label>Max Iterations</label>
+                <input type="number" id="configMaxIter" min="1" max="100">
+              </div>
+              <div class="config-field">
+                <label>Temperature</label>
+                <input type="number" id="configTemp" min="0" max="2" step="0.1">
+              </div>
+            </div>
+          </div>
+
+          <div class="config-section">
+            <div class="config-section-title">
+              <i class="fas fa-shield-alt"></i>
+              Safety Settings
+            </div>
+            <div class="toggle-container">
+              <div class="toggle-label-wrapper">
+                <div class="toggle-title">
+                  <i class="fas fa-flask"></i>
+                  Sandbox Mode
+                </div>
+                <div class="toggle-desc">Preview changes without actually writing files</div>
+              </div>
+              <label class="toggle-switch">
+                <input type="checkbox" id="configSandbox">
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+            <div class="config-field">
+              <label>Max Cost Per Task ($)</label>
+              <input type="number" id="configMaxCost" min="0" step="0.1">
+            </div>
+          </div>
+
+          <div class="btn-group">
+            <button class="btn btn-block" id="cancelConfigBtn">
+              <i class="fas fa-times"></i>
+              Cancel
+            </button>
+            <button class="btn btn-primary btn-block" id="saveConfigBtn">
+              <i class="fas fa-save"></i>
+              Save Changes
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stats Modal -->
+    <div class="modal" id="statsModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div class="modal-title">
+            <i class="fas fa-chart-line"></i>
+            Global Statistics
+          </div>
+          <button class="close-btn" id="closeStatsBtn">&times;</button>
+        </div>
+        <div class="modal-body" id="statsBody">
+          <!-- Stats will be inserted here -->
+        </div>
+      </div>
+    </div>
+
+    <!-- README Modal -->
+    <div class="modal" id="readmeModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div class="modal-title">
+            <i class="fas fa-file-alt"></i>
+            Lesson README Specification
+          </div>
+          <button class="close-btn" id="closeReadmeBtn">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="readme-content" id="readmeContent">
+            <p style="text-align: center; color: #64748b;">Loading README...</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tools Configuration Modal -->
+    <div class="modal" id="toolsConfigModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div class="modal-title">
+            <i class="fas fa-toolbox"></i>
+            Configure Tools
+          </div>
+          <button class="close-btn" id="closeToolsConfigBtn">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div style="margin-bottom: 16px; padding: 12px; background: rgba(255, 215, 0, 0.1); border-left: 3px solid #ffd700; border-radius: 4px;">
+            <div style="color: #ffd700; font-weight: 500; margin-bottom: 4px;">
+              <i class="fas fa-info-circle"></i> Tool Selection
+            </div>
+            <div style="color: #94a3b8; font-size: 13px;">
+              Enable or disable specific tools for this task. Disabled tools won't be available to the agent.
+            </div>
+          </div>
+          <div id="toolsConfigList" style="max-height: 400px; overflow-y: auto;">
+            <!-- Tools will be loaded here -->
+          </div>
+          <div style="margin-top: 16px; padding-top: 16px; border-top: 1px solid #1e293b;">
+            <button class="btn btn-block" id="applyToolsConfigBtn" style="background: #ffd700; color: #000;">
+              <i class="fas fa-check"></i>
+              Apply Configuration
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- System Prompt Editor Modal -->
+    <div class="modal" id="systemPromptModal">
+      <div class="modal-content" style="max-width: 800px;">
+        <div class="modal-header">
+          <div class="modal-title">
+            <i class="fas fa-robot"></i>
+            Edit System Prompt
+          </div>
+          <button class="close-btn" id="closeSystemPromptBtn">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div style="margin-bottom: 16px; padding: 12px; background: rgba(255, 215, 0, 0.1); border-left: 3px solid #ffd700; border-radius: 4px;">
+            <div style="color: #ffd700; font-weight: 500; margin-bottom: 4px;">
+              <i class="fas fa-info-circle"></i> System Prompt
+            </div>
+            <div style="color: #94a3b8; font-size: 13px;">
+              Define the agent's role, expertise, and working methodology. This prompt is prepended to every task.
+            </div>
+          </div>
+          <div style="margin-bottom: 12px;">
+            <label style="display: block; margin-bottom: 6px; color: #94a3b8; font-size: 11px; font-weight: 600;">
+              SYSTEM PROMPT CONTENT
+            </label>
+            <textarea 
+              id="systemPromptTextarea" 
+              rows="18"
+              style="width: 100%; padding: 12px; background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(255, 215, 0, 0.2); border-radius: 8px; color: #e2e8f0; font-family: 'Courier New', monospace; font-size: 13px; resize: vertical;"
+              placeholder="Loading system prompt..."></textarea>
+          </div>
+          <div style="display: flex; gap: 12px; margin-top: 16px; padding-top: 16px; border-top: 1px solid #1e293b;">
+            <button class="btn btn-block" id="saveSystemPromptBtn" style="background: #ffd700; color: #000;">
+              <i class="fas fa-save"></i>
+              Save System Prompt
+            </button>
+            <button class="btn btn-block" id="resetSystemPromptBtn" style="background: rgba(239, 68, 68, 0.15); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.3);">
+              <i class="fas fa-undo"></i>
+              Reset to Default
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Full System Prompt Modal -->
+    <div class="modal" id="fullSystemPromptModal">
+      <div class="modal-content" style="max-width: 1200px; max-height: 90vh;">
+        <div class="modal-header">
+          <div class="modal-title">
+            <i class="fas fa-robot"></i>
+            Complete System Prompt
+          </div>
+          <button class="close-btn" id="closeFullSystemPromptBtn">&times;</button>
+        </div>
+        <div class="modal-body" style="max-height: 80vh; overflow-y: auto;">
+          <div style="margin-bottom: 16px; padding: 12px; background: rgba(139, 92, 246, 0.1); border-left: 3px solid #8b5cf6; border-radius: 4px;">
+            <div style="color: #a78bfa; font-weight: 500; margin-bottom: 4px;">
+              <i class="fas fa-info-circle"></i> Full System Prompt
+            </div>
+            <div style="color: #94a3b8; font-size: 13px;">
+              This is the EXACT prompt that will be sent to the model, including all tools and lesson format specifications.
+            </div>
+          </div>
+          <pre id="fullSystemPromptPreview" style="background: #0a0e1a; padding: 16px; border-radius: 8px; color: #e2e8f0; font-family: 'Courier New', monospace; font-size: 11px; white-space: pre-wrap; word-wrap: break-word; margin: 0;">Loading...</pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- Profile Management Modal -->
+    <div class="modal" id="profileModal">
+      <div class="modal-content" style="max-width: 600px;">
+        <div class="modal-header">
+          <div class="modal-title">
+            <i class="fas fa-user-cog"></i>
+            Task Settings Profiles
+          </div>
+          <button class="close-btn" id="closeProfileBtn">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div style="margin-bottom: 16px; padding: 12px; background: rgba(34, 197, 94, 0.1); border-left: 3px solid #22c55e; border-radius: 4px;">
+            <div style="color: #22c55e; font-weight: 500; margin-bottom: 4px;">
+              <i class="fas fa-info-circle"></i> Settings Profiles
+            </div>
+            <div style="color: #94a3b8; font-size: 13px;">
+              Save your current task settings as named profiles for quick reuse.
+            </div>
+          </div>
+
+          <!-- Save New Profile -->
+          <div style="margin-bottom: 24px; padding: 16px; background: rgba(15, 23, 42, 0.5); border-radius: 8px;">
+            <label style="display: block; margin-bottom: 8px; color: #94a3b8; font-size: 11px; font-weight: 600;">
+              SAVE CURRENT SETTINGS AS:
+            </label>
+            <div style="display: flex; gap: 8px;">
+              <input 
+                type="text" 
+                id="newProfileName" 
+                placeholder="Profile name (e.g., Quick Tasks, Full Analysis)"
+                style="flex: 1; padding: 10px; background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(139, 92, 246, 0.3); border-radius: 6px; color: #e2e8f0; font-size: 13px;">
+              <button class="btn" id="saveProfileBtn" style="background: #8b5cf6; color: #fff; padding: 10px 20px;">
+                <i class="fas fa-save"></i> Save
+              </button>
+            </div>
+          </div>
+
+          <!-- Saved Profiles List -->
+          <div>
+            <label style="display: block; margin-bottom: 12px; color: #94a3b8; font-size: 11px; font-weight: 600;">
+              SAVED PROFILES
+            </label>
+            <div id="profilesList" style="display: flex; flex-direction: column; gap: 8px;">
+              <div style="padding: 20px; text-align: center; color: #64748b; font-size: 13px;">
+                <i class="fas fa-inbox" style="font-size: 24px; margin-bottom: 8px; display: block;"></i>
+                No saved profiles yet
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="src/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,207 @@
+{
+  "lesson_id": "ml_04_the_i_vowels",
+  "language": "Malayalam",
+  "title": "The 'I' Vowels",
+  "subtitle": "ഇ, ി, ഈ, ീ - Short and Long I Sounds",
+  "description": "Learn to read and pronounce Malayalam vowel characters. Master the visual recognition and phonetic sounds of these essential letters.",
+  "estimated_minutes": 27,
+  "cefr_level": "A0",
+  "tags": [
+    "script",
+    "vowels",
+    "modifiers",
+    "i-vowels"
+  ],
+  "steps": [
+    {
+      "type": "content",
+      "content_markdown": "# The 'I' Transformation 🔄\n\n## Cumulative Review\nQuick! Can you read these?\n- **മരം** (maram) = Tree ← Lesson 2\n- **പന** (pana) = Palm ← Lesson 3\n- **തറ** (thaRa) = Floor ← Lesson 3\n\nGreat! You know **30 words** and **11 letters**!\n\n## Today's Mission\nLearn the **'I' vowel system** (4 symbols total):\n\n### Short 'I' (like 'i' in 'bit'):\n- **ഇ** - Independent form (starts words)\n- **ി** - Dependent form (modifies consonants)\n\n### Long 'I' (like 'ee' in 'see'):\n- **ഈ** - Independent form (starts words)\n- **ീ** - Dependent form (modifies consonants)\n\n### The Pattern (Same as Lesson 2!)\nJust like **അ/ആ** and **ാ**, the 'I' vowels have:\n- **Standalone forms** for word beginnings\n- **Modifier forms** that attach to consonants\n\nLet's unlock 10 more words! 💡",
+      "step_title": "The 'I' Transformation"
+    },
+    {
+      "type": "content",
+      "content_markdown": "## Short 'I': ഇ (Independent)\n\n### Sound\n**ഇ** sounds like the 'i' in \"*bit*\" or \"*sit*\" - short and crisp.\n\n### When to Use\nUse **ഇ** when the short 'i' sound **starts a word**.\n\n**Examples:**\n- **ഇന്ന** (inna) = Here/Now\n- **ഇല** (ila) = Leaf\n\n### Visual Recognition\n**ഇ** looks like a **backwards '3'** or a curved shape:\n- Simple, distinctive form\n- Easy to spot at word beginnings\n\n### Compare to 'A' Vowels:\n| Short | Long |\n|-------|------|\n| **അ** (a) | **ആ** (aa) |\n| **ഇ** (i) | **ഈ** (ee) ← coming next! |\n\nSee the pattern?",
+      "step_title": "Short 'I': ഇ (Independent)"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q1",
+      "question": "What sound does **ഇ** make?",
+      "options": [
+        "Short 'i' like in 'bit'",
+        "Long 'ee' like in 'see'",
+        "Short 'a' like in 'about'",
+        "Like 'eye'"
+      ],
+      "correct_answer": "Short 'i' like in 'bit'",
+      "feedback": "Perfect! ഇ is the SHORT 'i' vowel - quick and crisp!",
+      "step_title": "**ഇ** Sound"
+    },
+    {
+      "type": "content",
+      "content_markdown": "## Short 'I' Modifier: ി (Dependent)\n\n### The Magic Symbol\n**ി** is the **dependent form** - it attaches to consonants to change 'a' → 'i'.\n\n### How It Works\n**Visual placement:** The **ി** symbol appears **BEFORE** the consonant (to the LEFT)!\n\nThis is unique - it's written LEFT of the letter but pronounced AFTER!\n\n### Transformation Examples:\n**Without modifier:**\n- **മ** (ma) → **മി** (mi)\n- **ക** (ka) → **കി** (ki)\n- **ന** (na) → **നി** (ni)\n\n**With modifier (notice ി appears LEFT):**\n- **കരി** → ka-ri (charcoal)\n- **അരി** → a-ri (rice)\n- **നീതി** → nee-thi (justice)\n\n### Reading Rule\n**See ി?** Read the consonant FIRST, then add 'i':\n- കി = \"ki\" (not \"ika\")\n- പി = \"pi\" (not \"ipa\")",
+      "step_title": "Short 'I' Modifier: ി"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q2",
+      "question": "Where does the **ി** modifier appear visually?",
+      "options": [
+        "To the LEFT of the consonant (but pronounced after)",
+        "To the right of the consonant",
+        "Above the consonant",
+        "Below the consonant"
+      ],
+      "correct_answer": "To the LEFT of the consonant (but pronounced after)",
+      "feedback": "Excellent! This is Malayalam's quirk - ി appears LEFT but sounds AFTER the consonant!",
+      "step_title": "Where does **ി** modifier"
+    },
+    {
+      "type": "content",
+      "content_markdown": "## Long 'I': ഈ (Independent)\n\n### Sound\n**ഈ** sounds like the 'ee' in \"*see*\" or \"*bee*\" - held longer than ഇ.\n\n### Length Distinction\nFeel the difference:\n- **ഇ** (i) = Quick, like 'bit'\n- **ഈ** (ee) = Longer, like 'beee'\n\n### When to Use\nUse **ഈ** when the long 'ee' sound **starts a word**.\n\n**Examples:**\n- **ഈ** (ee) = This (demonstrative)\n- **ഈന** (eena) = Scale (fish scale)\n\n### Visual Recognition\n**ഈ** looks like **ഇ** with an **extra top curve**:\n- **ഇ** → Short i (simpler)\n- **ഈ** → Long ee (more elaborate)\n\nSame pattern as അ/ആ!",
+      "step_title": "Long 'I': ഈ (Independent)"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q3",
+      "question": "What's the difference between ഇ and ഈ?",
+      "options": [
+        "ഇ is short 'i' (bit), ഈ is long 'ee' (see)",
+        "They're the same sound",
+        "ഇ is uppercase, ഈ is lowercase",
+        "ഇ is for vowels, ഈ is for consonants"
+      ],
+      "correct_answer": "ഇ is short 'i' (bit), ഈ is long 'ee' (see)",
+      "feedback": "Perfect! Vowel LENGTH is crucial in Malayalam - it distinguishes word meanings!",
+      "step_title": "ഇ  Difference"
+    },
+    {
+      "type": "content",
+      "content_markdown": "## Long 'I' Modifier: ീ (Dependent)\n\n### The Elongated Symbol\n**ീ** attaches to consonants to make the 'ee' sound (long i).\n\n### Visual Placement\nUnlike **ി** (which goes LEFT), **ീ** appears to the **RIGHT** of consonants!\n\n### Transformation Examples:\n**Without modifier:**\n- **ത** (tha) → **തീ** (thee) = Fire\n- **ന** (na) → **നീ** (nee) = You\n- **മ** (ma) → **മീ** (mee)\n\n**Full Words:**\n- **തീ** (thee) = Fire\n- **നീ** (nee) = You\n- **നീതി** (neethi) = Justice\n- **രീതി** (reethi) = Way/Method\n\n### Visual Pattern\n**ീ** looks like a **long vertical line** to the right - representing the LONG sound!",
+      "step_title": "Long 'I' Modifier: ീ"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q4",
+      "question": "Where does the **ീ** modifier appear?",
+      "options": [
+        "To the RIGHT of the consonant",
+        "To the LEFT of the consonant",
+        "Above the consonant",
+        "Below the consonant"
+      ],
+      "correct_answer": "To the RIGHT of the consonant",
+      "feedback": "Correct! Unlike ി (left), the long ീ appears to the RIGHT of consonants.",
+      "step_title": "Where does **ീ** modifier"
+    },
+    {
+      "type": "content",
+      "content_markdown": "## All 4 'I' Forms Together 📊\n\n### Complete Chart:\n\n| Type | Symbol | Sound | Example | Meaning |\n|------|--------|-------|---------|----------|\n| Short Independent | **ഇ** | i (bit) | **ഇന്ന** | here/now |\n| Short Dependent | **ി** | i (bit) | **കി** | ki |\n| Long Independent | **ഈ** | ee (see) | **ഈ** | this |\n| Long Dependent | **ീ** | ee (see) | **തീ** | fire |\n\n### Placement Summary:\n- **ി** → LEFT of consonant (unique!)\n- **ീ** → RIGHT of consonant (normal)\n\n### Practice Reading:\n1. **നി** → ni (short i, ി is left)\n2. **നീ** → nee (long i, ീ is right)\n3. **കി** → ki\n4. **തീ** → thee (fire!)",
+      "step_title": "All 4 'I' Forms"
+    },
+    {
+      "type": "free_response",
+      "id": "q5",
+      "question": "Write the Malayalam word for 'rice' in English letters",
+      "ai_grading": false,
+      "accepted_responses": [
+        "ari",
+        "Ari",
+        "ARI",
+        "arി"
+      ],
+      "hint": "It's അരി - starts with അ (a), then ര (ra), then ി (short i modifier). Sounds like 'ari'.",
+      "step_title": "Write Malayalam Word"
+    },
+    {
+      "type": "content",
+      "content_markdown": "## Your 10 New Words 📚\n\nHere are today's essential vocabulary:\n\n| Malayalam | Pronunciation | Meaning | Notes |\n|-----------|--------------|---------|--------|\n| **അരി** | ari | rice | Short ി modifier |\n| **കരി** | kari | charcoal | Old letters + ി! |\n| **തീ** | thee | fire | Long ീ modifier |\n| **നീ** | nee | you | Long ീ modifier |\n| **പനി** | pani | fever | p + short i |\n| **കവി** | kavi | poet | Letters you know! |\n| **വിറ** | viRa | shiver | v + i + hard R |\n| **മതി** | mathi | enough | Useful word! |\n| **നീതി** | neethi | justice | Long ee + short i |\n| **രീതി** | reethi | way/method | Long ee pattern |\n\n### Sound Symbols:\n- **$R$** = Hard trilled 'r' (റ)\n- **$th$** = Dental 't' (ത)\n- **$n$** = Dental 'n' (ന)",
+      "step_title": "Your 10 New Words"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q6",
+      "question": "How do you pronounce **തീ**?",
+      "options": [
+        "thee",
+        "thee-a",
+        "thee2",
+        "thee3"
+      ],
+      "correct_answer": "thee",
+      "feedback": "Correct! തീ (thee) = fire. The long ീ gives it power! 🔥",
+      "step_title": "**തീ**? Pronunciation"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q7",
+      "question": "How do you write 'you' in Malayalam?",
+      "options": [
+        "നീ",
+        "തീ",
+        "അരി",
+        "കവി"
+      ],
+      "correct_answer": "നീ",
+      "feedback": "Perfect! നീ (nee) = you. Essential for conversations!",
+      "step_title": "How do you write"
+    },
+    {
+      "type": "free_response",
+      "id": "q8",
+      "question": "How do you pronounce **കരി**?",
+      "ai_grading": false,
+      "accepted_responses": [
+        "kari",
+        "Kari",
+        "KARI",
+        "kari"
+      ],
+      "hint": "It's a black substance used for fuel. കരി uses the short ി modifier.",
+      "step_title": "**കരി**? Pronunciation"
+    },
+    {
+      "type": "content",
+      "content_markdown": "## Vowel Modifier Comparison 🔍\n\n### All Modifiers You Know:\n\n| Vowel | Short Modifier | Long Modifier |\n|-------|---------------|---------------|\n| **A** | (inherent 'a') | **ാ** (right) |\n| **I** | **ി** (left!) | **ീ** (right) |\n\n### Examples Side by Side:\n\n**Base: ക (ka)**\n- ക (ka) - inherent a\n- കാ (kaa) - long aa (ാ to right)\n- കി (ki) - short i (ി to left)\n- കീ (kee) - long ee (ീ to right)\n\n**Base: ന (na)**\n- ന (na)\n- നാ (naa) - like in നാവ (tongue)\n- നി (ni)\n- നീ (nee) - meaning 'you'!\n\n### Reading Challenge\nWhich word means 'enough'?",
+      "step_title": "Vowel Modifier Comparison"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q9",
+      "question": "Which word means 'enough'?",
+      "options": [
+        "മതി (mathi)",
+        "കവി (kavi)",
+        "പനി (pani)",
+        "നീതി (neethi)"
+      ],
+      "correct_answer": "മതി (mathi)",
+      "feedback": "Excellent! മതി (mathi) = enough. Very useful in daily conversations!",
+      "step_title": "Which word means 'enough'?"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q10",
+      "question": "How do you pronounce **നീതി**?",
+      "options": [
+        "neethi",
+        "neethi-a",
+        "neethi2",
+        "neethi3"
+      ],
+      "correct_answer": "neethi",
+      "feedback": "Perfect! നീതി (neethi) = justice. Notice it uses BOTH ീ and ി!",
+      "step_title": "**നീതി**? Pronunciation"
+    },
+    {
+      "type": "content",
+      "content_markdown": "## 🎊 Lesson 4 Complete!\n\n### Your Growing Power:\n\n**✅ Total Symbols: 15**\n- Vowels: അ, ആ, ഇ, ഈ\n- Modifiers: ാ, ി, ീ, ം\n- Consonants: ക, റ, മ, പ, വ, ത, ന\n- Bonus: ര, ല\n\n**✅ Total Words: 40!**\n- 10 from each lesson\n- You're building fluency!\n\n**✅ Vowel Mastery:**\n1. **Independent vs Dependent** - When to use which form\n2. **Length matters** - Short vs long changes meaning\n3. **Directional modifiers** - ി (left) vs ാ/ീ (right)\n\n### Cumulative Reinforcement Check ✓\n**Previous lesson letters in today's words:**\n- **ക:** appears in 2 words (കരി, കവി)\n- **ന:** appears in 3 words (പനി, നീ, നീതി)\n- **മ:** appears in 1 word (മതി)\n- **റ:** appears in 1 word (വിറ)\n- **ത:** appears in 2 words (തീ, മതി, നീതി)\n\nRequirement exceeded! ✅\n\n### What's Next?\nLesson 5 brings the **'U' vowels**: ഉ, ു, ഊ, ൂ\n\nWords like:\n- **പുലി** (puli) = Tiger\n- **പൂ** (poo) = Flower\n- **മൂന്നു** (moonnu) = Three\n\nYou're halfway through the vowel system! 🚀",
+      "step_title": "Lesson 4 Complete!"
+    }
+  ],
+  "skills_learned": [
+    "Reading Malayalam vowels",
+    "Reading Malayalam script",
+    "Reading 27+ Malayalam words"
+  ]
+}

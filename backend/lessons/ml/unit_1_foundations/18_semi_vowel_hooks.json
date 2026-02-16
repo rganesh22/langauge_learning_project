@@ -1,0 +1,186 @@
+{
+  "lesson_id": "ml_18_semi_vowel_hooks",
+  "language": "Malayalam",
+  "title": "Semi-Vowel Hooks",
+  "subtitle": "്യ, ്വ - Y and V Subjoined Forms",
+  "description": "Learn to read and pronounce Malayalam vowel characters. Master the visual recognition and phonetic sounds of these essential letters.",
+  "estimated_minutes": 27,
+  "cefr_level": "A0",
+  "tags": [
+    "script",
+    "conjuncts",
+    "semi-vowels",
+    "hooks"
+  ],
+  "steps": [
+    {
+      "type": "content",
+      "content_markdown": "# Semi-Vowel Hooks! 🪝\n\n**170 words** mastered!\n\n## Today's Pattern: Subjoined Consonants\n\n### What Are \"Hooks\"?\nSome conjuncts don't stack - they **attach below/beside** the base consonant!\n\n### Today's Semi-Vowels:\n- **യ** (ya) - Standard form\n- **്യ** (y-hook) - Subjoined 'y' sound\n- **വ** (va) - Standard form\n- **്വ** (v-hook) - Subjoined 'v' sound\n\n### Pattern:\n**Consonant + ്യ** = Add 'y' glide\n**Consonant + ്വ** = Add 'v' glide\n\n### Visual:\nThese \"hook\" below or beside the consonant!\n\nLet's learn these elegant forms! 🎯",
+      "step_title": "Semi-Vowel Hooks! 🪝"
+    },
+    {
+      "type": "content",
+      "content_markdown": "## ്യ (y-hook) - The Y Glide\n\n### Formation:\n**Any consonant + ് + യ** = Consonant + y sound\n\n### Examples:\n- **ക്യ** (kya)\n- **ത്യ** (thya)\n- **പ്യ** (pya)\n- **സ്യ** (sya)\n\n### Visual Pattern:\nയ becomes a **small hook** attached to the consonant!\n\n### In Words:\n- **ഗ്യാനം** (gyaanam) = Knowledge\n- **സത്യം** (sathyam) = Truth\n- **വൈദ്യം** (vaidhyam) = Medicine (review!)\n- **ഭാഗ്യം** (bhaagyam) = Luck\n\n### Note:\nNew consonants: **ഗ** (ga), **ഭ** (bha) - aspirated consonants!",
+      "step_title": "്യ (y-hook) - Y"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q1",
+      "question": "How do you pronounce **സത്യം**?",
+      "options": [
+        "sathyam",
+        "saathyaam",
+        "sathyam-a",
+        "sathyam3"
+      ],
+      "correct_answer": "sathyam",
+      "feedback": "Perfect! സത്യം (sathyam) = truth. Philosophical vocabulary!",
+      "step_title": "**സത്യം**? Pronunciation"
+    },
+    {
+      "type": "content",
+      "content_markdown": "## ്വ (v-hook) - The V Glide\n\n### Formation:\n**Any consonant + ് + വ** = Consonant + v sound\n\n### Examples:\n- **ക്വ** (kva)\n- **ത്വ** (thva)\n- **പ്വ** (pva)\n- **സ്വ** (sva)\n\n### Visual Pattern:\nവ becomes a **curved hook** attached to the consonant!\n\n### In Words:\n- **സ്വപ്നം** (svapnam) = Dream\n- **അശ്വം** (ashvam) = Horse\n- **ദ്വാരം** (dvaaram) = Door/opening\n- **ക്വാഡ്** (kvadd) = Squad (loanword)\n\n### Note:\nNew consonants: **ദ** (da - dental d), **അശ്വം** uses ശ!",
+      "step_title": "്വ (v-hook) - V"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q2",
+      "question": "How do you pronounce **സ്വപ്നം**?",
+      "options": [
+        "svapnam",
+        "svaapnaam",
+        "svapnam-a",
+        "svapnam3"
+      ],
+      "correct_answer": "svapnam",
+      "feedback": "Correct! സ്വപ്നം (svapnam) = dream. Beautiful word!",
+      "step_title": "**സ്വപ്നം**? Pronunciation"
+    },
+    {
+      "type": "free_response",
+      "id": "q3",
+      "question": "Write 'truth' in English letters",
+      "ai_grading": false,
+      "accepted_responses": [
+        "sathyam",
+        "Sathyam",
+        "SATHYAM",
+        "sathyham"
+      ],
+      "hint": "സത്യം - uses ്യ hook!",
+      "step_title": "Write 'truth' English letters"
+    },
+    {
+      "type": "content",
+      "content_markdown": "## Your 10 New Words 📚\n\n| Malayalam | Pronunciation | Meaning | Hook |\n|-----------|--------------|---------|----------|\n| **സത്യം** | sathyam | truth | ്യ |\n| **സ്വപ്നം** | svapnam | dream | ്വ |\n| **ഗ്യാനം** | gyaanam | knowledge | ്യ |\n| **അശ്വം** | ashvam | horse | ്വ |\n| **വൈദ്യൻ** | vaidhyan | doctor | ്യ |\n| **ദ്വാരം** | dvaaram | door | ്വ |\n| **ഭാഗ്യം** | bhaagyam | luck | ്യ |\n| **സ്വന്തം** | svantham | own | ്വ |\n| **ദിവ്യം** | dhivyam | divine | ്യ |\n| **ത്വചാ** | thvachaa | skin | ്വ |\n\n### New Consonants:\n- **ഗ** (ga)\n- **ഭ** (bha)\n- **ദ** (da)\n- **ധ** (dha)",
+      "step_title": "Your 10 New Words"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q4",
+      "question": "How do you pronounce **അശ്വം**?",
+      "options": [
+        "ashvam",
+        "aashvaam",
+        "ashvam-a",
+        "ashvam3"
+      ],
+      "correct_answer": "ashvam",
+      "feedback": "Perfect! അശ്വം (ashvam) = horse. Animal vocabulary!",
+      "step_title": "**അശ്വം**? Pronunciation"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q5",
+      "question": "How do you pronounce **ഭാഗ്യം**?",
+      "options": [
+        "bhaagyam",
+        "bhaaaagyaam",
+        "bhaagyam-a",
+        "bhaagyam3"
+      ],
+      "correct_answer": "bhaagyam",
+      "feedback": "Excellent! ഭാഗ്യം (bhaagyam) = luck/fortune!",
+      "step_title": "**ഭാഗ്യം**? Pronunciation"
+    },
+    {
+      "type": "free_response",
+      "id": "q6",
+      "question": "How do you pronounce **വൈദ്യൻ**?",
+      "ai_grading": false,
+      "accepted_responses": [
+        "vaidhyan",
+        "Vaidhyan",
+        "VAIDHYAN",
+        "vaidhyan"
+      ],
+      "hint": "Medical professional - uses ്യ!",
+      "step_title": "**വൈദ്യൻ**? Pronunciation"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q7",
+      "question": "How do you pronounce **സ്വന്തം**?",
+      "options": [
+        "svantham",
+        "svaanthaam",
+        "svantham-a",
+        "svantham3"
+      ],
+      "correct_answer": "svantham",
+      "feedback": "Correct! സ്വന്തം (svantham) = own. Essential word!",
+      "step_title": "**സ്വന്തം**? Pronunciation"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q8",
+      "question": "What visual pattern do ്യ and ്വ create?",
+      "options": [
+        "They hook/attach below or beside the consonant",
+        "They stack on top",
+        "They appear before",
+        "They're invisible"
+      ],
+      "correct_answer": "They hook/attach below or beside the consonant",
+      "feedback": "Perfect! Semi-vowel hooks are subjoined - elegant visual pattern!",
+      "step_title": "What visual pattern do"
+    },
+    {
+      "type": "free_response",
+      "id": "q9",
+      "question": "Write 'dream' in English letters",
+      "ai_grading": false,
+      "accepted_responses": [
+        "svapnam",
+        "Svapnam",
+        "SVAPNAM"
+      ],
+      "hint": "സ്വപ്നം - uses ്വ hook",
+      "step_title": "Write 'dream' English letters"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q10",
+      "question": "How do you pronounce **ദിവ്യം**?",
+      "options": [
+        "dhivyam",
+        "dhivyaam",
+        "dhivyam-a",
+        "dhivyam3"
+      ],
+      "correct_answer": "dhivyam",
+      "feedback": "Excellent! ദിവ്യം (dhivyam) = divine. Spiritual vocabulary!",
+      "step_title": "**ദിവ്യം**? Pronunciation"
+    },
+    {
+      "type": "content",
+      "content_markdown": "## 🎊 Lesson 18 Complete!\n\n**✅ Total Symbols: 59+**\n- **New hooks:** ്യ, ്വ\n- **New consonants:** ഗ, ഭ, ദ, ധ\n- Subjoined forms mastered!\n\n**✅ Total Words: 180!**\n\n**✅ Cumulative Reinforcement:**\n- **ം:** 7 words (സത്യം, സ്വപ്നം, ഗ്യാനം, അശ്വം, ഭാഗ്യം, സ്വന്തം, ദിവ്യം)\n- **സ:** 3 words (സത്യം, സ്വപ്നം, സ്വന്തം)\n- **വ:** 3 words (സ്വപ്നം, അശ്വം, വൈദ്യൻ)\n- **ത:** 2 words (സത്യം, സ്വന്തം)\n\nRequirement met! ✅\n\n### What's Next?\nLesson 19: **Flowing Hooks** - ്ര, ്ല\n\nR and L subjoined forms - complete Phase 3! 🚀",
+      "step_title": "Lesson 18 Complete!"
+    }
+  ],
+  "skills_learned": [
+    "Reading Malayalam script",
+    "Reading 10+ Malayalam words",
+    "Understanding Malayalam phonetics"
+  ]
+}

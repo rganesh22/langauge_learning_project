@@ -1,0 +1,206 @@
+LESSON FORMAT SPECIFICATION
+
+You are creating educational content in JSON format for a mobile-first language learning application. Follow this specification exactly.
+
+=== FILE STRUCTURE ===
+
+lessons/{language_code}/{unit_directory}/{number}_{name}.json
+
+Language Codes: ml=Malayalam, kn=Kannada, ta=Tamil, te=Telugu, hi=Hindi
+Unit Format: unit_{number}_{description} (e.g., unit_1_foundations)
+Lesson Files: {number}_{name}.json (e.g., 01_the_a_starters.json)
+
+=== REQUIRED TOP-LEVEL FIELDS ===
+
+{
+  "lesson_id": "{language}_{number}_{name}",
+  "language": "Malayalam",
+  "title": "Short Title (2-6 words)",
+  "subtitle": "Brief context (optional)",
+  "description": "Clear 1-2 sentence learning objective",
+  "estimated_minutes": 25,
+  "cefr_level": "A0|A1|A2|B1|B2|C1|C2",
+  "tags": ["tag1", "tag2", "tag3"],
+  "skills_learned": ["Specific skill 1", "Specific skill 2", "Specific skill 3"],
+  "steps": [array of step objects]
+}
+
+CRITICAL RULES:
+- lesson_id: Must be globally unique
+- skills_learned: REQUIRED, 3-5 specific measurable skills
+- estimated_minutes: 15-35 typical range
+- tags: 3-6 relevant tags (lowercase)
+
+=== STEP TYPES ===
+
+Three types: content, multiple_choice, free_response
+
+--- STEP TYPE 1: CONTENT ---
+
+{
+  "type": "content",
+  "content_markdown": "Markdown text with headers, lists, tables, native script",
+  "step_title": "3-4 Words Max"
+}
+
+MOBILE-FIRST RULES:
+- step_title: MUST be 3-4 words (displays in sidebar)
+- Tables: MAX 3 columns (mobile constraint)
+- Paragraphs: Keep short, scannable
+- Headers: Use ## and ### for hierarchy
+
+Markdown Support:
+- Headers: #, ##, ###
+- Bold: **text**
+- Italic: *text*
+- Lists: - item or 1. item
+- Tables: Standard markdown (3 columns max)
+- Phonetic notation: $R$ $L$ $N$ for special sounds
+
+Common table pattern:
+| Malayalam | Sound | Meaning |
+|-----------|-------|---------|
+| **അ** | a | letter |
+
+--- STEP TYPE 2: MULTIPLE CHOICE ---
+
+{
+  "type": "multiple_choice",
+  "id": "q1",
+  "question": "Clear specific question?",
+  "options": [
+    "Correct answer",
+    "Plausible distractor 1",
+    "Plausible distractor 2",
+    "Plausible distractor 3"
+  ],
+  "correct_answer": "Correct answer",
+  "feedback": "Perfect! Brief explanation.",
+  "step_title": "3-4 Words"
+}
+
+CRITICAL RULES:
+- id: Unique within lesson (q1, q2, etc.)
+- options: 2-6 choices (typically 4)
+- correct_answer: MUST EXACTLY MATCH one option (case-sensitive)
+- feedback: Positive + brief explanation (start with Perfect!/Excellent!/Correct!)
+- step_title: Extract key concept from question, 3-4 words
+
+--- STEP TYPE 3: FREE RESPONSE ---
+
+{
+  "type": "free_response",
+  "id": "q1",
+  "question": "Write the word for X in English letters",
+  "ai_grading": false,
+  "accepted_responses": ["answer", "Answer", "ANSWER"],
+  "hint": "Think about the letters...",
+  "step_title": "3-4 Words"
+}
+
+RULES:
+- ai_grading: Always false (exact match)
+- accepted_responses: Include variations (case, spelling)
+- hint: Optional but recommended, don't give away answer
+
+=== PHONETIC NOTATION ===
+
+Use $ symbols for special sounds in transliteration:
+$R$ = Hard/trilled retroflex R (റ)
+$L$ = Retroflex L (ള)
+$N$ = Retroflex N (ണ)
+$r$ = Soft R (ര)
+$l$ = Standard L (ല)
+$n$ = Dental N (ന)
+$ng$ = Velar NG (ങ)
+
+Example: "കറ (kaRa)" vs "കര (kara)" shows different R sounds
+
+=== VALIDATION CHECKLIST ===
+
+Before submitting lesson:
+✓ lesson_id is unique
+✓ All required fields present
+✓ skills_learned has 3-5 specific skills
+✓ Every step has step_title (3-4 words)
+✓ Tables have 3 columns maximum
+✓ correct_answer exactly matches an option
+✓ accepted_responses provided for free_response
+✓ Content is mobile-optimized
+✓ Native script appears with transliteration
+
+=== COMMON MISTAKES ===
+
+❌ Long step titles (breaks mobile layout)
+❌ Wide tables (more than 3 columns)
+❌ Mismatched correct_answer (typo, case difference)
+❌ Missing skills_learned array
+❌ Forgetting ai_grading: false for free_response
+❌ No accepted_responses when ai_grading is false
+
+=== UNIT METADATA ===
+
+Each unit directory needs _unit_metadata.json:
+
+{
+  "unit_id": "{language}_unit_{number}",
+  "unit_number": 1,
+  "language": "Malayalam",
+  "title": "Unit Title",
+  "subtitle": "Optional context",
+  "description": "1-3 sentences about objectives",
+  "estimated_minutes": 740,
+  "lesson_count": 30,
+  "lessons": ["01_lesson_name", "02_lesson_name"],
+  "completion_criteria": {"all_lessons_completed": true},
+  "skills_learned": ["Overall skill 1", "Overall skill 2"]
+}
+
+=== EXAMPLE COMPLETE LESSON ===
+
+{
+  "lesson_id": "ml_01_the_a_starters",
+  "language": "Malayalam",
+  "title": "The 'A' Starters",
+  "subtitle": "അ, ക, റ, മ - Your First Four Letters",
+  "description": "Learn to read Malayalam script phonetically. Master the visual recognition and pronunciation of these characters.",
+  "estimated_minutes": 25,
+  "cefr_level": "A0",
+  "tags": ["script", "vowels", "consonants", "basics"],
+  "skills_learned": [
+    "Reading അ character",
+    "Pronouncing retroflex R",
+    "Recognizing മ consonant",
+    "Writing basic Malayalam words"
+  ],
+  "steps": [
+    {
+      "type": "content",
+      "content_markdown": "## Welcome to Malayalam!\n\nYou'll learn 4 essential characters today:\n\n- **അ** (a)\n- **ക** (ka)\n- **റ** (Ra)\n- **മ** (ma)",
+      "step_title": "Welcome to Malayalam"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q1",
+      "question": "What sound does **അ** make?",
+      "options": [
+        "Like 'a' in 'about' (short neutral vowel)",
+        "Like 'ay' in 'day'",
+        "Like 'ah' in 'father'",
+        "It's silent"
+      ],
+      "correct_answer": "Like 'a' in 'about' (short neutral vowel)",
+      "feedback": "Perfect! അ is a short, neutral 'a' sound - the foundation of Malayalam phonetics.",
+      "step_title": "Sound of അ"
+    },
+    {
+      "type": "free_response",
+      "id": "q2",
+      "question": "Write the Malayalam word for 'Mother' in English letters",
+      "ai_grading": false,
+      "accepted_responses": ["amma", "Amma", "AMMA"],
+      "hint": "It uses the letter മ twice with a special symbol.",
+      "step_title": "Write Mother Word"
+    }
+  ]
+}

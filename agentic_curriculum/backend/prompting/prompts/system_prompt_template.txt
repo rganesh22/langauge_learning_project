@@ -1,0 +1,8 @@
+{system_prompt}
+
+Your task: {task}
+
+AVAILABLE TOOLS:
+
+{tools_description}
+{readme_section}

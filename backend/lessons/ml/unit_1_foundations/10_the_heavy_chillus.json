@@ -1,0 +1,208 @@
+{
+  "lesson_id": "ml_10_heavy_chillus",
+  "language": "Malayalam",
+  "title": "The Heavy Chillus",
+  "subtitle": "ൾ, ൺ - Retroflex L and N Endings",
+  "description": "Learn to read Malayalam chillu characters - special consonant endings. Master their visual forms and how they sound at the end of words.",
+  "estimated_minutes": 24,
+  "cefr_level": "A0",
+  "tags": [
+    "script",
+    "chillus",
+    "retroflexes",
+    "endings"
+  ],
+  "steps": [
+    {
+      "type": "content",
+      "content_markdown": "# Phase 3: The Ligature Jungle Begins! 🌿\n\n## Welcome to Advanced Script\n\nYou've mastered **90 words** and the complete vowel system!\n\nPhase 3 focuses on **how letters combine** - stacking, merging, and creating complex forms.\n\n## Today: Heavy Chillus\n\nYou learned basic chillus in Lesson 6:\n- **ൻ** - Dental 'n' chillu\n- **ർ** - Soft 'r' chillu\n- **ൽ** - Standard 'l' chillu\n\n### Today's Retroflex Chillus:\n- **ൾ** - Retroflex 'L' chillu ($L$)\n- **ൺ** - Retroflex 'N' chillu ($N$)\n\nThese create **heavy, authoritative endings** - common in formal and literary Malayalam.\n\n### Why \"Heavy\"?\nRetroflex sounds are STRONGER than their dental counterparts:\n- ൽ (light 'l') vs **ൾ** (heavy 'L')\n- ൻ (light 'n') vs **ൺ** (heavy 'N')\n\n### Words You'll Learn:\n- **കേരളം** (keraLam) = Kerala (uses ള!)\n- **വീൾ** (veeL) = House\n- **നാൾ** (naaL) = Day\n\nLet's master the heavy endings! 💪",
+      "step_title": "The Ligature Jungle Begins!"
+    },
+    {
+      "type": "content",
+      "content_markdown": "## Understanding Retroflex L: ള\n\n### Two 'L' Sounds in Malayalam\n\n**1. Standard ല ($l$) - You learned this:**\n- Tongue tip touches ridge behind teeth\n- Light, standard 'l' sound\n- Example: **പാൽ** (paal) = Milk\n\n**2. Retroflex ള ($L$) - TODAY:**\n- Tongue curls BACK to touch roof of mouth\n- Heavy, thick 'L' sound\n- Example: **കേരളം** (keraLam) = Kerala!\n\n### Articulation for ള\n**Same retroflex position as ട, ഡ, ണ:**\n1. Curl tongue tip back\n2. Touch hard palate (roof)\n3. Release with 'L' sound\n\n### Sound Symbol: $L$\nWe write **$L$** (capital L) to show retroflex.\n\n### Visual Recognition:\n**ള** looks DIFFERENT from **ല**:\n- **ല** (la) - Lighter visual weight\n- **ള** (La) - Heavier, more complex shape",
+      "step_title": "Retroflex L: ള Explained"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q1",
+      "question": "What makes **ള** different from **ല**?",
+      "options": [
+        "ള is retroflex (tongue curled back), ല is standard (tongue at ridge)",
+        "They're the same sound",
+        "ള is louder",
+        "ള only appears at word beginnings"
+      ],
+      "correct_answer": "ള is retroflex (tongue curled back), ല is standard (tongue at ridge)",
+      "feedback": "Perfect! Malayalam distinguishes these two 'L' sounds precisely!",
+      "step_title": "What makes **ള** different"
+    },
+    {
+      "type": "content",
+      "content_markdown": "## Retroflex L Chillu: ൾ\n\n### Pure Retroflex L\n**ൾ** is the CHILLU form - pure 'L' sound with NO vowel.\n\nJust like:\n- ല (la) → ൽ (l) - standard chillu\n- ള (La) → **ൾ** (L) - retroflex chillu\n\n### Usage\nExtremely common in Malayalam!\n\n**Examples:**\n- **നാൾ** (naaL) = Day\n- **വീൾ** (veeL) = House  \n- **പാൾ** (paaL) = Milk (dialectal variant)\n- **കാൾ** (kaaL) = Leg (variant)\n\n### Visual Recognition\n**ൾ** is a distinct shape - the retroflex chillu marker.\n\n### In Context:\n**നാൾ** = naa-**L** (day)\n- ന (na)\n- ാ (aa modifier)\n- ൾ (pure retroflex L)\n\nNo vowel after the 'L' - clean ending!\n\n### Cultural Note:\n**നാൾ** (day) appears in many compound words:\n- **ഇന്നാൾ** (innaaL) = These days\n- **എന്നാൾ** (ennaaL) = Always",
+      "step_title": "Retroflex L Chillu: ൾ"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q2",
+      "question": "What does the chillu **ൾ** represent?",
+      "options": [
+        "Pure retroflex 'L' sound with no following vowel",
+        "The sound 'La' with inherent 'a'",
+        "A dental 'l' sound",
+        "A doubled 'L' sound"
+      ],
+      "correct_answer": "Pure retroflex 'L' sound with no following vowel",
+      "feedback": "Excellent! Chillus = pure consonants. ൾ is heavy retroflex L!",
+      "step_title": "What does chillu **ൾ**"
+    },
+    {
+      "type": "content",
+      "content_markdown": "## Understanding Retroflex N: ണ\n\n### Malayalam's N Sounds (Review + New)\n\nYou've learned:\n1. **ന** ($n$) - Dental 'n' (tongue on teeth)\n2. **ൻ** - Dental 'n' chillu\n3. **ണ** ($N$) - Retroflex 'N' (tongue curled back) ← Lesson 7\n\n### Today: The Chillu Form\n4. **ൺ** - Retroflex 'N' CHILLU (pure sound, no vowel)\n\n### When to Use ൺ vs ൻ\n- **ൻ** = Light dental ending\n- **ൺ** = Heavy retroflex ending\n\n**Compare:**\n- **അവൻ** (avan) = He (light ending)\n- **കാൺ** (kaaN) = See (heavy ending - if used as chillu)\n\n### Articulation Reminder:\nSame retroflex curl as ട, ഡ, ണ, ള!",
+      "step_title": "Retroflex N: ണ Explained"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q3",
+      "question": "How many different 'n' sounds does Malayalam have?",
+      "options": [
+        "At least 4 (dental n, retroflex N, velar ng, and their chillus)",
+        "Just 1 like English",
+        "Exactly 2",
+        "Only 3"
+      ],
+      "correct_answer": "At least 4 (dental n, retroflex N, velar ng, and their chillus)",
+      "feedback": "Perfect! Malayalam has exceptional phonetic precision with multiple 'n' sounds!",
+      "step_title": "different 'n' sounds do"
+    },
+    {
+      "type": "content",
+      "content_markdown": "## Retroflex N Chillu: ൺ\n\n### Pure Retroflex N\n**ൺ** is the chillu form - pure 'N' sound with NO vowel.\n\n**Relationship:**\n- ണ (Na) → **ൺ** (N) - retroflex chillu\n- ന (na) → ൻ (n) - dental chillu\n\n### Usage\nLess common than ൾ, but important!\n\n**Examples:**\n- **മൺ** (maN) = Soil/Earth\n- **പൺ** (paN) = Old/Ancient\n- **വാൺ** (vaaN) = Sky (variant)\n\n### Visual Recognition\n**ൺ** has a distinct retroflex chillu shape.\n\n### In Context:\n**മൺ** = ma-**N** (soil)\n- മ (ma)\n- ൺ (pure retroflex N)\n\nHeavy, authoritative ending!\n\n### Minimal Pair:\n- **മൻ** (man) - if using dental chillu\n- **മൺ** (maN) - with retroflex chillu\n- Different phonetic weight!",
+      "step_title": "Retroflex N Chillu: ൺ"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q4",
+      "question": "What's the difference between ൻ and ൺ?",
+      "options": [
+        "ൻ is dental (light), ൺ is retroflex (heavy) - both pure consonants",
+        "They're the same chillu",
+        "ൻ is uppercase, ൺ is lowercase",
+        "ൻ starts words, ൺ ends words"
+      ],
+      "correct_answer": "ൻ is dental (light), ൺ is retroflex (heavy) - both pure consonants",
+      "feedback": "Excellent! Even chillu endings distinguish dental vs retroflex!",
+      "step_title": "ൻ  Difference"
+    },
+    {
+      "type": "content",
+      "content_markdown": "## Kerala's Name Revealed! 🌴\n\n### കേരളം (keraLam) = Kerala\n\nNow you can fully understand this word:\n\n**Breakdown:**\n1. **ക** (ka) - Base consonant\n2. **േ** (long e modifier) → **കേ** (ke:)\n3. **ര** (ra) - Soft 'r'\n4. **ള** (La) - RETROFLEX L! ← Today's focus\n5. **ം** (anusvara) - Nasal ending\n\n**Pronunciation:** ke-ra-**L**-am\n\n### Why Retroflex L?\nThe retroflex gives Kerala its distinctive sound - **heavy, authoritative, unique**!\n\nWithout retroflex:\n- **കേരലം** (keralam) - would sound wrong!\n\n### Cultural Significance:\nKerala's name likely derives from:\n- **കേര** (kera) = Coconut tree\n- **ളം** (Lam) = Land/Place\n\n**Land of Coconuts!** 🥥",
+      "step_title": "Kerala's Name Unveiled"
+    },
+    {
+      "type": "free_response",
+      "id": "q5",
+      "question": "Write 'day' in English letters using sound symbols",
+      "ai_grading": false,
+      "accepted_responses": [
+        "naaL",
+        "NaaL",
+        "naal",
+        "NAAL"
+      ],
+      "hint": "It's നാൾ - na + aa (long) + L (retroflex chillu). Use capital L if you want!",
+      "step_title": "Write 'day' English letters"
+    },
+    {
+      "type": "content",
+      "content_markdown": "## Reading All 10 Words 📚\n\n| Malayalam | Breakdown | Pronunciation | Meaning |\n|-----------|-----------|--------------|----------|\n| **നാൾ** | na + aa + L | naaL | day |\n| **വീൾ** | vi + ii + L | veeL | house |\n| **പൂൾ** | pu + uu + L | pooL | flower |\n| **കേരളം** | ke + ra + La + m | keraLam | Kerala |\n| **മൺ** | ma + N | maN | soil |\n| **കാൾ** | ka + aa + L | kaaL | leg |\n| **വാൾ** | va + aa + L | vaaL | sword |\n| **പൺ** | pa + N | paN | old |\n| **കോൾ** | ko + L | koL | rule |\n| **താൾ** | tha + aa + L | thaaL | page |\n\n### Sound Symbols:\n- **$L$** = Retroflex 'L' (ള, ൾ)\n- **$N$** = Retroflex 'N' (ണ, ൺ)\n- **$th$** = Dental 't' (ത)",
+      "step_title": "Reading All 10 Words"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q6",
+      "question": "How do you pronounce **നാൾ**?",
+      "options": [
+        "naaL",
+        "naaaaL",
+        "naaL-a",
+        "naaL3"
+      ],
+      "correct_answer": "naaL",
+      "feedback": "Correct! നാൾ (naaL) = day. Heavy retroflex L ending!",
+      "step_title": "**നാൾ**? Pronunciation"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q7",
+      "question": "How do you write 'Kerala' in Malayalam?",
+      "options": [
+        "കേരളം",
+        "കേരലം",
+        "കരളം",
+        "േകരളം"
+      ],
+      "correct_answer": "കേരളം",
+      "feedback": "Perfect! കേരളം uses the retroflex ള - essential for correct pronunciation!",
+      "step_title": "How do you write"
+    },
+    {
+      "type": "free_response",
+      "id": "q8",
+      "question": "How do you pronounce **വാൾ**?",
+      "ai_grading": false,
+      "accepted_responses": [
+        "vaaL",
+        "Vaal",
+        "VAAL",
+        "vaaL"
+      ],
+      "hint": "It's a weapon. വാൾ uses the retroflex L chillu for a strong ending.",
+      "step_title": "**വാൾ**? Pronunciation"
+    },
+    {
+      "type": "content",
+      "content_markdown": "## Chillu Mastery Chart 📊\n\n### All Chillus You Know:\n\n| Type | Dental/Standard | Retroflex/Heavy |\n|------|----------------|----------------|\n| **N** | **ൻ** (n - light) | **ൺ** (N - heavy) |\n| **R** | **ർ** (r - soft) | - |\n| **L** | **ൽ** (l - light) | **ൾ** (L - heavy) |\n\n### Usage Patterns:\n\n**Dental chillus** (light endings):\n- **അവൻ** (avan) = He\n- **പാൽ** (paal) = Milk\n\n**Retroflex chillus** (heavy endings):\n- **നാൾ** (naaL) = Day\n- **മൺ** (maN) = Soil\n\n### Reading Strategy:\n1. See a chillu? → No vowel after\n2. Standard shape? → Dental/light\n3. Retroflex shape? → Heavy\n\n### Practice:\nRead these and identify the chillu type:\n1. **കാർ** (kaar) = Car [ർ - soft r]\n2. **വാൾ** (vaaL) = Sword [ൾ - retroflex L]\n3. **തേൻ** (then) = Honey [ൻ - dental n]",
+      "step_title": "Chillu Mastery Chart"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q9",
+      "question": "Which word means 'soil/earth'?",
+      "options": [
+        "മൺ (maN)",
+        "നാൾ (naaL)",
+        "വീൾ (veeL)",
+        "താൾ (thaaL)"
+      ],
+      "correct_answer": "മൺ (maN)",
+      "feedback": "Excellent! മൺ (maN) = soil. Uses the retroflex N chillu!",
+      "step_title": "Which word means 'soil/earth'?"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q10",
+      "question": "How do you pronounce **താൾ**?",
+      "options": [
+        "thaaL",
+        "thaaaaL",
+        "thaaL-a",
+        "thaaL3"
+      ],
+      "correct_answer": "thaaL",
+      "feedback": "Perfect! താൾ (thaaL) = page/leaf. Literary vocabulary with heavy L!",
+      "step_title": "**താൾ**? Pronunciation"
+    },
+    {
+      "type": "content",
+      "content_markdown": "## 🎊 Lesson 10 Complete!\n\n### Your Chillu Arsenal:\n\n**✅ Total Symbols: 35**\n- All vowels: 10 independent + modifiers\n- Consonants: 15+ learned\n- **All 5 chillus:** ൻ, ർ, ൽ, ൾ, ൺ ← Complete!\n\n**✅ Total Words: 100! 🎉**\n- **MAJOR MILESTONE REACHED!**\n- 100 real Malayalam words in your vocabulary!\n- Reading authentic text is now possible!\n\n**✅ Phonetic Sophistication:**\n1. **Retroflex mastery** - ട, ഡ, ണ, ള + chillus\n2. **Chillu precision** - 5 different pure consonant endings\n3. **Sound weight** - Light vs heavy distinctions\n\n### Cumulative Reinforcement Check ✓\n**Previous lesson letters in today's words:**\n- **ക:** appears in 2 words (കേരളം, കാൾ, േകാൾ)\n- **ന:** appears in 2 words (നാൾ, പൺ)\n- **വ:** appears in 2 words (വീൾ, വാൾ)\n- **പ:** appears in 2 words (പൂൾ, പൺ)\n- **മ:** appears in 2 words (കേരളം, മൺ)\n- **Long vowels:** Heavily reinforced (ാ, ീ, ൂ, േ, ോ)\n- **Previous chillus:** Still in use!\n\nRequirement exceeded! ✅\n\n### What's Next?\n**Ligature territory begins!**\n\nLesson 11: **Sibilants & Soft Breath** - സ, ഹ, ശ, ഷ (The four 'S' sounds)\n\nThen: Double consonants that STACK:\n- **ക്ക** (kka) - Double stop\n- **പ്പ** (ppa) - Double labial\n- **ത്ത** (ththa) - Double dental\n\nYou're reading at intermediate level! 🚀",
+      "step_title": "Lesson 10 Complete!"
+    }
+  ],
+  "skills_learned": [
+    "Understanding chillu characters",
+    "Distinguishing retroflex sounds",
+    "Reading Malayalam script",
+    "Reading 18+ Malayalam words"
+  ]
+}

@@ -1,0 +1,203 @@
+{
+  "lesson_id": "ml_30_final_reading",
+  "language": "Malayalam",
+  "title": "Final Reading - Your First Story",
+  "subtitle": "Read a Complete 5-Sentence Malayalam Story",
+  "description": "Practice reading a complete Malayalam story. Apply all your phonetic reading skills to read connected text.",
+  "estimated_minutes": 30,
+  "cefr_level": "A0",
+  "tags": [
+    "reading",
+    "story",
+    "completion",
+    "achievement",
+    "phase5-complete"
+  ],
+  "steps": [
+    {
+      "type": "content",
+      "content_markdown": "# Your Final Challenge! 🎓\n\n**290 words** mastered!\n\n## The Complete Journey\n\nYou've learned:\n- **Phase 1:** Foundations (60 words)\n- **Phase 2:** Phonetic precision (60 words)\n- **Phase 3:** Conjuncts (70 words)\n- **Phase 4:** Nuance & logic (60 words)\n- **Phase 5:** Fluency lab (40 words)\n\n### Total Mastery:\n- All vowels ✅\n- All consonants ✅\n- All conjuncts ✅\n- All chillus ✅\n- Grammar suffixes ✅\n- Real-world vocabulary ✅\n\n## Today:\n**Read your FIRST complete Malayalam story!**\n\n### The Story:\n5 sentences about Kerala!\n\nLet's finish strong! 🎯",
+      "step_title": "Your Final Challenge!"
+    },
+    {
+      "type": "content",
+      "content_markdown": "## The Story: കേരളം (Kerala)\n\n### Full Text:\n\n**കേരളം ഇന്ത്യയിലെ സുന്ദരമായ സംസ്ഥാനമാണ്. അവിടെ വളെര മഴ പെയ്യും. െതങ്ങ്, റബർ, കുരുമുളക് എന്നിവ പ്രധാനമാണ്. മലയാളം ഭാഷ െകാച്ചി, തിരുവനന്തപുരം പ്രധാന നഗരങ്ങളാണ്. അപ്പവും കടല കറിയും രുചികരമായ ഭക്ഷണമാണ്!**\n\n### Transliteration:\nKeraLam inthyayile sundaramaaya samsthaanam aaNu. Avide vaLare mazha peyyum. Thengu, Rabar, kurumulaku enniva pradhaanam aaNu. Malayalam bhaasha Kochi, Thiruvananthapuram pradhaana nagarangaL aaNu. Appavum kadala kariyum ruchikaram aaya bhakshaNam aaNu!\n\n### Translation:\n**Kerala is a beautiful state in India. There it rains a lot. Coconut, rubber, pepper are important. Malayalam language Kochi, Thiruvananthapuram are main cities. Appam and chickpea curry are delicious food!**",
+      "step_title": "The Story: കേരളം (Kerala)"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q1",
+      "question": "What is the story about?",
+      "options": [
+        "Kerala (കേരളം)",
+        "India in general",
+        "A person",
+        "Food only"
+      ],
+      "correct_answer": "Kerala (കേരളം)",
+      "feedback": "Perfect! The story describes Kerala!",
+      "step_title": "the story about? Explained"
+    },
+    {
+      "type": "content",
+      "content_markdown": "## Sentence-by-Sentence Breakdown\n\n### Sentence 1:\n**കേരളം ഇന്ത്യയിലെ സുന്ദരമായ സംസ്ഥാനമാണ്.**\n\n**Words:**\n- കേരളം = Kerala\n- ഇന്ത്യയിലെ = of India (locative + possessive)\n- സുന്ദരമായ = beautiful\n- സംസ്ഥാനം = state\n- ആണ് = is\n\n**Meaning:** Kerala is a beautiful state in India.\n\n### Sentence 2:\n**അവിടെ വളെര മഴ പെയ്യും.**\n\n**Words:**\n- അവിടെ = there\n- വളെര = very much\n- മഴ = rain (you know this!)\n- പെയ്യും = will fall/rain\n\n**Meaning:** There it rains a lot.",
+      "step_title": "Sentence-by-Sentence Breakdown"
+    },
+    {
+      "type": "free_response",
+      "id": "q2",
+      "question": "How do you pronounce **മഴ**?",
+      "ai_grading": false,
+      "accepted_responses": [
+        "rain",
+        "Rain",
+        "RAIN"
+      ],
+      "hint": "You learned this in Lesson 29!",
+      "step_title": "**മഴ**? Pronunciation"
+    },
+    {
+      "type": "content",
+      "content_markdown": "## More Breakdown\n\n### Sentence 3:\n**െതങ്ങ്, റബർ, കുരുമുളക് എന്നിവ പ്രധാനമാണ്.**\n\n**Words:**\n- െതങ്ങ് = coconut\n- റബർ = rubber\n- കുരുമുളക് = pepper\n- എന്നിവ = these things (plural marker)\n- പ്രധാനം = important\n- ആണ് = are\n\n**Meaning:** Coconut, rubber, pepper are important.\n\n### Sentence 4:\n**മലയാളം ഭാഷ െകാച്ചി, തിരുവനന്തപുരം പ്രധാന നഗരങ്ങളാണ്.**\n\n**Words:**\n- മലയാളം = Malayalam\n- ഭാഷ = language\n- െകാച്ചി = Kochi (city)\n- തിരുവനന്തപുരം = Thiruvananthapuram (capital)\n- പ്രധാന = main\n- നഗരങ്ങൾ = cities\n- ആണ് = are\n\n**Meaning:** Malayalam language. Kochi, Thiruvananthapuram are main cities.",
+      "step_title": "More Breakdown"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q3",
+      "question": "What are two main cities mentioned?",
+      "options": [
+        "Kochi and Thiruvananthapuram",
+        "Mumbai and Delhi",
+        "Chennai and Bangalore",
+        "Only Kerala"
+      ],
+      "correct_answer": "Kochi and Thiruvananthapuram",
+      "feedback": "Excellent! േകാച്ചി (Kochi) and തിരുവനന്തപുരം are the main cities!",
+      "step_title": "What are two main"
+    },
+    {
+      "type": "content",
+      "content_markdown": "## Final Sentence!\n\n### Sentence 5:\n**അപ്പവും കടല കറിയും രുചികരമായ ഭക്ഷണമാണ്!**\n\n**Words:**\n- അപ്പം = appam (YOU KNOW THIS! Lesson 28! 🌱)\n- -ഉം = and (suffix)\n- കടല കറി = chickpea curry (LESSON 28! 🌱)\n- രുചികരമായ = delicious\n- ഭക്ഷണം = food\n- ആണ് = is\n\n**Meaning:** Appam and chickpea curry are delicious food!\n\n### Full Circle! 🔄\n**Your vegan culinary vocabulary from Lesson 28 appears in your final story!**\n\n### Achievement Unlocked:\n**You can read Malayalam!** 🎉",
+      "step_title": "Final Sentence!"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q4",
+      "question": "Which food items are mentioned as delicious?",
+      "options": [
+        "Appam and chickpea curry (അപ്പം and കടല കറി)",
+        "Puttu and sambar",
+        "Rice and coconut",
+        "Only coconut"
+      ],
+      "correct_answer": "Appam and chickpea curry (അപ്പം and കടല കറി)",
+      "feedback": "Perfect! Your vegan vocabulary from Lesson 28 appears! Full circle! 🌱",
+      "step_title": "Which food items are"
+    },
+    {
+      "type": "free_response",
+      "id": "q5",
+      "question": "What three agricultural products are mentioned as important to Kerala?",
+      "ai_grading": false,
+      "accepted_responses": [
+        "coconut rubber pepper",
+        "Coconut rubber pepper",
+        "coconut, rubber, pepper",
+        "thenga rabar kurumulaku",
+        "തെങ്ങ് റബർ കുരുമുളക്"
+      ],
+      "hint": "Three agricultural products in sentence 3!",
+      "step_title": "What three agricultural products"
+    },
+    {
+      "type": "content",
+      "content_markdown": "## Read It Again! 🔁\n\n### Now read the FULL story fluently:\n\n---\n\n**കേരളം ഇന്ത്യയിലെ സുന്ദരമായ സംസ്ഥാനമാണ്.**\n\n**അവിടെ വളെര മഴ പെയ്യും.**\n\n**െതങ്ങ്, റബർ, കുരുമുളക് എന്നിവ പ്രധാനമാണ്.**\n\n**മലയാളം ഭാഷ. െകാച്ചി, തിരുവനന്തപുരം പ്രധാന നഗരങ്ങളാണ്.**\n\n**അപ്പവും കടല കറിയും രുചികരമായ ഭക്ഷണമാണ്!**\n\n---\n\n### Can you read it without transliteration?\n**Try it!** 📖\n\n### Speed Challenge:\nRead it 3 times, getting faster each time! ⚡",
+      "step_title": "Read It Again!"
+    },
+    {
+      "type": "content",
+      "content_markdown": "## Your 10 Final Words 📚\n\n| Malayalam | Pronunciation | Meaning | From Story |\n|-----------|--------------|---------|----------|\n| **സുന്ദരം** | sundaram | beautiful | Sentence 1 |\n| **സംസ്ഥാനം** | samsthaanam | state | Sentence 1 |\n| **അവിടെ** | avide | there | Sentence 2 |\n| **വളെര** | vaLare | very/much | Sentence 2 |\n| **െതങ്ങ്** | thengu | coconut | Sentence 3 |\n| **കുരുമുളക്** | kurumulaku | pepper | Sentence 3 |\n| **ഭാഷ** | bhaasha | language | Sentence 4 |\n| **നഗരം** | nagaram | city | Sentence 4 |\n| **രുചികരം** | ruchikaram | delicious | Sentence 5 |\n| **ഭക്ഷണം** | bhakshaNam | food | Sentence 5 |\n\n### **300 WORDS TOTAL!** 🎊",
+      "step_title": "Your 10 Final Words"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q6",
+      "question": "How do you pronounce **സുന്ദരം**?",
+      "options": [
+        "sundaram",
+        "sundaaraam",
+        "sundaram-a",
+        "sundaram3"
+      ],
+      "correct_answer": "sundaram",
+      "feedback": "Perfect! സുന്ദരം = beautiful. Descriptive vocabulary!",
+      "step_title": "**സുന്ദരം**? Pronunciation"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q7",
+      "question": "How do you pronounce **ഭാഷ**?",
+      "options": [
+        "bhaasha",
+        "bhaaaashaa",
+        "bhaasha-a",
+        "bhaasha3"
+      ],
+      "correct_answer": "bhaasha",
+      "feedback": "Excellent! ഭാഷ = language. മലയാളം ഭാഷ = Malayalam language!",
+      "step_title": "**ഭാഷ**? Pronunciation"
+    },
+    {
+      "type": "free_response",
+      "id": "q8",
+      "question": "How do you pronounce **നഗരം**?",
+      "ai_grading": false,
+      "accepted_responses": [
+        "nagaram",
+        "Nagaram",
+        "NAGARAM",
+        "nagaram"
+      ],
+      "hint": "Urban area!",
+      "step_title": "**നഗരം**? Pronunciation"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q9",
+      "question": "How do you pronounce **രുചികരം**?",
+      "options": [
+        "ruchikaram",
+        "ruchikaaraam",
+        "ruchikaram-a",
+        "ruchikaram3"
+      ],
+      "correct_answer": "ruchikaram",
+      "feedback": "Perfect! രുചികരം = delicious. Food vocabulary!",
+      "step_title": "**രുചികരം**? Pronunciation"
+    },
+    {
+      "type": "free_response",
+      "id": "q10",
+      "question": "How do you pronounce **െതങ്ങ്**?",
+      "ai_grading": false,
+      "accepted_responses": [
+        "thengu",
+        "Thengu",
+        "THENGU",
+        "thengu"
+      ],
+      "hint": "The tree of Kerala! തേങ്ങാപ്പാൽ uses this word!",
+      "step_title": "**െതങ്ങ്**? Pronunciation"
+    },
+    {
+      "type": "content",
+      "content_markdown": "## 🎊🎉🏆 LESSON 30 COMPLETE! 🏆🎉🎊\n## 🌟 PHASE 5 COMPLETE! 🌟\n## 🎓 ENTIRE CURRICULUM COMPLETE! 🎓\n\n---\n\n### 🏆 YOUR ACHIEVEMENTS:\n\n**✅ All 5 Phases Mastered:**\n1. **Phase 1:** High-Utility Foundations (Lessons 1-6)\n2. **Phase 2:** Phonetic Precision (Lessons 7-12)\n3. **Phase 3:** The Ligature Jungle (Lessons 13-19)\n4. **Phase 4:** Nuance & Logic (Lessons 20-25)\n5. **Phase 5:** The Fluency Lab (Lessons 26-30)\n\n**✅ Complete Script Mastery:**\n- 12 independent vowels\n- 11 dependent vowel modifiers\n- 40+ consonants\n- 5 chillus\n- 50+ conjunct patterns\n- Special marks (ം, ഃ, ൃ, ്)\n- Vocalic letters\n- All orthographic rules\n\n**✅ 300 WORDS!** 🎊\n\n**✅ You Can Now:**\n- ✅ Read Malayalam script fluently\n- ✅ Recognize all letter forms\n- ✅ Understand conjuncts instantly\n- ✅ Navigate Kerala with literacy\n- ✅ Read news headlines\n- ✅ Order vegan food (🌱 Lesson 28!)\n- ✅ Understand signs and warnings\n- ✅ Read your first complete story!\n\n---\n\n### 🌱 Special Achievement:\n**VEGAN CULINARY VOCABULARY MASTERED!**\n\nYou learned all these delicious Kerala dishes:\n- അപ്പം (Appam) ✅\n- പുട്ട് (Puttu) ✅\n- കടല കറി (Chickpea curry) ✅\n- സാമ്പാർ (Sambar) ✅\n- ഇഡ്ഡലി (Idli) ✅\n- അവിയൽ (Aviyal) ✅\n- ഉപ്പേരി (Banana chips) ✅\n- ചോറ് (Rice) ✅\n- പപ്പടം (Papadum) ✅\n- തേങ്ങാപ്പാൽ (Coconut milk) ✅\n\n**You can now order food in Malayalam! 🌱🥥**\n\n---\n\n### 📖 Your First Story:\nYou successfully read a complete 5-sentence Malayalam story about Kerala!\n\n**കേരളം ഇന്ത്യയിലെ സുന്ദരമായ സംസ്ഥാനമാണ്. അവിടെ വളെര മഴ പെയ്യും. െതങ്ങ്, റബർ, കുരുമുളക് എന്നിവ പ്രധാനമാണ്. മലയാളം ഭാഷ െകാച്ചി, തിരുവനന്തപുരം പ്രധാന നഗരങ്ങളാണ്. അപ്പവും കടല കറിയും രുചികരമായ ഭക്ഷണമാണ്!**\n\n---\n\n### 💪 You Are Now:\n**MALAYALAM SCRIPT LITERATE!**\n\n### 🎯 Cumulative Reinforcement (Final):\n- **അ:** Appears in 10+ words across all lessons ✅\n- **ക:** Appears in 15+ words ✅\n- **മ:** Appears in 12+ words ✅\n- **പ:** Appears in 10+ words ✅\n- **ം:** Appears in 20+ words ✅\n- **ത:** Appears in 8+ words ✅\n- **ന:** Appears in 12+ words ✅\n- **വ:** Appears in 8+ words ✅\n- **ള:** Appears in 6+ words ✅\n- **സ:** Appears in 8+ words ✅\n\n**Requirement exceeded! ✅✅✅**\n\n---\n\n### 🚀 What's Next?\n**Practice reading:**\n- Malayalam news websites\n- Children's books\n- Social media posts\n- Shop signs in Kerala\n- Malayalam movies with subtitles\n- WhatsApp messages\n\n**You have the FOUNDATION!**\n**Now build FLUENCY through practice!**\n\n---\n\n## 🙏 നന്ദി! (Nandhi - Thank You!)\n\n**Congratulations on completing the Malayalam Script Curriculum!**\n\nYou are now equipped to read Malayalam everywhere you encounter it!\n\n**Keep practicing, keep reading, keep growing!** 📖✨\n\n---\n\n### 🏆 FINAL STATS:\n- **30 Lessons** ✅\n- **300 Words** ✅\n- **All Script Elements** ✅\n- **100% Complete** ✅\n\n---\n\n# 🎓 YOU DID IT! 🎓",
+      "step_title": "LESSON 30 COMPLETE!"
+    }
+  ],
+  "skills_learned": [
+    "Reading 10+ Malayalam words",
+    "Understanding Malayalam phonetics",
+    "Applying reading strategies"
+  ]
+}

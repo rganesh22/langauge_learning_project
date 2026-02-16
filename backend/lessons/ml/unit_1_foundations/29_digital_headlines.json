@@ -1,0 +1,193 @@
+{
+  "lesson_id": "ml_29_digital_headlines",
+  "language": "Malayalam",
+  "title": "Digital Headlines",
+  "subtitle": "Reading Modern Malayalam Fonts and News",
+  "description": "Learn to read modern Malayalam fonts and digital text. Practice reading Malayalam in various styles.",
+  "estimated_minutes": 24,
+  "cefr_level": "A0",
+  "tags": [
+    "reading",
+    "digital",
+    "news",
+    "modern",
+    "fluency"
+  ],
+  "steps": [
+    {
+      "type": "content",
+      "content_markdown": "# Digital Malayalam! 📱💻\n\n**280 words** mastered!\n\n## The Digital Age\n\n### Malayalam Online:\n- **News websites** 📰\n- **Social media** 📱\n- **WhatsApp/Messages** 💬\n- **YouTube** 📺\n- **Apps** 📲\n\n### Font Variations:\nDifferent fonts = same letters!\n\n### Today's Goal:\n**Read digital Malayalam at speed!**\n\n### Topics:\n- News vocabulary\n- Headline structure\n- Modern abbreviations\n- Digital conventions\n\nLet's go digital! 🎯",
+      "step_title": "Digital Malayalam!"
+    },
+    {
+      "type": "content",
+      "content_markdown": "## News Vocabulary\n\n### Headlines Terms:\n- **വാർത്ത** (vaartha) = News\n- **തിരെഞ്ഞടുപ്പ്** (thirenjedupu) = Election\n- **സർക്കാർ** (sarkkaar) = Government\n- **നയം** (nayam) = Policy\n- **പ്രഖ്യാപനം** (prakhyaapanam) = Announcement\n\n### Common Words:\n- **ഇന്ന്** (innu) = Today\n- **നാെള** (naaLe) = Tomorrow\n- **ഇന്നെല** (innale) = Yesterday\n- **പുതിയത്** (puthiyathu) = New (news)\n\n### Digital Terms:\n- **ൈലക്ക്** (laik) = Like\n- **ഷേർ** (shEr) = Share\n- **കെമന്റ്** (kamenT) = Comment",
+      "step_title": "News Vocabulary"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q1",
+      "question": "How do you pronounce **വാർത്ത**?",
+      "options": [
+        "vaartha",
+        "vaaaarthaa",
+        "vaartha-a",
+        "vaartha3"
+      ],
+      "correct_answer": "vaartha",
+      "feedback": "Perfect! വാർത്ത = news. Essential media vocabulary!",
+      "step_title": "**വാർത്ത**? Pronunciation"
+    },
+    {
+      "type": "content",
+      "content_markdown": "## Headline Structure\n\n### Malayalam Headlines:\nLike English: **Subject + Verb** (usually)\n\n### Example Headlines:\n1. **സർക്കാർ പുതിയ നയം പ്രഖ്യാപിച്ചു**\n   = Government announced new policy\n\n2. **തിരെഞ്ഞടുപ്പ് ഇന്ന്**\n   = Election today\n\n3. **കേരളത്തിൽ മഴ**\n   = Rain in Kerala\n\n### Pattern Recognition:\n- **-ിൽ** = In/At (location)\n- **-ിച്ചു** = Past tense ending\n- **ഇന്ന്** = Today (time marker)\n\n### Speed Reading:\nRecognize patterns, not individual letters!",
+      "step_title": "Headline Structure"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q2",
+      "question": "How do you pronounce **ഇന്ന്**?",
+      "options": [
+        "innu",
+        "innu-a",
+        "innu2",
+        "innu3"
+      ],
+      "correct_answer": "innu",
+      "feedback": "Correct! ഇന്ന് = today. Time vocabulary!",
+      "step_title": "**ഇന്ന്**? Pronunciation"
+    },
+    {
+      "type": "free_response",
+      "id": "q3",
+      "question": "How do you pronounce **സർക്കാർ**?",
+      "ai_grading": false,
+      "accepted_responses": [
+        "sarkkaar",
+        "Sarkkaar",
+        "SARKKAAR",
+        "sarkkaar"
+      ],
+      "hint": "Political institution!",
+      "step_title": "**സർക്കാർ**? Pronunciation"
+    },
+    {
+      "type": "content",
+      "content_markdown": "## Modern Abbreviations\n\n### Common Shortcuts:\n- **BJP** = ബിജെപി\n- **COVID** = െകാവിഡ്\n- **USA** = യുഎസ്എ\n- **UK** = യുെക\n- **PM** = പിഎം (Prime Minister)\n- **CM** = സിഎം (Chief Minister)\n\n### Social Media:\n- **FB** = എഫ്ബി (Facebook)\n- **IG** = ഐജി (Instagram)\n- **YT** = വൈടി (YouTube)\n\n### Pattern:\nEnglish abbreviations → Malayalam script!",
+      "step_title": "Modern Abbreviations"
+    },
+    {
+      "type": "content",
+      "content_markdown": "## Your 10 New Words 📚\n\n| Malayalam | Pronunciation | Meaning | Context |\n|-----------|--------------|---------|----------|\n| **വാർത്ത** | vaartha | news | Media |\n| **ഇന്ന്** | innu | today | Time |\n| **സർക്കാർ** | sarkkaar | government | Politics |\n| **തിരെഞ്ഞടുപ്പ്** | thirenjedupu | election | Politics |\n| **നാെള** | naaLe | tomorrow | Time |\n| **ഇന്നെല** | innale | yesterday | Time |\n| **മഴ** | mazha | rain | Weather |\n| **നയം** | nayam | policy | Politics |\n| **പ്രഖ്യാപനം** | prakhyaapanam | announcement | News |\n| **ൈലക്ക്** | laik | like | Social media |\n\n### Digital age vocabulary!",
+      "step_title": "Your 10 New Words"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q4",
+      "question": "How do you pronounce **തിരെഞ്ഞടുപ്പ്**?",
+      "options": [
+        "thirenjedupu",
+        "thirenjedupu-a",
+        "thirenjedupu2",
+        "thirenjedupu3"
+      ],
+      "correct_answer": "thirenjedupu",
+      "feedback": "Perfect! തിരഞ്ഞെടുപ്പ് = election. Political vocabulary!",
+      "step_title": "**തിരെഞ്ഞടു Pronunciation"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q5",
+      "question": "How do you pronounce **നാെള**?",
+      "options": [
+        "naaLe",
+        "naaaaLe",
+        "naaLe-a",
+        "naaLe3"
+      ],
+      "correct_answer": "naaLe",
+      "feedback": "Excellent! നാളെ = tomorrow. Time vocabulary!",
+      "step_title": "**നാെള**? Pronunciation"
+    },
+    {
+      "type": "free_response",
+      "id": "q6",
+      "question": "How do you pronounce **മഴ**?",
+      "ai_grading": false,
+      "accepted_responses": [
+        "mazha",
+        "Mazha",
+        "MAZHA",
+        "mazha"
+      ],
+      "hint": "Weather phenomenon!",
+      "step_title": "**മഴ**? Pronunciation"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q7",
+      "question": "How do you pronounce **ഇന്നെല**?",
+      "options": [
+        "innale",
+        "innaale",
+        "innale-a",
+        "innale3"
+      ],
+      "correct_answer": "innale",
+      "feedback": "Correct! ഇന്നലെ = yesterday. Completing time triad!",
+      "step_title": "**ഇന്നെല**? Pronunciation"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q8",
+      "question": "How do you pronounce **നയം**?",
+      "options": [
+        "nayam",
+        "naayaam",
+        "nayam-a",
+        "nayam3"
+      ],
+      "correct_answer": "nayam",
+      "feedback": "Perfect! നയം = policy. Political vocabulary!",
+      "step_title": "**നയം**? Pronunciation"
+    },
+    {
+      "type": "free_response",
+      "id": "q9",
+      "question": "How do you pronounce **പ്രഖ്യാപനം**?",
+      "ai_grading": false,
+      "accepted_responses": [
+        "prakhyaapanam",
+        "Prakhyaapanam",
+        "PRAKHYAAPANAM",
+        "prakhyaapanam"
+      ],
+      "hint": "Official statement!",
+      "step_title": "**പ്രഖ്യാപന Pronunciation"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q10",
+      "question": "How do you pronounce **ൈലക്ക്**?",
+      "options": [
+        "laik",
+        "laaik",
+        "laik-a",
+        "laik3"
+      ],
+      "correct_answer": "laik",
+      "feedback": "Excellent! ലൈക്ക് = like. Modern digital vocabulary!",
+      "step_title": "**ൈലക്ക്**? Pronunciation"
+    },
+    {
+      "type": "content",
+      "content_markdown": "## 🎊 Lesson 29 Complete!\n\n**✅ Digital Literacy:**\n- **News vocabulary** mastered\n- **Time words** (ഇന്ന്, നാളെ, ഇന്നലെ)\n- **Political terms** understood\n- **Social media** language\n- Headline structure!\n\n**✅ Total Words: 290!**\n\n**✅ Cumulative Reinforcement:**\n- **ഇ:** 3 words (ഇന്ന്, ഇന്നെല, ൈലക്ക്)\n- **ന:** 4 words (ഇന്ന്, നാെള, ഇന്നെല, നയം)\n- **ം:** 2 words (നയം, പ്രഖ്യാപനം)\n- **സ:** 1 word (സർക്കാർ)\n- **വ:** 1 word (വാർത്ത)\n- **അ:** 2 words (വാർത്ത, മഴ)\n\nRequirement met! ✅\n\n### What's Next?\nLesson 30: **FINAL READING** - Complete story!\n\nThe grand finale! 🚀🎓",
+      "step_title": "Lesson 29 Complete!"
+    }
+  ],
+  "skills_learned": [
+    "Reading 10+ Malayalam words",
+    "Understanding Malayalam phonetics",
+    "Applying reading strategies"
+  ]
+}

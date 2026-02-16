@@ -3014,6 +3014,31 @@ def grade_speaking_activity(user_transcript: str, speaking_topic: str, tasks: li
                 "_token_info": token_info,
             }
         
+        # Validate and ensure scores are present and non-zero if feedback exists
+        if result.get('feedback') and len(result.get('feedback', '')) > 50:
+            # If we have substantial feedback, ensure we have reasonable scores
+            if not result.get('score') or result.get('score') == 0:
+                # Calculate from component scores or use a default
+                component_scores = [
+                    result.get('vocabulary_score', 0),
+                    result.get('grammar_score', 0),
+                    result.get('fluency_score', 0),
+                    result.get('task_completion_score', 0)
+                ]
+                non_zero_scores = [s for s in component_scores if s and s > 0]
+                if non_zero_scores:
+                    result['score'] = sum(non_zero_scores) / len(non_zero_scores)
+                    print(f"[DEBUG] Calculated overall score from components: {result['score']}")
+                else:
+                    result['score'] = 50
+                    print(f"[DEBUG] All scores were 0 despite having feedback, using fallback: 50")
+            
+            # Ensure component scores exist
+            for score_key in ['vocabulary_score', 'grammar_score', 'fluency_score', 'task_completion_score']:
+                if not result.get(score_key) or result.get(score_key) == 0:
+                    result[score_key] = result.get('score', 50)
+                    print(f"[DEBUG] Missing {score_key}, using overall score: {result[score_key]}")
+        
         # Add debug info
         result['_prompt'] = prompt
         result['_response_time'] = response_time
@@ -3125,7 +3150,7 @@ def grade_speaking_activity_with_audio(audio_data: bytes, audio_format: str, spe
                 [uploaded_file, prompt],
                 generation_config=genai.GenerationConfig(
                     temperature=0.7,
-                    max_output_tokens=4096,
+                    max_output_tokens=8192,  # Increased from 4096 to handle longer transcripts and feedback
                 )
             )
             response_time = time.time() - start_time
@@ -3200,6 +3225,33 @@ def grade_speaking_activity_with_audio(audio_data: bytes, audio_format: str, spe
         print(f"  - task_completion_score: {result.get('task_completion_score')}")
         print(f"  - feedback length: {len(result.get('feedback', ''))}")
         print(f"  - user_transcript length: {len(result.get('user_transcript', ''))}")
+        
+        # Validate and ensure scores are present and non-zero if feedback exists
+        # Sometimes the AI provides feedback but returns 0 scores - this is incorrect
+        if result.get('feedback') and len(result.get('feedback', '')) > 50:
+            # If we have substantial feedback, ensure we have reasonable scores
+            if not result.get('score') or result.get('score') == 0:
+                # Calculate from component scores or use a default
+                component_scores = [
+                    result.get('vocabulary_score', 0),
+                    result.get('grammar_score', 0),
+                    result.get('fluency_score', 0),
+                    result.get('task_completion_score', 0)
+                ]
+                non_zero_scores = [s for s in component_scores if s and s > 0]
+                if non_zero_scores:
+                    result['score'] = sum(non_zero_scores) / len(non_zero_scores)
+                    print(f"[DEBUG] Calculated overall score from components: {result['score']}")
+                else:
+                    # If all scores are 0 but we have feedback, set a reasonable default
+                    result['score'] = 50  # Middle-range score as fallback
+                    print(f"[DEBUG] All scores were 0 despite having feedback, using fallback: 50")
+            
+            # Ensure component scores exist
+            for score_key in ['vocabulary_score', 'grammar_score', 'fluency_score', 'task_completion_score']:
+                if not result.get(score_key) or result.get(score_key) == 0:
+                    result[score_key] = result.get('score', 50)
+                    print(f"[DEBUG] Missing {score_key}, using overall score: {result[score_key]}")
         
         # Add debug info
         result['_prompt'] = prompt

@@ -20,7 +20,7 @@ import * as FileSystem from 'expo-file-system';
 import { MASTERY_FILTERS, WORD_CLASSES as SHARED_WORD_CLASSES, LEVELS as SHARED_LEVELS, LEVEL_COLORS as SHARED_LEVEL_COLORS } from '../constants/filters';
 import { LanguageContext } from '../contexts/LanguageContext';
 
-const API_BASE_URL = __DEV__ ? 'http://localhost:5001' : 'http://localhost:5001';
+const API_BASE_URL = __DEV__ ? 'http://localhost:8080' : 'http://localhost:8080';
 
 const ACTIVITY_COLORS = {
   reading: { primary: '#4A90E2', light: '#E8F4FD' },
@@ -1110,6 +1110,14 @@ export default function ActivityScreen({ route, navigation }) {
       // Use fromHistory from component params (already extracted) or fallback to route params
       const isFromHistory = fromHistory !== undefined ? fromHistory : (route?.params?.fromHistory || false);
       
+      console.log('[ActivityScreen] Loading state:', {
+        activityType,
+        activityId,
+        resolvedActivityId,
+        isFromHistory,
+        hasSavedActivityData: !!savedActivityData,
+      });
+      
       // Handle conversation activities differently
       if (activityType === 'conversation') {
         if (isFromHistory && savedActivityData) {
@@ -1416,6 +1424,7 @@ export default function ActivityScreen({ route, navigation }) {
       // Check if we're loading from history (activity data passed via route params)
       // If we already have savedActivityData, prefer that to avoid 404s on stale IDs
       if (isFromHistory && activityId && savedActivityData) {
+        console.log('[ActivityScreen] Path 1: Loading from route savedActivityData');
         console.log('Loading activity from history (route data) with ID:', activityId);
         setLoadingStatus('Loading from history...');
         setResolvedActivityId(null); // avoid stale DB fetches when using route data
@@ -1446,15 +1455,18 @@ export default function ActivityScreen({ route, navigation }) {
             console.error('Error transliterating tasks (route data):', err);
           }
         }
+        console.log('[ActivityScreen] Path 1 complete, returning');
         return;
       }
 
       // If activityId is provided (no route data), fetch fresh data from database to ensure we have latest submissions
       if (isFromHistory && resolvedActivityId) {
+        console.log('[ActivityScreen] Path 2: Fetching from DB with ID:', resolvedActivityId);
         console.log('Loading activity from history with ID:', resolvedActivityId);
         setLoadingStatus('Loading from history...');
         try {
           const response = await fetch(`${API_BASE_URL}/api/activity/${resolvedActivityId}`);
+          console.log('[ActivityScreen] DB fetch response status:', response.status);
           if (!response.ok) {
             if (response.status === 404) {
               console.warn('Activity not found in DB, falling back to route data if available');
@@ -1827,6 +1839,7 @@ export default function ActivityScreen({ route, navigation }) {
         return;
       }
 
+      console.log('[ActivityScreen] Path 3: Creating NEW activity');
       console.log(`Loading ${activityType} activity for ${language}...`);
       
       // Set initial status based on activity type

@@ -18,7 +18,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useFocusEffect } from '@react-navigation/native';
 import { MASTERY_FILTERS, WORD_CLASSES, CEFR_LEVELS } from '../constants/filters';
 
-const API_BASE_URL = __DEV__ ? 'http://localhost:5001' : 'http://localhost:5001';
+const API_BASE_URL = __DEV__ ? 'http://localhost:8080' : 'http://localhost:8080';
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
 const CARD_WIDTH = SCREEN_WIDTH * 0.85;
@@ -1280,7 +1280,7 @@ export default function FlashcardScreen({ route, navigation }) {
                       <SafeText style={styles.overviewLabelTranslit}>{localizedText.mastered.transliteration}</SafeText>
                     )}
                   </View>
-                  <SafeText style={styles.overviewValue}>{srsStats.total_mastered?.toLocaleString() || 0}</SafeText>
+                  <SafeText style={styles.overviewValue}>{srsStats.total_mastered ? srsStats.total_mastered.toLocaleString() : 0}</SafeText>
                 </View>
                 <View style={styles.overviewRow}>
                   <View style={styles.overviewLabelContainer}>
@@ -1289,7 +1289,7 @@ export default function FlashcardScreen({ route, navigation }) {
                       <SafeText style={styles.overviewLabelTranslit}>{localizedText.learning.transliteration}</SafeText>
                     )}
                   </View>
-                  <SafeText style={styles.overviewValue}>{srsStats.total_learning?.toLocaleString() || 0}</SafeText>
+                  <SafeText style={styles.overviewValue}>{srsStats.total_learning ? srsStats.total_learning.toLocaleString() : 0}</SafeText>
                 </View>
                 <View style={styles.overviewRow}>
                   <View style={styles.overviewLabelContainer}>
@@ -1298,7 +1298,7 @@ export default function FlashcardScreen({ route, navigation }) {
                       <SafeText style={styles.overviewLabelTranslit}>{localizedText.newAvailable.transliteration}</SafeText>
                     )}
                   </View>
-                  <SafeText style={styles.overviewValue}>{srsStats.total_new?.toLocaleString() || 0}</SafeText>
+                  <SafeText style={styles.overviewValue}>{srsStats.total_new ? srsStats.total_new.toLocaleString() : 0}</SafeText>
                 </View>
               </View>
               
@@ -1499,7 +1499,7 @@ export default function FlashcardScreen({ route, navigation }) {
                   </Text>
                   {showTransliterations && FLASHCARD_LOCALIZATION[language]?.[cornerData.comfort_level]?.transliteration && (
                     <Text style={[styles.cornerTranslit, { color: isActive ? "#FFFFFF" : cornerData.brightColor }]}>
-                      {FLASHCARD_LOCALIZATION[language][cornerData.comfort_level].transliteration}
+                      {FLASHCARD_LOCALIZATION[language]?.[cornerData.comfort_level]?.transliteration}
                     </Text>
                   )}
                 </View>
@@ -1543,14 +1543,19 @@ export default function FlashcardScreen({ route, navigation }) {
           disabled={!canNavigateBack || previousButtonDisabled}
         >
           <View style={styles.previousCardContent}>
+            <Ionicons 
+              name="arrow-back-circle" 
+              size={18} 
+              color={(!canNavigateBack || previousButtonDisabled) ? "#666666" : "#FFFFFF"} 
+            />
             <SafeText style={[
               styles.previousCardText,
               (!canNavigateBack || previousButtonDisabled) && styles.previousCardTextDisabled,
               language === 'urdu' && { fontFamily: 'NafeesNastaleeq' }
             ]}>
-              {localizedText.previousCard.text}
+              {localizedText?.previousCard?.text || 'Previous Card'}
             </SafeText>
-            {showTransliterations && (
+            {showTransliterations && localizedText?.previousCard?.transliteration && (
               <SafeText style={[
                 styles.previousCardTranslit,
                 (!canNavigateBack || previousButtonDisabled) && styles.previousCardTranslitDisabled
@@ -1636,15 +1641,15 @@ export default function FlashcardScreen({ route, navigation }) {
               )}
               
               <SafeText style={styles.wordLabel}>
-                {currentWord?.cardDirection === 'english-to-native' ? localizedText.wordLabel.text : localizedText.translationLabel.text}
+                {currentWord?.cardDirection === 'english-to-native' ? (localizedText?.wordLabel?.text || 'Word') : (localizedText?.translationLabel?.text || 'Translation')}
               </SafeText>
               {showTransliterations && (
                 <SafeText style={styles.wordLabelTransliteration}>
-                  {currentWord?.cardDirection === 'english-to-native' ? localizedText.wordLabel.transliteration : localizedText.translationLabel.transliteration}
+                  {currentWord?.cardDirection === 'english-to-native' ? (localizedText?.wordLabel?.transliteration || '') : (localizedText?.translationLabel?.transliteration || '')}
                 </SafeText>
               )}
               <SafeText style={styles.wordText}>
-                {currentWord?.cardDirection === 'english-to-native' ? currentWord?.english_word : currentWord?.translation || ''}
+                {(currentWord?.cardDirection === 'english-to-native' ? currentWord?.english_word : currentWord?.translation) || ''}
               </SafeText>
               {currentWord?.cardDirection === 'native-to-english' && showTransliterations && (transliterations[currentWord.id] || currentWord.transliteration) && (
                 <SafeText style={styles.transliterationText}>
@@ -1654,7 +1659,7 @@ export default function FlashcardScreen({ route, navigation }) {
               
               {/* Info Badges - POS, CEFR Level, Verb Transitivity */}
               <View style={styles.infoBadgesContainer}>
-                {currentWord?.word_class && (() => {
+                {currentWord?.word_class ? (() => {
                   const wordClassColor = getWordClassColor(currentWord.word_class);
                   return (
                     <View style={[
@@ -1669,9 +1674,9 @@ export default function FlashcardScreen({ route, navigation }) {
                       </SafeText>
                     </View>
                   );
-                })()}
+                })() : null}
                 
-                {currentWord?.level && (() => {
+                {currentWord?.level ? (() => {
                   const levelColor = CEFR_LEVELS.find(l => l.value === currentWord.level?.toLowerCase())?.color || { bg: '#6C757D', text: '#FFFFFF' };
                   return (
                     <View style={[
@@ -1682,11 +1687,11 @@ export default function FlashcardScreen({ route, navigation }) {
                         styles.cefrBadgeText,
                         { color: levelColor.text }
                       ]}>
-                        {currentWord.level.toUpperCase()}
+                        {currentWord.level?.toUpperCase() || ''}
                       </SafeText>
                     </View>
                   );
-                })()}
+                })() : null}
                 
                 {currentWord?.verb_transitivity && (
                   <View style={styles.transitivityBadge}>
@@ -1700,8 +1705,8 @@ export default function FlashcardScreen({ route, navigation }) {
               <View style={styles.flipButton}>
                 <Ionicons name="refresh" size={24} color="#14B8A6" />
                 <View style={styles.flipButtonTextContainer}>
-                  <SafeText style={styles.flipButtonText}>{localizedText.tapToReveal.text}</SafeText>
-                  {showTransliterations && (
+                  <SafeText style={styles.flipButtonText}>{localizedText?.tapToReveal?.text || 'Tap to reveal'}</SafeText>
+                  {showTransliterations && localizedText?.tapToReveal?.transliteration && (
                     <SafeText style={styles.flipButtonTransliteration}>{localizedText.tapToReveal.transliteration}</SafeText>
                   )}
                 </View>
@@ -1767,15 +1772,15 @@ export default function FlashcardScreen({ route, navigation }) {
               )}
               
               <SafeText style={styles.wordLabelBack}>
-                {currentWord?.cardDirection === 'english-to-native' ? localizedText.translationLabel.text : localizedText.wordLabel.text}
+                {currentWord?.cardDirection === 'english-to-native' ? (localizedText?.translationLabel?.text || 'Translation') : (localizedText?.wordLabel?.text || 'Word')}
               </SafeText>
               {showTransliterations && (
                 <SafeText style={styles.wordLabelTransliteration}>
-                  {currentWord?.cardDirection === 'english-to-native' ? localizedText.translationLabel.transliteration : localizedText.wordLabel.transliteration}
+                  {currentWord?.cardDirection === 'english-to-native' ? (localizedText?.translationLabel?.transliteration || '') : (localizedText?.wordLabel?.transliteration || '')}
                 </SafeText>
               )}
               <SafeText style={styles.translationText}>
-                {currentWord?.cardDirection === 'english-to-native' ? currentWord?.translation : currentWord?.english_word || ''}
+                {(currentWord?.cardDirection === 'english-to-native' ? currentWord?.translation : currentWord?.english_word) || ''}
               </SafeText>
               {currentWord?.cardDirection === 'english-to-native' && showTransliterations && (transliterations[currentWord.id] || currentWord.transliteration) && (
                 <SafeText style={styles.transliterationTextBack}>
@@ -1785,7 +1790,7 @@ export default function FlashcardScreen({ route, navigation }) {
               
               {/* Info Badges - POS, CEFR Level, Verb Transitivity */}
               <View style={styles.infoBadgesContainer}>
-                {currentWord?.word_class && (() => {
+                {currentWord?.word_class ? (() => {
                   const wordClassColor = getWordClassColor(currentWord.word_class);
                   return (
                     <View style={[
@@ -1800,9 +1805,9 @@ export default function FlashcardScreen({ route, navigation }) {
                       </SafeText>
                     </View>
                   );
-                })()}
+                })() : null}
                 
-                {currentWord?.level && (() => {
+                {currentWord?.level ? (() => {
                   const levelColor = CEFR_LEVELS.find(l => l.value === currentWord.level?.toLowerCase())?.color || { bg: '#6C757D', text: '#FFFFFF' };
                   return (
                     <View style={[
@@ -1813,11 +1818,11 @@ export default function FlashcardScreen({ route, navigation }) {
                         styles.cefrBadgeText,
                         { color: levelColor.text }
                       ]}>
-                        {currentWord.level.toUpperCase()}
+                        {currentWord.level?.toUpperCase() || ''}
                       </SafeText>
                     </View>
                   );
-                })()}
+                })() : null}
                 
                 {currentWord?.verb_transitivity && (
                   <View style={styles.transitivityBadge}>
@@ -1831,8 +1836,8 @@ export default function FlashcardScreen({ route, navigation }) {
               <View style={styles.flipButton}>
                 <Ionicons name="refresh" size={24} color="#14B8A6" />
                 <View style={styles.flipButtonTextContainer}>
-                  <SafeText style={styles.flipButtonTextBack}>{localizedText.tapToFlipBack.text}</SafeText>
-                  {showTransliterations && (
+                  <SafeText style={styles.flipButtonTextBack}>{localizedText?.tapToFlipBack?.text || 'Tap to flip back'}</SafeText>
+                  {showTransliterations && localizedText?.tapToFlipBack?.transliteration && (
                     <SafeText style={styles.flipButtonTransliteration}>{localizedText.tapToFlipBack.transliteration}</SafeText>
                   )}
                 </View>
@@ -2835,7 +2840,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#CCCCCC',
   },
   previousCardContent: {
+    flexDirection: 'row',
     alignItems: 'center',
+    gap: 6,
   },
   previousCardText: {
     fontSize: 14,

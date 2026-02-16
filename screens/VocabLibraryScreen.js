@@ -17,7 +17,7 @@ import { MASTERY_FILTERS, WORD_CLASSES as SHARED_WORD_CLASSES, LEVELS as SHARED_
 import { Ionicons } from '@expo/vector-icons';
 import { useFocusEffect } from '@react-navigation/native';
 
-const API_BASE_URL = __DEV__ ? 'http://localhost:5001' : 'http://localhost:5001';
+const API_BASE_URL = __DEV__ ? 'http://localhost:8080' : 'http://localhost:8080';
 
 // Use shared LANGUAGES list imported from context for consistent language options across screens
 
@@ -221,6 +221,9 @@ export default function VocabLibraryScreen({ route, navigation }) {
   // Defensive: ensure displayed fields are strings (avoid React Native Web unexpected text node)
   const english = String(item.english_word ?? '');
   const translationText = String(item.translation ?? '');
+  
+  // Check if word is due for review
+  const isDue = item.next_review_date && new Date(item.next_review_date) <= new Date();
 
     return (
         <View style={styles.wordCard}>
@@ -232,18 +235,26 @@ export default function VocabLibraryScreen({ route, navigation }) {
               <SafeText style={styles.transliteration}>{transliteration}</SafeText>
             )}
           </View>
-          <TouchableOpacity onPress={() => handleWordPress(item)} activeOpacity={0.7}>
-            <View
-              style={[
-                styles.masteryBadge,
-                { backgroundColor: getMasteryColor(item.mastery_level) },
-              ]}
-            >
-              <SafeText style={styles.masteryText}>
-                {getMasteryEmoji(item.mastery_level)} {String(item.mastery_level?.toUpperCase() || 'NEW')}
-              </SafeText>
-            </View>
-          </TouchableOpacity>
+          <View style={styles.masteryBadgeContainer}>
+            <TouchableOpacity onPress={() => handleWordPress(item)} activeOpacity={0.7}>
+              <View
+                style={[
+                  styles.masteryBadge,
+                  { backgroundColor: getMasteryColor(item.mastery_level) },
+                ]}
+              >
+                <SafeText style={styles.masteryText}>
+                  {getMasteryEmoji(item.mastery_level)}{' '}{String(item.mastery_level?.toUpperCase() || 'NEW')}
+                </SafeText>
+              </View>
+            </TouchableOpacity>
+            {isDue && (
+              <View style={styles.dueBadge}>
+                <Ionicons name="time-outline" size={10} color="#FFFFFF" />
+                <SafeText style={styles.dueText}>DUE</SafeText>
+              </View>
+            )}
+          </View>
         </View>
         <View style={styles.wordMeta}>
           {item.word_class ? (() => {
@@ -270,16 +281,16 @@ export default function VocabLibraryScreen({ route, navigation }) {
             <View style={[
               styles.tag,
               {
-                backgroundColor: LEVEL_COLORS[item.level.toUpperCase()]?.bg || '#E8F4FD',
+                backgroundColor: LEVEL_COLORS[item.level?.toUpperCase()]?.bg || '#E8F4FD',
               }
             ]}>
               <SafeText style={[
                 styles.tagText,
                 {
-                  color: LEVEL_COLORS[item.level.toUpperCase()]?.text || '#666',
+                  color: LEVEL_COLORS[item.level?.toUpperCase()]?.text || '#666',
                 }
               ]}>
-                {String(item.level.toUpperCase())}
+                {String(item.level?.toUpperCase() || '')}
               </SafeText>
             </View>
           ) : null}
@@ -378,8 +389,6 @@ export default function VocabLibraryScreen({ route, navigation }) {
       <>
   <View style={styles.filterWrapContainer}>
   {MASTERY_FILTERS.map((filter) => {
-              // Only show filter chips for non-'due' filters
-              if (filter.value !== 'due') {
                 const isAll = filter.value === '';
                 const isSelected = isAll ? masteryFilter.length === 0 : masteryFilter.includes(filter.value);
                 return (
@@ -407,18 +416,33 @@ export default function VocabLibraryScreen({ route, navigation }) {
                       }
                     }}
                   >
-                    <SafeText
-                      style={[
-                        styles.filterChipText,
-                        {
-                          color: isSelected ? filter.color.text : filter.color.bg,
-                          fontWeight: isSelected ? '600' : '500',
-                        },
-                      ]}
-                    >{`${filter.emoji} ${String(filter.label)}`}</SafeText>
+                    {filter.icon ? (
+                      <View style={styles.filterChipContent}>
+                        <Ionicons name={filter.icon} size={14} color={isSelected ? filter.color.text : filter.color.bg} />
+                        <SafeText
+                          style={[
+                            styles.filterChipText,
+                            {
+                              color: isSelected ? filter.color.text : filter.color.bg,
+                              fontWeight: isSelected ? '600' : '500',
+                              marginLeft: 4,
+                            },
+                          ]}
+                        >{String(filter.label)}</SafeText>
+                      </View>
+                    ) : (
+                      <SafeText
+                        style={[
+                          styles.filterChipText,
+                          {
+                            color: isSelected ? filter.color.text : filter.color.bg,
+                            fontWeight: isSelected ? '600' : '500',
+                          },
+                        ]}
+                      >{`${filter.emoji} ${String(filter.label)}`}</SafeText>
+                    )}
                   </TouchableOpacity>
                 );
-              }
             })}
   </View>
 
@@ -691,7 +715,7 @@ export default function VocabLibraryScreen({ route, navigation }) {
                         { backgroundColor: getMasteryColor(reviewHistory.current_state?.mastery_level) }
                       ]}>
                         <SafeText style={styles.masteryText}>
-                          {getMasteryEmoji(reviewHistory.current_state?.mastery_level)} {reviewHistory.current_state?.mastery_level?.toUpperCase() || 'NEW'}
+                          {getMasteryEmoji(reviewHistory.current_state?.mastery_level)}{' '}{reviewHistory.current_state?.mastery_level?.toUpperCase() || 'NEW'}
                         </SafeText>
                       </View>
                     </View>
@@ -748,7 +772,7 @@ export default function VocabLibraryScreen({ route, navigation }) {
                         <View key={index} style={styles.historyItem}>
                           <View style={styles.historyItemHeader}>
                             <SafeText style={styles.historyDate}>
-                              {new Date(review.reviewed_at).toLocaleDateString()} {new Date(review.reviewed_at).toLocaleTimeString()}
+                              {new Date(review.reviewed_at).toLocaleDateString()}{' '}{new Date(review.reviewed_at).toLocaleTimeString()}
                             </SafeText>
                             <View style={[
                               styles.ratingBadge,
@@ -1015,6 +1039,10 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#E0E0E0',
   },
+  filterChipContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
   filterChipActive: {
     backgroundColor: '#4A90E2',
     borderColor: '#4A90E2',
@@ -1063,6 +1091,9 @@ const styles = StyleSheet.create({
     color: '#666',
     fontStyle: 'italic',
   },
+  masteryBadgeContainer: {
+    alignItems: 'flex-end',
+  },
   masteryBadge: {
     paddingHorizontal: 10,
     paddingVertical: 4,
@@ -1070,6 +1101,22 @@ const styles = StyleSheet.create({
     marginLeft: 12,
   },
   masteryText: {
+    fontSize: 10,
+    fontWeight: 'bold',
+    color: '#FFFFFF',
+  },
+  dueBadge: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+    borderRadius: 12,
+    backgroundColor: '#FF6B6B',
+    marginTop: 4,
+    marginLeft: 12,
+  },
+  dueText: {
     fontSize: 10,
     fontWeight: 'bold',
     color: '#FFFFFF',

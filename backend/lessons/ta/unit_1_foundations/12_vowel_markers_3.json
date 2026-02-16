@@ -1,0 +1,144 @@
+{
+  "lesson_id": "ta_12_vowel_markers_3",
+  "language": "Tamil",
+  "title": "Vowel Markers III",
+  "subtitle": "E, Ee, and Ai",
+  "description": "Learn the vowel markers that appear before the consonant, including the diphthong 'ai'.",
+  "estimated_minutes": 25,
+  "cefr_level": "A0",
+  "tags": ["script", "vowel-markers", "basics"],
+  "skills_learned": [
+    "Recognizing the short 'e' marker (Ottrai-k-kombu)",
+    "Recognizing the long 'ee' marker (Irattai-k-kombu)",
+    "Recognizing the 'ai' marker (Sangili-k-kombu)",
+    "Reading syllables like கெ, கே, and கை"
+  ],
+  "steps": [
+    {
+      "type": "content",
+      "step_title": "Markers in Front",
+      "content_markdown": "## Before the Letter\n\nSome vowel markers in Tamil are written **before** the consonant they modify. This might feel strange at first, but you'll soon get the hang of it!",
+      "step_title": "Markers in Front"
+    },
+    {
+      "type": "content",
+      "step_title": "The Short 'E' Marker",
+      "content_markdown": "## The Short 'E' Marker: ெ\n\nThis single-loop symbol is called **Ottrai-k-kombu**. It is placed before the consonant to add the short 'e' sound (எ).\n\n| Combination | Result | Sound |\n|-------------|--------|-------|\n| **எ** + **க** | **கெ** | ke |\n| **எ** + **ம** | **மெ** | me |\n| **எ** + **ப** | **பெ** | pe |",
+      "step_title": "The Short 'E' Marker"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q1",
+      "question": "How is **பெ** pronounced?",
+      "options": ["pe", "pee", "pa", "pi"],
+      "correct_answer": "pe",
+      "feedback": "Correct! The single-loop marker before the letter adds the short 'e' sound.",
+      "step_title": "Identify பெ Sound"
+    },
+    {
+      "type": "content",
+      "step_title": "The Long 'Ee' Marker",
+      "content_markdown": "## The Long 'Ee' Marker: ே\n\nThis double-loop symbol is called **Irattai-k-kombu**. It is placed before the consonant to add the long 'ee' sound (ஏ).\n\n| Combination | Result | Sound |\n|-------------|--------|-------|\n| **ஏ** + **க** | **கே** | kee |\n| **ஏ** + **ம** | **மே** | mee |\n| **ஏ** + **ப** | **பே** | pee |",
+      "step_title": "The Long 'Ee' Marker"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q2",
+      "question": "How is **மே** pronounced?",
+      "options": ["me", "mee", "ma", "mi"],
+      "correct_answer": "mee",
+      "feedback": "Perfect! The double-loop marker adds the long 'ee' sound.",
+      "step_title": "Identify மே Sound"
+    },
+    {
+      "type": "content",
+      "step_title": "The 'Ai' Marker",
+      "content_markdown": "## The 'Ai' Marker: ை\n\nThis marker, called **Sangili-k-kombu**, is placed before the consonant to add the 'ai' sound (ஐ).\n\n| Combination | Result | Sound |\n|-------------|--------|-------|\n| **ஐ** + **க** | **கை** | kai |\n| **ஐ** + **ம** | **மை** | mai |\n| **ஐ** + **ப** | **பை** | pai |",
+      "step_title": "The 'Ai' Marker"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q3",
+      "question": "How is **கை** pronounced?",
+      "options": ["ka", "kai", "ke", "ko"],
+      "correct_answer": "kai",
+      "feedback": "Excellent! The 'ai' marker looks like two connected loops.",
+      "step_title": "Identify கை Sound"
+    },
+    {
+      "type": "content",
+      "step_title": "Reading Practice",
+      "content_markdown": "## Read the Words\n\nTry reading these combinations:\n- **பெ** (pe) + **ய** (ya) + **ர்** (r) = **பெயர்** (peyar - *name*)\n- **மே** (mee) + **ல** (la) = **மேல** (meela - *above*)\n- **கை** (kai) + **ய** (ya) = **கைய** (kaiya - *hand*)",
+      "step_title": "Reading Practice"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q4",
+      "question": "How is **பெயர்** pronounced?",
+      "options": ["peyar", "payar", "piyar", "peyaar"],
+      "correct_answer": "peyar",
+      "feedback": "Correct! **பெ** (pe) + **ய** (ya) + **ர்** (r) = **peyar**.",
+      "step_title": "Read பெயர்"
+    },
+    {
+      "type": "free_response",
+      "id": "q5",
+      "question": "Write the sound of **மை** in English letters.",
+      "ai_grading": false,
+      "accepted_responses": ["mai"],
+      "hint": "It's 'm' with the 'ai' marker.",
+      "step_title": "Write the Sound"
+    },
+    {
+      "type": "free_response",
+      "id": "q6",
+      "question": "Write the sound of **கே** in English letters.",
+      "ai_grading": false,
+      "accepted_responses": ["kee"],
+      "hint": "It's 'k' with the long 'ee' marker.",
+      "step_title": "Write the Sound"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q7",
+      "question": "Where are these three markers placed relative to the consonant?",
+      "options": ["Before the consonant", "After the consonant", "Above the consonant", "Below the consonant"],
+      "correct_answer": "Before the consonant",
+      "feedback": "Correct! These three markers always come before the letter they modify.",
+      "step_title": "Marker Placement"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q8",
+      "question": "Which of these is 'se'?",
+      "options": ["செ", "சே", "சை", "சி"],
+      "correct_answer": "செ",
+      "feedback": "Correct! **செ** is 'se'.",
+      "step_title": "Identify செ"
+    },
+    {
+      "type": "free_response",
+      "id": "q9",
+      "question": "Type the sound of **தை**",
+      "ai_grading": false,
+      "accepted_responses": ["thai"],
+      "hint": "It's dental 'th' with 'ai'.",
+      "step_title": "Identify தை"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q10",
+      "question": "Which marker is the 'Irattai-k-kombu'?",
+      "options": ["ெ (short e)", "ே (long ee)", "ை (ai)", "ா (aa)"],
+      "correct_answer": "ே (long ee)",
+      "feedback": "Exactly! It's the double-loop marker.",
+      "step_title": "Identify Irattai"
+    },
+    {
+      "type": "content",
+      "step_title": "Visual Summary",
+      "content_markdown": "## Marker Recap\n\n- **ெ** = short e (before)\n- **ே** = long ee (before)\n- **ை** = ai (before)",
+      "step_title": "Visual Summary"
+    }
+  ]
+}

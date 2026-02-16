@@ -262,6 +262,90 @@ def init_db():
         )
     ''')
     
+    # Lessons table
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS lessons (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            lesson_id TEXT NOT NULL UNIQUE,
+            title TEXT NOT NULL,
+            language TEXT NOT NULL,
+            level TEXT NOT NULL,
+            unit_id TEXT,
+            lesson_number INTEGER,
+            steps_json TEXT NOT NULL,
+            created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+            updated_at TEXT DEFAULT CURRENT_TIMESTAMP
+        )
+    ''')
+    
+    # Units table
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS units (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            unit_id TEXT NOT NULL UNIQUE,
+            unit_number INTEGER NOT NULL,
+            language TEXT NOT NULL,
+            title TEXT NOT NULL,
+            subtitle TEXT,
+            description TEXT,
+            estimated_minutes INTEGER DEFAULT 0,
+            lesson_count INTEGER DEFAULT 0,
+            metadata_json TEXT,
+            created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+            updated_at TEXT DEFAULT CURRENT_TIMESTAMP
+        )
+    ''')
+    
+    # Unit progress table
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS unit_progress (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            user_id INTEGER DEFAULT 1,
+            unit_id TEXT NOT NULL,
+            lessons_completed INTEGER DEFAULT 0,
+            total_lessons INTEGER NOT NULL,
+            is_completed INTEGER DEFAULT 0,
+            updated_at TEXT NOT NULL,
+            UNIQUE(user_id, unit_id),
+            FOREIGN KEY (user_id) REFERENCES user_profile(id)
+        )
+    ''')
+    
+    # Lesson completion history table
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS lesson_completions (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            user_id INTEGER DEFAULT 1,
+            lesson_id TEXT NOT NULL,
+            completed_at TEXT NOT NULL,
+            answers_json TEXT,
+            feedback_json TEXT,
+            total_score REAL,
+            FOREIGN KEY (user_id) REFERENCES user_profile(id)
+        )
+    ''')
+    
+    # Create index for faster lesson queries
+    cursor.execute('''
+        CREATE INDEX IF NOT EXISTS idx_lessons_language 
+        ON lessons(language, level)
+    ''')
+    
+    cursor.execute('''
+        CREATE INDEX IF NOT EXISTS idx_lessons_unit 
+        ON lessons(unit_id, lesson_number)
+    ''')
+    
+    cursor.execute('''
+        CREATE INDEX IF NOT EXISTS idx_units_language 
+        ON units(language, unit_number)
+    ''')
+    
+    cursor.execute('''
+        CREATE INDEX IF NOT EXISTS idx_lesson_completions_user 
+        ON lesson_completions(user_id, lesson_id, completed_at DESC)
+    ''')
+    
     # Daily progress table
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS daily_progress (
@@ -498,6 +582,101 @@ def init_db_schema():
             completed_at TEXT,
             FOREIGN KEY (user_id) REFERENCES user_profile(id)
         )
+    ''')
+    
+    # Lessons table
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS lessons (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            lesson_id TEXT NOT NULL UNIQUE,
+            title TEXT NOT NULL,
+            language TEXT NOT NULL,
+            level TEXT NOT NULL,
+            unit_id TEXT,
+            lesson_number INTEGER,
+            steps_json TEXT NOT NULL,
+            created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+            updated_at TEXT DEFAULT CURRENT_TIMESTAMP
+        )
+    ''')
+    
+    # Add new columns to lessons table if they don't exist
+    try:
+        cursor.execute('ALTER TABLE lessons ADD COLUMN unit_id TEXT')
+    except sqlite3.OperationalError:
+        pass  # Column already exists
+    
+    try:
+        cursor.execute('ALTER TABLE lessons ADD COLUMN lesson_number INTEGER')
+    except sqlite3.OperationalError:
+        pass  # Column already exists
+    
+    # Units table
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS units (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            unit_id TEXT NOT NULL UNIQUE,
+            unit_number INTEGER NOT NULL,
+            language TEXT NOT NULL,
+            title TEXT NOT NULL,
+            subtitle TEXT,
+            description TEXT,
+            estimated_minutes INTEGER DEFAULT 0,
+            lesson_count INTEGER DEFAULT 0,
+            metadata_json TEXT,
+            created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+            updated_at TEXT DEFAULT CURRENT_TIMESTAMP
+        )
+    ''')
+    
+    # Unit progress table
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS unit_progress (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            user_id INTEGER DEFAULT 1,
+            unit_id TEXT NOT NULL,
+            lessons_completed INTEGER DEFAULT 0,
+            total_lessons INTEGER NOT NULL,
+            is_completed INTEGER DEFAULT 0,
+            updated_at TEXT NOT NULL,
+            UNIQUE(user_id, unit_id),
+            FOREIGN KEY (user_id) REFERENCES user_profile(id)
+        )
+    ''')
+    
+    # Lesson completion history table
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS lesson_completions (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            user_id INTEGER DEFAULT 1,
+            lesson_id TEXT NOT NULL,
+            completed_at TEXT NOT NULL,
+            answers_json TEXT,
+            feedback_json TEXT,
+            total_score REAL,
+            FOREIGN KEY (user_id) REFERENCES user_profile(id)
+        )
+    ''')
+    
+    # Create index for faster lesson queries
+    cursor.execute('''
+        CREATE INDEX IF NOT EXISTS idx_lessons_language 
+        ON lessons(language, level)
+    ''')
+    
+    cursor.execute('''
+        CREATE INDEX IF NOT EXISTS idx_lessons_unit 
+        ON lessons(unit_id, lesson_number)
+    ''')
+    
+    cursor.execute('''
+        CREATE INDEX IF NOT EXISTS idx_units_language 
+        ON units(language, unit_number)
+    ''')
+    
+    cursor.execute('''
+        CREATE INDEX IF NOT EXISTS idx_lesson_completions_user 
+        ON lesson_completions(user_id, lesson_id, completed_at DESC)
     ''')
     
     # Daily progress table
@@ -1848,12 +2027,12 @@ def get_vocabulary(
                 mastery_values = [v for v in mastery_values if v != 'due']
                 if mastery_values:
                     # Both 'due' and other values
-                    where_clause += ' AND ((ws.next_review_date IS NULL OR ws.next_review_date <= ?) OR COALESCE(ws.mastery_level, "new") IN (' + ','.join(['?' for _ in mastery_values]) + '))'
+                    where_clause += ' AND ((ws.next_review_date IS NOT NULL AND ws.next_review_date <= ?) OR COALESCE(ws.mastery_level, "new") IN (' + ','.join(['?' for _ in mastery_values]) + '))'
                     params.append(datetime.now().strftime('%Y-%m-%d'))
                     params.extend(mastery_values)
                 else:
-                    # Only 'due'
-                    where_clause += ' AND (ws.next_review_date IS NULL OR ws.next_review_date <= ?)'
+                    # Only 'due' - words that have been reviewed and are due today or earlier
+                    where_clause += ' AND ws.next_review_date IS NOT NULL AND ws.next_review_date <= ?'
                     params.append(datetime.now().strftime('%Y-%m-%d'))
             else:
                 # Only specific mastery levels
@@ -3697,6 +3876,510 @@ def update_language_personalization(language: str, default_transliterate: bool) 
         return True
     except Exception as e:
         print(f"Error updating language personalization: {str(e)}")
+        return False
+
+
+# ============================================================================
+# Lesson Management
+# ============================================================================
+
+def add_lesson(lesson_id: str, title: str, language: str, level: str, steps: List[Dict], 
+               unit_id: str = None, lesson_number: int = None) -> bool:
+    """Add a new lesson to the database
+    
+    Args:
+        lesson_id: Unique lesson identifier
+        title: Lesson title
+        language: Language name (e.g., 'Spanish', 'Kannada')
+        level: CEFR level (e.g., 'A1', 'B1')
+        steps: List of lesson step dictionaries
+        unit_id: Optional unit identifier
+        lesson_number: Optional lesson number within unit
+    
+    Returns:
+        True if successful, False otherwise
+    """
+    try:
+        conn = sqlite3.connect(config.DB_PATH, timeout=10.0)
+        cursor = conn.cursor()
+        
+        now = datetime.now().isoformat()
+        steps_json = json.dumps(steps)
+        
+        cursor.execute('''
+            INSERT INTO lessons (lesson_id, title, language, level, unit_id, lesson_number, steps_json, created_at, updated_at)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ''', (lesson_id, title, language, level, unit_id, lesson_number, steps_json, now, now))
+        
+        conn.commit()
+        conn.close()
+        return True
+    except sqlite3.IntegrityError:
+        # Lesson already exists, update it instead
+        return update_lesson(lesson_id, title, language, level, steps, unit_id, lesson_number)
+    except Exception as e:
+        print(f"Error adding lesson: {str(e)}")
+        return False
+
+
+def update_lesson(lesson_id: str, title: str, language: str, level: str, steps: List[Dict],
+                 unit_id: str = None, lesson_number: int = None) -> bool:
+    """Update an existing lesson
+    
+    Args:
+        lesson_id: Unique lesson identifier
+        title: Lesson title
+        language: Language name
+        level: CEFR level
+        steps: List of lesson step dictionaries
+        unit_id: Optional unit identifier
+        lesson_number: Optional lesson number within unit
+    
+    Returns:
+        True if successful, False otherwise
+    """
+    try:
+        conn = sqlite3.connect(config.DB_PATH, timeout=10.0)
+        cursor = conn.cursor()
+        
+        now = datetime.now().isoformat()
+        steps_json = json.dumps(steps)
+        
+        cursor.execute('''
+            UPDATE lessons 
+            SET title = ?, language = ?, level = ?, unit_id = ?, lesson_number = ?, steps_json = ?, updated_at = ?
+            WHERE lesson_id = ?
+        ''', (title, language, level, unit_id, lesson_number, steps_json, now, lesson_id))
+        
+        conn.commit()
+        conn.close()
+        return True
+    except Exception as e:
+        print(f"Error updating lesson: {str(e)}")
+        return False
+
+
+def get_lessons_by_language(language: str) -> List[Dict]:
+    """Get all lessons for a specific language
+    
+    Args:
+        language: Language name or code
+    
+    Returns:
+        List of lesson dictionaries
+    """
+    try:
+        conn = sqlite3.connect(config.DB_PATH)
+        conn.row_factory = sqlite3.Row
+        cursor = conn.cursor()
+        
+        # Try to match by language name (case-insensitive)
+        # Sort by extracting the numeric part from lesson_id (e.g., ml_01_... -> 01)
+        cursor.execute('''
+            SELECT * FROM lessons 
+            WHERE LOWER(language) = LOWER(?)
+            ORDER BY CAST(SUBSTR(lesson_id, 4, 2) AS INTEGER), title
+        ''', (language,))
+        
+        rows = cursor.fetchall()
+        conn.close()
+        
+        lessons = []
+        for row in rows:
+            lessons.append({
+                'lesson_id': row['lesson_id'],
+                'title': row['title'],
+                'language': row['language'],
+                'level': row['level'],
+                'steps': json.loads(row['steps_json']),
+                'created_at': row['created_at'],
+                'updated_at': row['updated_at'],
+            })
+        
+        return lessons
+    except Exception as e:
+        print(f"Error getting lessons: {str(e)}")
+        return []
+
+
+def get_lesson_by_id(lesson_id: str) -> Optional[Dict]:
+    """Get a specific lesson by ID
+    
+    Args:
+        lesson_id: Unique lesson identifier
+    
+    Returns:
+        Lesson dictionary or None if not found
+    """
+    try:
+        conn = sqlite3.connect(config.DB_PATH)
+        conn.row_factory = sqlite3.Row
+        cursor = conn.cursor()
+        
+        cursor.execute('''
+            SELECT * FROM lessons 
+            WHERE lesson_id = ?
+        ''', (lesson_id,))
+        
+        row = cursor.fetchone()
+        conn.close()
+        
+        if row:
+            return {
+                'lesson_id': row['lesson_id'],
+                'title': row['title'],
+                'language': row['language'],
+                'level': row['level'],
+                'steps': json.loads(row['steps_json']),
+                'created_at': row['created_at'],
+                'updated_at': row['updated_at'],
+            }
+        return None
+    except Exception as e:
+        print(f"Error getting lesson: {str(e)}")
+        return None
+
+
+def record_lesson_completion(user_id: int, lesson_id: str, answers: Dict, feedback: Dict, total_score: float = None) -> bool:
+    """Record a lesson completion
+    
+    Args:
+        user_id: User ID
+        lesson_id: Lesson ID
+        answers: Dictionary of answers
+        feedback: Dictionary of feedback
+        total_score: Overall score (optional)
+    
+    Returns:
+        True if successful, False otherwise
+    """
+    try:
+        conn = sqlite3.connect(config.DB_PATH)
+        cursor = conn.cursor()
+        
+        now = datetime.now().isoformat()
+        
+        cursor.execute('''
+            INSERT INTO lesson_completions 
+            (user_id, lesson_id, completed_at, answers_json, feedback_json, total_score)
+            VALUES (?, ?, ?, ?, ?, ?)
+        ''', (user_id, lesson_id, now, json.dumps(answers), json.dumps(feedback), total_score))
+        
+        conn.commit()
+        conn.close()
+        return True
+    except Exception as e:
+        print(f"Error recording lesson completion: {str(e)}")
+        return False
+
+
+def get_lesson_completions(user_id: int, lesson_id: str = None) -> List[Dict]:
+    """Get lesson completion history for a user
+    
+    Args:
+        user_id: User ID
+        lesson_id: Optional lesson ID to filter by
+    
+    Returns:
+        List of completion dictionaries
+    """
+    try:
+        conn = sqlite3.connect(config.DB_PATH)
+        conn.row_factory = sqlite3.Row
+        cursor = conn.cursor()
+        
+        if lesson_id:
+            cursor.execute('''
+                SELECT * FROM lesson_completions 
+                WHERE user_id = ? AND lesson_id = ?
+                ORDER BY completed_at DESC
+            ''', (user_id, lesson_id))
+        else:
+            cursor.execute('''
+                SELECT * FROM lesson_completions 
+                WHERE user_id = ?
+                ORDER BY completed_at DESC
+            ''', (user_id,))
+        
+        rows = cursor.fetchall()
+        conn.close()
+        
+        completions = []
+        for row in rows:
+            completions.append({
+                'id': row['id'],
+                'lesson_id': row['lesson_id'],
+                'completed_at': row['completed_at'],
+                'answers': json.loads(row['answers_json']) if row['answers_json'] else {},
+                'feedback': json.loads(row['feedback_json']) if row['feedback_json'] else {},
+                'total_score': row['total_score'],
+            })
+        
+        return completions
+    except Exception as e:
+        print(f"Error getting lesson completions: {str(e)}")
+        return []
+
+
+# ============================================================================
+# Unit Management
+# ============================================================================
+
+def add_unit(unit_id: str, unit_number: int, language: str, title: str, subtitle: str = None, 
+             description: str = None, estimated_minutes: int = 0, lesson_count: int = 0, 
+             metadata: Dict = None) -> bool:
+    """Add or update a unit
+    
+    Args:
+        unit_id: Unique unit identifier
+        unit_number: Unit number for ordering
+        language: Language name
+        title: Unit title
+        subtitle: Unit subtitle (optional)
+        description: Unit description (optional)
+        estimated_minutes: Estimated completion time
+        lesson_count: Number of lessons in unit
+        metadata: Additional metadata as dict (optional)
+    
+    Returns:
+        True if successful, False otherwise
+    """
+    try:
+        conn = sqlite3.connect(config.DB_PATH)
+        cursor = conn.cursor()
+        
+        now = datetime.now().isoformat()
+        metadata_json = json.dumps(metadata) if metadata else None
+        
+        cursor.execute('''
+            INSERT INTO units 
+            (unit_id, unit_number, language, title, subtitle, description, estimated_minutes, 
+             lesson_count, metadata_json, created_at, updated_at)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            ON CONFLICT(unit_id) DO UPDATE SET
+                unit_number = excluded.unit_number,
+                language = excluded.language,
+                title = excluded.title,
+                subtitle = excluded.subtitle,
+                description = excluded.description,
+                estimated_minutes = excluded.estimated_minutes,
+                lesson_count = excluded.lesson_count,
+                metadata_json = excluded.metadata_json,
+                updated_at = excluded.updated_at
+        ''', (unit_id, unit_number, language, title, subtitle, description, estimated_minutes,
+              lesson_count, metadata_json, now, now))
+        
+        conn.commit()
+        conn.close()
+        return True
+    except Exception as e:
+        print(f"Error adding unit: {str(e)}")
+        return False
+
+
+def get_units_by_language(language: str) -> List[Dict]:
+    """Get all units for a specific language
+    
+    Args:
+        language: Language name or code
+    
+    Returns:
+        List of unit dictionaries with progress
+    """
+    try:
+        conn = sqlite3.connect(config.DB_PATH)
+        conn.row_factory = sqlite3.Row
+        cursor = conn.cursor()
+        
+        cursor.execute('''
+            SELECT u.*, 
+                   up.lessons_completed,
+                   up.is_completed
+            FROM units u
+            LEFT JOIN unit_progress up ON u.unit_id = up.unit_id AND up.user_id = 1
+            WHERE LOWER(u.language) = LOWER(?)
+            ORDER BY u.unit_number
+        ''', (language,))
+        
+        rows = cursor.fetchall()
+        conn.close()
+        
+        units = []
+        for row in rows:
+            units.append({
+                'unit_id': row['unit_id'],
+                'unit_number': row['unit_number'],
+                'title': row['title'],
+                'subtitle': row['subtitle'],
+                'description': row['description'],
+                'estimated_minutes': row['estimated_minutes'],
+                'lesson_count': row['lesson_count'],
+                'lessons_completed': row['lessons_completed'] or 0,
+                'is_completed': bool(row['is_completed']) if row['is_completed'] is not None else False,
+                'metadata': json.loads(row['metadata_json']) if row['metadata_json'] else {},
+                'created_at': row['created_at'],
+                'updated_at': row['updated_at'],
+            })
+        
+        return units
+    except Exception as e:
+        print(f"Error getting units: {str(e)}")
+        return []
+
+
+def update_unit_progress(user_id: int, unit_id: str) -> bool:
+    """Update unit progress based on lesson completions
+    
+    Args:
+        user_id: User ID
+        unit_id: Unit ID
+    
+    Returns:
+        True if successful, False otherwise
+    """
+    try:
+        conn = sqlite3.connect(config.DB_PATH)
+        cursor = conn.cursor()
+        
+        # Get total lessons in unit
+        cursor.execute('SELECT lesson_count FROM units WHERE unit_id = ?', (unit_id,))
+        result = cursor.fetchone()
+        if not result:
+            conn.close()
+            return False
+        total_lessons = result[0]
+        
+        # Count completed lessons in this unit
+        cursor.execute('''
+            SELECT COUNT(DISTINCT lc.lesson_id)
+            FROM lesson_completions lc
+            JOIN lessons l ON lc.lesson_id = l.lesson_id
+            WHERE lc.user_id = ? AND l.unit_id = ?
+        ''', (user_id, unit_id))
+        
+        lessons_completed = cursor.fetchone()[0]
+        is_completed = 1 if lessons_completed >= total_lessons else 0
+        now = datetime.now().isoformat()
+        
+        cursor.execute('''
+            INSERT INTO unit_progress (user_id, unit_id, lessons_completed, total_lessons, is_completed, updated_at)
+            VALUES (?, ?, ?, ?, ?, ?)
+            ON CONFLICT(user_id, unit_id) DO UPDATE SET
+                lessons_completed = excluded.lessons_completed,
+                total_lessons = excluded.total_lessons,
+                is_completed = excluded.is_completed,
+                updated_at = excluded.updated_at
+        ''', (user_id, unit_id, lessons_completed, total_lessons, is_completed, now))
+        
+        conn.commit()
+        conn.close()
+        return True
+    except Exception as e:
+        print(f"Error updating unit progress: {str(e)}")
+        return False
+
+
+# ============================================================================
+# Lesson Progress Tracking
+# ============================================================================
+
+def save_lesson_progress(user_id: int, lesson_id: str, current_step: int, completed_steps: List[int]) -> bool:
+    """Save lesson progress (current step and completed steps)
+    
+    Args:
+        user_id: User ID
+        lesson_id: Lesson ID
+        current_step: Current step index
+        completed_steps: List of completed step indices
+    
+    Returns:
+        True if successful, False otherwise
+    """
+    try:
+        conn = sqlite3.connect(config.DB_PATH)
+        cursor = conn.cursor()
+        
+        now = datetime.now().isoformat()
+        completed_steps_json = json.dumps(completed_steps)
+        
+        cursor.execute('''
+            INSERT INTO lesson_progress (user_id, lesson_id, current_step, completed_steps, updated_at)
+            VALUES (?, ?, ?, ?, ?)
+            ON CONFLICT(user_id, lesson_id) 
+            DO UPDATE SET 
+                current_step = excluded.current_step,
+                completed_steps = excluded.completed_steps,
+                updated_at = excluded.updated_at
+        ''', (user_id, lesson_id, current_step, completed_steps_json, now))
+        
+        conn.commit()
+        conn.close()
+        return True
+    except Exception as e:
+        print(f"Error saving lesson progress: {str(e)}")
+        return False
+
+
+def get_lesson_progress(user_id: int, lesson_id: str) -> Optional[Dict]:
+    """Get lesson progress for a specific lesson
+    
+    Args:
+        user_id: User ID
+        lesson_id: Lesson ID
+    
+    Returns:
+        Progress dictionary or None if not found
+    """
+    try:
+        conn = sqlite3.connect(config.DB_PATH)
+        conn.row_factory = sqlite3.Row
+        cursor = conn.cursor()
+        
+        cursor.execute('''
+            SELECT * FROM lesson_progress 
+            WHERE user_id = ? AND lesson_id = ?
+        ''', (user_id, lesson_id))
+        
+        row = cursor.fetchone()
+        conn.close()
+        
+        if row:
+            return {
+                'lesson_id': row['lesson_id'],
+                'current_step': row['current_step'],
+                'completed_steps': json.loads(row['completed_steps']) if row['completed_steps'] else [],
+                'updated_at': row['updated_at'],
+            }
+        return None
+    except Exception as e:
+        print(f"Error getting lesson progress: {str(e)}")
+        return None
+
+
+def clear_lesson_progress(user_id: int, lesson_id: str) -> bool:
+    """Clear lesson progress (for redo functionality)
+    
+    Args:
+        user_id: User ID
+        lesson_id: Lesson ID
+    
+    Returns:
+        True if successful, False otherwise
+    """
+    try:
+        conn = sqlite3.connect(config.DB_PATH)
+        cursor = conn.cursor()
+        
+        cursor.execute('''
+            DELETE FROM lesson_progress 
+            WHERE user_id = ? AND lesson_id = ?
+        ''', (user_id, lesson_id))
+        
+        conn.commit()
+        conn.close()
+        return True
+    except Exception as e:
+        print(f"Error clearing lesson progress: {str(e)}")
         return False
 
 

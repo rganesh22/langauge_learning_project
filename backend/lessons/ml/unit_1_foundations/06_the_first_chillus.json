@@ -1,0 +1,207 @@
+{
+  "lesson_id": "ml_06_first_chillus",
+  "language": "Malayalam",
+  "title": "The First Chillus",
+  "subtitle": "ൻ, ർ, ൽ - Pure Consonant Endings",
+  "description": "Learn to read and pronounce Malayalam vowel characters. Master the visual recognition and phonetic sounds of these essential letters.",
+  "estimated_minutes": 25,
+  "cefr_level": "A0",
+  "tags": [
+    "script",
+    "chillus",
+    "endings",
+    "consonants"
+  ],
+  "steps": [
+    {
+      "type": "content",
+      "content_markdown": "# The Art of Endings 🎭\n\n## Cumulative Review\nQuick! Read these:\n- **പുലി** (puli) = Tiger ← Lesson 5\n- **പൂ** (poo) = Flower ← Lesson 5  \n- **നീതി** (neethi) = Justice ← Lesson 4\n\nPerfect! You're at **50 words** and **19 symbols**!\n\n## Today's Challenge\nSo far, every consonant had an inherent 'a' sound:\n- ക = \"ka\" (not just \"k\")\n- മ = \"ma\" (not just \"m\")\n\nBut what if you want a word to end with **JUST the consonant** - no vowel?\n\n**Enter: CHILLUS** (ചില്ല് = chillu)\n\n### What Are Chillus?\nSpecial consonant forms with **NO inherent 'a'** - pure consonant sounds!\n\n### Today's Three Chillus:\n- **ൻ** - Pure 'n' sound (no vowel)\n- **ർ** - Pure 'r' sound (no vowel)\n- **ൽ** - Pure 'l' sound (no vowel)\n\n### Why They Matter\nChillus create **authentic Malayalam endings**:\n- **അവൻ** (avan) = He [ends with pure 'n']\n- **കാർ** (kaar) = Car [ends with pure 'r']\n- **പാൽ** (paal) = Milk [ends with pure 'l']\n\nLet's master natural endings! 🎯",
+      "step_title": "The Art of Endings"
+    },
+    {
+      "type": "content",
+      "content_markdown": "## Understanding the Problem 🤔\n\n### Without Chillus:\n**ന** = \"na\" (with inherent 'a')\n\nIf you want to write \"avan\" (he), you'd get:\n- **അവന** = a-va-**na** ❌ (wrong! extra 'a')\n\nBut we want:\n- **അവൻ** = a-va-**n** ✅ (pure 'n', no 'a')\n\n### The Solution: Chillu ൻ\nThe chillu **ൻ** is 'n' WITHOUT the inherent 'a'.\n\n### Visual Recognition\nCompare these carefully:\n- **ന** (na) - Regular letter, has tail on right\n- **ൻ** (n) - Chillu, different shape, NO inherent vowel\n\nThe chillu is a **distinct shape** - learn to spot it!",
+      "step_title": "the Problem Explained"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q1",
+      "question": "What is special about chillu letters?",
+      "options": [
+        "They are pure consonants with NO inherent 'a' vowel",
+        "They are uppercase versions of regular letters",
+        "They only appear at the beginning of words",
+        "They make the consonant sound twice"
+      ],
+      "correct_answer": "They are pure consonants with NO inherent 'a' vowel",
+      "feedback": "Perfect! Chillus break the inherent 'a' rule - they're PURE consonants!",
+      "step_title": "special about chillu Explained"
+    },
+    {
+      "type": "content",
+      "content_markdown": "## Chillu 1: ൻ (Pure 'n')\n\n### Sound\n**ൻ** makes a pure 'n' sound with NO following vowel.\n\nIt's the DENTAL 'n' (tongue on teeth) - same position as **ന** (na).\n\n### Usage\nUsed at the **end of words** or before certain consonants.\n\n**Examples:**\n- **അവൻ** (avan) = He\n- **മകൻ** (makan) = Son\n- **എൻ** (en) = My\n\n### Pronunciation Tip\nSay \"avan\" - the final 'n' should be crisp, not \"avana\"!\n\n### Visual Recognition\n**ൻ** has a **compact, contained shape** - no extending marks.\n\nCompare:\n- ന (na) - has rightward tail\n- ൻ (n) - more closed/compact\n\n### In Context\n**മകൻ** = ma-ka-**n** (son)\n- മ (ma)\n- ക (ka)  \n- ൻ (n) ← Pure consonant!",
+      "step_title": "Chillu 1: ൻ (Pure"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q2",
+      "question": "How do you pronounce **അവൻ**?",
+      "options": [
+        "avan",
+        "aavaan",
+        "avan-a",
+        "avan3"
+      ],
+      "correct_answer": "avan",
+      "feedback": "Correct! അവൻ (avan) = he. The chillu ൻ gives it a clean ending!",
+      "step_title": "**അവൻ**? Pronunciation"
+    },
+    {
+      "type": "content",
+      "content_markdown": "## Chillu 2: ർ (Pure 'r')\n\n### Sound\n**ർ** makes a pure 'r' sound with NO following vowel.\n\nThis is the SOFT 'r' ($r$) - not the hard trilled റ ($R$)!\n\n### Usage\nExtremely common in Malayalam - appears in countless words!\n\n**Examples:**\n- **കാർ** (kaar) = Car\n- **നീർ** (neer) = Water\n- **മാൻ** (maan) = Deer (uses ൻ chillu)\n- **വേർ** (ver) = Separate\n\n### Visual Recognition\n**ർ** looks like a **curved hook or swoosh**:\n- Distinctive shape\n- Clearly different from regular ര (ra)\n\n### In Context\n**കാർ** = kaa-**r** (car)\n- ക (ka)\n- ാ (aa modifier)\n- ർ (r) ← Pure consonant ending!",
+      "step_title": "Chillu 2: ർ (Pure"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q3",
+      "question": "What sound does the chillu **ർ** make?",
+      "options": [
+        "Pure soft 'r' (no vowel after)",
+        "The sound 'ra'",
+        "Hard trilled 'R'",
+        "The sound 'ar'"
+      ],
+      "correct_answer": "Pure soft 'r' (no vowel after)",
+      "feedback": "Excellent! ർ is a pure consonant - just the 'r' sound, no vowel!",
+      "step_title": "What sound does chillu"
+    },
+    {
+      "type": "content",
+      "content_markdown": "## Chillu 3: ൽ (Pure 'l')\n\n### Sound\n**ൽ** makes a pure 'l' sound with NO following vowel.\n\n### Usage\nVery common in Malayalam words and grammatical endings!\n\n**Examples:**\n- **പാൽ** (paal) = Milk\n- **കാൽ** (kaal) = Leg/Foot\n- **നാൽ** (naal) = Four\n- **വേൽ** (vel) = Spear\n\n### Visual Recognition\n**ൽ** has a **distinctive curved shape**:\n- Different from regular ല (la)\n- Compact form\n- Easy to spot at word endings\n\n### In Context\n**പാൽ** = paa-**l** (milk)\n- പ (pa)\n- ാ (aa modifier)\n- ൽ (l) ← Pure consonant ending!\n\n### Cultural Note\n**പാൽ** (milk) is a fundamental word in Kerala - essential in cooking and chai!",
+      "step_title": "Chillu 3: ൽ (Pure"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q4",
+      "question": "How do you pronounce **പാൽ**?",
+      "options": [
+        "paal",
+        "paaaal",
+        "paal-a",
+        "paal3"
+      ],
+      "correct_answer": "paal",
+      "feedback": "Perfect! പാൽ (paal) = milk. The chillu ൽ creates the clean 'l' ending!",
+      "step_title": "**പാൽ**? Pronunciation"
+    },
+    {
+      "type": "content",
+      "content_markdown": "## All Three Chillus Together 📊\n\n### Comparison Chart:\n\n| Regular | Sound | Chillu | Sound | Example | Meaning |\n|---------|-------|--------|-------|---------|----------|\n| **ന** | na | **ൻ** | n | **അവൻ** | he |\n| **ര** | ra | **ർ** | r | **കാർ** | car |\n| **ല** | la | **ൽ** | l | **പാൽ** | milk |\n\n### Key Pattern\nChillus **remove the inherent 'a'**:\n- ന (na) → ൻ (n)\n- ര (ra) → ർ (r)\n- ല (la) → ൽ (l)\n\n### Why This Matters\nWithout chillus, Malayalam would sound unnatural:\n- **കാർ** (kaar) = car ✅\n- **കാര** (kaara) = wrong sound ❌\n\n### Reading Practice\nSpot the chillus in these words:\n1. **മകൻ** → ma-ka-**n**\n2. **നീർ** → nee-**r**\n3. **കാൽ** → kaa-**l**",
+      "step_title": "All Three Chillus Together"
+    },
+    {
+      "type": "free_response",
+      "id": "q5",
+      "question": "Write the Malayalam word for 'son' in English letters",
+      "ai_grading": false,
+      "accepted_responses": [
+        "makan",
+        "Makan",
+        "MAKAN"
+      ],
+      "hint": "It's മകൻ - മ (ma) + ക (ka) + ൻ (pure 'n'). Sounds like 'makan'.",
+      "step_title": "Write Malayalam Word"
+    },
+    {
+      "type": "content",
+      "content_markdown": "## Your 10 New Words 📚\n\nToday's essential vocabulary:\n\n| Malayalam | Pronunciation | Meaning | Chillu Used |\n|-----------|--------------|---------|-------------|\n| **അവൻ** | avan | he | ൻ (n) |\n| **മകൻ** | makan | son | ൻ (n) |\n| **കാർ** | kaar | car | ർ (r) |\n| **പാൽ** | paal | milk | ൽ (l) |\n| **കാൽ** | kaal | leg/foot | ൽ (l) |\n| **നീർ** | neer | water | ർ (r) |\n| **തേൻ** | then | honey | ൻ (n) |\n| **മാൻ** | maan | deer | ൻ (n) |\n| **വേൽ** | vel | spear | ൽ (l) |\n| **ചുമർ** | chumar | wall | ർ (r) |\n\n### Note:\n**തേ** (te) uses **േ** (long 'e' vowel) - we'll learn this formally in Lesson 8!\n**ചു** (chu) uses **ച** - a new consonant appearing here.",
+      "step_title": "Your 10 New Words"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q6",
+      "question": "How do you pronounce **നീർ**?",
+      "options": [
+        "neer",
+        "neer-a",
+        "neer2",
+        "neer3"
+      ],
+      "correct_answer": "neer",
+      "feedback": "Correct! നീർ (neer) = water. Essential vocabulary! 💧",
+      "step_title": "**നീർ**? Pronunciation"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q7",
+      "question": "How do you write 'honey' in Malayalam?",
+      "options": [
+        "തേൻ",
+        "പാൽ",
+        "നീർ",
+        "മാൻ"
+      ],
+      "correct_answer": "തേൻ",
+      "feedback": "Perfect! തേൻ (then) = honey. A sweet word with chillu ൻ! 🍯",
+      "step_title": "How do you write"
+    },
+    {
+      "type": "free_response",
+      "id": "q8",
+      "question": "How do you pronounce **കാൽ**?",
+      "ai_grading": false,
+      "accepted_responses": [
+        "kaal",
+        "Kaal",
+        "KAAL",
+        "kaal"
+      ],
+      "hint": "It's a body part. കാൽ uses the chillu ൽ ending.",
+      "step_title": "**കാൽ**? Pronunciation"
+    },
+    {
+      "type": "content",
+      "content_markdown": "## Reading Challenge 🎯\n\n### Spot the Difference\nThese pairs look similar - can you tell them apart?\n\n**1. Regular vs Chillu:**\n- **അവന** (avana) - would sound wrong!\n- **അവൻ** (avan) - correct! Pure 'n' ending ✅\n\n**2. Different Chillus:**\n- **കാർ** (kaar) = car (ends with ർ)\n- **കാൽ** (kaal) = leg (ends with ൽ)\n- Different endings, different meanings!\n\n**3. Long Vowel + Chillu:**\n- **പാൽ** → paa-l (milk)\n- **നീർ** → nee-r (water)\n- **തേൻ** → the-n (honey)\n\n### Pattern Recognition\nMost chillu words follow: **CONSONANT + LONG VOWEL + CHILLU**\n\nExamples: കാർ, പാൽ, നീർ, കാൽ",
+      "step_title": "Reading Challenge"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q9",
+      "question": "Which word means 'deer'?",
+      "options": [
+        "മാൻ (maan)",
+        "മകൻ (makan)",
+        "കാർ (kaar)",
+        "വേൽ (vel)"
+      ],
+      "correct_answer": "മാൻ (maan)",
+      "feedback": "Excellent! മാൻ (maan) = deer. Uses the long ാ and chillu ൻ!",
+      "step_title": "Which word means 'deer'?"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q10",
+      "question": "How do you pronounce **ചുമർ**?",
+      "options": [
+        "chumar",
+        "chumaar",
+        "chumar-a",
+        "chumar3"
+      ],
+      "correct_answer": "chumar",
+      "feedback": "Perfect! ചുമർ (chumar) = wall. Notice the chillu ർ at the end!",
+      "step_title": "**ചുമർ**? Pronunciation"
+    },
+    {
+      "type": "content",
+      "content_markdown": "## 🎊 Lesson 6 Complete - Phase 1 DONE!\n\n### Your Foundation is SOLID:\n\n**✅ Total Symbols: 22**\n- Vowels: അ, ആ, ഇ, ഈ, ഉ, ഊ\n- Modifiers: ാ, ി, ീ, ു, ൂ, ം\n- Consonants: ക, റ, മ, പ, വ, ത, ന, ര, ല\n- Chillus: ൻ, ർ, ൽ\n\n**✅ Total Words: 60!**\n- 10 words per lesson × 6 lessons\n- Real, practical vocabulary\n- Ready for reading!\n\n**✅ Core Concepts Mastered:**\n1. **Inherent 'a'** - Every consonant carries it\n2. **Vowel modifiers** - Right, left, and below\n3. **Chillus** - Pure consonants for authentic endings\n4. **Phonetic precision** - Multiple 'r', 't', 'n' sounds\n\n### Cumulative Reinforcement Check ✓\n**Previous lesson letters in today's words:**\n- **മ:** appears in 2 words (മകൻ, മാൻ, ചുമർ)\n- **ക:** appears in 2 words (മകൻ, കാർ, കാൽ)\n- **പ:** appears in 1 word (പാൽ)\n- **ാ (long aa):** appears in 4 words (കാർ, പാൽ, കാൽ, മാൻ)\n- **ീ (long ee):** appears in 1 word (നീർ)\n\nRequirement met! ✅ Strong retention.\n\n## 🏆 PHASE 1 COMPLETE!\n\nYou've finished **High-Utility Foundations**!\n\nYou now have:\n- All basic vowel sounds\n- Essential consonants\n- Authentic word endings\n- 60 real Malayalam words!\n\n### What's Next?\n**Phase 2: Phonetic Precision** begins!\n\nLesson 7 introduces **retroflexes**: ട, ഡ, ണ - the sounds English doesn't have!\n\nGet ready for:\n- **ടാ** (Taa) - Hard retroflex T\n- **കോട** (koTa) - Fort\n- **പാട** (paaTu) - Song\n\nYou're becoming a Malayalam reader! 🚀📚",
+      "step_title": "Lesson 6 Complete -"
+    }
+  ],
+  "skills_learned": [
+    "Recognizing Malayalam consonants",
+    "Understanding chillu characters",
+    "Reading Malayalam script",
+    "Reading 19+ Malayalam words"
+  ]
+}

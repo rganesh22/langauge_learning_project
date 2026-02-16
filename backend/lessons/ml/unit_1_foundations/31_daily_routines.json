@@ -1,0 +1,103 @@
+{
+  "lesson_id": "ml_31_daily_routines",
+  "language": "Malayalam",
+  "title": "Daily Routines",
+  "subtitle": "Morning to Night Actions",
+  "description": "Learn common Malayalam verbs and phrases to describe daily activities from waking up to sleeping.",
+  "estimated_minutes": 25,
+  "cefr_level": "A1",
+  "tags": [
+    "verbs",
+    "daily life",
+    "routines",
+    "actions",
+    "time"
+  ],
+  "skills_learned": [
+    "Describing morning routine in Malayalam",
+    "Identifying verbs for daily actions",
+    "Forming simple sentences about routine",
+    "Understanding time-related phrases"
+  ],
+  "steps": [
+    {
+      "type": "content",
+      "content_markdown": "# Your Day in Malayalam\n\nLet's learn to talk about your daily routines! We'll cover actions from morning till night.\n\n### Key Verbs Today:\n- **ഉണരുക** (uNaRuka) - to wake up\n- **എഴുന്നേൽക്കുക** (ezhunneelkuka) - to get up\n- **കഴിക്കുക** (kazhikkuka) - to eat/drink\n- **പോകുക** (pOkuRuka) - to go\n- **ഉറങ്ങുക** (uRanguRuka) - to sleep\n\nThese verbs are essential for describing any daily activity!",
+      "step_title": "Your Day in Malayalam"
+    },
+    {
+      "type": "content",
+      "content_markdown": "## Morning Actions\n\n| Malayalam | Pronunciation | Meaning | Example Phrase |\n|-----------|---------------|---------|----------------|\n| **ഉണരുക** | uNaRuka | to wake up | ഞാൻ രാവിലെ ഉണരുന്നു. (Njaan raavile uNarunnu.) - I wake up in the morning. |\n| **എഴുന്നേൽക്കുക** | ezhunneelkuka | to get up | അവൻ എഴുന്നേൽക്കുന്നു. (Avan ezhunneelkkunnu.) - He gets up. |\n| **പല്ലു തേക്കുക** | pallu thekkuka | to brush teeth | അവൾ പല്ലു തേക്കുന്നു. (AvaL pallu thekkunnu.) - She brushes her teeth. |\n| **കുളിക്കുക** | kuLikkuka | to bathe | ഞാൻ കുളിക്കുന്നു. (Njaan kuLikkunnu.) - I bathe. |\n\nNotice the verb endings change based on the subject!",
+      "step_title": "Morning Actions"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q1",
+      "question": "What does **ഉണരുക** (uNaRuka) mean?",
+      "options": [
+        "to wake up",
+        "to eat",
+        "to go",
+        "to sleep"
+      ],
+      "correct_answer": "to wake up",
+      "feedback": "Correct! **ഉണരുക** means 'to wake up'. A great start to your day!",
+      "step_title": "Meaning of ഉണരുക"
+    },
+    {
+      "type": "content",
+      "content_markdown": "## Afternoon & Evening\n\n| Malayalam | Pronunciation | Meaning | Example Phrase |\n|-----------|---------------|---------|----------------|\n| **കഴിക്കുക** | kazhikkuka | to eat/drink | ഞങ്ങൾ ഭക്ഷണം കഴിക്കുന്നു. (Njangal bhakshaNam kazhikkunnu.) - We eat food. |\n| **പോകുക** | pOkuRuka | to go | നിങ്ങൾ സ്കൂളിൽ പോകുന്നു. (Ningal skooLil pOkunnu.) - You go to school. |\n| **പഠിക്കുക** | paThikkuka | to study | അവർ പഠിക്കുന്നു. (Avar paThikkunnu.) - They study. |\n| **ഉറങ്ങുക** | uRanguRuka | to sleep | ഞാൻ രാത്രി ഉറങ്ങുന്നു. (Njaan raathri uRangunnu.) - I sleep at night. |\n\nThese cover common activities throughout the day!",
+      "step_title": "Afternoon & Evening"
+    },
+    {
+      "type": "free_response",
+      "id": "q2",
+      "question": "Write the Malayalam word for 'to eat' in English letters.",
+      "ai_grading": false,
+      "accepted_responses": [
+        "kazhikkuka",
+        "Kazhikkuka",
+        "KAZHIKKUKA"
+      ],
+      "hint": "It starts with 'ka' and sounds like 'ka-zhi-kku-ka'.",
+      "step_title": "Write 'to eat'"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q3",
+      "question": "Which word means 'to sleep'?",
+      "options": [
+        "ഉറങ്ങുക (uRanguRuka)",
+        "പോകുക (pOkuRuka)",
+        "കഴിക്കുക (kazhikkuka)",
+        "ഉണരുക (uNaRuka)"
+      ],
+      "correct_answer": "ഉറങ്ങുക (uRanguRuka)",
+      "feedback": "Excellent! **ഉറങ്ങുക** is 'to sleep'. Sweet dreams!",
+      "step_title": "Meaning of 'to sleep'"
+    },
+    {
+      "type": "content",
+      "content_markdown": "## Putting it Together\n\n| Time Phrase | Malayalam | Pronunciation | Meaning |\n|-------------|-----------|---------------|---------|\n| In the morning | രാവിലെ | raavile | morning |\n| In the afternoon | ഉച്ചയ്ക്ക് | uchchaykku | afternoon |\n| In the evening | വൈകുന്നേരം | vaykunneRam | evening |\n| At night | രാത്രിയിൽ | raathriyil | night |\n\nPractice combining these with your new verbs to describe your day!\n\nExample: ഞാൻ രാവിലെ ഉണരുന്നു. (Njaan raavile uNarunnu.) - I wake up in the morning.",
+      "step_title": "Time Phrases"
+    },
+    {
+      "type": "free_response",
+      "id": "q4",
+      "question": "Write 'I eat food' in Malayalam English letters. (Hint: Use 'Njaan bhakshaNam kazhikkunnu'.)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "Njaan bhakshaNam kazhikkunnu",
+        "njaan bhakshanam kazhikkunnu",
+        "NJAAN BHAKSHANAM KAZHIKKUNNU"
+      ],
+      "hint": "Remember the sentence structure: Subject + Object + Verb.",
+      "step_title": "Write 'I eat food'"
+    },
+    {
+      "type": "content",
+      "content_markdown": "## 📚 Lesson 31 Complete!\n\n**✅ Daily Routine Vocabulary:**\n- **Verbs:** ഉണരുക, എഴുന്നേൽക്കുക, കഴിക്കുക, പോകുക, പഠിക്കുക, ഉറങ്ങുക, പല്ലു തേക്കുക, കുളിക്കുക\n- **Time Phrases:** രാവിലെ, ഉച്ചയ്ക്ക്, വൈകുന്നേരം, രാത്രിയിൽ\n\n**✅ Skills Mastered:**\n- Describing basic daily activities.\n- Using common time expressions.\n- Forming simple Malayalam sentences.\n\nKeep practicing these verbs and phrases to talk about your day!",
+      "step_title": "Lesson 31 Complete!"
+    }
+  ]
+}

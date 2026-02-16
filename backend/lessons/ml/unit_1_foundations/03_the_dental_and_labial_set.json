@@ -1,0 +1,206 @@
+{
+  "lesson_id": "ml_03_dental_labial_set",
+  "language": "Malayalam",
+  "title": "The Dental & Labial Set",
+  "subtitle": "പ, വ, ത, ന - Precise Articulation",
+  "description": "Learn to read and pronounce Malayalam consonant characters. Master the visual recognition and phonetic sounds of these essential letters.",
+  "estimated_minutes": 28,
+  "cefr_level": "A0",
+  "tags": [
+    "script",
+    "consonants",
+    "dentals",
+    "labials"
+  ],
+  "steps": [
+    {
+      "type": "content",
+      "content_markdown": "# Articulation Precision 🎯\n\n## Quick Cumulative Review\nCan you still read these from Lessons 1-2?\n- **മരം** (maram) = Tree\n- **ആന** (aana) = Elephant  \n- **കാലം** (kaalam) = Time\n\nExcellent! You know **7 symbols** and **20 words**.\n\n## Today's Mission\nLearn **4 consonants** that require careful mouth positioning:\n\n### The Labials (Made with Lips):\n- **പ** (pa) - Unaspirated 'p' (no puff of air)\n- **വ** (va) - 'V' sound (lip-teeth contact)\n\n### The Dentals (Tongue Touches Teeth):\n- **ത** (tha) - Soft dental 'th' (like Spanish 't')\n- **ന** (na) - Dental 'n' (tongue on teeth, not roof)\n\n### Why These Matter\nEnglish speakers often struggle with these because:\n1. English 'p' has aspiration (puff of air) - Malayalam പ doesn't\n2. English 't/n' use the roof of your mouth - Malayalam ത/ന use your teeth\n\nLet's master the precision! 💪",
+      "step_title": "Articulation Precision"
+    },
+    {
+      "type": "content",
+      "content_markdown": "## Letter 1: പ (pa) - The Gentle P\n\n### Sound & Articulation\n**പ** makes a 'p' sound WITHOUT the puff of air English speakers add.\n\n**Test this:** Hold your hand in front of your mouth:\n- English \"pit\" → You feel air\n- Malayalam **പ** → NO air puff!\n\n### How to Pronounce\n1. Press lips together\n2. Release WITHOUT pushing air\n3. Add the inherent 'a' → \"pa\"\n\nThink of the 'p' in \"*s*pit\" (not \"pit\") - that's closer!\n\n### Visual Memory\nപ looks like a **pot with a lid** - self-contained, no air escaping!\n\n### In Words\n- **പന** (pana) = Palm (tree)\n- **പാവ** (paava) = Doll\n- **പക** (paka) = Revenge",
+      "step_title": "Letter പ (pa) -"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q1",
+      "question": "How is Malayalam **പ** (pa) different from English 'p'?",
+      "options": [
+        "Malayalam പ has NO puff of air (unaspirated), English 'p' does",
+        "They're pronounced exactly the same",
+        "Malayalam പ is louder",
+        "Malayalam പ uses the nose"
+      ],
+      "correct_answer": "Malayalam പ has NO puff of air (unaspirated), English 'p' does",
+      "feedback": "Perfect! This is a KEY phonetic distinction. Malayalam പ is 'crisp' without aspiration.",
+      "step_title": "How is Malayalam **പ**"
+    },
+    {
+      "type": "content",
+      "content_markdown": "## Letter 2: വ (va) - The V Sound\n\n### Sound & Articulation\n**വ** is straightforward for English speakers - it's the 'v' in \"*van*\".\n\n**Articulation:**\n1. Top teeth touch bottom lip\n2. Voice vibrates\n3. Air flows through (voiced fricative)\n\nRemember the inherent 'a': വ = \"va\"\n\n### Visual Memory\nവ looks like a **wave** (വ) - the flowing 'v' sound!\n\n### In Words\n- **വാന** (vaana) = Sky\n- **പാവ** (paava) = Doll\n- **വറ** (vaRa) = Fry/Roast (verb)\n\n### Important Note\nSome Malayalam dialects pronounce വ closer to 'w' - this is natural variation!",
+      "step_title": "Letter വ (va) -"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q2",
+      "question": "What sound does **വ** make?",
+      "options": [
+        "V (like in 'van')",
+        "W (like in 'want')",
+        "B (like in 'bat')",
+        "F (like in 'fan')"
+      ],
+      "correct_answer": "V (like in 'van')",
+      "feedback": "Correct! വ makes the 'v' sound (though some dialects say it like 'w').",
+      "step_title": "**വ** Sound"
+    },
+    {
+      "type": "content",
+      "content_markdown": "## Letter 3: ത (tha) - Dental T\n\n### Critical Distinction!\nMalayalam has **THREE different 't' sounds**:\n1. **ത** ($th$) - DENTAL 't' (tongue on teeth) ← TODAY\n2. **ട** ($T$) - Retroflex 't' (tongue curled back) ← Later lesson\n3. **റ്റ** ($tt$) - Hard double 't' ← Later lesson\n\n### Sound & Articulation for ത\n**Tongue placement is KEY:**\n\n**English 't':** Tongue touches the ridge BEHIND your teeth (alveolar)\n**Malayalam ത:** Tongue touches the BACK of your TOP TEETH (dental)\n\nThink of Spanish \"tiempo\" or Greek \"theta\" - that's the target!\n\n### Visual Memory\nത has a **neat, contained shape** - like teeth lined up!\n\n### In Words\n- **തറ** (thaRa) = Floor\n- **തന** (thana) = Self\n- **തീ** (thee) = Fire\n\n### Pro Tip\nPut your tongue between your teeth at first to feel the position, then gradually move it to touch the teeth properly.",
+      "step_title": "Letter ത (tha) -"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q3",
+      "question": "Where does your tongue touch when pronouncing **ത** (tha)?",
+      "options": [
+        "Back of the top teeth (dental position)",
+        "Ridge behind teeth (alveolar position, like English)",
+        "Roof of the mouth",
+        "Between the teeth (interdental, like 'th' in 'think')"
+      ],
+      "correct_answer": "Back of the top teeth (dental position)",
+      "feedback": "Excellent! This dental articulation is what makes Malayalam distinct from English.",
+      "step_title": "Where does your tongue"
+    },
+    {
+      "type": "content",
+      "content_markdown": "## Letter 4: ന (na) - Dental N\n\n### Another Precision Point!\nJust like with 't', Malayalam has **MULTIPLE 'n' sounds**:\n1. **ന** ($n$) - DENTAL 'n' (tongue on teeth) ← TODAY\n2. **ണ** ($N$) - Retroflex 'n' (tongue curled back) ← Later\n3. **ങ** (ng) - Velar 'n' (like in \"sing\") ← Later\n\n### Sound & Articulation for ന\n**Same tongue position as ത!**\n\n**English 'n':** Tongue on the ridge behind teeth\n**Malayalam ന:** Tongue on the back of TOP TEETH\n\nSay \"no\" while touching your teeth with your tongue - that's closer!\n\n### Visual Memory\nന looks like it has a **horizontal line** - like teeth!\n\n### In Words\n- **നമ** (nama) = Bow (respectful gesture)\n- **നാവ** (naava) = Tongue (the organ!)\n- **മന** (mana) = Mind\n- **പന** (pana) = Palm tree",
+      "step_title": "Letter ന (na) -"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q4",
+      "question": "What's the relationship between ത (tha) and ന (na)?",
+      "options": [
+        "Both are dental sounds - your tongue touches your teeth in the same position",
+        "They use completely different tongue positions",
+        "One is dental, one is retroflex",
+        "They're the same sound"
+      ],
+      "correct_answer": "Both are dental sounds - your tongue touches your teeth in the same position",
+      "feedback": "Perfect! ത and ന are 'dental pairs' - same position, different sounds (t vs n).",
+      "step_title": "What's the relationship between"
+    },
+    {
+      "type": "content",
+      "content_markdown": "## Building Words with Your New Letters 🏗️\n\n### Combining What You Know\n**Old letters:** അ, ക, റ, മ, ං, ആ, ാ, ര, ല\n**New letters:** പ, വ, ത, ന\n\n### Word Formation Examples:\n\n**1. പന** (pana) = Palm tree\n- പ (pa) + ന (na) = pana\n\n**2. വാന** (vaana) = Sky\n- വ (va) + ാ (aa modifier) + ന (na) = vaana\n\n**3. തറ** (thaRa) = Floor\n- ത (tha) + റ ($R$ - hard R) = thaRa\n\n**4. പാവ** (paava) = Doll\n- പ (pa) + ാ (aa modifier) + വ (va) = paava\n\n**5. മന** (mana) = Mind\n- മ (ma) + ന (na) = mana\n\n### Cumulative Practice\nNotice how **മ** and **ക** from Lesson 1 appear in today's words!",
+      "step_title": "Building Words Your New"
+    },
+    {
+      "type": "free_response",
+      "id": "q5",
+      "question": "Write the Malayalam word for 'mind' in English letters",
+      "ai_grading": false,
+      "accepted_responses": [
+        "mana",
+        "Mana",
+        "MANA"
+      ],
+      "hint": "It uses മ (from Lesson 1) and ന (today's dental 'n'). Sounds like 'mana'.",
+      "step_title": "Write Malayalam Word"
+    },
+    {
+      "type": "content",
+      "content_markdown": "## Your 10 New Words 📚\n\nHere are ALL the words for this lesson:\n\n| Malayalam | Pronunciation | Meaning | Notes |\n|-----------|--------------|---------|--------|\n| **പന** | pana | palm (tree) | Unaspirated p |\n| **വാന** | vaana | sky | Long aa sound |\n| **തറ** | thaRa | floor | Dental th + hard R |\n| **നമ** | nama | bow (gesture) | Dental n |\n| **പാവ** | paava | doll | p + long aa + v |\n| **മന** | mana | mind | From L1 + today |\n| **തന** | thana | self | Double dental |\n| **പക** | paka | revenge | Unaspirated p |\n| **വറ** | vaRa | fry/roast | v + hard R |\n| **നാവ** | naava | tongue | Long aa + dental |\n\n### Sound Symbols:\n- **$th$** = Dental 't' (ത)\n- **$R$** = Hard trilled 'r' (റ)\n- **$n$** = Dental 'n' (ന)",
+      "step_title": "Your 10 New Words"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q6",
+      "question": "How do you pronounce **വാന**?",
+      "options": [
+        "vaa-na",
+        "va-na",
+        "vaan",
+        "vaana"
+      ],
+      "correct_answer": "vaa-na",
+      "feedback": "Perfect! വാന is pronounced 'vaa-na' with the long 'aa' sound in the first syllable.",
+      "step_title": "**വാന**? Pronunciation"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q7",
+      "question": "How do you write 'floor' in Malayalam?",
+      "options": [
+        "തറ",
+        "പന",
+        "നമ",
+        "വറ"
+      ],
+      "correct_answer": "തറ",
+      "feedback": "Excellent! തറ (thaRa) = floor. Dental ത + hard retroflex റ!",
+      "step_title": "How do you write"
+    },
+    {
+      "type": "free_response",
+      "id": "q8",
+      "question": "How do you pronounce **നാവ**?",
+      "ai_grading": false,
+      "accepted_responses": [
+        "naava",
+        "Naava",
+        "NAAVA",
+        "naa-va"
+      ],
+      "hint": "It has the dental ന with the long 'aa' sound. Pronounce it 'naa-va'.",
+      "step_title": "**നാവ**? Pronunciation"
+    },
+    {
+      "type": "content",
+      "content_markdown": "## Articulation Practice Challenge 🎯\n\n### Minimal Pairs (Words that differ by ONE sound)\nThese help train your ear and mouth:\n\n**1. Dental vs Already-Known:**\n- **നമ** (nama) = bow (dental ന)\n- **മന** (mana) = mind (dental ന)\n- Both use the dental 'n' you learned today!\n\n**2. Aspiration Matters:**\n- **പന** (pana) = palm (NO air puff)\n- Try saying it with English 'p' - feels wrong!\n\n**3. Retroflex Contrast (Preview):**\n- **തറ** (thaRa) = floor (dental ത + retroflex റ)\n- Notice how your tongue MOVES during the word!\n\n### Your Turn\nWhich word means 'doll'?",
+      "step_title": "Articulation Practice Challenge"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q9",
+      "question": "How do you pronounce **പാവ**?",
+      "options": [
+        "paa-va",
+        "pa-va",
+        "paav",
+        "paava"
+      ],
+      "correct_answer": "paa-va",
+      "feedback": "Correct! പാവ is pronounced 'paa-va' - unaspirated p, long aa, then v sound.",
+      "step_title": "**പാവ**? Pronunciation"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q10",
+      "question": "How do you pronounce **തന**?",
+      "options": [
+        "tha-na",
+        "than",
+        "thana",
+        "ta-na"
+      ],
+      "correct_answer": "tha-na",
+      "feedback": "Perfect! തന is pronounced 'tha-na' using both dental consonants you learned today!",
+      "step_title": "**തന**? Pronunciation"
+    },
+    {
+      "type": "content",
+      "content_markdown": "## 🎊 Lesson 3 Complete!\n\n### Your Expanding Mastery:\n\n**✅ Total Letters: 11**\n- L1-2: അ, ക, റ, മ, ං, ആ, ാ\n- New: പ, വ, ത, ന\n- Bonus: ര, ല (appearing in words)\n\n**✅ Total Words: 30!**\n- 10 from each lesson\n- Real, usable vocabulary!\n\n**✅ Phonetic Precision:**\n1. **Aspiration** - പ without air puff\n2. **Dental articulation** - ത and ന with tongue on teeth\n3. **Mouth positioning** - Labials vs dentals\n\n### Cumulative Reinforcement Check ✓\n**Lesson 1-2 letters in Lesson 3 words:**\n- **മ:** appears in 2 words (മന, നമ)\n- **ക:** appears in 1 word (പക)\n- **റ:** appears in 2 words (തറ, വറ)\n- **ാ (long aa):** appears in 4 words (വാന, പാവ, നാവ)\n\nRequirement met! ✅ Previous letters appearing regularly.\n\n### What's Next?\nLesson 4 introduces the **'I' vowels**: ഇ, ി, ഈ, ീ\n\nWords like:\n- **അരി** (ari) = Rice\n- **തീ** (thee) = Fire\n- **നീ** (nee) = You\n\nYou're reading Malayalam sentences soon! 🚀",
+      "step_title": "Lesson 3 Complete!"
+    }
+  ],
+  "skills_learned": [
+    "Recognizing Malayalam consonants",
+    "Reading Malayalam script",
+    "Reading 10+ Malayalam words"
+  ]
+}

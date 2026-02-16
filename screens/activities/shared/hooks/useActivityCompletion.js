@@ -3,7 +3,7 @@
  * Handles score submission, word updates, and activity data persistence
  */
 
-const API_BASE_URL = __DEV__ ? 'http://localhost:5001' : 'http://localhost:5001';
+const API_BASE_URL = __DEV__ ? 'http://localhost:8080' : 'http://localhost:8080';
 
 export function useActivityCompletion(language, activityType) {
   const complete = async ({ score, wordUpdates, activityData, activityId }) => {

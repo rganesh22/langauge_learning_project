@@ -24,7 +24,7 @@ export const LANGUAGES = [
   { code: 'scottish', name: 'Scottish Gaelic', langCode: 'gd', nativeChar: 'GD', nativeName: 'Gàidhlig', countryCode: 'GB', color: '#0065BD', family: 'Celtic', active: false },
   
   // Dravidian Languages
-  { code: 'tamil', name: 'Tamil', langCode: 'ta', nativeChar: '\u0ba4', nativeName: '\u0ba4\u0bae\u0bbf\u0bb4\u0bcd', countryCode: 'IN', color: '#FFD700', family: 'Dravidian', active: true },
+  { code: 'tamil', name: 'Tamil', langCode: 'ta', nativeChar: '\u0ba4', nativeName: '\u0ba4\u0bae\u0bbf\u0bb4\u0bcd', countryCode: 'IN', color: '#CC9900', family: 'Dravidian', active: true },
   { code: 'telugu', name: 'Telugu', langCode: 'te', nativeChar: '\u0c24\u0c46', nativeName: '\u0c24\u0c46\u0c32\u0c41\u0c17\u0c41', countryCode: 'IN', color: '#006747', family: 'Dravidian', active: true },
   { code: 'kannada', name: 'Kannada', langCode: 'kn', nativeChar: '\u0c95', nativeName: '\u0c95\u0ca8\u0ccd\u0ca8\u0ca1', countryCode: 'IN', color: '#F97316', family: 'Dravidian', active: true },
   { code: 'malayalam', name: 'Malayalam', langCode: 'ml', nativeChar: '\u0d2e', nativeName: '\u0d2e\u0d32\u0d2f\u0d3e\u0d33\u0d02', countryCode: 'IN', color: '#D21034', family: 'Dravidian', active: true },
@@ -84,7 +84,7 @@ export function LanguageProvider({ children }) {
   const [userSelectedLanguages, setUserSelectedLanguages] = useState([]);
   const [availableLanguages, setAvailableLanguages] = useState([]);
 
-  const API_BASE_URL = 'http://localhost:5001';
+  const API_BASE_URL = 'http://localhost:8080';
 
   const loadUserLanguages = async () => {
     try {

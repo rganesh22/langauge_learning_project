@@ -1,0 +1,40 @@
+{
+  "unit_id": "ta_unit_1",
+  "unit_number": 1,
+  "language": "Tamil",
+  "title": "Tamil Reading Foundations",
+  "subtitle": "Master the Tamil script and pronunciation",
+  "description": "A comprehensive guide to reading Tamil script. From basic vowels and consonants to the nuances of medial softening and gemination.",
+  "estimated_minutes": 500,
+  "lesson_count": 20,
+  "lessons": [
+    "01_vowels_part_1",
+    "02_vowels_part_2",
+    "03_vowels_part_3",
+    "04_hard_consonants",
+    "05_soft_consonants",
+    "06_medium_consonants",
+    "07_the_pulli",
+    "08_medial_softening_1",
+    "09_medial_softening_2",
+    "10_vowel_markers_1",
+    "11_vowel_markers_2",
+    "12_vowel_markers_3",
+    "13_vowel_markers_4",
+    "14_doubled_consonants",
+    "15_nasal_plosive_pairs",
+    "16_special_retroflexes",
+    "17_grantha_letters",
+    "18_word_reading",
+    "19_sentence_reading",
+    "20_final_review"
+  ],
+  "completion_criteria": {"all_lessons_completed": true},
+  "skills_learned": [
+    "Recognizing all 12 Tamil vowels",
+    "Understanding the 18 basic consonants",
+    "Applying medial softening rules (k to g, etc.)",
+    "Reading doubled and nasal-plosive clusters",
+    "Pronouncing the unique Tamil retroflex 'zha'"
+  ]
+}

@@ -1,4 +1,4 @@
-export const API_BASE_URL = __DEV__ ? 'http://localhost:5001' : 'http://localhost:5001';
+export const API_BASE_URL = __DEV__ ? 'http://localhost:8080' : 'http://localhost:8080';
 
 export const ACTIVITY_COLORS = {
   reading: { primary: '#4A90E2', light: '#E8F4FD' },
