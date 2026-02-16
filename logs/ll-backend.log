@@ -1,6 +1,6 @@
 INFO:     Will watch for changes in these directories: ['/Users/raghavganesh/Documents/Code Projects/Language Learning Project']
-INFO:     Uvicorn running on http://0.0.0.0:8081 (Press CTRL+C to quit)
-INFO:     Started reloader process [32446] using WatchFiles
+INFO:     Uvicorn running on http://0.0.0.0:8080 (Press CTRL+C to quit)
+INFO:     Started reloader process [41086] using WatchFiles
 /Users/raghavganesh/Documents/Code Projects/Language Learning Project/backend/api_client.py:17: FutureWarning: 
 
 All support for the `google.generativeai` package has ended. It will no longer be receiving 
@@ -10,6 +10,145 @@ See README for more details:
 https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
 
   import google.generativeai as genai
-INFO:     Started server process [32452]
+INFO:     Started server process [41090]
 INFO:     Waiting for application startup.
 INFO:     Application startup complete.
+[Startup] Initializing database schema...
+[Startup] Database initialization complete
+[Startup] Note: Run 'python3 reload_lessons.py' to load lessons into database
+INFO:     127.0.0.1:50114 - "OPTIONS /api/srs/sync-quotas-all HTTP/1.1" 200 OK
+✓ Synced SRS quotas for 0 languages
+INFO:     127.0.0.1:50114 - "POST /api/srs/sync-quotas-all HTTP/1.1" 200 OK
+Getting dashboard data for kannada...
+INFO:     127.0.0.1:50119 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+✓ Synced SRS quotas for 0 languages
+INFO:     127.0.0.1:50122 - "POST /api/srs/sync-quotas-all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50119 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:50114 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
+Getting dashboard data for kannada...
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:50119 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50114 - "GET /api/streak HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50119 - "GET /api/streak HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50124 - "GET /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50120 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50124 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50120 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50124 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50854 - "GET /api/srs/stats/telugu HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50851 - "GET /api/srs/stats/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50853 - "GET /api/srs/stats/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50857 - "GET /api/srs/stats/malayalam HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50860 - "GET /api/srs/stats/urdu HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50859 - "GET /api/srs/stats/hindi HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50854 - "GET /api/srs/stats/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50857 - "GET /api/language-personalization/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50854 - "GET /api/words-for-review/kannada?limit=50 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50859 - "GET /api/srs/stats/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50854 - "GET /api/srs/preview/23520663 HTTP/1.1" 200 OK
+✓ Synced SRS quotas for 0 languages
+INFO:     127.0.0.1:51088 - "POST /api/srs/sync-quotas-all HTTP/1.1" 200 OK
+Getting dashboard data for kannada...
+INFO:     127.0.0.1:51092 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+✓ Synced SRS quotas for 0 languages
+INFO:     127.0.0.1:51096 - "POST /api/srs/sync-quotas-all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51092 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:51088 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
+Getting dashboard data for kannada...
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:51092 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51088 - "GET /api/streak HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51092 - "GET /api/streak HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51098 - "GET /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51095 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51098 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51095 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51098 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52554 - "GET /api/daily-activities?date=2026-02-15 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52554 - "GET /api/daily-activities?date=2026-02-15 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52554 - "GET /api/units/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52576 - "GET /api/srs/stats/malayalam HTTP/1.1" 200 OK
+Getting dashboard data for tamil...
+INFO:     127.0.0.1:52577 - "GET /api/srs/stats/hindi HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52577 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52572 - "GET /api/srs/stats/telugu HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52572 - "GET /api/units/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52569 - "GET /api/srs/stats/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52572 - "GET /api/lessons/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52573 - "GET /api/srs/stats/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52554 - "GET /api/srs/stats/urdu HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52572 - "GET /api/srs/stats/hindi HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52569 - "GET /api/srs/stats/malayalam HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52573 - "GET /api/srs/stats/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52554 - "GET /api/srs/stats/telugu HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52572 - "GET /api/lessons/by-id/ta_01_vowels_part_1 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52572 - "GET /api/units/ta_unit_1/lessons HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52572 - "GET /api/lessons/progress/ta_01_vowels_part_1 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52554 - "GET /api/lessons/progress/ta_02_vowels_part_2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52554 - "GET /api/lessons/progress/ta_04_hard_consonants HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52572 - "GET /api/lessons/progress/ta_03_vowels_part_3 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52554 - "GET /api/lessons/progress/ta_05_soft_consonants HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52572 - "GET /api/lessons/progress/ta_06_medium_consonants HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52554 - "GET /api/lessons/progress/ta_07_the_pulli HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52572 - "GET /api/lessons/progress/ta_08_medial_softening_1 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52554 - "GET /api/lessons/progress/ta_09_medial_softening_2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52572 - "GET /api/lessons/progress/ta_10_vowel_markers_1 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52554 - "GET /api/lessons/progress/ta_11_vowel_markers_2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52572 - "GET /api/lessons/progress/ta_12_vowel_markers_3 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52554 - "GET /api/lessons/progress/ta_13_vowel_markers_4 HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:52572 - "GET /api/lessons/progress/ta_14_doubled_consonants HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52576 - "GET /api/dashboard/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52554 - "GET /api/lessons/progress/ta_15_nasal_plosive_pairs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52572 - "GET /api/lessons/progress/ta_16_special_retroflexes HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52569 - "GET /api/srs/stats/urdu HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52576 - "GET /api/lessons/progress/ta_17_grantha_letters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52573 - "GET /api/srs/stats/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52554 - "GET /api/lessons/progress/ta_18_word_reading HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52572 - "GET /api/streak HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52577 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52577 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52572 - "OPTIONS /api/lessons/progress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52577 - "GET /api/lessons/progress/ta_01_vowels_part_1 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52572 - "POST /api/lessons/progress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52572 - "POST /api/lessons/progress HTTP/1.1" 200 OK
+Getting dashboard data for tamil...
+INFO:     127.0.0.1:52577 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:52572 - "GET /api/dashboard/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52572 - "GET /api/streak HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52554 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52554 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52554 - "GET /api/daily-activities?date=2026-02-15 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52554 - "GET /api/lessons/by-id/ta_01_vowels_part_1 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52554 - "GET /api/units/ta_unit_1/lessons HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52554 - "GET /api/lessons/progress/ta_01_vowels_part_1 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52625 - "GET /api/lessons/progress/ta_03_vowels_part_3 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52623 - "GET /api/lessons/progress/ta_02_vowels_part_2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52627 - "GET /api/lessons/progress/ta_04_hard_consonants HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52554 - "GET /api/lessons/progress/ta_07_the_pulli HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52631 - "GET /api/lessons/progress/ta_06_medium_consonants HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52630 - "GET /api/lessons/progress/ta_05_soft_consonants HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52625 - "GET /api/lessons/progress/ta_08_medial_softening_1 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52623 - "GET /api/lessons/progress/ta_09_medial_softening_2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52554 - "GET /api/lessons/progress/ta_11_vowel_markers_2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52627 - "GET /api/lessons/progress/ta_10_vowel_markers_1 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52630 - "GET /api/lessons/progress/ta_13_vowel_markers_4 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52631 - "GET /api/lessons/progress/ta_12_vowel_markers_3 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52623 - "GET /api/lessons/progress/ta_14_doubled_consonants HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52625 - "GET /api/lessons/progress/ta_15_nasal_plosive_pairs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52554 - "GET /api/lessons/progress/ta_16_special_retroflexes HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52627 - "GET /api/lessons/progress/ta_17_grantha_letters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52630 - "GET /api/lessons/progress/ta_18_word_reading HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52630 - "GET /api/lessons/progress/ta_01_vowels_part_1 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52627 - "POST /api/lessons/progress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52627 - "POST /api/lessons/progress HTTP/1.1" 200 OK
+Getting dashboard data for tamil...
+INFO:     127.0.0.1:52914 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:52913 - "GET /api/dashboard/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52913 - "GET /api/streak HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52915 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52915 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK

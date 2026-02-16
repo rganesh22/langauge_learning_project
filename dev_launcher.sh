@@ -15,10 +15,10 @@ AC_BACKEND_CMD_ENV="${AC_BACKEND_CMD:-}"
 AC_FRONTEND_CMD_ENV="${AC_FRONTEND_CMD:-}"
 
 # Default commands (can be overridden via env or flags)
-LL_BACKEND_CMD_DEFAULT=(python3 -m uvicorn backend.main:app --host 0.0.0.0 --port 8081 --reload)
-LL_FRONTEND_CMD_DEFAULT=(npm start)
-AC_BACKEND_CMD_DEFAULT=(python3 -m uvicorn agentic_curriculum/backend.main:app --host 0.0.0.0 --port 8000 --reload)
-AC_FRONTEND_CMD_DEFAULT=(bash -c "cd agentic_curriculum/ui && npm start")
+LL_BACKEND_CMD_DEFAULT=(python3 -m uvicorn backend.main:app --host 0.0.0.0 --port 8080 --reload)
+LL_FRONTEND_CMD_DEFAULT=(npx expo start --web)
+AC_BACKEND_CMD_DEFAULT=(python3 -m uvicorn backend.server:app --host 0.0.0.0 --port 8000 --reload)
+AC_FRONTEND_CMD_DEFAULT=(npm start)
 
 LL_BACKEND_CMD=(${LL_BACKEND_CMD_DEFAULT[@]})
 LL_FRONTEND_CMD=(${LL_FRONTEND_CMD_DEFAULT[@]})
@@ -81,15 +81,16 @@ ensure_logs(){
 
 run_cmd(){
   local name="$1"; shift
-  local -a cmd=("$@")
   local logfile="${LOG_DIR}/${name}.log"
   if [[ ${DRY_RUN} -eq 1 ]]; then
-    echo "[DRY-RUN] ${name}: ${cmd[*]}  > ${logfile} 2>&1 &"
+    echo "[DRY-RUN] ${name}: $@  > ${logfile} 2>&1 &"
     return 0
   fi
   echo "Starting ${name}; logs -> ${logfile}"
-  nohup ${cmd[*]} > "${logfile}" 2>&1 &
-  sleep 0.1
+  nohup "$@" > "${logfile}" 2>&1 &
+  local pid=$!
+  echo "  PID: ${pid}"
+  sleep 0.5
 }
 
 main(){
@@ -112,14 +113,12 @@ main(){
 
   # Start selected services
   if [[ ${START_LL_BACKEND} -eq 1 ]]; then
-    run_cmd ll-backend "${LL_BACKEND_CMD[@]}"
+    (cd "${SCRIPT_DIR}" && run_cmd ll-backend "${LL_BACKEND_CMD[@]}")
   fi
   if [[ ${START_LL_FRONTEND} -eq 1 ]]; then
-    # run from repo root
     (cd "${SCRIPT_DIR}" && run_cmd ll-frontend "${LL_FRONTEND_CMD[@]}")
   fi
   if [[ ${START_AC_BACKEND} -eq 1 ]]; then
-    # agentic curriculum backend runs from agentic_curriculum/
     (cd "${SCRIPT_DIR}/agentic_curriculum" && run_cmd ac-backend "${AC_BACKEND_CMD[@]}")
   fi
   if [[ ${START_AC_FRONTEND} -eq 1 ]]; then
@@ -127,9 +126,11 @@ main(){
   fi
 
   if [[ ${DRY_RUN} -eq 1 ]]; then
-    echo "\nDry-run complete. No processes started."
+    echo ""
+    echo "Dry-run complete. No processes started."
   else
-    echo "\nLaunched requested processes. Use 'ps aux | grep -E "ll-backend|ac-backend|node|uvicorn"' to inspect."
+    echo ""
+    echo "Launched requested processes. Use 'ps aux | grep -E \"ll-backend|ac-backend|node|uvicorn\"' to inspect."
     echo "Logs are in: ${LOG_DIR}"
   fi
 }
