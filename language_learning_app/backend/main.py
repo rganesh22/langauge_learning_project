@@ -980,13 +980,25 @@ def get_words_for_review(language: str, limit: int = 10, mode: str = "all"):
     
     Args:
         language: Language code
-        limit: Max number of words to return
+        limit: Max number of words to return (for mode=new, automatically capped
+               to today's remaining daily quota)
         mode: 'all' (default), 'reviews' (only due reviews), or 'new' (only new words)
     """
     if mode == "reviews":
         words = db.get_words_for_review_only(language, limit)
     elif mode == "new":
-        words = db.get_new_words_only(language, limit)
+        # Always respect today's daily quota — never return more new words than the
+        # user is supposed to learn today.
+        from datetime import date as _date
+        today = config.get_current_date_str()
+        quota = db.get_daily_quota(language, today)
+        remaining = max(0, quota['new_cards_quota'] - quota['new_cards_completed'])
+        # Cap the requested limit at the daily remaining quota
+        effective_limit = min(limit, remaining) if remaining > 0 else 0
+        if effective_limit == 0:
+            words = []
+        else:
+            words = db.get_new_words_only(language, effective_limit)
     else:
         words = db.get_words_for_review(language, limit)
     return {"words": words}

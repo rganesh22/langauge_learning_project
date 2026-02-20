@@ -636,23 +636,13 @@ export default function FlashcardScreen({ route, navigation }) {
     }
     // Don't reload the deck if it's already been loaded for this studyMode
     if (loadedForModeRef.current === studyMode) return;
-    // Wait until srsStats are available so we can size the deck correctly
-    if (!srsStats) return;
 
     loadedForModeRef.current = studyMode;
 
-    // Use the exact count from srsStats so the deck matches what the user expects
-    let limit;
-    if (studyMode === 'new') {
-      limit = srsStats.new_count || 10;
-    } else if (studyMode === 'reviews') {
-      limit = srsStats.due_count || 10;
-    } else {
-      // 'all' — combined
-      limit = (srsStats.due_count || 0) + (srsStats.new_count || 0) || 10;
-    }
-    loadWords(limit, studyMode);
-  }, [language, studyMode, srsStats]);
+    // Pass a large limit — the backend enforces the daily quota for mode=new,
+    // and for reviews/all the server caps at the available due count.
+    loadWords(100, studyMode);
+  }, [language, studyMode]);
 
   // Load language-specific settings
   const loadLanguageSettings = async () => {
@@ -820,7 +810,7 @@ export default function FlashcardScreen({ route, navigation }) {
       
       // Get more words for review (DO NOT check goal completion here - let user practice)
       const modeParam = studyMode || 'all';
-      const reviewResponse = await fetch(`${API_BASE_URL}/api/words-for-review/${language}?limit=50&mode=${modeParam}`);
+      const reviewResponse = await fetch(`${API_BASE_URL}/api/words-for-review/${language}?limit=100&mode=${modeParam}`);
       const reviewData = await reviewResponse.json();
       const newSrsWords = reviewData.words || [];
       
