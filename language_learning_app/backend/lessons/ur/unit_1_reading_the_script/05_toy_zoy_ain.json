@@ -1,0 +1,212 @@
+{
+  "lesson_id": "ur_05_toy_zoy_ain",
+  "language": "Urdu",
+  "title": "Emphatics & Ain Group",
+  "subtitle": "ط (toy), ظ (zoy), ع (ain), غ (ghain)",
+  "description": "Arabic-origin emphatic and guttural letters.",
+  "estimated_minutes": 22.8,
+  "cefr_level": "A0",
+  "tags": [
+    "script",
+    "reading",
+    "basics"
+  ],
+  "skills_learned": [
+    "Emphatic letters",
+    "Ain and Ghain"
+  ],
+  "steps": [
+    {
+      "type": "content",
+      "step_title": "Emphatics & Ain Group",
+      "content_markdown": "# Emphatics & Ain Group\n\nArabic-origin emphatic and guttural letters.\n\n### Today's Characters\n**ط** · **ظ** · **ع** · **غ**"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ط (toy)",
+      "content_markdown": "## ط — toy\n\n**Sound:** t (emphatic)\n\n**Memory Trick:** Tall looped letter"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q1",
+      "step_title": "Identify: toy",
+      "question": "Which character represents the sound **toy** (t (emphatic))?",
+      "options": [
+        "ط",
+        "ظ",
+        "غ",
+        "ع"
+      ],
+      "correct_answer": "ط",
+      "feedback": "Correct! **ط** is the t (emphatic) sound. Tall looped letter"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ظ (zoy)",
+      "content_markdown": "## ظ — zoy\n\n**Sound:** z (emphatic)\n\n**Memory Trick:** ط + dot above\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **ظ** | z (emphatic) | zoy |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q2",
+      "step_title": "Identify: zoy",
+      "question": "Which character represents the sound **zoy** (z (emphatic))?",
+      "options": [
+        "غ",
+        "ط",
+        "ظ",
+        "ع"
+      ],
+      "correct_answer": "ظ",
+      "feedback": "Correct! **ظ** is the z (emphatic) sound. ط + dot above"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ع (ain)",
+      "content_markdown": "## ع — ain\n\n**Sound:** a (guttural)\n\n**Memory Trick:** Unique guttural vowel carrier\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **ع** | a (guttural) | ain |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q3",
+      "step_title": "Identify: ain",
+      "question": "Which character represents the sound **ain** (a (guttural))?",
+      "options": [
+        "ظ",
+        "غ",
+        "ع",
+        "ط"
+      ],
+      "correct_answer": "ع",
+      "feedback": "Correct! **ع** is the a (guttural) sound. Unique guttural vowel carrier"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: غ (ghain)",
+      "content_markdown": "## غ — ghain\n\n**Sound:** gh (guttural)\n\n**Memory Trick:** ع + dot above"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q4",
+      "step_title": "Identify: ghain",
+      "question": "Which character represents the sound **ghain** (gh (guttural))?",
+      "options": [
+        "غ",
+        "ط",
+        "ظ",
+        "ع"
+      ],
+      "correct_answer": "غ",
+      "feedback": "Correct! **غ** is the gh (guttural) sound. ع + dot above"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q5",
+      "step_title": "Sound Match",
+      "question": "What sound does **ط** make?",
+      "options": [
+        "t (emphatic)",
+        "z (emphatic)",
+        "a (guttural)",
+        "gh (guttural)"
+      ],
+      "correct_answer": "t (emphatic)",
+      "feedback": "Right! **ط** = toy = t (emphatic)."
+    },
+    {
+      "type": "content",
+      "step_title": "Visual Comparison",
+      "content_markdown": "## Compare the Shapes\n\nLook closely at how these characters differ:\n\n- **ط** (toy) vs **ظ** (zoy)\n- **ع** (ain) vs **غ** (ghain)\n\nNotice the subtle differences in strokes, dots, or curves!"
+    },
+    {
+      "type": "free_response",
+      "id": "q6",
+      "step_title": "Type the Sound",
+      "question": "What is the transliteration (Roman letters) for **غ**?",
+      "ai_grading": false,
+      "accepted_responses": [
+        "ghain",
+        "ghain",
+        "GHAIN"
+      ],
+      "hint": "It sounds like 'gh (guttural)'."
+    },
+    {
+      "type": "content",
+      "step_title": "Word Practice",
+      "content_markdown": "## Let's Read Words!\n\nUsing what you've learned, try reading these words:\n\n| Urdu | Transliteration | Meaning |\n|---------|-----------------|--------|\n| **طالب** | taalib | student |\n| **عمر** | umar | age |\n| **غلط** | ghalat | wrong |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q7",
+      "step_title": "Read: طالب",
+      "question": "What does **طالب** (taalib) mean?",
+      "options": [
+        "age",
+        "hello",
+        "wrong",
+        "student"
+      ],
+      "correct_answer": "student",
+      "feedback": "Correct! **طالب** (taalib) means 'student'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q8",
+      "step_title": "Read: عمر",
+      "question": "What does **عمر** (umar) mean?",
+      "options": [
+        "wrong",
+        "age",
+        "student",
+        "hello"
+      ],
+      "correct_answer": "age",
+      "feedback": "Correct! **عمر** (umar) means 'age'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q9",
+      "step_title": "Read: غلط",
+      "question": "What does **غلط** (ghalat) mean?",
+      "options": [
+        "age",
+        "hello",
+        "wrong",
+        "student"
+      ],
+      "correct_answer": "wrong",
+      "feedback": "Correct! **غلط** (ghalat) means 'wrong'."
+    },
+    {
+      "type": "free_response",
+      "id": "q10",
+      "step_title": "Transliterate the Word",
+      "question": "Type the transliteration for **طالب** (meaning: student)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "taalib",
+        "taalib",
+        "taalib"
+      ],
+      "hint": "Sound it out character by character."
+    },
+    {
+      "type": "content",
+      "step_title": "Lesson Summary",
+      "content_markdown": "## Summary\n\nGreat job! Here's everything you learned:\n\n| Character | Transliteration | Sound |\n|-----------|----------------|-------|\n| **ط** | toy | t (emphatic) |\n| **ظ** | zoy | z (emphatic) |\n| **ع** | ain | a (guttural) |\n| **غ** | ghain | gh (guttural) |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q11",
+      "step_title": "Final Check",
+      "question": "How many new characters/concepts did we cover in this lesson?",
+      "options": [
+        "4",
+        "6",
+        "3",
+        "9"
+      ],
+      "correct_answer": "4",
+      "feedback": "Correct! We covered 4 characters today. Keep practicing!"
+    }
+  ]
+}

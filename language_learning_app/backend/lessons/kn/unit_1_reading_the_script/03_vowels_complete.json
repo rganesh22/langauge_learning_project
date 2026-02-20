@@ -1,0 +1,232 @@
+{
+  "lesson_id": "kn_03_vowels_complete",
+  "language": "Kannada",
+  "title": "Completing the Vowels",
+  "subtitle": "ಒ, ಓ, ಔ, ಅಂ, ಅಃ",
+  "description": "Finish the vowel inventory with back vowels and special marks.",
+  "estimated_minutes": 25.2,
+  "cefr_level": "A0",
+  "tags": [
+    "script",
+    "reading",
+    "basics"
+  ],
+  "skills_learned": [
+    "Complete vowel chart (14 vowels)",
+    "Anusvara and Visarga",
+    "All vowels mastered"
+  ],
+  "steps": [
+    {
+      "type": "content",
+      "step_title": "Completing the Vowels",
+      "content_markdown": "# Completing the Vowels\n\nFinish the vowel inventory with back vowels and special marks.\n\n### Today's Characters\n**ಒ** · **ಓ** · **ಔ** · **ಅಂ** · **ಅಃ**"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ಒ (o)",
+      "content_markdown": "## ಒ — o\n\n**Sound:** o in hot\n\n**Memory Trick:** Round sound, round shape"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q1",
+      "step_title": "Identify: o",
+      "question": "Which character represents the sound **o** (o in hot)?",
+      "options": [
+        "ಒ",
+        "ಓ",
+        "ಔ",
+        "ಅಂ"
+      ],
+      "correct_answer": "ಒ",
+      "feedback": "Correct! **ಒ** is the o in hot sound. Round sound, round shape"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ಓ (oo)",
+      "content_markdown": "## ಓ — oo\n\n**Sound:** o in go\n\n**Memory Trick:** Long version of ಒ\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **ಓ** | o in go | oo |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q2",
+      "step_title": "Identify: oo",
+      "question": "Which character represents the sound **oo** (o in go)?",
+      "options": [
+        "ಔ",
+        "ಓ",
+        "ಒ",
+        "ಅಂ"
+      ],
+      "correct_answer": "ಓ",
+      "feedback": "Correct! **ಓ** is the o in go sound. Long version of ಒ"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ಔ (au)",
+      "content_markdown": "## ಔ — au\n\n**Sound:** ow in how\n\n**Memory Trick:** Diphthong — wide sound\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **ಔ** | ow in how | au |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q3",
+      "step_title": "Identify: au",
+      "question": "Which character represents the sound **au** (ow in how)?",
+      "options": [
+        "ಒ",
+        "ಓ",
+        "ಅಂ",
+        "ಔ"
+      ],
+      "correct_answer": "ಔ",
+      "feedback": "Correct! **ಔ** is the ow in how sound. Diphthong — wide sound"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ಅಂ (am)",
+      "content_markdown": "## ಅಂ — am\n\n**Sound:** nasal ending\n\n**Memory Trick:** Anusvara — dot above\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **ಅಂ** | nasal ending | am |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q4",
+      "step_title": "Identify: am",
+      "question": "Which character represents the sound **am** (nasal ending)?",
+      "options": [
+        "ಓ",
+        "ಔ",
+        "ಅಂ",
+        "ಒ"
+      ],
+      "correct_answer": "ಅಂ",
+      "feedback": "Correct! **ಅಂ** is the nasal ending sound. Anusvara — dot above"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ಅಃ (aha)",
+      "content_markdown": "## ಅಃ — aha\n\n**Sound:** breathy ending\n\n**Memory Trick:** Visarga — two dots"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q5",
+      "step_title": "Identify: aha",
+      "question": "Which character represents the sound **aha** (breathy ending)?",
+      "options": [
+        "ಅಃ",
+        "ಔ",
+        "ಓ",
+        "ಒ"
+      ],
+      "correct_answer": "ಅಃ",
+      "feedback": "Correct! **ಅಃ** is the breathy ending sound. Visarga — two dots"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q6",
+      "step_title": "Sound Match",
+      "question": "What sound does **ಒ** make?",
+      "options": [
+        "o in hot",
+        "o in go",
+        "ow in how",
+        "nasal ending"
+      ],
+      "correct_answer": "o in hot",
+      "feedback": "Right! **ಒ** = o = o in hot."
+    },
+    {
+      "type": "content",
+      "step_title": "Visual Comparison",
+      "content_markdown": "## Compare the Shapes\n\nLook closely at how these characters differ:\n\n- **ಒ** (o) vs **ಓ** (oo)\n- **ಔ** (au) vs **ಅಂ** (am)\n\nNotice the subtle differences in strokes, dots, or curves!"
+    },
+    {
+      "type": "free_response",
+      "id": "q7",
+      "step_title": "Type the Sound",
+      "question": "What is the transliteration (Roman letters) for **ಅಃ**?",
+      "ai_grading": false,
+      "accepted_responses": [
+        "aha",
+        "aha",
+        "AHA"
+      ],
+      "hint": "It sounds like 'breathy ending'."
+    },
+    {
+      "type": "content",
+      "step_title": "Word Practice",
+      "content_markdown": "## Let's Read Words!\n\nUsing what you've learned, try reading these words:\n\n| Kannada | Transliteration | Meaning |\n|---------|-----------------|--------|\n| **ಒಂದು** | ondu | one |\n| **ಓದು** | oodu | read |\n| **ಔಷಧ** | aushadha | medicine |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q8",
+      "step_title": "Read: ಒಂದು",
+      "question": "What does **ಒಂದು** (ondu) mean?",
+      "options": [
+        "hello",
+        "one",
+        "medicine",
+        "read"
+      ],
+      "correct_answer": "one",
+      "feedback": "Correct! **ಒಂದು** (ondu) means 'one'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q9",
+      "step_title": "Read: ಓದು",
+      "question": "What does **ಓದು** (oodu) mean?",
+      "options": [
+        "one",
+        "hello",
+        "read",
+        "medicine"
+      ],
+      "correct_answer": "read",
+      "feedback": "Correct! **ಓದು** (oodu) means 'read'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q10",
+      "step_title": "Read: ಔಷಧ",
+      "question": "What does **ಔಷಧ** (aushadha) mean?",
+      "options": [
+        "medicine",
+        "read",
+        "one",
+        "hello"
+      ],
+      "correct_answer": "medicine",
+      "feedback": "Correct! **ಔಷಧ** (aushadha) means 'medicine'."
+    },
+    {
+      "type": "free_response",
+      "id": "q11",
+      "step_title": "Transliterate the Word",
+      "question": "Type the transliteration for **ಒಂದು** (meaning: one)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "ondu",
+        "ondu",
+        "ondu"
+      ],
+      "hint": "Sound it out character by character."
+    },
+    {
+      "type": "content",
+      "step_title": "Lesson Summary",
+      "content_markdown": "## Summary\n\nGreat job! Here's everything you learned:\n\n| Character | Transliteration | Sound |\n|-----------|----------------|-------|\n| **ಒ** | o | o in hot |\n| **ಓ** | oo | o in go |\n| **ಔ** | au | ow in how |\n| **ಅಂ** | am | nasal ending |\n| **ಅಃ** | aha | breathy ending |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q12",
+      "step_title": "Final Check",
+      "question": "How many new characters/concepts did we cover in this lesson?",
+      "options": [
+        "5",
+        "7",
+        "4",
+        "10"
+      ],
+      "correct_answer": "5",
+      "feedback": "Correct! We covered 5 characters today. Keep practicing!"
+    }
+  ]
+}

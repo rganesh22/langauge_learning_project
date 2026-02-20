@@ -1,0 +1,212 @@
+{
+  "lesson_id": "ur_04_siin_shiin",
+  "language": "Urdu",
+  "title": "The Siin & Shiin Group",
+  "subtitle": "س (siin), ش (shiin), ص (suaad), ض (zuaad)",
+  "description": "Sibilants and emphatic letters.",
+  "estimated_minutes": 22.8,
+  "cefr_level": "A0",
+  "tags": [
+    "script",
+    "reading",
+    "basics"
+  ],
+  "skills_learned": [
+    "Sibilant letters",
+    "Emphatic consonants"
+  ],
+  "steps": [
+    {
+      "type": "content",
+      "step_title": "The Siin & Shiin Group",
+      "content_markdown": "# The Siin & Shiin Group\n\nSibilants and emphatic letters.\n\n### Today's Characters\n**س** · **ش** · **ص** · **ض**"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: س (siin)",
+      "content_markdown": "## س — siin\n\n**Sound:** s\n\n**Memory Trick:** Three teeth — like a wave"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q1",
+      "step_title": "Identify: siin",
+      "question": "Which character represents the sound **siin** (s)?",
+      "options": [
+        "ص",
+        "ش",
+        "س",
+        "ض"
+      ],
+      "correct_answer": "س",
+      "feedback": "Correct! **س** is the s sound. Three teeth — like a wave"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ش (shiin)",
+      "content_markdown": "## ش — shiin\n\n**Sound:** sh\n\n**Memory Trick:** Three teeth + three dots above\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **ش** | sh | shiin |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q2",
+      "step_title": "Identify: shiin",
+      "question": "Which character represents the sound **shiin** (sh)?",
+      "options": [
+        "ص",
+        "س",
+        "ش",
+        "ض"
+      ],
+      "correct_answer": "ش",
+      "feedback": "Correct! **ش** is the sh sound. Three teeth + three dots above"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ص (suaad)",
+      "content_markdown": "## ص — suaad\n\n**Sound:** s (emphatic)\n\n**Memory Trick:** Looped shape — Arabic emphatic\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **ص** | s (emphatic) | suaad |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q3",
+      "step_title": "Identify: suaad",
+      "question": "Which character represents the sound **suaad** (s (emphatic))?",
+      "options": [
+        "ص",
+        "ض",
+        "ش",
+        "س"
+      ],
+      "correct_answer": "ص",
+      "feedback": "Correct! **ص** is the s (emphatic) sound. Looped shape — Arabic emphatic"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ض (zuaad)",
+      "content_markdown": "## ض — zuaad\n\n**Sound:** z (emphatic)\n\n**Memory Trick:** ص + dot above"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q4",
+      "step_title": "Identify: zuaad",
+      "question": "Which character represents the sound **zuaad** (z (emphatic))?",
+      "options": [
+        "ش",
+        "ص",
+        "س",
+        "ض"
+      ],
+      "correct_answer": "ض",
+      "feedback": "Correct! **ض** is the z (emphatic) sound. ص + dot above"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q5",
+      "step_title": "Sound Match",
+      "question": "What sound does **س** make?",
+      "options": [
+        "s",
+        "sh",
+        "s (emphatic)",
+        "z (emphatic)"
+      ],
+      "correct_answer": "s",
+      "feedback": "Right! **س** = siin = s."
+    },
+    {
+      "type": "content",
+      "step_title": "Visual Comparison",
+      "content_markdown": "## Compare the Shapes\n\nLook closely at how these characters differ:\n\n- **س** (siin) vs **ش** (shiin)\n- **ص** (suaad) vs **ض** (zuaad)\n\nNotice the subtle differences in strokes, dots, or curves!"
+    },
+    {
+      "type": "free_response",
+      "id": "q6",
+      "step_title": "Type the Sound",
+      "question": "What is the transliteration (Roman letters) for **ض**?",
+      "ai_grading": false,
+      "accepted_responses": [
+        "zuaad",
+        "zuaad",
+        "ZUAAD"
+      ],
+      "hint": "It sounds like 'z (emphatic)'."
+    },
+    {
+      "type": "content",
+      "step_title": "Word Practice",
+      "content_markdown": "## Let's Read Words!\n\nUsing what you've learned, try reading these words:\n\n| Urdu | Transliteration | Meaning |\n|---------|-----------------|--------|\n| **سب** | sab | all |\n| **شام** | shaam | evening |\n| **صبح** | subah | morning |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q7",
+      "step_title": "Read: سب",
+      "question": "What does **سب** (sab) mean?",
+      "options": [
+        "evening",
+        "all",
+        "hello",
+        "morning"
+      ],
+      "correct_answer": "all",
+      "feedback": "Correct! **سب** (sab) means 'all'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q8",
+      "step_title": "Read: شام",
+      "question": "What does **شام** (shaam) mean?",
+      "options": [
+        "evening",
+        "hello",
+        "all",
+        "morning"
+      ],
+      "correct_answer": "evening",
+      "feedback": "Correct! **شام** (shaam) means 'evening'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q9",
+      "step_title": "Read: صبح",
+      "question": "What does **صبح** (subah) mean?",
+      "options": [
+        "evening",
+        "hello",
+        "all",
+        "morning"
+      ],
+      "correct_answer": "morning",
+      "feedback": "Correct! **صبح** (subah) means 'morning'."
+    },
+    {
+      "type": "free_response",
+      "id": "q10",
+      "step_title": "Transliterate the Word",
+      "question": "Type the transliteration for **سب** (meaning: all)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "sab",
+        "sab",
+        "sab"
+      ],
+      "hint": "Sound it out character by character."
+    },
+    {
+      "type": "content",
+      "step_title": "Lesson Summary",
+      "content_markdown": "## Summary\n\nGreat job! Here's everything you learned:\n\n| Character | Transliteration | Sound |\n|-----------|----------------|-------|\n| **س** | siin | s |\n| **ش** | shiin | sh |\n| **ص** | suaad | s (emphatic) |\n| **ض** | zuaad | z (emphatic) |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q11",
+      "step_title": "Final Check",
+      "question": "How many new characters/concepts did we cover in this lesson?",
+      "options": [
+        "4",
+        "6",
+        "3",
+        "9"
+      ],
+      "correct_answer": "4",
+      "feedback": "Correct! We covered 4 characters today. Keep practicing!"
+    }
+  ]
+}

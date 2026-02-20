@@ -1,0 +1,214 @@
+{
+  "lesson_id": "ta_08_vowel_markers_aa_i",
+  "language": "Tamil",
+  "title": "Vowel Markers I — ா and ி",
+  "subtitle": "Changing consonant vowels with markers",
+  "description": "Learn how vowel markers (matras) modify consonants from their default 'a' sound to other vowels.",
+  "estimated_minutes": 22.8,
+  "cefr_level": "A0",
+  "tags": [
+    "script",
+    "reading",
+    "basics"
+  ],
+  "skills_learned": [
+    "The aa marker ா",
+    "The i marker ி",
+    "The ii marker ீ",
+    "Applying markers to any consonant"
+  ],
+  "steps": [
+    {
+      "type": "content",
+      "step_title": "Vowel Markers I — ா and ி",
+      "content_markdown": "# Vowel Markers I — ா and ி\n\nLearn how vowel markers (matras) modify consonants from their default 'a' sound to other vowels.\n\n### Today's Characters\n**கா** · **கி** · **கீ** · **பா**"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: கா (kaa)",
+      "content_markdown": "## கா — kaa\n\n**Sound:** kaa\n\n**Memory Trick:** Add a vertical line after the consonant for 'aa'"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q1",
+      "step_title": "Identify: kaa",
+      "question": "Which character represents the sound **kaa** (kaa)?",
+      "options": [
+        "கீ",
+        "கி",
+        "பா",
+        "கா"
+      ],
+      "correct_answer": "கா",
+      "feedback": "Correct! **கா** is the kaa sound. Add a vertical line after the consonant for 'aa'"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: கி (ki)",
+      "content_markdown": "## கி — ki\n\n**Sound:** ki\n\n**Memory Trick:** Add a loop on top for short 'i'\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **கி** | ki | ki |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q2",
+      "step_title": "Identify: ki",
+      "question": "Which character represents the sound **ki** (ki)?",
+      "options": [
+        "கி",
+        "பா",
+        "கீ",
+        "கா"
+      ],
+      "correct_answer": "கி",
+      "feedback": "Correct! **கி** is the ki sound. Add a loop on top for short 'i'"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: கீ (kii)",
+      "content_markdown": "## கீ — kii\n\n**Sound:** kee\n\n**Memory Trick:** Taller loop on top for long 'ii'\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **கீ** | kee | kii |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q3",
+      "step_title": "Identify: kii",
+      "question": "Which character represents the sound **kii** (kee)?",
+      "options": [
+        "கி",
+        "கா",
+        "பா",
+        "கீ"
+      ],
+      "correct_answer": "கீ",
+      "feedback": "Correct! **கீ** is the kee sound. Taller loop on top for long 'ii'"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: பா (paa)",
+      "content_markdown": "## பா — paa\n\n**Sound:** paa\n\n**Memory Trick:** Same 'aa' marker works on all consonants"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q4",
+      "step_title": "Identify: paa",
+      "question": "Which character represents the sound **paa** (paa)?",
+      "options": [
+        "பா",
+        "கா",
+        "கி",
+        "கீ"
+      ],
+      "correct_answer": "பா",
+      "feedback": "Correct! **பா** is the paa sound. Same 'aa' marker works on all consonants"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q5",
+      "step_title": "Sound Match",
+      "question": "What sound does **கா** make?",
+      "options": [
+        "kaa",
+        "ki",
+        "kee",
+        "paa"
+      ],
+      "correct_answer": "kaa",
+      "feedback": "Right! **கா** = kaa = kaa."
+    },
+    {
+      "type": "content",
+      "step_title": "Visual Comparison",
+      "content_markdown": "## Compare the Shapes\n\nLook closely at how these characters differ:\n\n- **கா** (kaa) vs **கி** (ki)\n- **கீ** (kii) vs **பா** (paa)\n\nNotice the subtle differences in strokes, dots, or curves!"
+    },
+    {
+      "type": "free_response",
+      "id": "q6",
+      "step_title": "Type the Sound",
+      "question": "What is the transliteration (Roman letters) for **பா**?",
+      "ai_grading": false,
+      "accepted_responses": [
+        "paa",
+        "paa",
+        "PAA"
+      ],
+      "hint": "It sounds like 'paa'."
+    },
+    {
+      "type": "content",
+      "step_title": "Word Practice",
+      "content_markdown": "## Let's Read Words!\n\nUsing what you've learned, try reading these words:\n\n| Tamil | Transliteration | Meaning |\n|---------|-----------------|--------|\n| **பாடம்** | paadam | lesson |\n| **கீழ்** | kiizh | below |\n| **தமிழ்** | tamizh | Tamil |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q7",
+      "step_title": "Read: பாடம்",
+      "question": "What does **பாடம்** (paadam) mean?",
+      "options": [
+        "hello",
+        "below",
+        "Tamil",
+        "lesson"
+      ],
+      "correct_answer": "lesson",
+      "feedback": "Correct! **பாடம்** (paadam) means 'lesson'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q8",
+      "step_title": "Read: கீழ்",
+      "question": "What does **கீழ்** (kiizh) mean?",
+      "options": [
+        "below",
+        "hello",
+        "Tamil",
+        "lesson"
+      ],
+      "correct_answer": "below",
+      "feedback": "Correct! **கீழ்** (kiizh) means 'below'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q9",
+      "step_title": "Read: தமிழ்",
+      "question": "What does **தமிழ்** (tamizh) mean?",
+      "options": [
+        "lesson",
+        "Tamil",
+        "below",
+        "hello"
+      ],
+      "correct_answer": "Tamil",
+      "feedback": "Correct! **தமிழ்** (tamizh) means 'Tamil'."
+    },
+    {
+      "type": "free_response",
+      "id": "q10",
+      "step_title": "Transliterate the Word",
+      "question": "Type the transliteration for **பாடம்** (meaning: lesson)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "paadam",
+        "paadam",
+        "paadam"
+      ],
+      "hint": "Sound it out character by character."
+    },
+    {
+      "type": "content",
+      "step_title": "Lesson Summary",
+      "content_markdown": "## Summary\n\nGreat job! Here's everything you learned:\n\n| Character | Transliteration | Sound |\n|-----------|----------------|-------|\n| **கா** | kaa | kaa |\n| **கி** | ki | ki |\n| **கீ** | kii | kee |\n| **பா** | paa | paa |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q11",
+      "step_title": "Final Check",
+      "question": "How many new characters/concepts did we cover in this lesson?",
+      "options": [
+        "4",
+        "6",
+        "3",
+        "9"
+      ],
+      "correct_answer": "4",
+      "feedback": "Correct! We covered 4 characters today. Keep practicing!"
+    }
+  ]
+}

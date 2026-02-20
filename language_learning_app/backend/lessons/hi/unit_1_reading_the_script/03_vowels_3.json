@@ -1,0 +1,230 @@
+{
+  "lesson_id": "hi_03_vowels_3",
+  "language": "Hindi",
+  "title": "Completing Vowels",
+  "subtitle": "ओ, औ, अं, अः, ऋ",
+  "description": "Finish the vowel set.",
+  "estimated_minutes": 25.2,
+  "cefr_level": "A0",
+  "tags": [
+    "script",
+    "reading",
+    "basics"
+  ],
+  "skills_learned": [
+    "Complete vowel set"
+  ],
+  "steps": [
+    {
+      "type": "content",
+      "step_title": "Completing Vowels",
+      "content_markdown": "# Completing Vowels\n\nFinish the vowel set.\n\n### Today's Characters\n**ओ** · **औ** · **अं** · **अः** · **ऋ**"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ओ (o)",
+      "content_markdown": "## ओ — o\n\n**Sound:** o in go\n\n**Memory Trick:** Combination shape"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q1",
+      "step_title": "Identify: o",
+      "question": "Which character represents the sound **o** (o in go)?",
+      "options": [
+        "ओ",
+        "औ",
+        "अं",
+        "अः"
+      ],
+      "correct_answer": "ओ",
+      "feedback": "Correct! **ओ** is the o in go sound. Combination shape"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: औ (au)",
+      "content_markdown": "## औ — au\n\n**Sound:** ow in how\n\n**Memory Trick:** Wide diphthong\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **औ** | ow in how | au |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q2",
+      "step_title": "Identify: au",
+      "question": "Which character represents the sound **au** (ow in how)?",
+      "options": [
+        "अं",
+        "औ",
+        "ओ",
+        "अः"
+      ],
+      "correct_answer": "औ",
+      "feedback": "Correct! **औ** is the ow in how sound. Wide diphthong"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: अं (am)",
+      "content_markdown": "## अं — am\n\n**Sound:** nasal dot\n\n**Memory Trick:** Anusvara\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **अं** | nasal dot | am |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q3",
+      "step_title": "Identify: am",
+      "question": "Which character represents the sound **am** (nasal dot)?",
+      "options": [
+        "ओ",
+        "औ",
+        "अः",
+        "अं"
+      ],
+      "correct_answer": "अं",
+      "feedback": "Correct! **अं** is the nasal dot sound. Anusvara"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: अः (aha)",
+      "content_markdown": "## अः — aha\n\n**Sound:** breathy\n\n**Memory Trick:** Visarga\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **अः** | breathy | aha |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q4",
+      "step_title": "Identify: aha",
+      "question": "Which character represents the sound **aha** (breathy)?",
+      "options": [
+        "औ",
+        "अं",
+        "अः",
+        "ओ"
+      ],
+      "correct_answer": "अः",
+      "feedback": "Correct! **अः** is the breathy sound. Visarga"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ऋ (ri)",
+      "content_markdown": "## ऋ — ri\n\n**Sound:** ri (Sanskrit)\n\n**Memory Trick:** Sanskrit vowel"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q5",
+      "step_title": "Identify: ri",
+      "question": "Which character represents the sound **ri** (ri (Sanskrit))?",
+      "options": [
+        "ऋ",
+        "अं",
+        "औ",
+        "ओ"
+      ],
+      "correct_answer": "ऋ",
+      "feedback": "Correct! **ऋ** is the ri (Sanskrit) sound. Sanskrit vowel"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q6",
+      "step_title": "Sound Match",
+      "question": "What sound does **ओ** make?",
+      "options": [
+        "o in go",
+        "ow in how",
+        "nasal dot",
+        "breathy"
+      ],
+      "correct_answer": "o in go",
+      "feedback": "Right! **ओ** = o = o in go."
+    },
+    {
+      "type": "content",
+      "step_title": "Visual Comparison",
+      "content_markdown": "## Compare the Shapes\n\nLook closely at how these characters differ:\n\n- **ओ** (o) vs **औ** (au)\n- **अं** (am) vs **अः** (aha)\n\nNotice the subtle differences in strokes, dots, or curves!"
+    },
+    {
+      "type": "free_response",
+      "id": "q7",
+      "step_title": "Type the Sound",
+      "question": "What is the transliteration (Roman letters) for **ऋ**?",
+      "ai_grading": false,
+      "accepted_responses": [
+        "ri",
+        "ri",
+        "RI"
+      ],
+      "hint": "It sounds like 'ri (Sanskrit)'."
+    },
+    {
+      "type": "content",
+      "step_title": "Word Practice",
+      "content_markdown": "## Let's Read Words!\n\nUsing what you've learned, try reading these words:\n\n| Hindi | Transliteration | Meaning |\n|---------|-----------------|--------|\n| **और** | aur | and |\n| **ओर** | or | towards |\n| **ऋतु** | ritu | season |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q8",
+      "step_title": "Read: और",
+      "question": "What does **और** (aur) mean?",
+      "options": [
+        "hello",
+        "and",
+        "season",
+        "towards"
+      ],
+      "correct_answer": "and",
+      "feedback": "Correct! **और** (aur) means 'and'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q9",
+      "step_title": "Read: ओर",
+      "question": "What does **ओर** (or) mean?",
+      "options": [
+        "and",
+        "hello",
+        "towards",
+        "season"
+      ],
+      "correct_answer": "towards",
+      "feedback": "Correct! **ओर** (or) means 'towards'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q10",
+      "step_title": "Read: ऋतु",
+      "question": "What does **ऋतु** (ritu) mean?",
+      "options": [
+        "season",
+        "towards",
+        "and",
+        "hello"
+      ],
+      "correct_answer": "season",
+      "feedback": "Correct! **ऋतु** (ritu) means 'season'."
+    },
+    {
+      "type": "free_response",
+      "id": "q11",
+      "step_title": "Transliterate the Word",
+      "question": "Type the transliteration for **और** (meaning: and)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "aur",
+        "aur",
+        "aur"
+      ],
+      "hint": "Sound it out character by character."
+    },
+    {
+      "type": "content",
+      "step_title": "Lesson Summary",
+      "content_markdown": "## Summary\n\nGreat job! Here's everything you learned:\n\n| Character | Transliteration | Sound |\n|-----------|----------------|-------|\n| **ओ** | o | o in go |\n| **औ** | au | ow in how |\n| **अं** | am | nasal dot |\n| **अः** | aha | breathy |\n| **ऋ** | ri | ri (Sanskrit) |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q12",
+      "step_title": "Final Check",
+      "question": "How many new characters/concepts did we cover in this lesson?",
+      "options": [
+        "5",
+        "7",
+        "4",
+        "10"
+      ],
+      "correct_answer": "5",
+      "feedback": "Correct! We covered 5 characters today. Keep practicing!"
+    }
+  ]
+}

@@ -1,0 +1,214 @@
+{
+  "lesson_id": "ta_02_vowels_part_2",
+  "language": "Tamil",
+  "title": "More Vowel Pairs",
+  "subtitle": "Meet உ, ஊ, எ, and ஏ",
+  "description": "Continue with four more vowels — the u-pair and e-pair.",
+  "estimated_minutes": 22.8,
+  "cefr_level": "A0",
+  "tags": [
+    "script",
+    "reading",
+    "basics"
+  ],
+  "skills_learned": [
+    "Recognizing உ (u)",
+    "Recognizing ஊ (uu)",
+    "Recognizing எ (e)",
+    "Recognizing ஏ (ee)"
+  ],
+  "steps": [
+    {
+      "type": "content",
+      "step_title": "More Vowel Pairs",
+      "content_markdown": "# More Vowel Pairs\n\nContinue with four more vowels — the u-pair and e-pair.\n\n### Today's Characters\n**உ** · **ஊ** · **எ** · **ஏ**"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: உ (u)",
+      "content_markdown": "## உ — u\n\n**Sound:** u in put\n\n**Memory Trick:** Looks like a hook — short and quick"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q1",
+      "step_title": "Identify: u",
+      "question": "Which character represents the sound **u** (u in put)?",
+      "options": [
+        "ஏ",
+        "ஊ",
+        "எ",
+        "உ"
+      ],
+      "correct_answer": "உ",
+      "feedback": "Correct! **உ** is the u in put sound. Looks like a hook — short and quick"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ஊ (uu)",
+      "content_markdown": "## ஊ — uu\n\n**Sound:** oo in food\n\n**Memory Trick:** Bigger hook — longer sound\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **ஊ** | oo in food | uu |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q2",
+      "step_title": "Identify: uu",
+      "question": "Which character represents the sound **uu** (oo in food)?",
+      "options": [
+        "ஊ",
+        "உ",
+        "எ",
+        "ஏ"
+      ],
+      "correct_answer": "ஊ",
+      "feedback": "Correct! **ஊ** is the oo in food sound. Bigger hook — longer sound"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: எ (e)",
+      "content_markdown": "## எ — e\n\n**Sound:** e in bed\n\n**Memory Trick:** Open shape — short 'eh'\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **எ** | e in bed | e |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q3",
+      "step_title": "Identify: e",
+      "question": "Which character represents the sound **e** (e in bed)?",
+      "options": [
+        "ஊ",
+        "உ",
+        "ஏ",
+        "எ"
+      ],
+      "correct_answer": "எ",
+      "feedback": "Correct! **எ** is the e in bed sound. Open shape — short 'eh'"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ஏ (ee)",
+      "content_markdown": "## ஏ — ee\n\n**Sound:** ay in say\n\n**Memory Trick:** Extra stroke on எ — elongated sound"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q4",
+      "step_title": "Identify: ee",
+      "question": "Which character represents the sound **ee** (ay in say)?",
+      "options": [
+        "உ",
+        "ஊ",
+        "ஏ",
+        "எ"
+      ],
+      "correct_answer": "ஏ",
+      "feedback": "Correct! **ஏ** is the ay in say sound. Extra stroke on எ — elongated sound"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q5",
+      "step_title": "Sound Match",
+      "question": "What sound does **உ** make?",
+      "options": [
+        "u in put",
+        "oo in food",
+        "e in bed",
+        "ay in say"
+      ],
+      "correct_answer": "u in put",
+      "feedback": "Right! **உ** = u = u in put."
+    },
+    {
+      "type": "content",
+      "step_title": "Visual Comparison",
+      "content_markdown": "## Compare the Shapes\n\nLook closely at how these characters differ:\n\n- **உ** (u) vs **ஊ** (uu)\n- **எ** (e) vs **ஏ** (ee)\n\nNotice the subtle differences in strokes, dots, or curves!"
+    },
+    {
+      "type": "free_response",
+      "id": "q6",
+      "step_title": "Type the Sound",
+      "question": "What is the transliteration (Roman letters) for **ஏ**?",
+      "ai_grading": false,
+      "accepted_responses": [
+        "ee",
+        "ee",
+        "EE"
+      ],
+      "hint": "It sounds like 'ay in say'."
+    },
+    {
+      "type": "content",
+      "step_title": "Word Practice",
+      "content_markdown": "## Let's Read Words!\n\nUsing what you've learned, try reading these words:\n\n| Tamil | Transliteration | Meaning |\n|---------|-----------------|--------|\n| **உணவு** | unavu | food |\n| **ஊர்** | uur | town/village |\n| **எட்டு** | ettu | eight |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q7",
+      "step_title": "Read: உணவு",
+      "question": "What does **உணவு** (unavu) mean?",
+      "options": [
+        "hello",
+        "eight",
+        "town/village",
+        "food"
+      ],
+      "correct_answer": "food",
+      "feedback": "Correct! **உணவு** (unavu) means 'food'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q8",
+      "step_title": "Read: ஊர்",
+      "question": "What does **ஊர்** (uur) mean?",
+      "options": [
+        "eight",
+        "town/village",
+        "food",
+        "hello"
+      ],
+      "correct_answer": "town/village",
+      "feedback": "Correct! **ஊர்** (uur) means 'town/village'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q9",
+      "step_title": "Read: எட்டு",
+      "question": "What does **எட்டு** (ettu) mean?",
+      "options": [
+        "town/village",
+        "food",
+        "eight",
+        "hello"
+      ],
+      "correct_answer": "eight",
+      "feedback": "Correct! **எட்டு** (ettu) means 'eight'."
+    },
+    {
+      "type": "free_response",
+      "id": "q10",
+      "step_title": "Transliterate the Word",
+      "question": "Type the transliteration for **உணவு** (meaning: food)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "unavu",
+        "unavu",
+        "unavu"
+      ],
+      "hint": "Sound it out character by character."
+    },
+    {
+      "type": "content",
+      "step_title": "Lesson Summary",
+      "content_markdown": "## Summary\n\nGreat job! Here's everything you learned:\n\n| Character | Transliteration | Sound |\n|-----------|----------------|-------|\n| **உ** | u | u in put |\n| **ஊ** | uu | oo in food |\n| **எ** | e | e in bed |\n| **ஏ** | ee | ay in say |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q11",
+      "step_title": "Final Check",
+      "question": "How many new characters/concepts did we cover in this lesson?",
+      "options": [
+        "4",
+        "6",
+        "3",
+        "9"
+      ],
+      "correct_answer": "4",
+      "feedback": "Correct! We covered 4 characters today. Keep practicing!"
+    }
+  ]
+}

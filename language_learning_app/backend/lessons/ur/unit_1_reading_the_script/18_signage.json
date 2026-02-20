@@ -1,0 +1,180 @@
+{
+  "lesson_id": "ur_18_signage",
+  "language": "Urdu",
+  "title": "Reading Signs & Labels",
+  "subtitle": "Practical Urdu reading",
+  "description": "Read Urdu as you'd encounter it in daily life.",
+  "estimated_minutes": 18.0,
+  "cefr_level": "A0",
+  "tags": [
+    "script",
+    "reading",
+    "basics"
+  ],
+  "skills_learned": [
+    "Environmental reading"
+  ],
+  "steps": [
+    {
+      "type": "content",
+      "step_title": "Reading Signs & Labels",
+      "content_markdown": "# Reading Signs & Labels\n\nRead Urdu as you'd encounter it in daily life."
+    },
+    {
+      "type": "content",
+      "step_title": "Word Practice",
+      "content_markdown": "## Let's Read Words!\n\nUsing what you've learned, try reading these words:\n\n| Urdu | Transliteration | Meaning |\n|---------|-----------------|--------|\n| **دکان** | dukaan | shop |\n| **ہسپتال** | haspataal | hospital |\n| **بس اڈا** | bas adda | bus station |\n| **ریلوے اسٹیشن** | railway station | railway station |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q1",
+      "step_title": "Read: دکان",
+      "question": "What does **دکان** (dukaan) mean?",
+      "options": [
+        "hospital",
+        "railway station",
+        "bus station",
+        "shop"
+      ],
+      "correct_answer": "shop",
+      "feedback": "Correct! **دکان** (dukaan) means 'shop'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q2",
+      "step_title": "Read: ہسپتال",
+      "question": "What does **ہسپتال** (haspataal) mean?",
+      "options": [
+        "bus station",
+        "hospital",
+        "railway station",
+        "shop"
+      ],
+      "correct_answer": "hospital",
+      "feedback": "Correct! **ہسپتال** (haspataal) means 'hospital'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q3",
+      "step_title": "Read: بس اڈا",
+      "question": "What does **بس اڈا** (bas adda) mean?",
+      "options": [
+        "railway station",
+        "bus station",
+        "hospital",
+        "shop"
+      ],
+      "correct_answer": "bus station",
+      "feedback": "Correct! **بس اڈا** (bas adda) means 'bus station'."
+    },
+    {
+      "type": "free_response",
+      "id": "q4",
+      "step_title": "Transliterate the Word",
+      "question": "Type the transliteration for **دکان** (meaning: shop)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "dukaan",
+        "dukaan",
+        "dukaan"
+      ],
+      "hint": "Sound it out character by character."
+    },
+    {
+      "type": "content",
+      "step_title": "Lesson Summary",
+      "content_markdown": "## Summary\n\nExcellent reading practice! You worked through 4 words/phrases. Keep building your speed and confidence!"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q5",
+      "step_title": "Final Check",
+      "question": "What does **ریلوے اسٹیشن** mean?",
+      "options": [
+        "railway station",
+        "shop",
+        "water",
+        "school"
+      ],
+      "correct_answer": "railway station",
+      "feedback": "Perfect! You're reading Urdu with confidence!"
+    },
+    {
+      "type": "free_response",
+      "id": "q6",
+      "step_title": "Practice: دکان",
+      "question": "Type the meaning of **دکان** (dukaan)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "shop"
+      ],
+      "hint": "Transliteration: dukaan"
+    },
+    {
+      "type": "free_response",
+      "id": "q7",
+      "step_title": "Practice: ہسپتال",
+      "question": "Type the meaning of **ہسپتال** (haspataal)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "hospital"
+      ],
+      "hint": "Transliteration: haspataal"
+    },
+    {
+      "type": "free_response",
+      "id": "q8",
+      "step_title": "Practice: بس اڈا",
+      "question": "Type the meaning of **بس اڈا** (bas adda)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "bus station"
+      ],
+      "hint": "Transliteration: bas adda"
+    },
+    {
+      "type": "free_response",
+      "id": "q9",
+      "step_title": "Practice: ریلوے اسٹیشن",
+      "question": "Type the meaning of **ریلوے اسٹیشن** (railway station)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "railway station"
+      ],
+      "hint": "Transliteration: railway station"
+    },
+    {
+      "type": "free_response",
+      "id": "q10",
+      "step_title": "Practice: دکان",
+      "question": "Type the meaning of **دکان** (dukaan)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "shop"
+      ],
+      "hint": "Transliteration: dukaan"
+    },
+    {
+      "type": "free_response",
+      "id": "q11",
+      "step_title": "Practice: ہسپتال",
+      "question": "Type the meaning of **ہسپتال** (haspataal)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "hospital"
+      ],
+      "hint": "Transliteration: haspataal"
+    },
+    {
+      "type": "free_response",
+      "id": "q12",
+      "step_title": "Practice: بس اڈا",
+      "question": "Type the meaning of **بس اڈا** (bas adda)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "bus station"
+      ],
+      "hint": "Transliteration: bas adda"
+    }
+  ]
+}

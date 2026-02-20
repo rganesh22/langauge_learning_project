@@ -1,0 +1,251 @@
+{
+  "lesson_id": "ta_06_medium_consonants",
+  "language": "Tamil",
+  "title": "The Idaiyinam (Medium) Consonants",
+  "subtitle": "ய, ர, ல, வ, ழ, ள — the 6 approximants",
+  "description": "Complete the 18 basic consonants with the semivowels and liquids.",
+  "estimated_minutes": 27.599999999999998,
+  "cefr_level": "A0",
+  "tags": [
+    "script",
+    "reading",
+    "basics"
+  ],
+  "skills_learned": [
+    "All 18 Tamil consonants complete",
+    "The unique ழ sound",
+    "Retroflex vs dental vs alveolar"
+  ],
+  "steps": [
+    {
+      "type": "content",
+      "step_title": "The Idaiyinam (Medium) Consonants",
+      "content_markdown": "# The Idaiyinam (Medium) Consonants\n\nComplete the 18 basic consonants with the semivowels and liquids.\n\n### Today's Characters\n**ய** · **ர** · **ல** · **வ** · **ழ** · **ள**"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ய (ya)",
+      "content_markdown": "## ய — ya\n\n**Sound:** ya in yoga\n\n**Memory Trick:** Flowing shape for a flowing sound"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q1",
+      "step_title": "Identify: ya",
+      "question": "Which character represents the sound **ya** (ya in yoga)?",
+      "options": [
+        "வ",
+        "ய",
+        "ல",
+        "ர"
+      ],
+      "correct_answer": "ய",
+      "feedback": "Correct! **ய** is the ya in yoga sound. Flowing shape for a flowing sound"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ர (ra)",
+      "content_markdown": "## ர — ra\n\n**Sound:** ra (soft r)\n\n**Memory Trick:** Gentle curve — soft, American-style 'r'\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **ர** | ra (soft r) | ra |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q2",
+      "step_title": "Identify: ra",
+      "question": "Which character represents the sound **ra** (ra (soft r))?",
+      "options": [
+        "ல",
+        "ய",
+        "ர",
+        "வ"
+      ],
+      "correct_answer": "ர",
+      "feedback": "Correct! **ர** is the ra (soft r) sound. Gentle curve — soft, American-style 'r'"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ல (la)",
+      "content_markdown": "## ல — la\n\n**Sound:** la in lama\n\n**Memory Trick:** Lateral tongue — 'l' sound\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **ல** | la in lama | la |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q3",
+      "step_title": "Identify: la",
+      "question": "Which character represents the sound **la** (la in lama)?",
+      "options": [
+        "ல",
+        "வ",
+        "ர",
+        "ய"
+      ],
+      "correct_answer": "ல",
+      "feedback": "Correct! **ல** is the la in lama sound. Lateral tongue — 'l' sound"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: வ (va)",
+      "content_markdown": "## வ — va\n\n**Sound:** va in vanilla\n\n**Memory Trick:** Starts with lips, not teeth\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **வ** | va in vanilla | va |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q4",
+      "step_title": "Identify: va",
+      "question": "Which character represents the sound **va** (va in vanilla)?",
+      "options": [
+        "ர",
+        "ய",
+        "ல",
+        "வ"
+      ],
+      "correct_answer": "வ",
+      "feedback": "Correct! **வ** is the va in vanilla sound. Starts with lips, not teeth"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ழ (zha)",
+      "content_markdown": "## ழ — zha\n\n**Sound:** unique retroflex 'zh'\n\n**Memory Trick:** Uniquely Tamil! Tongue curls way back\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **ழ** | unique retroflex 'zh' | zha |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q5",
+      "step_title": "Identify: zha",
+      "question": "Which character represents the sound **zha** (unique retroflex 'zh')?",
+      "options": [
+        "ழ",
+        "ல",
+        "ர",
+        "ய"
+      ],
+      "correct_answer": "ழ",
+      "feedback": "Correct! **ழ** is the unique retroflex 'zh' sound. Uniquely Tamil! Tongue curls way back"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ள (La (retroflex l))",
+      "content_markdown": "## ள — La (retroflex l)\n\n**Sound:** l with tongue curled back\n\n**Memory Trick:** Heavier 'l' — tongue tip curls to palate"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q6",
+      "step_title": "Identify: La (retroflex l)",
+      "question": "Which character represents the sound **La (retroflex l)** (l with tongue curled back)?",
+      "options": [
+        "ல",
+        "ர",
+        "ய",
+        "ள"
+      ],
+      "correct_answer": "ள",
+      "feedback": "Correct! **ள** is the l with tongue curled back sound. Heavier 'l' — tongue tip curls to palate"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q7",
+      "step_title": "Sound Match",
+      "question": "What sound does **ய** make?",
+      "options": [
+        "ya in yoga",
+        "ra (soft r)",
+        "la in lama",
+        "va in vanilla"
+      ],
+      "correct_answer": "ya in yoga",
+      "feedback": "Right! **ய** = ya = ya in yoga."
+    },
+    {
+      "type": "content",
+      "step_title": "Visual Comparison",
+      "content_markdown": "## Compare the Shapes\n\nLook closely at how these characters differ:\n\n- **ய** (ya) vs **ர** (ra)\n- **ல** (la) vs **வ** (va)\n- **ழ** (zha) vs **ள** (La (retroflex l))\n\nNotice the subtle differences in strokes, dots, or curves!"
+    },
+    {
+      "type": "free_response",
+      "id": "q8",
+      "step_title": "Type the Sound",
+      "question": "What is the transliteration (Roman letters) for **ள**?",
+      "ai_grading": false,
+      "accepted_responses": [
+        "La (retroflex l)",
+        "la (retroflex l)",
+        "LA (RETROFLEX L)"
+      ],
+      "hint": "It sounds like 'l with tongue curled back'."
+    },
+    {
+      "type": "content",
+      "step_title": "Word Practice",
+      "content_markdown": "## Let's Read Words!\n\nUsing what you've learned, try reading these words:\n\n| Tamil | Transliteration | Meaning |\n|---------|-----------------|--------|\n| **வாழை** | vaazhai | banana |\n| **யானை** | yaanai | elephant |\n| **தமிழ்** | tamizh | Tamil |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q9",
+      "step_title": "Read: வாழை",
+      "question": "What does **வாழை** (vaazhai) mean?",
+      "options": [
+        "hello",
+        "Tamil",
+        "elephant",
+        "banana"
+      ],
+      "correct_answer": "banana",
+      "feedback": "Correct! **வாழை** (vaazhai) means 'banana'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q10",
+      "step_title": "Read: யானை",
+      "question": "What does **யானை** (yaanai) mean?",
+      "options": [
+        "hello",
+        "banana",
+        "Tamil",
+        "elephant"
+      ],
+      "correct_answer": "elephant",
+      "feedback": "Correct! **யானை** (yaanai) means 'elephant'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q11",
+      "step_title": "Read: தமிழ்",
+      "question": "What does **தமிழ்** (tamizh) mean?",
+      "options": [
+        "Tamil",
+        "banana",
+        "hello",
+        "elephant"
+      ],
+      "correct_answer": "Tamil",
+      "feedback": "Correct! **தமிழ்** (tamizh) means 'Tamil'."
+    },
+    {
+      "type": "free_response",
+      "id": "q12",
+      "step_title": "Transliterate the Word",
+      "question": "Type the transliteration for **வாழை** (meaning: banana)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "vaazhai",
+        "vaazhai",
+        "vaazhai"
+      ],
+      "hint": "Sound it out character by character."
+    },
+    {
+      "type": "content",
+      "step_title": "Lesson Summary",
+      "content_markdown": "## Summary\n\nGreat job! Here's everything you learned:\n\n| Character | Transliteration | Sound |\n|-----------|----------------|-------|\n| **ய** | ya | ya in yoga |\n| **ர** | ra | ra (soft r) |\n| **ல** | la | la in lama |\n| **வ** | va | va in vanilla |\n| **ழ** | zha | unique retroflex 'zh' |\n| **ள** | La (retroflex l) | l with tongue curled back |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q13",
+      "step_title": "Final Check",
+      "question": "How many new characters/concepts did we cover in this lesson?",
+      "options": [
+        "6",
+        "8",
+        "5",
+        "11"
+      ],
+      "correct_answer": "6",
+      "feedback": "Correct! We covered 6 characters today. Keep practicing!"
+    }
+  ]
+}

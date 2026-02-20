@@ -1,0 +1,138 @@
+{
+  "lesson_id": "kn_07_sibilants_special",
+  "language": "Kannada",
+  "title": "Sibilants & Special Consonants",
+  "subtitle": "ಶ, ಷ, ಸ, ಹ, ಳ",
+  "description": "Learn the sibilants, aspirate, and the special retroflex ಳ. Focus on reading and pronunciation.",
+  "estimated_minutes": 25,
+  "cefr_level": "A0",
+  "tags": ["script", "reading", "basics", "consonants"],
+  "skills_learned": [
+    "Recognizing Sibilants (ಶ, ಷ, ಸ)",
+    "Recognizing the aspirate ಹ",
+    "Recognizing the special retroflex ಳ"
+  ],
+  "steps": [
+    {
+      "type": "content",
+      "step_title": "Sibilants & Special",
+      "content_markdown": "# Sibilants & Special Consonants\n\nLearn the sibilants, aspirate, and the special retroflex ಳ.\n\n### Today's Characters\n**ಶ** · **ಷ** · **ಸ** · **ಹ** · **ಳ**"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ಶ (sha)",
+      "content_markdown": "## ಶ — sha\n\n**Sound:** sh as in 'ship'\n\n**Memory Trick:** The palatal sibilant sound."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q1",
+      "step_title": "Identify: sha",
+      "question": "Which character represents the sound **sha**?",
+      "options": ["ಹ", "ಶ", "ಷ", "ಸ"],
+      "correct_answer": "ಶ",
+      "feedback": "Correct! **ಶ** is the 'sha' sound."
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ಷ (Sha)",
+      "content_markdown": "## ಷ — Sha\n\n**Sound:** sh (retroflex)\n\n**Memory Trick:** Tongue curls back for this sibilant sound."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q2",
+      "step_title": "Identify: Sha",
+      "question": "Which character represents the retroflex sound **Sha**?",
+      "options": ["ಶ", "ಸ", "ಹ", "ಷ"],
+      "correct_answer": "ಷ",
+      "feedback": "Correct! **ಷ** is the retroflex 'Sha' sound."
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ಸ (sa)",
+      "content_markdown": "## ಸ — sa\n\n**Sound:** s as in 'sun'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q3",
+      "step_title": "Identify: sa",
+      "question": "Which character represents the sound **sa**?",
+      "options": ["ಷ", "ಹ", "ಶ", "ಸ"],
+      "correct_answer": "ಸ",
+      "feedback": "Correct! **ಸ** is the 'sa' sound."
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ಹ (ha)",
+      "content_markdown": "## ಹ — ha\n\n**Sound:** h as in 'hat'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q4",
+      "step_title": "Identify: ha",
+      "question": "Which character represents the sound **ha**?",
+      "options": ["ಹ", "ಶ", "ಸ", "ಷ"],
+      "correct_answer": "ಹ",
+      "feedback": "Correct! **ಹ** is the 'ha' sound."
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ಳ (La)",
+      "content_markdown": "## ಳ — La\n\n**Sound:** retroflex l\n\n**Memory Trick:** A heavy 'l' sound made with the tongue curled back."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q5",
+      "step_title": "Identify: La",
+      "question": "Which character represents the retroflex sound **La**?",
+      "options": ["ಸ", "ಶ", "ಳ", "ಷ"],
+      "correct_answer": "ಳ",
+      "feedback": "Correct! **ಳ** is the retroflex 'l' sound."
+    },
+    {
+      "type": "content",
+      "step_title": "Reading Practice",
+      "content_markdown": "## Let's Read!\n\nPractice reading these words out loud:\n\n| Kannada | Transliteration |\n|---------|-----------------|\n| **ಶಾಲೆ** | shaale |\n| **ಸರಿ** | sari |\n| **ಹಣ** | hana |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q6",
+      "step_title": "Read: ಶಾಲೆ",
+      "question": "How do you read this word out loud?\n\n# ಶಾಲೆ",
+      "options": ["hana", "shaale", "sari", "shiva"],
+      "correct_answer": "shaale",
+      "feedback": "Perfect! You read 'shaale' correctly."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q7",
+      "step_title": "Read: ಸರಿ",
+      "question": "How do you read this word out loud?\n\n# ಸರಿ",
+      "options": ["shaale", "sari", "hana", "sama"],
+      "correct_answer": "sari",
+      "feedback": "Perfect! You read 'sari' correctly."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q8",
+      "step_title": "Read: ಹಣ",
+      "question": "How do you read this word out loud?\n\n# ಹಣ",
+      "options": ["hana", "sari", "shaale", "hara"],
+      "correct_answer": "hana",
+      "feedback": "Perfect! You read 'hana' correctly."
+    },
+    {
+      "type": "free_response",
+      "id": "q9",
+      "step_title": "Transliterate Word",
+      "question": "Type the transliteration for **ಶಾಲೆ**",
+      "ai_grading": false,
+      "accepted_responses": ["shaale", "Shaale"],
+      "hint": "SH-AA-L-E"
+    },
+    {
+      "type": "content",
+      "step_title": "Lesson Summary",
+      "content_markdown": "## Summary\n\nYou've learned the Sibilants and Special Consonants:\n\n- **Sibilants:** ಶ (sha), ಷ (Sha), ಸ (sa)\n- **Aspirate:** ಹ (ha)\n- **Retroflex L:** ಳ (La)"
+    }
+  ]
+}

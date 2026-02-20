@@ -1,0 +1,213 @@
+{
+  "lesson_id": "ta_07_the_pulli",
+  "language": "Tamil",
+  "title": "The Pulli — Removing the Inherent Vowel",
+  "subtitle": "The dot that changes everything: ்",
+  "description": "Learn how the pulli (்) removes the inherent 'a' from consonants to create pure consonant sounds.",
+  "estimated_minutes": 22.8,
+  "cefr_level": "A0",
+  "tags": [
+    "script",
+    "reading",
+    "basics"
+  ],
+  "skills_learned": [
+    "Understanding the pulli ்",
+    "Reading pure consonants at word end",
+    "Distinguishing ka vs k"
+  ],
+  "steps": [
+    {
+      "type": "content",
+      "step_title": "The Pulli — Removing the Inherent Vowel",
+      "content_markdown": "# The Pulli — Removing the Inherent Vowel\n\nLearn how the pulli (்) removes the inherent 'a' from consonants to create pure consonant sounds.\n\n### Today's Characters\n**க் vs க** · **ம் vs ம** · **ன் vs ன** · **ல் vs ல**"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: க் vs க (k vs ka)",
+      "content_markdown": "## க் vs க — k vs ka\n\n**Sound:** pure k vs ka\n\n**Memory Trick:** Dot on top = strip the 'a' away"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q1",
+      "step_title": "Identify: k vs ka",
+      "question": "Which character represents the sound **k vs ka** (pure k vs ka)?",
+      "options": [
+        "ல் vs ல",
+        "க் vs க",
+        "ம் vs ம",
+        "ன் vs ன"
+      ],
+      "correct_answer": "க் vs க",
+      "feedback": "Correct! **க் vs க** is the pure k vs ka sound. Dot on top = strip the 'a' away"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ம் vs ம (m vs ma)",
+      "content_markdown": "## ம் vs ம — m vs ma\n\n**Sound:** pure m vs ma\n\n**Memory Trick:** With pulli: just the consonant, no vowel\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **ம் vs ம** | pure m vs ma | m vs ma |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q2",
+      "step_title": "Identify: m vs ma",
+      "question": "Which character represents the sound **m vs ma** (pure m vs ma)?",
+      "options": [
+        "க் vs க",
+        "ன் vs ன",
+        "ல் vs ல",
+        "ம் vs ம"
+      ],
+      "correct_answer": "ம் vs ம",
+      "feedback": "Correct! **ம் vs ம** is the pure m vs ma sound. With pulli: just the consonant, no vowel"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ன் vs ன (n vs na)",
+      "content_markdown": "## ன் vs ன — n vs na\n\n**Sound:** pure n vs na\n\n**Memory Trick:** Essential for ending words correctly\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **ன் vs ன** | pure n vs na | n vs na |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q3",
+      "step_title": "Identify: n vs na",
+      "question": "Which character represents the sound **n vs na** (pure n vs na)?",
+      "options": [
+        "ம் vs ம",
+        "ல் vs ல",
+        "க் vs க",
+        "ன் vs ன"
+      ],
+      "correct_answer": "ன் vs ன",
+      "feedback": "Correct! **ன் vs ன** is the pure n vs na sound. Essential for ending words correctly"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ல் vs ல (l vs la)",
+      "content_markdown": "## ல் vs ல — l vs la\n\n**Sound:** pure l vs la\n\n**Memory Trick:** Many Tamil words end in ல்"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q4",
+      "step_title": "Identify: l vs la",
+      "question": "Which character represents the sound **l vs la** (pure l vs la)?",
+      "options": [
+        "ல் vs ல",
+        "க் vs க",
+        "ன் vs ன",
+        "ம் vs ம"
+      ],
+      "correct_answer": "ல் vs ல",
+      "feedback": "Correct! **ல் vs ல** is the pure l vs la sound. Many Tamil words end in ல்"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q5",
+      "step_title": "Sound Match",
+      "question": "What sound does **க் vs க** make?",
+      "options": [
+        "pure k vs ka",
+        "pure m vs ma",
+        "pure n vs na",
+        "pure l vs la"
+      ],
+      "correct_answer": "pure k vs ka",
+      "feedback": "Right! **க் vs க** = k vs ka = pure k vs ka."
+    },
+    {
+      "type": "content",
+      "step_title": "Visual Comparison",
+      "content_markdown": "## Compare the Shapes\n\nLook closely at how these characters differ:\n\n- **க் vs க** (k vs ka) vs **ம் vs ம** (m vs ma)\n- **ன் vs ன** (n vs na) vs **ல் vs ல** (l vs la)\n\nNotice the subtle differences in strokes, dots, or curves!"
+    },
+    {
+      "type": "free_response",
+      "id": "q6",
+      "step_title": "Type the Sound",
+      "question": "What is the transliteration (Roman letters) for **ல் vs ல**?",
+      "ai_grading": false,
+      "accepted_responses": [
+        "l vs la",
+        "l vs la",
+        "L VS LA"
+      ],
+      "hint": "It sounds like 'pure l vs la'."
+    },
+    {
+      "type": "content",
+      "step_title": "Word Practice",
+      "content_markdown": "## Let's Read Words!\n\nUsing what you've learned, try reading these words:\n\n| Tamil | Transliteration | Meaning |\n|---------|-----------------|--------|\n| **கண்** | kan | eye (ends in pure n) |\n| **பால்** | paal | milk (ends in pure l) |\n| **நாம்** | naam | we (ends in pure m) |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q7",
+      "step_title": "Read: கண்",
+      "question": "What does **கண்** (kan) mean?",
+      "options": [
+        "hello",
+        "milk (ends in pure l)",
+        "we (ends in pure m)",
+        "eye (ends in pure n)"
+      ],
+      "correct_answer": "eye (ends in pure n)",
+      "feedback": "Correct! **கண்** (kan) means 'eye (ends in pure n)'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q8",
+      "step_title": "Read: பால்",
+      "question": "What does **பால்** (paal) mean?",
+      "options": [
+        "we (ends in pure m)",
+        "milk (ends in pure l)",
+        "eye (ends in pure n)",
+        "hello"
+      ],
+      "correct_answer": "milk (ends in pure l)",
+      "feedback": "Correct! **பால்** (paal) means 'milk (ends in pure l)'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q9",
+      "step_title": "Read: நாம்",
+      "question": "What does **நாம்** (naam) mean?",
+      "options": [
+        "eye (ends in pure n)",
+        "hello",
+        "milk (ends in pure l)",
+        "we (ends in pure m)"
+      ],
+      "correct_answer": "we (ends in pure m)",
+      "feedback": "Correct! **நாம்** (naam) means 'we (ends in pure m)'."
+    },
+    {
+      "type": "free_response",
+      "id": "q10",
+      "step_title": "Transliterate the Word",
+      "question": "Type the transliteration for **கண்** (meaning: eye (ends in pure n))",
+      "ai_grading": false,
+      "accepted_responses": [
+        "kan",
+        "kan",
+        "kan"
+      ],
+      "hint": "Sound it out character by character."
+    },
+    {
+      "type": "content",
+      "step_title": "Lesson Summary",
+      "content_markdown": "## Summary\n\nGreat job! Here's everything you learned:\n\n| Character | Transliteration | Sound |\n|-----------|----------------|-------|\n| **க் vs க** | k vs ka | pure k vs ka |\n| **ம் vs ம** | m vs ma | pure m vs ma |\n| **ன் vs ன** | n vs na | pure n vs na |\n| **ல் vs ல** | l vs la | pure l vs la |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q11",
+      "step_title": "Final Check",
+      "question": "How many new characters/concepts did we cover in this lesson?",
+      "options": [
+        "4",
+        "6",
+        "3",
+        "9"
+      ],
+      "correct_answer": "4",
+      "feedback": "Correct! We covered 4 characters today. Keep practicing!"
+    }
+  ]
+}

@@ -1,0 +1,96 @@
+{
+  "lesson_id": "kn_13_advanced_conjuncts",
+  "language": "Kannada",
+  "title": "Advanced Conjuncts",
+  "subtitle": "ಕ್ಷ, ಜ್ಞ, ಶ್ರ, ಸ್ತ — literary clusters",
+  "description": "Learn to read and pronounce less common but important conjunct consonants. Focus on reading and pronunciation.",
+  "estimated_minutes": 25,
+  "cefr_level": "A0",
+  "tags": ["script", "reading", "basics", "conjuncts"],
+  "skills_learned": [
+    "Recognizing Sanskrit-origin clusters",
+    "Reading complex ligatures correctly",
+    "Pronouncing jnya and ksha accurately"
+  ],
+  "steps": [
+    {
+      "type": "content",
+      "step_title": "Advanced Conjuncts",
+      "content_markdown": "# Advanced Conjuncts\n\nLearn less common but important conjunct consonants found in formal and literary Kannada.\n\n### Today's Characters\n**ಕ್ಷ** · **ಜ್ಞ** · **ಶ್ರ** · **ಸ್ತ**"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ಕ್ಷ (ksha)",
+      "content_markdown": "## ಕ್ಷ — ksha\n\n**Sound:** ksh as in 'action' (but more distinct)."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q1",
+      "step_title": "Identify: ksha",
+      "question": "Which character represents the sound **ksha**?",
+      "options": ["ಕ್ಷ", "ಶ್ರ", "ಜ್ಞ", "ಸ್ತ"],
+      "correct_answer": "ಕ್ಷ",
+      "feedback": "Correct! **ಕ್ಷ** is the 'ksh' sound."
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ಜ್ಞ (jnya)",
+      "content_markdown": "## ಜ್ಞ — jnya\n\n**Sound:** gnya as in 'onion' (but often pronounced like 'gya' in some dialects)."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q2",
+      "step_title": "Identify: jnya",
+      "question": "Which character represents the sound **jnya**?",
+      "options": ["ಶ್ರ", "ಕ್ಷ", "ಜ್ಞ", "ಸ್ತ"],
+      "correct_answer": "ಜ್ಞ",
+      "feedback": "Correct! **ಜ್ಞ** is the 'jnya' (gnya) sound."
+    },
+    {
+      "type": "content",
+      "step_title": "Reading Practice",
+      "content_markdown": "## Let's Read!\n\nPractice reading these words out loud:\n\n| Kannada | Transliteration |\n|---------|-----------------|\n| **ಅಕ್ಷರ** | akshara |\n| **ವಿಜ್ಞಾನ** | vijnyaana |\n| **ಶ್ರೀ** | shrii |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q3",
+      "step_title": "Read: ಅಕ್ಷರ",
+      "question": "How do you read this word out loud?\n\n# ಅಕ್ಷರ",
+      "options": ["vijnyaana", "akshara", "shrii", "kshama"],
+      "correct_answer": "akshara",
+      "feedback": "Perfect! You read 'akshara' correctly."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q4",
+      "step_title": "Read: ವಿಜ್ಞಾನ",
+      "question": "How do you read this word out loud?\n\n# ವಿಜ್ಞಾನ",
+      "options": ["akshara", "vijnyaana", "shrii", "jnyaana"],
+      "correct_answer": "vijnyaana",
+      "feedback": "Perfect! You read 'vijnyaana' correctly."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q5",
+      "step_title": "Read: ಶ್ರೀ",
+      "question": "How do you read this word out loud?\n\n# ಶ್ರೀ",
+      "options": ["akshara", "vijnyaana", "shrii", "shiva"],
+      "correct_answer": "shrii",
+      "feedback": "Perfect! You read 'shrii' correctly."
+    },
+    {
+      "type": "free_response",
+      "id": "q6",
+      "step_title": "Transliterate Word",
+      "question": "Type the transliteration for **ಶ್ರೀ**",
+      "ai_grading": false,
+      "accepted_responses": ["shrii", "Shrii"],
+      "hint": "SH-R-II"
+    },
+    {
+      "type": "content",
+      "step_title": "Lesson Summary",
+      "content_markdown": "## Summary\n\nYou've learned advanced literary clusters:\n\n- **ಕ್ಷ** (ksha)\n- **ಜ್ಞ** (jnya)\n- **ಶ್ರ** (shra)\n- **ಸ್ತ** (stha)"
+    }
+  ]
+}

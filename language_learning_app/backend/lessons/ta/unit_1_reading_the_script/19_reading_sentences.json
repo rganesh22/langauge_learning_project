@@ -1,0 +1,182 @@
+{
+  "lesson_id": "ta_19_reading_sentences",
+  "language": "Tamil",
+  "title": "Reading Simple Sentences",
+  "subtitle": "From words to sentences",
+  "description": "Practice reading complete Tamil sentences and short phrases.",
+  "estimated_minutes": 18.0,
+  "cefr_level": "A0",
+  "tags": [
+    "script",
+    "reading",
+    "basics"
+  ],
+  "skills_learned": [
+    "Reading full sentences",
+    "Word boundary recognition",
+    "Question markers"
+  ],
+  "steps": [
+    {
+      "type": "content",
+      "step_title": "Reading Simple Sentences",
+      "content_markdown": "# Reading Simple Sentences\n\nPractice reading complete Tamil sentences and short phrases."
+    },
+    {
+      "type": "content",
+      "step_title": "Word Practice",
+      "content_markdown": "## Let's Read Words!\n\nUsing what you've learned, try reading these words:\n\n| Tamil | Transliteration | Meaning |\n|---------|-----------------|--------|\n| **நான் தமிழ் படிக்கிறேன்** | naan tamizh padikkireen | I am learning Tamil |\n| **இது என் புத்தகம்** | itu en putthagam | This is my book |\n| **அவர் யார்?** | avar yaar? | Who is he/she? |\n| **நன்றாக இருக்கிறது** | nanraaga irukkiRatu | It is good |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q1",
+      "step_title": "Read: நான் தமிழ் படிக்கிறேன்",
+      "question": "What does **நான் தமிழ் படிக்கிறேன்** (naan tamizh padikkireen) mean?",
+      "options": [
+        "I am learning Tamil",
+        "Who is he/she?",
+        "It is good",
+        "This is my book"
+      ],
+      "correct_answer": "I am learning Tamil",
+      "feedback": "Correct! **நான் தமிழ் படிக்கிறேன்** (naan tamizh padikkireen) means 'I am learning Tamil'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q2",
+      "step_title": "Read: இது என் புத்தகம்",
+      "question": "What does **இது என் புத்தகம்** (itu en putthagam) mean?",
+      "options": [
+        "It is good",
+        "I am learning Tamil",
+        "Who is he/she?",
+        "This is my book"
+      ],
+      "correct_answer": "This is my book",
+      "feedback": "Correct! **இது என் புத்தகம்** (itu en putthagam) means 'This is my book'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q3",
+      "step_title": "Read: அவர் யார்?",
+      "question": "What does **அவர் யார்?** (avar yaar?) mean?",
+      "options": [
+        "I am learning Tamil",
+        "This is my book",
+        "Who is he/she?",
+        "It is good"
+      ],
+      "correct_answer": "Who is he/she?",
+      "feedback": "Correct! **அவர் யார்?** (avar yaar?) means 'Who is he/she?'."
+    },
+    {
+      "type": "free_response",
+      "id": "q4",
+      "step_title": "Transliterate the Word",
+      "question": "Type the transliteration for **நான் தமிழ் படிக்கிறேன்** (meaning: I am learning Tamil)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "naan tamizh padikkireen",
+        "naan tamizh padikkireen",
+        "naantamizhpadikkireen"
+      ],
+      "hint": "Sound it out character by character."
+    },
+    {
+      "type": "content",
+      "step_title": "Lesson Summary",
+      "content_markdown": "## Summary\n\nExcellent reading practice! You worked through 4 words/phrases. Keep building your speed and confidence!"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q5",
+      "step_title": "Final Check",
+      "question": "What does **நன்றாக இருக்கிறது** mean?",
+      "options": [
+        "It is good",
+        "I am learning Tamil",
+        "water",
+        "school"
+      ],
+      "correct_answer": "It is good",
+      "feedback": "Perfect! You're reading Tamil with confidence!"
+    },
+    {
+      "type": "free_response",
+      "id": "q6",
+      "step_title": "Practice: நான் தமிழ் படிக்கிறேன்",
+      "question": "Type the meaning of **நான் தமிழ் படிக்கிறேன்** (naan tamizh padikkireen)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "I am learning Tamil"
+      ],
+      "hint": "Transliteration: naan tamizh padikkireen"
+    },
+    {
+      "type": "free_response",
+      "id": "q7",
+      "step_title": "Practice: இது என் புத்தகம்",
+      "question": "Type the meaning of **இது என் புத்தகம்** (itu en putthagam)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "This is my book"
+      ],
+      "hint": "Transliteration: itu en putthagam"
+    },
+    {
+      "type": "free_response",
+      "id": "q8",
+      "step_title": "Practice: அவர் யார்?",
+      "question": "Type the meaning of **அவர் யார்?** (avar yaar?)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "Who is he/she?"
+      ],
+      "hint": "Transliteration: avar yaar?"
+    },
+    {
+      "type": "free_response",
+      "id": "q9",
+      "step_title": "Practice: நன்றாக இருக்கிறது",
+      "question": "Type the meaning of **நன்றாக இருக்கிறது** (nanraaga irukkiRatu)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "It is good"
+      ],
+      "hint": "Transliteration: nanraaga irukkiRatu"
+    },
+    {
+      "type": "free_response",
+      "id": "q10",
+      "step_title": "Practice: நான் தமிழ் படிக்கிறேன்",
+      "question": "Type the meaning of **நான் தமிழ் படிக்கிறேன்** (naan tamizh padikkireen)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "I am learning Tamil"
+      ],
+      "hint": "Transliteration: naan tamizh padikkireen"
+    },
+    {
+      "type": "free_response",
+      "id": "q11",
+      "step_title": "Practice: இது என் புத்தகம்",
+      "question": "Type the meaning of **இது என் புத்தகம்** (itu en putthagam)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "This is my book"
+      ],
+      "hint": "Transliteration: itu en putthagam"
+    },
+    {
+      "type": "free_response",
+      "id": "q12",
+      "step_title": "Practice: அவர் யார்?",
+      "question": "Type the meaning of **அவர் யார்?** (avar yaar?)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "Who is he/she?"
+      ],
+      "hint": "Transliteration: avar yaar?"
+    }
+  ]
+}

@@ -1,0 +1,96 @@
+{
+  "lesson_id": "kn_11_conjuncts_common",
+  "language": "Kannada",
+  "title": "Common Conjuncts",
+  "subtitle": "ಕ್ಕ, ತ್ತ, ನ್ನ, ಲ್ಲ, ಮ್ಮ — doubled consonants",
+  "description": "Learn to read and pronounce the most frequently occurring consonant clusters (geminates) in Kannada.",
+  "estimated_minutes": 25,
+  "cefr_level": "A0",
+  "tags": ["script", "reading", "basics", "conjuncts"],
+  "skills_learned": [
+    "Recognizing doubled consonants",
+    "Pronouncing geminate sounds correctly",
+    "Reading common cluster patterns"
+  ],
+  "steps": [
+    {
+      "type": "content",
+      "step_title": "Doubled Consonants",
+      "content_markdown": "# Common Conjunct Consonants\n\nLearn the most frequently occurring consonant clusters in Kannada. These are often 'doubled' versions of the same consonant.\n\n### Today's Characters\n**ಕ್ಕ** · **ತ್ತ** · **ನ್ನ** · **ಲ್ಲ** · **ಮ್ಮ**"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ಕ್ಕ (kka)",
+      "content_markdown": "## ಕ್ಕ — kka\n\n**Sound:** kka as in 'bookkeep'.\n\n**Memory Trick:** A doubled 'k' — hold the closure for a split second before releasing."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q1",
+      "step_title": "Identify: kka",
+      "question": "Which character represents the sound **kka**?",
+      "options": ["ಕ್ಕ", "ಲ್ಲ", "ತ್ತ", "ನ್ನ"],
+      "correct_answer": "ಕ್ಕ",
+      "feedback": "Correct! **ಕ್ಕ** is the doubled 'k' sound."
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ಮ್ಮ (mma)",
+      "content_markdown": "## ಮ್ಮ — mma\n\n**Sound:** mma as in 'hammer'.\n\n**Memory Trick:** A doubled 'm' sound."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q2",
+      "step_title": "Identify: mma",
+      "question": "Which character represents the sound **mma**?",
+      "options": ["ತ್ತ", "ಕ್ಕ", "ನ್ನ", "ಮ್ಮ"],
+      "correct_answer": "ಮ್ಮ",
+      "feedback": "Correct! **ಮ್ಮ** is the doubled 'm' sound."
+    },
+    {
+      "type": "content",
+      "step_title": "Reading Practice",
+      "content_markdown": "## Let's Read!\n\nPractice reading these words out loud, focusing on the doubled consonants:\n\n| Kannada | Transliteration |\n|---------|-----------------|\n| **ಅಕ್ಕ** | akka |\n| **ಅಮ್ಮ** | amma |\n| **ಎಲ್ಲಾ** | ellaa |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q3",
+      "step_title": "Read: ಅಕ್ಕ",
+      "question": "How do you read this word out loud?\n\n# ಅಕ್ಕ",
+      "options": ["amma", "ellaa", "akka", "anna"],
+      "correct_answer": "akka",
+      "feedback": "Perfect! You read 'akka' correctly."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q4",
+      "step_title": "Read: ಅಮ್ಮ",
+      "question": "How do you read this word out loud?\n\n# ಅಮ್ಮ",
+      "options": ["akka", "ellaa", "amma", "anna"],
+      "correct_answer": "amma",
+      "feedback": "Perfect! You read 'amma' correctly."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q5",
+      "step_title": "Read: ಎಲ್ಲಾ",
+      "question": "How do you read this word out loud?\n\n# ಎಲ್ಲಾ",
+      "options": ["akka", "amma", "ellaa", "anna"],
+      "correct_answer": "ellaa",
+      "feedback": "Perfect! You read 'ellaa' correctly."
+    },
+    {
+      "type": "free_response",
+      "id": "q6",
+      "step_title": "Transliterate Word",
+      "question": "Type the transliteration for **ಅಮ್ಮ**",
+      "ai_grading": false,
+      "accepted_responses": ["amma", "Amma"],
+      "hint": "A-MM-A"
+    },
+    {
+      "type": "content",
+      "step_title": "Lesson Summary",
+      "content_markdown": "## Summary\n\nYou've learned common geminate (doubled) consonants:\n\n- **ಕ್ಕ** (kka)\n- **ತ್ತ** (ttha)\n- **ನ್ನ** (nna)\n- **ಲ್ಲ** (lla)\n- **ಮ್ಮ** (mma)"
+    }
+  ]
+}

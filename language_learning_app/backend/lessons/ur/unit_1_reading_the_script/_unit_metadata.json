@@ -1,0 +1,42 @@
+{
+  "unit_id": "ur_unit_1",
+  "unit_number": 1,
+  "language": "Urdu",
+  "title": "Reading Urdu Script",
+  "subtitle": "Master the Nastaliq/Naskh script from right to left",
+  "description": "A 20-lesson course teaching you to read Urdu's modified Arabic script. Learn letter forms, connections, dots, and diacritics to read Urdu text confidently.",
+  "estimated_minutes": 500,
+  "lesson_count": 20,
+  "lessons": [
+    "01_intro_alif_bay",
+    "02_say_jim_group",
+    "03_daal_zaal",
+    "04_siin_shiin",
+    "05_toy_zoy_ain",
+    "06_fay_qaaf",
+    "07_laam_miim_nuun",
+    "08_waao_hay_yay",
+    "09_letter_forms",
+    "10_short_vowels",
+    "11_long_vowels",
+    "12_aspiration",
+    "13_special_marks",
+    "14_common_ligatures",
+    "15_reading_words",
+    "16_numbers",
+    "17_without_diacritics",
+    "18_signage",
+    "19_sentences",
+    "20_final_review"
+  ],
+  "completion_criteria": {
+    "all_lessons_completed": true
+  },
+  "skills_learned": [
+    "Reading all Urdu script characters",
+    "Understanding Urdu vowel and consonant systems",
+    "Reading real Urdu words and sentences",
+    "Vowel marks / matras system",
+    "Consonant clusters and conjuncts"
+  ]
+}

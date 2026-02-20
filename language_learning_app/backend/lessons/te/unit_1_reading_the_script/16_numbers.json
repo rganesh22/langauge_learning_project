@@ -1,0 +1,230 @@
+{
+  "lesson_id": "te_16_numbers",
+  "language": "Telugu",
+  "title": "Telugu Numerals",
+  "subtitle": "౧ ౨ ౩ ౪ ౫ ౬ ౭ ౮ ౯ ౦",
+  "description": "Telugu numeral symbols and words.",
+  "estimated_minutes": 25.2,
+  "cefr_level": "A0",
+  "tags": [
+    "script",
+    "reading",
+    "basics"
+  ],
+  "skills_learned": [
+    "Telugu numerals"
+  ],
+  "steps": [
+    {
+      "type": "content",
+      "step_title": "Telugu Numerals",
+      "content_markdown": "# Telugu Numerals\n\nTelugu numeral symbols and words.\n\n### Today's Characters\n**౧** · **౨** · **౩** · **౪** · **౫**"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ౧ (1)",
+      "content_markdown": "## ౧ — 1\n\n**Sound:** okati\n\n**Memory Trick:** One"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q1",
+      "step_title": "Identify: 1",
+      "question": "Which character represents the sound **1** (okati)?",
+      "options": [
+        "౧",
+        "౩",
+        "౨",
+        "౪"
+      ],
+      "correct_answer": "౧",
+      "feedback": "Correct! **౧** is the okati sound. One"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ౨ (2)",
+      "content_markdown": "## ౨ — 2\n\n**Sound:** rendu\n\n**Memory Trick:** Two\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **౨** | rendu | 2 |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q2",
+      "step_title": "Identify: 2",
+      "question": "Which character represents the sound **2** (rendu)?",
+      "options": [
+        "౨",
+        "౪",
+        "౧",
+        "౩"
+      ],
+      "correct_answer": "౨",
+      "feedback": "Correct! **౨** is the rendu sound. Two"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ౩ (3)",
+      "content_markdown": "## ౩ — 3\n\n**Sound:** muudu\n\n**Memory Trick:** Three\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **౩** | muudu | 3 |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q3",
+      "step_title": "Identify: 3",
+      "question": "Which character represents the sound **3** (muudu)?",
+      "options": [
+        "౪",
+        "౧",
+        "౨",
+        "౩"
+      ],
+      "correct_answer": "౩",
+      "feedback": "Correct! **౩** is the muudu sound. Three"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ౪ (4)",
+      "content_markdown": "## ౪ — 4\n\n**Sound:** naalugu\n\n**Memory Trick:** Four\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **౪** | naalugu | 4 |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q4",
+      "step_title": "Identify: 4",
+      "question": "Which character represents the sound **4** (naalugu)?",
+      "options": [
+        "౩",
+        "౨",
+        "౧",
+        "౪"
+      ],
+      "correct_answer": "౪",
+      "feedback": "Correct! **౪** is the naalugu sound. Four"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ౫ (5)",
+      "content_markdown": "## ౫ — 5\n\n**Sound:** aidu\n\n**Memory Trick:** Five"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q5",
+      "step_title": "Identify: 5",
+      "question": "Which character represents the sound **5** (aidu)?",
+      "options": [
+        "౨",
+        "౩",
+        "౫",
+        "౧"
+      ],
+      "correct_answer": "౫",
+      "feedback": "Correct! **౫** is the aidu sound. Five"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q6",
+      "step_title": "Sound Match",
+      "question": "What sound does **౧** make?",
+      "options": [
+        "okati",
+        "rendu",
+        "muudu",
+        "naalugu"
+      ],
+      "correct_answer": "okati",
+      "feedback": "Right! **౧** = 1 = okati."
+    },
+    {
+      "type": "content",
+      "step_title": "Visual Comparison",
+      "content_markdown": "## Compare the Shapes\n\nLook closely at how these characters differ:\n\n- **౧** (1) vs **౨** (2)\n- **౩** (3) vs **౪** (4)\n\nNotice the subtle differences in strokes, dots, or curves!"
+    },
+    {
+      "type": "free_response",
+      "id": "q7",
+      "step_title": "Type the Sound",
+      "question": "What is the transliteration (Roman letters) for **౫**?",
+      "ai_grading": false,
+      "accepted_responses": [
+        "5",
+        "5",
+        "5"
+      ],
+      "hint": "It sounds like 'aidu'."
+    },
+    {
+      "type": "content",
+      "step_title": "Word Practice",
+      "content_markdown": "## Let's Read Words!\n\nUsing what you've learned, try reading these words:\n\n| Telugu | Transliteration | Meaning |\n|---------|-----------------|--------|\n| **ఒకటి** | okati | one |\n| **రెండు** | rendu | two |\n| **పది** | padi | ten |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q8",
+      "step_title": "Read: ఒకటి",
+      "question": "What does **ఒకటి** (okati) mean?",
+      "options": [
+        "ten",
+        "hello",
+        "two",
+        "one"
+      ],
+      "correct_answer": "one",
+      "feedback": "Correct! **ఒకటి** (okati) means 'one'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q9",
+      "step_title": "Read: రెండు",
+      "question": "What does **రెండు** (rendu) mean?",
+      "options": [
+        "ten",
+        "two",
+        "hello",
+        "one"
+      ],
+      "correct_answer": "two",
+      "feedback": "Correct! **రెండు** (rendu) means 'two'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q10",
+      "step_title": "Read: పది",
+      "question": "What does **పది** (padi) mean?",
+      "options": [
+        "ten",
+        "hello",
+        "two",
+        "one"
+      ],
+      "correct_answer": "ten",
+      "feedback": "Correct! **పది** (padi) means 'ten'."
+    },
+    {
+      "type": "free_response",
+      "id": "q11",
+      "step_title": "Transliterate the Word",
+      "question": "Type the transliteration for **ఒకటి** (meaning: one)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "okati",
+        "okati",
+        "okati"
+      ],
+      "hint": "Sound it out character by character."
+    },
+    {
+      "type": "content",
+      "step_title": "Lesson Summary",
+      "content_markdown": "## Summary\n\nGreat job! Here's everything you learned:\n\n| Character | Transliteration | Sound |\n|-----------|----------------|-------|\n| **౧** | 1 | okati |\n| **౨** | 2 | rendu |\n| **౩** | 3 | muudu |\n| **౪** | 4 | naalugu |\n| **౫** | 5 | aidu |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q12",
+      "step_title": "Final Check",
+      "question": "How many new characters/concepts did we cover in this lesson?",
+      "options": [
+        "5",
+        "7",
+        "4",
+        "10"
+      ],
+      "correct_answer": "5",
+      "feedback": "Correct! We covered 5 characters today. Keep practicing!"
+    }
+  ]
+}

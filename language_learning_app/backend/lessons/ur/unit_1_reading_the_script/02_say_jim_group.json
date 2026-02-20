@@ -1,0 +1,231 @@
+{
+  "lesson_id": "ur_02_say_jim_group",
+  "language": "Urdu",
+  "title": "The Say & Jim Groups",
+  "subtitle": "ث (say), ج (jiim), چ (chay), ح (hay), خ (khay)",
+  "description": "More letters with the important dot/shape distinctions.",
+  "estimated_minutes": 25.2,
+  "cefr_level": "A0",
+  "tags": [
+    "script",
+    "reading",
+    "basics"
+  ],
+  "skills_learned": [
+    "Jim-group letters",
+    "Dot-based distinctions"
+  ],
+  "steps": [
+    {
+      "type": "content",
+      "step_title": "The Say & Jim Groups",
+      "content_markdown": "# The Say & Jim Groups\n\nMore letters with the important dot/shape distinctions.\n\n### Today's Characters\n**ث** · **ج** · **چ** · **ح** · **خ**"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ث (say)",
+      "content_markdown": "## ث — say\n\n**Sound:** s/th\n\n**Memory Trick:** Boat + THREE dots above"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q1",
+      "step_title": "Identify: say",
+      "question": "Which character represents the sound **say** (s/th)?",
+      "options": [
+        "ح",
+        "ج",
+        "چ",
+        "ث"
+      ],
+      "correct_answer": "ث",
+      "feedback": "Correct! **ث** is the s/th sound. Boat + THREE dots above"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ج (jiim)",
+      "content_markdown": "## ج — jiim\n\n**Sound:** j\n\n**Memory Trick:** Cup shape, ONE dot below\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **ج** | j | jiim |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q2",
+      "step_title": "Identify: jiim",
+      "question": "Which character represents the sound **jiim** (j)?",
+      "options": [
+        "ج",
+        "ث",
+        "چ",
+        "ح"
+      ],
+      "correct_answer": "ج",
+      "feedback": "Correct! **ج** is the j sound. Cup shape, ONE dot below"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: چ (chay)",
+      "content_markdown": "## چ — chay\n\n**Sound:** ch\n\n**Memory Trick:** Cup + THREE dots below — Urdu!\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **چ** | ch | chay |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q3",
+      "step_title": "Identify: chay",
+      "question": "Which character represents the sound **chay** (ch)?",
+      "options": [
+        "ج",
+        "ث",
+        "ح",
+        "چ"
+      ],
+      "correct_answer": "چ",
+      "feedback": "Correct! **چ** is the ch sound. Cup + THREE dots below — Urdu!"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ح (hay)",
+      "content_markdown": "## ح — hay\n\n**Sound:** h (breathy)\n\n**Memory Trick:** Cup with NO dots\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **ح** | h (breathy) | hay |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q4",
+      "step_title": "Identify: hay",
+      "question": "Which character represents the sound **hay** (h (breathy))?",
+      "options": [
+        "ث",
+        "ج",
+        "ح",
+        "چ"
+      ],
+      "correct_answer": "ح",
+      "feedback": "Correct! **ح** is the h (breathy) sound. Cup with NO dots"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: خ (khay)",
+      "content_markdown": "## خ — khay\n\n**Sound:** kh (guttural)\n\n**Memory Trick:** Cup + ONE dot above"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q5",
+      "step_title": "Identify: khay",
+      "question": "Which character represents the sound **khay** (kh (guttural))?",
+      "options": [
+        "ج",
+        "خ",
+        "ث",
+        "چ"
+      ],
+      "correct_answer": "خ",
+      "feedback": "Correct! **خ** is the kh (guttural) sound. Cup + ONE dot above"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q6",
+      "step_title": "Sound Match",
+      "question": "What sound does **ث** make?",
+      "options": [
+        "s/th",
+        "j",
+        "ch",
+        "h (breathy)"
+      ],
+      "correct_answer": "s/th",
+      "feedback": "Right! **ث** = say = s/th."
+    },
+    {
+      "type": "content",
+      "step_title": "Visual Comparison",
+      "content_markdown": "## Compare the Shapes\n\nLook closely at how these characters differ:\n\n- **ث** (say) vs **ج** (jiim)\n- **چ** (chay) vs **ح** (hay)\n\nNotice the subtle differences in strokes, dots, or curves!"
+    },
+    {
+      "type": "free_response",
+      "id": "q7",
+      "step_title": "Type the Sound",
+      "question": "What is the transliteration (Roman letters) for **خ**?",
+      "ai_grading": false,
+      "accepted_responses": [
+        "khay",
+        "khay",
+        "KHAY"
+      ],
+      "hint": "It sounds like 'kh (guttural)'."
+    },
+    {
+      "type": "content",
+      "step_title": "Word Practice",
+      "content_markdown": "## Let's Read Words!\n\nUsing what you've learned, try reading these words:\n\n| Urdu | Transliteration | Meaning |\n|---------|-----------------|--------|\n| **چاچا** | chaachaa | uncle |\n| **حال** | haal | condition |\n| **جب** | jab | when |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q8",
+      "step_title": "Read: چاچا",
+      "question": "What does **چاچا** (chaachaa) mean?",
+      "options": [
+        "when",
+        "uncle",
+        "condition",
+        "hello"
+      ],
+      "correct_answer": "uncle",
+      "feedback": "Correct! **چاچا** (chaachaa) means 'uncle'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q9",
+      "step_title": "Read: حال",
+      "question": "What does **حال** (haal) mean?",
+      "options": [
+        "when",
+        "uncle",
+        "condition",
+        "hello"
+      ],
+      "correct_answer": "condition",
+      "feedback": "Correct! **حال** (haal) means 'condition'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q10",
+      "step_title": "Read: جب",
+      "question": "What does **جب** (jab) mean?",
+      "options": [
+        "when",
+        "hello",
+        "condition",
+        "uncle"
+      ],
+      "correct_answer": "when",
+      "feedback": "Correct! **جب** (jab) means 'when'."
+    },
+    {
+      "type": "free_response",
+      "id": "q11",
+      "step_title": "Transliterate the Word",
+      "question": "Type the transliteration for **چاچا** (meaning: uncle)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "chaachaa",
+        "chaachaa",
+        "chaachaa"
+      ],
+      "hint": "Sound it out character by character."
+    },
+    {
+      "type": "content",
+      "step_title": "Lesson Summary",
+      "content_markdown": "## Summary\n\nGreat job! Here's everything you learned:\n\n| Character | Transliteration | Sound |\n|-----------|----------------|-------|\n| **ث** | say | s/th |\n| **ج** | jiim | j |\n| **چ** | chay | ch |\n| **ح** | hay | h (breathy) |\n| **خ** | khay | kh (guttural) |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q12",
+      "step_title": "Final Check",
+      "question": "How many new characters/concepts did we cover in this lesson?",
+      "options": [
+        "5",
+        "7",
+        "4",
+        "10"
+      ],
+      "correct_answer": "5",
+      "feedback": "Correct! We covered 5 characters today. Keep practicing!"
+    }
+  ]
+}

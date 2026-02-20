@@ -1,0 +1,40 @@
+{
+  "unit_id": "hi_unit_1",
+  "unit_number": 1,
+  "language": "Hindi",
+  "title": "Reading Devanagari Script",
+  "subtitle": "Master Hindi's Devanagari writing system",
+  "description": "An 18-lesson course teaching you to read Devanagari script for Hindi. From vowels through consonants, matras, conjuncts, and real-world reading.",
+  "estimated_minutes": 450,
+  "lesson_count": 18,
+  "lessons": [
+    "01_vowels_1",
+    "02_vowels_2",
+    "03_vowels_3",
+    "04_ka_group",
+    "05_cha_group",
+    "06_ta_group",
+    "07_tha_group",
+    "08_pa_group",
+    "09_semivowels_sibilants",
+    "10_nuqta_letters",
+    "11_matras_1",
+    "12_matras_2",
+    "13_halant_conjuncts",
+    "14_more_conjuncts",
+    "15_reading_words",
+    "16_numbers",
+    "17_sentences",
+    "18_final_review"
+  ],
+  "completion_criteria": {
+    "all_lessons_completed": true
+  },
+  "skills_learned": [
+    "Reading all Hindi script characters",
+    "Understanding Hindi vowel and consonant systems",
+    "Reading real Hindi words and sentences",
+    "Vowel marks / matras system",
+    "Consonant clusters and conjuncts"
+  ]
+}

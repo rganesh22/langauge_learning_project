@@ -1,0 +1,177 @@
+{
+  "lesson_id": "ur_13_special_marks",
+  "language": "Urdu",
+  "title": "Special Marks & Symbols",
+  "subtitle": "تشدید (shadda), جزم (jazm), ہمزہ (hamza)",
+  "description": "Learn the special marks used in Urdu.",
+  "estimated_minutes": 19.2,
+  "cefr_level": "A0",
+  "tags": [
+    "script",
+    "reading",
+    "basics"
+  ],
+  "skills_learned": [
+    "Shadda, Jazm, Hamza"
+  ],
+  "steps": [
+    {
+      "type": "content",
+      "step_title": "Special Marks & Symbols",
+      "content_markdown": "# Special Marks & Symbols\n\nLearn the special marks used in Urdu.\n\n### Today's Characters\n**تشدید (ّ)** · **جزم (ْ)** · **ہمزہ (ء)**"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: تشدید (ّ) (shadda)",
+      "content_markdown": "## تشدید (ّ) — shadda\n\n**Sound:** doubles the letter\n\n**Memory Trick:** Small w-shape above = double the consonant"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q1",
+      "step_title": "Identify: shadda",
+      "question": "Which character represents the sound **shadda** (doubles the letter)?",
+      "options": [
+        "تشدید (ّ)",
+        "ہمزہ (ء)",
+        "جزم (ْ)",
+        "?"
+      ],
+      "correct_answer": "تشدید (ّ)",
+      "feedback": "Correct! **تشدید (ّ)** is the doubles the letter sound. Small w-shape above = double the consonant"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: جزم (ْ) (jazm/sukun)",
+      "content_markdown": "## جزم (ْ) — jazm/sukun\n\n**Sound:** no vowel\n\n**Memory Trick:** Small circle above = consonant has no vowel\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **جزم (ْ)** | no vowel | jazm/sukun |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q2",
+      "step_title": "Identify: jazm/sukun",
+      "question": "Which character represents the sound **jazm/sukun** (no vowel)?",
+      "options": [
+        "ہمزہ (ء)",
+        "تشدید (ّ)",
+        "جزم (ْ)",
+        "?"
+      ],
+      "correct_answer": "جزم (ْ)",
+      "feedback": "Correct! **جزم (ْ)** is the no vowel sound. Small circle above = consonant has no vowel"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ہمزہ (ء) (hamza)",
+      "content_markdown": "## ہمزہ (ء) — hamza\n\n**Sound:** glottal stop\n\n**Memory Trick:** A catch in the throat"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q3",
+      "step_title": "Identify: hamza",
+      "question": "Which character represents the sound **hamza** (glottal stop)?",
+      "options": [
+        "ہمزہ (ء)",
+        "?",
+        "تشدید (ّ)",
+        "جزم (ْ)"
+      ],
+      "correct_answer": "ہمزہ (ء)",
+      "feedback": "Correct! **ہمزہ (ء)** is the glottal stop sound. A catch in the throat"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q4",
+      "step_title": "Sound Match",
+      "question": "What sound does **تشدید (ّ)** make?",
+      "options": [
+        "doubles the letter",
+        "no vowel",
+        "glottal stop"
+      ],
+      "correct_answer": "doubles the letter",
+      "feedback": "Right! **تشدید (ّ)** = shadda = doubles the letter."
+    },
+    {
+      "type": "content",
+      "step_title": "Visual Comparison",
+      "content_markdown": "## Compare the Shapes\n\nLook closely at how these characters differ:\n\n- **تشدید (ّ)** (shadda) vs **جزم (ْ)** (jazm/sukun)\n\nNotice the subtle differences in strokes, dots, or curves!"
+    },
+    {
+      "type": "free_response",
+      "id": "q5",
+      "step_title": "Type the Sound",
+      "question": "What is the transliteration (Roman letters) for **ہمزہ (ء)**?",
+      "ai_grading": false,
+      "accepted_responses": [
+        "hamza",
+        "hamza",
+        "HAMZA"
+      ],
+      "hint": "It sounds like 'glottal stop'."
+    },
+    {
+      "type": "content",
+      "step_title": "Word Practice",
+      "content_markdown": "## Let's Read Words!\n\nUsing what you've learned, try reading these words:\n\n| Urdu | Transliteration | Meaning |\n|---------|-----------------|--------|\n| **اللہ** | allaah | God (shadda on ل) |\n| **مؤمن** | momin | believer (hamza on و) |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q6",
+      "step_title": "Read: اللہ",
+      "question": "What does **اللہ** (allaah) mean?",
+      "options": [
+        "believer (hamza on و)",
+        "God (shadda on ل)",
+        "hello",
+        "goodbye"
+      ],
+      "correct_answer": "God (shadda on ل)",
+      "feedback": "Correct! **اللہ** (allaah) means 'God (shadda on ل)'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q7",
+      "step_title": "Read: مؤمن",
+      "question": "What does **مؤمن** (momin) mean?",
+      "options": [
+        "goodbye",
+        "believer (hamza on و)",
+        "hello",
+        "God (shadda on ل)"
+      ],
+      "correct_answer": "believer (hamza on و)",
+      "feedback": "Correct! **مؤمن** (momin) means 'believer (hamza on و)'."
+    },
+    {
+      "type": "free_response",
+      "id": "q8",
+      "step_title": "Transliterate the Word",
+      "question": "Type the transliteration for **اللہ** (meaning: God (shadda on ل))",
+      "ai_grading": false,
+      "accepted_responses": [
+        "allaah",
+        "allaah",
+        "allaah"
+      ],
+      "hint": "Sound it out character by character."
+    },
+    {
+      "type": "content",
+      "step_title": "Lesson Summary",
+      "content_markdown": "## Summary\n\nGreat job! Here's everything you learned:\n\n| Character | Transliteration | Sound |\n|-----------|----------------|-------|\n| **تشدید (ّ)** | shadda | doubles the letter |\n| **جزم (ْ)** | jazm/sukun | no vowel |\n| **ہمزہ (ء)** | hamza | glottal stop |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q9",
+      "step_title": "Final Check",
+      "question": "How many new characters/concepts did we cover in this lesson?",
+      "options": [
+        "3",
+        "5",
+        "2",
+        "8"
+      ],
+      "correct_answer": "3",
+      "feedback": "Correct! We covered 3 characters today. Keep practicing!"
+    }
+  ]
+}

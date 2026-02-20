@@ -1,0 +1,192 @@
+{
+  "lesson_id": "ur_14_common_ligatures",
+  "language": "Urdu",
+  "title": "Common Ligatures",
+  "subtitle": "لا (laam-alif) and other standard joins",
+  "description": "Learn the mandatory ligatures and common beautiful letter joins in Nastaliq.",
+  "estimated_minutes": 20.4,
+  "cefr_level": "A0",
+  "tags": [
+    "script",
+    "reading",
+    "basics"
+  ],
+  "skills_learned": [
+    "Laam-alif ligature",
+    "Reading standard joins"
+  ],
+  "steps": [
+    {
+      "type": "content",
+      "step_title": "Common Ligatures",
+      "content_markdown": "# Common Ligatures\n\nLearn the mandatory ligatures and common beautiful letter joins in Nastaliq.\n\n### Today's Characters\n**لا** · **للہ** · **بسم**"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: لا (laa)",
+      "content_markdown": "## لا — laa\n\n**Sound:** laa\n\n**Memory Trick:** Laam + alif ALWAYS form this ligature"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q1",
+      "step_title": "Identify: laa",
+      "question": "Which character represents the sound **laa** (laa)?",
+      "options": [
+        "للہ",
+        "بسم",
+        "لا",
+        "?"
+      ],
+      "correct_answer": "لا",
+      "feedback": "Correct! **لا** is the laa sound. Laam + alif ALWAYS form this ligature"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: للہ (llah)",
+      "content_markdown": "## للہ — llah\n\n**Sound:** llah\n\n**Memory Trick:** Double laam + hay — in 'Allah'\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **للہ** | llah | llah |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q2",
+      "step_title": "Identify: llah",
+      "question": "Which character represents the sound **llah** (llah)?",
+      "options": [
+        "لا",
+        "?",
+        "بسم",
+        "للہ"
+      ],
+      "correct_answer": "للہ",
+      "feedback": "Correct! **للہ** is the llah sound. Double laam + hay — in 'Allah'"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: بسم (bism)",
+      "content_markdown": "## بسم — bism\n\n**Sound:** bism\n\n**Memory Trick:** Common in Bismillah"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q3",
+      "step_title": "Identify: bism",
+      "question": "Which character represents the sound **bism** (bism)?",
+      "options": [
+        "?",
+        "بسم",
+        "لا",
+        "للہ"
+      ],
+      "correct_answer": "بسم",
+      "feedback": "Correct! **بسم** is the bism sound. Common in Bismillah"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q4",
+      "step_title": "Sound Match",
+      "question": "What sound does **لا** make?",
+      "options": [
+        "laa",
+        "llah",
+        "bism"
+      ],
+      "correct_answer": "laa",
+      "feedback": "Right! **لا** = laa = laa."
+    },
+    {
+      "type": "content",
+      "step_title": "Visual Comparison",
+      "content_markdown": "## Compare the Shapes\n\nLook closely at how these characters differ:\n\n- **لا** (laa) vs **للہ** (llah)\n\nNotice the subtle differences in strokes, dots, or curves!"
+    },
+    {
+      "type": "free_response",
+      "id": "q5",
+      "step_title": "Type the Sound",
+      "question": "What is the transliteration (Roman letters) for **بسم**?",
+      "ai_grading": false,
+      "accepted_responses": [
+        "bism",
+        "bism",
+        "BISM"
+      ],
+      "hint": "It sounds like 'bism'."
+    },
+    {
+      "type": "content",
+      "step_title": "Word Practice",
+      "content_markdown": "## Let's Read Words!\n\nUsing what you've learned, try reading these words:\n\n| Urdu | Transliteration | Meaning |\n|---------|-----------------|--------|\n| **لا** | laa | no |\n| **الله** | allaah | God |\n| **بسم الله** | bismillaah | in the name of God |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q6",
+      "step_title": "Read: لا",
+      "question": "What does **لا** (laa) mean?",
+      "options": [
+        "in the name of God",
+        "God",
+        "hello",
+        "no"
+      ],
+      "correct_answer": "no",
+      "feedback": "Correct! **لا** (laa) means 'no'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q7",
+      "step_title": "Read: الله",
+      "question": "What does **الله** (allaah) mean?",
+      "options": [
+        "hello",
+        "no",
+        "in the name of God",
+        "God"
+      ],
+      "correct_answer": "God",
+      "feedback": "Correct! **الله** (allaah) means 'God'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q8",
+      "step_title": "Read: بسم الله",
+      "question": "What does **بسم الله** (bismillaah) mean?",
+      "options": [
+        "hello",
+        "God",
+        "in the name of God",
+        "no"
+      ],
+      "correct_answer": "in the name of God",
+      "feedback": "Correct! **بسم الله** (bismillaah) means 'in the name of God'."
+    },
+    {
+      "type": "free_response",
+      "id": "q9",
+      "step_title": "Transliterate the Word",
+      "question": "Type the transliteration for **لا** (meaning: no)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "laa",
+        "laa",
+        "laa"
+      ],
+      "hint": "Sound it out character by character."
+    },
+    {
+      "type": "content",
+      "step_title": "Lesson Summary",
+      "content_markdown": "## Summary\n\nGreat job! Here's everything you learned:\n\n| Character | Transliteration | Sound |\n|-----------|----------------|-------|\n| **لا** | laa | laa |\n| **للہ** | llah | llah |\n| **بسم** | bism | bism |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q10",
+      "step_title": "Final Check",
+      "question": "How many new characters/concepts did we cover in this lesson?",
+      "options": [
+        "3",
+        "5",
+        "2",
+        "8"
+      ],
+      "correct_answer": "3",
+      "feedback": "Correct! We covered 3 characters today. Keep practicing!"
+    }
+  ]
+}

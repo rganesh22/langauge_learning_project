@@ -1,0 +1,213 @@
+{
+  "lesson_id": "ta_03_vowels_part_3",
+  "language": "Tamil",
+  "title": "The Final Vowels",
+  "subtitle": "Meet ஐ, ஒ, ஓ, and ஔ",
+  "description": "Complete the Tamil vowel set with the diphthongs and back vowels.",
+  "estimated_minutes": 22.8,
+  "cefr_level": "A0",
+  "tags": [
+    "script",
+    "reading",
+    "basics"
+  ],
+  "skills_learned": [
+    "All 12 Tamil vowels",
+    "Diphthongs ஐ and ஔ",
+    "Complete vowel chart"
+  ],
+  "steps": [
+    {
+      "type": "content",
+      "step_title": "The Final Vowels",
+      "content_markdown": "# The Final Vowels\n\nComplete the Tamil vowel set with the diphthongs and back vowels.\n\n### Today's Characters\n**ஐ** · **ஒ** · **ஓ** · **ஔ**"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ஐ (ai)",
+      "content_markdown": "## ஐ — ai\n\n**Sound:** ai in aisle\n\n**Memory Trick:** Two-part sound, two-part look"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q1",
+      "step_title": "Identify: ai",
+      "question": "Which character represents the sound **ai** (ai in aisle)?",
+      "options": [
+        "ஐ",
+        "ஒ",
+        "ஓ",
+        "ஔ"
+      ],
+      "correct_answer": "ஐ",
+      "feedback": "Correct! **ஐ** is the ai in aisle sound. Two-part sound, two-part look"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ஒ (o)",
+      "content_markdown": "## ஒ — o\n\n**Sound:** o in hot\n\n**Memory Trick:** Round shape for a round sound\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **ஒ** | o in hot | o |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q2",
+      "step_title": "Identify: o",
+      "question": "Which character represents the sound **o** (o in hot)?",
+      "options": [
+        "ஓ",
+        "ஒ",
+        "ஐ",
+        "ஔ"
+      ],
+      "correct_answer": "ஒ",
+      "feedback": "Correct! **ஒ** is the o in hot sound. Round shape for a round sound"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ஓ (oo)",
+      "content_markdown": "## ஓ — oo\n\n**Sound:** o in go\n\n**Memory Trick:** ஒ with extra curve — longer sound\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **ஓ** | o in go | oo |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q3",
+      "step_title": "Identify: oo",
+      "question": "Which character represents the sound **oo** (o in go)?",
+      "options": [
+        "ஐ",
+        "ஒ",
+        "ஔ",
+        "ஓ"
+      ],
+      "correct_answer": "ஓ",
+      "feedback": "Correct! **ஓ** is the o in go sound. ஒ with extra curve — longer sound"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ஔ (au)",
+      "content_markdown": "## ஔ — au\n\n**Sound:** ow in how\n\n**Memory Trick:** Wide letter for a wide diphthong"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q4",
+      "step_title": "Identify: au",
+      "question": "Which character represents the sound **au** (ow in how)?",
+      "options": [
+        "ஒ",
+        "ஓ",
+        "ஔ",
+        "ஐ"
+      ],
+      "correct_answer": "ஔ",
+      "feedback": "Correct! **ஔ** is the ow in how sound. Wide letter for a wide diphthong"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q5",
+      "step_title": "Sound Match",
+      "question": "What sound does **ஐ** make?",
+      "options": [
+        "ai in aisle",
+        "o in hot",
+        "o in go",
+        "ow in how"
+      ],
+      "correct_answer": "ai in aisle",
+      "feedback": "Right! **ஐ** = ai = ai in aisle."
+    },
+    {
+      "type": "content",
+      "step_title": "Visual Comparison",
+      "content_markdown": "## Compare the Shapes\n\nLook closely at how these characters differ:\n\n- **ஐ** (ai) vs **ஒ** (o)\n- **ஓ** (oo) vs **ஔ** (au)\n\nNotice the subtle differences in strokes, dots, or curves!"
+    },
+    {
+      "type": "free_response",
+      "id": "q6",
+      "step_title": "Type the Sound",
+      "question": "What is the transliteration (Roman letters) for **ஔ**?",
+      "ai_grading": false,
+      "accepted_responses": [
+        "au",
+        "au",
+        "AU"
+      ],
+      "hint": "It sounds like 'ow in how'."
+    },
+    {
+      "type": "content",
+      "step_title": "Word Practice",
+      "content_markdown": "## Let's Read Words!\n\nUsing what you've learned, try reading these words:\n\n| Tamil | Transliteration | Meaning |\n|---------|-----------------|--------|\n| **ஐந்து** | aintu | five |\n| **ஒன்று** | onru | one |\n| **ஓடு** | oodu | run |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q7",
+      "step_title": "Read: ஐந்து",
+      "question": "What does **ஐந்து** (aintu) mean?",
+      "options": [
+        "one",
+        "run",
+        "hello",
+        "five"
+      ],
+      "correct_answer": "five",
+      "feedback": "Correct! **ஐந்து** (aintu) means 'five'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q8",
+      "step_title": "Read: ஒன்று",
+      "question": "What does **ஒன்று** (onru) mean?",
+      "options": [
+        "hello",
+        "one",
+        "run",
+        "five"
+      ],
+      "correct_answer": "one",
+      "feedback": "Correct! **ஒன்று** (onru) means 'one'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q9",
+      "step_title": "Read: ஓடு",
+      "question": "What does **ஓடு** (oodu) mean?",
+      "options": [
+        "five",
+        "hello",
+        "run",
+        "one"
+      ],
+      "correct_answer": "run",
+      "feedback": "Correct! **ஓடு** (oodu) means 'run'."
+    },
+    {
+      "type": "free_response",
+      "id": "q10",
+      "step_title": "Transliterate the Word",
+      "question": "Type the transliteration for **ஐந்து** (meaning: five)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "aintu",
+        "aintu",
+        "aintu"
+      ],
+      "hint": "Sound it out character by character."
+    },
+    {
+      "type": "content",
+      "step_title": "Lesson Summary",
+      "content_markdown": "## Summary\n\nGreat job! Here's everything you learned:\n\n| Character | Transliteration | Sound |\n|-----------|----------------|-------|\n| **ஐ** | ai | ai in aisle |\n| **ஒ** | o | o in hot |\n| **ஓ** | oo | o in go |\n| **ஔ** | au | ow in how |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q11",
+      "step_title": "Final Check",
+      "question": "How many new characters/concepts did we cover in this lesson?",
+      "options": [
+        "4",
+        "6",
+        "3",
+        "9"
+      ],
+      "correct_answer": "4",
+      "feedback": "Correct! We covered 4 characters today. Keep practicing!"
+    }
+  ]
+}

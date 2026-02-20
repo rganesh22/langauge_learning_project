@@ -1,0 +1,231 @@
+{
+  "lesson_id": "ur_08_waao_hay_yay",
+  "language": "Urdu",
+  "title": "Waao, Hay, Yay",
+  "subtitle": "و (waao), ہ/ھ (hay), ی (yay), ے (baree yay)",
+  "description": "The final core letters, including important Urdu-specific forms.",
+  "estimated_minutes": 25.2,
+  "cefr_level": "A0",
+  "tags": [
+    "script",
+    "reading",
+    "basics"
+  ],
+  "skills_learned": [
+    "Final core letters",
+    "Do-chashmii hay (aspiration)"
+  ],
+  "steps": [
+    {
+      "type": "content",
+      "step_title": "Waao, Hay, Yay",
+      "content_markdown": "# Waao, Hay, Yay\n\nThe final core letters, including important Urdu-specific forms.\n\n### Today's Characters\n**و** · **ہ** · **ھ** · **ی** · **ے**"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: و (waao)",
+      "content_markdown": "## و — waao\n\n**Sound:** w / oo / o\n\n**Memory Trick:** Multi-purpose: consonant w, vowel oo/o"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q1",
+      "step_title": "Identify: waao",
+      "question": "Which character represents the sound **waao** (w / oo / o)?",
+      "options": [
+        "ھ",
+        "ہ",
+        "ی",
+        "و"
+      ],
+      "correct_answer": "و",
+      "feedback": "Correct! **و** is the w / oo / o sound. Multi-purpose: consonant w, vowel oo/o"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ہ (hay)",
+      "content_markdown": "## ہ — hay\n\n**Sound:** h\n\n**Memory Trick:** Urdu hay — different initial/medial/final forms\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **ہ** | h | hay |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q2",
+      "step_title": "Identify: hay",
+      "question": "Which character represents the sound **hay** (h)?",
+      "options": [
+        "ہ",
+        "ی",
+        "ھ",
+        "و"
+      ],
+      "correct_answer": "ہ",
+      "feedback": "Correct! **ہ** is the h sound. Urdu hay — different initial/medial/final forms"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ھ (do-chashmii hay)",
+      "content_markdown": "## ھ — do-chashmii hay\n\n**Sound:** aspiration\n\n**Memory Trick:** Adds aspiration to preceding letter (بھ = bh)\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **ھ** | aspiration | do-chashmii hay |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q3",
+      "step_title": "Identify: do-chashmii hay",
+      "question": "Which character represents the sound **do-chashmii hay** (aspiration)?",
+      "options": [
+        "ہ",
+        "و",
+        "ی",
+        "ھ"
+      ],
+      "correct_answer": "ھ",
+      "feedback": "Correct! **ھ** is the aspiration sound. Adds aspiration to preceding letter (بھ = bh)"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ی (yay)",
+      "content_markdown": "## ی — yay\n\n**Sound:** y / ii / i\n\n**Memory Trick:** Multi-purpose: consonant y, vowel ii/i\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **ی** | y / ii / i | yay |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q4",
+      "step_title": "Identify: yay",
+      "question": "Which character represents the sound **yay** (y / ii / i)?",
+      "options": [
+        "ی",
+        "و",
+        "ہ",
+        "ھ"
+      ],
+      "correct_answer": "ی",
+      "feedback": "Correct! **ی** is the y / ii / i sound. Multi-purpose: consonant y, vowel ii/i"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ے (baree yay)",
+      "content_markdown": "## ے — baree yay\n\n**Sound:** ay / e\n\n**Memory Trick:** Large yay — only at word end"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q5",
+      "step_title": "Identify: baree yay",
+      "question": "Which character represents the sound **baree yay** (ay / e)?",
+      "options": [
+        "و",
+        "ہ",
+        "ے",
+        "ھ"
+      ],
+      "correct_answer": "ے",
+      "feedback": "Correct! **ے** is the ay / e sound. Large yay — only at word end"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q6",
+      "step_title": "Sound Match",
+      "question": "What sound does **و** make?",
+      "options": [
+        "w / oo / o",
+        "h",
+        "aspiration",
+        "y / ii / i"
+      ],
+      "correct_answer": "w / oo / o",
+      "feedback": "Right! **و** = waao = w / oo / o."
+    },
+    {
+      "type": "content",
+      "step_title": "Visual Comparison",
+      "content_markdown": "## Compare the Shapes\n\nLook closely at how these characters differ:\n\n- **و** (waao) vs **ہ** (hay)\n- **ھ** (do-chashmii hay) vs **ی** (yay)\n\nNotice the subtle differences in strokes, dots, or curves!"
+    },
+    {
+      "type": "free_response",
+      "id": "q7",
+      "step_title": "Type the Sound",
+      "question": "What is the transliteration (Roman letters) for **ے**?",
+      "ai_grading": false,
+      "accepted_responses": [
+        "baree yay",
+        "baree yay",
+        "BAREE YAY"
+      ],
+      "hint": "It sounds like 'ay / e'."
+    },
+    {
+      "type": "content",
+      "step_title": "Word Practice",
+      "content_markdown": "## Let's Read Words!\n\nUsing what you've learned, try reading these words:\n\n| Urdu | Transliteration | Meaning |\n|---------|-----------------|--------|\n| **ہم** | ham | we |\n| **یہ** | yeh | this |\n| **وہ** | woh | that |\n| **ہے** | hai | is |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q8",
+      "step_title": "Read: ہم",
+      "question": "What does **ہم** (ham) mean?",
+      "options": [
+        "we",
+        "is",
+        "that",
+        "this"
+      ],
+      "correct_answer": "we",
+      "feedback": "Correct! **ہم** (ham) means 'we'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q9",
+      "step_title": "Read: یہ",
+      "question": "What does **یہ** (yeh) mean?",
+      "options": [
+        "we",
+        "this",
+        "that",
+        "is"
+      ],
+      "correct_answer": "this",
+      "feedback": "Correct! **یہ** (yeh) means 'this'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q10",
+      "step_title": "Read: وہ",
+      "question": "What does **وہ** (woh) mean?",
+      "options": [
+        "that",
+        "we",
+        "is",
+        "this"
+      ],
+      "correct_answer": "that",
+      "feedback": "Correct! **وہ** (woh) means 'that'."
+    },
+    {
+      "type": "free_response",
+      "id": "q11",
+      "step_title": "Transliterate the Word",
+      "question": "Type the transliteration for **ہم** (meaning: we)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "ham",
+        "ham",
+        "ham"
+      ],
+      "hint": "Sound it out character by character."
+    },
+    {
+      "type": "content",
+      "step_title": "Lesson Summary",
+      "content_markdown": "## Summary\n\nGreat job! Here's everything you learned:\n\n| Character | Transliteration | Sound |\n|-----------|----------------|-------|\n| **و** | waao | w / oo / o |\n| **ہ** | hay | h |\n| **ھ** | do-chashmii hay | aspiration |\n| **ی** | yay | y / ii / i |\n| **ے** | baree yay | ay / e |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q12",
+      "step_title": "Final Check",
+      "question": "How many new characters/concepts did we cover in this lesson?",
+      "options": [
+        "5",
+        "7",
+        "4",
+        "10"
+      ],
+      "correct_answer": "5",
+      "feedback": "Correct! We covered 5 characters today. Keep practicing!"
+    }
+  ]
+}

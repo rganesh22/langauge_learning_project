@@ -1,0 +1,251 @@
+{
+  "lesson_id": "kn_02_vowels_part_2",
+  "language": "Kannada",
+  "title": "More Vowels",
+  "subtitle": "ಉ, ಊ, ಋ, ಎ, ಏ, ಐ",
+  "description": "Continue with more vowels including the Sanskrit vowel ಋ.",
+  "estimated_minutes": 27.599999999999998,
+  "cefr_level": "A0",
+  "tags": [
+    "script",
+    "reading",
+    "basics"
+  ],
+  "skills_learned": [
+    "Six more vowels",
+    "The Sanskrit vowel ಋ",
+    "Growing vowel recognition"
+  ],
+  "steps": [
+    {
+      "type": "content",
+      "step_title": "More Vowels",
+      "content_markdown": "# More Vowels\n\nContinue with more vowels including the Sanskrit vowel ಋ.\n\n### Today's Characters\n**ಉ** · **ಊ** · **ಋ** · **ಎ** · **ಏ** · **ಐ**"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ಉ (u)",
+      "content_markdown": "## ಉ — u\n\n**Sound:** u in put\n\n**Memory Trick:** Rounded for rounded lips"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q1",
+      "step_title": "Identify: u",
+      "question": "Which character represents the sound **u** (u in put)?",
+      "options": [
+        "ಎ",
+        "ಊ",
+        "ಋ",
+        "ಉ"
+      ],
+      "correct_answer": "ಉ",
+      "feedback": "Correct! **ಉ** is the u in put sound. Rounded for rounded lips"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ಊ (uu)",
+      "content_markdown": "## ಊ — uu\n\n**Sound:** oo in food\n\n**Memory Trick:** Extended ಉ\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **ಊ** | oo in food | uu |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q2",
+      "step_title": "Identify: uu",
+      "question": "Which character represents the sound **uu** (oo in food)?",
+      "options": [
+        "ಊ",
+        "ಉ",
+        "ಋ",
+        "ಎ"
+      ],
+      "correct_answer": "ಊ",
+      "feedback": "Correct! **ಊ** is the oo in food sound. Extended ಉ"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ಋ (ru)",
+      "content_markdown": "## ಋ — ru\n\n**Sound:** ri in Sanskrit words\n\n**Memory Trick:** Rare vowel from Sanskrit\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **ಋ** | ri in Sanskrit words | ru |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q3",
+      "step_title": "Identify: ru",
+      "question": "Which character represents the sound **ru** (ri in Sanskrit words)?",
+      "options": [
+        "ಊ",
+        "ಉ",
+        "ಎ",
+        "ಋ"
+      ],
+      "correct_answer": "ಋ",
+      "feedback": "Correct! **ಋ** is the ri in Sanskrit words sound. Rare vowel from Sanskrit"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ಎ (e)",
+      "content_markdown": "## ಎ — e\n\n**Sound:** e in bed\n\n**Memory Trick:** Open top for short 'e'\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **ಎ** | e in bed | e |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q4",
+      "step_title": "Identify: e",
+      "question": "Which character represents the sound **e** (e in bed)?",
+      "options": [
+        "ಉ",
+        "ಊ",
+        "ಎ",
+        "ಋ"
+      ],
+      "correct_answer": "ಎ",
+      "feedback": "Correct! **ಎ** is the e in bed sound. Open top for short 'e'"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ಏ (ee)",
+      "content_markdown": "## ಏ — ee\n\n**Sound:** ay in say\n\n**Memory Trick:** Extended for long 'ee'\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **ಏ** | ay in say | ee |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q5",
+      "step_title": "Identify: ee",
+      "question": "Which character represents the sound **ee** (ay in say)?",
+      "options": [
+        "ಊ",
+        "ಏ",
+        "ಉ",
+        "ಋ"
+      ],
+      "correct_answer": "ಏ",
+      "feedback": "Correct! **ಏ** is the ay in say sound. Extended for long 'ee'"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ಐ (ai)",
+      "content_markdown": "## ಐ — ai\n\n**Sound:** ai in aisle\n\n**Memory Trick:** Diphthong — two sounds in one"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q6",
+      "step_title": "Identify: ai",
+      "question": "Which character represents the sound **ai** (ai in aisle)?",
+      "options": [
+        "ಊ",
+        "ಉ",
+        "ಋ",
+        "ಐ"
+      ],
+      "correct_answer": "ಐ",
+      "feedback": "Correct! **ಐ** is the ai in aisle sound. Diphthong — two sounds in one"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q7",
+      "step_title": "Sound Match",
+      "question": "What sound does **ಉ** make?",
+      "options": [
+        "u in put",
+        "oo in food",
+        "ri in Sanskrit words",
+        "e in bed"
+      ],
+      "correct_answer": "u in put",
+      "feedback": "Right! **ಉ** = u = u in put."
+    },
+    {
+      "type": "content",
+      "step_title": "Visual Comparison",
+      "content_markdown": "## Compare the Shapes\n\nLook closely at how these characters differ:\n\n- **ಉ** (u) vs **ಊ** (uu)\n- **ಋ** (ru) vs **ಎ** (e)\n- **ಏ** (ee) vs **ಐ** (ai)\n\nNotice the subtle differences in strokes, dots, or curves!"
+    },
+    {
+      "type": "free_response",
+      "id": "q8",
+      "step_title": "Type the Sound",
+      "question": "What is the transliteration (Roman letters) for **ಐ**?",
+      "ai_grading": false,
+      "accepted_responses": [
+        "ai",
+        "ai",
+        "AI"
+      ],
+      "hint": "It sounds like 'ai in aisle'."
+    },
+    {
+      "type": "content",
+      "step_title": "Word Practice",
+      "content_markdown": "## Let's Read Words!\n\nUsing what you've learned, try reading these words:\n\n| Kannada | Transliteration | Meaning |\n|---------|-----------------|--------|\n| **ಊರು** | uuru | town/village |\n| **ಎಲ್ಲಾ** | ellaa | all/everyone |\n| **ಐದು** | aidu | five |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q9",
+      "step_title": "Read: ಊರು",
+      "question": "What does **ಊರು** (uuru) mean?",
+      "options": [
+        "five",
+        "all/everyone",
+        "town/village",
+        "hello"
+      ],
+      "correct_answer": "town/village",
+      "feedback": "Correct! **ಊರು** (uuru) means 'town/village'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q10",
+      "step_title": "Read: ಎಲ್ಲಾ",
+      "question": "What does **ಎಲ್ಲಾ** (ellaa) mean?",
+      "options": [
+        "all/everyone",
+        "hello",
+        "five",
+        "town/village"
+      ],
+      "correct_answer": "all/everyone",
+      "feedback": "Correct! **ಎಲ್ಲಾ** (ellaa) means 'all/everyone'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q11",
+      "step_title": "Read: ಐದು",
+      "question": "What does **ಐದು** (aidu) mean?",
+      "options": [
+        "all/everyone",
+        "hello",
+        "five",
+        "town/village"
+      ],
+      "correct_answer": "five",
+      "feedback": "Correct! **ಐದು** (aidu) means 'five'."
+    },
+    {
+      "type": "free_response",
+      "id": "q12",
+      "step_title": "Transliterate the Word",
+      "question": "Type the transliteration for **ಊರು** (meaning: town/village)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "uuru",
+        "uuru",
+        "uuru"
+      ],
+      "hint": "Sound it out character by character."
+    },
+    {
+      "type": "content",
+      "step_title": "Lesson Summary",
+      "content_markdown": "## Summary\n\nGreat job! Here's everything you learned:\n\n| Character | Transliteration | Sound |\n|-----------|----------------|-------|\n| **ಉ** | u | u in put |\n| **ಊ** | uu | oo in food |\n| **ಋ** | ru | ri in Sanskrit words |\n| **ಎ** | e | e in bed |\n| **ಏ** | ee | ay in say |\n| **ಐ** | ai | ai in aisle |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q13",
+      "step_title": "Final Check",
+      "question": "How many new characters/concepts did we cover in this lesson?",
+      "options": [
+        "6",
+        "8",
+        "5",
+        "11"
+      ],
+      "correct_answer": "6",
+      "feedback": "Correct! We covered 6 characters today. Keep practicing!"
+    }
+  ]
+}

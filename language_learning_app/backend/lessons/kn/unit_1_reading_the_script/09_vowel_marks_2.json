@@ -1,0 +1,124 @@
+{
+  "lesson_id": "kn_09_vowel_marks_2",
+  "language": "Kannada",
+  "title": "Vowel Marks — Part 2",
+  "subtitle": "ೆ, ೇ, ೈ, ೊ, ೋ, ೌ — completing the system",
+  "description": "Complete the vowel mark system with e, o, and diphthong markers. Focus on reading and pronunciation.",
+  "estimated_minutes": 25,
+  "cefr_level": "A0",
+  "tags": ["script", "reading", "basics"],
+  "skills_learned": [
+    "Applying the remaining vowel marks to consonants",
+    "Distinguishing between e and o markers",
+    "Reading syllables with diphthong markers"
+  ],
+  "steps": [
+    {
+      "type": "content",
+      "step_title": "Vowel Marks — Part 2",
+      "content_markdown": "# Vowel Marks — Part 2\n\nComplete the vowel mark system with e, o, and diphthong markers.\n\n### Today's Characters\n**ಕೆ** · **ಕೇ** · **ಕೈ** · **ಕೊ** · **ಕೋ** · **ಕೌ**"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ಕೆ (ke)",
+      "content_markdown": "## ಕೆ — ke\n\n**Sound:** ke as in 'kettle'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q1",
+      "step_title": "Identify: ke",
+      "question": "Which character represents the sound **ke**?",
+      "options": ["ಕೆ", "ಕೇ", "ಕೈ", "ಕೊ"],
+      "correct_answer": "ಕೆ",
+      "feedback": "Correct! **ಕೆ** is the 'ke' sound."
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ಕೇ (kee)",
+      "content_markdown": "## ಕೇ — kee\n\n**Sound:** kee as in 'cake' (long e)."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q2",
+      "step_title": "Identify: kee",
+      "question": "Which character represents the long sound **kee**?",
+      "options": ["ಕೇ", "ಕೆ", "ಕೊ", "ಕೈ"],
+      "correct_answer": "ಕೇ",
+      "feedback": "Correct! **ಕೇ** is the long 'kee' sound."
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ಕೊ (ko)",
+      "content_markdown": "## ಕೊ — ko\n\n**Sound:** ko as in 'corn'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q3",
+      "step_title": "Identify: ko",
+      "question": "Which character represents the sound **ko**?",
+      "options": ["ಕೊ", "ಕೆ", "ಕೈ", "ಕೇ"],
+      "correct_answer": "ಕೊ",
+      "feedback": "Correct! **ಕೊ** is the 'ko' sound."
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ಕೋ (koo)",
+      "content_markdown": "## ಕೋ — koo\n\n**Sound:** koo as in 'coat' (long o)."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q4",
+      "step_title": "Identify: koo",
+      "question": "Which character represents the long sound **koo**?",
+      "options": ["ಕೋ", "ಕೈ", "ಕೆ", "ಕೇ"],
+      "correct_answer": "ಕೋ",
+      "feedback": "Correct! **ಕೋ** is the long 'koo' sound."
+    },
+    {
+      "type": "content",
+      "step_title": "Reading Practice",
+      "content_markdown": "## Let's Read!\n\nPractice reading these words out loud:\n\n| Kannada | Transliteration |\n|---------|-----------------|\n| **ಕೆಲಸ** | kelasa |\n| **ಕೋಣೆ** | koone |\n| **ಕೈ** | kai |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q9",
+      "step_title": "Read: ಕೆಲಸ",
+      "question": "How do you read this word out loud?\n\n# ಕೆಲಸ",
+      "options": ["koone", "kelasa", "kai", "kama"],
+      "correct_answer": "kelasa",
+      "feedback": "Perfect! You read 'kelasa' correctly."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q10",
+      "step_title": "Read: ಕೋಣೆ",
+      "question": "How do you read this word out loud?\n\n# ಕೋಣೆ",
+      "options": ["kelasa", "kai", "koone", "kalla"],
+      "correct_answer": "koone",
+      "feedback": "Perfect! You read 'koone' correctly."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q11",
+      "step_title": "Read: ಕೈ",
+      "question": "How do you read this syllable out loud?\n\n# ಕೈ",
+      "options": ["kelasa", "kai", "koone", "kaa"],
+      "correct_answer": "kai",
+      "feedback": "Perfect! You read 'kai' correctly."
+    },
+    {
+      "type": "free_response",
+      "id": "q12",
+      "step_title": "Transliterate Word",
+      "question": "Type the transliteration for **ಕೆಲಸ**",
+      "ai_grading": false,
+      "accepted_responses": ["kelasa", "Kelasa"],
+      "hint": "K-E-L-A-S-A"
+    },
+    {
+      "type": "content",
+      "step_title": "Lesson Summary",
+      "content_markdown": "## Summary\n\nYou've completed the vowel mark system:\n\n- **ೆ** (e), **ೇ** (ee), **ೈ** (ai)\n- **ೊ** (o), **ೋ** (oo), **ೌ** (au)"
+    }
+  ]
+}

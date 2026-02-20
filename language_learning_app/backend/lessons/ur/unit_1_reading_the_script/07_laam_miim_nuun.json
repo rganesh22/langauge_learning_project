@@ -1,0 +1,212 @@
+{
+  "lesson_id": "ur_07_laam_miim_nuun",
+  "language": "Urdu",
+  "title": "Laam, Miim, Nuun",
+  "subtitle": "ل (laam), م (miim), ن (nuun), ں (nuun ghunna)",
+  "description": "Common everyday letters including Urdu's nasal nuun.",
+  "estimated_minutes": 22.8,
+  "cefr_level": "A0",
+  "tags": [
+    "script",
+    "reading",
+    "basics"
+  ],
+  "skills_learned": [
+    "Common consonants",
+    "Nasal nuun ں"
+  ],
+  "steps": [
+    {
+      "type": "content",
+      "step_title": "Laam, Miim, Nuun",
+      "content_markdown": "# Laam, Miim, Nuun\n\nCommon everyday letters including Urdu's nasal nuun.\n\n### Today's Characters\n**ل** · **م** · **ن** · **ں**"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ل (laam)",
+      "content_markdown": "## ل — laam\n\n**Sound:** l\n\n**Memory Trick:** Tall stroke that leans"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q1",
+      "step_title": "Identify: laam",
+      "question": "Which character represents the sound **laam** (l)?",
+      "options": [
+        "ں",
+        "ل",
+        "م",
+        "ن"
+      ],
+      "correct_answer": "ل",
+      "feedback": "Correct! **ل** is the l sound. Tall stroke that leans"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: م (miim)",
+      "content_markdown": "## م — miim\n\n**Sound:** m\n\n**Memory Trick:** Round loop\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **م** | m | miim |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q2",
+      "step_title": "Identify: miim",
+      "question": "Which character represents the sound **miim** (m)?",
+      "options": [
+        "ل",
+        "ن",
+        "ں",
+        "م"
+      ],
+      "correct_answer": "م",
+      "feedback": "Correct! **م** is the m sound. Round loop"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ن (nuun)",
+      "content_markdown": "## ن — nuun\n\n**Sound:** n\n\n**Memory Trick:** Cup with dot above\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **ن** | n | nuun |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q3",
+      "step_title": "Identify: nuun",
+      "question": "Which character represents the sound **nuun** (n)?",
+      "options": [
+        "م",
+        "ں",
+        "ل",
+        "ن"
+      ],
+      "correct_answer": "ن",
+      "feedback": "Correct! **ن** is the n sound. Cup with dot above"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ں (nuun ghunna)",
+      "content_markdown": "## ں — nuun ghunna\n\n**Sound:** nasal n (no dot)\n\n**Memory Trick:** Nasalization marker — Urdu specific!"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q4",
+      "step_title": "Identify: nuun ghunna",
+      "question": "Which character represents the sound **nuun ghunna** (nasal n (no dot))?",
+      "options": [
+        "ں",
+        "ل",
+        "ن",
+        "م"
+      ],
+      "correct_answer": "ں",
+      "feedback": "Correct! **ں** is the nasal n (no dot) sound. Nasalization marker — Urdu specific!"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q5",
+      "step_title": "Sound Match",
+      "question": "What sound does **ل** make?",
+      "options": [
+        "l",
+        "m",
+        "n",
+        "nasal n (no dot)"
+      ],
+      "correct_answer": "l",
+      "feedback": "Right! **ل** = laam = l."
+    },
+    {
+      "type": "content",
+      "step_title": "Visual Comparison",
+      "content_markdown": "## Compare the Shapes\n\nLook closely at how these characters differ:\n\n- **ل** (laam) vs **م** (miim)\n- **ن** (nuun) vs **ں** (nuun ghunna)\n\nNotice the subtle differences in strokes, dots, or curves!"
+    },
+    {
+      "type": "free_response",
+      "id": "q6",
+      "step_title": "Type the Sound",
+      "question": "What is the transliteration (Roman letters) for **ں**?",
+      "ai_grading": false,
+      "accepted_responses": [
+        "nuun ghunna",
+        "nuun ghunna",
+        "NUUN GHUNNA"
+      ],
+      "hint": "It sounds like 'nasal n (no dot)'."
+    },
+    {
+      "type": "content",
+      "step_title": "Word Practice",
+      "content_markdown": "## Let's Read Words!\n\nUsing what you've learned, try reading these words:\n\n| Urdu | Transliteration | Meaning |\n|---------|-----------------|--------|\n| **لکھنا** | likhnaa | to write |\n| **من** | man | mind |\n| **نام** | naam | name |\n| **میں** | mein | in/I |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q7",
+      "step_title": "Read: لکھنا",
+      "question": "What does **لکھنا** (likhnaa) mean?",
+      "options": [
+        "in/I",
+        "mind",
+        "name",
+        "to write"
+      ],
+      "correct_answer": "to write",
+      "feedback": "Correct! **لکھنا** (likhnaa) means 'to write'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q8",
+      "step_title": "Read: من",
+      "question": "What does **من** (man) mean?",
+      "options": [
+        "name",
+        "mind",
+        "to write",
+        "in/I"
+      ],
+      "correct_answer": "mind",
+      "feedback": "Correct! **من** (man) means 'mind'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q9",
+      "step_title": "Read: نام",
+      "question": "What does **نام** (naam) mean?",
+      "options": [
+        "to write",
+        "in/I",
+        "mind",
+        "name"
+      ],
+      "correct_answer": "name",
+      "feedback": "Correct! **نام** (naam) means 'name'."
+    },
+    {
+      "type": "free_response",
+      "id": "q10",
+      "step_title": "Transliterate the Word",
+      "question": "Type the transliteration for **لکھنا** (meaning: to write)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "likhnaa",
+        "likhnaa",
+        "likhnaa"
+      ],
+      "hint": "Sound it out character by character."
+    },
+    {
+      "type": "content",
+      "step_title": "Lesson Summary",
+      "content_markdown": "## Summary\n\nGreat job! Here's everything you learned:\n\n| Character | Transliteration | Sound |\n|-----------|----------------|-------|\n| **ل** | laam | l |\n| **م** | miim | m |\n| **ن** | nuun | n |\n| **ں** | nuun ghunna | nasal n (no dot) |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q11",
+      "step_title": "Final Check",
+      "question": "How many new characters/concepts did we cover in this lesson?",
+      "options": [
+        "4",
+        "6",
+        "3",
+        "9"
+      ],
+      "correct_answer": "4",
+      "feedback": "Correct! We covered 4 characters today. Keep practicing!"
+    }
+  ]
+}

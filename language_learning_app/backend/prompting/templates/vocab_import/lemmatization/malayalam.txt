@@ -1,0 +1,17 @@
+Lemmatize these Malayalam words to their base/dictionary forms.
+
+Rules for Malayalam:
+- Verbs: convert to -ക form / infinitive (e.g., പോകുന്നു → പോകുക).
+- Nouns: remove case endings and plurals (e.g., വീട്ടിൽ → വീട്).
+- Adjectives: use base form.
+- Remove tense, aspect, plural, and agreement suffixes.
+
+CRITICAL REQUIREMENTS:
+1) Output ONLY in Malayalam script (മലയാളം). NO Latin/English letters.
+2) Remove any English words from the output.
+3) Return ONLY a JSON array with objects: {{"word": "base_form", "word_class": "noun/verb/..."}}
+
+Words to lemmatize:
+{words}
+
+Return ONLY the JSON array, no other text.

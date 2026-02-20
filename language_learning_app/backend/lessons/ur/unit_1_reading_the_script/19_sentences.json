@@ -1,0 +1,180 @@
+{
+  "lesson_id": "ur_19_sentences",
+  "language": "Urdu",
+  "title": "Reading Sentences",
+  "subtitle": "Complete Urdu sentences",
+  "description": "Read full Urdu sentences.",
+  "estimated_minutes": 18.0,
+  "cefr_level": "A0",
+  "tags": [
+    "script",
+    "reading",
+    "basics"
+  ],
+  "skills_learned": [
+    "Sentence reading"
+  ],
+  "steps": [
+    {
+      "type": "content",
+      "step_title": "Reading Sentences",
+      "content_markdown": "# Reading Sentences\n\nRead full Urdu sentences."
+    },
+    {
+      "type": "content",
+      "step_title": "Word Practice",
+      "content_markdown": "## Let's Read Words!\n\nUsing what you've learned, try reading these words:\n\n| Urdu | Transliteration | Meaning |\n|---------|-----------------|--------|\n| **میں اردو سیکھ رہا ہوں** | main urduu siikh rahaa huun | I am learning Urdu |\n| **یہ میری کتاب ہے** | yeh merii kitaab hai | This is my book |\n| **آپ کا نام کیا ہے؟** | aap kaa naam kyaa hai? | What is your name? |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q1",
+      "step_title": "Read: میں اردو سیکھ رہا ہوں",
+      "question": "What does **میں اردو سیکھ رہا ہوں** (main urduu siikh rahaa huun) mean?",
+      "options": [
+        "I am learning Urdu",
+        "What is your name?",
+        "hello",
+        "This is my book"
+      ],
+      "correct_answer": "I am learning Urdu",
+      "feedback": "Correct! **میں اردو سیکھ رہا ہوں** (main urduu siikh rahaa huun) means 'I am learning Urdu'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q2",
+      "step_title": "Read: یہ میری کتاب ہے",
+      "question": "What does **یہ میری کتاب ہے** (yeh merii kitaab hai) mean?",
+      "options": [
+        "hello",
+        "I am learning Urdu",
+        "What is your name?",
+        "This is my book"
+      ],
+      "correct_answer": "This is my book",
+      "feedback": "Correct! **یہ میری کتاب ہے** (yeh merii kitaab hai) means 'This is my book'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q3",
+      "step_title": "Read: آپ کا نام کیا ہے؟",
+      "question": "What does **آپ کا نام کیا ہے؟** (aap kaa naam kyaa hai?) mean?",
+      "options": [
+        "I am learning Urdu",
+        "This is my book",
+        "What is your name?",
+        "hello"
+      ],
+      "correct_answer": "What is your name?",
+      "feedback": "Correct! **آپ کا نام کیا ہے؟** (aap kaa naam kyaa hai?) means 'What is your name?'."
+    },
+    {
+      "type": "free_response",
+      "id": "q4",
+      "step_title": "Transliterate the Word",
+      "question": "Type the transliteration for **میں اردو سیکھ رہا ہوں** (meaning: I am learning Urdu)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "main urduu siikh rahaa huun",
+        "main urduu siikh rahaa huun",
+        "mainurduusiikhrahaahuun"
+      ],
+      "hint": "Sound it out character by character."
+    },
+    {
+      "type": "content",
+      "step_title": "Lesson Summary",
+      "content_markdown": "## Summary\n\nExcellent reading practice! You worked through 3 words/phrases. Keep building your speed and confidence!"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q5",
+      "step_title": "Final Check",
+      "question": "What does **آپ کا نام کیا ہے؟** mean?",
+      "options": [
+        "What is your name?",
+        "I am learning Urdu",
+        "water",
+        "school"
+      ],
+      "correct_answer": "What is your name?",
+      "feedback": "Perfect! You're reading Urdu with confidence!"
+    },
+    {
+      "type": "free_response",
+      "id": "q6",
+      "step_title": "Practice: آپ کا نام کیا ہے؟",
+      "question": "Type the meaning of **آپ کا نام کیا ہے؟** (aap kaa naam kyaa hai?)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "What is your name?"
+      ],
+      "hint": "Transliteration: aap kaa naam kyaa hai?"
+    },
+    {
+      "type": "free_response",
+      "id": "q7",
+      "step_title": "Practice: میں اردو سیکھ رہا ہوں",
+      "question": "Type the meaning of **میں اردو سیکھ رہا ہوں** (main urduu siikh rahaa huun)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "I am learning Urdu"
+      ],
+      "hint": "Transliteration: main urduu siikh rahaa huun"
+    },
+    {
+      "type": "free_response",
+      "id": "q8",
+      "step_title": "Practice: یہ میری کتاب ہے",
+      "question": "Type the meaning of **یہ میری کتاب ہے** (yeh merii kitaab hai)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "This is my book"
+      ],
+      "hint": "Transliteration: yeh merii kitaab hai"
+    },
+    {
+      "type": "free_response",
+      "id": "q9",
+      "step_title": "Practice: آپ کا نام کیا ہے؟",
+      "question": "Type the meaning of **آپ کا نام کیا ہے؟** (aap kaa naam kyaa hai?)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "What is your name?"
+      ],
+      "hint": "Transliteration: aap kaa naam kyaa hai?"
+    },
+    {
+      "type": "free_response",
+      "id": "q10",
+      "step_title": "Practice: میں اردو سیکھ رہا ہوں",
+      "question": "Type the meaning of **میں اردو سیکھ رہا ہوں** (main urduu siikh rahaa huun)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "I am learning Urdu"
+      ],
+      "hint": "Transliteration: main urduu siikh rahaa huun"
+    },
+    {
+      "type": "free_response",
+      "id": "q11",
+      "step_title": "Practice: یہ میری کتاب ہے",
+      "question": "Type the meaning of **یہ میری کتاب ہے** (yeh merii kitaab hai)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "This is my book"
+      ],
+      "hint": "Transliteration: yeh merii kitaab hai"
+    },
+    {
+      "type": "free_response",
+      "id": "q12",
+      "step_title": "Practice: آپ کا نام کیا ہے؟",
+      "question": "Type the meaning of **آپ کا نام کیا ہے؟** (aap kaa naam kyaa hai?)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "What is your name?"
+      ],
+      "hint": "Transliteration: aap kaa naam kyaa hai?"
+    }
+  ]
+}

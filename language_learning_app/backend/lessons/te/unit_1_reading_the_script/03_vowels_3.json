@@ -1,0 +1,230 @@
+{
+  "lesson_id": "te_03_vowels_3",
+  "language": "Telugu",
+  "title": "Completing Vowels",
+  "subtitle": "ఒ, ఓ, ఔ, అం, అః",
+  "description": "Finish the vowel set.",
+  "estimated_minutes": 25.2,
+  "cefr_level": "A0",
+  "tags": [
+    "script",
+    "reading",
+    "basics"
+  ],
+  "skills_learned": [
+    "Complete vowel set (16 vowels)"
+  ],
+  "steps": [
+    {
+      "type": "content",
+      "step_title": "Completing Vowels",
+      "content_markdown": "# Completing Vowels\n\nFinish the vowel set.\n\n### Today's Characters\n**ఒ** · **ఓ** · **ఔ** · **అం** · **అః**"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ఒ (o)",
+      "content_markdown": "## ఒ — o\n\n**Sound:** o in hot\n\n**Memory Trick:** Round"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q1",
+      "step_title": "Identify: o",
+      "question": "Which character represents the sound **o** (o in hot)?",
+      "options": [
+        "ఒ",
+        "ఓ",
+        "ఔ",
+        "అం"
+      ],
+      "correct_answer": "ఒ",
+      "feedback": "Correct! **ఒ** is the o in hot sound. Round"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ఓ (oo)",
+      "content_markdown": "## ఓ — oo\n\n**Sound:** o in go\n\n**Memory Trick:** Long o\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **ఓ** | o in go | oo |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q2",
+      "step_title": "Identify: oo",
+      "question": "Which character represents the sound **oo** (o in go)?",
+      "options": [
+        "ఔ",
+        "ఓ",
+        "ఒ",
+        "అం"
+      ],
+      "correct_answer": "ఓ",
+      "feedback": "Correct! **ఓ** is the o in go sound. Long o"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ఔ (au)",
+      "content_markdown": "## ఔ — au\n\n**Sound:** ow in how\n\n**Memory Trick:** Diphthong\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **ఔ** | ow in how | au |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q3",
+      "step_title": "Identify: au",
+      "question": "Which character represents the sound **au** (ow in how)?",
+      "options": [
+        "ఒ",
+        "ఓ",
+        "అం",
+        "ఔ"
+      ],
+      "correct_answer": "ఔ",
+      "feedback": "Correct! **ఔ** is the ow in how sound. Diphthong"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: అం (am)",
+      "content_markdown": "## అం — am\n\n**Sound:** nasal\n\n**Memory Trick:** Anusvara\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **అం** | nasal | am |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q4",
+      "step_title": "Identify: am",
+      "question": "Which character represents the sound **am** (nasal)?",
+      "options": [
+        "ఓ",
+        "ఔ",
+        "అం",
+        "ఒ"
+      ],
+      "correct_answer": "అం",
+      "feedback": "Correct! **అం** is the nasal sound. Anusvara"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: అః (aha)",
+      "content_markdown": "## అః — aha\n\n**Sound:** breathy\n\n**Memory Trick:** Visarga"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q5",
+      "step_title": "Identify: aha",
+      "question": "Which character represents the sound **aha** (breathy)?",
+      "options": [
+        "అః",
+        "ఔ",
+        "ఓ",
+        "ఒ"
+      ],
+      "correct_answer": "అః",
+      "feedback": "Correct! **అః** is the breathy sound. Visarga"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q6",
+      "step_title": "Sound Match",
+      "question": "What sound does **ఒ** make?",
+      "options": [
+        "o in hot",
+        "o in go",
+        "ow in how",
+        "nasal"
+      ],
+      "correct_answer": "o in hot",
+      "feedback": "Right! **ఒ** = o = o in hot."
+    },
+    {
+      "type": "content",
+      "step_title": "Visual Comparison",
+      "content_markdown": "## Compare the Shapes\n\nLook closely at how these characters differ:\n\n- **ఒ** (o) vs **ఓ** (oo)\n- **ఔ** (au) vs **అం** (am)\n\nNotice the subtle differences in strokes, dots, or curves!"
+    },
+    {
+      "type": "free_response",
+      "id": "q7",
+      "step_title": "Type the Sound",
+      "question": "What is the transliteration (Roman letters) for **అః**?",
+      "ai_grading": false,
+      "accepted_responses": [
+        "aha",
+        "aha",
+        "AHA"
+      ],
+      "hint": "It sounds like 'breathy'."
+    },
+    {
+      "type": "content",
+      "step_title": "Word Practice",
+      "content_markdown": "## Let's Read Words!\n\nUsing what you've learned, try reading these words:\n\n| Telugu | Transliteration | Meaning |\n|---------|-----------------|--------|\n| **ఒకటి** | okati | one |\n| **ఓడ** | ooda | ship |\n| **ఔషధం** | aushadham | medicine |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q8",
+      "step_title": "Read: ఒకటి",
+      "question": "What does **ఒకటి** (okati) mean?",
+      "options": [
+        "hello",
+        "one",
+        "medicine",
+        "ship"
+      ],
+      "correct_answer": "one",
+      "feedback": "Correct! **ఒకటి** (okati) means 'one'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q9",
+      "step_title": "Read: ఓడ",
+      "question": "What does **ఓడ** (ooda) mean?",
+      "options": [
+        "one",
+        "hello",
+        "ship",
+        "medicine"
+      ],
+      "correct_answer": "ship",
+      "feedback": "Correct! **ఓడ** (ooda) means 'ship'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q10",
+      "step_title": "Read: ఔషధం",
+      "question": "What does **ఔషధం** (aushadham) mean?",
+      "options": [
+        "medicine",
+        "ship",
+        "one",
+        "hello"
+      ],
+      "correct_answer": "medicine",
+      "feedback": "Correct! **ఔషధం** (aushadham) means 'medicine'."
+    },
+    {
+      "type": "free_response",
+      "id": "q11",
+      "step_title": "Transliterate the Word",
+      "question": "Type the transliteration for **ఒకటి** (meaning: one)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "okati",
+        "okati",
+        "okati"
+      ],
+      "hint": "Sound it out character by character."
+    },
+    {
+      "type": "content",
+      "step_title": "Lesson Summary",
+      "content_markdown": "## Summary\n\nGreat job! Here's everything you learned:\n\n| Character | Transliteration | Sound |\n|-----------|----------------|-------|\n| **ఒ** | o | o in hot |\n| **ఓ** | oo | o in go |\n| **ఔ** | au | ow in how |\n| **అం** | am | nasal |\n| **అః** | aha | breathy |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q12",
+      "step_title": "Final Check",
+      "question": "How many new characters/concepts did we cover in this lesson?",
+      "options": [
+        "5",
+        "7",
+        "4",
+        "10"
+      ],
+      "correct_answer": "5",
+      "feedback": "Correct! We covered 5 characters today. Keep practicing!"
+    }
+  ]
+}

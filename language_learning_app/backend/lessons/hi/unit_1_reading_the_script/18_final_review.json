@@ -1,0 +1,180 @@
+{
+  "lesson_id": "hi_18_final_review",
+  "language": "Hindi",
+  "title": "Final Review",
+  "subtitle": "Devanagari mastery!",
+  "description": "Comprehensive review.",
+  "estimated_minutes": 18.0,
+  "cefr_level": "A0",
+  "tags": [
+    "script",
+    "reading",
+    "basics"
+  ],
+  "skills_learned": [
+    "Complete Devanagari mastery"
+  ],
+  "steps": [
+    {
+      "type": "content",
+      "step_title": "Final Review",
+      "content_markdown": "# Final Review\n\nComprehensive review."
+    },
+    {
+      "type": "content",
+      "step_title": "Word Practice",
+      "content_markdown": "## Let's Read Words!\n\nUsing what you've learned, try reading these words:\n\n| Hindi | Transliteration | Meaning |\n|---------|-----------------|--------|\n| **भारत** | bhaarat | India |\n| **हिन्दुस्तान** | hindustaan | Hindustan |\n| **दिल्ली** | dillii | Delhi |\n| **स्वागत है** | swaagat hai | welcome |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q1",
+      "step_title": "Read: भारत",
+      "question": "What does **भारत** (bhaarat) mean?",
+      "options": [
+        "Hindustan",
+        "welcome",
+        "Delhi",
+        "India"
+      ],
+      "correct_answer": "India",
+      "feedback": "Correct! **भारत** (bhaarat) means 'India'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q2",
+      "step_title": "Read: हिन्दुस्तान",
+      "question": "What does **हिन्दुस्तान** (hindustaan) mean?",
+      "options": [
+        "Delhi",
+        "Hindustan",
+        "welcome",
+        "India"
+      ],
+      "correct_answer": "Hindustan",
+      "feedback": "Correct! **हिन्दुस्तान** (hindustaan) means 'Hindustan'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q3",
+      "step_title": "Read: दिल्ली",
+      "question": "What does **दिल्ली** (dillii) mean?",
+      "options": [
+        "welcome",
+        "Delhi",
+        "Hindustan",
+        "India"
+      ],
+      "correct_answer": "Delhi",
+      "feedback": "Correct! **दिल्ली** (dillii) means 'Delhi'."
+    },
+    {
+      "type": "free_response",
+      "id": "q4",
+      "step_title": "Transliterate the Word",
+      "question": "Type the transliteration for **भारत** (meaning: India)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "bhaarat",
+        "bhaarat",
+        "bhaarat"
+      ],
+      "hint": "Sound it out character by character."
+    },
+    {
+      "type": "content",
+      "step_title": "Lesson Summary",
+      "content_markdown": "## Summary\n\nExcellent reading practice! You worked through 4 words/phrases. Keep building your speed and confidence!"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q5",
+      "step_title": "Final Check",
+      "question": "What does **स्वागत है** mean?",
+      "options": [
+        "welcome",
+        "India",
+        "water",
+        "school"
+      ],
+      "correct_answer": "welcome",
+      "feedback": "Perfect! You're reading Hindi with confidence!"
+    },
+    {
+      "type": "free_response",
+      "id": "q6",
+      "step_title": "Practice: भारत",
+      "question": "Type the meaning of **भारत** (bhaarat)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "India"
+      ],
+      "hint": "Transliteration: bhaarat"
+    },
+    {
+      "type": "free_response",
+      "id": "q7",
+      "step_title": "Practice: हिन्दुस्तान",
+      "question": "Type the meaning of **हिन्दुस्तान** (hindustaan)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "Hindustan"
+      ],
+      "hint": "Transliteration: hindustaan"
+    },
+    {
+      "type": "free_response",
+      "id": "q8",
+      "step_title": "Practice: दिल्ली",
+      "question": "Type the meaning of **दिल्ली** (dillii)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "Delhi"
+      ],
+      "hint": "Transliteration: dillii"
+    },
+    {
+      "type": "free_response",
+      "id": "q9",
+      "step_title": "Practice: स्वागत है",
+      "question": "Type the meaning of **स्वागत है** (swaagat hai)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "welcome"
+      ],
+      "hint": "Transliteration: swaagat hai"
+    },
+    {
+      "type": "free_response",
+      "id": "q10",
+      "step_title": "Practice: भारत",
+      "question": "Type the meaning of **भारत** (bhaarat)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "India"
+      ],
+      "hint": "Transliteration: bhaarat"
+    },
+    {
+      "type": "free_response",
+      "id": "q11",
+      "step_title": "Practice: हिन्दुस्तान",
+      "question": "Type the meaning of **हिन्दुस्तान** (hindustaan)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "Hindustan"
+      ],
+      "hint": "Transliteration: hindustaan"
+    },
+    {
+      "type": "free_response",
+      "id": "q12",
+      "step_title": "Practice: दिल्ली",
+      "question": "Type the meaning of **दिल्ली** (dillii)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "Delhi"
+      ],
+      "hint": "Transliteration: dillii"
+    }
+  ]
+}

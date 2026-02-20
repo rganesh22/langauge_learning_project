@@ -1,0 +1,180 @@
+{
+  "lesson_id": "ur_20_final_review",
+  "language": "Urdu",
+  "title": "Final Review",
+  "subtitle": "Urdu script mastery!",
+  "description": "Comprehensive review.",
+  "estimated_minutes": 18.0,
+  "cefr_level": "A0",
+  "tags": [
+    "script",
+    "reading",
+    "basics"
+  ],
+  "skills_learned": [
+    "Complete Urdu script mastery"
+  ],
+  "steps": [
+    {
+      "type": "content",
+      "step_title": "Final Review",
+      "content_markdown": "# Final Review\n\nComprehensive review."
+    },
+    {
+      "type": "content",
+      "step_title": "Word Practice",
+      "content_markdown": "## Let's Read Words!\n\nUsing what you've learned, try reading these words:\n\n| Urdu | Transliteration | Meaning |\n|---------|-----------------|--------|\n| **پاکستان زندہ باد** | paakistaan zindah baad | Long live Pakistan |\n| **اردو ادب** | urduu adab | Urdu literature |\n| **خوش آمدید** | khush aamdeed | welcome |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q1",
+      "step_title": "Read: پاکستان زندہ باد",
+      "question": "What does **پاکستان زندہ باد** (paakistaan zindah baad) mean?",
+      "options": [
+        "Urdu literature",
+        "Long live Pakistan",
+        "welcome",
+        "hello"
+      ],
+      "correct_answer": "Long live Pakistan",
+      "feedback": "Correct! **پاکستان زندہ باد** (paakistaan zindah baad) means 'Long live Pakistan'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q2",
+      "step_title": "Read: اردو ادب",
+      "question": "What does **اردو ادب** (urduu adab) mean?",
+      "options": [
+        "welcome",
+        "Urdu literature",
+        "Long live Pakistan",
+        "hello"
+      ],
+      "correct_answer": "Urdu literature",
+      "feedback": "Correct! **اردو ادب** (urduu adab) means 'Urdu literature'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q3",
+      "step_title": "Read: خوش آمدید",
+      "question": "What does **خوش آمدید** (khush aamdeed) mean?",
+      "options": [
+        "hello",
+        "Urdu literature",
+        "welcome",
+        "Long live Pakistan"
+      ],
+      "correct_answer": "welcome",
+      "feedback": "Correct! **خوش آمدید** (khush aamdeed) means 'welcome'."
+    },
+    {
+      "type": "free_response",
+      "id": "q4",
+      "step_title": "Transliterate the Word",
+      "question": "Type the transliteration for **پاکستان زندہ باد** (meaning: Long live Pakistan)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "paakistaan zindah baad",
+        "paakistaan zindah baad",
+        "paakistaanzindahbaad"
+      ],
+      "hint": "Sound it out character by character."
+    },
+    {
+      "type": "content",
+      "step_title": "Lesson Summary",
+      "content_markdown": "## Summary\n\nExcellent reading practice! You worked through 3 words/phrases. Keep building your speed and confidence!"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q5",
+      "step_title": "Final Check",
+      "question": "What does **خوش آمدید** mean?",
+      "options": [
+        "welcome",
+        "Long live Pakistan",
+        "water",
+        "school"
+      ],
+      "correct_answer": "welcome",
+      "feedback": "Perfect! You're reading Urdu with confidence!"
+    },
+    {
+      "type": "free_response",
+      "id": "q6",
+      "step_title": "Practice: خوش آمدید",
+      "question": "Type the meaning of **خوش آمدید** (khush aamdeed)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "welcome"
+      ],
+      "hint": "Transliteration: khush aamdeed"
+    },
+    {
+      "type": "free_response",
+      "id": "q7",
+      "step_title": "Practice: پاکستان زندہ باد",
+      "question": "Type the meaning of **پاکستان زندہ باد** (paakistaan zindah baad)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "Long live Pakistan"
+      ],
+      "hint": "Transliteration: paakistaan zindah baad"
+    },
+    {
+      "type": "free_response",
+      "id": "q8",
+      "step_title": "Practice: اردو ادب",
+      "question": "Type the meaning of **اردو ادب** (urduu adab)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "Urdu literature"
+      ],
+      "hint": "Transliteration: urduu adab"
+    },
+    {
+      "type": "free_response",
+      "id": "q9",
+      "step_title": "Practice: خوش آمدید",
+      "question": "Type the meaning of **خوش آمدید** (khush aamdeed)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "welcome"
+      ],
+      "hint": "Transliteration: khush aamdeed"
+    },
+    {
+      "type": "free_response",
+      "id": "q10",
+      "step_title": "Practice: پاکستان زندہ باد",
+      "question": "Type the meaning of **پاکستان زندہ باد** (paakistaan zindah baad)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "Long live Pakistan"
+      ],
+      "hint": "Transliteration: paakistaan zindah baad"
+    },
+    {
+      "type": "free_response",
+      "id": "q11",
+      "step_title": "Practice: اردو ادب",
+      "question": "Type the meaning of **اردو ادب** (urduu adab)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "Urdu literature"
+      ],
+      "hint": "Transliteration: urduu adab"
+    },
+    {
+      "type": "free_response",
+      "id": "q12",
+      "step_title": "Practice: خوش آمدید",
+      "question": "Type the meaning of **خوش آمدید** (khush aamdeed)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "welcome"
+      ],
+      "hint": "Transliteration: khush aamdeed"
+    }
+  ]
+}

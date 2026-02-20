@@ -1,0 +1,231 @@
+{
+  "lesson_id": "hi_07_tha_group",
+  "language": "Hindi",
+  "title": "The Tha-Group (Dentals)",
+  "subtitle": "त, थ, द, ध, न",
+  "description": "Dental consonants — tongue touches teeth.",
+  "estimated_minutes": 25.2,
+  "cefr_level": "A0",
+  "tags": [
+    "script",
+    "reading",
+    "basics"
+  ],
+  "skills_learned": [
+    "Dental consonants",
+    "Dental vs retroflex"
+  ],
+  "steps": [
+    {
+      "type": "content",
+      "step_title": "The Tha-Group (Dentals)",
+      "content_markdown": "# The Tha-Group (Dentals)\n\nDental consonants — tongue touches teeth.\n\n### Today's Characters\n**त** · **थ** · **द** · **ध** · **न**"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: त (ta)",
+      "content_markdown": "## त — ta\n\n**Sound:** th (dental, soft)\n\n**Memory Trick:** Softer than English 't'"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q1",
+      "step_title": "Identify: ta",
+      "question": "Which character represents the sound **ta** (th (dental, soft))?",
+      "options": [
+        "ध",
+        "त",
+        "थ",
+        "द"
+      ],
+      "correct_answer": "त",
+      "feedback": "Correct! **त** is the th (dental, soft) sound. Softer than English 't'"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: थ (tha)",
+      "content_markdown": "## थ — tha\n\n**Sound:** th (dental asp.)\n\n**Memory Trick:** Dental + aspirated\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **थ** | th (dental asp.) | tha |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q2",
+      "step_title": "Identify: tha",
+      "question": "Which character represents the sound **tha** (th (dental asp.))?",
+      "options": [
+        "त",
+        "द",
+        "ध",
+        "थ"
+      ],
+      "correct_answer": "थ",
+      "feedback": "Correct! **थ** is the th (dental asp.) sound. Dental + aspirated"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: द (da)",
+      "content_markdown": "## द — da\n\n**Sound:** d (dental)\n\n**Memory Trick:** Voiced dental\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **द** | d (dental) | da |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q3",
+      "step_title": "Identify: da",
+      "question": "Which character represents the sound **da** (d (dental))?",
+      "options": [
+        "थ",
+        "ध",
+        "त",
+        "द"
+      ],
+      "correct_answer": "द",
+      "feedback": "Correct! **द** is the d (dental) sound. Voiced dental"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ध (dha)",
+      "content_markdown": "## ध — dha\n\n**Sound:** dh (dental asp.)\n\n**Memory Trick:** Voiced + aspirated\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **ध** | dh (dental asp.) | dha |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q4",
+      "step_title": "Identify: dha",
+      "question": "Which character represents the sound **dha** (dh (dental asp.))?",
+      "options": [
+        "ध",
+        "त",
+        "द",
+        "थ"
+      ],
+      "correct_answer": "ध",
+      "feedback": "Correct! **ध** is the dh (dental asp.) sound. Voiced + aspirated"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: न (na)",
+      "content_markdown": "## न — na\n\n**Sound:** na (dental)\n\n**Memory Trick:** Dental nasal — common 'n'"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q5",
+      "step_title": "Identify: na",
+      "question": "Which character represents the sound **na** (na (dental))?",
+      "options": [
+        "द",
+        "त",
+        "न",
+        "थ"
+      ],
+      "correct_answer": "न",
+      "feedback": "Correct! **न** is the na (dental) sound. Dental nasal — common 'n'"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q6",
+      "step_title": "Sound Match",
+      "question": "What sound does **त** make?",
+      "options": [
+        "th (dental, soft)",
+        "th (dental asp.)",
+        "d (dental)",
+        "dh (dental asp.)"
+      ],
+      "correct_answer": "th (dental, soft)",
+      "feedback": "Right! **त** = ta = th (dental, soft)."
+    },
+    {
+      "type": "content",
+      "step_title": "Visual Comparison",
+      "content_markdown": "## Compare the Shapes\n\nLook closely at how these characters differ:\n\n- **त** (ta) vs **थ** (tha)\n- **द** (da) vs **ध** (dha)\n\nNotice the subtle differences in strokes, dots, or curves!"
+    },
+    {
+      "type": "free_response",
+      "id": "q7",
+      "step_title": "Type the Sound",
+      "question": "What is the transliteration (Roman letters) for **न**?",
+      "ai_grading": false,
+      "accepted_responses": [
+        "na",
+        "na",
+        "NA"
+      ],
+      "hint": "It sounds like 'na (dental)'."
+    },
+    {
+      "type": "content",
+      "step_title": "Word Practice",
+      "content_markdown": "## Let's Read Words!\n\nUsing what you've learned, try reading these words:\n\n| Hindi | Transliteration | Meaning |\n|---------|-----------------|--------|\n| **दिन** | din | day |\n| **धन** | dhan | wealth |\n| **नमस्ते** | namaste | hello |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q8",
+      "step_title": "Read: दिन",
+      "question": "What does **दिन** (din) mean?",
+      "options": [
+        "hello",
+        "day",
+        "wealth",
+        "hello"
+      ],
+      "correct_answer": "day",
+      "feedback": "Correct! **दिन** (din) means 'day'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q9",
+      "step_title": "Read: धन",
+      "question": "What does **धन** (dhan) mean?",
+      "options": [
+        "day",
+        "hello",
+        "hello",
+        "wealth"
+      ],
+      "correct_answer": "wealth",
+      "feedback": "Correct! **धन** (dhan) means 'wealth'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q10",
+      "step_title": "Read: नमस्ते",
+      "question": "What does **नमस्ते** (namaste) mean?",
+      "options": [
+        "hello",
+        "hello",
+        "day",
+        "wealth"
+      ],
+      "correct_answer": "hello",
+      "feedback": "Correct! **नमस्ते** (namaste) means 'hello'."
+    },
+    {
+      "type": "free_response",
+      "id": "q11",
+      "step_title": "Transliterate the Word",
+      "question": "Type the transliteration for **दिन** (meaning: day)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "din",
+        "din",
+        "din"
+      ],
+      "hint": "Sound it out character by character."
+    },
+    {
+      "type": "content",
+      "step_title": "Lesson Summary",
+      "content_markdown": "## Summary\n\nGreat job! Here's everything you learned:\n\n| Character | Transliteration | Sound |\n|-----------|----------------|-------|\n| **त** | ta | th (dental, soft) |\n| **थ** | tha | th (dental asp.) |\n| **द** | da | d (dental) |\n| **ध** | dha | dh (dental asp.) |\n| **न** | na | na (dental) |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q12",
+      "step_title": "Final Check",
+      "question": "How many new characters/concepts did we cover in this lesson?",
+      "options": [
+        "5",
+        "7",
+        "4",
+        "10"
+      ],
+      "correct_answer": "5",
+      "feedback": "Correct! We covered 5 characters today. Keep practicing!"
+    }
+  ]
+}

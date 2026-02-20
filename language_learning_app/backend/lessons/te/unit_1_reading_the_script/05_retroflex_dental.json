@@ -1,0 +1,231 @@
+{
+  "lesson_id": "te_05_retroflex_dental",
+  "language": "Telugu",
+  "title": "Retroflex & Dental Consonants",
+  "subtitle": "ట, ఠ, డ, ఢ, ణ and త, థ, ద, ధ, న",
+  "description": "Master the retroflex-dental distinction.",
+  "estimated_minutes": 25.2,
+  "cefr_level": "A0",
+  "tags": [
+    "script",
+    "reading",
+    "basics"
+  ],
+  "skills_learned": [
+    "Retroflex consonants",
+    "Dental consonants"
+  ],
+  "steps": [
+    {
+      "type": "content",
+      "step_title": "Retroflex & Dental Consonants",
+      "content_markdown": "# Retroflex & Dental Consonants\n\nMaster the retroflex-dental distinction.\n\n### Today's Characters\n**ట** · **డ** · **ణ** · **త** · **న**"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ట (Ta)",
+      "content_markdown": "## ట — Ta\n\n**Sound:** ta (retroflex)\n\n**Memory Trick:** Tongue curls back"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q1",
+      "step_title": "Identify: Ta",
+      "question": "Which character represents the sound **Ta** (ta (retroflex))?",
+      "options": [
+        "ట",
+        "డ",
+        "త",
+        "ణ"
+      ],
+      "correct_answer": "ట",
+      "feedback": "Correct! **ట** is the ta (retroflex) sound. Tongue curls back"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: డ (Da)",
+      "content_markdown": "## డ — Da\n\n**Sound:** da (retroflex)\n\n**Memory Trick:** Voiced retroflex\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **డ** | da (retroflex) | Da |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q2",
+      "step_title": "Identify: Da",
+      "question": "Which character represents the sound **Da** (da (retroflex))?",
+      "options": [
+        "త",
+        "ట",
+        "డ",
+        "ణ"
+      ],
+      "correct_answer": "డ",
+      "feedback": "Correct! **డ** is the da (retroflex) sound. Voiced retroflex"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ణ (Na)",
+      "content_markdown": "## ణ — Na\n\n**Sound:** na (retroflex)\n\n**Memory Trick:** Retroflex nasal\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **ణ** | na (retroflex) | Na |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q3",
+      "step_title": "Identify: Na",
+      "question": "Which character represents the sound **Na** (na (retroflex))?",
+      "options": [
+        "డ",
+        "త",
+        "ణ",
+        "ట"
+      ],
+      "correct_answer": "ణ",
+      "feedback": "Correct! **ణ** is the na (retroflex) sound. Retroflex nasal"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: త (tha)",
+      "content_markdown": "## త — tha\n\n**Sound:** th (dental)\n\n**Memory Trick:** Tongue on teeth\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **త** | th (dental) | tha |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q4",
+      "step_title": "Identify: tha",
+      "question": "Which character represents the sound **tha** (th (dental))?",
+      "options": [
+        "త",
+        "ట",
+        "డ",
+        "ణ"
+      ],
+      "correct_answer": "త",
+      "feedback": "Correct! **త** is the th (dental) sound. Tongue on teeth"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: న (na)",
+      "content_markdown": "## న — na\n\n**Sound:** na (dental)\n\n**Memory Trick:** Dental nasal"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q5",
+      "step_title": "Identify: na",
+      "question": "Which character represents the sound **na** (na (dental))?",
+      "options": [
+        "న",
+        "డ",
+        "ణ",
+        "ట"
+      ],
+      "correct_answer": "న",
+      "feedback": "Correct! **న** is the na (dental) sound. Dental nasal"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q6",
+      "step_title": "Sound Match",
+      "question": "What sound does **ట** make?",
+      "options": [
+        "ta (retroflex)",
+        "da (retroflex)",
+        "na (retroflex)",
+        "th (dental)"
+      ],
+      "correct_answer": "ta (retroflex)",
+      "feedback": "Right! **ట** = Ta = ta (retroflex)."
+    },
+    {
+      "type": "content",
+      "step_title": "Visual Comparison",
+      "content_markdown": "## Compare the Shapes\n\nLook closely at how these characters differ:\n\n- **ట** (Ta) vs **డ** (Da)\n- **ణ** (Na) vs **త** (tha)\n\nNotice the subtle differences in strokes, dots, or curves!"
+    },
+    {
+      "type": "free_response",
+      "id": "q7",
+      "step_title": "Type the Sound",
+      "question": "What is the transliteration (Roman letters) for **న**?",
+      "ai_grading": false,
+      "accepted_responses": [
+        "na",
+        "na",
+        "NA"
+      ],
+      "hint": "It sounds like 'na (dental)'."
+    },
+    {
+      "type": "content",
+      "step_title": "Word Practice",
+      "content_markdown": "## Let's Read Words!\n\nUsing what you've learned, try reading these words:\n\n| Telugu | Transliteration | Meaning |\n|---------|-----------------|--------|\n| **తెలుగు** | telugu | Telugu |\n| **నాడు** | naadu | country |\n| **దేశం** | desham | country/nation |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q8",
+      "step_title": "Read: తెలుగు",
+      "question": "What does **తెలుగు** (telugu) mean?",
+      "options": [
+        "country/nation",
+        "Telugu",
+        "country",
+        "hello"
+      ],
+      "correct_answer": "Telugu",
+      "feedback": "Correct! **తెలుగు** (telugu) means 'Telugu'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q9",
+      "step_title": "Read: నాడు",
+      "question": "What does **నాడు** (naadu) mean?",
+      "options": [
+        "country/nation",
+        "hello",
+        "country",
+        "Telugu"
+      ],
+      "correct_answer": "country",
+      "feedback": "Correct! **నాడు** (naadu) means 'country'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q10",
+      "step_title": "Read: దేశం",
+      "question": "What does **దేశం** (desham) mean?",
+      "options": [
+        "hello",
+        "country/nation",
+        "country",
+        "Telugu"
+      ],
+      "correct_answer": "country/nation",
+      "feedback": "Correct! **దేశం** (desham) means 'country/nation'."
+    },
+    {
+      "type": "free_response",
+      "id": "q11",
+      "step_title": "Transliterate the Word",
+      "question": "Type the transliteration for **తెలుగు** (meaning: Telugu)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "telugu",
+        "telugu",
+        "telugu"
+      ],
+      "hint": "Sound it out character by character."
+    },
+    {
+      "type": "content",
+      "step_title": "Lesson Summary",
+      "content_markdown": "## Summary\n\nGreat job! Here's everything you learned:\n\n| Character | Transliteration | Sound |\n|-----------|----------------|-------|\n| **ట** | Ta | ta (retroflex) |\n| **డ** | Da | da (retroflex) |\n| **ణ** | Na | na (retroflex) |\n| **త** | tha | th (dental) |\n| **న** | na | na (dental) |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q12",
+      "step_title": "Final Check",
+      "question": "How many new characters/concepts did we cover in this lesson?",
+      "options": [
+        "5",
+        "7",
+        "4",
+        "10"
+      ],
+      "correct_answer": "5",
+      "feedback": "Correct! We covered 5 characters today. Keep practicing!"
+    }
+  ]
+}

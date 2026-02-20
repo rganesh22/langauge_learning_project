@@ -1,0 +1,213 @@
+{
+  "lesson_id": "ta_16_special_characters",
+  "language": "Tamil",
+  "title": "Special Characters & Symbols",
+  "subtitle": "ஃ (Aytham), ஸ, ஷ, ஹ — Grantha and special marks",
+  "description": "Learn the special Tamil characters including the unique Aytham and borrowed Grantha letters.",
+  "estimated_minutes": 22.8,
+  "cefr_level": "A0",
+  "tags": [
+    "script",
+    "reading",
+    "basics"
+  ],
+  "skills_learned": [
+    "Aytham ஃ",
+    "Grantha letters ஸ ஷ ஹ",
+    "Reading borrowed words"
+  ],
+  "steps": [
+    {
+      "type": "content",
+      "step_title": "Special Characters & Symbols",
+      "content_markdown": "# Special Characters & Symbols\n\nLearn the special Tamil characters including the unique Aytham and borrowed Grantha letters.\n\n### Today's Characters\n**ஃ** · **ஸ** · **ஷ** · **ஹ**"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ஃ (ah)",
+      "content_markdown": "## ஃ — ah\n\n**Sound:** a glottal stop or 'h'\n\n**Memory Trick:** Three dots — the visarga, a breathy stop"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q1",
+      "step_title": "Identify: ah",
+      "question": "Which character represents the sound **ah** (a glottal stop or 'h')?",
+      "options": [
+        "ஃ",
+        "ஷ",
+        "ஸ",
+        "ஹ"
+      ],
+      "correct_answer": "ஃ",
+      "feedback": "Correct! **ஃ** is the a glottal stop or 'h' sound. Three dots — the visarga, a breathy stop"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ஸ (sa)",
+      "content_markdown": "## ஸ — sa\n\n**Sound:** sa as in sun\n\n**Memory Trick:** Grantha letter borrowed from Sanskrit for 's'\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **ஸ** | sa as in sun | sa |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q2",
+      "step_title": "Identify: sa",
+      "question": "Which character represents the sound **sa** (sa as in sun)?",
+      "options": [
+        "ஸ",
+        "ஹ",
+        "ஃ",
+        "ஷ"
+      ],
+      "correct_answer": "ஸ",
+      "feedback": "Correct! **ஸ** is the sa as in sun sound. Grantha letter borrowed from Sanskrit for 's'"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ஷ (sha)",
+      "content_markdown": "## ஷ — sha\n\n**Sound:** sh as in ship\n\n**Memory Trick:** Grantha letter for the 'sh' sound\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **ஷ** | sh as in ship | sha |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q3",
+      "step_title": "Identify: sha",
+      "question": "Which character represents the sound **sha** (sh as in ship)?",
+      "options": [
+        "ஹ",
+        "ஃ",
+        "ஸ",
+        "ஷ"
+      ],
+      "correct_answer": "ஷ",
+      "feedback": "Correct! **ஷ** is the sh as in ship sound. Grantha letter for the 'sh' sound"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ஹ (ha)",
+      "content_markdown": "## ஹ — ha\n\n**Sound:** ha as in hat\n\n**Memory Trick:** Grantha letter for the 'h' sound"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q4",
+      "step_title": "Identify: ha",
+      "question": "Which character represents the sound **ha** (ha as in hat)?",
+      "options": [
+        "ஷ",
+        "ஸ",
+        "ஃ",
+        "ஹ"
+      ],
+      "correct_answer": "ஹ",
+      "feedback": "Correct! **ஹ** is the ha as in hat sound. Grantha letter for the 'h' sound"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q5",
+      "step_title": "Sound Match",
+      "question": "What sound does **ஃ** make?",
+      "options": [
+        "a glottal stop or 'h'",
+        "sa as in sun",
+        "sh as in ship",
+        "ha as in hat"
+      ],
+      "correct_answer": "a glottal stop or 'h'",
+      "feedback": "Right! **ஃ** = ah = a glottal stop or 'h'."
+    },
+    {
+      "type": "content",
+      "step_title": "Visual Comparison",
+      "content_markdown": "## Compare the Shapes\n\nLook closely at how these characters differ:\n\n- **ஃ** (ah) vs **ஸ** (sa)\n- **ஷ** (sha) vs **ஹ** (ha)\n\nNotice the subtle differences in strokes, dots, or curves!"
+    },
+    {
+      "type": "free_response",
+      "id": "q6",
+      "step_title": "Type the Sound",
+      "question": "What is the transliteration (Roman letters) for **ஹ**?",
+      "ai_grading": false,
+      "accepted_responses": [
+        "ha",
+        "ha",
+        "HA"
+      ],
+      "hint": "It sounds like 'ha as in hat'."
+    },
+    {
+      "type": "content",
+      "step_title": "Word Practice",
+      "content_markdown": "## Let's Read Words!\n\nUsing what you've learned, try reading these words:\n\n| Tamil | Transliteration | Meaning |\n|---------|-----------------|--------|\n| **ஸ்ரீ** | srii | Sri / honorific |\n| **ஷாப்** | shaap | shop |\n| **ஹலோ** | haloo | hello |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q7",
+      "step_title": "Read: ஸ்ரீ",
+      "question": "What does **ஸ்ரீ** (srii) mean?",
+      "options": [
+        "Sri / honorific",
+        "hello",
+        "hello",
+        "shop"
+      ],
+      "correct_answer": "Sri / honorific",
+      "feedback": "Correct! **ஸ்ரீ** (srii) means 'Sri / honorific'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q8",
+      "step_title": "Read: ஷாப்",
+      "question": "What does **ஷாப்** (shaap) mean?",
+      "options": [
+        "hello",
+        "hello",
+        "Sri / honorific",
+        "shop"
+      ],
+      "correct_answer": "shop",
+      "feedback": "Correct! **ஷாப்** (shaap) means 'shop'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q9",
+      "step_title": "Read: ஹலோ",
+      "question": "What does **ஹலோ** (haloo) mean?",
+      "options": [
+        "shop",
+        "hello",
+        "hello",
+        "Sri / honorific"
+      ],
+      "correct_answer": "hello",
+      "feedback": "Correct! **ஹலோ** (haloo) means 'hello'."
+    },
+    {
+      "type": "free_response",
+      "id": "q10",
+      "step_title": "Transliterate the Word",
+      "question": "Type the transliteration for **ஸ்ரீ** (meaning: Sri / honorific)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "srii",
+        "srii",
+        "srii"
+      ],
+      "hint": "Sound it out character by character."
+    },
+    {
+      "type": "content",
+      "step_title": "Lesson Summary",
+      "content_markdown": "## Summary\n\nGreat job! Here's everything you learned:\n\n| Character | Transliteration | Sound |\n|-----------|----------------|-------|\n| **ஃ** | ah | a glottal stop or 'h' |\n| **ஸ** | sa | sa as in sun |\n| **ஷ** | sha | sh as in ship |\n| **ஹ** | ha | ha as in hat |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q11",
+      "step_title": "Final Check",
+      "question": "How many new characters/concepts did we cover in this lesson?",
+      "options": [
+        "4",
+        "6",
+        "3",
+        "9"
+      ],
+      "correct_answer": "4",
+      "feedback": "Correct! We covered 4 characters today. Keep practicing!"
+    }
+  ]
+}

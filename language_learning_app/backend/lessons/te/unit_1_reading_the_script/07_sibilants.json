@@ -1,0 +1,231 @@
+{
+  "lesson_id": "te_07_sibilants",
+  "language": "Telugu",
+  "title": "Sibilants & Special Letters",
+  "subtitle": "శ, ష, స, హ, ళ, ఱ",
+  "description": "Complete the consonant chart.",
+  "estimated_minutes": 25.2,
+  "cefr_level": "A0",
+  "tags": [
+    "script",
+    "reading",
+    "basics"
+  ],
+  "skills_learned": [
+    "Sibilants",
+    "Special letters"
+  ],
+  "steps": [
+    {
+      "type": "content",
+      "step_title": "Sibilants & Special Letters",
+      "content_markdown": "# Sibilants & Special Letters\n\nComplete the consonant chart.\n\n### Today's Characters\n**శ** · **ష** · **స** · **హ** · **ళ**"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: శ (sha)",
+      "content_markdown": "## శ — sha\n\n**Sound:** sh\n\n**Memory Trick:** Palatal sibilant"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q1",
+      "step_title": "Identify: sha",
+      "question": "Which character represents the sound **sha** (sh)?",
+      "options": [
+        "హ",
+        "శ",
+        "ష",
+        "స"
+      ],
+      "correct_answer": "శ",
+      "feedback": "Correct! **శ** is the sh sound. Palatal sibilant"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ష (Sha)",
+      "content_markdown": "## ష — Sha\n\n**Sound:** sh (retroflex)\n\n**Memory Trick:** Retroflex sibilant\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **ష** | sh (retroflex) | Sha |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q2",
+      "step_title": "Identify: Sha",
+      "question": "Which character represents the sound **Sha** (sh (retroflex))?",
+      "options": [
+        "శ",
+        "స",
+        "హ",
+        "ష"
+      ],
+      "correct_answer": "ష",
+      "feedback": "Correct! **ష** is the sh (retroflex) sound. Retroflex sibilant"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: స (sa)",
+      "content_markdown": "## స — sa\n\n**Sound:** s\n\n**Memory Trick:** Dental sibilant\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **స** | s | sa |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q3",
+      "step_title": "Identify: sa",
+      "question": "Which character represents the sound **sa** (s)?",
+      "options": [
+        "ష",
+        "హ",
+        "శ",
+        "స"
+      ],
+      "correct_answer": "స",
+      "feedback": "Correct! **స** is the s sound. Dental sibilant"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: హ (ha)",
+      "content_markdown": "## హ — ha\n\n**Sound:** h\n\n**Memory Trick:** Aspirate\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **హ** | h | ha |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q4",
+      "step_title": "Identify: ha",
+      "question": "Which character represents the sound **ha** (h)?",
+      "options": [
+        "హ",
+        "శ",
+        "స",
+        "ష"
+      ],
+      "correct_answer": "హ",
+      "feedback": "Correct! **హ** is the h sound. Aspirate"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ళ (La)",
+      "content_markdown": "## ళ — La\n\n**Sound:** retroflex l\n\n**Memory Trick:** Heavy L"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q5",
+      "step_title": "Identify: La",
+      "question": "Which character represents the sound **La** (retroflex l)?",
+      "options": [
+        "స",
+        "శ",
+        "ళ",
+        "ష"
+      ],
+      "correct_answer": "ళ",
+      "feedback": "Correct! **ళ** is the retroflex l sound. Heavy L"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q6",
+      "step_title": "Sound Match",
+      "question": "What sound does **శ** make?",
+      "options": [
+        "sh",
+        "sh (retroflex)",
+        "s",
+        "h"
+      ],
+      "correct_answer": "sh",
+      "feedback": "Right! **శ** = sha = sh."
+    },
+    {
+      "type": "content",
+      "step_title": "Visual Comparison",
+      "content_markdown": "## Compare the Shapes\n\nLook closely at how these characters differ:\n\n- **శ** (sha) vs **ష** (Sha)\n- **స** (sa) vs **హ** (ha)\n\nNotice the subtle differences in strokes, dots, or curves!"
+    },
+    {
+      "type": "free_response",
+      "id": "q7",
+      "step_title": "Type the Sound",
+      "question": "What is the transliteration (Roman letters) for **ళ**?",
+      "ai_grading": false,
+      "accepted_responses": [
+        "La",
+        "la",
+        "LA"
+      ],
+      "hint": "It sounds like 'retroflex l'."
+    },
+    {
+      "type": "content",
+      "step_title": "Word Practice",
+      "content_markdown": "## Let's Read Words!\n\nUsing what you've learned, try reading these words:\n\n| Telugu | Transliteration | Meaning |\n|---------|-----------------|--------|\n| **శాల** | shaala | hall |\n| **సంఖ్య** | sankhya | number |\n| **హైదరాబాద్** | haidaraabaad | Hyderabad |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q8",
+      "step_title": "Read: శాల",
+      "question": "What does **శాల** (shaala) mean?",
+      "options": [
+        "Hyderabad",
+        "hall",
+        "number",
+        "hello"
+      ],
+      "correct_answer": "hall",
+      "feedback": "Correct! **శాల** (shaala) means 'hall'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q9",
+      "step_title": "Read: సంఖ్య",
+      "question": "What does **సంఖ్య** (sankhya) mean?",
+      "options": [
+        "hall",
+        "hello",
+        "Hyderabad",
+        "number"
+      ],
+      "correct_answer": "number",
+      "feedback": "Correct! **సంఖ్య** (sankhya) means 'number'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q10",
+      "step_title": "Read: హైదరాబాద్",
+      "question": "What does **హైదరాబాద్** (haidaraabaad) mean?",
+      "options": [
+        "Hyderabad",
+        "hello",
+        "hall",
+        "number"
+      ],
+      "correct_answer": "Hyderabad",
+      "feedback": "Correct! **హైదరాబాద్** (haidaraabaad) means 'Hyderabad'."
+    },
+    {
+      "type": "free_response",
+      "id": "q11",
+      "step_title": "Transliterate the Word",
+      "question": "Type the transliteration for **శాల** (meaning: hall)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "shaala",
+        "shaala",
+        "shaala"
+      ],
+      "hint": "Sound it out character by character."
+    },
+    {
+      "type": "content",
+      "step_title": "Lesson Summary",
+      "content_markdown": "## Summary\n\nGreat job! Here's everything you learned:\n\n| Character | Transliteration | Sound |\n|-----------|----------------|-------|\n| **శ** | sha | sh |\n| **ష** | Sha | sh (retroflex) |\n| **స** | sa | s |\n| **హ** | ha | h |\n| **ళ** | La | retroflex l |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q12",
+      "step_title": "Final Check",
+      "question": "How many new characters/concepts did we cover in this lesson?",
+      "options": [
+        "5",
+        "7",
+        "4",
+        "10"
+      ],
+      "correct_answer": "5",
+      "feedback": "Correct! We covered 5 characters today. Keep practicing!"
+    }
+  ]
+}

@@ -1,0 +1,152 @@
+{
+  "lesson_id": "kn_06_labial_semivowels",
+  "language": "Kannada",
+  "title": "Labials & Semivowels",
+  "subtitle": "ಪ, ಫ, ಬ, ಭ, ಮ and ಯ, ರ, ಲ, ವ",
+  "description": "Complete the main consonant groups with labials and semivowels. Focus on reading and pronunciation.",
+  "estimated_minutes": 30,
+  "cefr_level": "A0",
+  "tags": ["script", "reading", "basics", "consonants"],
+  "skills_learned": [
+    "Recognizing Labial consonants",
+    "Recognizing Semivowels",
+    "Reading words with mixed consonants"
+  ],
+  "steps": [
+    {
+      "type": "content",
+      "step_title": "Labials & Semivowels",
+      "content_markdown": "# Labials & Semivowels\n\nComplete the main consonant groups with labials and semivowels.\n\n### Today's Characters\n**ಪ** · **ಬ** · **ಮ** · **ಯ** · **ರ** · **ಲ**"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ಪ (pa)",
+      "content_markdown": "## ಪ — pa\n\n**Sound:** pa\n\n**Memory Trick:** Lips together to make the sound."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q1",
+      "step_title": "Identify: pa",
+      "question": "Which character represents the sound **pa**?",
+      "options": ["ಯ", "ಪ", "ಮ", "ಬ"],
+      "correct_answer": "ಪ",
+      "feedback": "Correct! **ಪ** is the 'pa' sound."
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ಬ (ba)",
+      "content_markdown": "## ಬ — ba\n\n**Sound:** ba\n\n**Memory Trick:** The voiced version of 'p'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q2",
+      "step_title": "Identify: ba",
+      "question": "Which character represents the sound **ba**?",
+      "options": ["ಮ", "ಪ", "ಬ", "ಯ"],
+      "correct_answer": "ಬ",
+      "feedback": "Correct! **ಬ** is the 'ba' sound."
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ಮ (ma)",
+      "content_markdown": "## ಮ — ma\n\n**Sound:** ma\n\n**Memory Trick:** The nasal labial sound."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q3",
+      "step_title": "Identify: ma",
+      "question": "Which character represents the sound **ma**?",
+      "options": ["ಮ", "ಯ", "ಬ", "ಪ"],
+      "correct_answer": "ಮ",
+      "feedback": "Correct! **ಮ** is the 'ma' sound."
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ಯ (ya)",
+      "content_markdown": "## ಯ — ya\n\n**Sound:** ya as in 'yarn'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q4",
+      "step_title": "Identify: ya",
+      "question": "Which character represents the sound **ya**?",
+      "options": ["ಬ", "ಪ", "ಮ", "ಯ"],
+      "correct_answer": "ಯ",
+      "feedback": "Correct! **ಯ** is the 'ya' sound."
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ರ (ra)",
+      "content_markdown": "## ರ — ra\n\n**Sound:** ra (tapped or trilled)."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q5",
+      "step_title": "Identify: ra",
+      "question": "Which character represents the sound **ra**?",
+      "options": ["ರ", "ಮ", "ಬ", "ಪ"],
+      "correct_answer": "ರ",
+      "feedback": "Correct! **ರ** is the 'ra' sound."
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ಲ (la)",
+      "content_markdown": "## ಲ — la\n\n**Sound:** la as in 'lake'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q6",
+      "step_title": "Identify: la",
+      "question": "Which character represents the sound **la**?",
+      "options": ["ಮ", "ಬ", "ಪ", "ಲ"],
+      "correct_answer": "ಲ",
+      "feedback": "Correct! **ಲ** is the 'la' sound."
+    },
+    {
+      "type": "content",
+      "step_title": "Reading Practice",
+      "content_markdown": "## Let's Read!\n\nPractice reading these words out loud:\n\n| Kannada | Transliteration |\n|---------|-----------------|\n| **ಪುಸ್ತಕ** | pusthaka |\n| **ಬೆಂಗಳೂರು** | bengaluuru |\n| **ಮನೆ** | mane |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q7",
+      "step_title": "Read: ಪುಸ್ತಕ",
+      "question": "How do you read this word out loud?\n\n# ಪುಸ್ತಕ",
+      "options": ["pusthaka", "bengaluuru", "mane", "paya"],
+      "correct_answer": "pusthaka",
+      "feedback": "Perfect! You read 'pusthaka' correctly."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q8",
+      "step_title": "Read: ಬೆಂಗಳೂರು",
+      "question": "How do you read this word out loud?\n\n# ಬೆಂಗಳೂರು",
+      "options": ["mane", "pusthaka", "bengaluuru", "baale"],
+      "correct_answer": "bengaluuru",
+      "feedback": "Perfect! You read 'bengaluuru' correctly."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q9",
+      "step_title": "Read: ಮನೆ",
+      "question": "How do you read this word out loud?\n\n# ಮನೆ",
+      "options": ["pusthaka", "mane", "bengaluuru", "maathu"],
+      "correct_answer": "mane",
+      "feedback": "Perfect! You read 'mane' correctly."
+    },
+    {
+      "type": "free_response",
+      "id": "q10",
+      "step_title": "Transliterate Word",
+      "question": "Type the transliteration for **ಮನೆ**",
+      "ai_grading": false,
+      "accepted_responses": ["mane", "Mane"],
+      "hint": "M-A-N-E"
+    },
+    {
+      "type": "content",
+      "step_title": "Lesson Summary",
+      "content_markdown": "## Summary\n\nYou've now learned the Labials and Semivowels:\n\n- **Labials:** ಪ (pa), ಬ (ba), ಮ (ma)\n- **Semivowels:** ಯ (ya), ರ (ra), ಲ (la), ವ (va)"
+    }
+  ]
+}

@@ -1,0 +1,212 @@
+{
+  "lesson_id": "te_01_vowels_1",
+  "language": "Telugu",
+  "title": "The First Vowels",
+  "subtitle": "అ, ఆ, ఇ, ఈ",
+  "description": "Learn the first four Telugu vowels.",
+  "estimated_minutes": 22.8,
+  "cefr_level": "A0",
+  "tags": [
+    "script",
+    "reading",
+    "basics"
+  ],
+  "skills_learned": [
+    "Recognize అ ఆ ఇ ఈ",
+    "Short vs long distinction"
+  ],
+  "steps": [
+    {
+      "type": "content",
+      "step_title": "Welcome to Telugu Script!",
+      "content_markdown": "# Welcome to Telugu Script! 🎉\n\nYou're about to learn to read Telugu — one of the beautiful writing systems of South Asia.\n\n## Today's Mission\nLearn **4 new characters** and start reading real words!\n\n### What You'll Learn\n- **అ** (a) — a in about\n- **ఆ** (aa) — a in father\n- **ఇ** (i) — i in bit\n- **ఈ** (ii) — ee in see\n\nLet's begin! 💪"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: అ (a)",
+      "content_markdown": "## అ — a\n\n**Sound:** a in about\n\n**Memory Trick:** Round top — the foundation vowel"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q1",
+      "step_title": "Identify: a",
+      "question": "Which character represents the sound **a** (a in about)?",
+      "options": [
+        "అ",
+        "ఈ",
+        "ఇ",
+        "ఆ"
+      ],
+      "correct_answer": "అ",
+      "feedback": "Correct! **అ** is the a in about sound. Round top — the foundation vowel"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ఆ (aa)",
+      "content_markdown": "## ఆ — aa\n\n**Sound:** a in father\n\n**Memory Trick:** అ with a stroke — longer sound\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **ఆ** | a in father | aa |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q2",
+      "step_title": "Identify: aa",
+      "question": "Which character represents the sound **aa** (a in father)?",
+      "options": [
+        "ఆ",
+        "ఈ",
+        "ఇ",
+        "అ"
+      ],
+      "correct_answer": "ఆ",
+      "feedback": "Correct! **ఆ** is the a in father sound. అ with a stroke — longer sound"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ఇ (i)",
+      "content_markdown": "## ఇ — i\n\n**Sound:** i in bit\n\n**Memory Trick:** Compact for a short sound\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **ఇ** | i in bit | i |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q3",
+      "step_title": "Identify: i",
+      "question": "Which character represents the sound **i** (i in bit)?",
+      "options": [
+        "అ",
+        "ఇ",
+        "ఆ",
+        "ఈ"
+      ],
+      "correct_answer": "ఇ",
+      "feedback": "Correct! **ఇ** is the i in bit sound. Compact for a short sound"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ఈ (ii)",
+      "content_markdown": "## ఈ — ii\n\n**Sound:** ee in see\n\n**Memory Trick:** Extended for a long sound"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q4",
+      "step_title": "Identify: ii",
+      "question": "Which character represents the sound **ii** (ee in see)?",
+      "options": [
+        "అ",
+        "ఆ",
+        "ఇ",
+        "ఈ"
+      ],
+      "correct_answer": "ఈ",
+      "feedback": "Correct! **ఈ** is the ee in see sound. Extended for a long sound"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q5",
+      "step_title": "Sound Match",
+      "question": "What sound does **అ** make?",
+      "options": [
+        "a in about",
+        "a in father",
+        "i in bit",
+        "ee in see"
+      ],
+      "correct_answer": "a in about",
+      "feedback": "Right! **అ** = a = a in about."
+    },
+    {
+      "type": "content",
+      "step_title": "Visual Comparison",
+      "content_markdown": "## Compare the Shapes\n\nLook closely at how these characters differ:\n\n- **అ** (a) vs **ఆ** (aa)\n- **ఇ** (i) vs **ఈ** (ii)\n\nNotice the subtle differences in strokes, dots, or curves!"
+    },
+    {
+      "type": "free_response",
+      "id": "q6",
+      "step_title": "Type the Sound",
+      "question": "What is the transliteration (Roman letters) for **ఈ**?",
+      "ai_grading": false,
+      "accepted_responses": [
+        "ii",
+        "ii",
+        "II"
+      ],
+      "hint": "It sounds like 'ee in see'."
+    },
+    {
+      "type": "content",
+      "step_title": "Word Practice",
+      "content_markdown": "## Let's Read Words!\n\nUsing what you've learned, try reading these words:\n\n| Telugu | Transliteration | Meaning |\n|---------|-----------------|--------|\n| **అమ్మ** | amma | mother |\n| **ఆమె** | aame | she |\n| **ఇల్లు** | illu | house |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q7",
+      "step_title": "Read: అమ్మ",
+      "question": "What does **అమ్మ** (amma) mean?",
+      "options": [
+        "hello",
+        "mother",
+        "house",
+        "she"
+      ],
+      "correct_answer": "mother",
+      "feedback": "Correct! **అమ్మ** (amma) means 'mother'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q8",
+      "step_title": "Read: ఆమె",
+      "question": "What does **ఆమె** (aame) mean?",
+      "options": [
+        "mother",
+        "she",
+        "hello",
+        "house"
+      ],
+      "correct_answer": "she",
+      "feedback": "Correct! **ఆమె** (aame) means 'she'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q9",
+      "step_title": "Read: ఇల్లు",
+      "question": "What does **ఇల్లు** (illu) mean?",
+      "options": [
+        "she",
+        "mother",
+        "hello",
+        "house"
+      ],
+      "correct_answer": "house",
+      "feedback": "Correct! **ఇల్లు** (illu) means 'house'."
+    },
+    {
+      "type": "free_response",
+      "id": "q10",
+      "step_title": "Transliterate the Word",
+      "question": "Type the transliteration for **అమ్మ** (meaning: mother)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "amma",
+        "amma",
+        "amma"
+      ],
+      "hint": "Sound it out character by character."
+    },
+    {
+      "type": "content",
+      "step_title": "Lesson Summary",
+      "content_markdown": "## Summary\n\nGreat job! Here's everything you learned:\n\n| Character | Transliteration | Sound |\n|-----------|----------------|-------|\n| **అ** | a | a in about |\n| **ఆ** | aa | a in father |\n| **ఇ** | i | i in bit |\n| **ఈ** | ii | ee in see |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q11",
+      "step_title": "Final Check",
+      "question": "How many new characters/concepts did we cover in this lesson?",
+      "options": [
+        "4",
+        "6",
+        "3",
+        "9"
+      ],
+      "correct_answer": "4",
+      "feedback": "Correct! We covered 4 characters today. Keep practicing!"
+    }
+  ]
+}

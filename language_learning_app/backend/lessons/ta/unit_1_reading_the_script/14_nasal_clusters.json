@@ -1,0 +1,232 @@
+{
+  "lesson_id": "ta_14_nasal_clusters",
+  "language": "Tamil",
+  "title": "Nasal + Stop Clusters",
+  "subtitle": "ங்க, ஞ்ச, ண்ட, ந்த, ம்ப — the natural pairs",
+  "description": "Learn the five natural nasal-stop combinations that are extremely common in Tamil.",
+  "estimated_minutes": 25.2,
+  "cefr_level": "A0",
+  "tags": [
+    "script",
+    "reading",
+    "basics"
+  ],
+  "skills_learned": [
+    "Nasal-stop cluster reading",
+    "The 5 natural pairs",
+    "Cluster pronunciation"
+  ],
+  "steps": [
+    {
+      "type": "content",
+      "step_title": "Nasal + Stop Clusters",
+      "content_markdown": "# Nasal + Stop Clusters\n\nLearn the five natural nasal-stop combinations that are extremely common in Tamil.\n\n### Today's Characters\n**ங்க** · **ஞ்ச** · **ண்ட** · **ந்த** · **ம்ப**"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ங்க (ngka)",
+      "content_markdown": "## ங்க — ngka\n\n**Sound:** nk as in think\n\n**Memory Trick:** Nasal ங + hard க — the 'nk' pair"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q1",
+      "step_title": "Identify: ngka",
+      "question": "Which character represents the sound **ngka** (nk as in think)?",
+      "options": [
+        "ஞ்ச",
+        "ண்ட",
+        "ங்க",
+        "ந்த"
+      ],
+      "correct_answer": "ங்க",
+      "feedback": "Correct! **ங்க** is the nk as in think sound. Nasal ங + hard க — the 'nk' pair"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ஞ்ச (nycha)",
+      "content_markdown": "## ஞ்ச — nycha\n\n**Sound:** nch as in lunch\n\n**Memory Trick:** Nasal ஞ + hard ச — the 'nch' pair\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **ஞ்ச** | nch as in lunch | nycha |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q2",
+      "step_title": "Identify: nycha",
+      "question": "Which character represents the sound **nycha** (nch as in lunch)?",
+      "options": [
+        "ங்க",
+        "ந்த",
+        "ண்ட",
+        "ஞ்ச"
+      ],
+      "correct_answer": "ஞ்ச",
+      "feedback": "Correct! **ஞ்ச** is the nch as in lunch sound. Nasal ஞ + hard ச — the 'nch' pair"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ண்ட (Nda)",
+      "content_markdown": "## ண்ட — Nda\n\n**Sound:** nd (retroflex)\n\n**Memory Trick:** Retroflex nasal + retroflex stop\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **ண்ட** | nd (retroflex) | Nda |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q3",
+      "step_title": "Identify: Nda",
+      "question": "Which character represents the sound **Nda** (nd (retroflex))?",
+      "options": [
+        "ந்த",
+        "ண்ட",
+        "ங்க",
+        "ஞ்ச"
+      ],
+      "correct_answer": "ண்ட",
+      "feedback": "Correct! **ண்ட** is the nd (retroflex) sound. Retroflex nasal + retroflex stop"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ந்த (ntha)",
+      "content_markdown": "## ந்த — ntha\n\n**Sound:** nth as in tenth\n\n**Memory Trick:** Dental nasal + dental stop\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **ந்த** | nth as in tenth | ntha |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q4",
+      "step_title": "Identify: ntha",
+      "question": "Which character represents the sound **ntha** (nth as in tenth)?",
+      "options": [
+        "ங்க",
+        "ஞ்ச",
+        "ண்ட",
+        "ந்த"
+      ],
+      "correct_answer": "ந்த",
+      "feedback": "Correct! **ந்த** is the nth as in tenth sound. Dental nasal + dental stop"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ம்ப (mpa)",
+      "content_markdown": "## ம்ப — mpa\n\n**Sound:** mp as in jump\n\n**Memory Trick:** Labial nasal + labial stop"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q5",
+      "step_title": "Identify: mpa",
+      "question": "Which character represents the sound **mpa** (mp as in jump)?",
+      "options": [
+        "ங்க",
+        "ஞ்ச",
+        "ம்ப",
+        "ண்ட"
+      ],
+      "correct_answer": "ம்ப",
+      "feedback": "Correct! **ம்ப** is the mp as in jump sound. Labial nasal + labial stop"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q6",
+      "step_title": "Sound Match",
+      "question": "What sound does **ங்க** make?",
+      "options": [
+        "nk as in think",
+        "nch as in lunch",
+        "nd (retroflex)",
+        "nth as in tenth"
+      ],
+      "correct_answer": "nk as in think",
+      "feedback": "Right! **ங்க** = ngka = nk as in think."
+    },
+    {
+      "type": "content",
+      "step_title": "Visual Comparison",
+      "content_markdown": "## Compare the Shapes\n\nLook closely at how these characters differ:\n\n- **ங்க** (ngka) vs **ஞ்ச** (nycha)\n- **ண்ட** (Nda) vs **ந்த** (ntha)\n\nNotice the subtle differences in strokes, dots, or curves!"
+    },
+    {
+      "type": "free_response",
+      "id": "q7",
+      "step_title": "Type the Sound",
+      "question": "What is the transliteration (Roman letters) for **ம்ப**?",
+      "ai_grading": false,
+      "accepted_responses": [
+        "mpa",
+        "mpa",
+        "MPA"
+      ],
+      "hint": "It sounds like 'mp as in jump'."
+    },
+    {
+      "type": "content",
+      "step_title": "Word Practice",
+      "content_markdown": "## Let's Read Words!\n\nUsing what you've learned, try reading these words:\n\n| Tamil | Transliteration | Meaning |\n|---------|-----------------|--------|\n| **மாங்காய்** | maangkaay | mango (raw) |\n| **பந்து** | panthu | ball |\n| **கொம்பு** | kompu | horn |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q8",
+      "step_title": "Read: மாங்காய்",
+      "question": "What does **மாங்காய்** (maangkaay) mean?",
+      "options": [
+        "hello",
+        "horn",
+        "mango (raw)",
+        "ball"
+      ],
+      "correct_answer": "mango (raw)",
+      "feedback": "Correct! **மாங்காய்** (maangkaay) means 'mango (raw)'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q9",
+      "step_title": "Read: பந்து",
+      "question": "What does **பந்து** (panthu) mean?",
+      "options": [
+        "hello",
+        "mango (raw)",
+        "horn",
+        "ball"
+      ],
+      "correct_answer": "ball",
+      "feedback": "Correct! **பந்து** (panthu) means 'ball'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q10",
+      "step_title": "Read: கொம்பு",
+      "question": "What does **கொம்பு** (kompu) mean?",
+      "options": [
+        "mango (raw)",
+        "ball",
+        "horn",
+        "hello"
+      ],
+      "correct_answer": "horn",
+      "feedback": "Correct! **கொம்பு** (kompu) means 'horn'."
+    },
+    {
+      "type": "free_response",
+      "id": "q11",
+      "step_title": "Transliterate the Word",
+      "question": "Type the transliteration for **மாங்காய்** (meaning: mango (raw))",
+      "ai_grading": false,
+      "accepted_responses": [
+        "maangkaay",
+        "maangkaay",
+        "maangkaay"
+      ],
+      "hint": "Sound it out character by character."
+    },
+    {
+      "type": "content",
+      "step_title": "Lesson Summary",
+      "content_markdown": "## Summary\n\nGreat job! Here's everything you learned:\n\n| Character | Transliteration | Sound |\n|-----------|----------------|-------|\n| **ங்க** | ngka | nk as in think |\n| **ஞ்ச** | nycha | nch as in lunch |\n| **ண்ட** | Nda | nd (retroflex) |\n| **ந்த** | ntha | nth as in tenth |\n| **ம்ப** | mpa | mp as in jump |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q12",
+      "step_title": "Final Check",
+      "question": "How many new characters/concepts did we cover in this lesson?",
+      "options": [
+        "5",
+        "7",
+        "4",
+        "10"
+      ],
+      "correct_answer": "5",
+      "feedback": "Correct! We covered 5 characters today. Keep practicing!"
+    }
+  ]
+}

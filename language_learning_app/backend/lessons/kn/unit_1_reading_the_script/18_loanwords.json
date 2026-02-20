@@ -1,0 +1,68 @@
+{
+  "lesson_id": "kn_18_loanwords",
+  "language": "Kannada",
+  "title": "Reading Loanwords",
+  "subtitle": "Modern Kannada vocabulary",
+  "description": "Practice reading loanwords written in Kannada script. Focus on reading and pronunciation.",
+  "estimated_minutes": 20,
+  "cefr_level": "A0",
+  "tags": ["script", "reading", "basics"],
+  "skills_learned": [
+    "Reading familiar loanwords in Kannada script",
+    "Identifying English-origin words by sound",
+    "Practicing complex clusters in modern words"
+  ],
+  "steps": [
+    {
+      "type": "content",
+      "step_title": "Reading Loanwords",
+      "content_markdown": "# Reading Loanwords\n\nMany modern Kannada words are borrowed from English and written in the Kannada script. Since you already know the sounds, these are great for reading practice!\n\n### Today's Focus\n**ಬಸ್** · **ಟಿಕೆಟ್** · **ಫೋನ್** · **ಕಂಪ್ಯೂಟರ್**"
+    },
+    {
+      "type": "content",
+      "step_title": "Reading Table",
+      "content_markdown": "## Practice Reading\n\nRead these words out loud and see if you recognize the sounds:\n\n| Kannada | Transliteration |\n|---------|-----------------|\n| **ಬಸ್** | bas |\n| **ಟಿಕೆಟ್** | tiket |\n| **ಫೋನ್** | phoon |\n| **ಕಂಪ್ಯೂಟರ್** | kampyuutar |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q1",
+      "step_title": "Read: ಬಸ್",
+      "question": "How do you read this word out loud?\n\n# ಬಸ್",
+      "options": ["bas", "tiket", "phoon", "kampyuutar"],
+      "correct_answer": "bas",
+      "feedback": "Correct! This is 'bas' (bus)."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q2",
+      "step_title": "Read: ಟಿಕೆಟ್",
+      "question": "How do you read this word out loud?\n\n# ಟಿಕೆಟ್",
+      "options": ["bas", "tiket", "phoon", "kampyuutar"],
+      "correct_answer": "tiket",
+      "feedback": "Correct! This is 'tiket' (ticket)."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q3",
+      "step_title": "Read: ಫೋನ್",
+      "question": "How do you read this word out loud?\n\n# ಫೋನ್",
+      "options": ["bas", "tiket", "phoon", "kampyuutar"],
+      "correct_answer": "phoon",
+      "feedback": "Correct! This is 'phoon' (phone)."
+    },
+    {
+      "type": "free_response",
+      "id": "q4",
+      "step_title": "Transliterate Word",
+      "question": "Type the transliteration for **ಕಂಪ್ಯೂಟರ್**",
+      "ai_grading": false,
+      "accepted_responses": ["kampyuutar", "Kampyuutar"],
+      "hint": "K-A-M-P-Y-UU-T-A-R"
+    },
+    {
+      "type": "content",
+      "step_title": "Lesson Summary",
+      "content_markdown": "## Summary\n\nYou've practiced reading loanwords. Using familiar sounds is a great way to confirm your understanding of the script!"
+    }
+  ]
+}

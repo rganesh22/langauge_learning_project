@@ -1,0 +1,180 @@
+{
+  "lesson_id": "hi_15_reading_words",
+  "language": "Hindi",
+  "title": "Reading Real Words",
+  "subtitle": "Common Hindi vocabulary",
+  "description": "Practice reading everyday Hindi words.",
+  "estimated_minutes": 18.0,
+  "cefr_level": "A0",
+  "tags": [
+    "script",
+    "reading",
+    "basics"
+  ],
+  "skills_learned": [
+    "Common vocabulary"
+  ],
+  "steps": [
+    {
+      "type": "content",
+      "step_title": "Reading Real Words",
+      "content_markdown": "# Reading Real Words\n\nPractice reading everyday Hindi words."
+    },
+    {
+      "type": "content",
+      "step_title": "Word Practice",
+      "content_markdown": "## Let's Read Words!\n\nUsing what you've learned, try reading these words:\n\n| Hindi | Transliteration | Meaning |\n|---------|-----------------|--------|\n| **नमस्ते** | namaste | hello |\n| **धन्यवाद** | dhanyavaad | thank you |\n| **पानी** | paanii | water |\n| **खाना** | khaanaa | food |\n| **किताब** | kitaab | book |\n| **स्कूल** | skuul | school |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q1",
+      "step_title": "Read: नमस्ते",
+      "question": "What does **नमस्ते** (namaste) mean?",
+      "options": [
+        "hello",
+        "thank you",
+        "food",
+        "water"
+      ],
+      "correct_answer": "hello",
+      "feedback": "Correct! **नमस्ते** (namaste) means 'hello'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q2",
+      "step_title": "Read: धन्यवाद",
+      "question": "What does **धन्यवाद** (dhanyavaad) mean?",
+      "options": [
+        "thank you",
+        "food",
+        "water",
+        "hello"
+      ],
+      "correct_answer": "thank you",
+      "feedback": "Correct! **धन्यवाद** (dhanyavaad) means 'thank you'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q3",
+      "step_title": "Read: पानी",
+      "question": "What does **पानी** (paanii) mean?",
+      "options": [
+        "hello",
+        "water",
+        "thank you",
+        "food"
+      ],
+      "correct_answer": "water",
+      "feedback": "Correct! **पानी** (paanii) means 'water'."
+    },
+    {
+      "type": "free_response",
+      "id": "q4",
+      "step_title": "Transliterate the Word",
+      "question": "Type the transliteration for **नमस्ते** (meaning: hello)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "namaste",
+        "namaste",
+        "namaste"
+      ],
+      "hint": "Sound it out character by character."
+    },
+    {
+      "type": "content",
+      "step_title": "Lesson Summary",
+      "content_markdown": "## Summary\n\nExcellent reading practice! You worked through 6 words/phrases. Keep building your speed and confidence!"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q5",
+      "step_title": "Final Check",
+      "question": "What does **स्कूल** mean?",
+      "options": [
+        "school",
+        "hello",
+        "water",
+        "school"
+      ],
+      "correct_answer": "school",
+      "feedback": "Perfect! You're reading Hindi with confidence!"
+    },
+    {
+      "type": "free_response",
+      "id": "q6",
+      "step_title": "Practice: पानी",
+      "question": "Type the meaning of **पानी** (paanii)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "water"
+      ],
+      "hint": "Transliteration: paanii"
+    },
+    {
+      "type": "free_response",
+      "id": "q7",
+      "step_title": "Practice: खाना",
+      "question": "Type the meaning of **खाना** (khaanaa)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "food"
+      ],
+      "hint": "Transliteration: khaanaa"
+    },
+    {
+      "type": "free_response",
+      "id": "q8",
+      "step_title": "Practice: किताब",
+      "question": "Type the meaning of **किताब** (kitaab)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "book"
+      ],
+      "hint": "Transliteration: kitaab"
+    },
+    {
+      "type": "free_response",
+      "id": "q9",
+      "step_title": "Practice: स्कूल",
+      "question": "Type the meaning of **स्कूल** (skuul)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "school"
+      ],
+      "hint": "Transliteration: skuul"
+    },
+    {
+      "type": "free_response",
+      "id": "q10",
+      "step_title": "Practice: नमस्ते",
+      "question": "Type the meaning of **नमस्ते** (namaste)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "hello"
+      ],
+      "hint": "Transliteration: namaste"
+    },
+    {
+      "type": "free_response",
+      "id": "q11",
+      "step_title": "Practice: धन्यवाद",
+      "question": "Type the meaning of **धन्यवाद** (dhanyavaad)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "thank you"
+      ],
+      "hint": "Transliteration: dhanyavaad"
+    },
+    {
+      "type": "free_response",
+      "id": "q12",
+      "step_title": "Practice: पानी",
+      "question": "Type the meaning of **पानी** (paanii)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "water"
+      ],
+      "hint": "Transliteration: paanii"
+    }
+  ]
+}

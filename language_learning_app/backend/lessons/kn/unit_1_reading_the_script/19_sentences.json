@@ -1,0 +1,182 @@
+{
+  "lesson_id": "kn_19_sentences",
+  "language": "Kannada",
+  "title": "Reading Simple Sentences",
+  "subtitle": "From words to sentences",
+  "description": "Practice reading complete Kannada sentences.",
+  "estimated_minutes": 18.0,
+  "cefr_level": "A0",
+  "tags": [
+    "script",
+    "reading",
+    "basics"
+  ],
+  "skills_learned": [
+    "Full sentence reading",
+    "Word boundaries",
+    "Natural reading flow"
+  ],
+  "steps": [
+    {
+      "type": "content",
+      "step_title": "Reading Simple Sentences",
+      "content_markdown": "# Reading Simple Sentences\n\nPractice reading complete Kannada sentences."
+    },
+    {
+      "type": "content",
+      "step_title": "Word Practice",
+      "content_markdown": "## Let's Read Words!\n\nUsing what you've learned, try reading these words:\n\n| Kannada | Transliteration | Meaning |\n|---------|-----------------|--------|\n| **ನಾನು ಕನ್ನಡ ಕಲಿಯುತ್ತಿದ್ದೇನೆ** | naanu kannada kaliyuttiddeene | I am learning Kannada |\n| **ಇದು ನನ್ನ ಪುಸ್ತಕ** | idu nanna pusthaka | This is my book |\n| **ನಿಮ್ಮ ಹೆಸರೇನು?** | nimma hesareenu? | What is your name? |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q1",
+      "step_title": "Read: ನಾನು ಕನ್ನಡ ಕಲಿಯುತ್ತಿದ್ದೇನೆ",
+      "question": "What does **ನಾನು ಕನ್ನಡ ಕಲಿಯುತ್ತಿದ್ದೇನೆ** (naanu kannada kaliyuttiddeene) mean?",
+      "options": [
+        "I am learning Kannada",
+        "What is your name?",
+        "hello",
+        "This is my book"
+      ],
+      "correct_answer": "I am learning Kannada",
+      "feedback": "Correct! **ನಾನು ಕನ್ನಡ ಕಲಿಯುತ್ತಿದ್ದೇನೆ** (naanu kannada kaliyuttiddeene) means 'I am learning Kannada'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q2",
+      "step_title": "Read: ಇದು ನನ್ನ ಪುಸ್ತಕ",
+      "question": "What does **ಇದು ನನ್ನ ಪುಸ್ತಕ** (idu nanna pusthaka) mean?",
+      "options": [
+        "hello",
+        "I am learning Kannada",
+        "What is your name?",
+        "This is my book"
+      ],
+      "correct_answer": "This is my book",
+      "feedback": "Correct! **ಇದು ನನ್ನ ಪುಸ್ತಕ** (idu nanna pusthaka) means 'This is my book'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q3",
+      "step_title": "Read: ನಿಮ್ಮ ಹೆಸರೇನು?",
+      "question": "What does **ನಿಮ್ಮ ಹೆಸರೇನು?** (nimma hesareenu?) mean?",
+      "options": [
+        "I am learning Kannada",
+        "This is my book",
+        "What is your name?",
+        "hello"
+      ],
+      "correct_answer": "What is your name?",
+      "feedback": "Correct! **ನಿಮ್ಮ ಹೆಸರೇನು?** (nimma hesareenu?) means 'What is your name?'."
+    },
+    {
+      "type": "free_response",
+      "id": "q4",
+      "step_title": "Transliterate the Word",
+      "question": "Type the transliteration for **ನಾನು ಕನ್ನಡ ಕಲಿಯುತ್ತಿದ್ದೇನೆ** (meaning: I am learning Kannada)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "naanu kannada kaliyuttiddeene",
+        "naanu kannada kaliyuttiddeene",
+        "naanukannadakaliyuttiddeene"
+      ],
+      "hint": "Sound it out character by character."
+    },
+    {
+      "type": "content",
+      "step_title": "Lesson Summary",
+      "content_markdown": "## Summary\n\nExcellent reading practice! You worked through 3 words/phrases. Keep building your speed and confidence!"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q5",
+      "step_title": "Final Check",
+      "question": "What does **ನಿಮ್ಮ ಹೆಸರೇನು?** mean?",
+      "options": [
+        "What is your name?",
+        "I am learning Kannada",
+        "water",
+        "school"
+      ],
+      "correct_answer": "What is your name?",
+      "feedback": "Perfect! You're reading Kannada with confidence!"
+    },
+    {
+      "type": "free_response",
+      "id": "q6",
+      "step_title": "Practice: ನಿಮ್ಮ ಹೆಸರೇನು?",
+      "question": "Type the meaning of **ನಿಮ್ಮ ಹೆಸರೇನು?** (nimma hesareenu?)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "What is your name?"
+      ],
+      "hint": "Transliteration: nimma hesareenu?"
+    },
+    {
+      "type": "free_response",
+      "id": "q7",
+      "step_title": "Practice: ನಾನು ಕನ್ನಡ ಕಲಿಯುತ್ತಿದ್ದೇನೆ",
+      "question": "Type the meaning of **ನಾನು ಕನ್ನಡ ಕಲಿಯುತ್ತಿದ್ದೇನೆ** (naanu kannada kaliyuttiddeene)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "I am learning Kannada"
+      ],
+      "hint": "Transliteration: naanu kannada kaliyuttiddeene"
+    },
+    {
+      "type": "free_response",
+      "id": "q8",
+      "step_title": "Practice: ಇದು ನನ್ನ ಪುಸ್ತಕ",
+      "question": "Type the meaning of **ಇದು ನನ್ನ ಪುಸ್ತಕ** (idu nanna pusthaka)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "This is my book"
+      ],
+      "hint": "Transliteration: idu nanna pusthaka"
+    },
+    {
+      "type": "free_response",
+      "id": "q9",
+      "step_title": "Practice: ನಿಮ್ಮ ಹೆಸರೇನು?",
+      "question": "Type the meaning of **ನಿಮ್ಮ ಹೆಸರೇನು?** (nimma hesareenu?)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "What is your name?"
+      ],
+      "hint": "Transliteration: nimma hesareenu?"
+    },
+    {
+      "type": "free_response",
+      "id": "q10",
+      "step_title": "Practice: ನಾನು ಕನ್ನಡ ಕಲಿಯುತ್ತಿದ್ದೇನೆ",
+      "question": "Type the meaning of **ನಾನು ಕನ್ನಡ ಕಲಿಯುತ್ತಿದ್ದೇನೆ** (naanu kannada kaliyuttiddeene)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "I am learning Kannada"
+      ],
+      "hint": "Transliteration: naanu kannada kaliyuttiddeene"
+    },
+    {
+      "type": "free_response",
+      "id": "q11",
+      "step_title": "Practice: ಇದು ನನ್ನ ಪುಸ್ತಕ",
+      "question": "Type the meaning of **ಇದು ನನ್ನ ಪುಸ್ತಕ** (idu nanna pusthaka)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "This is my book"
+      ],
+      "hint": "Transliteration: idu nanna pusthaka"
+    },
+    {
+      "type": "free_response",
+      "id": "q12",
+      "step_title": "Practice: ನಿಮ್ಮ ಹೆಸರೇನು?",
+      "question": "Type the meaning of **ನಿಮ್ಮ ಹೆಸರೇನು?** (nimma hesareenu?)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "What is your name?"
+      ],
+      "hint": "Transliteration: nimma hesareenu?"
+    }
+  ]
+}

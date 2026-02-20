@@ -1,0 +1,212 @@
+{
+  "lesson_id": "hi_01_vowels_1",
+  "language": "Hindi",
+  "title": "The First Vowels",
+  "subtitle": "अ, आ, इ, ई",
+  "description": "The foundation of Devanagari — first four vowels.",
+  "estimated_minutes": 22.8,
+  "cefr_level": "A0",
+  "tags": [
+    "script",
+    "reading",
+    "basics"
+  ],
+  "skills_learned": [
+    "First 4 Devanagari vowels",
+    "The shirorekha (headline)"
+  ],
+  "steps": [
+    {
+      "type": "content",
+      "step_title": "Welcome to Hindi Script!",
+      "content_markdown": "# Welcome to Hindi Script! 🎉\n\nYou're about to learn to read Hindi — one of the beautiful writing systems of South Asia.\n\n## Today's Mission\nLearn **4 new characters** and start reading real words!\n\n### What You'll Learn\n- **अ** (a) — a in about\n- **आ** (aa) — a in father\n- **इ** (i) — i in bit\n- **ई** (ii) — ee in see\n\nLet's begin! 💪"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: अ (a)",
+      "content_markdown": "## अ — a\n\n**Sound:** a in about\n\n**Memory Trick:** The line on top (shirorekha) is the hallmark of Devanagari"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q1",
+      "step_title": "Identify: a",
+      "question": "Which character represents the sound **a** (a in about)?",
+      "options": [
+        "अ",
+        "ई",
+        "इ",
+        "आ"
+      ],
+      "correct_answer": "अ",
+      "feedback": "Correct! **अ** is the a in about sound. The line on top (shirorekha) is the hallmark of Devanagari"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: आ (aa)",
+      "content_markdown": "## आ — aa\n\n**Sound:** a in father\n\n**Memory Trick:** अ with a stroke — longer sound\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **आ** | a in father | aa |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q2",
+      "step_title": "Identify: aa",
+      "question": "Which character represents the sound **aa** (a in father)?",
+      "options": [
+        "आ",
+        "ई",
+        "इ",
+        "अ"
+      ],
+      "correct_answer": "आ",
+      "feedback": "Correct! **आ** is the a in father sound. अ with a stroke — longer sound"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: इ (i)",
+      "content_markdown": "## इ — i\n\n**Sound:** i in bit\n\n**Memory Trick:** Compact shape\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **इ** | i in bit | i |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q3",
+      "step_title": "Identify: i",
+      "question": "Which character represents the sound **i** (i in bit)?",
+      "options": [
+        "अ",
+        "इ",
+        "आ",
+        "ई"
+      ],
+      "correct_answer": "इ",
+      "feedback": "Correct! **इ** is the i in bit sound. Compact shape"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ई (ii)",
+      "content_markdown": "## ई — ii\n\n**Sound:** ee in see\n\n**Memory Trick:** Extended form"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q4",
+      "step_title": "Identify: ii",
+      "question": "Which character represents the sound **ii** (ee in see)?",
+      "options": [
+        "अ",
+        "आ",
+        "इ",
+        "ई"
+      ],
+      "correct_answer": "ई",
+      "feedback": "Correct! **ई** is the ee in see sound. Extended form"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q5",
+      "step_title": "Sound Match",
+      "question": "What sound does **अ** make?",
+      "options": [
+        "a in about",
+        "a in father",
+        "i in bit",
+        "ee in see"
+      ],
+      "correct_answer": "a in about",
+      "feedback": "Right! **अ** = a = a in about."
+    },
+    {
+      "type": "content",
+      "step_title": "Visual Comparison",
+      "content_markdown": "## Compare the Shapes\n\nLook closely at how these characters differ:\n\n- **अ** (a) vs **आ** (aa)\n- **इ** (i) vs **ई** (ii)\n\nNotice the subtle differences in strokes, dots, or curves!"
+    },
+    {
+      "type": "free_response",
+      "id": "q6",
+      "step_title": "Type the Sound",
+      "question": "What is the transliteration (Roman letters) for **ई**?",
+      "ai_grading": false,
+      "accepted_responses": [
+        "ii",
+        "ii",
+        "II"
+      ],
+      "hint": "It sounds like 'ee in see'."
+    },
+    {
+      "type": "content",
+      "step_title": "Word Practice",
+      "content_markdown": "## Let's Read Words!\n\nUsing what you've learned, try reading these words:\n\n| Hindi | Transliteration | Meaning |\n|---------|-----------------|--------|\n| **अब** | ab | now |\n| **आम** | aam | mango |\n| **इस** | is | this |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q7",
+      "step_title": "Read: अब",
+      "question": "What does **अब** (ab) mean?",
+      "options": [
+        "hello",
+        "now",
+        "this",
+        "mango"
+      ],
+      "correct_answer": "now",
+      "feedback": "Correct! **अब** (ab) means 'now'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q8",
+      "step_title": "Read: आम",
+      "question": "What does **आम** (aam) mean?",
+      "options": [
+        "now",
+        "mango",
+        "hello",
+        "this"
+      ],
+      "correct_answer": "mango",
+      "feedback": "Correct! **आम** (aam) means 'mango'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q9",
+      "step_title": "Read: इस",
+      "question": "What does **इस** (is) mean?",
+      "options": [
+        "mango",
+        "now",
+        "hello",
+        "this"
+      ],
+      "correct_answer": "this",
+      "feedback": "Correct! **इस** (is) means 'this'."
+    },
+    {
+      "type": "free_response",
+      "id": "q10",
+      "step_title": "Transliterate the Word",
+      "question": "Type the transliteration for **अब** (meaning: now)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "ab",
+        "ab",
+        "ab"
+      ],
+      "hint": "Sound it out character by character."
+    },
+    {
+      "type": "content",
+      "step_title": "Lesson Summary",
+      "content_markdown": "## Summary\n\nGreat job! Here's everything you learned:\n\n| Character | Transliteration | Sound |\n|-----------|----------------|-------|\n| **अ** | a | a in about |\n| **आ** | aa | a in father |\n| **इ** | i | i in bit |\n| **ई** | ii | ee in see |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q11",
+      "step_title": "Final Check",
+      "question": "How many new characters/concepts did we cover in this lesson?",
+      "options": [
+        "4",
+        "6",
+        "3",
+        "9"
+      ],
+      "correct_answer": "4",
+      "feedback": "Correct! We covered 4 characters today. Keep practicing!"
+    }
+  ]
+}

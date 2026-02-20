@@ -1,0 +1,17 @@
+Lemmatize these Urdu words (in Devanagari script) to their base/dictionary forms.
+
+Rules for Urdu (Devanagari):
+- Verbs: convert to informal imperative/base form (e.g., जा रहा हूँ → जाओ).
+- Nouns: remove case endings and plurals.
+- Adjectives: use base form.
+- Remove tense, aspect, plural, and agreement suffixes.
+
+CRITICAL REQUIREMENTS:
+1) Output ONLY in Devanagari script (for storage). NO Latin/English letters.
+2) Remove any English words from the output.
+3) Return ONLY a JSON array with objects: {{"word": "base_form", "word_class": "noun/verb/..."}}
+
+Words to lemmatize:
+{words}
+
+Return ONLY the JSON array, no other text.

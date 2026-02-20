@@ -1,0 +1,212 @@
+{
+  "lesson_id": "ur_11_long_vowels",
+  "language": "Urdu",
+  "title": "Long Vowels",
+  "subtitle": "Using ا و ی for long sounds",
+  "description": "How alif, waao, and yay serve as long vowel carriers.",
+  "estimated_minutes": 22.8,
+  "cefr_level": "A0",
+  "tags": [
+    "script",
+    "reading",
+    "basics"
+  ],
+  "skills_learned": [
+    "Long vowel reading",
+    "Alif madda"
+  ],
+  "steps": [
+    {
+      "type": "content",
+      "step_title": "Long Vowels",
+      "content_markdown": "# Long Vowels\n\nHow alif, waao, and yay serve as long vowel carriers.\n\n### Today's Characters\n**ا = aa** · **و = oo/o** · **ی = ii/ee** · **آ = initial aa**"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ا = aa (aa)",
+      "content_markdown": "## ا = aa — aa\n\n**Sound:** long a\n\n**Memory Trick:** Alif after consonant = 'aa'"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q1",
+      "step_title": "Identify: aa",
+      "question": "Which character represents the sound **aa** (long a)?",
+      "options": [
+        "ا = aa",
+        "آ = initial aa",
+        "و = oo/o",
+        "ی = ii/ee"
+      ],
+      "correct_answer": "ا = aa",
+      "feedback": "Correct! **ا = aa** is the long a sound. Alif after consonant = 'aa'"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: و = oo/o (oo)",
+      "content_markdown": "## و = oo/o — oo\n\n**Sound:** long u or o\n\n**Memory Trick:** Waao = 'oo' or 'o'\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **و = oo/o** | long u or o | oo |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q2",
+      "step_title": "Identify: oo",
+      "question": "Which character represents the sound **oo** (long u or o)?",
+      "options": [
+        "آ = initial aa",
+        "ا = aa",
+        "و = oo/o",
+        "ی = ii/ee"
+      ],
+      "correct_answer": "و = oo/o",
+      "feedback": "Correct! **و = oo/o** is the long u or o sound. Waao = 'oo' or 'o'"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ی = ii/ee (ii)",
+      "content_markdown": "## ی = ii/ee — ii\n\n**Sound:** long i\n\n**Memory Trick:** Yay = 'ii' or 'ee'\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **ی = ii/ee** | long i | ii |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q3",
+      "step_title": "Identify: ii",
+      "question": "Which character represents the sound **ii** (long i)?",
+      "options": [
+        "ی = ii/ee",
+        "ا = aa",
+        "و = oo/o",
+        "آ = initial aa"
+      ],
+      "correct_answer": "ی = ii/ee",
+      "feedback": "Correct! **ی = ii/ee** is the long i sound. Yay = 'ii' or 'ee'"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: آ = initial aa (aa)",
+      "content_markdown": "## آ = initial aa — aa\n\n**Sound:** aa at word start\n\n**Memory Trick:** Alif with madda = initial 'aa'"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q4",
+      "step_title": "Identify: aa",
+      "question": "Which character represents the sound **aa** (aa at word start)?",
+      "options": [
+        "آ = initial aa",
+        "ی = ii/ee",
+        "ا = aa",
+        "و = oo/o"
+      ],
+      "correct_answer": "آ = initial aa",
+      "feedback": "Correct! **آ = initial aa** is the aa at word start sound. Alif with madda = initial 'aa'"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q5",
+      "step_title": "Sound Match",
+      "question": "What sound does **ا = aa** make?",
+      "options": [
+        "long a",
+        "long u or o",
+        "long i",
+        "aa at word start"
+      ],
+      "correct_answer": "long a",
+      "feedback": "Right! **ا = aa** = aa = long a."
+    },
+    {
+      "type": "content",
+      "step_title": "Visual Comparison",
+      "content_markdown": "## Compare the Shapes\n\nLook closely at how these characters differ:\n\n- **ا = aa** (aa) vs **و = oo/o** (oo)\n- **ی = ii/ee** (ii) vs **آ = initial aa** (aa)\n\nNotice the subtle differences in strokes, dots, or curves!"
+    },
+    {
+      "type": "free_response",
+      "id": "q6",
+      "step_title": "Type the Sound",
+      "question": "What is the transliteration (Roman letters) for **آ = initial aa**?",
+      "ai_grading": false,
+      "accepted_responses": [
+        "aa",
+        "aa",
+        "AA"
+      ],
+      "hint": "It sounds like 'aa at word start'."
+    },
+    {
+      "type": "content",
+      "step_title": "Word Practice",
+      "content_markdown": "## Let's Read Words!\n\nUsing what you've learned, try reading these words:\n\n| Urdu | Transliteration | Meaning |\n|---------|-----------------|--------|\n| **آنا** | aanaa | to come |\n| **جانا** | jaanaa | to go |\n| **بولنا** | bolnaa | to speak |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q7",
+      "step_title": "Read: آنا",
+      "question": "What does **آنا** (aanaa) mean?",
+      "options": [
+        "hello",
+        "to come",
+        "to go",
+        "to speak"
+      ],
+      "correct_answer": "to come",
+      "feedback": "Correct! **آنا** (aanaa) means 'to come'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q8",
+      "step_title": "Read: جانا",
+      "question": "What does **جانا** (jaanaa) mean?",
+      "options": [
+        "to come",
+        "to speak",
+        "hello",
+        "to go"
+      ],
+      "correct_answer": "to go",
+      "feedback": "Correct! **جانا** (jaanaa) means 'to go'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q9",
+      "step_title": "Read: بولنا",
+      "question": "What does **بولنا** (bolnaa) mean?",
+      "options": [
+        "hello",
+        "to come",
+        "to go",
+        "to speak"
+      ],
+      "correct_answer": "to speak",
+      "feedback": "Correct! **بولنا** (bolnaa) means 'to speak'."
+    },
+    {
+      "type": "free_response",
+      "id": "q10",
+      "step_title": "Transliterate the Word",
+      "question": "Type the transliteration for **آنا** (meaning: to come)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "aanaa",
+        "aanaa",
+        "aanaa"
+      ],
+      "hint": "Sound it out character by character."
+    },
+    {
+      "type": "content",
+      "step_title": "Lesson Summary",
+      "content_markdown": "## Summary\n\nGreat job! Here's everything you learned:\n\n| Character | Transliteration | Sound |\n|-----------|----------------|-------|\n| **ا = aa** | aa | long a |\n| **و = oo/o** | oo | long u or o |\n| **ی = ii/ee** | ii | long i |\n| **آ = initial aa** | aa | aa at word start |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q11",
+      "step_title": "Final Check",
+      "question": "How many new characters/concepts did we cover in this lesson?",
+      "options": [
+        "4",
+        "6",
+        "3",
+        "9"
+      ],
+      "correct_answer": "4",
+      "feedback": "Correct! We covered 4 characters today. Keep practicing!"
+    }
+  ]
+}

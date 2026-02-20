@@ -1,0 +1,139 @@
+{
+  "lesson_id": "kn_04_velar_palatal",
+  "language": "Kannada",
+  "title": "Velar & Palatal Consonants",
+  "subtitle": "ಕ, ಖ, ಗ, ಘ, ಙ and ಚ, ಛ, ಜ, ಝ, ಞ",
+  "description": "Learn the first two consonant groups — produced at the back and middle of the mouth. Focus on reading and pronunciation.",
+  "estimated_minutes": 25,
+  "cefr_level": "A0",
+  "tags": ["script", "reading", "basics", "consonants"],
+  "skills_learned": [
+    "Recognizing Velar consonants (k-group)",
+    "Recognizing Palatal consonants (ch-group)",
+    "Distinguishing aspirated vs unaspirated sounds"
+  ],
+  "steps": [
+    {
+      "type": "content",
+      "step_title": "Consonant Groups",
+      "content_markdown": "# Velar & Palatal Consonants\n\nKannada consonants are organized into groups based on where they are produced in the mouth.\n\n### Today's Characters\n**ಕ** · **ಖ** · **ಗ** · **ಚ** · **ಜ**"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ಕ (ka)",
+      "content_markdown": "## ಕ — ka\n\n**Sound:** ka as in 'karma'\n\n**Memory Trick:** The first consonant — the gateway letter."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q1",
+      "step_title": "Identify: ka",
+      "question": "Which character represents the sound **ka**?",
+      "options": ["ಗ", "ಖ", "ಕ", "ಚ"],
+      "correct_answer": "ಕ",
+      "feedback": "Correct! **ಕ** is the 'ka' sound."
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ಖ (kha)",
+      "content_markdown": "## ಖ — kha\n\n**Sound:** kha (aspirated)\n\n**Memory Trick:** 'k' with a sharp puff of air."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q2",
+      "step_title": "Identify: kha",
+      "question": "Which character represents the aspirated sound **kha**?",
+      "options": ["ಗ", "ಕ", "ಖ", "ಚ"],
+      "correct_answer": "ಖ",
+      "feedback": "Correct! **ಖ** is the aspirated 'kha' sound."
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ಗ (ga)",
+      "content_markdown": "## ಗ — ga\n\n**Sound:** ga as in 'garden'\n\n**Memory Trick:** The voiced version of 'k'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q3",
+      "step_title": "Identify: ga",
+      "question": "Which character represents the sound **ga**?",
+      "options": ["ಗ", "ಚ", "ಖ", "ಕ"],
+      "correct_answer": "ಗ",
+      "feedback": "Correct! **ಗ** is the 'ga' sound."
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ಚ (cha)",
+      "content_markdown": "## ಚ — cha\n\n**Sound:** cha as in 'chai'\n\n**Memory Trick:** Palatal sound — middle of the mouth."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q4",
+      "step_title": "Identify: cha",
+      "question": "Which character represents the sound **cha**?",
+      "options": ["ಖ", "ಗ", "ಕ", "ಚ"],
+      "correct_answer": "ಚ",
+      "feedback": "Correct! **ಚ** is the 'cha' sound."
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ಜ (ja)",
+      "content_markdown": "## ಜ — ja\n\n**Sound:** ja as in 'jar'\n\n**Memory Trick:** The voiced version of 'ch'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q5",
+      "step_title": "Identify: ja",
+      "question": "Which character represents the sound **ja**?",
+      "options": ["ಖ", "ಕ", "ಗ", "ಜ"],
+      "correct_answer": "ಜ",
+      "feedback": "Correct! **ಜ** is the 'ja' sound."
+    },
+    {
+      "type": "content",
+      "step_title": "Reading Practice",
+      "content_markdown": "## Let's Read!\n\nPractice reading these combinations out loud:\n\n| Kannada | Transliteration |\n|---------|-----------------|\n| **ಕನ್ನಡ** | kannada |\n| **ಗುರು** | guru |\n| **ಚಂದ್ರ** | chandra |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q6",
+      "step_title": "Read: ಕನ್ನಡ",
+      "question": "How do you read this word out loud?\n\n# ಕನ್ನಡ",
+      "options": ["kannada", "guru", "chandra", "karma"],
+      "correct_answer": "kannada",
+      "feedback": "Perfect! You read 'kannada' correctly."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q7",
+      "step_title": "Read: ಗುರು",
+      "question": "How do you read this word out loud?\n\n# ಗುರು",
+      "options": ["chandra", "kannada", "guru", "gaja"],
+      "correct_answer": "guru",
+      "feedback": "Perfect! You read 'guru' correctly."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q8",
+      "step_title": "Read: ಚಂದ್ರ",
+      "question": "How do you read this word out loud?\n\n# ಚಂದ್ರ",
+      "options": ["kannada", "chandra", "guru", "chai"],
+      "correct_answer": "chandra",
+      "feedback": "Perfect! You read 'chandra' correctly."
+    },
+    {
+      "type": "free_response",
+      "id": "q9",
+      "step_title": "Transliterate Word",
+      "question": "Type the transliteration for **ಕನ್ನಡ**",
+      "ai_grading": false,
+      "accepted_responses": ["kannada", "Kannada"],
+      "hint": "It's the name of the language!",
+      "step_title": "Transliterate Kannada"
+    },
+    {
+      "type": "content",
+      "step_title": "Lesson Summary",
+      "content_markdown": "## Summary\n\nGreat job! You've learned the first two consonant groups:\n\n- **Velars (Throat):** ಕ (ka), ಖ (kha), ಗ (ga)\n- **Palatals (Palate):** ಚ (cha), ಜ (ja)"
+    }
+  ]
+}

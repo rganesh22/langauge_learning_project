@@ -1,0 +1,250 @@
+{
+  "lesson_id": "te_02_vowels_2",
+  "language": "Telugu",
+  "title": "More Vowels",
+  "subtitle": "ఉ, ఊ, ఋ, ఎ, ఏ, ఐ",
+  "description": "Six more vowels to expand your set.",
+  "estimated_minutes": 27.599999999999998,
+  "cefr_level": "A0",
+  "tags": [
+    "script",
+    "reading",
+    "basics"
+  ],
+  "skills_learned": [
+    "Six more vowels",
+    "Sanskrit vowel ఋ"
+  ],
+  "steps": [
+    {
+      "type": "content",
+      "step_title": "More Vowels",
+      "content_markdown": "# More Vowels\n\nSix more vowels to expand your set.\n\n### Today's Characters\n**ఉ** · **ఊ** · **ఋ** · **ఎ** · **ఏ** · **ఐ**"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ఉ (u)",
+      "content_markdown": "## ఉ — u\n\n**Sound:** u in put\n\n**Memory Trick:** Rounded shape"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q1",
+      "step_title": "Identify: u",
+      "question": "Which character represents the sound **u** (u in put)?",
+      "options": [
+        "ఎ",
+        "ఊ",
+        "ఋ",
+        "ఉ"
+      ],
+      "correct_answer": "ఉ",
+      "feedback": "Correct! **ఉ** is the u in put sound. Rounded shape"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ఊ (uu)",
+      "content_markdown": "## ఊ — uu\n\n**Sound:** oo in food\n\n**Memory Trick:** Extended ఉ\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **ఊ** | oo in food | uu |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q2",
+      "step_title": "Identify: uu",
+      "question": "Which character represents the sound **uu** (oo in food)?",
+      "options": [
+        "ఊ",
+        "ఉ",
+        "ఋ",
+        "ఎ"
+      ],
+      "correct_answer": "ఊ",
+      "feedback": "Correct! **ఊ** is the oo in food sound. Extended ఉ"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ఋ (ru)",
+      "content_markdown": "## ఋ — ru\n\n**Sound:** ri (Sanskrit)\n\n**Memory Trick:** Sanskrit vowel\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **ఋ** | ri (Sanskrit) | ru |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q3",
+      "step_title": "Identify: ru",
+      "question": "Which character represents the sound **ru** (ri (Sanskrit))?",
+      "options": [
+        "ఊ",
+        "ఉ",
+        "ఎ",
+        "ఋ"
+      ],
+      "correct_answer": "ఋ",
+      "feedback": "Correct! **ఋ** is the ri (Sanskrit) sound. Sanskrit vowel"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ఎ (e)",
+      "content_markdown": "## ఎ — e\n\n**Sound:** e in bed\n\n**Memory Trick:** Short e\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **ఎ** | e in bed | e |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q4",
+      "step_title": "Identify: e",
+      "question": "Which character represents the sound **e** (e in bed)?",
+      "options": [
+        "ఉ",
+        "ఊ",
+        "ఎ",
+        "ఋ"
+      ],
+      "correct_answer": "ఎ",
+      "feedback": "Correct! **ఎ** is the e in bed sound. Short e"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ఏ (ee)",
+      "content_markdown": "## ఏ — ee\n\n**Sound:** ay in say\n\n**Memory Trick:** Long ee\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **ఏ** | ay in say | ee |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q5",
+      "step_title": "Identify: ee",
+      "question": "Which character represents the sound **ee** (ay in say)?",
+      "options": [
+        "ఊ",
+        "ఏ",
+        "ఉ",
+        "ఋ"
+      ],
+      "correct_answer": "ఏ",
+      "feedback": "Correct! **ఏ** is the ay in say sound. Long ee"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ఐ (ai)",
+      "content_markdown": "## ఐ — ai\n\n**Sound:** ai in aisle\n\n**Memory Trick:** Diphthong"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q6",
+      "step_title": "Identify: ai",
+      "question": "Which character represents the sound **ai** (ai in aisle)?",
+      "options": [
+        "ఊ",
+        "ఉ",
+        "ఋ",
+        "ఐ"
+      ],
+      "correct_answer": "ఐ",
+      "feedback": "Correct! **ఐ** is the ai in aisle sound. Diphthong"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q7",
+      "step_title": "Sound Match",
+      "question": "What sound does **ఉ** make?",
+      "options": [
+        "u in put",
+        "oo in food",
+        "ri (Sanskrit)",
+        "e in bed"
+      ],
+      "correct_answer": "u in put",
+      "feedback": "Right! **ఉ** = u = u in put."
+    },
+    {
+      "type": "content",
+      "step_title": "Visual Comparison",
+      "content_markdown": "## Compare the Shapes\n\nLook closely at how these characters differ:\n\n- **ఉ** (u) vs **ఊ** (uu)\n- **ఋ** (ru) vs **ఎ** (e)\n- **ఏ** (ee) vs **ఐ** (ai)\n\nNotice the subtle differences in strokes, dots, or curves!"
+    },
+    {
+      "type": "free_response",
+      "id": "q8",
+      "step_title": "Type the Sound",
+      "question": "What is the transliteration (Roman letters) for **ఐ**?",
+      "ai_grading": false,
+      "accepted_responses": [
+        "ai",
+        "ai",
+        "AI"
+      ],
+      "hint": "It sounds like 'ai in aisle'."
+    },
+    {
+      "type": "content",
+      "step_title": "Word Practice",
+      "content_markdown": "## Let's Read Words!\n\nUsing what you've learned, try reading these words:\n\n| Telugu | Transliteration | Meaning |\n|---------|-----------------|--------|\n| **ఊరు** | uuru | village |\n| **ఎక్కడ** | ekkada | where |\n| **ఐదు** | aidu | five |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q9",
+      "step_title": "Read: ఊరు",
+      "question": "What does **ఊరు** (uuru) mean?",
+      "options": [
+        "five",
+        "where",
+        "village",
+        "hello"
+      ],
+      "correct_answer": "village",
+      "feedback": "Correct! **ఊరు** (uuru) means 'village'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q10",
+      "step_title": "Read: ఎక్కడ",
+      "question": "What does **ఎక్కడ** (ekkada) mean?",
+      "options": [
+        "where",
+        "hello",
+        "five",
+        "village"
+      ],
+      "correct_answer": "where",
+      "feedback": "Correct! **ఎక్కడ** (ekkada) means 'where'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q11",
+      "step_title": "Read: ఐదు",
+      "question": "What does **ఐదు** (aidu) mean?",
+      "options": [
+        "where",
+        "hello",
+        "five",
+        "village"
+      ],
+      "correct_answer": "five",
+      "feedback": "Correct! **ఐదు** (aidu) means 'five'."
+    },
+    {
+      "type": "free_response",
+      "id": "q12",
+      "step_title": "Transliterate the Word",
+      "question": "Type the transliteration for **ఊరు** (meaning: village)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "uuru",
+        "uuru",
+        "uuru"
+      ],
+      "hint": "Sound it out character by character."
+    },
+    {
+      "type": "content",
+      "step_title": "Lesson Summary",
+      "content_markdown": "## Summary\n\nGreat job! Here's everything you learned:\n\n| Character | Transliteration | Sound |\n|-----------|----------------|-------|\n| **ఉ** | u | u in put |\n| **ఊ** | uu | oo in food |\n| **ఋ** | ru | ri (Sanskrit) |\n| **ఎ** | e | e in bed |\n| **ఏ** | ee | ay in say |\n| **ఐ** | ai | ai in aisle |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q13",
+      "step_title": "Final Check",
+      "question": "How many new characters/concepts did we cover in this lesson?",
+      "options": [
+        "6",
+        "8",
+        "5",
+        "11"
+      ],
+      "correct_answer": "6",
+      "feedback": "Correct! We covered 6 characters today. Keep practicing!"
+    }
+  ]
+}

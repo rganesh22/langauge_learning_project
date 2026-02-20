@@ -1,0 +1,34 @@
+For each {source_language} word below, provide:
+1) A concise English translation (8 words maximum).
+2) Translations into: {target_languages}.
+3) The word class (noun / verb / adjective / adverb / pronoun / etc).
+
+TRANSLATION RULES:
+- English must be SHORT — 8 words maximum per translation.
+- For VERBS: always prefix the English with "to" (e.g. "to eat", "to sleep", "to run").
+- For NOUNS / ADJECTIVES / others: give the most common meaning first.
+
+SCRIPT RULES:
+- All source words must stay in {source_language} native script only.
+- All translated words must be in the correct native script for that language.
+- Do NOT provide transliterations or romanizations; those are generated separately.
+
+IN-CONTEXT EXAMPLES (Kannada → Hindi, Telugu):
+
+Noun example:
+  Input word: ಮನೆ
+  Output:
+  {{"word": "ಮನೆ", "english": "house", "word_class": "noun", "translations": {{"hindi": "घर", "telugu": "ఇల్లు"}}}}
+
+Verb example:
+  Input word: ತಿನ್ನು
+  Output:
+  {{"word": "ತಿನ್ನು", "english": "to eat", "word_class": "verb", "translations": {{"hindi": "खाना", "telugu": "తిను"}}}}
+
+Return ONLY a valid JSON array in the following format (no extra text):
+[
+  {{"word": "original_in_native_script", "english": "...", "word_class": "noun", "translations": {{"lang1": "...", "lang2": "..."}}}}
+]
+
+Words:
+{words}

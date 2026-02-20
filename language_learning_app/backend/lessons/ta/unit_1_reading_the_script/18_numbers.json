@@ -1,0 +1,232 @@
+{
+  "lesson_id": "ta_18_numbers",
+  "language": "Tamil",
+  "title": "Tamil Numerals",
+  "subtitle": "௧ ௨ ௩ ௪ ௫ ௬ ௭ ௮ ௯ ௰",
+  "description": "Learn to read Tamil numerals and number words.",
+  "estimated_minutes": 25.2,
+  "cefr_level": "A0",
+  "tags": [
+    "script",
+    "reading",
+    "basics"
+  ],
+  "skills_learned": [
+    "Tamil numeral symbols",
+    "Number words 1-10",
+    "Reading prices and dates"
+  ],
+  "steps": [
+    {
+      "type": "content",
+      "step_title": "Tamil Numerals",
+      "content_markdown": "# Tamil Numerals\n\nLearn to read Tamil numerals and number words.\n\n### Today's Characters\n**௧** · **௨** · **௩** · **௪** · **௫**"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ௧ (1)",
+      "content_markdown": "## ௧ — 1\n\n**Sound:** onru\n\n**Memory Trick:** One stroke — one"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q1",
+      "step_title": "Identify: 1",
+      "question": "Which character represents the sound **1** (onru)?",
+      "options": [
+        "௪",
+        "௨",
+        "௩",
+        "௧"
+      ],
+      "correct_answer": "௧",
+      "feedback": "Correct! **௧** is the onru sound. One stroke — one"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ௨ (2)",
+      "content_markdown": "## ௨ — 2\n\n**Sound:** irandu\n\n**Memory Trick:** Two curves\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **௨** | irandu | 2 |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q2",
+      "step_title": "Identify: 2",
+      "question": "Which character represents the sound **2** (irandu)?",
+      "options": [
+        "௨",
+        "௩",
+        "௧",
+        "௪"
+      ],
+      "correct_answer": "௨",
+      "feedback": "Correct! **௨** is the irandu sound. Two curves"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ௩ (3)",
+      "content_markdown": "## ௩ — 3\n\n**Sound:** muunru\n\n**Memory Trick:** Three-like shape\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **௩** | muunru | 3 |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q3",
+      "step_title": "Identify: 3",
+      "question": "Which character represents the sound **3** (muunru)?",
+      "options": [
+        "௩",
+        "௧",
+        "௪",
+        "௨"
+      ],
+      "correct_answer": "௩",
+      "feedback": "Correct! **௩** is the muunru sound. Three-like shape"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ௪ (4)",
+      "content_markdown": "## ௪ — 4\n\n**Sound:** naanku\n\n**Memory Trick:** Four-cornered\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **௪** | naanku | 4 |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q4",
+      "step_title": "Identify: 4",
+      "question": "Which character represents the sound **4** (naanku)?",
+      "options": [
+        "௩",
+        "௪",
+        "௧",
+        "௨"
+      ],
+      "correct_answer": "௪",
+      "feedback": "Correct! **௪** is the naanku sound. Four-cornered"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ௫ (5)",
+      "content_markdown": "## ௫ — 5\n\n**Sound:** aintu\n\n**Memory Trick:** Five dots mentally"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q5",
+      "step_title": "Identify: 5",
+      "question": "Which character represents the sound **5** (aintu)?",
+      "options": [
+        "௧",
+        "௫",
+        "௩",
+        "௨"
+      ],
+      "correct_answer": "௫",
+      "feedback": "Correct! **௫** is the aintu sound. Five dots mentally"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q6",
+      "step_title": "Sound Match",
+      "question": "What sound does **௧** make?",
+      "options": [
+        "onru",
+        "irandu",
+        "muunru",
+        "naanku"
+      ],
+      "correct_answer": "onru",
+      "feedback": "Right! **௧** = 1 = onru."
+    },
+    {
+      "type": "content",
+      "step_title": "Visual Comparison",
+      "content_markdown": "## Compare the Shapes\n\nLook closely at how these characters differ:\n\n- **௧** (1) vs **௨** (2)\n- **௩** (3) vs **௪** (4)\n\nNotice the subtle differences in strokes, dots, or curves!"
+    },
+    {
+      "type": "free_response",
+      "id": "q7",
+      "step_title": "Type the Sound",
+      "question": "What is the transliteration (Roman letters) for **௫**?",
+      "ai_grading": false,
+      "accepted_responses": [
+        "5",
+        "5",
+        "5"
+      ],
+      "hint": "It sounds like 'aintu'."
+    },
+    {
+      "type": "content",
+      "step_title": "Word Practice",
+      "content_markdown": "## Let's Read Words!\n\nUsing what you've learned, try reading these words:\n\n| Tamil | Transliteration | Meaning |\n|---------|-----------------|--------|\n| **ஒன்று** | onru | one |\n| **இரண்டு** | irandu | two |\n| **மூன்று** | muunru | three |\n| **பத்து** | patthu | ten |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q8",
+      "step_title": "Read: ஒன்று",
+      "question": "What does **ஒன்று** (onru) mean?",
+      "options": [
+        "three",
+        "two",
+        "one",
+        "ten"
+      ],
+      "correct_answer": "one",
+      "feedback": "Correct! **ஒன்று** (onru) means 'one'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q9",
+      "step_title": "Read: இரண்டு",
+      "question": "What does **இரண்டு** (irandu) mean?",
+      "options": [
+        "three",
+        "one",
+        "ten",
+        "two"
+      ],
+      "correct_answer": "two",
+      "feedback": "Correct! **இரண்டு** (irandu) means 'two'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q10",
+      "step_title": "Read: மூன்று",
+      "question": "What does **மூன்று** (muunru) mean?",
+      "options": [
+        "ten",
+        "two",
+        "three",
+        "one"
+      ],
+      "correct_answer": "three",
+      "feedback": "Correct! **மூன்று** (muunru) means 'three'."
+    },
+    {
+      "type": "free_response",
+      "id": "q11",
+      "step_title": "Transliterate the Word",
+      "question": "Type the transliteration for **ஒன்று** (meaning: one)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "onru",
+        "onru",
+        "onru"
+      ],
+      "hint": "Sound it out character by character."
+    },
+    {
+      "type": "content",
+      "step_title": "Lesson Summary",
+      "content_markdown": "## Summary\n\nGreat job! Here's everything you learned:\n\n| Character | Transliteration | Sound |\n|-----------|----------------|-------|\n| **௧** | 1 | onru |\n| **௨** | 2 | irandu |\n| **௩** | 3 | muunru |\n| **௪** | 4 | naanku |\n| **௫** | 5 | aintu |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q12",
+      "step_title": "Final Check",
+      "question": "How many new characters/concepts did we cover in this lesson?",
+      "options": [
+        "5",
+        "7",
+        "4",
+        "10"
+      ],
+      "correct_answer": "5",
+      "feedback": "Correct! We covered 5 characters today. Keep practicing!"
+    }
+  ]
+}

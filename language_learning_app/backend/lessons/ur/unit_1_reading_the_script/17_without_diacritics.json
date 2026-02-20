@@ -1,0 +1,181 @@
+{
+  "lesson_id": "ur_17_without_diacritics",
+  "language": "Urdu",
+  "title": "Reading Without Diacritics",
+  "subtitle": "How Urdu is actually printed",
+  "description": "Learn to read Urdu as it normally appears — without short vowel marks.",
+  "estimated_minutes": 18.0,
+  "cefr_level": "A0",
+  "tags": [
+    "script",
+    "reading",
+    "basics"
+  ],
+  "skills_learned": [
+    "Reading undiacriticized text",
+    "Context-based vowel guessing"
+  ],
+  "steps": [
+    {
+      "type": "content",
+      "step_title": "Reading Without Diacritics",
+      "content_markdown": "# Reading Without Diacritics\n\nLearn to read Urdu as it normally appears — without short vowel marks."
+    },
+    {
+      "type": "content",
+      "step_title": "Word Practice",
+      "content_markdown": "## Let's Read Words!\n\nUsing what you've learned, try reading these words:\n\n| Urdu | Transliteration | Meaning |\n|---------|-----------------|--------|\n| **پاکستان** | paakistaan | Pakistan |\n| **لاہور** | laahoor | Lahore |\n| **اسلام آباد** | islaam aabaad | Islamabad |\n| **کراچی** | karaachi | Karachi |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q1",
+      "step_title": "Read: پاکستان",
+      "question": "What does **پاکستان** (paakistaan) mean?",
+      "options": [
+        "Pakistan",
+        "Islamabad",
+        "Lahore",
+        "Karachi"
+      ],
+      "correct_answer": "Pakistan",
+      "feedback": "Correct! **پاکستان** (paakistaan) means 'Pakistan'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q2",
+      "step_title": "Read: لاہور",
+      "question": "What does **لاہور** (laahoor) mean?",
+      "options": [
+        "Lahore",
+        "Karachi",
+        "Pakistan",
+        "Islamabad"
+      ],
+      "correct_answer": "Lahore",
+      "feedback": "Correct! **لاہور** (laahoor) means 'Lahore'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q3",
+      "step_title": "Read: اسلام آباد",
+      "question": "What does **اسلام آباد** (islaam aabaad) mean?",
+      "options": [
+        "Pakistan",
+        "Karachi",
+        "Lahore",
+        "Islamabad"
+      ],
+      "correct_answer": "Islamabad",
+      "feedback": "Correct! **اسلام آباد** (islaam aabaad) means 'Islamabad'."
+    },
+    {
+      "type": "free_response",
+      "id": "q4",
+      "step_title": "Transliterate the Word",
+      "question": "Type the transliteration for **پاکستان** (meaning: Pakistan)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "paakistaan",
+        "paakistaan",
+        "paakistaan"
+      ],
+      "hint": "Sound it out character by character."
+    },
+    {
+      "type": "content",
+      "step_title": "Lesson Summary",
+      "content_markdown": "## Summary\n\nExcellent reading practice! You worked through 4 words/phrases. Keep building your speed and confidence!"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q5",
+      "step_title": "Final Check",
+      "question": "What does **کراچی** mean?",
+      "options": [
+        "Karachi",
+        "Pakistan",
+        "water",
+        "school"
+      ],
+      "correct_answer": "Karachi",
+      "feedback": "Perfect! You're reading Urdu with confidence!"
+    },
+    {
+      "type": "free_response",
+      "id": "q6",
+      "step_title": "Practice: پاکستان",
+      "question": "Type the meaning of **پاکستان** (paakistaan)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "Pakistan"
+      ],
+      "hint": "Transliteration: paakistaan"
+    },
+    {
+      "type": "free_response",
+      "id": "q7",
+      "step_title": "Practice: لاہور",
+      "question": "Type the meaning of **لاہور** (laahoor)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "Lahore"
+      ],
+      "hint": "Transliteration: laahoor"
+    },
+    {
+      "type": "free_response",
+      "id": "q8",
+      "step_title": "Practice: اسلام آباد",
+      "question": "Type the meaning of **اسلام آباد** (islaam aabaad)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "Islamabad"
+      ],
+      "hint": "Transliteration: islaam aabaad"
+    },
+    {
+      "type": "free_response",
+      "id": "q9",
+      "step_title": "Practice: کراچی",
+      "question": "Type the meaning of **کراچی** (karaachi)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "Karachi"
+      ],
+      "hint": "Transliteration: karaachi"
+    },
+    {
+      "type": "free_response",
+      "id": "q10",
+      "step_title": "Practice: پاکستان",
+      "question": "Type the meaning of **پاکستان** (paakistaan)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "Pakistan"
+      ],
+      "hint": "Transliteration: paakistaan"
+    },
+    {
+      "type": "free_response",
+      "id": "q11",
+      "step_title": "Practice: لاہور",
+      "question": "Type the meaning of **لاہور** (laahoor)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "Lahore"
+      ],
+      "hint": "Transliteration: laahoor"
+    },
+    {
+      "type": "free_response",
+      "id": "q12",
+      "step_title": "Practice: اسلام آباد",
+      "question": "Type the meaning of **اسلام آباد** (islaam aabaad)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "Islamabad"
+      ],
+      "hint": "Transliteration: islaam aabaad"
+    }
+  ]
+}

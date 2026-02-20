@@ -1,0 +1,230 @@
+{
+  "lesson_id": "te_11_conjuncts_1",
+  "language": "Telugu",
+  "title": "Common Conjuncts",
+  "subtitle": "క్క, త్త, న్న, ల్ల, మ్మ",
+  "description": "Doubled consonant clusters.",
+  "estimated_minutes": 25.2,
+  "cefr_level": "A0",
+  "tags": [
+    "script",
+    "reading",
+    "basics"
+  ],
+  "skills_learned": [
+    "Geminated consonants"
+  ],
+  "steps": [
+    {
+      "type": "content",
+      "step_title": "Common Conjuncts",
+      "content_markdown": "# Common Conjuncts\n\nDoubled consonant clusters.\n\n### Today's Characters\n**క్క** · **త్త** · **న్న** · **ల్ల** · **మ్మ**"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: క్క (kka)",
+      "content_markdown": "## క్క — kka\n\n**Sound:** kka\n\n**Memory Trick:** Doubled k"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q1",
+      "step_title": "Identify: kka",
+      "question": "Which character represents the sound **kka** (kka)?",
+      "options": [
+        "క్క",
+        "ల్ల",
+        "త్త",
+        "న్న"
+      ],
+      "correct_answer": "క్క",
+      "feedback": "Correct! **క్క** is the kka sound. Doubled k"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: త్త (ttha)",
+      "content_markdown": "## త్త — ttha\n\n**Sound:** ttha\n\n**Memory Trick:** Doubled t\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **త్త** | ttha | ttha |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q2",
+      "step_title": "Identify: ttha",
+      "question": "Which character represents the sound **ttha** (ttha)?",
+      "options": [
+        "ల్ల",
+        "క్క",
+        "త్త",
+        "న్న"
+      ],
+      "correct_answer": "త్త",
+      "feedback": "Correct! **త్త** is the ttha sound. Doubled t"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: న్న (nna)",
+      "content_markdown": "## న్న — nna\n\n**Sound:** nna\n\n**Memory Trick:** Doubled n\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **న్న** | nna | nna |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q3",
+      "step_title": "Identify: nna",
+      "question": "Which character represents the sound **nna** (nna)?",
+      "options": [
+        "న్న",
+        "క్క",
+        "త్త",
+        "ల్ల"
+      ],
+      "correct_answer": "న్న",
+      "feedback": "Correct! **న్న** is the nna sound. Doubled n"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ల్ల (lla)",
+      "content_markdown": "## ల్ల — lla\n\n**Sound:** lla\n\n**Memory Trick:** Doubled l\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **ల్ల** | lla | lla |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q4",
+      "step_title": "Identify: lla",
+      "question": "Which character represents the sound **lla** (lla)?",
+      "options": [
+        "ల్ల",
+        "న్న",
+        "క్క",
+        "త్త"
+      ],
+      "correct_answer": "ల్ల",
+      "feedback": "Correct! **ల్ల** is the lla sound. Doubled l"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: మ్మ (mma)",
+      "content_markdown": "## మ్మ — mma\n\n**Sound:** mma\n\n**Memory Trick:** Doubled m"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q5",
+      "step_title": "Identify: mma",
+      "question": "Which character represents the sound **mma** (mma)?",
+      "options": [
+        "త్త",
+        "క్క",
+        "న్న",
+        "మ్మ"
+      ],
+      "correct_answer": "మ్మ",
+      "feedback": "Correct! **మ్మ** is the mma sound. Doubled m"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q6",
+      "step_title": "Sound Match",
+      "question": "What sound does **క్క** make?",
+      "options": [
+        "kka",
+        "ttha",
+        "nna",
+        "lla"
+      ],
+      "correct_answer": "kka",
+      "feedback": "Right! **క్క** = kka = kka."
+    },
+    {
+      "type": "content",
+      "step_title": "Visual Comparison",
+      "content_markdown": "## Compare the Shapes\n\nLook closely at how these characters differ:\n\n- **క్క** (kka) vs **త్త** (ttha)\n- **న్న** (nna) vs **ల్ల** (lla)\n\nNotice the subtle differences in strokes, dots, or curves!"
+    },
+    {
+      "type": "free_response",
+      "id": "q7",
+      "step_title": "Type the Sound",
+      "question": "What is the transliteration (Roman letters) for **మ్మ**?",
+      "ai_grading": false,
+      "accepted_responses": [
+        "mma",
+        "mma",
+        "MMA"
+      ],
+      "hint": "It sounds like 'mma'."
+    },
+    {
+      "type": "content",
+      "step_title": "Word Practice",
+      "content_markdown": "## Let's Read Words!\n\nUsing what you've learned, try reading these words:\n\n| Telugu | Transliteration | Meaning |\n|---------|-----------------|--------|\n| **అమ్మ** | amma | mother |\n| **అక్క** | akka | sister |\n| **ఎల్లా** | ellaa | how |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q8",
+      "step_title": "Read: అమ్మ",
+      "question": "What does **అమ్మ** (amma) mean?",
+      "options": [
+        "sister",
+        "how",
+        "hello",
+        "mother"
+      ],
+      "correct_answer": "mother",
+      "feedback": "Correct! **అమ్మ** (amma) means 'mother'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q9",
+      "step_title": "Read: అక్క",
+      "question": "What does **అక్క** (akka) mean?",
+      "options": [
+        "hello",
+        "mother",
+        "how",
+        "sister"
+      ],
+      "correct_answer": "sister",
+      "feedback": "Correct! **అక్క** (akka) means 'sister'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q10",
+      "step_title": "Read: ఎల్లా",
+      "question": "What does **ఎల్లా** (ellaa) mean?",
+      "options": [
+        "hello",
+        "sister",
+        "mother",
+        "how"
+      ],
+      "correct_answer": "how",
+      "feedback": "Correct! **ఎల్లా** (ellaa) means 'how'."
+    },
+    {
+      "type": "free_response",
+      "id": "q11",
+      "step_title": "Transliterate the Word",
+      "question": "Type the transliteration for **అమ్మ** (meaning: mother)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "amma",
+        "amma",
+        "amma"
+      ],
+      "hint": "Sound it out character by character."
+    },
+    {
+      "type": "content",
+      "step_title": "Lesson Summary",
+      "content_markdown": "## Summary\n\nGreat job! Here's everything you learned:\n\n| Character | Transliteration | Sound |\n|-----------|----------------|-------|\n| **క్క** | kka | kka |\n| **త్త** | ttha | ttha |\n| **న్న** | nna | nna |\n| **ల్ల** | lla | lla |\n| **మ్మ** | mma | mma |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q12",
+      "step_title": "Final Check",
+      "question": "How many new characters/concepts did we cover in this lesson?",
+      "options": [
+        "5",
+        "7",
+        "4",
+        "10"
+      ],
+      "correct_answer": "5",
+      "feedback": "Correct! We covered 5 characters today. Keep practicing!"
+    }
+  ]
+}

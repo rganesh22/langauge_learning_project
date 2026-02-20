@@ -1,0 +1,180 @@
+{
+  "lesson_id": "hi_17_sentences",
+  "language": "Hindi",
+  "title": "Reading Sentences",
+  "subtitle": "Full sentence practice",
+  "description": "Read complete Hindi sentences.",
+  "estimated_minutes": 18.0,
+  "cefr_level": "A0",
+  "tags": [
+    "script",
+    "reading",
+    "basics"
+  ],
+  "skills_learned": [
+    "Sentence reading"
+  ],
+  "steps": [
+    {
+      "type": "content",
+      "step_title": "Reading Sentences",
+      "content_markdown": "# Reading Sentences\n\nRead complete Hindi sentences."
+    },
+    {
+      "type": "content",
+      "step_title": "Word Practice",
+      "content_markdown": "## Let's Read Words!\n\nUsing what you've learned, try reading these words:\n\n| Hindi | Transliteration | Meaning |\n|---------|-----------------|--------|\n| **मैं हिंदी सीख रहा हूँ** | main hindii siikh rahaa huun | I am learning Hindi |\n| **यह मेरी किताब है** | yah merii kitaab hai | This is my book |\n| **आपका नाम क्या है?** | aapkaa naam kyaa hai? | What is your name? |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q1",
+      "step_title": "Read: मैं हिंदी सीख रहा हूँ",
+      "question": "What does **मैं हिंदी सीख रहा हूँ** (main hindii siikh rahaa huun) mean?",
+      "options": [
+        "I am learning Hindi",
+        "What is your name?",
+        "This is my book",
+        "hello"
+      ],
+      "correct_answer": "I am learning Hindi",
+      "feedback": "Correct! **मैं हिंदी सीख रहा हूँ** (main hindii siikh rahaa huun) means 'I am learning Hindi'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q2",
+      "step_title": "Read: यह मेरी किताब है",
+      "question": "What does **यह मेरी किताब है** (yah merii kitaab hai) mean?",
+      "options": [
+        "This is my book",
+        "hello",
+        "I am learning Hindi",
+        "What is your name?"
+      ],
+      "correct_answer": "This is my book",
+      "feedback": "Correct! **यह मेरी किताब है** (yah merii kitaab hai) means 'This is my book'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q3",
+      "step_title": "Read: आपका नाम क्या है?",
+      "question": "What does **आपका नाम क्या है?** (aapkaa naam kyaa hai?) mean?",
+      "options": [
+        "I am learning Hindi",
+        "hello",
+        "This is my book",
+        "What is your name?"
+      ],
+      "correct_answer": "What is your name?",
+      "feedback": "Correct! **आपका नाम क्या है?** (aapkaa naam kyaa hai?) means 'What is your name?'."
+    },
+    {
+      "type": "free_response",
+      "id": "q4",
+      "step_title": "Transliterate the Word",
+      "question": "Type the transliteration for **मैं हिंदी सीख रहा हूँ** (meaning: I am learning Hindi)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "main hindii siikh rahaa huun",
+        "main hindii siikh rahaa huun",
+        "mainhindiisiikhrahaahuun"
+      ],
+      "hint": "Sound it out character by character."
+    },
+    {
+      "type": "content",
+      "step_title": "Lesson Summary",
+      "content_markdown": "## Summary\n\nExcellent reading practice! You worked through 3 words/phrases. Keep building your speed and confidence!"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q5",
+      "step_title": "Final Check",
+      "question": "What does **आपका नाम क्या है?** mean?",
+      "options": [
+        "What is your name?",
+        "I am learning Hindi",
+        "water",
+        "school"
+      ],
+      "correct_answer": "What is your name?",
+      "feedback": "Perfect! You're reading Hindi with confidence!"
+    },
+    {
+      "type": "free_response",
+      "id": "q6",
+      "step_title": "Practice: आपका नाम क्या है?",
+      "question": "Type the meaning of **आपका नाम क्या है?** (aapkaa naam kyaa hai?)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "What is your name?"
+      ],
+      "hint": "Transliteration: aapkaa naam kyaa hai?"
+    },
+    {
+      "type": "free_response",
+      "id": "q7",
+      "step_title": "Practice: मैं हिंदी सीख रहा हूँ",
+      "question": "Type the meaning of **मैं हिंदी सीख रहा हूँ** (main hindii siikh rahaa huun)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "I am learning Hindi"
+      ],
+      "hint": "Transliteration: main hindii siikh rahaa huun"
+    },
+    {
+      "type": "free_response",
+      "id": "q8",
+      "step_title": "Practice: यह मेरी किताब है",
+      "question": "Type the meaning of **यह मेरी किताब है** (yah merii kitaab hai)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "This is my book"
+      ],
+      "hint": "Transliteration: yah merii kitaab hai"
+    },
+    {
+      "type": "free_response",
+      "id": "q9",
+      "step_title": "Practice: आपका नाम क्या है?",
+      "question": "Type the meaning of **आपका नाम क्या है?** (aapkaa naam kyaa hai?)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "What is your name?"
+      ],
+      "hint": "Transliteration: aapkaa naam kyaa hai?"
+    },
+    {
+      "type": "free_response",
+      "id": "q10",
+      "step_title": "Practice: मैं हिंदी सीख रहा हूँ",
+      "question": "Type the meaning of **मैं हिंदी सीख रहा हूँ** (main hindii siikh rahaa huun)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "I am learning Hindi"
+      ],
+      "hint": "Transliteration: main hindii siikh rahaa huun"
+    },
+    {
+      "type": "free_response",
+      "id": "q11",
+      "step_title": "Practice: यह मेरी किताब है",
+      "question": "Type the meaning of **यह मेरी किताब है** (yah merii kitaab hai)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "This is my book"
+      ],
+      "hint": "Transliteration: yah merii kitaab hai"
+    },
+    {
+      "type": "free_response",
+      "id": "q12",
+      "step_title": "Practice: आपका नाम क्या है?",
+      "question": "Type the meaning of **आपका नाम क्या है?** (aapkaa naam kyaa hai?)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "What is your name?"
+      ],
+      "hint": "Transliteration: aapkaa naam kyaa hai?"
+    }
+  ]
+}

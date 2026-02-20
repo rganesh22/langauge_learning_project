@@ -1,0 +1,138 @@
+{
+  "lesson_id": "kn_08_vowel_marks_1",
+  "language": "Kannada",
+  "title": "Vowel Marks — Part 1",
+  "subtitle": "ಾ, ಿ, ೀ, ು, ೂ — modifying consonants",
+  "description": "Learn how vowel marks change the inherent 'a' of consonants. Focus on reading and pronunciation.",
+  "estimated_minutes": 25,
+  "cefr_level": "A0",
+  "tags": ["script", "reading", "basics"],
+  "skills_learned": [
+    "Applying the first five vowel marks to consonants",
+    "Reading syllables with modified vowels",
+    "Recognizing the visual changes in consonants"
+  ],
+  "steps": [
+    {
+      "type": "content",
+      "step_title": "Vowel Marks — Part 1",
+      "content_markdown": "# Vowel Marks — Part 1\n\nLearn how vowel marks change the inherent 'a' of consonants.\n\n### Today's Characters\n**ಕಾ** · **ಕಿ** · **ಕೀ** · **ಕು** · **ಕೂ**"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ಕಾ (kaa)",
+      "content_markdown": "## ಕಾ — kaa\n\n**Sound:** kaa as in 'calm'.\n\n**Visual:** Adds a stroke to the right of the consonant."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q1",
+      "step_title": "Identify: kaa",
+      "question": "Which character represents the sound **kaa**?",
+      "options": ["ಕೀ", "ಕಿ", "ಕು", "ಕಾ"],
+      "correct_answer": "ಕಾ",
+      "feedback": "Correct! **ಕಾ** is the 'kaa' sound."
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ಕಿ (ki)",
+      "content_markdown": "## ಕಿ — ki\n\n**Sound:** ki as in 'kit'.\n\n**Visual:** Adds a small hook/mark on top."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q2",
+      "step_title": "Identify: ki",
+      "question": "Which character represents the sound **ki**?",
+      "options": ["ಕಿ", "ಕು", "ಕೀ", "ಕಾ"],
+      "correct_answer": "ಕಿ",
+      "feedback": "Correct! **ಕಿ** is the 'ki' sound."
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ಕೀ (kii)",
+      "content_markdown": "## ಕೀ — kii\n\n**Sound:** kii as in 'keep'.\n\n**Visual:** An extended version of the 'i' mark."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q3",
+      "step_title": "Identify: kii",
+      "question": "Which character represents the sound **kii**?",
+      "options": ["ಕಿ", "ಕಾ", "ಕು", "ಕೀ"],
+      "correct_answer": "ಕೀ",
+      "feedback": "Correct! **ಕೀ** is the 'kii' sound."
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ಕು (ku)",
+      "content_markdown": "## ಕು — ku\n\n**Sound:** ku as in 'cook'.\n\n**Visual:** Mark added below the consonant."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q4",
+      "step_title": "Identify: ku",
+      "question": "Which character represents the sound **ku**?",
+      "options": ["ಕು", "ಕಾ", "ಕಿ", "ಕೀ"],
+      "correct_answer": "ಕು",
+      "feedback": "Correct! **ಕು** is the 'ku' sound."
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ಕೂ (kuu)",
+      "content_markdown": "## ಕೂ — kuu\n\n**Sound:** kuu as in 'cool'.\n\n**Visual:** Extended mark below the consonant."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q5",
+      "step_title": "Identify: kuu",
+      "question": "Which character represents the sound **kuu**?",
+      "options": ["ಕಾ", "ಕಿ", "ಕೂ", "ಕೀ"],
+      "correct_answer": "ಕೂ",
+      "feedback": "Correct! **ಕೂ** is the 'kuu' sound."
+    },
+    {
+      "type": "content",
+      "step_title": "Reading Practice",
+      "content_markdown": "## Let's Read!\n\nPractice reading these modified syllables:\n\n| Kannada | Transliteration |\n|---------|-----------------|\n| **ಕಾರು** | kaaru |\n| **ಕೀಲಿ** | kiili |\n| **ಗೂಡು** | guudu |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q8",
+      "step_title": "Read: ಕಾರು",
+      "question": "How do you read this word out loud?\n\n# ಕಾರು",
+      "options": ["kaaru", "kiili", "guudu", "kalla"],
+      "correct_answer": "kaaru",
+      "feedback": "Perfect! You read 'kaaru' correctly."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q9",
+      "step_title": "Read: ಕೀಲಿ",
+      "question": "How do you read this word out loud?\n\n# ಕೀಲಿ",
+      "options": ["kaaru", "kiili", "guudu", "kila"],
+      "correct_answer": "kiili",
+      "feedback": "Perfect! You read 'kiili' correctly."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q10",
+      "step_title": "Read: ಗೂಡು",
+      "question": "How do you read this word out loud?\n\n# ಗೂಡು",
+      "options": ["guudu", "kaaru", "kiili", "gaada"],
+      "correct_answer": "guudu",
+      "feedback": "Perfect! You read 'guudu' correctly."
+    },
+    {
+      "type": "free_response",
+      "id": "q11",
+      "step_title": "Transliterate Word",
+      "question": "Type the transliteration for **ಕಾರು**",
+      "ai_grading": false,
+      "accepted_responses": ["kaaru", "Kaaru"],
+      "hint": "K-AA-R-U"
+    },
+    {
+      "type": "content",
+      "step_title": "Lesson Summary",
+      "content_markdown": "## Summary\n\nYou've learned the first set of vowel marks:\n\n- **ಾ** (aa)\n- **ಿ** (i)\n- **ೀ** (ii)\n- **ು** (u)\n- **ೂ** (uu)"
+    }
+  ]
+}

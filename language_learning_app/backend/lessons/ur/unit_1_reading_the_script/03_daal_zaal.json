@@ -1,0 +1,250 @@
+{
+  "lesson_id": "ur_03_daal_zaal",
+  "language": "Urdu",
+  "title": "Non-Connecting Letters",
+  "subtitle": "د (daal), ذ (zaal), ر (ray), ڑ (array), ز (zay), ژ (zhay)",
+  "description": "Letters that don't connect to the next letter.",
+  "estimated_minutes": 27.599999999999998,
+  "cefr_level": "A0",
+  "tags": [
+    "script",
+    "reading",
+    "basics"
+  ],
+  "skills_learned": [
+    "Non-connecting letters",
+    "Retroflex ڑ"
+  ],
+  "steps": [
+    {
+      "type": "content",
+      "step_title": "Non-Connecting Letters",
+      "content_markdown": "# Non-Connecting Letters\n\nLetters that don't connect to the next letter.\n\n### Today's Characters\n**د** · **ذ** · **ر** · **ڑ** · **ز** · **ژ**"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: د (daal)",
+      "content_markdown": "## د — daal\n\n**Sound:** d\n\n**Memory Trick:** Triangular — doesn't connect left"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q1",
+      "step_title": "Identify: daal",
+      "question": "Which character represents the sound **daal** (d)?",
+      "options": [
+        "د",
+        "ذ",
+        "ر",
+        "ڑ"
+      ],
+      "correct_answer": "د",
+      "feedback": "Correct! **د** is the d sound. Triangular — doesn't connect left"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ذ (zaal)",
+      "content_markdown": "## ذ — zaal\n\n**Sound:** z/dh\n\n**Memory Trick:** د + dot above\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **ذ** | z/dh | zaal |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q2",
+      "step_title": "Identify: zaal",
+      "question": "Which character represents the sound **zaal** (z/dh)?",
+      "options": [
+        "ر",
+        "ذ",
+        "د",
+        "ڑ"
+      ],
+      "correct_answer": "ذ",
+      "feedback": "Correct! **ذ** is the z/dh sound. د + dot above"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ر (ray)",
+      "content_markdown": "## ر — ray\n\n**Sound:** r\n\n**Memory Trick:** A dipping stroke\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **ر** | r | ray |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q3",
+      "step_title": "Identify: ray",
+      "question": "Which character represents the sound **ray** (r)?",
+      "options": [
+        "د",
+        "ذ",
+        "ڑ",
+        "ر"
+      ],
+      "correct_answer": "ر",
+      "feedback": "Correct! **ر** is the r sound. A dipping stroke"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ڑ (array)",
+      "content_markdown": "## ڑ — array\n\n**Sound:** rd (retroflex)\n\n**Memory Trick:** ر + small taa — Urdu specific\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **ڑ** | rd (retroflex) | array |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q4",
+      "step_title": "Identify: array",
+      "question": "Which character represents the sound **array** (rd (retroflex))?",
+      "options": [
+        "ذ",
+        "ر",
+        "ڑ",
+        "د"
+      ],
+      "correct_answer": "ڑ",
+      "feedback": "Correct! **ڑ** is the rd (retroflex) sound. ر + small taa — Urdu specific"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ز (zay)",
+      "content_markdown": "## ز — zay\n\n**Sound:** z\n\n**Memory Trick:** ر + dot above\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **ز** | z | zay |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q5",
+      "step_title": "Identify: zay",
+      "question": "Which character represents the sound **zay** (z)?",
+      "options": [
+        "ز",
+        "ر",
+        "ذ",
+        "د"
+      ],
+      "correct_answer": "ز",
+      "feedback": "Correct! **ز** is the z sound. ر + dot above"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ژ (zhay)",
+      "content_markdown": "## ژ — zhay\n\n**Sound:** zh\n\n**Memory Trick:** ر + three dots — rare"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q6",
+      "step_title": "Identify: zhay",
+      "question": "Which character represents the sound **zhay** (zh)?",
+      "options": [
+        "د",
+        "ژ",
+        "ذ",
+        "ر"
+      ],
+      "correct_answer": "ژ",
+      "feedback": "Correct! **ژ** is the zh sound. ر + three dots — rare"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q7",
+      "step_title": "Sound Match",
+      "question": "What sound does **د** make?",
+      "options": [
+        "d",
+        "z/dh",
+        "r",
+        "rd (retroflex)"
+      ],
+      "correct_answer": "d",
+      "feedback": "Right! **د** = daal = d."
+    },
+    {
+      "type": "content",
+      "step_title": "Visual Comparison",
+      "content_markdown": "## Compare the Shapes\n\nLook closely at how these characters differ:\n\n- **د** (daal) vs **ذ** (zaal)\n- **ر** (ray) vs **ڑ** (array)\n- **ز** (zay) vs **ژ** (zhay)\n\nNotice the subtle differences in strokes, dots, or curves!"
+    },
+    {
+      "type": "free_response",
+      "id": "q8",
+      "step_title": "Type the Sound",
+      "question": "What is the transliteration (Roman letters) for **ژ**?",
+      "ai_grading": false,
+      "accepted_responses": [
+        "zhay",
+        "zhay",
+        "ZHAY"
+      ],
+      "hint": "It sounds like 'zh'."
+    },
+    {
+      "type": "content",
+      "step_title": "Word Practice",
+      "content_markdown": "## Let's Read Words!\n\nUsing what you've learned, try reading these words:\n\n| Urdu | Transliteration | Meaning |\n|---------|-----------------|--------|\n| **در** | dar | door |\n| **روز** | roz | day |\n| **بڑا** | baraa | big |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q9",
+      "step_title": "Read: در",
+      "question": "What does **در** (dar) mean?",
+      "options": [
+        "day",
+        "hello",
+        "door",
+        "big"
+      ],
+      "correct_answer": "door",
+      "feedback": "Correct! **در** (dar) means 'door'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q10",
+      "step_title": "Read: روز",
+      "question": "What does **روز** (roz) mean?",
+      "options": [
+        "day",
+        "big",
+        "door",
+        "hello"
+      ],
+      "correct_answer": "day",
+      "feedback": "Correct! **روز** (roz) means 'day'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q11",
+      "step_title": "Read: بڑا",
+      "question": "What does **بڑا** (baraa) mean?",
+      "options": [
+        "door",
+        "big",
+        "hello",
+        "day"
+      ],
+      "correct_answer": "big",
+      "feedback": "Correct! **بڑا** (baraa) means 'big'."
+    },
+    {
+      "type": "free_response",
+      "id": "q12",
+      "step_title": "Transliterate the Word",
+      "question": "Type the transliteration for **در** (meaning: door)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "dar",
+        "dar",
+        "dar"
+      ],
+      "hint": "Sound it out character by character."
+    },
+    {
+      "type": "content",
+      "step_title": "Lesson Summary",
+      "content_markdown": "## Summary\n\nGreat job! Here's everything you learned:\n\n| Character | Transliteration | Sound |\n|-----------|----------------|-------|\n| **د** | daal | d |\n| **ذ** | zaal | z/dh |\n| **ر** | ray | r |\n| **ڑ** | array | rd (retroflex) |\n| **ز** | zay | z |\n| **ژ** | zhay | zh |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q13",
+      "step_title": "Final Check",
+      "question": "How many new characters/concepts did we cover in this lesson?",
+      "options": [
+        "6",
+        "8",
+        "5",
+        "11"
+      ],
+      "correct_answer": "6",
+      "feedback": "Correct! We covered 6 characters today. Keep practicing!"
+    }
+  ]
+}

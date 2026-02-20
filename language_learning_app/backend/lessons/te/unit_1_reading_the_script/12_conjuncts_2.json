@@ -1,0 +1,230 @@
+{
+  "lesson_id": "te_12_conjuncts_2",
+  "language": "Telugu",
+  "title": "Nasal & Mixed Clusters",
+  "subtitle": "ంక, ంచ, ండ, ంత, ంప",
+  "description": "Nasal-stop pairs and mixed clusters.",
+  "estimated_minutes": 25.2,
+  "cefr_level": "A0",
+  "tags": [
+    "script",
+    "reading",
+    "basics"
+  ],
+  "skills_learned": [
+    "Nasal clusters"
+  ],
+  "steps": [
+    {
+      "type": "content",
+      "step_title": "Nasal & Mixed Clusters",
+      "content_markdown": "# Nasal & Mixed Clusters\n\nNasal-stop pairs and mixed clusters.\n\n### Today's Characters\n**ంక** · **ంచ** · **ండ** · **ంత** · **ంప**"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ంక (nka)",
+      "content_markdown": "## ంక — nka\n\n**Sound:** nk\n\n**Memory Trick:** Velar pair"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q1",
+      "step_title": "Identify: nka",
+      "question": "Which character represents the sound **nka** (nk)?",
+      "options": [
+        "ండ",
+        "ంత",
+        "ంక",
+        "ంచ"
+      ],
+      "correct_answer": "ంక",
+      "feedback": "Correct! **ంక** is the nk sound. Velar pair"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ంచ (ncha)",
+      "content_markdown": "## ంచ — ncha\n\n**Sound:** nch\n\n**Memory Trick:** Palatal pair\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **ంచ** | nch | ncha |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q2",
+      "step_title": "Identify: ncha",
+      "question": "Which character represents the sound **ncha** (nch)?",
+      "options": [
+        "ంచ",
+        "ంత",
+        "ంక",
+        "ండ"
+      ],
+      "correct_answer": "ంచ",
+      "feedback": "Correct! **ంచ** is the nch sound. Palatal pair"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ండ (nda)",
+      "content_markdown": "## ండ — nda\n\n**Sound:** nd\n\n**Memory Trick:** Retroflex pair\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **ండ** | nd | nda |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q3",
+      "step_title": "Identify: nda",
+      "question": "Which character represents the sound **nda** (nd)?",
+      "options": [
+        "ంచ",
+        "ండ",
+        "ంత",
+        "ంక"
+      ],
+      "correct_answer": "ండ",
+      "feedback": "Correct! **ండ** is the nd sound. Retroflex pair"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ంత (ntha)",
+      "content_markdown": "## ంత — ntha\n\n**Sound:** nth\n\n**Memory Trick:** Dental pair\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **ంత** | nth | ntha |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q4",
+      "step_title": "Identify: ntha",
+      "question": "Which character represents the sound **ntha** (nth)?",
+      "options": [
+        "ంత",
+        "ంక",
+        "ంచ",
+        "ండ"
+      ],
+      "correct_answer": "ంత",
+      "feedback": "Correct! **ంత** is the nth sound. Dental pair"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ంప (mpa)",
+      "content_markdown": "## ంప — mpa\n\n**Sound:** mp\n\n**Memory Trick:** Labial pair"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q5",
+      "step_title": "Identify: mpa",
+      "question": "Which character represents the sound **mpa** (mp)?",
+      "options": [
+        "ంప",
+        "ంక",
+        "ంచ",
+        "ండ"
+      ],
+      "correct_answer": "ంప",
+      "feedback": "Correct! **ంప** is the mp sound. Labial pair"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q6",
+      "step_title": "Sound Match",
+      "question": "What sound does **ంక** make?",
+      "options": [
+        "nk",
+        "nch",
+        "nd",
+        "nth"
+      ],
+      "correct_answer": "nk",
+      "feedback": "Right! **ంక** = nka = nk."
+    },
+    {
+      "type": "content",
+      "step_title": "Visual Comparison",
+      "content_markdown": "## Compare the Shapes\n\nLook closely at how these characters differ:\n\n- **ంక** (nka) vs **ంచ** (ncha)\n- **ండ** (nda) vs **ంత** (ntha)\n\nNotice the subtle differences in strokes, dots, or curves!"
+    },
+    {
+      "type": "free_response",
+      "id": "q7",
+      "step_title": "Type the Sound",
+      "question": "What is the transliteration (Roman letters) for **ంప**?",
+      "ai_grading": false,
+      "accepted_responses": [
+        "mpa",
+        "mpa",
+        "MPA"
+      ],
+      "hint": "It sounds like 'mp'."
+    },
+    {
+      "type": "content",
+      "step_title": "Word Practice",
+      "content_markdown": "## Let's Read Words!\n\nUsing what you've learned, try reading these words:\n\n| Telugu | Transliteration | Meaning |\n|---------|-----------------|--------|\n| **బంగారం** | bangaaram | gold |\n| **సంతోషం** | santosham | happiness |\n| **కొండ** | konda | hill |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q8",
+      "step_title": "Read: బంగారం",
+      "question": "What does **బంగారం** (bangaaram) mean?",
+      "options": [
+        "hill",
+        "happiness",
+        "gold",
+        "hello"
+      ],
+      "correct_answer": "gold",
+      "feedback": "Correct! **బంగారం** (bangaaram) means 'gold'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q9",
+      "step_title": "Read: సంతోషం",
+      "question": "What does **సంతోషం** (santosham) mean?",
+      "options": [
+        "happiness",
+        "gold",
+        "hill",
+        "hello"
+      ],
+      "correct_answer": "happiness",
+      "feedback": "Correct! **సంతోషం** (santosham) means 'happiness'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q10",
+      "step_title": "Read: కొండ",
+      "question": "What does **కొండ** (konda) mean?",
+      "options": [
+        "gold",
+        "hello",
+        "happiness",
+        "hill"
+      ],
+      "correct_answer": "hill",
+      "feedback": "Correct! **కొండ** (konda) means 'hill'."
+    },
+    {
+      "type": "free_response",
+      "id": "q11",
+      "step_title": "Transliterate the Word",
+      "question": "Type the transliteration for **బంగారం** (meaning: gold)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "bangaaram",
+        "bangaaram",
+        "bangaaram"
+      ],
+      "hint": "Sound it out character by character."
+    },
+    {
+      "type": "content",
+      "step_title": "Lesson Summary",
+      "content_markdown": "## Summary\n\nGreat job! Here's everything you learned:\n\n| Character | Transliteration | Sound |\n|-----------|----------------|-------|\n| **ంక** | nka | nk |\n| **ంచ** | ncha | nch |\n| **ండ** | nda | nd |\n| **ంత** | ntha | nth |\n| **ంప** | mpa | mp |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q12",
+      "step_title": "Final Check",
+      "question": "How many new characters/concepts did we cover in this lesson?",
+      "options": [
+        "5",
+        "7",
+        "4",
+        "10"
+      ],
+      "correct_answer": "5",
+      "feedback": "Correct! We covered 5 characters today. Keep practicing!"
+    }
+  ]
+}

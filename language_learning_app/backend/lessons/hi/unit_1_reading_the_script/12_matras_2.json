@@ -1,0 +1,230 @@
+{
+  "lesson_id": "hi_12_matras_2",
+  "language": "Hindi",
+  "title": "Matras — Part 2",
+  "subtitle": "े, ै, ो, ौ, ृ",
+  "description": "Complete the matra system.",
+  "estimated_minutes": 25.2,
+  "cefr_level": "A0",
+  "tags": [
+    "script",
+    "reading",
+    "basics"
+  ],
+  "skills_learned": [
+    "Complete matra system"
+  ],
+  "steps": [
+    {
+      "type": "content",
+      "step_title": "Matras — Part 2",
+      "content_markdown": "# Matras — Part 2\n\nComplete the matra system.\n\n### Today's Characters\n**के** · **कै** · **को** · **कौ** · **कृ**"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: के (ke)",
+      "content_markdown": "## के — ke\n\n**Sound:** kay\n\n**Memory Trick:** Stroke above = e"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q1",
+      "step_title": "Identify: ke",
+      "question": "Which character represents the sound **ke** (kay)?",
+      "options": [
+        "को",
+        "कौ",
+        "के",
+        "कै"
+      ],
+      "correct_answer": "के",
+      "feedback": "Correct! **के** is the kay sound. Stroke above = e"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: कै (kai)",
+      "content_markdown": "## कै — kai\n\n**Sound:** kai\n\n**Memory Trick:** Double stroke above = ai\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **कै** | kai | kai |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q2",
+      "step_title": "Identify: kai",
+      "question": "Which character represents the sound **kai** (kai)?",
+      "options": [
+        "कै",
+        "कौ",
+        "के",
+        "को"
+      ],
+      "correct_answer": "कै",
+      "feedback": "Correct! **कै** is the kai sound. Double stroke above = ai"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: को (ko)",
+      "content_markdown": "## को — ko\n\n**Sound:** ko\n\n**Memory Trick:** Stroke above + after = o\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **को** | ko | ko |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q3",
+      "step_title": "Identify: ko",
+      "question": "Which character represents the sound **ko** (ko)?",
+      "options": [
+        "कै",
+        "को",
+        "कौ",
+        "के"
+      ],
+      "correct_answer": "को",
+      "feedback": "Correct! **को** is the ko sound. Stroke above + after = o"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: कौ (kau)",
+      "content_markdown": "## कौ — kau\n\n**Sound:** kow\n\n**Memory Trick:** Double above + after = au\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **कौ** | kow | kau |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q4",
+      "step_title": "Identify: kau",
+      "question": "Which character represents the sound **kau** (kow)?",
+      "options": [
+        "कौ",
+        "के",
+        "कै",
+        "को"
+      ],
+      "correct_answer": "कौ",
+      "feedback": "Correct! **कौ** is the kow sound. Double above + after = au"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: कृ (kri)",
+      "content_markdown": "## कृ — kri\n\n**Sound:** kri\n\n**Memory Trick:** Small hook below = ri"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q5",
+      "step_title": "Identify: kri",
+      "question": "Which character represents the sound **kri** (kri)?",
+      "options": [
+        "कृ",
+        "के",
+        "कै",
+        "को"
+      ],
+      "correct_answer": "कृ",
+      "feedback": "Correct! **कृ** is the kri sound. Small hook below = ri"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q6",
+      "step_title": "Sound Match",
+      "question": "What sound does **के** make?",
+      "options": [
+        "kay",
+        "kai",
+        "ko",
+        "kow"
+      ],
+      "correct_answer": "kay",
+      "feedback": "Right! **के** = ke = kay."
+    },
+    {
+      "type": "content",
+      "step_title": "Visual Comparison",
+      "content_markdown": "## Compare the Shapes\n\nLook closely at how these characters differ:\n\n- **के** (ke) vs **कै** (kai)\n- **को** (ko) vs **कौ** (kau)\n\nNotice the subtle differences in strokes, dots, or curves!"
+    },
+    {
+      "type": "free_response",
+      "id": "q7",
+      "step_title": "Type the Sound",
+      "question": "What is the transliteration (Roman letters) for **कृ**?",
+      "ai_grading": false,
+      "accepted_responses": [
+        "kri",
+        "kri",
+        "KRI"
+      ],
+      "hint": "It sounds like 'kri'."
+    },
+    {
+      "type": "content",
+      "step_title": "Word Practice",
+      "content_markdown": "## Let's Read Words!\n\nUsing what you've learned, try reading these words:\n\n| Hindi | Transliteration | Meaning |\n|---------|-----------------|--------|\n| **केला** | kelaa | banana |\n| **कौन** | kaun | who |\n| **कृपा** | kripaa | grace |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q8",
+      "step_title": "Read: केला",
+      "question": "What does **केला** (kelaa) mean?",
+      "options": [
+        "grace",
+        "who",
+        "banana",
+        "hello"
+      ],
+      "correct_answer": "banana",
+      "feedback": "Correct! **केला** (kelaa) means 'banana'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q9",
+      "step_title": "Read: कौन",
+      "question": "What does **कौन** (kaun) mean?",
+      "options": [
+        "who",
+        "banana",
+        "grace",
+        "hello"
+      ],
+      "correct_answer": "who",
+      "feedback": "Correct! **कौन** (kaun) means 'who'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q10",
+      "step_title": "Read: कृपा",
+      "question": "What does **कृपा** (kripaa) mean?",
+      "options": [
+        "banana",
+        "hello",
+        "who",
+        "grace"
+      ],
+      "correct_answer": "grace",
+      "feedback": "Correct! **कृपा** (kripaa) means 'grace'."
+    },
+    {
+      "type": "free_response",
+      "id": "q11",
+      "step_title": "Transliterate the Word",
+      "question": "Type the transliteration for **केला** (meaning: banana)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "kelaa",
+        "kelaa",
+        "kelaa"
+      ],
+      "hint": "Sound it out character by character."
+    },
+    {
+      "type": "content",
+      "step_title": "Lesson Summary",
+      "content_markdown": "## Summary\n\nGreat job! Here's everything you learned:\n\n| Character | Transliteration | Sound |\n|-----------|----------------|-------|\n| **के** | ke | kay |\n| **कै** | kai | kai |\n| **को** | ko | ko |\n| **कौ** | kau | kow |\n| **कृ** | kri | kri |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q12",
+      "step_title": "Final Check",
+      "question": "How many new characters/concepts did we cover in this lesson?",
+      "options": [
+        "5",
+        "7",
+        "4",
+        "10"
+      ],
+      "correct_answer": "5",
+      "feedback": "Correct! We covered 5 characters today. Keep practicing!"
+    }
+  ]
+}

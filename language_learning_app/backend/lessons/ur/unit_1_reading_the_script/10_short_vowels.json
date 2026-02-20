@@ -1,0 +1,192 @@
+{
+  "lesson_id": "ur_10_short_vowels",
+  "language": "Urdu",
+  "title": "Short Vowels (Diacritics)",
+  "subtitle": "زبر (zabar), زیر (zer), پیش (pesh)",
+  "description": "Learn the short vowel marks that are often omitted in printed Urdu.",
+  "estimated_minutes": 20.4,
+  "cefr_level": "A0",
+  "tags": [
+    "script",
+    "reading",
+    "basics"
+  ],
+  "skills_learned": [
+    "Three short vowel marks",
+    "Reading with diacritics"
+  ],
+  "steps": [
+    {
+      "type": "content",
+      "step_title": "Short Vowels (Diacritics)",
+      "content_markdown": "# Short Vowels (Diacritics)\n\nLearn the short vowel marks that are often omitted in printed Urdu.\n\n### Today's Characters\n**بَ** · **بِ** · **بُ**"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: بَ (ba)",
+      "content_markdown": "## بَ — ba\n\n**Sound:** ba (zabar = a above)\n\n**Memory Trick:** Small diagonal stroke above = 'a'"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q1",
+      "step_title": "Identify: ba",
+      "question": "Which character represents the sound **ba** (ba (zabar = a above))?",
+      "options": [
+        "بِ",
+        "بُ",
+        "?",
+        "بَ"
+      ],
+      "correct_answer": "بَ",
+      "feedback": "Correct! **بَ** is the ba (zabar = a above) sound. Small diagonal stroke above = 'a'"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: بِ (bi)",
+      "content_markdown": "## بِ — bi\n\n**Sound:** bi (zer = i below)\n\n**Memory Trick:** Small stroke below = 'i'\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **بِ** | bi (zer = i below) | bi |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q2",
+      "step_title": "Identify: bi",
+      "question": "Which character represents the sound **bi** (bi (zer = i below))?",
+      "options": [
+        "بَ",
+        "بُ",
+        "بِ",
+        "?"
+      ],
+      "correct_answer": "بِ",
+      "feedback": "Correct! **بِ** is the bi (zer = i below) sound. Small stroke below = 'i'"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: بُ (bu)",
+      "content_markdown": "## بُ — bu\n\n**Sound:** bu (pesh = u above)\n\n**Memory Trick:** Small waao-like mark above = 'u'"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q3",
+      "step_title": "Identify: bu",
+      "question": "Which character represents the sound **bu** (bu (pesh = u above))?",
+      "options": [
+        "بُ",
+        "بَ",
+        "بِ",
+        "?"
+      ],
+      "correct_answer": "بُ",
+      "feedback": "Correct! **بُ** is the bu (pesh = u above) sound. Small waao-like mark above = 'u'"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q4",
+      "step_title": "Sound Match",
+      "question": "What sound does **بَ** make?",
+      "options": [
+        "ba (zabar = a above)",
+        "bi (zer = i below)",
+        "bu (pesh = u above)"
+      ],
+      "correct_answer": "ba (zabar = a above)",
+      "feedback": "Right! **بَ** = ba = ba (zabar = a above)."
+    },
+    {
+      "type": "content",
+      "step_title": "Visual Comparison",
+      "content_markdown": "## Compare the Shapes\n\nLook closely at how these characters differ:\n\n- **بَ** (ba) vs **بِ** (bi)\n\nNotice the subtle differences in strokes, dots, or curves!"
+    },
+    {
+      "type": "free_response",
+      "id": "q5",
+      "step_title": "Type the Sound",
+      "question": "What is the transliteration (Roman letters) for **بُ**?",
+      "ai_grading": false,
+      "accepted_responses": [
+        "bu",
+        "bu",
+        "BU"
+      ],
+      "hint": "It sounds like 'bu (pesh = u above)'."
+    },
+    {
+      "type": "content",
+      "step_title": "Word Practice",
+      "content_markdown": "## Let's Read Words!\n\nUsing what you've learned, try reading these words:\n\n| Urdu | Transliteration | Meaning |\n|---------|-----------------|--------|\n| **کِتاب** | kitaab | book (with zer on ک) |\n| **سُنا** | sunaa | heard (with pesh on س) |\n| **بَس** | bas | enough (with zabar on ب) |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q6",
+      "step_title": "Read: کِتاب",
+      "question": "What does **کِتاب** (kitaab) mean?",
+      "options": [
+        "heard (with pesh on س)",
+        "enough (with zabar on ب)",
+        "book (with zer on ک)",
+        "hello"
+      ],
+      "correct_answer": "book (with zer on ک)",
+      "feedback": "Correct! **کِتاب** (kitaab) means 'book (with zer on ک)'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q7",
+      "step_title": "Read: سُنا",
+      "question": "What does **سُنا** (sunaa) mean?",
+      "options": [
+        "hello",
+        "heard (with pesh on س)",
+        "enough (with zabar on ب)",
+        "book (with zer on ک)"
+      ],
+      "correct_answer": "heard (with pesh on س)",
+      "feedback": "Correct! **سُنا** (sunaa) means 'heard (with pesh on س)'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q8",
+      "step_title": "Read: بَس",
+      "question": "What does **بَس** (bas) mean?",
+      "options": [
+        "enough (with zabar on ب)",
+        "hello",
+        "heard (with pesh on س)",
+        "book (with zer on ک)"
+      ],
+      "correct_answer": "enough (with zabar on ب)",
+      "feedback": "Correct! **بَس** (bas) means 'enough (with zabar on ب)'."
+    },
+    {
+      "type": "free_response",
+      "id": "q9",
+      "step_title": "Transliterate the Word",
+      "question": "Type the transliteration for **کِتاب** (meaning: book (with zer on ک))",
+      "ai_grading": false,
+      "accepted_responses": [
+        "kitaab",
+        "kitaab",
+        "kitaab"
+      ],
+      "hint": "Sound it out character by character."
+    },
+    {
+      "type": "content",
+      "step_title": "Lesson Summary",
+      "content_markdown": "## Summary\n\nGreat job! Here's everything you learned:\n\n| Character | Transliteration | Sound |\n|-----------|----------------|-------|\n| **بَ** | ba | ba (zabar = a above) |\n| **بِ** | bi | bi (zer = i below) |\n| **بُ** | bu | bu (pesh = u above) |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q10",
+      "step_title": "Final Check",
+      "question": "How many new characters/concepts did we cover in this lesson?",
+      "options": [
+        "3",
+        "5",
+        "2",
+        "8"
+      ],
+      "correct_answer": "3",
+      "feedback": "Correct! We covered 3 characters today. Keep practicing!"
+    }
+  ]
+}

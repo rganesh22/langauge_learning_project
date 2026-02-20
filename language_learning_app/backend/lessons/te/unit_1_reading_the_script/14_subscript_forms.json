@@ -1,0 +1,192 @@
+{
+  "lesson_id": "te_14_subscript_forms",
+  "language": "Telugu",
+  "title": "Subscript Consonant Forms",
+  "subtitle": "How consonants stack in Telugu",
+  "description": "Telugu uses subscript forms for consonant clusters.",
+  "estimated_minutes": 20.4,
+  "cefr_level": "A0",
+  "tags": [
+    "script",
+    "reading",
+    "basics"
+  ],
+  "skills_learned": [
+    "Subscript forms",
+    "Ra and Ya subscripts"
+  ],
+  "steps": [
+    {
+      "type": "content",
+      "step_title": "Subscript Consonant Forms",
+      "content_markdown": "# Subscript Consonant Forms\n\nTelugu uses subscript forms for consonant clusters.\n\n### Today's Characters\n**క + ్ + ర = క్ర** · **ప + ్ + ర = ప్ర** · **స + ్ + య = స్య**"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: క + ్ + ర = క్ర (kra)",
+      "content_markdown": "## క + ్ + ర = క్ర — kra\n\n**Sound:** kra\n\n**Memory Trick:** Ra subscript — very common"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q1",
+      "step_title": "Identify: kra",
+      "question": "Which character represents the sound **kra** (kra)?",
+      "options": [
+        "ప + ్ + ర = ప్ర",
+        "స + ్ + య = స్య",
+        "క + ్ + ర = క్ర",
+        "?"
+      ],
+      "correct_answer": "క + ్ + ర = క్ర",
+      "feedback": "Correct! **క + ్ + ర = క్ర** is the kra sound. Ra subscript — very common"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ప + ్ + ర = ప్ర (pra)",
+      "content_markdown": "## ప + ్ + ర = ప్ర — pra\n\n**Sound:** pra\n\n**Memory Trick:** Ra goes below\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **ప + ్ + ర = ప్ర** | pra | pra |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q2",
+      "step_title": "Identify: pra",
+      "question": "Which character represents the sound **pra** (pra)?",
+      "options": [
+        "క + ్ + ర = క్ర",
+        "?",
+        "స + ్ + య = స్య",
+        "ప + ్ + ర = ప్ర"
+      ],
+      "correct_answer": "ప + ్ + ర = ప్ర",
+      "feedback": "Correct! **ప + ్ + ర = ప్ర** is the pra sound. Ra goes below"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: స + ్ + య = స్య (sya)",
+      "content_markdown": "## స + ్ + య = స్య — sya\n\n**Sound:** sya\n\n**Memory Trick:** Ya subscript"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q3",
+      "step_title": "Identify: sya",
+      "question": "Which character represents the sound **sya** (sya)?",
+      "options": [
+        "?",
+        "స + ్ + య = స్య",
+        "క + ్ + ర = క్ర",
+        "ప + ్ + ర = ప్ర"
+      ],
+      "correct_answer": "స + ్ + య = స్య",
+      "feedback": "Correct! **స + ్ + య = స్య** is the sya sound. Ya subscript"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q4",
+      "step_title": "Sound Match",
+      "question": "What sound does **క + ్ + ర = క్ర** make?",
+      "options": [
+        "kra",
+        "pra",
+        "sya"
+      ],
+      "correct_answer": "kra",
+      "feedback": "Right! **క + ్ + ర = క్ర** = kra = kra."
+    },
+    {
+      "type": "content",
+      "step_title": "Visual Comparison",
+      "content_markdown": "## Compare the Shapes\n\nLook closely at how these characters differ:\n\n- **క + ్ + ర = క్ర** (kra) vs **ప + ్ + ర = ప్ర** (pra)\n\nNotice the subtle differences in strokes, dots, or curves!"
+    },
+    {
+      "type": "free_response",
+      "id": "q5",
+      "step_title": "Type the Sound",
+      "question": "What is the transliteration (Roman letters) for **స + ్ + య = స్య**?",
+      "ai_grading": false,
+      "accepted_responses": [
+        "sya",
+        "sya",
+        "SYA"
+      ],
+      "hint": "It sounds like 'sya'."
+    },
+    {
+      "type": "content",
+      "step_title": "Word Practice",
+      "content_markdown": "## Let's Read Words!\n\nUsing what you've learned, try reading these words:\n\n| Telugu | Transliteration | Meaning |\n|---------|-----------------|--------|\n| **ప్రపంచం** | prapancham | world |\n| **క్రమం** | kramam | order |\n| **విద్యార్థి** | vidyaarthi | student |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q6",
+      "step_title": "Read: ప్రపంచం",
+      "question": "What does **ప్రపంచం** (prapancham) mean?",
+      "options": [
+        "student",
+        "order",
+        "hello",
+        "world"
+      ],
+      "correct_answer": "world",
+      "feedback": "Correct! **ప్రపంచం** (prapancham) means 'world'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q7",
+      "step_title": "Read: క్రమం",
+      "question": "What does **క్రమం** (kramam) mean?",
+      "options": [
+        "hello",
+        "world",
+        "student",
+        "order"
+      ],
+      "correct_answer": "order",
+      "feedback": "Correct! **క్రమం** (kramam) means 'order'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q8",
+      "step_title": "Read: విద్యార్థి",
+      "question": "What does **విద్యార్థి** (vidyaarthi) mean?",
+      "options": [
+        "hello",
+        "order",
+        "student",
+        "world"
+      ],
+      "correct_answer": "student",
+      "feedback": "Correct! **విద్యార్థి** (vidyaarthi) means 'student'."
+    },
+    {
+      "type": "free_response",
+      "id": "q9",
+      "step_title": "Transliterate the Word",
+      "question": "Type the transliteration for **ప్రపంచం** (meaning: world)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "prapancham",
+        "prapancham",
+        "prapancham"
+      ],
+      "hint": "Sound it out character by character."
+    },
+    {
+      "type": "content",
+      "step_title": "Lesson Summary",
+      "content_markdown": "## Summary\n\nGreat job! Here's everything you learned:\n\n| Character | Transliteration | Sound |\n|-----------|----------------|-------|\n| **క + ్ + ర = క్ర** | kra | kra |\n| **ప + ్ + ర = ప్ర** | pra | pra |\n| **స + ్ + య = స్య** | sya | sya |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q10",
+      "step_title": "Final Check",
+      "question": "How many new characters/concepts did we cover in this lesson?",
+      "options": [
+        "3",
+        "5",
+        "2",
+        "8"
+      ],
+      "correct_answer": "3",
+      "feedback": "Correct! We covered 3 characters today. Keep practicing!"
+    }
+  ]
+}

@@ -1,0 +1,251 @@
+{
+  "lesson_id": "ta_04_hard_consonants",
+  "language": "Tamil",
+  "title": "The Vallinam (Hard) Consonants",
+  "subtitle": "க, ச, ட, த, ப, ற — the 6 hard stops",
+  "description": "Learn the six hard consonants of Tamil — the backbone of Tamil pronunciation.",
+  "estimated_minutes": 27.599999999999998,
+  "cefr_level": "A0",
+  "tags": [
+    "script",
+    "reading",
+    "basics"
+  ],
+  "skills_learned": [
+    "6 vallinam consonants",
+    "Inherent 'a' in consonants",
+    "Retroflex vs dental distinction"
+  ],
+  "steps": [
+    {
+      "type": "content",
+      "step_title": "The Vallinam (Hard) Consonants",
+      "content_markdown": "# The Vallinam (Hard) Consonants\n\nLearn the six hard consonants of Tamil — the backbone of Tamil pronunciation.\n\n### Today's Characters\n**க** · **ச** · **ட** · **த** · **ப** · **ற**"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: க (ka)",
+      "content_markdown": "## க — ka\n\n**Sound:** ka in karma\n\n**Memory Trick:** Looks like a 'k' with curves"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q1",
+      "step_title": "Identify: ka",
+      "question": "Which character represents the sound **ka** (ka in karma)?",
+      "options": [
+        "ட",
+        "ச",
+        "க",
+        "த"
+      ],
+      "correct_answer": "க",
+      "feedback": "Correct! **க** is the ka in karma sound. Looks like a 'k' with curves"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ச (sa/cha)",
+      "content_markdown": "## ச — sa/cha\n\n**Sound:** sa or cha\n\n**Memory Trick:** Context decides: 'sa' at start, 'cha' after nasal\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **ச** | sa or cha | sa/cha |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q2",
+      "step_title": "Identify: sa/cha",
+      "question": "Which character represents the sound **sa/cha** (sa or cha)?",
+      "options": [
+        "ட",
+        "க",
+        "ச",
+        "த"
+      ],
+      "correct_answer": "ச",
+      "feedback": "Correct! **ச** is the sa or cha sound. Context decides: 'sa' at start, 'cha' after nasal"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ட (ta (retroflex))",
+      "content_markdown": "## ட — ta (retroflex)\n\n**Sound:** ta with tongue curled back\n\n**Memory Trick:** The curl in the letter matches the tongue curl\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **ட** | ta with tongue curled back | ta (retroflex) |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q3",
+      "step_title": "Identify: ta (retroflex)",
+      "question": "Which character represents the sound **ta (retroflex)** (ta with tongue curled back)?",
+      "options": [
+        "ட",
+        "த",
+        "ச",
+        "க"
+      ],
+      "correct_answer": "ட",
+      "feedback": "Correct! **ட** is the ta with tongue curled back sound. The curl in the letter matches the tongue curl"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: த (tha (dental))",
+      "content_markdown": "## த — tha (dental)\n\n**Sound:** th as in 'the'\n\n**Memory Trick:** Softer shape for softer dental sound\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **த** | th as in 'the' | tha (dental) |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q4",
+      "step_title": "Identify: tha (dental)",
+      "question": "Which character represents the sound **tha (dental)** (th as in 'the')?",
+      "options": [
+        "ச",
+        "ட",
+        "க",
+        "த"
+      ],
+      "correct_answer": "த",
+      "feedback": "Correct! **த** is the th as in 'the' sound. Softer shape for softer dental sound"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ப (pa)",
+      "content_markdown": "## ப — pa\n\n**Sound:** pa in papa\n\n**Memory Trick:** Round like pursed lips making 'p'\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **ப** | pa in papa | pa |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q5",
+      "step_title": "Identify: pa",
+      "question": "Which character represents the sound **pa** (pa in papa)?",
+      "options": [
+        "ச",
+        "க",
+        "ட",
+        "ப"
+      ],
+      "correct_answer": "ப",
+      "feedback": "Correct! **ப** is the pa in papa sound. Round like pursed lips making 'p'"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ற (Ra (trill))",
+      "content_markdown": "## ற — Ra (trill)\n\n**Sound:** trilled r/tra\n\n**Memory Trick:** Strong vertical line — strong trilled sound"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q6",
+      "step_title": "Identify: Ra (trill)",
+      "question": "Which character represents the sound **Ra (trill)** (trilled r/tra)?",
+      "options": [
+        "ற",
+        "ச",
+        "க",
+        "ட"
+      ],
+      "correct_answer": "ற",
+      "feedback": "Correct! **ற** is the trilled r/tra sound. Strong vertical line — strong trilled sound"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q7",
+      "step_title": "Sound Match",
+      "question": "What sound does **க** make?",
+      "options": [
+        "ka in karma",
+        "sa or cha",
+        "ta with tongue curled back",
+        "th as in 'the'"
+      ],
+      "correct_answer": "ka in karma",
+      "feedback": "Right! **க** = ka = ka in karma."
+    },
+    {
+      "type": "content",
+      "step_title": "Visual Comparison",
+      "content_markdown": "## Compare the Shapes\n\nLook closely at how these characters differ:\n\n- **க** (ka) vs **ச** (sa/cha)\n- **ட** (ta (retroflex)) vs **த** (tha (dental))\n- **ப** (pa) vs **ற** (Ra (trill))\n\nNotice the subtle differences in strokes, dots, or curves!"
+    },
+    {
+      "type": "free_response",
+      "id": "q8",
+      "step_title": "Type the Sound",
+      "question": "What is the transliteration (Roman letters) for **ற**?",
+      "ai_grading": false,
+      "accepted_responses": [
+        "Ra (trill)",
+        "ra (trill)",
+        "RA (TRILL)"
+      ],
+      "hint": "It sounds like 'trilled r/tra'."
+    },
+    {
+      "type": "content",
+      "step_title": "Word Practice",
+      "content_markdown": "## Let's Read Words!\n\nUsing what you've learned, try reading these words:\n\n| Tamil | Transliteration | Meaning |\n|---------|-----------------|--------|\n| **கண்** | kan | eye |\n| **தமிழ்** | tamizh | Tamil (the language) |\n| **பால்** | paal | milk |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q9",
+      "step_title": "Read: கண்",
+      "question": "What does **கண்** (kan) mean?",
+      "options": [
+        "milk",
+        "hello",
+        "Tamil (the language)",
+        "eye"
+      ],
+      "correct_answer": "eye",
+      "feedback": "Correct! **கண்** (kan) means 'eye'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q10",
+      "step_title": "Read: தமிழ்",
+      "question": "What does **தமிழ்** (tamizh) mean?",
+      "options": [
+        "eye",
+        "milk",
+        "Tamil (the language)",
+        "hello"
+      ],
+      "correct_answer": "Tamil (the language)",
+      "feedback": "Correct! **தமிழ்** (tamizh) means 'Tamil (the language)'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q11",
+      "step_title": "Read: பால்",
+      "question": "What does **பால்** (paal) mean?",
+      "options": [
+        "Tamil (the language)",
+        "eye",
+        "hello",
+        "milk"
+      ],
+      "correct_answer": "milk",
+      "feedback": "Correct! **பால்** (paal) means 'milk'."
+    },
+    {
+      "type": "free_response",
+      "id": "q12",
+      "step_title": "Transliterate the Word",
+      "question": "Type the transliteration for **கண்** (meaning: eye)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "kan",
+        "kan",
+        "kan"
+      ],
+      "hint": "Sound it out character by character."
+    },
+    {
+      "type": "content",
+      "step_title": "Lesson Summary",
+      "content_markdown": "## Summary\n\nGreat job! Here's everything you learned:\n\n| Character | Transliteration | Sound |\n|-----------|----------------|-------|\n| **க** | ka | ka in karma |\n| **ச** | sa/cha | sa or cha |\n| **ட** | ta (retroflex) | ta with tongue curled back |\n| **த** | tha (dental) | th as in 'the' |\n| **ப** | pa | pa in papa |\n| **ற** | Ra (trill) | trilled r/tra |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q13",
+      "step_title": "Final Check",
+      "question": "How many new characters/concepts did we cover in this lesson?",
+      "options": [
+        "6",
+        "8",
+        "5",
+        "11"
+      ],
+      "correct_answer": "6",
+      "feedback": "Correct! We covered 6 characters today. Keep practicing!"
+    }
+  ]
+}

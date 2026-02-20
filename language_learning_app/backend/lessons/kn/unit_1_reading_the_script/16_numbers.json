@@ -1,0 +1,87 @@
+{
+  "lesson_id": "kn_16_numbers",
+  "language": "Kannada",
+  "title": "Kannada Numerals",
+  "subtitle": "೦, ೧, ೨, ೩, ೪, ೫, ೬, ೭, ೮, ೯",
+  "description": "Learn to recognize and read Kannada numeral symbols and their corresponding words.",
+  "estimated_minutes": 25,
+  "cefr_level": "A0",
+  "tags": ["script", "reading", "basics", "numbers"],
+  "skills_learned": [
+    "Recognizing Kannada numeral symbols (0-9)",
+    "Reading number words in Kannada script",
+    "Matching numerals to their pronunciation"
+  ],
+  "steps": [
+    {
+      "type": "content",
+      "step_title": "Kannada Numerals",
+      "content_markdown": "# Kannada Numerals\n\nKannada has its own set of symbols for numbers. Let's learn to recognize them and read their names.\n\n### Today's Symbols\n**೧** (1) · **೨** (2) · **೩** (3) · **೪** (4) · **೫** (5)"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ೧ (ondu)",
+      "content_markdown": "## ೧ — ondu\n\n**Numeral:** ೧\n**Word:** ಒಂದು (ondu)"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q1",
+      "step_title": "Identify: 1",
+      "question": "Which symbol represents the number **1** (ondu)?",
+      "options": ["೧", "೩", "೨", "೪"],
+      "correct_answer": "೧",
+      "feedback": "Correct! **೧** is the symbol for one."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q2",
+      "step_title": "Read: ಒಂದು",
+      "question": "How do you read this word out loud?\n\n# ಒಂದು",
+      "options": ["ondu", "eradu", "muuru", "naalku"],
+      "correct_answer": "ondu",
+      "feedback": "Perfect! ಒಂದು is read as 'ondu'."
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ೨ (eradu)",
+      "content_markdown": "## ೨ — eradu\n\n**Numeral:** ೨\n**Word:** ಎರಡು (eradu)"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q3",
+      "step_title": "Identify: 2",
+      "question": "Which symbol represents the number **2** (eradu)?",
+      "options": ["೨", "೪", "೧", "೩"],
+      "correct_answer": "೨",
+      "feedback": "Correct! **೨** is the symbol for two."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q4",
+      "step_title": "Read: ಎರಡು",
+      "question": "How do you read this word out loud?\n\n# ಎರಡು",
+      "options": ["ondu", "eradu", "muuru", "naalku"],
+      "correct_answer": "eradu",
+      "feedback": "Perfect! ಎರಡು is read as 'eradu'."
+    },
+    {
+      "type": "content",
+      "step_title": "Numeral Table",
+      "content_markdown": "## Quick Reference\n\n| Symbol | Word | Transliteration |\n|--------|------|-----------------|\n| **೧** | ಒಂದು | ondu |\n| **೨** | ಎರಡು | eradu |\n| **೩** | ಮುುರು | muuru |\n| **೪** | ಪಾಲ್ಕು | naalku |\n| **೫** | ಐದು | aidu |"
+    },
+    {
+      "type": "free_response",
+      "id": "q5",
+      "step_title": "Transliterate 3",
+      "question": "Type the transliteration for the word **ಮುುರು**",
+      "ai_grading": false,
+      "accepted_responses": ["muuru", "Muuru"],
+      "hint": "M-UU-R-U"
+    },
+    {
+      "type": "content",
+      "step_title": "Lesson Summary",
+      "content_markdown": "## Summary\n\nYou've learned to read the first five Kannada numerals and their words:\n\n- **೧** (ondu)\n- **೨** (eradu)\n- **೩** (muuru)\n- **೪** (naalku)\n- **೫** (aidu)"
+    }
+  ]
+}

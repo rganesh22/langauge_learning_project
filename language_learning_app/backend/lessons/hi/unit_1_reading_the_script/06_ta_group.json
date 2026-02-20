@@ -1,0 +1,230 @@
+{
+  "lesson_id": "hi_06_ta_group",
+  "language": "Hindi",
+  "title": "The Ta-Group (Retroflexes)",
+  "subtitle": "ट, ठ, ड, ढ, ण",
+  "description": "Retroflex consonants — tongue curls back.",
+  "estimated_minutes": 25.2,
+  "cefr_level": "A0",
+  "tags": [
+    "script",
+    "reading",
+    "basics"
+  ],
+  "skills_learned": [
+    "Retroflex consonants"
+  ],
+  "steps": [
+    {
+      "type": "content",
+      "step_title": "The Ta-Group (Retroflexes)",
+      "content_markdown": "# The Ta-Group (Retroflexes)\n\nRetroflex consonants — tongue curls back.\n\n### Today's Characters\n**ट** · **ठ** · **ड** · **ढ** · **ण**"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ट (Ta)",
+      "content_markdown": "## ट — Ta\n\n**Sound:** ta (retroflex)\n\n**Memory Trick:** Tongue curls to palate"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q1",
+      "step_title": "Identify: Ta",
+      "question": "Which character represents the sound **Ta** (ta (retroflex))?",
+      "options": [
+        "ढ",
+        "ट",
+        "ड",
+        "ठ"
+      ],
+      "correct_answer": "ट",
+      "feedback": "Correct! **ट** is the ta (retroflex) sound. Tongue curls to palate"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ठ (Tha)",
+      "content_markdown": "## ठ — Tha\n\n**Sound:** tha (retroflex asp.)\n\n**Memory Trick:** Aspirated retroflex\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **ठ** | tha (retroflex asp.) | Tha |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q2",
+      "step_title": "Identify: Tha",
+      "question": "Which character represents the sound **Tha** (tha (retroflex asp.))?",
+      "options": [
+        "ड",
+        "ट",
+        "ठ",
+        "ढ"
+      ],
+      "correct_answer": "ठ",
+      "feedback": "Correct! **ठ** is the tha (retroflex asp.) sound. Aspirated retroflex"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ड (Da)",
+      "content_markdown": "## ड — Da\n\n**Sound:** da (retroflex)\n\n**Memory Trick:** Voiced retroflex\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **ड** | da (retroflex) | Da |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q3",
+      "step_title": "Identify: Da",
+      "question": "Which character represents the sound **Da** (da (retroflex))?",
+      "options": [
+        "ड",
+        "ढ",
+        "ठ",
+        "ट"
+      ],
+      "correct_answer": "ड",
+      "feedback": "Correct! **ड** is the da (retroflex) sound. Voiced retroflex"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ढ (Dha)",
+      "content_markdown": "## ढ — Dha\n\n**Sound:** dha (retroflex asp.)\n\n**Memory Trick:** Voiced + aspirated\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **ढ** | dha (retroflex asp.) | Dha |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q4",
+      "step_title": "Identify: Dha",
+      "question": "Which character represents the sound **Dha** (dha (retroflex asp.))?",
+      "options": [
+        "ठ",
+        "ट",
+        "ड",
+        "ढ"
+      ],
+      "correct_answer": "ढ",
+      "feedback": "Correct! **ढ** is the dha (retroflex asp.) sound. Voiced + aspirated"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ण (Na)",
+      "content_markdown": "## ण — Na\n\n**Sound:** na (retroflex)\n\n**Memory Trick:** Retroflex nasal"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q5",
+      "step_title": "Identify: Na",
+      "question": "Which character represents the sound **Na** (na (retroflex))?",
+      "options": [
+        "ण",
+        "ड",
+        "ठ",
+        "ट"
+      ],
+      "correct_answer": "ण",
+      "feedback": "Correct! **ण** is the na (retroflex) sound. Retroflex nasal"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q6",
+      "step_title": "Sound Match",
+      "question": "What sound does **ट** make?",
+      "options": [
+        "ta (retroflex)",
+        "tha (retroflex asp.)",
+        "da (retroflex)",
+        "dha (retroflex asp.)"
+      ],
+      "correct_answer": "ta (retroflex)",
+      "feedback": "Right! **ट** = Ta = ta (retroflex)."
+    },
+    {
+      "type": "content",
+      "step_title": "Visual Comparison",
+      "content_markdown": "## Compare the Shapes\n\nLook closely at how these characters differ:\n\n- **ट** (Ta) vs **ठ** (Tha)\n- **ड** (Da) vs **ढ** (Dha)\n\nNotice the subtle differences in strokes, dots, or curves!"
+    },
+    {
+      "type": "free_response",
+      "id": "q7",
+      "step_title": "Type the Sound",
+      "question": "What is the transliteration (Roman letters) for **ण**?",
+      "ai_grading": false,
+      "accepted_responses": [
+        "Na",
+        "na",
+        "NA"
+      ],
+      "hint": "It sounds like 'na (retroflex)'."
+    },
+    {
+      "type": "content",
+      "step_title": "Word Practice",
+      "content_markdown": "## Let's Read Words!\n\nUsing what you've learned, try reading these words:\n\n| Hindi | Transliteration | Meaning |\n|---------|-----------------|--------|\n| **टमाटर** | tamaatar | tomato |\n| **डर** | dar | fear |\n| **बाण** | baan | arrow |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q8",
+      "step_title": "Read: टमाटर",
+      "question": "What does **टमाटर** (tamaatar) mean?",
+      "options": [
+        "arrow",
+        "fear",
+        "hello",
+        "tomato"
+      ],
+      "correct_answer": "tomato",
+      "feedback": "Correct! **टमाटर** (tamaatar) means 'tomato'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q9",
+      "step_title": "Read: डर",
+      "question": "What does **डर** (dar) mean?",
+      "options": [
+        "hello",
+        "arrow",
+        "tomato",
+        "fear"
+      ],
+      "correct_answer": "fear",
+      "feedback": "Correct! **डर** (dar) means 'fear'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q10",
+      "step_title": "Read: बाण",
+      "question": "What does **बाण** (baan) mean?",
+      "options": [
+        "hello",
+        "tomato",
+        "fear",
+        "arrow"
+      ],
+      "correct_answer": "arrow",
+      "feedback": "Correct! **बाण** (baan) means 'arrow'."
+    },
+    {
+      "type": "free_response",
+      "id": "q11",
+      "step_title": "Transliterate the Word",
+      "question": "Type the transliteration for **टमाटर** (meaning: tomato)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "tamaatar",
+        "tamaatar",
+        "tamaatar"
+      ],
+      "hint": "Sound it out character by character."
+    },
+    {
+      "type": "content",
+      "step_title": "Lesson Summary",
+      "content_markdown": "## Summary\n\nGreat job! Here's everything you learned:\n\n| Character | Transliteration | Sound |\n|-----------|----------------|-------|\n| **ट** | Ta | ta (retroflex) |\n| **ठ** | Tha | tha (retroflex asp.) |\n| **ड** | Da | da (retroflex) |\n| **ढ** | Dha | dha (retroflex asp.) |\n| **ण** | Na | na (retroflex) |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q12",
+      "step_title": "Final Check",
+      "question": "How many new characters/concepts did we cover in this lesson?",
+      "options": [
+        "5",
+        "7",
+        "4",
+        "10"
+      ],
+      "correct_answer": "5",
+      "feedback": "Correct! We covered 5 characters today. Keep practicing!"
+    }
+  ]
+}

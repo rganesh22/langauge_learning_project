@@ -1,0 +1,230 @@
+{
+  "lesson_id": "hi_11_matras_1",
+  "language": "Hindi",
+  "title": "Matras (Vowel Signs) — Part 1",
+  "subtitle": "ा, ि, ी, ु, ू",
+  "description": "How vowel marks change consonant sounds.",
+  "estimated_minutes": 25.2,
+  "cefr_level": "A0",
+  "tags": [
+    "script",
+    "reading",
+    "basics"
+  ],
+  "skills_learned": [
+    "First five matras"
+  ],
+  "steps": [
+    {
+      "type": "content",
+      "step_title": "Matras (Vowel Signs) — Part 1",
+      "content_markdown": "# Matras (Vowel Signs) — Part 1\n\nHow vowel marks change consonant sounds.\n\n### Today's Characters\n**का** · **कि** · **की** · **कु** · **कू**"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: का (kaa)",
+      "content_markdown": "## का — kaa\n\n**Sound:** kaa\n\n**Memory Trick:** Vertical stroke after = aa"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q1",
+      "step_title": "Identify: kaa",
+      "question": "Which character represents the sound **kaa** (kaa)?",
+      "options": [
+        "का",
+        "कु",
+        "कि",
+        "की"
+      ],
+      "correct_answer": "का",
+      "feedback": "Correct! **का** is the kaa sound. Vertical stroke after = aa"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: कि (ki)",
+      "content_markdown": "## कि — ki\n\n**Sound:** ki\n\n**Memory Trick:** Hook before = short i\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **कि** | ki | ki |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q2",
+      "step_title": "Identify: ki",
+      "question": "Which character represents the sound **ki** (ki)?",
+      "options": [
+        "कु",
+        "का",
+        "कि",
+        "की"
+      ],
+      "correct_answer": "कि",
+      "feedback": "Correct! **कि** is the ki sound. Hook before = short i"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: की (kii)",
+      "content_markdown": "## की — kii\n\n**Sound:** kee\n\n**Memory Trick:** Line after = long ii\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **की** | kee | kii |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q3",
+      "step_title": "Identify: kii",
+      "question": "Which character represents the sound **kii** (kee)?",
+      "options": [
+        "की",
+        "का",
+        "कि",
+        "कु"
+      ],
+      "correct_answer": "की",
+      "feedback": "Correct! **की** is the kee sound. Line after = long ii"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: कु (ku)",
+      "content_markdown": "## कु — ku\n\n**Sound:** ku\n\n**Memory Trick:** Hook below = u\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **कु** | ku | ku |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q4",
+      "step_title": "Identify: ku",
+      "question": "Which character represents the sound **ku** (ku)?",
+      "options": [
+        "कु",
+        "की",
+        "का",
+        "कि"
+      ],
+      "correct_answer": "कु",
+      "feedback": "Correct! **कु** is the ku sound. Hook below = u"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: कू (kuu)",
+      "content_markdown": "## कू — kuu\n\n**Sound:** koo\n\n**Memory Trick:** Extended hook below = uu"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q5",
+      "step_title": "Identify: kuu",
+      "question": "Which character represents the sound **kuu** (koo)?",
+      "options": [
+        "कि",
+        "का",
+        "की",
+        "कू"
+      ],
+      "correct_answer": "कू",
+      "feedback": "Correct! **कू** is the koo sound. Extended hook below = uu"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q6",
+      "step_title": "Sound Match",
+      "question": "What sound does **का** make?",
+      "options": [
+        "kaa",
+        "ki",
+        "kee",
+        "ku"
+      ],
+      "correct_answer": "kaa",
+      "feedback": "Right! **का** = kaa = kaa."
+    },
+    {
+      "type": "content",
+      "step_title": "Visual Comparison",
+      "content_markdown": "## Compare the Shapes\n\nLook closely at how these characters differ:\n\n- **का** (kaa) vs **कि** (ki)\n- **की** (kii) vs **कु** (ku)\n\nNotice the subtle differences in strokes, dots, or curves!"
+    },
+    {
+      "type": "free_response",
+      "id": "q7",
+      "step_title": "Type the Sound",
+      "question": "What is the transliteration (Roman letters) for **कू**?",
+      "ai_grading": false,
+      "accepted_responses": [
+        "kuu",
+        "kuu",
+        "KUU"
+      ],
+      "hint": "It sounds like 'koo'."
+    },
+    {
+      "type": "content",
+      "step_title": "Word Practice",
+      "content_markdown": "## Let's Read Words!\n\nUsing what you've learned, try reading these words:\n\n| Hindi | Transliteration | Meaning |\n|---------|-----------------|--------|\n| **काम** | kaam | work |\n| **किताब** | kitaab | book |\n| **कूल** | kuul | cool |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q8",
+      "step_title": "Read: काम",
+      "question": "What does **काम** (kaam) mean?",
+      "options": [
+        "book",
+        "cool",
+        "hello",
+        "work"
+      ],
+      "correct_answer": "work",
+      "feedback": "Correct! **काम** (kaam) means 'work'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q9",
+      "step_title": "Read: किताब",
+      "question": "What does **किताब** (kitaab) mean?",
+      "options": [
+        "hello",
+        "work",
+        "cool",
+        "book"
+      ],
+      "correct_answer": "book",
+      "feedback": "Correct! **किताब** (kitaab) means 'book'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q10",
+      "step_title": "Read: कूल",
+      "question": "What does **कूल** (kuul) mean?",
+      "options": [
+        "hello",
+        "book",
+        "work",
+        "cool"
+      ],
+      "correct_answer": "cool",
+      "feedback": "Correct! **कूल** (kuul) means 'cool'."
+    },
+    {
+      "type": "free_response",
+      "id": "q11",
+      "step_title": "Transliterate the Word",
+      "question": "Type the transliteration for **काम** (meaning: work)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "kaam",
+        "kaam",
+        "kaam"
+      ],
+      "hint": "Sound it out character by character."
+    },
+    {
+      "type": "content",
+      "step_title": "Lesson Summary",
+      "content_markdown": "## Summary\n\nGreat job! Here's everything you learned:\n\n| Character | Transliteration | Sound |\n|-----------|----------------|-------|\n| **का** | kaa | kaa |\n| **कि** | ki | ki |\n| **की** | kii | kee |\n| **कु** | ku | ku |\n| **कू** | kuu | koo |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q12",
+      "step_title": "Final Check",
+      "question": "How many new characters/concepts did we cover in this lesson?",
+      "options": [
+        "5",
+        "7",
+        "4",
+        "10"
+      ],
+      "correct_answer": "5",
+      "feedback": "Correct! We covered 5 characters today. Keep practicing!"
+    }
+  ]
+}

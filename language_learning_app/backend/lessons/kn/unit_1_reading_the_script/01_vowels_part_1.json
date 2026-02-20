@@ -1,0 +1,171 @@
+{
+  "lesson_id": "kn_01_vowels_part_1",
+  "language": "Kannada",
+  "title": "The First Vowels",
+  "subtitle": "ಅ ಆ ಇ ಈ — Your foundation for reading Kannada",
+  "description": "Master the first four Kannada vowels with detailed pronunciation practice. Focus on reading and pronouncing, not meaning.",
+  "estimated_minutes": 30,
+  "cefr_level": "A0",
+  "tags": ["script", "reading", "basics", "vowels"],
+  "skills_learned": [
+    "Reading ಅ ಆ ಇ ಈ",
+    "Short vs long vowel distinction",
+    "Pronouncing Kannada vowels correctly"
+  ],
+  "steps": [
+    {
+      "type": "content",
+      "step_title": "Welcome to Kannada Script! 🎉",
+      "content_markdown": "# Welcome to Kannada Script! 🎉\n\nYou're about to learn to **read** Kannada — one of India's classical writing systems used by 45+ million people.\n\n## Today's Mission\nLearn to **READ and PRONOUNCE** 4 Kannada vowels.\n\n### What You'll Learn Today\n- **ಅ** (a) — like 'u' in 'but'\n- **ಆ** (ā) — like 'a' in 'father'\n- **ಇ** (i) — like 'i' in 'sit'\n- **ಈ** (ī) — like 'ee' in 'see'\n\n💡 **Important:** We're learning to READ and PRONOUNCE, not translate. Focus on the sounds!\n\nLet's begin! 💪"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ಅ (a)",
+      "content_markdown": "## ಅ — The Short 'a' Sound\n\n### How to Pronounce\n**Sound:** Like the 'u' in 'but' or 'a' in 'about' (schwa sound)\n\n**NOT like:** 'a' in 'cat' ❌\n\n### Pronunciation Practice\nSay these English words and focus on the underlined sound:\n- b**u**t\n- **a**bout  \n- s**u**ppose\n\nThat's the ಅ sound!\n\n### The Character\n**ಅ** has a rounded, curved shape. It's the **foundation** of Kannada script — the first vowel you'll see everywhere.\n\n### Practice Reading\nLook at ಅ and say: \"**a**\" (like 'but')"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q1",
+      "step_title": "Identify: ಅ",
+      "question": "Which character makes the sound **'a'** (like 'but')?\n\nಅ   ಆ   ಇ   ಈ",
+      "options": ["ಅ", "ಆ", "ಇ", "ಈ"],
+      "correct_answer": "ಅ",
+      "feedback": "Perfect! **ಅ** makes the 'a' sound (like 'but'). This rounded character is your foundation."
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ಆ (ā)",
+      "content_markdown": "## ಆ — The Long 'ā' Sound\n\n### How to Pronounce\n**Sound:** Like the 'a' in 'father' or 'car' (long, open sound)\n\n**Key difference:** ಆ is LONGER than ಅ\n- ಅ = short 'a' (but)\n- ಆ = long 'ā' (father)\n\n### Pronunciation Practice\nSay these words and hold the 'a' sound longer:\n- f**a**ther\n- c**a**r\n- sp**a**\n\nThat's the ಆ sound — hold it longer!\n\n### The Character\n**ಆ** looks like **ಅ with an extra stroke/tail** on the right side. The extra mark means \"make it longer!\"\n\n| Character | Sound | Duration |\n|-----------|-------|----------|\n| ಅ | a (but) | Short |\n| ಆ | ā (father) | Long — hold it! |\n\n### Practice Reading\nCompare:\n- ಅ → \"a\" (quick)\n- ಆ → \"āāā\" (hold it longer)"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q2",
+      "step_title": "Identify: ಆ",
+      "question": "Which character makes the LONG 'ā' sound (like 'father')?\n\nಅ   ಆ   ಇ   ಈ",
+      "options": ["ಆ", "ಅ", "ಇ", "ಈ"],
+      "correct_answer": "ಆ",
+      "feedback": "Excellent! **ಆ** makes the long 'ā' sound (like 'father'). Notice the extra stroke compared to ಅ!"
+    },
+    {
+      "type": "content",
+      "step_title": "Practice: ಅ vs ಆ",
+      "content_markdown": "## Practice Time: Short vs Long\n\n### Look at these pairs and practice saying them:\n\n| Character | Sound | Say it like... |\n|-----------|-------|----------------|\n| ಅ | a | \"but\" (quick) |\n| ಆ | ā | \"father\" (hold it) |\n| ಅ | a | \"about\" (short) |\n| ಆ | ā | \"spa\" (long) |\n\n### Reading Practice\nRead these out loud:\n\n1. ಅ ಅ ಅ (three quick 'a' sounds)\n2. ಆ ಆ ಆ (three long 'ā' sounds)  \n3. ಅ ಆ ಅ ಆ (alternate: short, long, short, long)\n\n🎯 **Pro tip:** The difference is DURATION, not the mouth position. Same sound, different length!"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q3",
+      "step_title": "Quiz: Which is longer?",
+      "question": "Which vowel should you hold LONGER when pronouncing?\n\nಅ   or   ಆ",
+      "options": ["ಆ (the one with the extra stroke)", "ಅ (the plain rounded one)", "They're the same length", "Neither — both are short"],
+      "correct_answer": "ಆ (the one with the extra stroke)",
+      "feedback": "Correct! ಆ is the LONG vowel — hold it longer like 'father'. The extra stroke is your visual cue!"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ಇ (i)",
+      "content_markdown": "## ಇ — The Short 'i' Sound\n\n### How to Pronounce\n**Sound:** Like the 'i' in 'sit' or 'bit' (short, relaxed)\n\n**NOT like:** 'ee' in 'see' ❌ (that's too long)\n\n### Pronunciation Practice\nSay these English words quickly:\n- s**i**t\n- b**i**t\n- h**i**t\n- k**i**t\n\nKeep it short and relaxed — that's ಇ!\n\n### The Character\n**ಇ** has a unique curved shape that wraps downward. Think of it as compact — matching its short sound.\n\n### Practice Reading\nLook at ಇ and say: \"**i**\" (like 'sit' — quick and short)"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q4",
+      "step_title": "Identify: ಇ",
+      "question": "Which character makes the SHORT 'i' sound (like 'sit')?\n\nಅ   ಆ   ಇ   ಈ",
+      "options": ["ಇ", "ಈ", "ಅ", "ಆ"],
+      "correct_answer": "ಇ",
+      "feedback": "Perfect! **ಇ** makes the short 'i' sound (like 'sit'). Notice its compact, curved shape!"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ಈ (ī)",
+      "content_markdown": "## ಈ — The Long 'ī' Sound\n\n### How to Pronounce\n**Sound:** Like 'ee' in 'see' or 'ea' in 'tea' (long, stretched)\n\n**Key difference:** ಈ is LONGER than ಇ\n- ಇ = short 'i' (sit)\n- ಈ = long 'ī' (see)\n\n### Pronunciation Practice\nSay these words and hold the 'ee' sound:\n- s**ee**\n- t**ea**\n- m**e**\n- b**ee**\n\nHold that 'eee' sound — that's ಈ!\n\n### The Character\n**ಈ** looks like **ಇ with an extended curve/tail**. The extension means \"make it longer!\"\n\n| Character | Sound | Duration |\n|-----------|-------|----------|\n| ಇ | i (sit) | Short |\n| ಈ | ī (see) | Long — stretch it! |\n\n### Practice Reading\nCompare:\n- ಇ → \"i\" (quick, like 'sit')\n- ಈ → \"ēēē\" (hold it, like 'see')"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q5",
+      "step_title": "Identify: ಈ",
+      "question": "Which character makes the LONG 'ī' sound (like 'see')?\n\nಅ   ಆ   ಇ   ಈ",
+      "options": ["ಈ", "ಇ", "ಆ", "ಅ"],
+      "correct_answer": "ಈ",
+      "feedback": "Excellent! **ಈ** makes the long 'ī' sound (like 'see'). See the extended curve compared to ಇ!"
+    },
+    {
+      "type": "content",
+      "step_title": "Practice: ಇ vs ಈ",
+      "content_markdown": "## Practice Time: Short vs Long 'i'\n\n### Compare and practice:\n\n| Character | Sound | Say it like... |\n|-----------|-------|----------------|\n| ಇ | i | \"sit\" (quick) |\n| ಈ | ī | \"see\" (hold it) |\n| ಇ | i | \"bit\" (short) |\n| ಈ | ī | \"tea\" (long) |\n\n### Reading Practice\nRead these out loud:\n\n1. ಇ ಇ ಇ (three quick 'i' sounds)\n2. ಈ ಈ ಈ (three long 'ī' sounds)\n3. ಇ ಈ ಇ ಈ (alternate: short, long, short, long)\n\n🎯 **Pro tip:** Your mouth position stays the same — only the duration changes!"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q6",
+      "step_title": "Quiz: Short or Long?",
+      "question": "Which vowel should you hold LONGER?\n\nಇ   or   ಈ",
+      "options": ["ಈ (the one with the extended curve)", "ಇ (the compact one)", "They're the same", "Neither"],
+      "correct_answer": "ಈ (the one with the extended curve)",
+      "feedback": "Correct! ಈ is the LONG vowel — hold it like 'see'. The extended curve tells you to stretch it!"
+    },
+    {
+      "type": "content",
+      "step_title": "The Pattern: Short vs Long",
+      "content_markdown": "## Understanding the Pattern 🧩\n\n### Kannada vowels come in SHORT and LONG pairs:\n\n| Short | Long | \n|-------|------|\n| ಅ (a) | ಆ (ā) |\n| ಇ (i) | ಈ (ī) |\n\n### The Visual Cue\n**Long vowels have EXTRA strokes or curves** compared to short vowels:\n- ಅ → ಆ (added tail)\n- ಇ → ಈ (extended curve)\n\n### The Sound Difference\n**DURATION is key** — long vowels are held approximately twice as long as short vowels.\n\n🎯 **Reading tip:** When you see the \"extra\" mark, hold the sound longer!"
+    },
+    {
+      "type": "content",
+      "step_title": "Complete Review Table",
+      "content_markdown": "## Your First 4 Vowels — Complete Reference\n\n| Character | Sound | English Equivalent | Duration |\n|-----------|-------|-------------------|----------|\n| **ಅ** | a | 'u' in 'but' | Short ⚡ |\n| **ಆ** | ā | 'a' in 'father' | Long 🔄 |\n| **ಇ** | i | 'i' in 'sit' | Short ⚡ |\n| **ಈ** | ī | 'ee' in 'see' | Long 🔄 |\n\n### Memory Tricks\n- **ಅ** — Rounded and simple (foundation)\n- **ಆ** — ಅ + tail (hold it longer!)\n- **ಇ** — Curved and compact (short sound)\n- **ಈ** — ಇ + extension (stretch it!)\n\n### Practice Reading\nRead this sequence slowly:\n\n**ಅ ಆ ಇ ಈ ಅ ಆ ಇ ಈ**\n\nSay: \"a, ā, i, ī, a, ā, i, ī\""
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q7",
+      "step_title": "Recognition: ಅ",
+      "question": "Read this character:\n\n# ಅ\n\nWhat sound does it make?",
+      "options": ["a (like 'but')", "ā (like 'father')", "i (like 'sit')", "ī (like 'see')"],
+      "correct_answer": "a (like 'but')",
+      "feedback": "Perfect! ಅ = 'a' (like 'but'). Short and simple — the foundation vowel!"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q8",
+      "step_title": "Recognition: ಆ",
+      "question": "Read this character:\n\n# ಆ\n\nWhat sound does it make?",
+      "options": ["ā (like 'father')", "a (like 'but')", "ī (like 'see')", "i (like 'sit')"],
+      "correct_answer": "ā (like 'father')",
+      "feedback": "Excellent! ಆ = 'ā' (like 'father'). Long vowel — hold it!"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q9",
+      "step_title": "Recognition: ಇ",
+      "question": "Read this character:\n\n# ಇ\n\nWhat sound does it make?",
+      "options": ["i (like 'sit')", "ī (like 'see')", "a (like 'but')", "ā (like 'father')"],
+      "correct_answer": "i (like 'sit')",
+      "feedback": "Perfect! ಇ = 'i' (like 'sit'). Short and compact!"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q10",
+      "step_title": "Recognition: ಈ",
+      "question": "Read this character:\n\n# ಈ\n\nWhat sound does it make?",
+      "options": ["ī (like 'see')", "i (like 'sit')", "ā (like 'father')", "a (like 'but')"],
+      "correct_answer": "ī (like 'see')",
+      "feedback": "Excellent! ಈ = 'ī' (like 'see'). Long vowel — stretch it!"
+    },
+    {
+      "type": "content",
+      "step_title": "Mixed Reading Practice",
+      "content_markdown": "## Mixed Reading Practice 📖\n\n### Read these characters in random order:\n\n1. **ಇ** → say: \"i\" (sit)\n2. **ಆ** → say: \"ā\" (father)\n3. **ಅ** → say: \"a\" (but)\n4. **ಈ** → say: \"ī\" (see)\n5. **ಆ** → say: \"ā\" (father)\n6. **ಇ** → say: \"i\" (sit)\n\n### Speed Practice\nNow read this sequence faster:\n\n**ಅ ಇ ಆ ಈ ಇ ಅ ಈ ಆ**\n\n### Challenge: Can you read this?\n\n**ಇ ಇ ಆ ಅ ಈ ಅ ಆ ಈ**\n\n🎯 Take your time — accuracy over speed!"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q11",
+      "step_title": "Final Challenge",
+      "question": "Which character is DIFFERENT from the others?\n\nಅ   ಅ   ಆ   ಅ",
+      "options": ["ಆ (the long one)", "They're all the same", "ಅ (the short one)", "None are different"],
+      "correct_answer": "ಆ (the long one)",
+      "feedback": "Correct! ಆ is the long vowel, while the others are all ಅ (short). Great eye for detail!"
+    },
+    {
+      "type": "content",
+      "step_title": "🎉 Lesson Complete!",
+      "content_markdown": "## Congratulations! 🎉\n\nYou've mastered your first 4 Kannada vowels!\n\n### What You Learned Today\n✅ **ಅ** — a (but) — short\n✅ **ಆ** — ā (father) — long\n✅ **ಇ** — i (sit) — short  \n✅ **ಈ** — ī (see) — long\n\n### Key Concepts\n- Short vs long vowel pairs\n- Visual cues for duration (extra strokes = longer)\n- Reading and pronouncing Kannada characters\n\n### Next Up\nIn the next lesson, you'll learn more vowels to expand your reading ability!\n\n**Practice tip:** Try reading these 4 vowels throughout the day. The more you see them, the faster you'll recognize them!\n\n🌟 Great work! See you in the next lesson!"
+    }
+  ]
+}

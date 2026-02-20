@@ -1,0 +1,231 @@
+{
+  "lesson_id": "hi_10_nuqta_letters",
+  "language": "Hindi",
+  "title": "Nuqta Letters — Urdu-Origin Sounds",
+  "subtitle": "क़, ख़, ग़, ज़, ड़, ढ़, फ़",
+  "description": "Learn the dotted letters for sounds borrowed from Persian/Arabic.",
+  "estimated_minutes": 25.2,
+  "cefr_level": "A0",
+  "tags": [
+    "script",
+    "reading",
+    "basics"
+  ],
+  "skills_learned": [
+    "Nuqta letters",
+    "Persian/Arabic borrowed sounds"
+  ],
+  "steps": [
+    {
+      "type": "content",
+      "step_title": "Nuqta Letters — Urdu-Origin Sounds",
+      "content_markdown": "# Nuqta Letters — Urdu-Origin Sounds\n\nLearn the dotted letters for sounds borrowed from Persian/Arabic.\n\n### Today's Characters\n**क़** · **ख़** · **ग़** · **ज़** · **फ़**"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: क़ (qa)",
+      "content_markdown": "## क़ — qa\n\n**Sound:** q (deep throat)\n\n**Memory Trick:** Dot below = Urdu/Persian sound"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q1",
+      "step_title": "Identify: qa",
+      "question": "Which character represents the sound **qa** (q (deep throat))?",
+      "options": [
+        "ख़",
+        "ग़",
+        "ज़",
+        "क़"
+      ],
+      "correct_answer": "क़",
+      "feedback": "Correct! **क़** is the q (deep throat) sound. Dot below = Urdu/Persian sound"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ख़ (kha)",
+      "content_markdown": "## ख़ — kha\n\n**Sound:** kh (guttural)\n\n**Memory Trick:** Like Scottish 'loch'\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **ख़** | kh (guttural) | kha |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q2",
+      "step_title": "Identify: kha",
+      "question": "Which character represents the sound **kha** (kh (guttural))?",
+      "options": [
+        "क़",
+        "ग़",
+        "ख़",
+        "ज़"
+      ],
+      "correct_answer": "ख़",
+      "feedback": "Correct! **ख़** is the kh (guttural) sound. Like Scottish 'loch'"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ग़ (gha)",
+      "content_markdown": "## ग़ — gha\n\n**Sound:** gh (guttural)\n\n**Memory Trick:** Voiced guttural\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **ग़** | gh (guttural) | gha |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q3",
+      "step_title": "Identify: gha",
+      "question": "Which character represents the sound **gha** (gh (guttural))?",
+      "options": [
+        "ग़",
+        "क़",
+        "ख़",
+        "ज़"
+      ],
+      "correct_answer": "ग़",
+      "feedback": "Correct! **ग़** is the gh (guttural) sound. Voiced guttural"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ज़ (za)",
+      "content_markdown": "## ज़ — za\n\n**Sound:** z in zoo\n\n**Memory Trick:** Common in everyday Hindi\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **ज़** | z in zoo | za |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q4",
+      "step_title": "Identify: za",
+      "question": "Which character represents the sound **za** (z in zoo)?",
+      "options": [
+        "क़",
+        "ख़",
+        "ज़",
+        "ग़"
+      ],
+      "correct_answer": "ज़",
+      "feedback": "Correct! **ज़** is the z in zoo sound. Common in everyday Hindi"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: फ़ (fa)",
+      "content_markdown": "## फ़ — fa\n\n**Sound:** f in fun\n\n**Memory Trick:** The 'f' sound in Hindi"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q5",
+      "step_title": "Identify: fa",
+      "question": "Which character represents the sound **fa** (f in fun)?",
+      "options": [
+        "फ़",
+        "ख़",
+        "क़",
+        "ग़"
+      ],
+      "correct_answer": "फ़",
+      "feedback": "Correct! **फ़** is the f in fun sound. The 'f' sound in Hindi"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q6",
+      "step_title": "Sound Match",
+      "question": "What sound does **क़** make?",
+      "options": [
+        "q (deep throat)",
+        "kh (guttural)",
+        "gh (guttural)",
+        "z in zoo"
+      ],
+      "correct_answer": "q (deep throat)",
+      "feedback": "Right! **क़** = qa = q (deep throat)."
+    },
+    {
+      "type": "content",
+      "step_title": "Visual Comparison",
+      "content_markdown": "## Compare the Shapes\n\nLook closely at how these characters differ:\n\n- **क़** (qa) vs **ख़** (kha)\n- **ग़** (gha) vs **ज़** (za)\n\nNotice the subtle differences in strokes, dots, or curves!"
+    },
+    {
+      "type": "free_response",
+      "id": "q7",
+      "step_title": "Type the Sound",
+      "question": "What is the transliteration (Roman letters) for **फ़**?",
+      "ai_grading": false,
+      "accepted_responses": [
+        "fa",
+        "fa",
+        "FA"
+      ],
+      "hint": "It sounds like 'f in fun'."
+    },
+    {
+      "type": "content",
+      "step_title": "Word Practice",
+      "content_markdown": "## Let's Read Words!\n\nUsing what you've learned, try reading these words:\n\n| Hindi | Transliteration | Meaning |\n|---------|-----------------|--------|\n| **ज़रूरी** | zaruuri | necessary |\n| **फ़ोन** | fon | phone |\n| **क़ीमत** | qiimat | price |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q8",
+      "step_title": "Read: ज़रूरी",
+      "question": "What does **ज़रूरी** (zaruuri) mean?",
+      "options": [
+        "necessary",
+        "hello",
+        "price",
+        "phone"
+      ],
+      "correct_answer": "necessary",
+      "feedback": "Correct! **ज़रूरी** (zaruuri) means 'necessary'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q9",
+      "step_title": "Read: फ़ोन",
+      "question": "What does **फ़ोन** (fon) mean?",
+      "options": [
+        "necessary",
+        "phone",
+        "hello",
+        "price"
+      ],
+      "correct_answer": "phone",
+      "feedback": "Correct! **फ़ोन** (fon) means 'phone'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q10",
+      "step_title": "Read: क़ीमत",
+      "question": "What does **क़ीमत** (qiimat) mean?",
+      "options": [
+        "price",
+        "phone",
+        "hello",
+        "necessary"
+      ],
+      "correct_answer": "price",
+      "feedback": "Correct! **क़ीमत** (qiimat) means 'price'."
+    },
+    {
+      "type": "free_response",
+      "id": "q11",
+      "step_title": "Transliterate the Word",
+      "question": "Type the transliteration for **ज़रूरी** (meaning: necessary)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "zaruuri",
+        "zaruuri",
+        "zaruuri"
+      ],
+      "hint": "Sound it out character by character."
+    },
+    {
+      "type": "content",
+      "step_title": "Lesson Summary",
+      "content_markdown": "## Summary\n\nGreat job! Here's everything you learned:\n\n| Character | Transliteration | Sound |\n|-----------|----------------|-------|\n| **क़** | qa | q (deep throat) |\n| **ख़** | kha | kh (guttural) |\n| **ग़** | gha | gh (guttural) |\n| **ज़** | za | z in zoo |\n| **फ़** | fa | f in fun |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q12",
+      "step_title": "Final Check",
+      "question": "How many new characters/concepts did we cover in this lesson?",
+      "options": [
+        "5",
+        "7",
+        "4",
+        "10"
+      ],
+      "correct_answer": "5",
+      "feedback": "Correct! We covered 5 characters today. Keep practicing!"
+    }
+  ]
+}

@@ -1,0 +1,230 @@
+{
+  "lesson_id": "hi_08_pa_group",
+  "language": "Hindi",
+  "title": "The Pa-Group (Labials)",
+  "subtitle": "प, फ, ब, भ, म",
+  "description": "Labial consonants — produced with the lips.",
+  "estimated_minutes": 25.2,
+  "cefr_level": "A0",
+  "tags": [
+    "script",
+    "reading",
+    "basics"
+  ],
+  "skills_learned": [
+    "Labial consonants"
+  ],
+  "steps": [
+    {
+      "type": "content",
+      "step_title": "The Pa-Group (Labials)",
+      "content_markdown": "# The Pa-Group (Labials)\n\nLabial consonants — produced with the lips.\n\n### Today's Characters\n**प** · **फ** · **ब** · **भ** · **म**"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: प (pa)",
+      "content_markdown": "## प — pa\n\n**Sound:** pa\n\n**Memory Trick:** Lips together"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q1",
+      "step_title": "Identify: pa",
+      "question": "Which character represents the sound **pa** (pa)?",
+      "options": [
+        "ब",
+        "फ",
+        "भ",
+        "प"
+      ],
+      "correct_answer": "प",
+      "feedback": "Correct! **प** is the pa sound. Lips together"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: फ (pha)",
+      "content_markdown": "## फ — pha\n\n**Sound:** pha / fa\n\n**Memory Trick:** Also used for 'f' sound\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **फ** | pha / fa | pha |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q2",
+      "step_title": "Identify: pha",
+      "question": "Which character represents the sound **pha** (pha / fa)?",
+      "options": [
+        "फ",
+        "भ",
+        "ब",
+        "प"
+      ],
+      "correct_answer": "फ",
+      "feedback": "Correct! **फ** is the pha / fa sound. Also used for 'f' sound"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ब (ba)",
+      "content_markdown": "## ब — ba\n\n**Sound:** ba\n\n**Memory Trick:** Voiced labial\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **ब** | ba | ba |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q3",
+      "step_title": "Identify: ba",
+      "question": "Which character represents the sound **ba** (ba)?",
+      "options": [
+        "फ",
+        "प",
+        "भ",
+        "ब"
+      ],
+      "correct_answer": "ब",
+      "feedback": "Correct! **ब** is the ba sound. Voiced labial"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: भ (bha)",
+      "content_markdown": "## भ — bha\n\n**Sound:** bha\n\n**Memory Trick:** Voiced + aspirated\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **भ** | bha | bha |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q4",
+      "step_title": "Identify: bha",
+      "question": "Which character represents the sound **bha** (bha)?",
+      "options": [
+        "भ",
+        "प",
+        "फ",
+        "ब"
+      ],
+      "correct_answer": "भ",
+      "feedback": "Correct! **भ** is the bha sound. Voiced + aspirated"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: म (ma)",
+      "content_markdown": "## म — ma\n\n**Sound:** ma\n\n**Memory Trick:** Nasal — lips together"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q5",
+      "step_title": "Identify: ma",
+      "question": "Which character represents the sound **ma** (ma)?",
+      "options": [
+        "प",
+        "फ",
+        "म",
+        "ब"
+      ],
+      "correct_answer": "म",
+      "feedback": "Correct! **म** is the ma sound. Nasal — lips together"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q6",
+      "step_title": "Sound Match",
+      "question": "What sound does **प** make?",
+      "options": [
+        "pa",
+        "pha / fa",
+        "ba",
+        "bha"
+      ],
+      "correct_answer": "pa",
+      "feedback": "Right! **प** = pa = pa."
+    },
+    {
+      "type": "content",
+      "step_title": "Visual Comparison",
+      "content_markdown": "## Compare the Shapes\n\nLook closely at how these characters differ:\n\n- **प** (pa) vs **फ** (pha)\n- **ब** (ba) vs **भ** (bha)\n\nNotice the subtle differences in strokes, dots, or curves!"
+    },
+    {
+      "type": "free_response",
+      "id": "q7",
+      "step_title": "Type the Sound",
+      "question": "What is the transliteration (Roman letters) for **म**?",
+      "ai_grading": false,
+      "accepted_responses": [
+        "ma",
+        "ma",
+        "MA"
+      ],
+      "hint": "It sounds like 'ma'."
+    },
+    {
+      "type": "content",
+      "step_title": "Word Practice",
+      "content_markdown": "## Let's Read Words!\n\nUsing what you've learned, try reading these words:\n\n| Hindi | Transliteration | Meaning |\n|---------|-----------------|--------|\n| **पानी** | paanii | water |\n| **फल** | phal | fruit |\n| **भारत** | bhaarat | India |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q8",
+      "step_title": "Read: पानी",
+      "question": "What does **पानी** (paanii) mean?",
+      "options": [
+        "water",
+        "hello",
+        "India",
+        "fruit"
+      ],
+      "correct_answer": "water",
+      "feedback": "Correct! **पानी** (paanii) means 'water'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q9",
+      "step_title": "Read: फल",
+      "question": "What does **फल** (phal) mean?",
+      "options": [
+        "water",
+        "fruit",
+        "India",
+        "hello"
+      ],
+      "correct_answer": "fruit",
+      "feedback": "Correct! **फल** (phal) means 'fruit'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q10",
+      "step_title": "Read: भारत",
+      "question": "What does **भारत** (bhaarat) mean?",
+      "options": [
+        "India",
+        "water",
+        "hello",
+        "fruit"
+      ],
+      "correct_answer": "India",
+      "feedback": "Correct! **भारत** (bhaarat) means 'India'."
+    },
+    {
+      "type": "free_response",
+      "id": "q11",
+      "step_title": "Transliterate the Word",
+      "question": "Type the transliteration for **पानी** (meaning: water)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "paanii",
+        "paanii",
+        "paanii"
+      ],
+      "hint": "Sound it out character by character."
+    },
+    {
+      "type": "content",
+      "step_title": "Lesson Summary",
+      "content_markdown": "## Summary\n\nGreat job! Here's everything you learned:\n\n| Character | Transliteration | Sound |\n|-----------|----------------|-------|\n| **प** | pa | pa |\n| **फ** | pha | pha / fa |\n| **ब** | ba | ba |\n| **भ** | bha | bha |\n| **म** | ma | ma |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q12",
+      "step_title": "Final Check",
+      "question": "How many new characters/concepts did we cover in this lesson?",
+      "options": [
+        "5",
+        "7",
+        "4",
+        "10"
+      ],
+      "correct_answer": "5",
+      "feedback": "Correct! We covered 5 characters today. Keep practicing!"
+    }
+  ]
+}

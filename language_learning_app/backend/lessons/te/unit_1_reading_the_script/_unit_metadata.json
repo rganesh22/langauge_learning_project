@@ -1,0 +1,42 @@
+{
+  "unit_id": "te_unit_1",
+  "unit_number": 1,
+  "language": "Telugu",
+  "title": "Reading Telugu Script",
+  "subtitle": "Master the beautiful Telugu writing system",
+  "description": "A 20-lesson course teaching you to read Telugu script. Known as the 'Italian of the East' for its melodious sound, Telugu has a round, flowing script.",
+  "estimated_minutes": 500,
+  "lesson_count": 20,
+  "lessons": [
+    "01_vowels_1",
+    "02_vowels_2",
+    "03_vowels_3",
+    "04_velar_palatal",
+    "05_retroflex_dental",
+    "06_labial_semi",
+    "07_sibilants",
+    "08_vowel_marks_1",
+    "09_vowel_marks_2",
+    "10_halant",
+    "11_conjuncts_1",
+    "12_conjuncts_2",
+    "13_advanced_conjuncts",
+    "14_subscript_forms",
+    "15_reading_words",
+    "16_numbers",
+    "17_signage",
+    "18_loanwords",
+    "19_sentences",
+    "20_final_review"
+  ],
+  "completion_criteria": {
+    "all_lessons_completed": true
+  },
+  "skills_learned": [
+    "Reading all Telugu script characters",
+    "Understanding Telugu vowel and consonant systems",
+    "Reading real Telugu words and sentences",
+    "Vowel marks / matras system",
+    "Consonant clusters and conjuncts"
+  ]
+}

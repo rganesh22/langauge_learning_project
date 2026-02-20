@@ -1,0 +1,231 @@
+{
+  "lesson_id": "te_06_labial_semi",
+  "language": "Telugu",
+  "title": "Labials & Semivowels",
+  "subtitle": "ప, ఫ, బ, భ, మ and య, ర, ల, వ",
+  "description": "Labials, semivowels, and liquids.",
+  "estimated_minutes": 25.2,
+  "cefr_level": "A0",
+  "tags": [
+    "script",
+    "reading",
+    "basics"
+  ],
+  "skills_learned": [
+    "Labials",
+    "Semivowels"
+  ],
+  "steps": [
+    {
+      "type": "content",
+      "step_title": "Labials & Semivowels",
+      "content_markdown": "# Labials & Semivowels\n\nLabials, semivowels, and liquids.\n\n### Today's Characters\n**ప** · **బ** · **మ** · **య** · **ర**"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ప (pa)",
+      "content_markdown": "## ప — pa\n\n**Sound:** pa\n\n**Memory Trick:** Lips together"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q1",
+      "step_title": "Identify: pa",
+      "question": "Which character represents the sound **pa** (pa)?",
+      "options": [
+        "య",
+        "ప",
+        "మ",
+        "బ"
+      ],
+      "correct_answer": "ప",
+      "feedback": "Correct! **ప** is the pa sound. Lips together"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: బ (ba)",
+      "content_markdown": "## బ — ba\n\n**Sound:** ba\n\n**Memory Trick:** Voiced labial\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **బ** | ba | ba |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q2",
+      "step_title": "Identify: ba",
+      "question": "Which character represents the sound **ba** (ba)?",
+      "options": [
+        "మ",
+        "ప",
+        "బ",
+        "య"
+      ],
+      "correct_answer": "బ",
+      "feedback": "Correct! **బ** is the ba sound. Voiced labial"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: మ (ma)",
+      "content_markdown": "## మ — ma\n\n**Sound:** ma\n\n**Memory Trick:** Nasal\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **మ** | ma | ma |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q3",
+      "step_title": "Identify: ma",
+      "question": "Which character represents the sound **ma** (ma)?",
+      "options": [
+        "మ",
+        "య",
+        "బ",
+        "ప"
+      ],
+      "correct_answer": "మ",
+      "feedback": "Correct! **మ** is the ma sound. Nasal"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: య (ya)",
+      "content_markdown": "## య — ya\n\n**Sound:** ya\n\n**Memory Trick:** Semivowel\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **య** | ya | ya |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q4",
+      "step_title": "Identify: ya",
+      "question": "Which character represents the sound **ya** (ya)?",
+      "options": [
+        "బ",
+        "ప",
+        "మ",
+        "య"
+      ],
+      "correct_answer": "య",
+      "feedback": "Correct! **య** is the ya sound. Semivowel"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ర (ra)",
+      "content_markdown": "## ర — ra\n\n**Sound:** ra\n\n**Memory Trick:** Liquid"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q5",
+      "step_title": "Identify: ra",
+      "question": "Which character represents the sound **ra** (ra)?",
+      "options": [
+        "ర",
+        "మ",
+        "బ",
+        "ప"
+      ],
+      "correct_answer": "ర",
+      "feedback": "Correct! **ర** is the ra sound. Liquid"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q6",
+      "step_title": "Sound Match",
+      "question": "What sound does **ప** make?",
+      "options": [
+        "pa",
+        "ba",
+        "ma",
+        "ya"
+      ],
+      "correct_answer": "pa",
+      "feedback": "Right! **ప** = pa = pa."
+    },
+    {
+      "type": "content",
+      "step_title": "Visual Comparison",
+      "content_markdown": "## Compare the Shapes\n\nLook closely at how these characters differ:\n\n- **ప** (pa) vs **బ** (ba)\n- **మ** (ma) vs **య** (ya)\n\nNotice the subtle differences in strokes, dots, or curves!"
+    },
+    {
+      "type": "free_response",
+      "id": "q7",
+      "step_title": "Type the Sound",
+      "question": "What is the transliteration (Roman letters) for **ర**?",
+      "ai_grading": false,
+      "accepted_responses": [
+        "ra",
+        "ra",
+        "RA"
+      ],
+      "hint": "It sounds like 'ra'."
+    },
+    {
+      "type": "content",
+      "step_title": "Word Practice",
+      "content_markdown": "## Let's Read Words!\n\nUsing what you've learned, try reading these words:\n\n| Telugu | Transliteration | Meaning |\n|---------|-----------------|--------|\n| **పుస్తకం** | pusthakam | book |\n| **మనిషి** | manishi | person |\n| **వాన** | vaana | rain |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q8",
+      "step_title": "Read: పుస్తకం",
+      "question": "What does **పుస్తకం** (pusthakam) mean?",
+      "options": [
+        "rain",
+        "person",
+        "hello",
+        "book"
+      ],
+      "correct_answer": "book",
+      "feedback": "Correct! **పుస్తకం** (pusthakam) means 'book'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q9",
+      "step_title": "Read: మనిషి",
+      "question": "What does **మనిషి** (manishi) mean?",
+      "options": [
+        "hello",
+        "rain",
+        "book",
+        "person"
+      ],
+      "correct_answer": "person",
+      "feedback": "Correct! **మనిషి** (manishi) means 'person'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q10",
+      "step_title": "Read: వాన",
+      "question": "What does **వాన** (vaana) mean?",
+      "options": [
+        "hello",
+        "book",
+        "person",
+        "rain"
+      ],
+      "correct_answer": "rain",
+      "feedback": "Correct! **వాన** (vaana) means 'rain'."
+    },
+    {
+      "type": "free_response",
+      "id": "q11",
+      "step_title": "Transliterate the Word",
+      "question": "Type the transliteration for **పుస్తకం** (meaning: book)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "pusthakam",
+        "pusthakam",
+        "pusthakam"
+      ],
+      "hint": "Sound it out character by character."
+    },
+    {
+      "type": "content",
+      "step_title": "Lesson Summary",
+      "content_markdown": "## Summary\n\nGreat job! Here's everything you learned:\n\n| Character | Transliteration | Sound |\n|-----------|----------------|-------|\n| **ప** | pa | pa |\n| **బ** | ba | ba |\n| **మ** | ma | ma |\n| **య** | ya | ya |\n| **ర** | ra | ra |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q12",
+      "step_title": "Final Check",
+      "question": "How many new characters/concepts did we cover in this lesson?",
+      "options": [
+        "5",
+        "7",
+        "4",
+        "10"
+      ],
+      "correct_answer": "5",
+      "feedback": "Correct! We covered 5 characters today. Keep practicing!"
+    }
+  ]
+}

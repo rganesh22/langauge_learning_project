@@ -1,0 +1,213 @@
+{
+  "lesson_id": "ta_09_vowel_markers_u_uu",
+  "language": "Tamil",
+  "title": "Vowel Markers II — ு and ூ",
+  "subtitle": "The u-sound markers",
+  "description": "Learn the vowel markers for short 'u' and long 'uu' sounds.",
+  "estimated_minutes": 22.8,
+  "cefr_level": "A0",
+  "tags": [
+    "script",
+    "reading",
+    "basics"
+  ],
+  "skills_learned": [
+    "The u marker ு",
+    "The uu marker ூ",
+    "Recognizing u vs uu markers on various consonants"
+  ],
+  "steps": [
+    {
+      "type": "content",
+      "step_title": "Vowel Markers II — ு and ூ",
+      "content_markdown": "# Vowel Markers II — ு and ூ\n\nLearn the vowel markers for short 'u' and long 'uu' sounds.\n\n### Today's Characters\n**கு** · **கூ** · **பு** · **தூ**"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: கு (ku)",
+      "content_markdown": "## கு — ku\n\n**Sound:** ku\n\n**Memory Trick:** Small tail below for short 'u'"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q1",
+      "step_title": "Identify: ku",
+      "question": "Which character represents the sound **ku** (ku)?",
+      "options": [
+        "கு",
+        "கூ",
+        "பு",
+        "தூ"
+      ],
+      "correct_answer": "கு",
+      "feedback": "Correct! **கு** is the ku sound. Small tail below for short 'u'"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: கூ (kuu)",
+      "content_markdown": "## கூ — kuu\n\n**Sound:** koo\n\n**Memory Trick:** Longer tail below for long 'uu'\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **கூ** | koo | kuu |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q2",
+      "step_title": "Identify: kuu",
+      "question": "Which character represents the sound **kuu** (koo)?",
+      "options": [
+        "கூ",
+        "கு",
+        "தூ",
+        "பு"
+      ],
+      "correct_answer": "கூ",
+      "feedback": "Correct! **கூ** is the koo sound. Longer tail below for long 'uu'"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: பு (pu)",
+      "content_markdown": "## பு — pu\n\n**Sound:** pu\n\n**Memory Trick:** Same marker pattern on different consonants\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **பு** | pu | pu |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q3",
+      "step_title": "Identify: pu",
+      "question": "Which character represents the sound **pu** (pu)?",
+      "options": [
+        "கு",
+        "தூ",
+        "கூ",
+        "பு"
+      ],
+      "correct_answer": "பு",
+      "feedback": "Correct! **பு** is the pu sound. Same marker pattern on different consonants"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: தூ (thuu)",
+      "content_markdown": "## தூ — thuu\n\n**Sound:** thoo\n\n**Memory Trick:** Long 'uu' marker always extends further"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q4",
+      "step_title": "Identify: thuu",
+      "question": "Which character represents the sound **thuu** (thoo)?",
+      "options": [
+        "தூ",
+        "கு",
+        "பு",
+        "கூ"
+      ],
+      "correct_answer": "தூ",
+      "feedback": "Correct! **தூ** is the thoo sound. Long 'uu' marker always extends further"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q5",
+      "step_title": "Sound Match",
+      "question": "What sound does **கு** make?",
+      "options": [
+        "ku",
+        "koo",
+        "pu",
+        "thoo"
+      ],
+      "correct_answer": "ku",
+      "feedback": "Right! **கு** = ku = ku."
+    },
+    {
+      "type": "content",
+      "step_title": "Visual Comparison",
+      "content_markdown": "## Compare the Shapes\n\nLook closely at how these characters differ:\n\n- **கு** (ku) vs **கூ** (kuu)\n- **பு** (pu) vs **தூ** (thuu)\n\nNotice the subtle differences in strokes, dots, or curves!"
+    },
+    {
+      "type": "free_response",
+      "id": "q6",
+      "step_title": "Type the Sound",
+      "question": "What is the transliteration (Roman letters) for **தூ**?",
+      "ai_grading": false,
+      "accepted_responses": [
+        "thuu",
+        "thuu",
+        "THUU"
+      ],
+      "hint": "It sounds like 'thoo'."
+    },
+    {
+      "type": "content",
+      "step_title": "Word Practice",
+      "content_markdown": "## Let's Read Words!\n\nUsing what you've learned, try reading these words:\n\n| Tamil | Transliteration | Meaning |\n|---------|-----------------|--------|\n| **குதிரை** | kutirai | horse |\n| **பூ** | puu | flower |\n| **தூக்கம்** | thuukkam | sleep |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q7",
+      "step_title": "Read: குதிரை",
+      "question": "What does **குதிரை** (kutirai) mean?",
+      "options": [
+        "hello",
+        "horse",
+        "sleep",
+        "flower"
+      ],
+      "correct_answer": "horse",
+      "feedback": "Correct! **குதிரை** (kutirai) means 'horse'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q8",
+      "step_title": "Read: பூ",
+      "question": "What does **பூ** (puu) mean?",
+      "options": [
+        "horse",
+        "sleep",
+        "hello",
+        "flower"
+      ],
+      "correct_answer": "flower",
+      "feedback": "Correct! **பூ** (puu) means 'flower'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q9",
+      "step_title": "Read: தூக்கம்",
+      "question": "What does **தூக்கம்** (thuukkam) mean?",
+      "options": [
+        "horse",
+        "sleep",
+        "hello",
+        "flower"
+      ],
+      "correct_answer": "sleep",
+      "feedback": "Correct! **தூக்கம்** (thuukkam) means 'sleep'."
+    },
+    {
+      "type": "free_response",
+      "id": "q10",
+      "step_title": "Transliterate the Word",
+      "question": "Type the transliteration for **குதிரை** (meaning: horse)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "kutirai",
+        "kutirai",
+        "kutirai"
+      ],
+      "hint": "Sound it out character by character."
+    },
+    {
+      "type": "content",
+      "step_title": "Lesson Summary",
+      "content_markdown": "## Summary\n\nGreat job! Here's everything you learned:\n\n| Character | Transliteration | Sound |\n|-----------|----------------|-------|\n| **கு** | ku | ku |\n| **கூ** | kuu | koo |\n| **பு** | pu | pu |\n| **தூ** | thuu | thoo |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q11",
+      "step_title": "Final Check",
+      "question": "How many new characters/concepts did we cover in this lesson?",
+      "options": [
+        "4",
+        "6",
+        "3",
+        "9"
+      ],
+      "correct_answer": "4",
+      "feedback": "Correct! We covered 4 characters today. Keep practicing!"
+    }
+  ]
+}

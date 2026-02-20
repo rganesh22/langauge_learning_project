@@ -1,0 +1,251 @@
+{
+  "lesson_id": "ta_05_soft_consonants",
+  "language": "Tamil",
+  "title": "The Mellinam (Soft/Nasal) Consonants",
+  "subtitle": "ங, ஞ, ண, ந, ம, ன — the 6 nasals",
+  "description": "Learn the six nasal consonants that pair with the hard consonants.",
+  "estimated_minutes": 27.599999999999998,
+  "cefr_level": "A0",
+  "tags": [
+    "script",
+    "reading",
+    "basics"
+  ],
+  "skills_learned": [
+    "6 mellinam consonants",
+    "Nasal-stop pairing concept",
+    "Three types of 'n' in Tamil"
+  ],
+  "steps": [
+    {
+      "type": "content",
+      "step_title": "The Mellinam (Soft/Nasal) Consonants",
+      "content_markdown": "# The Mellinam (Soft/Nasal) Consonants\n\nLearn the six nasal consonants that pair with the hard consonants.\n\n### Today's Characters\n**ங** · **ஞ** · **ண** · **ந** · **ம** · **ன**"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ங (nga)",
+      "content_markdown": "## ங — nga\n\n**Sound:** ng as in sing\n\n**Memory Trick:** Curvy — the sound resonates in the nose"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q1",
+      "step_title": "Identify: nga",
+      "question": "Which character represents the sound **nga** (ng as in sing)?",
+      "options": [
+        "ங",
+        "ஞ",
+        "ந",
+        "ண"
+      ],
+      "correct_answer": "ங",
+      "feedback": "Correct! **ங** is the ng as in sing sound. Curvy — the sound resonates in the nose"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ஞ (nya)",
+      "content_markdown": "## ஞ — nya\n\n**Sound:** ny as in canyon\n\n**Memory Trick:** Like a knot — tongue ties to palate\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **ஞ** | ny as in canyon | nya |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q2",
+      "step_title": "Identify: nya",
+      "question": "Which character represents the sound **nya** (ny as in canyon)?",
+      "options": [
+        "ந",
+        "ங",
+        "ஞ",
+        "ண"
+      ],
+      "correct_answer": "ஞ",
+      "feedback": "Correct! **ஞ** is the ny as in canyon sound. Like a knot — tongue ties to palate"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ண (Na (retroflex))",
+      "content_markdown": "## ண — Na (retroflex)\n\n**Sound:** n with tongue curled back\n\n**Memory Trick:** Pairs with ட — same tongue position, nasal\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **ண** | n with tongue curled back | Na (retroflex) |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q3",
+      "step_title": "Identify: Na (retroflex)",
+      "question": "Which character represents the sound **Na (retroflex)** (n with tongue curled back)?",
+      "options": [
+        "ஞ",
+        "ந",
+        "ண",
+        "ங"
+      ],
+      "correct_answer": "ண",
+      "feedback": "Correct! **ண** is the n with tongue curled back sound. Pairs with ட — same tongue position, nasal"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ந (na (dental))",
+      "content_markdown": "## ந — na (dental)\n\n**Sound:** n as in 'no'\n\n**Memory Trick:** Pairs with த — dental nasal\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **ந** | n as in 'no' | na (dental) |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q4",
+      "step_title": "Identify: na (dental)",
+      "question": "Which character represents the sound **na (dental)** (n as in 'no')?",
+      "options": [
+        "ந",
+        "ங",
+        "ஞ",
+        "ண"
+      ],
+      "correct_answer": "ந",
+      "feedback": "Correct! **ந** is the n as in 'no' sound. Pairs with த — dental nasal"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ம (ma)",
+      "content_markdown": "## ம — ma\n\n**Sound:** ma in mama\n\n**Memory Trick:** Looks like lips together for 'm'\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **ம** | ma in mama | ma |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q5",
+      "step_title": "Identify: ma",
+      "question": "Which character represents the sound **ma** (ma in mama)?",
+      "options": [
+        "ம",
+        "ஞ",
+        "ண",
+        "ங"
+      ],
+      "correct_answer": "ம",
+      "feedback": "Correct! **ம** is the ma in mama sound. Looks like lips together for 'm'"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ன (na (alveolar))",
+      "content_markdown": "## ன — na (alveolar)\n\n**Sound:** n (tip of tongue behind teeth)\n\n**Memory Trick:** The everyday 'n' sound"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q6",
+      "step_title": "Identify: na (alveolar)",
+      "question": "Which character represents the sound **na (alveolar)** (n (tip of tongue behind teeth))?",
+      "options": [
+        "ன",
+        "ஞ",
+        "ங",
+        "ண"
+      ],
+      "correct_answer": "ன",
+      "feedback": "Correct! **ன** is the n (tip of tongue behind teeth) sound. The everyday 'n' sound"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q7",
+      "step_title": "Sound Match",
+      "question": "What sound does **ங** make?",
+      "options": [
+        "ng as in sing",
+        "ny as in canyon",
+        "n with tongue curled back",
+        "n as in 'no'"
+      ],
+      "correct_answer": "ng as in sing",
+      "feedback": "Right! **ங** = nga = ng as in sing."
+    },
+    {
+      "type": "content",
+      "step_title": "Visual Comparison",
+      "content_markdown": "## Compare the Shapes\n\nLook closely at how these characters differ:\n\n- **ங** (nga) vs **ஞ** (nya)\n- **ண** (Na (retroflex)) vs **ந** (na (dental))\n- **ம** (ma) vs **ன** (na (alveolar))\n\nNotice the subtle differences in strokes, dots, or curves!"
+    },
+    {
+      "type": "free_response",
+      "id": "q8",
+      "step_title": "Type the Sound",
+      "question": "What is the transliteration (Roman letters) for **ன**?",
+      "ai_grading": false,
+      "accepted_responses": [
+        "na (alveolar)",
+        "na (alveolar)",
+        "NA (ALVEOLAR)"
+      ],
+      "hint": "It sounds like 'n (tip of tongue behind teeth)'."
+    },
+    {
+      "type": "content",
+      "step_title": "Word Practice",
+      "content_markdown": "## Let's Read Words!\n\nUsing what you've learned, try reading these words:\n\n| Tamil | Transliteration | Meaning |\n|---------|-----------------|--------|\n| **மண்** | man | soil/earth |\n| **நான்** | naan | I/me |\n| **மீன்** | miin | fish |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q9",
+      "step_title": "Read: மண்",
+      "question": "What does **மண்** (man) mean?",
+      "options": [
+        "fish",
+        "hello",
+        "soil/earth",
+        "I/me"
+      ],
+      "correct_answer": "soil/earth",
+      "feedback": "Correct! **மண்** (man) means 'soil/earth'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q10",
+      "step_title": "Read: நான்",
+      "question": "What does **நான்** (naan) mean?",
+      "options": [
+        "hello",
+        "I/me",
+        "fish",
+        "soil/earth"
+      ],
+      "correct_answer": "I/me",
+      "feedback": "Correct! **நான்** (naan) means 'I/me'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q11",
+      "step_title": "Read: மீன்",
+      "question": "What does **மீன்** (miin) mean?",
+      "options": [
+        "hello",
+        "fish",
+        "soil/earth",
+        "I/me"
+      ],
+      "correct_answer": "fish",
+      "feedback": "Correct! **மீன்** (miin) means 'fish'."
+    },
+    {
+      "type": "free_response",
+      "id": "q12",
+      "step_title": "Transliterate the Word",
+      "question": "Type the transliteration for **மண்** (meaning: soil/earth)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "man",
+        "man",
+        "man"
+      ],
+      "hint": "Sound it out character by character."
+    },
+    {
+      "type": "content",
+      "step_title": "Lesson Summary",
+      "content_markdown": "## Summary\n\nGreat job! Here's everything you learned:\n\n| Character | Transliteration | Sound |\n|-----------|----------------|-------|\n| **ங** | nga | ng as in sing |\n| **ஞ** | nya | ny as in canyon |\n| **ண** | Na (retroflex) | n with tongue curled back |\n| **ந** | na (dental) | n as in 'no' |\n| **ம** | ma | ma in mama |\n| **ன** | na (alveolar) | n (tip of tongue behind teeth) |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q13",
+      "step_title": "Final Check",
+      "question": "How many new characters/concepts did we cover in this lesson?",
+      "options": [
+        "6",
+        "8",
+        "5",
+        "11"
+      ],
+      "correct_answer": "6",
+      "feedback": "Correct! We covered 6 characters today. Keep practicing!"
+    }
+  ]
+}

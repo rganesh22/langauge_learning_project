@@ -1,0 +1,214 @@
+{
+  "lesson_id": "ta_10_vowel_markers_e_ee_ai",
+  "language": "Tamil",
+  "title": "Vowel Markers III — ெ, ே, and ை",
+  "subtitle": "The front-placed markers",
+  "description": "Learn the unique pre-positioned vowel markers for e, ee, and ai sounds.",
+  "estimated_minutes": 22.8,
+  "cefr_level": "A0",
+  "tags": [
+    "script",
+    "reading",
+    "basics"
+  ],
+  "skills_learned": [
+    "Pre-positioned markers",
+    "The e marker ெ",
+    "The ee marker ே",
+    "The ai marker ை"
+  ],
+  "steps": [
+    {
+      "type": "content",
+      "step_title": "Vowel Markers III — ெ, ே, and ை",
+      "content_markdown": "# Vowel Markers III — ெ, ே, and ை\n\nLearn the unique pre-positioned vowel markers for e, ee, and ai sounds.\n\n### Today's Characters\n**கெ** · **கே** · **கை** · **தை**"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: கெ (ke)",
+      "content_markdown": "## கெ — ke\n\n**Sound:** ke\n\n**Memory Trick:** Marker goes BEFORE the consonant! A Tamil specialty"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q1",
+      "step_title": "Identify: ke",
+      "question": "Which character represents the sound **ke** (ke)?",
+      "options": [
+        "கே",
+        "கை",
+        "தை",
+        "கெ"
+      ],
+      "correct_answer": "கெ",
+      "feedback": "Correct! **கெ** is the ke sound. Marker goes BEFORE the consonant! A Tamil specialty"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: கே (kee)",
+      "content_markdown": "## கே — kee\n\n**Sound:** kay\n\n**Memory Trick:** Two strokes before = long 'ee'\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **கே** | kay | kee |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q2",
+      "step_title": "Identify: kee",
+      "question": "Which character represents the sound **kee** (kay)?",
+      "options": [
+        "கெ",
+        "கை",
+        "கே",
+        "தை"
+      ],
+      "correct_answer": "கே",
+      "feedback": "Correct! **கே** is the kay sound. Two strokes before = long 'ee'"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: கை (kai)",
+      "content_markdown": "## கை — kai\n\n**Sound:** kai\n\n**Memory Trick:** Special marker before for 'ai' diphthong\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **கை** | kai | kai |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q3",
+      "step_title": "Identify: kai",
+      "question": "Which character represents the sound **kai** (kai)?",
+      "options": [
+        "கை",
+        "கெ",
+        "கே",
+        "தை"
+      ],
+      "correct_answer": "கை",
+      "feedback": "Correct! **கை** is the kai sound. Special marker before for 'ai' diphthong"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: தை (thai)",
+      "content_markdown": "## தை — thai\n\n**Sound:** thai\n\n**Memory Trick:** Same ai-marker on different consonant"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q4",
+      "step_title": "Identify: thai",
+      "question": "Which character represents the sound **thai** (thai)?",
+      "options": [
+        "கெ",
+        "கே",
+        "தை",
+        "கை"
+      ],
+      "correct_answer": "தை",
+      "feedback": "Correct! **தை** is the thai sound. Same ai-marker on different consonant"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q5",
+      "step_title": "Sound Match",
+      "question": "What sound does **கெ** make?",
+      "options": [
+        "ke",
+        "kay",
+        "kai",
+        "thai"
+      ],
+      "correct_answer": "ke",
+      "feedback": "Right! **கெ** = ke = ke."
+    },
+    {
+      "type": "content",
+      "step_title": "Visual Comparison",
+      "content_markdown": "## Compare the Shapes\n\nLook closely at how these characters differ:\n\n- **கெ** (ke) vs **கே** (kee)\n- **கை** (kai) vs **தை** (thai)\n\nNotice the subtle differences in strokes, dots, or curves!"
+    },
+    {
+      "type": "free_response",
+      "id": "q6",
+      "step_title": "Type the Sound",
+      "question": "What is the transliteration (Roman letters) for **தை**?",
+      "ai_grading": false,
+      "accepted_responses": [
+        "thai",
+        "thai",
+        "THAI"
+      ],
+      "hint": "It sounds like 'thai'."
+    },
+    {
+      "type": "content",
+      "step_title": "Word Practice",
+      "content_markdown": "## Let's Read Words!\n\nUsing what you've learned, try reading these words:\n\n| Tamil | Transliteration | Meaning |\n|---------|-----------------|--------|\n| **கெடு** | kedu | spoil |\n| **தேன்** | theen | honey |\n| **கை** | kai | hand |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q7",
+      "step_title": "Read: கெடு",
+      "question": "What does **கெடு** (kedu) mean?",
+      "options": [
+        "hello",
+        "spoil",
+        "hand",
+        "honey"
+      ],
+      "correct_answer": "spoil",
+      "feedback": "Correct! **கெடு** (kedu) means 'spoil'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q8",
+      "step_title": "Read: தேன்",
+      "question": "What does **தேன்** (theen) mean?",
+      "options": [
+        "honey",
+        "hello",
+        "hand",
+        "spoil"
+      ],
+      "correct_answer": "honey",
+      "feedback": "Correct! **தேன்** (theen) means 'honey'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q9",
+      "step_title": "Read: கை",
+      "question": "What does **கை** (kai) mean?",
+      "options": [
+        "spoil",
+        "hand",
+        "hello",
+        "honey"
+      ],
+      "correct_answer": "hand",
+      "feedback": "Correct! **கை** (kai) means 'hand'."
+    },
+    {
+      "type": "free_response",
+      "id": "q10",
+      "step_title": "Transliterate the Word",
+      "question": "Type the transliteration for **கெடு** (meaning: spoil)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "kedu",
+        "kedu",
+        "kedu"
+      ],
+      "hint": "Sound it out character by character."
+    },
+    {
+      "type": "content",
+      "step_title": "Lesson Summary",
+      "content_markdown": "## Summary\n\nGreat job! Here's everything you learned:\n\n| Character | Transliteration | Sound |\n|-----------|----------------|-------|\n| **கெ** | ke | ke |\n| **கே** | kee | kay |\n| **கை** | kai | kai |\n| **தை** | thai | thai |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q11",
+      "step_title": "Final Check",
+      "question": "How many new characters/concepts did we cover in this lesson?",
+      "options": [
+        "4",
+        "6",
+        "3",
+        "9"
+      ],
+      "correct_answer": "4",
+      "feedback": "Correct! We covered 4 characters today. Keep practicing!"
+    }
+  ]
+}

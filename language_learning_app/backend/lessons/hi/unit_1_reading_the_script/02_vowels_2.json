@@ -1,0 +1,211 @@
+{
+  "lesson_id": "hi_02_vowels_2",
+  "language": "Hindi",
+  "title": "More Vowels",
+  "subtitle": "उ, ऊ, ए, ऐ",
+  "description": "Continue with u and e vowels.",
+  "estimated_minutes": 22.8,
+  "cefr_level": "A0",
+  "tags": [
+    "script",
+    "reading",
+    "basics"
+  ],
+  "skills_learned": [
+    "u, uu, e, ai vowels"
+  ],
+  "steps": [
+    {
+      "type": "content",
+      "step_title": "More Vowels",
+      "content_markdown": "# More Vowels\n\nContinue with u and e vowels.\n\n### Today's Characters\n**उ** · **ऊ** · **ए** · **ऐ**"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: उ (u)",
+      "content_markdown": "## उ — u\n\n**Sound:** u in put\n\n**Memory Trick:** Hook shape"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q1",
+      "step_title": "Identify: u",
+      "question": "Which character represents the sound **u** (u in put)?",
+      "options": [
+        "ऐ",
+        "ऊ",
+        "ए",
+        "उ"
+      ],
+      "correct_answer": "उ",
+      "feedback": "Correct! **उ** is the u in put sound. Hook shape"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ऊ (uu)",
+      "content_markdown": "## ऊ — uu\n\n**Sound:** oo in food\n\n**Memory Trick:** Extended hook\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **ऊ** | oo in food | uu |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q2",
+      "step_title": "Identify: uu",
+      "question": "Which character represents the sound **uu** (oo in food)?",
+      "options": [
+        "ऊ",
+        "उ",
+        "ए",
+        "ऐ"
+      ],
+      "correct_answer": "ऊ",
+      "feedback": "Correct! **ऊ** is the oo in food sound. Extended hook"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ए (e)",
+      "content_markdown": "## ए — e\n\n**Sound:** ay in say\n\n**Memory Trick:** Open shape\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **ए** | ay in say | e |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q3",
+      "step_title": "Identify: e",
+      "question": "Which character represents the sound **e** (ay in say)?",
+      "options": [
+        "ऊ",
+        "उ",
+        "ऐ",
+        "ए"
+      ],
+      "correct_answer": "ए",
+      "feedback": "Correct! **ए** is the ay in say sound. Open shape"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ऐ (ai)",
+      "content_markdown": "## ऐ — ai\n\n**Sound:** ai in aisle\n\n**Memory Trick:** Extra stroke"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q4",
+      "step_title": "Identify: ai",
+      "question": "Which character represents the sound **ai** (ai in aisle)?",
+      "options": [
+        "उ",
+        "ऊ",
+        "ऐ",
+        "ए"
+      ],
+      "correct_answer": "ऐ",
+      "feedback": "Correct! **ऐ** is the ai in aisle sound. Extra stroke"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q5",
+      "step_title": "Sound Match",
+      "question": "What sound does **उ** make?",
+      "options": [
+        "u in put",
+        "oo in food",
+        "ay in say",
+        "ai in aisle"
+      ],
+      "correct_answer": "u in put",
+      "feedback": "Right! **उ** = u = u in put."
+    },
+    {
+      "type": "content",
+      "step_title": "Visual Comparison",
+      "content_markdown": "## Compare the Shapes\n\nLook closely at how these characters differ:\n\n- **उ** (u) vs **ऊ** (uu)\n- **ए** (e) vs **ऐ** (ai)\n\nNotice the subtle differences in strokes, dots, or curves!"
+    },
+    {
+      "type": "free_response",
+      "id": "q6",
+      "step_title": "Type the Sound",
+      "question": "What is the transliteration (Roman letters) for **ऐ**?",
+      "ai_grading": false,
+      "accepted_responses": [
+        "ai",
+        "ai",
+        "AI"
+      ],
+      "hint": "It sounds like 'ai in aisle'."
+    },
+    {
+      "type": "content",
+      "step_title": "Word Practice",
+      "content_markdown": "## Let's Read Words!\n\nUsing what you've learned, try reading these words:\n\n| Hindi | Transliteration | Meaning |\n|---------|-----------------|--------|\n| **उस** | us | that |\n| **एक** | ek | one |\n| **ऐसा** | aisaa | such |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q7",
+      "step_title": "Read: उस",
+      "question": "What does **उस** (us) mean?",
+      "options": [
+        "hello",
+        "such",
+        "one",
+        "that"
+      ],
+      "correct_answer": "that",
+      "feedback": "Correct! **उस** (us) means 'that'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q8",
+      "step_title": "Read: एक",
+      "question": "What does **एक** (ek) mean?",
+      "options": [
+        "such",
+        "one",
+        "that",
+        "hello"
+      ],
+      "correct_answer": "one",
+      "feedback": "Correct! **एक** (ek) means 'one'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q9",
+      "step_title": "Read: ऐसा",
+      "question": "What does **ऐसा** (aisaa) mean?",
+      "options": [
+        "one",
+        "that",
+        "such",
+        "hello"
+      ],
+      "correct_answer": "such",
+      "feedback": "Correct! **ऐसा** (aisaa) means 'such'."
+    },
+    {
+      "type": "free_response",
+      "id": "q10",
+      "step_title": "Transliterate the Word",
+      "question": "Type the transliteration for **उस** (meaning: that)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "us",
+        "us",
+        "us"
+      ],
+      "hint": "Sound it out character by character."
+    },
+    {
+      "type": "content",
+      "step_title": "Lesson Summary",
+      "content_markdown": "## Summary\n\nGreat job! Here's everything you learned:\n\n| Character | Transliteration | Sound |\n|-----------|----------------|-------|\n| **उ** | u | u in put |\n| **ऊ** | uu | oo in food |\n| **ए** | e | ay in say |\n| **ऐ** | ai | ai in aisle |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q11",
+      "step_title": "Final Check",
+      "question": "How many new characters/concepts did we cover in this lesson?",
+      "options": [
+        "4",
+        "6",
+        "3",
+        "9"
+      ],
+      "correct_answer": "4",
+      "feedback": "Correct! We covered 4 characters today. Keep practicing!"
+    }
+  ]
+}

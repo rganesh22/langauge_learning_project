@@ -1,0 +1,96 @@
+{
+  "lesson_id": "kn_14_ottaksharas",
+  "language": "Kannada",
+  "title": "Subscript Consonants",
+  "subtitle": "How consonants stack in Kannada",
+  "description": "Understand how Kannada writes consonant clusters using subscript forms (Ottaksharas). Focus on reading and pronunciation.",
+  "estimated_minutes": 20,
+  "cefr_level": "A0",
+  "tags": ["script", "reading", "basics", "conjuncts"],
+  "skills_learned": [
+    "Recognizing subscript consonant forms",
+    "Reading stacked clusters correctly",
+    "Understanding the visual structure of Ottaksharas"
+  ],
+  "steps": [
+    {
+      "type": "content",
+      "step_title": "Ottaksharas",
+      "content_markdown": "# Subscript Consonants (Ottaksharas)\n\nUnderstand how Kannada writes consonant clusters using subscript forms. When two consonants follow each other without a vowel between them, the second consonant is often written below or to the side of the first in a reduced form.\n\n### Today's Focus\n**ಕ್ತ** (kta) · **ಸ್ಯ** (sya) · **ಪ್ರ** (pra)"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ಕ್ತ (kta)",
+      "content_markdown": "## ಕ್ತ — kta\n\n**Sound:** kta as in 'actor'.\n\n**Visual:** The 'ta' character is placed below the 'ka' character."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q1",
+      "step_title": "Identify: kta",
+      "question": "Which character represents the stacked sound **kta**?",
+      "options": ["ಸ್ಯ", "ಪ್ರ", "ಕ್ತ", "ಕ್ಕ"],
+      "correct_answer": "ಕ್ತ",
+      "feedback": "Correct! **ಕ್ತ** is the stacked 'kta' sound."
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ಸ್ಯ (sya)",
+      "content_markdown": "## ಸ್ಯ — sya\n\n**Sound:** sya as in 'syrup'.\n\n**Visual:** The 'ya' character takes a special subscript form below 'sa'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q2",
+      "step_title": "Identify: sya",
+      "question": "Which character represents the stacked sound **sya**?",
+      "options": ["ಕ್ತ", "ಪ್ರ", "ಸ್ಯ", "ಸ್ತ"],
+      "correct_answer": "ಸ್ಯ",
+      "feedback": "Correct! **ಸ್ಯ** is the stacked 'sya' sound."
+    },
+    {
+      "type": "content",
+      "step_title": "Reading Practice",
+      "content_markdown": "## Let's Read!\n\nPractice reading these words out loud, focusing on the subscript consonants:\n\n| Kannada | Transliteration |\n|---------|-----------------|\n| **ಪ್ರತಿ** | prathi |\n| **ವಿದ್ಯಾ** | vidyaa |\n| **ರಾಷ್ಟ್ರ** | raashtra |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q3",
+      "step_title": "Read: ಪ್ರತಿ",
+      "question": "How do you read this word out loud?\n\n# ಪ್ರತಿ",
+      "options": ["raashtra", "vidyaa", "prathi", "paya"],
+      "correct_answer": "prathi",
+      "feedback": "Perfect! You read 'prathi' correctly."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q4",
+      "step_title": "Read: ವಿದ್ಯಾ",
+      "question": "How do you read this word out loud?\n\n# ವಿದ್ಯಾ",
+      "options": ["prathi", "vidyaa", "raashtra", "vile"],
+      "correct_answer": "vidyaa",
+      "feedback": "Perfect! You read 'vidyaa' correctly."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q5",
+      "step_title": "Read: ರಾಷ್ಟ್ರ",
+      "question": "How do you read this word out loud?\n\n# ರಾಷ್ಟ್ರ",
+      "options": ["raashtra", "prathi", "vidyaa", "rama"],
+      "correct_answer": "raashtra",
+      "feedback": "Perfect! You read 'raashtra' correctly."
+    },
+    {
+      "type": "free_response",
+      "id": "q6",
+      "step_title": "Transliterate Word",
+      "question": "Type the transliteration for **ವಿದ್ಯಾ**",
+      "ai_grading": false,
+      "accepted_responses": ["vidyaa", "Vidyaa"],
+      "hint": "V-I-D-Y-AA"
+    },
+    {
+      "type": "content",
+      "step_title": "Lesson Summary",
+      "content_markdown": "## Summary\n\nYou've learned how subscript consonants (Ottaksharas) work:\n\n- **ಕ್ತ** (kta)\n- **ಸ್ಯ** (sya)\n- **ಪ್ರ** (pra)"
+    }
+  ]
+}

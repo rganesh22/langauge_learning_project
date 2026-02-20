@@ -1,0 +1,213 @@
+{
+  "lesson_id": "ta_13_doubled_consonants",
+  "language": "Tamil",
+  "title": "Doubled (Geminated) Consonants",
+  "subtitle": "When consonants repeat: க்க, ப்ப, ட்ட",
+  "description": "Learn how doubled consonants are written and pronounced in Tamil.",
+  "estimated_minutes": 22.8,
+  "cefr_level": "A0",
+  "tags": [
+    "script",
+    "reading",
+    "basics"
+  ],
+  "skills_learned": [
+    "Reading doubled consonants",
+    "Pulli as consonant connector",
+    "Pronunciation of geminates"
+  ],
+  "steps": [
+    {
+      "type": "content",
+      "step_title": "Doubled (Geminated) Consonants",
+      "content_markdown": "# Doubled (Geminated) Consonants\n\nLearn how doubled consonants are written and pronounced in Tamil.\n\n### Today's Characters\n**க்க** · **ப்ப** · **ட்ட** · **ச்ச**"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: க்க (kka)",
+      "content_markdown": "## க்க — kka\n\n**Sound:** kka (held k)\n\n**Memory Trick:** First க gets pulli, then second க follows"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q1",
+      "step_title": "Identify: kka",
+      "question": "Which character represents the sound **kka** (kka (held k))?",
+      "options": [
+        "க்க",
+        "ட்ட",
+        "ப்ப",
+        "ச்ச"
+      ],
+      "correct_answer": "க்க",
+      "feedback": "Correct! **க்க** is the kka (held k) sound. First க gets pulli, then second க follows"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ப்ப (ppa)",
+      "content_markdown": "## ப்ப — ppa\n\n**Sound:** ppa (held p)\n\n**Memory Trick:** Same pattern: pulli + repeat\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **ப்ப** | ppa (held p) | ppa |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q2",
+      "step_title": "Identify: ppa",
+      "question": "Which character represents the sound **ppa** (ppa (held p))?",
+      "options": [
+        "ட்ட",
+        "க்க",
+        "ப்ப",
+        "ச்ச"
+      ],
+      "correct_answer": "ப்ப",
+      "feedback": "Correct! **ப்ப** is the ppa (held p) sound. Same pattern: pulli + repeat"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ட்ட (tta)",
+      "content_markdown": "## ட்ட — tta\n\n**Sound:** tta (held t)\n\n**Memory Trick:** The pause before the second consonant is key\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **ட்ட** | tta (held t) | tta |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q3",
+      "step_title": "Identify: tta",
+      "question": "Which character represents the sound **tta** (tta (held t))?",
+      "options": [
+        "ட்ட",
+        "ச்ச",
+        "க்க",
+        "ப்ப"
+      ],
+      "correct_answer": "ட்ட",
+      "feedback": "Correct! **ட்ட** is the tta (held t) sound. The pause before the second consonant is key"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ச்ச (ccha)",
+      "content_markdown": "## ச்ச — ccha\n\n**Sound:** ccha\n\n**Memory Trick:** Doubling always uses pulli as connector"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q4",
+      "step_title": "Identify: ccha",
+      "question": "Which character represents the sound **ccha** (ccha)?",
+      "options": [
+        "ப்ப",
+        "ச்ச",
+        "க்க",
+        "ட்ட"
+      ],
+      "correct_answer": "ச்ச",
+      "feedback": "Correct! **ச்ச** is the ccha sound. Doubling always uses pulli as connector"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q5",
+      "step_title": "Sound Match",
+      "question": "What sound does **க்க** make?",
+      "options": [
+        "kka (held k)",
+        "ppa (held p)",
+        "tta (held t)",
+        "ccha"
+      ],
+      "correct_answer": "kka (held k)",
+      "feedback": "Right! **க்க** = kka = kka (held k)."
+    },
+    {
+      "type": "content",
+      "step_title": "Visual Comparison",
+      "content_markdown": "## Compare the Shapes\n\nLook closely at how these characters differ:\n\n- **க்க** (kka) vs **ப்ப** (ppa)\n- **ட்ட** (tta) vs **ச்ச** (ccha)\n\nNotice the subtle differences in strokes, dots, or curves!"
+    },
+    {
+      "type": "free_response",
+      "id": "q6",
+      "step_title": "Type the Sound",
+      "question": "What is the transliteration (Roman letters) for **ச்ச**?",
+      "ai_grading": false,
+      "accepted_responses": [
+        "ccha",
+        "ccha",
+        "CCHA"
+      ],
+      "hint": "It sounds like 'ccha'."
+    },
+    {
+      "type": "content",
+      "step_title": "Word Practice",
+      "content_markdown": "## Let's Read Words!\n\nUsing what you've learned, try reading these words:\n\n| Tamil | Transliteration | Meaning |\n|---------|-----------------|--------|\n| **அக்கா** | akkaa | elder sister |\n| **அப்பா** | appaa | father |\n| **எட்டு** | ettu | eight |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q7",
+      "step_title": "Read: அக்கா",
+      "question": "What does **அக்கா** (akkaa) mean?",
+      "options": [
+        "hello",
+        "elder sister",
+        "eight",
+        "father"
+      ],
+      "correct_answer": "elder sister",
+      "feedback": "Correct! **அக்கா** (akkaa) means 'elder sister'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q8",
+      "step_title": "Read: அப்பா",
+      "question": "What does **அப்பா** (appaa) mean?",
+      "options": [
+        "hello",
+        "elder sister",
+        "father",
+        "eight"
+      ],
+      "correct_answer": "father",
+      "feedback": "Correct! **அப்பா** (appaa) means 'father'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q9",
+      "step_title": "Read: எட்டு",
+      "question": "What does **எட்டு** (ettu) mean?",
+      "options": [
+        "hello",
+        "father",
+        "elder sister",
+        "eight"
+      ],
+      "correct_answer": "eight",
+      "feedback": "Correct! **எட்டு** (ettu) means 'eight'."
+    },
+    {
+      "type": "free_response",
+      "id": "q10",
+      "step_title": "Transliterate the Word",
+      "question": "Type the transliteration for **அக்கா** (meaning: elder sister)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "akkaa",
+        "akkaa",
+        "akkaa"
+      ],
+      "hint": "Sound it out character by character."
+    },
+    {
+      "type": "content",
+      "step_title": "Lesson Summary",
+      "content_markdown": "## Summary\n\nGreat job! Here's everything you learned:\n\n| Character | Transliteration | Sound |\n|-----------|----------------|-------|\n| **க்க** | kka | kka (held k) |\n| **ப்ப** | ppa | ppa (held p) |\n| **ட்ட** | tta | tta (held t) |\n| **ச்ச** | ccha | ccha |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q11",
+      "step_title": "Final Check",
+      "question": "How many new characters/concepts did we cover in this lesson?",
+      "options": [
+        "4",
+        "6",
+        "3",
+        "9"
+      ],
+      "correct_answer": "4",
+      "feedback": "Correct! We covered 4 characters today. Keep practicing!"
+    }
+  ]
+}

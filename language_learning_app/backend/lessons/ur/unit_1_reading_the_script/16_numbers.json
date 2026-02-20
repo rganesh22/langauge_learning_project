@@ -1,0 +1,230 @@
+{
+  "lesson_id": "ur_16_numbers",
+  "language": "Urdu",
+  "title": "Urdu Numerals",
+  "subtitle": "۱ ۲ ۳ ۴ ۵ ۶ ۷ ۸ ۹ ۰",
+  "description": "Eastern Arabic-Indic numerals used in Urdu.",
+  "estimated_minutes": 25.2,
+  "cefr_level": "A0",
+  "tags": [
+    "script",
+    "reading",
+    "basics"
+  ],
+  "skills_learned": [
+    "Urdu numerals"
+  ],
+  "steps": [
+    {
+      "type": "content",
+      "step_title": "Urdu Numerals",
+      "content_markdown": "# Urdu Numerals\n\nEastern Arabic-Indic numerals used in Urdu.\n\n### Today's Characters\n**۱** · **۲** · **۳** · **۴** · **۵**"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ۱ (1)",
+      "content_markdown": "## ۱ — 1\n\n**Sound:** ek\n\n**Memory Trick:** One"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q1",
+      "step_title": "Identify: 1",
+      "question": "Which character represents the sound **1** (ek)?",
+      "options": [
+        "۱",
+        "۳",
+        "۲",
+        "۴"
+      ],
+      "correct_answer": "۱",
+      "feedback": "Correct! **۱** is the ek sound. One"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ۲ (2)",
+      "content_markdown": "## ۲ — 2\n\n**Sound:** do\n\n**Memory Trick:** Two\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **۲** | do | 2 |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q2",
+      "step_title": "Identify: 2",
+      "question": "Which character represents the sound **2** (do)?",
+      "options": [
+        "۲",
+        "۴",
+        "۱",
+        "۳"
+      ],
+      "correct_answer": "۲",
+      "feedback": "Correct! **۲** is the do sound. Two"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ۳ (3)",
+      "content_markdown": "## ۳ — 3\n\n**Sound:** tiin\n\n**Memory Trick:** Three\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **۳** | tiin | 3 |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q3",
+      "step_title": "Identify: 3",
+      "question": "Which character represents the sound **3** (tiin)?",
+      "options": [
+        "۴",
+        "۱",
+        "۲",
+        "۳"
+      ],
+      "correct_answer": "۳",
+      "feedback": "Correct! **۳** is the tiin sound. Three"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ۴ (4)",
+      "content_markdown": "## ۴ — 4\n\n**Sound:** chaar\n\n**Memory Trick:** Four\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **۴** | chaar | 4 |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q4",
+      "step_title": "Identify: 4",
+      "question": "Which character represents the sound **4** (chaar)?",
+      "options": [
+        "۳",
+        "۲",
+        "۱",
+        "۴"
+      ],
+      "correct_answer": "۴",
+      "feedback": "Correct! **۴** is the chaar sound. Four"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ۵ (5)",
+      "content_markdown": "## ۵ — 5\n\n**Sound:** paanch\n\n**Memory Trick:** Five"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q5",
+      "step_title": "Identify: 5",
+      "question": "Which character represents the sound **5** (paanch)?",
+      "options": [
+        "۲",
+        "۳",
+        "۵",
+        "۱"
+      ],
+      "correct_answer": "۵",
+      "feedback": "Correct! **۵** is the paanch sound. Five"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q6",
+      "step_title": "Sound Match",
+      "question": "What sound does **۱** make?",
+      "options": [
+        "ek",
+        "do",
+        "tiin",
+        "chaar"
+      ],
+      "correct_answer": "ek",
+      "feedback": "Right! **۱** = 1 = ek."
+    },
+    {
+      "type": "content",
+      "step_title": "Visual Comparison",
+      "content_markdown": "## Compare the Shapes\n\nLook closely at how these characters differ:\n\n- **۱** (1) vs **۲** (2)\n- **۳** (3) vs **۴** (4)\n\nNotice the subtle differences in strokes, dots, or curves!"
+    },
+    {
+      "type": "free_response",
+      "id": "q7",
+      "step_title": "Type the Sound",
+      "question": "What is the transliteration (Roman letters) for **۵**?",
+      "ai_grading": false,
+      "accepted_responses": [
+        "5",
+        "5",
+        "5"
+      ],
+      "hint": "It sounds like 'paanch'."
+    },
+    {
+      "type": "content",
+      "step_title": "Word Practice",
+      "content_markdown": "## Let's Read Words!\n\nUsing what you've learned, try reading these words:\n\n| Urdu | Transliteration | Meaning |\n|---------|-----------------|--------|\n| **ایک** | ek | one |\n| **دو** | do | two |\n| **دس** | das | ten |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q8",
+      "step_title": "Read: ایک",
+      "question": "What does **ایک** (ek) mean?",
+      "options": [
+        "ten",
+        "hello",
+        "two",
+        "one"
+      ],
+      "correct_answer": "one",
+      "feedback": "Correct! **ایک** (ek) means 'one'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q9",
+      "step_title": "Read: دو",
+      "question": "What does **دو** (do) mean?",
+      "options": [
+        "ten",
+        "two",
+        "hello",
+        "one"
+      ],
+      "correct_answer": "two",
+      "feedback": "Correct! **دو** (do) means 'two'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q10",
+      "step_title": "Read: دس",
+      "question": "What does **دس** (das) mean?",
+      "options": [
+        "ten",
+        "hello",
+        "two",
+        "one"
+      ],
+      "correct_answer": "ten",
+      "feedback": "Correct! **دس** (das) means 'ten'."
+    },
+    {
+      "type": "free_response",
+      "id": "q11",
+      "step_title": "Transliterate the Word",
+      "question": "Type the transliteration for **ایک** (meaning: one)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "ek",
+        "ek",
+        "ek"
+      ],
+      "hint": "Sound it out character by character."
+    },
+    {
+      "type": "content",
+      "step_title": "Lesson Summary",
+      "content_markdown": "## Summary\n\nGreat job! Here's everything you learned:\n\n| Character | Transliteration | Sound |\n|-----------|----------------|-------|\n| **۱** | 1 | ek |\n| **۲** | 2 | do |\n| **۳** | 3 | tiin |\n| **۴** | 4 | chaar |\n| **۵** | 5 | paanch |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q12",
+      "step_title": "Final Check",
+      "question": "How many new characters/concepts did we cover in this lesson?",
+      "options": [
+        "5",
+        "7",
+        "4",
+        "10"
+      ],
+      "correct_answer": "5",
+      "feedback": "Correct! We covered 5 characters today. Keep practicing!"
+    }
+  ]
+}

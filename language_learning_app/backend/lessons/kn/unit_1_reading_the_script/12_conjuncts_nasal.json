@@ -1,0 +1,96 @@
+{
+  "lesson_id": "kn_12_conjuncts_nasal",
+  "language": "Kannada",
+  "title": "Nasal Clusters",
+  "subtitle": "ಂಕ, ಂಚ, ಂಡ, ಂತ, ಂಪ — nasal + stop pairs",
+  "description": "Learn to read and pronounce nasal-stop combinations. Focus on reading and pronunciation.",
+  "estimated_minutes": 25,
+  "cefr_level": "A0",
+  "tags": ["script", "reading", "basics", "conjuncts"],
+  "skills_learned": [
+    "Recognizing Nasal-stop clusters",
+    "Understanding Anusvara shorthand in clusters",
+    "Pronouncing nasalized stops correctly"
+  ],
+  "steps": [
+    {
+      "type": "content",
+      "step_title": "Nasal Clusters",
+      "content_markdown": "# Nasal Clusters & Mixed Conjuncts\n\nLearn nasal-stop combinations. In Kannada, the Anusvara (ಂ) often serves as a shorthand for a nasal consonant preceding a stop in the same group.\n\n### Today's Characters\n**ಂಕ** (ngka) · **ಂಚ** (ncha) · **ಂಡ** (Nda) · **ಂತ** (ntha) · **ಂಪ** (mpa)"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ಂಕ (ngka)",
+      "content_markdown": "## ಂಕ — ngka\n\n**Sound:** nk as in 'bank'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q1",
+      "step_title": "Identify: ngka",
+      "question": "Which character represents the sound **ngka**?",
+      "options": ["ಂಡ", "ಂತ", "ಂಕ", "ಂಚ"],
+      "correct_answer": "ಂಕ",
+      "feedback": "Correct! **ಂಕ** is the 'nk' sound."
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ಂಪ (mpa)",
+      "content_markdown": "## ಂಪ — mpa\n\n**Sound:** mp as in 'lamp'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q2",
+      "step_title": "Identify: mpa",
+      "question": "Which character represents the sound **mpa**?",
+      "options": ["ಂಪ", "ಂಕ", "ಂಚ", "ಂಡ"],
+      "correct_answer": "ಂಪ",
+      "feedback": "Correct! **ಂಪ** is the 'mp' sound."
+    },
+    {
+      "type": "content",
+      "step_title": "Reading Practice",
+      "content_markdown": "## Let's Read!\n\nPractice reading these words out loud:\n\n| Kannada | Transliteration |\n|---------|-----------------|\n| **ಬೆಂಗಳೂರು** | bengaluuru |\n| **ಸಂತೆ** | santhe |\n| **ಗುಂಡು** | gundu |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q3",
+      "step_title": "Read: ಬೆಂಗಳೂರು",
+      "question": "How do you read this word out loud?\n\n# ಬೆಂಗಳೂರು",
+      "options": ["gundu", "santhe", "bengaluuru", "baale"],
+      "correct_answer": "bengaluuru",
+      "feedback": "Perfect! You read 'bengaluuru' correctly."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q4",
+      "step_title": "Read: ಸಂತೆ",
+      "question": "How do you read this word out loud?\n\n# ಸಂತೆ",
+      "options": ["santhe", "bengaluuru", "gundu", "sama"],
+      "correct_answer": "santhe",
+      "feedback": "Perfect! You read 'santhe' correctly."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q5",
+      "step_title": "Read: ಗುಂಡು",
+      "question": "How do you read this word out loud?\n\n# ಗುಂಡು",
+      "options": ["bengaluuru", "santhe", "gundu", "gaada"],
+      "correct_answer": "gundu",
+      "feedback": "Perfect! You read 'gundu' correctly."
+    },
+    {
+      "type": "free_response",
+      "id": "q6",
+      "step_title": "Transliterate Word",
+      "question": "Type the transliteration for **ಸಂತೆ**",
+      "ai_grading": false,
+      "accepted_responses": ["santhe", "Santhe"],
+      "hint": "S-A-N-TH-E"
+    },
+    {
+      "type": "content",
+      "step_title": "Lesson Summary",
+      "content_markdown": "## Summary\n\nYou've learned common nasal clusters:\n\n- **ಂಕ** (ngka)\n- **ಂಚ** (ncha)\n- **ಂಡ** (Nda)\n- **ಂತ** (ntha)\n- **ಂಪ** (mpa)"
+    }
+  ]
+}

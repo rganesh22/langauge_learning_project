@@ -1,0 +1,212 @@
+{
+  "lesson_id": "ur_06_fay_qaaf",
+  "language": "Urdu",
+  "title": "Fay & Qaaf Group",
+  "subtitle": "ف (fay), ق (qaaf), ک (kaaf), گ (gaaf)",
+  "description": "Labio-dental and velar letters, including Urdu-specific forms.",
+  "estimated_minutes": 22.8,
+  "cefr_level": "A0",
+  "tags": [
+    "script",
+    "reading",
+    "basics"
+  ],
+  "skills_learned": [
+    "Fay, Qaaf group",
+    "Urdu-specific ک and گ"
+  ],
+  "steps": [
+    {
+      "type": "content",
+      "step_title": "Fay & Qaaf Group",
+      "content_markdown": "# Fay & Qaaf Group\n\nLabio-dental and velar letters, including Urdu-specific forms.\n\n### Today's Characters\n**ف** · **ق** · **ک** · **گ**"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ف (fay)",
+      "content_markdown": "## ف — fay\n\n**Sound:** f\n\n**Memory Trick:** Loop with dot above"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q1",
+      "step_title": "Identify: fay",
+      "question": "Which character represents the sound **fay** (f)?",
+      "options": [
+        "گ",
+        "ف",
+        "ک",
+        "ق"
+      ],
+      "correct_answer": "ف",
+      "feedback": "Correct! **ف** is the f sound. Loop with dot above"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ق (qaaf)",
+      "content_markdown": "## ق — qaaf\n\n**Sound:** q (deep throat)\n\n**Memory Trick:** Two dots above — deep guttural\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **ق** | q (deep throat) | qaaf |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q2",
+      "step_title": "Identify: qaaf",
+      "question": "Which character represents the sound **qaaf** (q (deep throat))?",
+      "options": [
+        "ک",
+        "ف",
+        "ق",
+        "گ"
+      ],
+      "correct_answer": "ق",
+      "feedback": "Correct! **ق** is the q (deep throat) sound. Two dots above — deep guttural"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ک (kaaf)",
+      "content_markdown": "## ک — kaaf\n\n**Sound:** k\n\n**Memory Trick:** Urdu form — different from Arabic ك\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **ک** | k | kaaf |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q3",
+      "step_title": "Identify: kaaf",
+      "question": "Which character represents the sound **kaaf** (k)?",
+      "options": [
+        "ک",
+        "گ",
+        "ق",
+        "ف"
+      ],
+      "correct_answer": "ک",
+      "feedback": "Correct! **ک** is the k sound. Urdu form — different from Arabic ك"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: گ (gaaf)",
+      "content_markdown": "## گ — gaaf\n\n**Sound:** g\n\n**Memory Trick:** ک + extra stroke — Urdu specific!"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q4",
+      "step_title": "Identify: gaaf",
+      "question": "Which character represents the sound **gaaf** (g)?",
+      "options": [
+        "ق",
+        "ف",
+        "ک",
+        "گ"
+      ],
+      "correct_answer": "گ",
+      "feedback": "Correct! **گ** is the g sound. ک + extra stroke — Urdu specific!"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q5",
+      "step_title": "Sound Match",
+      "question": "What sound does **ف** make?",
+      "options": [
+        "f",
+        "q (deep throat)",
+        "k",
+        "g"
+      ],
+      "correct_answer": "f",
+      "feedback": "Right! **ف** = fay = f."
+    },
+    {
+      "type": "content",
+      "step_title": "Visual Comparison",
+      "content_markdown": "## Compare the Shapes\n\nLook closely at how these characters differ:\n\n- **ف** (fay) vs **ق** (qaaf)\n- **ک** (kaaf) vs **گ** (gaaf)\n\nNotice the subtle differences in strokes, dots, or curves!"
+    },
+    {
+      "type": "free_response",
+      "id": "q6",
+      "step_title": "Type the Sound",
+      "question": "What is the transliteration (Roman letters) for **گ**?",
+      "ai_grading": false,
+      "accepted_responses": [
+        "gaaf",
+        "gaaf",
+        "GAAF"
+      ],
+      "hint": "It sounds like 'g'."
+    },
+    {
+      "type": "content",
+      "step_title": "Word Practice",
+      "content_markdown": "## Let's Read Words!\n\nUsing what you've learned, try reading these words:\n\n| Urdu | Transliteration | Meaning |\n|---------|-----------------|--------|\n| **فکر** | fikr | thought/worry |\n| **قلم** | qalam | pen |\n| **کام** | kaam | work |\n| **گھر** | ghar | home |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q7",
+      "step_title": "Read: فکر",
+      "question": "What does **فکر** (fikr) mean?",
+      "options": [
+        "work",
+        "pen",
+        "home",
+        "thought/worry"
+      ],
+      "correct_answer": "thought/worry",
+      "feedback": "Correct! **فکر** (fikr) means 'thought/worry'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q8",
+      "step_title": "Read: قلم",
+      "question": "What does **قلم** (qalam) mean?",
+      "options": [
+        "work",
+        "thought/worry",
+        "home",
+        "pen"
+      ],
+      "correct_answer": "pen",
+      "feedback": "Correct! **قلم** (qalam) means 'pen'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q9",
+      "step_title": "Read: کام",
+      "question": "What does **کام** (kaam) mean?",
+      "options": [
+        "home",
+        "pen",
+        "thought/worry",
+        "work"
+      ],
+      "correct_answer": "work",
+      "feedback": "Correct! **کام** (kaam) means 'work'."
+    },
+    {
+      "type": "free_response",
+      "id": "q10",
+      "step_title": "Transliterate the Word",
+      "question": "Type the transliteration for **فکر** (meaning: thought/worry)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "fikr",
+        "fikr",
+        "fikr"
+      ],
+      "hint": "Sound it out character by character."
+    },
+    {
+      "type": "content",
+      "step_title": "Lesson Summary",
+      "content_markdown": "## Summary\n\nGreat job! Here's everything you learned:\n\n| Character | Transliteration | Sound |\n|-----------|----------------|-------|\n| **ف** | fay | f |\n| **ق** | qaaf | q (deep throat) |\n| **ک** | kaaf | k |\n| **گ** | gaaf | g |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q11",
+      "step_title": "Final Check",
+      "question": "How many new characters/concepts did we cover in this lesson?",
+      "options": [
+        "4",
+        "6",
+        "3",
+        "9"
+      ],
+      "correct_answer": "4",
+      "feedback": "Correct! We covered 4 characters today. Keep practicing!"
+    }
+  ]
+}

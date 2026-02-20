@@ -1,0 +1,68 @@
+{
+  "lesson_id": "kn_15_reading_words",
+  "language": "Kannada",
+  "title": "Reading Practice: Words",
+  "subtitle": "Putting it all together",
+  "description": "Practice reading common Kannada words to build fluency. Focus on reading and pronunciation.",
+  "estimated_minutes": 20,
+  "cefr_level": "A0",
+  "tags": ["script", "reading", "basics"],
+  "skills_learned": [
+    "Reading multi-syllable words",
+    "Building reading fluency",
+    "Applying all script rules to real words"
+  ],
+  "steps": [
+    {
+      "type": "content",
+      "step_title": "Reading Practice",
+      "content_markdown": "# Reading Practice: Words\n\nNow that you've learned vowels, consonants, marks, and clusters, let's practice reading real Kannada words.\n\n### Today's Focus\n**ನಮಸ್ಕಾರ** · **ಧನ್ಯವಾದ** · **ನೀರು** · **ಊಟ** · **ಮಗು**"
+    },
+    {
+      "type": "content",
+      "step_title": "Word Table",
+      "content_markdown": "## Practice Reading\n\nRead these words out loud, paying attention to each character and mark:\n\n| Kannada | Transliteration |\n|---------|-----------------|\n| **ನಮಸ್ಕಾರ** | namaskaara |\n| **ಧನ್ಯವಾದ** | dhanyavaada |\n| **ನೀರು** | niiru |\n| **ಊಟ** | uuta |\n| **ಮಗು** | magu |\n| **ಹೆಸರು** | hesaru |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q1",
+      "step_title": "Read: ನಮಸ್ಕಾರ",
+      "question": "How do you read this word out loud?\n\n# ನಮಸ್ಕಾರ",
+      "options": ["namaskaara", "dhanyavaada", "niiru", "hesaru"],
+      "correct_answer": "namaskaara",
+      "feedback": "Perfect! You read 'namaskaara' correctly."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q2",
+      "step_title": "Read: ಧನ್ಯವಾದ",
+      "question": "How do you read this word out loud?\n\n# ಧನ್ಯವಾದ",
+      "options": ["namaskaara", "dhanyavaada", "niiru", "uuta"],
+      "correct_answer": "dhanyavaada",
+      "feedback": "Perfect! You read 'dhanyavaada' correctly."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q3",
+      "step_title": "Read: ನೀರು",
+      "question": "How do you read this word out loud?\n\n# ನೀರು",
+      "options": ["niiru", "uuta", "magu", "hesaru"],
+      "correct_answer": "niiru",
+      "feedback": "Perfect! You read 'niiru' correctly."
+    },
+    {
+      "type": "free_response",
+      "id": "q4",
+      "step_title": "Transliterate Word",
+      "question": "Type the transliteration for **ಹೆಸರು**",
+      "ai_grading": false,
+      "accepted_responses": ["hesaru", "Hesaru"],
+      "hint": "H-E-S-A-R-U"
+    },
+    {
+      "type": "content",
+      "step_title": "Lesson Summary",
+      "content_markdown": "## Summary\n\nGreat work! You've practiced reading common multi-syllable words. Keep practicing to build your speed!"
+    }
+  ]
+}

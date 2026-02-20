@@ -1,0 +1,213 @@
+{
+  "lesson_id": "ta_15_medial_softening",
+  "language": "Tamil",
+  "title": "Medial Softening Rules",
+  "subtitle": "When க becomes g, ப becomes b, ட becomes d",
+  "description": "Understand how Tamil hard consonants soften when they appear between vowels.",
+  "estimated_minutes": 22.8,
+  "cefr_level": "A0",
+  "tags": [
+    "script",
+    "reading",
+    "basics"
+  ],
+  "skills_learned": [
+    "Medial softening rules",
+    "When to soften hard consonants",
+    "Reading words with softened sounds"
+  ],
+  "steps": [
+    {
+      "type": "content",
+      "step_title": "Medial Softening Rules",
+      "content_markdown": "# Medial Softening Rules\n\nUnderstand how Tamil hard consonants soften when they appear between vowels.\n\n### Today's Characters\n**க → [g]** · **ச → [s/ʃ]** · **ட → [d]** · **ப → [b]**"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: க → [g] (ka → ga)",
+      "content_markdown": "## க → [g] — ka → ga\n\n**Sound:** k becomes g between vowels\n\n**Memory Trick:** ஆகா = 'aagaa' not 'aakaa'"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q1",
+      "step_title": "Identify: ka → ga",
+      "question": "Which character represents the sound **ka → ga** (k becomes g between vowels)?",
+      "options": [
+        "ட → [d]",
+        "க → [g]",
+        "ப → [b]",
+        "ச → [s/ʃ]"
+      ],
+      "correct_answer": "க → [g]",
+      "feedback": "Correct! **க → [g]** is the k becomes g between vowels sound. ஆகா = 'aagaa' not 'aakaa'"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ச → [s/ʃ] (sa → sa/sha)",
+      "content_markdown": "## ச → [s/ʃ] — sa → sa/sha\n\n**Sound:** ch can become s between vowels\n\n**Memory Trick:** Context dependent softening\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **ச → [s/ʃ]** | ch can become s between vowels | sa → sa/sha |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q2",
+      "step_title": "Identify: sa → sa/sha",
+      "question": "Which character represents the sound **sa → sa/sha** (ch can become s between vowels)?",
+      "options": [
+        "ச → [s/ʃ]",
+        "ப → [b]",
+        "ட → [d]",
+        "க → [g]"
+      ],
+      "correct_answer": "ச → [s/ʃ]",
+      "feedback": "Correct! **ச → [s/ʃ]** is the ch can become s between vowels sound. Context dependent softening"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ட → [d] (ta → da)",
+      "content_markdown": "## ட → [d] — ta → da\n\n**Sound:** t becomes d between vowels\n\n**Memory Trick:** நாடு = 'naadu' not 'naatu'\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **ட → [d]** | t becomes d between vowels | ta → da |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q3",
+      "step_title": "Identify: ta → da",
+      "question": "Which character represents the sound **ta → da** (t becomes d between vowels)?",
+      "options": [
+        "க → [g]",
+        "ச → [s/ʃ]",
+        "ட → [d]",
+        "ப → [b]"
+      ],
+      "correct_answer": "ட → [d]",
+      "feedback": "Correct! **ட → [d]** is the t becomes d between vowels sound. நாடு = 'naadu' not 'naatu'"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ப → [b] (pa → ba)",
+      "content_markdown": "## ப → [b] — pa → ba\n\n**Sound:** p becomes b between vowels\n\n**Memory Trick:** அபா → 'abaa'"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q4",
+      "step_title": "Identify: pa → ba",
+      "question": "Which character represents the sound **pa → ba** (p becomes b between vowels)?",
+      "options": [
+        "க → [g]",
+        "ப → [b]",
+        "ச → [s/ʃ]",
+        "ட → [d]"
+      ],
+      "correct_answer": "ப → [b]",
+      "feedback": "Correct! **ப → [b]** is the p becomes b between vowels sound. அபா → 'abaa'"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q5",
+      "step_title": "Sound Match",
+      "question": "What sound does **க → [g]** make?",
+      "options": [
+        "k becomes g between vowels",
+        "ch can become s between vowels",
+        "t becomes d between vowels",
+        "p becomes b between vowels"
+      ],
+      "correct_answer": "k becomes g between vowels",
+      "feedback": "Right! **க → [g]** = ka → ga = k becomes g between vowels."
+    },
+    {
+      "type": "content",
+      "step_title": "Visual Comparison",
+      "content_markdown": "## Compare the Shapes\n\nLook closely at how these characters differ:\n\n- **க → [g]** (ka → ga) vs **ச → [s/ʃ]** (sa → sa/sha)\n- **ட → [d]** (ta → da) vs **ப → [b]** (pa → ba)\n\nNotice the subtle differences in strokes, dots, or curves!"
+    },
+    {
+      "type": "free_response",
+      "id": "q6",
+      "step_title": "Type the Sound",
+      "question": "What is the transliteration (Roman letters) for **ப → [b]**?",
+      "ai_grading": false,
+      "accepted_responses": [
+        "pa → ba",
+        "pa → ba",
+        "PA → BA"
+      ],
+      "hint": "It sounds like 'p becomes b between vowels'."
+    },
+    {
+      "type": "content",
+      "step_title": "Word Practice",
+      "content_markdown": "## Let's Read Words!\n\nUsing what you've learned, try reading these words:\n\n| Tamil | Transliteration | Meaning |\n|---------|-----------------|--------|\n| **நாடு** | naadu | country (ட softens to d) |\n| **அகம்** | agam | inside (க softens to g) |\n| **சபை** | sabai | assembly (ப softens to b) |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q7",
+      "step_title": "Read: நாடு",
+      "question": "What does **நாடு** (naadu) mean?",
+      "options": [
+        "country (ட softens to d)",
+        "hello",
+        "inside (க softens to g)",
+        "assembly (ப softens to b)"
+      ],
+      "correct_answer": "country (ட softens to d)",
+      "feedback": "Correct! **நாடு** (naadu) means 'country (ட softens to d)'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q8",
+      "step_title": "Read: அகம்",
+      "question": "What does **அகம்** (agam) mean?",
+      "options": [
+        "hello",
+        "inside (க softens to g)",
+        "country (ட softens to d)",
+        "assembly (ப softens to b)"
+      ],
+      "correct_answer": "inside (க softens to g)",
+      "feedback": "Correct! **அகம்** (agam) means 'inside (க softens to g)'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q9",
+      "step_title": "Read: சபை",
+      "question": "What does **சபை** (sabai) mean?",
+      "options": [
+        "assembly (ப softens to b)",
+        "country (ட softens to d)",
+        "inside (க softens to g)",
+        "hello"
+      ],
+      "correct_answer": "assembly (ப softens to b)",
+      "feedback": "Correct! **சபை** (sabai) means 'assembly (ப softens to b)'."
+    },
+    {
+      "type": "free_response",
+      "id": "q10",
+      "step_title": "Transliterate the Word",
+      "question": "Type the transliteration for **நாடு** (meaning: country (ட softens to d))",
+      "ai_grading": false,
+      "accepted_responses": [
+        "naadu",
+        "naadu",
+        "naadu"
+      ],
+      "hint": "Sound it out character by character."
+    },
+    {
+      "type": "content",
+      "step_title": "Lesson Summary",
+      "content_markdown": "## Summary\n\nGreat job! Here's everything you learned:\n\n| Character | Transliteration | Sound |\n|-----------|----------------|-------|\n| **க → [g]** | ka → ga | k becomes g between vowels |\n| **ச → [s/ʃ]** | sa → sa/sha | ch can become s between vowels |\n| **ட → [d]** | ta → da | t becomes d between vowels |\n| **ப → [b]** | pa → ba | p becomes b between vowels |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q11",
+      "step_title": "Final Check",
+      "question": "How many new characters/concepts did we cover in this lesson?",
+      "options": [
+        "4",
+        "6",
+        "3",
+        "9"
+      ],
+      "correct_answer": "4",
+      "feedback": "Correct! We covered 4 characters today. Keep practicing!"
+    }
+  ]
+}

@@ -1,0 +1,268 @@
+{
+  "lesson_id": "hi_09_semivowels_sibilants",
+  "language": "Hindi",
+  "title": "Semivowels & Sibilants",
+  "subtitle": "य, र, ल, व, श, ष, स, ह",
+  "description": "Complete the consonant chart.",
+  "estimated_minutes": 30.0,
+  "cefr_level": "A0",
+  "tags": [
+    "script",
+    "reading",
+    "basics"
+  ],
+  "skills_learned": [
+    "All 33 consonants complete"
+  ],
+  "steps": [
+    {
+      "type": "content",
+      "step_title": "Semivowels & Sibilants",
+      "content_markdown": "# Semivowels & Sibilants\n\nComplete the consonant chart.\n\n### Today's Characters\n**य** · **र** · **ल** · **व** · **श** · **ष**"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: य (ya)",
+      "content_markdown": "## य — ya\n\n**Sound:** ya\n\n**Memory Trick:** Semivowel"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q1",
+      "step_title": "Identify: ya",
+      "question": "Which character represents the sound **ya** (ya)?",
+      "options": [
+        "य",
+        "र",
+        "ल",
+        "व"
+      ],
+      "correct_answer": "य",
+      "feedback": "Correct! **य** is the ya sound. Semivowel"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: र (ra)",
+      "content_markdown": "## र — ra\n\n**Sound:** ra\n\n**Memory Trick:** Liquid r\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **र** | ra | ra |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q2",
+      "step_title": "Identify: ra",
+      "question": "Which character represents the sound **ra** (ra)?",
+      "options": [
+        "र",
+        "य",
+        "व",
+        "ल"
+      ],
+      "correct_answer": "र",
+      "feedback": "Correct! **र** is the ra sound. Liquid r"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ल (la)",
+      "content_markdown": "## ल — la\n\n**Sound:** la\n\n**Memory Trick:** Lateral l\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **ल** | la | la |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q3",
+      "step_title": "Identify: la",
+      "question": "Which character represents the sound **la** (la)?",
+      "options": [
+        "य",
+        "व",
+        "र",
+        "ल"
+      ],
+      "correct_answer": "ल",
+      "feedback": "Correct! **ल** is the la sound. Lateral l"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: व (va/wa)",
+      "content_markdown": "## व — va/wa\n\n**Sound:** va or wa\n\n**Memory Trick:** Context dependent\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **व** | va or wa | va/wa |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q4",
+      "step_title": "Identify: va/wa",
+      "question": "Which character represents the sound **va/wa** (va or wa)?",
+      "options": [
+        "व",
+        "य",
+        "ल",
+        "र"
+      ],
+      "correct_answer": "व",
+      "feedback": "Correct! **व** is the va or wa sound. Context dependent"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: श (sha)",
+      "content_markdown": "## श — sha\n\n**Sound:** sh\n\n**Memory Trick:** Palatal sibilant\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **श** | sh | sha |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q5",
+      "step_title": "Identify: sha",
+      "question": "Which character represents the sound **sha** (sh)?",
+      "options": [
+        "श",
+        "ल",
+        "य",
+        "र"
+      ],
+      "correct_answer": "श",
+      "feedback": "Correct! **श** is the sh sound. Palatal sibilant"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ष (Sha)",
+      "content_markdown": "## ष — Sha\n\n**Sound:** sh (retroflex)\n\n**Memory Trick:** Retroflex sibilant\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **ष** | sh (retroflex) | Sha |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q6",
+      "step_title": "Identify: Sha",
+      "question": "Which character represents the sound **Sha** (sh (retroflex))?",
+      "options": [
+        "ल",
+        "र",
+        "य",
+        "ष"
+      ],
+      "correct_answer": "ष",
+      "feedback": "Correct! **ष** is the sh (retroflex) sound. Retroflex sibilant"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: स (sa)",
+      "content_markdown": "## स — sa\n\n**Sound:** s\n\n**Memory Trick:** Dental sibilant\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **स** | s | sa |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q7",
+      "step_title": "Identify: sa",
+      "question": "Which character represents the sound **sa** (s)?",
+      "options": [
+        "य",
+        "र",
+        "स",
+        "ल"
+      ],
+      "correct_answer": "स",
+      "feedback": "Correct! **स** is the s sound. Dental sibilant"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ह (ha)",
+      "content_markdown": "## ह — ha\n\n**Sound:** h\n\n**Memory Trick:** Aspirate"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q8",
+      "step_title": "Identify: ha",
+      "question": "Which character represents the sound **ha** (h)?",
+      "options": [
+        "र",
+        "ल",
+        "य",
+        "ह"
+      ],
+      "correct_answer": "ह",
+      "feedback": "Correct! **ह** is the h sound. Aspirate"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q9",
+      "step_title": "Sound Match",
+      "question": "What sound does **य** make?",
+      "options": [
+        "ya",
+        "ra",
+        "la",
+        "va or wa"
+      ],
+      "correct_answer": "ya",
+      "feedback": "Right! **य** = ya = ya."
+    },
+    {
+      "type": "content",
+      "step_title": "Visual Comparison",
+      "content_markdown": "## Compare the Shapes\n\nLook closely at how these characters differ:\n\n- **य** (ya) vs **र** (ra)\n- **ल** (la) vs **व** (va/wa)\n- **श** (sha) vs **ष** (Sha)\n- **स** (sa) vs **ह** (ha)\n\nNotice the subtle differences in strokes, dots, or curves!"
+    },
+    {
+      "type": "free_response",
+      "id": "q10",
+      "step_title": "Type the Sound",
+      "question": "What is the transliteration (Roman letters) for **ह**?",
+      "ai_grading": false,
+      "accepted_responses": [
+        "ha",
+        "ha",
+        "HA"
+      ],
+      "hint": "It sounds like 'h'."
+    },
+    {
+      "type": "content",
+      "step_title": "Word Practice",
+      "content_markdown": "## Let's Read Words!\n\nUsing what you've learned, try reading these words:\n\n| Hindi | Transliteration | Meaning |\n|---------|-----------------|--------|\n| **याद** | yaad | memory |\n| **शहर** | shahar | city |\n| **हम** | ham | we |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q11",
+      "step_title": "Read: याद",
+      "question": "What does **याद** (yaad) mean?",
+      "options": [
+        "city",
+        "memory",
+        "hello",
+        "we"
+      ],
+      "correct_answer": "memory",
+      "feedback": "Correct! **याद** (yaad) means 'memory'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q12",
+      "step_title": "Read: शहर",
+      "question": "What does **शहर** (shahar) mean?",
+      "options": [
+        "city",
+        "hello",
+        "memory",
+        "we"
+      ],
+      "correct_answer": "city",
+      "feedback": "Correct! **शहर** (shahar) means 'city'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q13",
+      "step_title": "Read: हम",
+      "question": "What does **हम** (ham) mean?",
+      "options": [
+        "we",
+        "memory",
+        "city",
+        "hello"
+      ],
+      "correct_answer": "we",
+      "feedback": "Correct! **हम** (ham) means 'we'."
+    },
+    {
+      "type": "free_response",
+      "id": "q14",
+      "step_title": "Transliterate the Word",
+      "question": "Type the transliteration for **याद** (meaning: memory)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "yaad",
+        "yaad",
+        "yaad"
+      ],
+      "hint": "Sound it out character by character."
+    }
+  ]
+}

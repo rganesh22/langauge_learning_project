@@ -1,0 +1,180 @@
+{
+  "lesson_id": "te_18_loanwords",
+  "language": "Telugu",
+  "title": "Loanwords in Telugu",
+  "subtitle": "English and Sanskrit borrowings",
+  "description": "Reading modern and borrowed vocabulary.",
+  "estimated_minutes": 18.0,
+  "cefr_level": "A0",
+  "tags": [
+    "script",
+    "reading",
+    "basics"
+  ],
+  "skills_learned": [
+    "Loanword reading"
+  ],
+  "steps": [
+    {
+      "type": "content",
+      "step_title": "Loanwords in Telugu",
+      "content_markdown": "# Loanwords in Telugu\n\nReading modern and borrowed vocabulary."
+    },
+    {
+      "type": "content",
+      "step_title": "Word Practice",
+      "content_markdown": "## Let's Read Words!\n\nUsing what you've learned, try reading these words:\n\n| Telugu | Transliteration | Meaning |\n|---------|-----------------|--------|\n| **బస్సు** | bassu | bus |\n| **టికెట్** | tiket | ticket |\n| **ఫోన్** | phoon | phone |\n| **కంప్యూటర్** | kampyuutar | computer |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q1",
+      "step_title": "Read: బస్సు",
+      "question": "What does **బస్సు** (bassu) mean?",
+      "options": [
+        "ticket",
+        "computer",
+        "phone",
+        "bus"
+      ],
+      "correct_answer": "bus",
+      "feedback": "Correct! **బస్సు** (bassu) means 'bus'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q2",
+      "step_title": "Read: టికెట్",
+      "question": "What does **టికెట్** (tiket) mean?",
+      "options": [
+        "phone",
+        "ticket",
+        "computer",
+        "bus"
+      ],
+      "correct_answer": "ticket",
+      "feedback": "Correct! **టికెట్** (tiket) means 'ticket'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q3",
+      "step_title": "Read: ఫోన్",
+      "question": "What does **ఫోన్** (phoon) mean?",
+      "options": [
+        "computer",
+        "phone",
+        "ticket",
+        "bus"
+      ],
+      "correct_answer": "phone",
+      "feedback": "Correct! **ఫోన్** (phoon) means 'phone'."
+    },
+    {
+      "type": "free_response",
+      "id": "q4",
+      "step_title": "Transliterate the Word",
+      "question": "Type the transliteration for **బస్సు** (meaning: bus)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "bassu",
+        "bassu",
+        "bassu"
+      ],
+      "hint": "Sound it out character by character."
+    },
+    {
+      "type": "content",
+      "step_title": "Lesson Summary",
+      "content_markdown": "## Summary\n\nExcellent reading practice! You worked through 4 words/phrases. Keep building your speed and confidence!"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q5",
+      "step_title": "Final Check",
+      "question": "What does **కంప్యూటర్** mean?",
+      "options": [
+        "computer",
+        "bus",
+        "water",
+        "school"
+      ],
+      "correct_answer": "computer",
+      "feedback": "Perfect! You're reading Telugu with confidence!"
+    },
+    {
+      "type": "free_response",
+      "id": "q6",
+      "step_title": "Practice: బస్సు",
+      "question": "Type the meaning of **బస్సు** (bassu)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "bus"
+      ],
+      "hint": "Transliteration: bassu"
+    },
+    {
+      "type": "free_response",
+      "id": "q7",
+      "step_title": "Practice: టికెట్",
+      "question": "Type the meaning of **టికెట్** (tiket)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "ticket"
+      ],
+      "hint": "Transliteration: tiket"
+    },
+    {
+      "type": "free_response",
+      "id": "q8",
+      "step_title": "Practice: ఫోన్",
+      "question": "Type the meaning of **ఫోన్** (phoon)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "phone"
+      ],
+      "hint": "Transliteration: phoon"
+    },
+    {
+      "type": "free_response",
+      "id": "q9",
+      "step_title": "Practice: కంప్యూటర్",
+      "question": "Type the meaning of **కంప్యూటర్** (kampyuutar)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "computer"
+      ],
+      "hint": "Transliteration: kampyuutar"
+    },
+    {
+      "type": "free_response",
+      "id": "q10",
+      "step_title": "Practice: బస్సు",
+      "question": "Type the meaning of **బస్సు** (bassu)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "bus"
+      ],
+      "hint": "Transliteration: bassu"
+    },
+    {
+      "type": "free_response",
+      "id": "q11",
+      "step_title": "Practice: టికెట్",
+      "question": "Type the meaning of **టికెట్** (tiket)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "ticket"
+      ],
+      "hint": "Transliteration: tiket"
+    },
+    {
+      "type": "free_response",
+      "id": "q12",
+      "step_title": "Practice: ఫోన్",
+      "question": "Type the meaning of **ఫోన్** (phoon)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "phone"
+      ],
+      "hint": "Transliteration: phoon"
+    }
+  ]
+}

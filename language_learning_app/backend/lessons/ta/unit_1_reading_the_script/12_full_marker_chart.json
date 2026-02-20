@@ -1,0 +1,193 @@
+{
+  "lesson_id": "ta_12_full_marker_chart",
+  "language": "Tamil",
+  "title": "The Complete Vowel Marker System",
+  "subtitle": "Putting it all together",
+  "description": "Review all vowel markers systematically and practice reading any consonant-vowel combination.",
+  "estimated_minutes": 20.4,
+  "cefr_level": "A0",
+  "tags": [
+    "script",
+    "reading",
+    "basics"
+  ],
+  "skills_learned": [
+    "Complete marker system mastery",
+    "Reading any consonant+vowel combo",
+    "Systematic chart knowledge"
+  ],
+  "steps": [
+    {
+      "type": "content",
+      "step_title": "The Complete Vowel Marker System",
+      "content_markdown": "# The Complete Vowel Marker System\n\nReview all vowel markers systematically and practice reading any consonant-vowel combination.\n\n### Today's Characters\n**க கா கி கீ கு கூ** · **கெ கே கை கொ கோ கௌ** · **த தா தி தீ து தூ**"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: க கா கி கீ கு கூ (ka kaa ki kii ku kuu)",
+      "content_markdown": "## க கா கி கீ கு கூ — ka kaa ki kii ku kuu\n\n**Sound:** all k-row\n\n**Memory Trick:** First row of the full chart"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q1",
+      "step_title": "Identify: ka kaa ki kii ku kuu",
+      "question": "Which character represents the sound **ka kaa ki kii ku kuu** (all k-row)?",
+      "options": [
+        "த தா தி தீ து தூ",
+        "?",
+        "க கா கி கீ கு கூ",
+        "கெ கே கை கொ கோ கௌ"
+      ],
+      "correct_answer": "க கா கி கீ கு கூ",
+      "feedback": "Correct! **க கா கி கீ கு கூ** is the all k-row sound. First row of the full chart"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: கெ கே கை கொ கோ கௌ (ke kee kai ko koo kau)",
+      "content_markdown": "## கெ கே கை கொ கோ கௌ — ke kee kai ko koo kau\n\n**Sound:** all k-row continued\n\n**Memory Trick:** Pre-positioned and split markers\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **கெ கே கை கொ கோ கௌ** | all k-row continued | ke kee kai ko koo kau |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q2",
+      "step_title": "Identify: ke kee kai ko koo kau",
+      "question": "Which character represents the sound **ke kee kai ko koo kau** (all k-row continued)?",
+      "options": [
+        "கெ கே கை கொ கோ கௌ",
+        "?",
+        "க கா கி கீ கு கூ",
+        "த தா தி தீ து தூ"
+      ],
+      "correct_answer": "கெ கே கை கொ கோ கௌ",
+      "feedback": "Correct! **கெ கே கை கொ கோ கௌ** is the all k-row continued sound. Pre-positioned and split markers"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: த தா தி தீ து தூ (tha thaa thi thii thu thuu)",
+      "content_markdown": "## த தா தி தீ து தூ — tha thaa thi thii thu thuu\n\n**Sound:** all th-row\n\n**Memory Trick:** Same markers, different base consonant"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q3",
+      "step_title": "Identify: tha thaa thi thii thu thuu",
+      "question": "Which character represents the sound **tha thaa thi thii thu thuu** (all th-row)?",
+      "options": [
+        "கெ கே கை கொ கோ கௌ",
+        "த தா தி தீ து தூ",
+        "?",
+        "க கா கி கீ கு கூ"
+      ],
+      "correct_answer": "த தா தி தீ து தூ",
+      "feedback": "Correct! **த தா தி தீ து தூ** is the all th-row sound. Same markers, different base consonant"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q4",
+      "step_title": "Sound Match",
+      "question": "What sound does **க கா கி கீ கு கூ** make?",
+      "options": [
+        "all k-row",
+        "all k-row continued",
+        "all th-row"
+      ],
+      "correct_answer": "all k-row",
+      "feedback": "Right! **க கா கி கீ கு கூ** = ka kaa ki kii ku kuu = all k-row."
+    },
+    {
+      "type": "content",
+      "step_title": "Visual Comparison",
+      "content_markdown": "## Compare the Shapes\n\nLook closely at how these characters differ:\n\n- **க கா கி கீ கு கூ** (ka kaa ki kii ku kuu) vs **கெ கே கை கொ கோ கௌ** (ke kee kai ko koo kau)\n\nNotice the subtle differences in strokes, dots, or curves!"
+    },
+    {
+      "type": "free_response",
+      "id": "q5",
+      "step_title": "Type the Sound",
+      "question": "What is the transliteration (Roman letters) for **த தா தி தீ து தூ**?",
+      "ai_grading": false,
+      "accepted_responses": [
+        "tha thaa thi thii thu thuu",
+        "tha thaa thi thii thu thuu",
+        "THA THAA THI THII THU THUU"
+      ],
+      "hint": "It sounds like 'all th-row'."
+    },
+    {
+      "type": "content",
+      "step_title": "Word Practice",
+      "content_markdown": "## Let's Read Words!\n\nUsing what you've learned, try reading these words:\n\n| Tamil | Transliteration | Meaning |\n|---------|-----------------|--------|\n| **காகிதம்** | kaakitham | paper |\n| **தேசம்** | theesam | country |\n| **கோவில்** | koovil | temple |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q6",
+      "step_title": "Read: காகிதம்",
+      "question": "What does **காகிதம்** (kaakitham) mean?",
+      "options": [
+        "paper",
+        "country",
+        "temple",
+        "hello"
+      ],
+      "correct_answer": "paper",
+      "feedback": "Correct! **காகிதம்** (kaakitham) means 'paper'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q7",
+      "step_title": "Read: தேசம்",
+      "question": "What does **தேசம்** (theesam) mean?",
+      "options": [
+        "country",
+        "temple",
+        "paper",
+        "hello"
+      ],
+      "correct_answer": "country",
+      "feedback": "Correct! **தேசம்** (theesam) means 'country'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q8",
+      "step_title": "Read: கோவில்",
+      "question": "What does **கோவில்** (koovil) mean?",
+      "options": [
+        "country",
+        "paper",
+        "temple",
+        "hello"
+      ],
+      "correct_answer": "temple",
+      "feedback": "Correct! **கோவில்** (koovil) means 'temple'."
+    },
+    {
+      "type": "free_response",
+      "id": "q9",
+      "step_title": "Transliterate the Word",
+      "question": "Type the transliteration for **காகிதம்** (meaning: paper)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "kaakitham",
+        "kaakitham",
+        "kaakitham"
+      ],
+      "hint": "Sound it out character by character."
+    },
+    {
+      "type": "content",
+      "step_title": "Lesson Summary",
+      "content_markdown": "## Summary\n\nGreat job! Here's everything you learned:\n\n| Character | Transliteration | Sound |\n|-----------|----------------|-------|\n| **க கா கி கீ கு கூ** | ka kaa ki kii ku kuu | all k-row |\n| **கெ கே கை கொ கோ கௌ** | ke kee kai ko koo kau | all k-row continued |\n| **த தா தி தீ து தூ** | tha thaa thi thii thu thuu | all th-row |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q10",
+      "step_title": "Final Check",
+      "question": "How many new characters/concepts did we cover in this lesson?",
+      "options": [
+        "3",
+        "5",
+        "2",
+        "8"
+      ],
+      "correct_answer": "3",
+      "feedback": "Correct! We covered 3 characters today. Keep practicing!"
+    }
+  ]
+}

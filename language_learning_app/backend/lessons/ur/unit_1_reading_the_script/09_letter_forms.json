@@ -1,0 +1,178 @@
+{
+  "lesson_id": "ur_09_letter_forms",
+  "language": "Urdu",
+  "title": "Letter Position Forms",
+  "subtitle": "Initial, medial, and final shapes",
+  "description": "Understand how letters change shape based on position in a word.",
+  "estimated_minutes": 19.2,
+  "cefr_level": "A0",
+  "tags": [
+    "script",
+    "reading",
+    "basics"
+  ],
+  "skills_learned": [
+    "Positional letter forms",
+    "Reading connected text"
+  ],
+  "steps": [
+    {
+      "type": "content",
+      "step_title": "Letter Position Forms",
+      "content_markdown": "# Letter Position Forms\n\nUnderstand how letters change shape based on position in a word.\n\n### Today's Characters\n**ب: بـ ـبـ ـب** · **ج: جـ ـجـ ـج** · **ک: کـ ـکـ ـک**"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ب: بـ ـبـ ـب (bay forms)",
+      "content_markdown": "## ب: بـ ـبـ ـب — bay forms\n\n**Sound:** b\n\n**Memory Trick:** Initial: بـ (tooth+dot), Medial: ـبـ, Final: ـب"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q1",
+      "step_title": "Identify: bay forms",
+      "question": "Which character represents the sound **bay forms** (b)?",
+      "options": [
+        "ب: بـ ـبـ ـب",
+        "ج: جـ ـجـ ـج",
+        "ک: کـ ـکـ ـک",
+        "?"
+      ],
+      "correct_answer": "ب: بـ ـبـ ـب",
+      "feedback": "Correct! **ب: بـ ـبـ ـب** is the b sound. Initial: بـ (tooth+dot), Medial: ـبـ, Final: ـب"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ج: جـ ـجـ ـج (jiim forms)",
+      "content_markdown": "## ج: جـ ـجـ ـج — jiim forms\n\n**Sound:** j\n\n**Memory Trick:** Initial: جـ, Medial: ـجـ, Final: ـج (full shape)\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **ج: جـ ـجـ ـج** | j | jiim forms |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q2",
+      "step_title": "Identify: jiim forms",
+      "question": "Which character represents the sound **jiim forms** (j)?",
+      "options": [
+        "ج: جـ ـجـ ـج",
+        "ب: بـ ـبـ ـب",
+        "?",
+        "ک: کـ ـکـ ـک"
+      ],
+      "correct_answer": "ج: جـ ـجـ ـج",
+      "feedback": "Correct! **ج: جـ ـجـ ـج** is the j sound. Initial: جـ, Medial: ـجـ, Final: ـج (full shape)"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ک: کـ ـکـ ـک (kaaf forms)",
+      "content_markdown": "## ک: کـ ـکـ ـک — kaaf forms\n\n**Sound:** k\n\n**Memory Trick:** Changes significantly by position"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q3",
+      "step_title": "Identify: kaaf forms",
+      "question": "Which character represents the sound **kaaf forms** (k)?",
+      "options": [
+        "ب: بـ ـبـ ـب",
+        "?",
+        "ج: جـ ـجـ ـج",
+        "ک: کـ ـکـ ـک"
+      ],
+      "correct_answer": "ک: کـ ـکـ ـک",
+      "feedback": "Correct! **ک: کـ ـکـ ـک** is the k sound. Changes significantly by position"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q4",
+      "step_title": "Sound Match",
+      "question": "What sound does **ب: بـ ـبـ ـب** make?",
+      "options": [
+        "b",
+        "j",
+        "k"
+      ],
+      "correct_answer": "b",
+      "feedback": "Right! **ب: بـ ـبـ ـب** = bay forms = b."
+    },
+    {
+      "type": "content",
+      "step_title": "Visual Comparison",
+      "content_markdown": "## Compare the Shapes\n\nLook closely at how these characters differ:\n\n- **ب: بـ ـبـ ـب** (bay forms) vs **ج: جـ ـجـ ـج** (jiim forms)\n\nNotice the subtle differences in strokes, dots, or curves!"
+    },
+    {
+      "type": "free_response",
+      "id": "q5",
+      "step_title": "Type the Sound",
+      "question": "What is the transliteration (Roman letters) for **ک: کـ ـکـ ـک**?",
+      "ai_grading": false,
+      "accepted_responses": [
+        "kaaf forms",
+        "kaaf forms",
+        "KAAF FORMS"
+      ],
+      "hint": "It sounds like 'k'."
+    },
+    {
+      "type": "content",
+      "step_title": "Word Practice",
+      "content_markdown": "## Let's Read Words!\n\nUsing what you've learned, try reading these words:\n\n| Urdu | Transliteration | Meaning |\n|---------|-----------------|--------|\n| **بچپن** | bachpan | childhood |\n| **کتاب** | kitaab | book |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q6",
+      "step_title": "Read: بچپن",
+      "question": "What does **بچپن** (bachpan) mean?",
+      "options": [
+        "goodbye",
+        "book",
+        "hello",
+        "childhood"
+      ],
+      "correct_answer": "childhood",
+      "feedback": "Correct! **بچپن** (bachpan) means 'childhood'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q7",
+      "step_title": "Read: کتاب",
+      "question": "What does **کتاب** (kitaab) mean?",
+      "options": [
+        "goodbye",
+        "book",
+        "hello",
+        "childhood"
+      ],
+      "correct_answer": "book",
+      "feedback": "Correct! **کتاب** (kitaab) means 'book'."
+    },
+    {
+      "type": "free_response",
+      "id": "q8",
+      "step_title": "Transliterate the Word",
+      "question": "Type the transliteration for **بچپن** (meaning: childhood)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "bachpan",
+        "bachpan",
+        "bachpan"
+      ],
+      "hint": "Sound it out character by character."
+    },
+    {
+      "type": "content",
+      "step_title": "Lesson Summary",
+      "content_markdown": "## Summary\n\nGreat job! Here's everything you learned:\n\n| Character | Transliteration | Sound |\n|-----------|----------------|-------|\n| **ب: بـ ـبـ ـب** | bay forms | b |\n| **ج: جـ ـجـ ـج** | jiim forms | j |\n| **ک: کـ ـکـ ـک** | kaaf forms | k |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q9",
+      "step_title": "Final Check",
+      "question": "How many new characters/concepts did we cover in this lesson?",
+      "options": [
+        "3",
+        "5",
+        "2",
+        "8"
+      ],
+      "correct_answer": "3",
+      "feedback": "Correct! We covered 3 characters today. Keep practicing!"
+    }
+  ]
+}

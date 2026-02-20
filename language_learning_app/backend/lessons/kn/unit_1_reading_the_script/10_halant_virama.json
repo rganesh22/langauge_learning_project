@@ -1,0 +1,110 @@
+{
+  "lesson_id": "kn_10_halant_virama",
+  "language": "Kannada",
+  "title": "The Halant (Virama)",
+  "subtitle": "್ — removing the inherent vowel",
+  "description": "Learn how the virama strips the inherent 'a' from consonants to create pure consonant sounds. Focus on reading and pronunciation.",
+  "estimated_minutes": 20,
+  "cefr_level": "A0",
+  "tags": ["script", "reading", "basics"],
+  "skills_learned": [
+    "Recognizing the Virama/halant symbol",
+    "Pronouncing pure consonant sounds",
+    "Reading words with consonant-vowel transitions"
+  ],
+  "steps": [
+    {
+      "type": "content",
+      "step_title": "The Halant (Virama)",
+      "content_markdown": "# The Halant (Virama)\n\nIn Kannada, every consonant has an inherent 'a' sound. The **Virama** (or Halant) is a mark used to remove that vowel sound.\n\n### Today's Focus\n**ಕ್ vs ಕ** · **ನ್ vs ನ** · **ಲ್ vs ಲ**"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ಕ್ vs ಕ (k vs ka)",
+      "content_markdown": "## ಕ್ vs ಕ — k vs ka\n\n- **ಕ** = 'ka' (consonant + inherent vowel)\n- **ಕ್** = 'k' (pure consonant sound)\n\n**Visual:** The small mark on top right (್) indicates the vowel is removed."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q1",
+      "step_title": "Identify: Pure k",
+      "question": "Which character represents the pure **k** sound (without the 'a')?",
+      "options": ["ಕ", "ಕ್", "ನ", "ನ್"],
+      "correct_answer": "ಕ್",
+      "feedback": "Correct! The mark on **ಕ್** tells you to stop the sound at the consonant."
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ನ್ vs ನ (n vs na)",
+      "content_markdown": "## ನ್ vs ನ — n vs na\n\n- **ನ** = 'na'\n- **ನ್** = 'n'\n\nThis is essential for creating consonant clusters and ending words properly."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q2",
+      "step_title": "Identify: Pure n",
+      "question": "Which character represents the pure **n** sound?",
+      "options": ["ನ", "ನ್", "ಲ", "ಲ್"],
+      "correct_answer": "ನ್",
+      "feedback": "Correct! **ನ್** is the pure nasal 'n' sound."
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ಲ್ vs ಲ (l vs la)",
+      "content_markdown": "## ಲ್ vs ಲ — l vs la\n\n- **ಲ** = 'la'\n- **ಲ್** = 'l'\n\nNotice the mark consistently appears in the same position to signal the vowel removal."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q3",
+      "step_title": "Identify: Pure l",
+      "question": "Which character represents the pure **l** sound?",
+      "options": ["ಲ", "ಲ್", "ಕ", "ಕ್"],
+      "correct_answer": "ಲ್",
+      "feedback": "Correct! **ಲ್** is the pure lateral 'l' sound."
+    },
+    {
+      "type": "content",
+      "step_title": "Reading Practice",
+      "content_markdown": "## Let's Read!\n\nPractice reading these words, paying attention to the pure consonants (halant):\n\n| Kannada | Transliteration |\n|---------|-----------------|\n| **ಕನ್ನಡ** | kannada |\n| **ಅಕ್ಕ** | akka |\n| **ಹಾಲ್** | haal |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q6",
+      "step_title": "Read: ಕನ್ನಡ",
+      "question": "How do you read this word out loud?\n\n# ಕನ್ನಡ",
+      "options": ["kannada", "akka", "haal", "kapa"],
+      "correct_answer": "kannada",
+      "feedback": "Perfect! You recognized the halant joining the 'n' sounds in 'kannada'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q7",
+      "step_title": "Read: ಅಕ್ಕ",
+      "question": "How do you read this word out loud?\n\n# ಅಕ್ಕ",
+      "options": ["kannada", "akka", "haal", "anna"],
+      "correct_answer": "akka",
+      "feedback": "Perfect! You read 'akka' correctly."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q8",
+      "step_title": "Read: ಹಾಲ್",
+      "question": "How do you read this word out loud?\n\n# ಹಾಲ್",
+      "options": ["haal", "kannada", "akka", "haala"],
+      "correct_answer": "haal",
+      "feedback": "Perfect! You recognized the pure 'l' at the end of 'haal'."
+    },
+    {
+      "type": "free_response",
+      "id": "q9",
+      "step_title": "Transliterate Word",
+      "question": "Type the transliteration for **ಹಾಲ್**",
+      "ai_grading": false,
+      "accepted_responses": ["haal", "Haal"],
+      "hint": "H-AA-L"
+    },
+    {
+      "type": "content",
+      "step_title": "Lesson Summary",
+      "content_markdown": "## Summary\n\nYou've learned how to strip vowels using the Virama (್):\n\n- **ಕ** (ka) → **ಕ್** (k)\n- **ನ** (na) → **ನ್** (n)\n- **ಲ** (la) → **ಲ್** (l)"
+    }
+  ]
+}

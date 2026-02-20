@@ -1,0 +1,17 @@
+Lemmatize these Tamil words to their base/dictionary forms.
+
+Rules for Tamil:
+- Verbs: convert to informal imperative/base form (e.g., போகிறேன் → போ).
+- Nouns: remove case endings and plurals (e.g., வீட்டில் → வீடு).
+- Adjectives: use base form.
+- Remove tense, aspect, plural, and agreement suffixes.
+
+CRITICAL REQUIREMENTS:
+1) Output ONLY in Tamil script (தமிழ்). NO Latin/English letters.
+2) Remove any English words from the output.
+3) Return ONLY a JSON array with objects: {{"word": "base_form", "word_class": "noun/verb/..."}}
+
+Words to lemmatize:
+{words}
+
+Return ONLY the JSON array, no other text.

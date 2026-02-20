@@ -1,0 +1,231 @@
+{
+  "lesson_id": "hi_04_ka_group",
+  "language": "Hindi",
+  "title": "The Ka-Group (Velars)",
+  "subtitle": "क, ख, ग, घ, ङ",
+  "description": "First consonant group — produced at the back of the mouth.",
+  "estimated_minutes": 25.2,
+  "cefr_level": "A0",
+  "tags": [
+    "script",
+    "reading",
+    "basics"
+  ],
+  "skills_learned": [
+    "Velar consonants",
+    "Aspiration"
+  ],
+  "steps": [
+    {
+      "type": "content",
+      "step_title": "The Ka-Group (Velars)",
+      "content_markdown": "# The Ka-Group (Velars)\n\nFirst consonant group — produced at the back of the mouth.\n\n### Today's Characters\n**क** · **ख** · **ग** · **घ** · **ङ**"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: क (ka)",
+      "content_markdown": "## क — ka\n\n**Sound:** ka\n\n**Memory Trick:** First consonant — like a vertical line with curve"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q1",
+      "step_title": "Identify: ka",
+      "question": "Which character represents the sound **ka** (ka)?",
+      "options": [
+        "ग",
+        "ख",
+        "क",
+        "घ"
+      ],
+      "correct_answer": "क",
+      "feedback": "Correct! **क** is the ka sound. First consonant — like a vertical line with curve"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ख (kha)",
+      "content_markdown": "## ख — kha\n\n**Sound:** kha (aspirated)\n\n**Memory Trick:** k + puff of air\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **ख** | kha (aspirated) | kha |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q2",
+      "step_title": "Identify: kha",
+      "question": "Which character represents the sound **kha** (kha (aspirated))?",
+      "options": [
+        "ग",
+        "क",
+        "ख",
+        "घ"
+      ],
+      "correct_answer": "ख",
+      "feedback": "Correct! **ख** is the kha (aspirated) sound. k + puff of air"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ग (ga)",
+      "content_markdown": "## ग — ga\n\n**Sound:** ga\n\n**Memory Trick:** Voiced k\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **ग** | ga | ga |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q3",
+      "step_title": "Identify: ga",
+      "question": "Which character represents the sound **ga** (ga)?",
+      "options": [
+        "ग",
+        "घ",
+        "ख",
+        "क"
+      ],
+      "correct_answer": "ग",
+      "feedback": "Correct! **ग** is the ga sound. Voiced k"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: घ (gha)",
+      "content_markdown": "## घ — gha\n\n**Sound:** gha (aspirated g)\n\n**Memory Trick:** Voiced + aspirated\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **घ** | gha (aspirated g) | gha |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q4",
+      "step_title": "Identify: gha",
+      "question": "Which character represents the sound **gha** (gha (aspirated g))?",
+      "options": [
+        "ख",
+        "ग",
+        "क",
+        "घ"
+      ],
+      "correct_answer": "घ",
+      "feedback": "Correct! **घ** is the gha (aspirated g) sound. Voiced + aspirated"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ङ (nga)",
+      "content_markdown": "## ङ — nga\n\n**Sound:** ng in sing\n\n**Memory Trick:** Rare — mainly in clusters"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q5",
+      "step_title": "Identify: nga",
+      "question": "Which character represents the sound **nga** (ng in sing)?",
+      "options": [
+        "ख",
+        "क",
+        "ग",
+        "ङ"
+      ],
+      "correct_answer": "ङ",
+      "feedback": "Correct! **ङ** is the ng in sing sound. Rare — mainly in clusters"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q6",
+      "step_title": "Sound Match",
+      "question": "What sound does **क** make?",
+      "options": [
+        "ka",
+        "kha (aspirated)",
+        "ga",
+        "gha (aspirated g)"
+      ],
+      "correct_answer": "ka",
+      "feedback": "Right! **क** = ka = ka."
+    },
+    {
+      "type": "content",
+      "step_title": "Visual Comparison",
+      "content_markdown": "## Compare the Shapes\n\nLook closely at how these characters differ:\n\n- **क** (ka) vs **ख** (kha)\n- **ग** (ga) vs **घ** (gha)\n\nNotice the subtle differences in strokes, dots, or curves!"
+    },
+    {
+      "type": "free_response",
+      "id": "q7",
+      "step_title": "Type the Sound",
+      "question": "What is the transliteration (Roman letters) for **ङ**?",
+      "ai_grading": false,
+      "accepted_responses": [
+        "nga",
+        "nga",
+        "NGA"
+      ],
+      "hint": "It sounds like 'ng in sing'."
+    },
+    {
+      "type": "content",
+      "step_title": "Word Practice",
+      "content_markdown": "## Let's Read Words!\n\nUsing what you've learned, try reading these words:\n\n| Hindi | Transliteration | Meaning |\n|---------|-----------------|--------|\n| **कल** | kal | yesterday/tomorrow |\n| **खाना** | khaanaa | food |\n| **गाना** | gaanaa | song |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q8",
+      "step_title": "Read: कल",
+      "question": "What does **कल** (kal) mean?",
+      "options": [
+        "yesterday/tomorrow",
+        "hello",
+        "food",
+        "song"
+      ],
+      "correct_answer": "yesterday/tomorrow",
+      "feedback": "Correct! **कल** (kal) means 'yesterday/tomorrow'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q9",
+      "step_title": "Read: खाना",
+      "question": "What does **खाना** (khaanaa) mean?",
+      "options": [
+        "song",
+        "hello",
+        "yesterday/tomorrow",
+        "food"
+      ],
+      "correct_answer": "food",
+      "feedback": "Correct! **खाना** (khaanaa) means 'food'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q10",
+      "step_title": "Read: गाना",
+      "question": "What does **गाना** (gaanaa) mean?",
+      "options": [
+        "yesterday/tomorrow",
+        "food",
+        "song",
+        "hello"
+      ],
+      "correct_answer": "song",
+      "feedback": "Correct! **गाना** (gaanaa) means 'song'."
+    },
+    {
+      "type": "free_response",
+      "id": "q11",
+      "step_title": "Transliterate the Word",
+      "question": "Type the transliteration for **कल** (meaning: yesterday/tomorrow)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "kal",
+        "kal",
+        "kal"
+      ],
+      "hint": "Sound it out character by character."
+    },
+    {
+      "type": "content",
+      "step_title": "Lesson Summary",
+      "content_markdown": "## Summary\n\nGreat job! Here's everything you learned:\n\n| Character | Transliteration | Sound |\n|-----------|----------------|-------|\n| **क** | ka | ka |\n| **ख** | kha | kha (aspirated) |\n| **ग** | ga | ga |\n| **घ** | gha | gha (aspirated g) |\n| **ङ** | nga | ng in sing |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q12",
+      "step_title": "Final Check",
+      "question": "How many new characters/concepts did we cover in this lesson?",
+      "options": [
+        "5",
+        "7",
+        "4",
+        "10"
+      ],
+      "correct_answer": "5",
+      "feedback": "Correct! We covered 5 characters today. Keep practicing!"
+    }
+  ]
+}

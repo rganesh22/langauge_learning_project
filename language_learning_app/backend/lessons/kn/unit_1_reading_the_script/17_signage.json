@@ -1,0 +1,68 @@
+{
+  "lesson_id": "kn_17_signage",
+  "language": "Kannada",
+  "title": "Reading Signs & Labels",
+  "subtitle": "Real-world Kannada reading",
+  "description": "Practice reading Kannada as it appears on signs, menus, and labels. Focus on reading and pronunciation.",
+  "estimated_minutes": 20,
+  "cefr_level": "A0",
+  "tags": ["script", "reading", "basics"],
+  "skills_learned": [
+    "Recognizing Kannada script in real-world contexts",
+    "Reading common signage and labels out loud",
+    "Building visual familiarity with environmental text"
+  ],
+  "steps": [
+    {
+      "type": "content",
+      "step_title": "Signs & Labels",
+      "content_markdown": "# Reading Signs & Labels\n\nLet's practice reading Kannada in real-world contexts, like on signs and labels.\n\n### Today's Focus\n**ಅಂಗಡಿ** · **ಆಸ್ಪತ್ರೆ** · **ಬಸ್ ನಿಲ್ದಾಣ** · **ಮಾರುಕಟ್ಟೆ**"
+    },
+    {
+      "type": "content",
+      "step_title": "Reading Table",
+      "content_markdown": "## Practice Reading\n\nRead these common sign words out loud:\n\n| Kannada | Transliteration |\n|---------|-----------------|\n| **ಅಂಗಡಿ** | angadi |\n| **ಆಸ್ಪತ್ರೆ** | aaspathre |\n| **ಬಸ್ ನಿಲ್ದಾಣ** | bas nildaana |\n| **ಮಾರುಕಟ್ಟೆ** | maarukatte |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q1",
+      "step_title": "Read: ಅಂಗಡಿ",
+      "question": "How do you read this sign out loud?\n\n# ಅಂಗಡಿ",
+      "options": ["angadi", "aaspathre", "bas nildaana", "maarukatte"],
+      "correct_answer": "angadi",
+      "feedback": "Perfect! You read 'angadi' correctly."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q2",
+      "step_title": "Read: ಆಸ್ಪತ್ರೆ",
+      "question": "How do you read this sign out loud?\n\n# ಆಸ್ಪತ್ರೆ",
+      "options": ["angadi", "aaspathre", "bas nildaana", "maarukatte"],
+      "correct_answer": "aaspathre",
+      "feedback": "Perfect! You read 'aaspathre' correctly."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q3",
+      "step_title": "Read: ಬಸ್ ನಿಲ್ದಾಣ",
+      "question": "How do you read this sign out loud?\n\n# ಬಸ್ ನಿಲ್ದಾಣ",
+      "options": ["angadi", "aaspathre", "bas nildaana", "maarukatte"],
+      "correct_answer": "bas nildaana",
+      "feedback": "Perfect! You read 'bas nildaana' correctly."
+    },
+    {
+      "type": "free_response",
+      "id": "q4",
+      "step_title": "Transliterate Word",
+      "question": "Type the transliteration for **ಮಾರುಕಟ್ಟೆ**",
+      "ai_grading": false,
+      "accepted_responses": ["maarukatte", "Maarukatte"],
+      "hint": "M-AA-R-U-K-A-TT-E"
+    },
+    {
+      "type": "content",
+      "step_title": "Lesson Summary",
+      "content_markdown": "## Summary\n\nYou've practiced reading environmental text in Kannada script. This is a great way to build your reading speed!"
+    }
+  ]
+}

@@ -1,0 +1,180 @@
+{
+  "lesson_id": "te_17_signage",
+  "language": "Telugu",
+  "title": "Reading Signs & Labels",
+  "subtitle": "Real-world Telugu",
+  "description": "Practice environmental reading.",
+  "estimated_minutes": 18.0,
+  "cefr_level": "A0",
+  "tags": [
+    "script",
+    "reading",
+    "basics"
+  ],
+  "skills_learned": [
+    "Environmental reading"
+  ],
+  "steps": [
+    {
+      "type": "content",
+      "step_title": "Reading Signs & Labels",
+      "content_markdown": "# Reading Signs & Labels\n\nPractice environmental reading."
+    },
+    {
+      "type": "content",
+      "step_title": "Word Practice",
+      "content_markdown": "## Let's Read Words!\n\nUsing what you've learned, try reading these words:\n\n| Telugu | Transliteration | Meaning |\n|---------|-----------------|--------|\n| **దుకాణం** | dukanam | shop |\n| **ఆసుపత్రి** | aasupathri | hospital |\n| **బస్ స్టాండ్** | bas staand | bus stand |\n| **రైల్వే స్టేషన్** | railway station | railway station |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q1",
+      "step_title": "Read: దుకాణం",
+      "question": "What does **దుకాణం** (dukanam) mean?",
+      "options": [
+        "shop",
+        "bus stand",
+        "hospital",
+        "railway station"
+      ],
+      "correct_answer": "shop",
+      "feedback": "Correct! **దుకాణం** (dukanam) means 'shop'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q2",
+      "step_title": "Read: ఆసుపత్రి",
+      "question": "What does **ఆసుపత్రి** (aasupathri) mean?",
+      "options": [
+        "hospital",
+        "railway station",
+        "shop",
+        "bus stand"
+      ],
+      "correct_answer": "hospital",
+      "feedback": "Correct! **ఆసుపత్రి** (aasupathri) means 'hospital'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q3",
+      "step_title": "Read: బస్ స్టాండ్",
+      "question": "What does **బస్ స్టాండ్** (bas staand) mean?",
+      "options": [
+        "shop",
+        "railway station",
+        "hospital",
+        "bus stand"
+      ],
+      "correct_answer": "bus stand",
+      "feedback": "Correct! **బస్ స్టాండ్** (bas staand) means 'bus stand'."
+    },
+    {
+      "type": "free_response",
+      "id": "q4",
+      "step_title": "Transliterate the Word",
+      "question": "Type the transliteration for **దుకాణం** (meaning: shop)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "dukanam",
+        "dukanam",
+        "dukanam"
+      ],
+      "hint": "Sound it out character by character."
+    },
+    {
+      "type": "content",
+      "step_title": "Lesson Summary",
+      "content_markdown": "## Summary\n\nExcellent reading practice! You worked through 4 words/phrases. Keep building your speed and confidence!"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q5",
+      "step_title": "Final Check",
+      "question": "What does **రైల్వే స్టేషన్** mean?",
+      "options": [
+        "railway station",
+        "shop",
+        "water",
+        "school"
+      ],
+      "correct_answer": "railway station",
+      "feedback": "Perfect! You're reading Telugu with confidence!"
+    },
+    {
+      "type": "free_response",
+      "id": "q6",
+      "step_title": "Practice: దుకాణం",
+      "question": "Type the meaning of **దుకాణం** (dukanam)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "shop"
+      ],
+      "hint": "Transliteration: dukanam"
+    },
+    {
+      "type": "free_response",
+      "id": "q7",
+      "step_title": "Practice: ఆసుపత్రి",
+      "question": "Type the meaning of **ఆసుపత్రి** (aasupathri)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "hospital"
+      ],
+      "hint": "Transliteration: aasupathri"
+    },
+    {
+      "type": "free_response",
+      "id": "q8",
+      "step_title": "Practice: బస్ స్టాండ్",
+      "question": "Type the meaning of **బస్ స్టాండ్** (bas staand)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "bus stand"
+      ],
+      "hint": "Transliteration: bas staand"
+    },
+    {
+      "type": "free_response",
+      "id": "q9",
+      "step_title": "Practice: రైల్వే స్టేషన్",
+      "question": "Type the meaning of **రైల్వే స్టేషన్** (railway station)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "railway station"
+      ],
+      "hint": "Transliteration: railway station"
+    },
+    {
+      "type": "free_response",
+      "id": "q10",
+      "step_title": "Practice: దుకాణం",
+      "question": "Type the meaning of **దుకాణం** (dukanam)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "shop"
+      ],
+      "hint": "Transliteration: dukanam"
+    },
+    {
+      "type": "free_response",
+      "id": "q11",
+      "step_title": "Practice: ఆసుపత్రి",
+      "question": "Type the meaning of **ఆసుపత్రి** (aasupathri)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "hospital"
+      ],
+      "hint": "Transliteration: aasupathri"
+    },
+    {
+      "type": "free_response",
+      "id": "q12",
+      "step_title": "Practice: బస్ స్టాండ్",
+      "question": "Type the meaning of **బస్ స్టాండ్** (bas staand)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "bus stand"
+      ],
+      "hint": "Transliteration: bas staand"
+    }
+  ]
+}

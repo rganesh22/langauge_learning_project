@@ -1,0 +1,249 @@
+{
+  "lesson_id": "te_09_vowel_marks_2",
+  "language": "Telugu",
+  "title": "Vowel Marks — Part 2",
+  "subtitle": "ె, ే, ై, ొ, ో, ౌ",
+  "description": "Complete the vowel mark system.",
+  "estimated_minutes": 27.599999999999998,
+  "cefr_level": "A0",
+  "tags": [
+    "script",
+    "reading",
+    "basics"
+  ],
+  "skills_learned": [
+    "Complete vowel mark system"
+  ],
+  "steps": [
+    {
+      "type": "content",
+      "step_title": "Vowel Marks — Part 2",
+      "content_markdown": "# Vowel Marks — Part 2\n\nComplete the vowel mark system.\n\n### Today's Characters\n**కె** · **కే** · **కై** · **కొ** · **కో** · **కౌ**"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: కె (ke)",
+      "content_markdown": "## కె — ke\n\n**Sound:** ke\n\n**Memory Trick:** Short e mark"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q1",
+      "step_title": "Identify: ke",
+      "question": "Which character represents the sound **ke** (ke)?",
+      "options": [
+        "కె",
+        "కే",
+        "కై",
+        "కొ"
+      ],
+      "correct_answer": "కె",
+      "feedback": "Correct! **కె** is the ke sound. Short e mark"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: కే (kee)",
+      "content_markdown": "## కే — kee\n\n**Sound:** kay\n\n**Memory Trick:** Long ee mark\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **కే** | kay | kee |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q2",
+      "step_title": "Identify: kee",
+      "question": "Which character represents the sound **kee** (kay)?",
+      "options": [
+        "కే",
+        "కె",
+        "కొ",
+        "కై"
+      ],
+      "correct_answer": "కే",
+      "feedback": "Correct! **కే** is the kay sound. Long ee mark"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: కై (kai)",
+      "content_markdown": "## కై — kai\n\n**Sound:** kai\n\n**Memory Trick:** Diphthong mark\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **కై** | kai | kai |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q3",
+      "step_title": "Identify: kai",
+      "question": "Which character represents the sound **kai** (kai)?",
+      "options": [
+        "కె",
+        "కొ",
+        "కే",
+        "కై"
+      ],
+      "correct_answer": "కై",
+      "feedback": "Correct! **కై** is the kai sound. Diphthong mark"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: కొ (ko)",
+      "content_markdown": "## కొ — ko\n\n**Sound:** ko\n\n**Memory Trick:** Short o mark\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **కొ** | ko | ko |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q4",
+      "step_title": "Identify: ko",
+      "question": "Which character represents the sound **ko** (ko)?",
+      "options": [
+        "కొ",
+        "కె",
+        "కై",
+        "కే"
+      ],
+      "correct_answer": "కొ",
+      "feedback": "Correct! **కొ** is the ko sound. Short o mark"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: కో (koo)",
+      "content_markdown": "## కో — koo\n\n**Sound:** koo\n\n**Memory Trick:** Long oo mark\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **కో** | koo | koo |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q5",
+      "step_title": "Identify: koo",
+      "question": "Which character represents the sound **koo** (koo)?",
+      "options": [
+        "కో",
+        "కై",
+        "కె",
+        "కే"
+      ],
+      "correct_answer": "కో",
+      "feedback": "Correct! **కో** is the koo sound. Long oo mark"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: కౌ (kau)",
+      "content_markdown": "## కౌ — kau\n\n**Sound:** kow\n\n**Memory Trick:** Au diphthong"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q6",
+      "step_title": "Identify: kau",
+      "question": "Which character represents the sound **kau** (kow)?",
+      "options": [
+        "కై",
+        "కే",
+        "కె",
+        "కౌ"
+      ],
+      "correct_answer": "కౌ",
+      "feedback": "Correct! **కౌ** is the kow sound. Au diphthong"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q7",
+      "step_title": "Sound Match",
+      "question": "What sound does **కె** make?",
+      "options": [
+        "ke",
+        "kay",
+        "kai",
+        "ko"
+      ],
+      "correct_answer": "ke",
+      "feedback": "Right! **కె** = ke = ke."
+    },
+    {
+      "type": "content",
+      "step_title": "Visual Comparison",
+      "content_markdown": "## Compare the Shapes\n\nLook closely at how these characters differ:\n\n- **కె** (ke) vs **కే** (kee)\n- **కై** (kai) vs **కొ** (ko)\n- **కో** (koo) vs **కౌ** (kau)\n\nNotice the subtle differences in strokes, dots, or curves!"
+    },
+    {
+      "type": "free_response",
+      "id": "q8",
+      "step_title": "Type the Sound",
+      "question": "What is the transliteration (Roman letters) for **కౌ**?",
+      "ai_grading": false,
+      "accepted_responses": [
+        "kau",
+        "kau",
+        "KAU"
+      ],
+      "hint": "It sounds like 'kow'."
+    },
+    {
+      "type": "content",
+      "step_title": "Word Practice",
+      "content_markdown": "## Let's Read Words!\n\nUsing what you've learned, try reading these words:\n\n| Telugu | Transliteration | Meaning |\n|---------|-----------------|--------|\n| **కెరటం** | keratam | wave |\n| **కోట** | koota | fort |\n| **కై** | kai | for |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q9",
+      "step_title": "Read: కెరటం",
+      "question": "What does **కెరటం** (keratam) mean?",
+      "options": [
+        "fort",
+        "wave",
+        "hello",
+        "for"
+      ],
+      "correct_answer": "wave",
+      "feedback": "Correct! **కెరటం** (keratam) means 'wave'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q10",
+      "step_title": "Read: కోట",
+      "question": "What does **కోట** (koota) mean?",
+      "options": [
+        "wave",
+        "hello",
+        "for",
+        "fort"
+      ],
+      "correct_answer": "fort",
+      "feedback": "Correct! **కోట** (koota) means 'fort'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q11",
+      "step_title": "Read: కై",
+      "question": "What does **కై** (kai) mean?",
+      "options": [
+        "wave",
+        "for",
+        "hello",
+        "fort"
+      ],
+      "correct_answer": "for",
+      "feedback": "Correct! **కై** (kai) means 'for'."
+    },
+    {
+      "type": "free_response",
+      "id": "q12",
+      "step_title": "Transliterate the Word",
+      "question": "Type the transliteration for **కెరటం** (meaning: wave)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "keratam",
+        "keratam",
+        "keratam"
+      ],
+      "hint": "Sound it out character by character."
+    },
+    {
+      "type": "content",
+      "step_title": "Lesson Summary",
+      "content_markdown": "## Summary\n\nGreat job! Here's everything you learned:\n\n| Character | Transliteration | Sound |\n|-----------|----------------|-------|\n| **కె** | ke | ke |\n| **కే** | kee | kay |\n| **కై** | kai | kai |\n| **కొ** | ko | ko |\n| **కో** | koo | koo |\n| **కౌ** | kau | kow |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q13",
+      "step_title": "Final Check",
+      "question": "How many new characters/concepts did we cover in this lesson?",
+      "options": [
+        "6",
+        "8",
+        "5",
+        "11"
+      ],
+      "correct_answer": "6",
+      "feedback": "Correct! We covered 6 characters today. Keep practicing!"
+    }
+  ]
+}

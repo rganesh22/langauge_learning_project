@@ -1,0 +1,231 @@
+{
+  "lesson_id": "ur_12_aspiration",
+  "language": "Urdu",
+  "title": "Aspirated Consonants",
+  "subtitle": "بھ (bh), پھ (ph), تھ (th), جھ (jh), چھ (chh), دھ (dh), ڈھ (dh), کھ (kh), گھ (gh)",
+  "description": "Learn how do-chashmii hay creates aspirated sounds — critical for Urdu.",
+  "estimated_minutes": 25.2,
+  "cefr_level": "A0",
+  "tags": [
+    "script",
+    "reading",
+    "basics"
+  ],
+  "skills_learned": [
+    "Aspiration with do-chashmii hay",
+    "Reading aspirated pairs"
+  ],
+  "steps": [
+    {
+      "type": "content",
+      "step_title": "Aspirated Consonants",
+      "content_markdown": "# Aspirated Consonants\n\nLearn how do-chashmii hay creates aspirated sounds — critical for Urdu.\n\n### Today's Characters\n**بھ** · **پھ** · **تھ** · **کھ** · **گھ**"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: بھ (bh)",
+      "content_markdown": "## بھ — bh\n\n**Sound:** bh\n\n**Memory Trick:** ب + ھ = aspirated b"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q1",
+      "step_title": "Identify: bh",
+      "question": "Which character represents the sound **bh** (bh)?",
+      "options": [
+        "تھ",
+        "کھ",
+        "بھ",
+        "پھ"
+      ],
+      "correct_answer": "بھ",
+      "feedback": "Correct! **بھ** is the bh sound. ب + ھ = aspirated b"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: پھ (ph)",
+      "content_markdown": "## پھ — ph\n\n**Sound:** ph\n\n**Memory Trick:** پ + ھ = aspirated p\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **پھ** | ph | ph |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q2",
+      "step_title": "Identify: ph",
+      "question": "Which character represents the sound **ph** (ph)?",
+      "options": [
+        "پھ",
+        "کھ",
+        "بھ",
+        "تھ"
+      ],
+      "correct_answer": "پھ",
+      "feedback": "Correct! **پھ** is the ph sound. پ + ھ = aspirated p"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: تھ (th)",
+      "content_markdown": "## تھ — th\n\n**Sound:** th (dental asp.)\n\n**Memory Trick:** ت + ھ = dental aspirated\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **تھ** | th (dental asp.) | th |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q3",
+      "step_title": "Identify: th",
+      "question": "Which character represents the sound **th** (th (dental asp.))?",
+      "options": [
+        "پھ",
+        "تھ",
+        "کھ",
+        "بھ"
+      ],
+      "correct_answer": "تھ",
+      "feedback": "Correct! **تھ** is the th (dental asp.) sound. ت + ھ = dental aspirated"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: کھ (kh)",
+      "content_markdown": "## کھ — kh\n\n**Sound:** kh\n\n**Memory Trick:** ک + ھ = aspirated k\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **کھ** | kh | kh |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q4",
+      "step_title": "Identify: kh",
+      "question": "Which character represents the sound **kh** (kh)?",
+      "options": [
+        "کھ",
+        "بھ",
+        "پھ",
+        "تھ"
+      ],
+      "correct_answer": "کھ",
+      "feedback": "Correct! **کھ** is the kh sound. ک + ھ = aspirated k"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: گھ (gh)",
+      "content_markdown": "## گھ — gh\n\n**Sound:** gh\n\n**Memory Trick:** گ + ھ = aspirated g"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q5",
+      "step_title": "Identify: gh",
+      "question": "Which character represents the sound **gh** (gh)?",
+      "options": [
+        "گھ",
+        "بھ",
+        "پھ",
+        "تھ"
+      ],
+      "correct_answer": "گھ",
+      "feedback": "Correct! **گھ** is the gh sound. گ + ھ = aspirated g"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q6",
+      "step_title": "Sound Match",
+      "question": "What sound does **بھ** make?",
+      "options": [
+        "bh",
+        "ph",
+        "th (dental asp.)",
+        "kh"
+      ],
+      "correct_answer": "bh",
+      "feedback": "Right! **بھ** = bh = bh."
+    },
+    {
+      "type": "content",
+      "step_title": "Visual Comparison",
+      "content_markdown": "## Compare the Shapes\n\nLook closely at how these characters differ:\n\n- **بھ** (bh) vs **پھ** (ph)\n- **تھ** (th) vs **کھ** (kh)\n\nNotice the subtle differences in strokes, dots, or curves!"
+    },
+    {
+      "type": "free_response",
+      "id": "q7",
+      "step_title": "Type the Sound",
+      "question": "What is the transliteration (Roman letters) for **گھ**?",
+      "ai_grading": false,
+      "accepted_responses": [
+        "gh",
+        "gh",
+        "GH"
+      ],
+      "hint": "It sounds like 'gh'."
+    },
+    {
+      "type": "content",
+      "step_title": "Word Practice",
+      "content_markdown": "## Let's Read Words!\n\nUsing what you've learned, try reading these words:\n\n| Urdu | Transliteration | Meaning |\n|---------|-----------------|--------|\n| **بھائی** | bhaaii | brother |\n| **پھول** | phool | flower |\n| **گھر** | ghar | home |\n| **کھانا** | khaanaa | food |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q8",
+      "step_title": "Read: بھائی",
+      "question": "What does **بھائی** (bhaaii) mean?",
+      "options": [
+        "home",
+        "flower",
+        "brother",
+        "food"
+      ],
+      "correct_answer": "brother",
+      "feedback": "Correct! **بھائی** (bhaaii) means 'brother'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q9",
+      "step_title": "Read: پھول",
+      "question": "What does **پھول** (phool) mean?",
+      "options": [
+        "flower",
+        "brother",
+        "home",
+        "food"
+      ],
+      "correct_answer": "flower",
+      "feedback": "Correct! **پھول** (phool) means 'flower'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q10",
+      "step_title": "Read: گھر",
+      "question": "What does **گھر** (ghar) mean?",
+      "options": [
+        "brother",
+        "food",
+        "flower",
+        "home"
+      ],
+      "correct_answer": "home",
+      "feedback": "Correct! **گھر** (ghar) means 'home'."
+    },
+    {
+      "type": "free_response",
+      "id": "q11",
+      "step_title": "Transliterate the Word",
+      "question": "Type the transliteration for **بھائی** (meaning: brother)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "bhaaii",
+        "bhaaii",
+        "bhaaii"
+      ],
+      "hint": "Sound it out character by character."
+    },
+    {
+      "type": "content",
+      "step_title": "Lesson Summary",
+      "content_markdown": "## Summary\n\nGreat job! Here's everything you learned:\n\n| Character | Transliteration | Sound |\n|-----------|----------------|-------|\n| **بھ** | bh | bh |\n| **پھ** | ph | ph |\n| **تھ** | th | th (dental asp.) |\n| **کھ** | kh | kh |\n| **گھ** | gh | gh |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q12",
+      "step_title": "Final Check",
+      "question": "How many new characters/concepts did we cover in this lesson?",
+      "options": [
+        "5",
+        "7",
+        "4",
+        "10"
+      ],
+      "correct_answer": "5",
+      "feedback": "Correct! We covered 5 characters today. Keep practicing!"
+    }
+  ]
+}

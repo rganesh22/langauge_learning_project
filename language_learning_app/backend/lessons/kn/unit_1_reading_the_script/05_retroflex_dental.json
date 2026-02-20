@@ -1,0 +1,186 @@
+{
+  "lesson_id": "kn_05_retroflex_dental",
+  "language": "Kannada",
+  "title": "Retroflex & Dental Consonants",
+  "subtitle": "ಟ, ಠ, ಡ, ಢ, ಣ and ತ, ಥ, ದ, ಧ, ನ",
+  "description": "Master the crucial distinction between retroflex and dental sounds. Focus on reading and pronunciation.",
+  "estimated_minutes": 25,
+  "cefr_level": "A0",
+  "tags": [
+    "script",
+    "reading",
+    "basics",
+    "consonants"
+  ],
+  "skills_learned": [
+    "Recognizing Retroflex consonants",
+    "Recognizing Dental consonants",
+    "Hearing the difference between T/D sounds"
+  ],
+  "steps": [
+    {
+      "type": "content",
+      "step_title": "Retroflex & Dental",
+      "content_markdown": "# Retroflex & Dental Consonants\n\nMaster the crucial distinction between retroflex and dental sounds.\n\n### Today's Characters\n**ಟ** · **ಡ** · **ಣ** · **ತ** · **ನ**"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ಟ (Ta)",
+      "content_markdown": "## ಟ — Ta\n\n**Sound:** ta (retroflex)\n\n**Memory Trick:** Tongue curls back to touch the roof of the mouth."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q1",
+      "step_title": "Identify: Ta",
+      "question": "Which character represents the retroflex sound **Ta**?",
+      "options": [
+        "ಟ",
+        "ಡ",
+        "ತ",
+        "ಣ"
+      ],
+      "correct_answer": "ಟ",
+      "feedback": "Correct! **ಟ** is the retroflex 'Ta' sound."
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ಡ (Da)",
+      "content_markdown": "## ಡ — Da\n\n**Sound:** da (retroflex)\n\n**Memory Trick:** The voiced version of the retroflex 'T'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q2",
+      "step_title": "Identify: Da",
+      "question": "Which character represents the retroflex sound **Da**?",
+      "options": [
+        "ತ",
+        "ಟ",
+        "ಡ",
+        "ಣ"
+      ],
+      "correct_answer": "ಡ",
+      "feedback": "Correct! **ಡ** is the retroflex 'Da' sound."
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ಣ (Na)",
+      "content_markdown": "## ಣ — Na\n\n**Sound:** na (retroflex)\n\n**Memory Trick:** Retroflex nasal sound."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q3",
+      "step_title": "Identify: Na",
+      "question": "Which character represents the retroflex sound **Na**?",
+      "options": [
+        "ಡ",
+        "ತ",
+        "ಣ",
+        "ಟ"
+      ],
+      "correct_answer": "ಣ",
+      "feedback": "Correct! **ಣ** is the retroflex 'Na' sound."
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ತ (tha)",
+      "content_markdown": "## ತ — tha\n\n**Sound:** th (dental) as in 'thin'\n\n**Memory Trick:** Tongue touches the back of the upper teeth."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q4",
+      "step_title": "Identify: tha",
+      "question": "Which character represents the dental sound **tha**?",
+      "options": [
+        "ತ",
+        "ಟ",
+        "ಡ",
+        "ಣ"
+      ],
+      "correct_answer": "ತ",
+      "feedback": "Correct! **ತ** is the dental 'tha' sound."
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ನ (na)",
+      "content_markdown": "## ನ — na\n\n**Sound:** na (dental) as in 'name'\n\n**Memory Trick:** Standard dental nasal sound."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q5",
+      "step_title": "Identify: na",
+      "question": "Which character represents the dental sound **na**?",
+      "options": [
+        "ನ",
+        "ಡ",
+        "ಣ",
+        "ಟ"
+      ],
+      "correct_answer": "ನ",
+      "feedback": "Correct! **ನ** is the dental 'na' sound."
+    },
+    {
+      "type": "content",
+      "step_title": "Reading Practice",
+      "content_markdown": "## Let's Read!\n\nPractice reading these words out loud, focusing on the distinction between retroflex and dental sounds:\n\n| Kannada | Transliteration |\n|---------|-----------------|\n| **ನಾಡು** | naadu |\n| **ಮಾತು** | maathu |\n| **ದಿನ** | dina |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q6",
+      "step_title": "Read: ನಾಡು",
+      "question": "How do you read this word out loud?\n\n# ನಾಡು",
+      "options": [
+        "naadu",
+        "maathu",
+        "dina",
+        "nanna"
+      ],
+      "correct_answer": "naadu",
+      "feedback": "Perfect! You read 'naadu' correctly."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q7",
+      "step_title": "Read: ಮಾತು",
+      "question": "How do you read this word out loud?\n\n# ಮಾತು",
+      "options": [
+        "naadu",
+        "maathu",
+        "dina",
+        "mane"
+      ],
+      "correct_answer": "maathu",
+      "feedback": "Perfect! You read 'maathu' correctly."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q8",
+      "step_title": "Read: ದಿನ",
+      "question": "How do you read this word out loud?\n\n# ದಿನ",
+      "options": [
+        "naadu",
+        "maathu",
+        "dina",
+        "deva"
+      ],
+      "correct_answer": "dina",
+      "feedback": "Perfect! You read 'dina' correctly."
+    },
+    {
+      "type": "free_response",
+      "id": "q9",
+      "step_title": "Transliterate Word",
+      "question": "Type the transliteration for **ನಾಡು**",
+      "ai_grading": false,
+      "accepted_responses": [
+        "naadu",
+        "Naadu"
+      ],
+      "hint": "Remember the long 'aa' and the retroflex 'd'."
+    },
+    {
+      "type": "content",
+      "step_title": "Lesson Summary",
+      "content_markdown": "## Summary\n\nGreat job! You've mastered the distinction between:\n\n- **Retroflex (Tongue Back):** ಟ (Ta), ಡ (Da), ಣ (Na)\n- **Dental (Tongue at Teeth):** ತ (tha), ನ (na)"
+    }
+  ]
+}

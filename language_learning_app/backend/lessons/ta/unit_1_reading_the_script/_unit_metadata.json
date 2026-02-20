@@ -1,0 +1,42 @@
+{
+  "unit_id": "ta_unit_1",
+  "unit_number": 1,
+  "language": "Tamil",
+  "title": "Reading Tamil Script",
+  "subtitle": "Master the Tamil alphabet from vowels to full words",
+  "description": "A comprehensive 20-lesson course teaching you to read Tamil script. From basic vowels through consonants, vowel markers, and special combinations to reading real words and sentences.",
+  "estimated_minutes": 500,
+  "lesson_count": 20,
+  "lessons": [
+    "01_vowels_part_1",
+    "02_vowels_part_2",
+    "03_vowels_part_3",
+    "04_hard_consonants",
+    "05_soft_consonants",
+    "06_medium_consonants",
+    "07_the_pulli",
+    "08_vowel_markers_aa_i",
+    "09_vowel_markers_u_uu",
+    "10_vowel_markers_e_ee_ai",
+    "11_vowel_markers_o_oo_au",
+    "12_full_marker_chart",
+    "13_doubled_consonants",
+    "14_nasal_clusters",
+    "15_medial_softening",
+    "16_special_characters",
+    "17_reading_words",
+    "18_numbers",
+    "19_reading_sentences",
+    "20_final_review"
+  ],
+  "completion_criteria": {
+    "all_lessons_completed": true
+  },
+  "skills_learned": [
+    "Reading all Tamil script characters",
+    "Understanding Tamil vowel and consonant systems",
+    "Reading real Tamil words and sentences",
+    "Vowel marks / matras system",
+    "Consonant clusters and conjuncts"
+  ]
+}

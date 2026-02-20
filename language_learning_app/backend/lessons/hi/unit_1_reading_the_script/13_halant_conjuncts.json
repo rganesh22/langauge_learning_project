@@ -1,0 +1,212 @@
+{
+  "lesson_id": "hi_13_halant_conjuncts",
+  "language": "Hindi",
+  "title": "The Halant & Conjuncts",
+  "subtitle": "How consonants join in Devanagari",
+  "description": "Learn the halant and common consonant conjuncts.",
+  "estimated_minutes": 22.8,
+  "cefr_level": "A0",
+  "tags": [
+    "script",
+    "reading",
+    "basics"
+  ],
+  "skills_learned": [
+    "Halant usage",
+    "Common conjuncts"
+  ],
+  "steps": [
+    {
+      "type": "content",
+      "step_title": "The Halant & Conjuncts",
+      "content_markdown": "# The Halant & Conjuncts\n\nLearn the halant and common consonant conjuncts.\n\n### Today's Characters\n**क् + क = क्क** · **प् + र = प्र** · **त् + र = त्र** · **श् + र = श्र**"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: क् + क = क्क (kka)",
+      "content_markdown": "## क् + क = क्क — kka\n\n**Sound:** kka\n\n**Memory Trick:** Halant joins consonants"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q1",
+      "step_title": "Identify: kka",
+      "question": "Which character represents the sound **kka** (kka)?",
+      "options": [
+        "क् + क = क्क",
+        "त् + र = त्र",
+        "प् + र = प्र",
+        "श् + र = श्र"
+      ],
+      "correct_answer": "क् + क = क्क",
+      "feedback": "Correct! **क् + क = क्क** is the kka sound. Halant joins consonants"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: प् + र = प्र (pra)",
+      "content_markdown": "## प् + र = प्र — pra\n\n**Sound:** pra\n\n**Memory Trick:** Ra joins as a hook below\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **प् + र = प्र** | pra | pra |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q2",
+      "step_title": "Identify: pra",
+      "question": "Which character represents the sound **pra** (pra)?",
+      "options": [
+        "त् + र = त्र",
+        "क् + क = क्क",
+        "प् + र = प्र",
+        "श् + र = श्र"
+      ],
+      "correct_answer": "प् + र = प्र",
+      "feedback": "Correct! **प् + र = प्र** is the pra sound. Ra joins as a hook below"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: त् + र = त्र (tra)",
+      "content_markdown": "## त् + र = त्र — tra\n\n**Sound:** tra\n\n**Memory Trick:** Special tra form\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **त् + र = त्र** | tra | tra |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q3",
+      "step_title": "Identify: tra",
+      "question": "Which character represents the sound **tra** (tra)?",
+      "options": [
+        "त् + र = त्र",
+        "श् + र = श्र",
+        "क् + क = क्क",
+        "प् + र = प्र"
+      ],
+      "correct_answer": "त् + र = त्र",
+      "feedback": "Correct! **त् + र = त्र** is the tra sound. Special tra form"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: श् + र = श्र (shra)",
+      "content_markdown": "## श् + र = श्र — shra\n\n**Sound:** shr\n\n**Memory Trick:** Common in names"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q4",
+      "step_title": "Identify: shra",
+      "question": "Which character represents the sound **shra** (shr)?",
+      "options": [
+        "प् + र = प्र",
+        "श् + र = श्र",
+        "क् + क = क्क",
+        "त् + र = त्र"
+      ],
+      "correct_answer": "श् + र = श्र",
+      "feedback": "Correct! **श् + र = श्र** is the shr sound. Common in names"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q5",
+      "step_title": "Sound Match",
+      "question": "What sound does **क् + क = क्क** make?",
+      "options": [
+        "kka",
+        "pra",
+        "tra",
+        "shr"
+      ],
+      "correct_answer": "kka",
+      "feedback": "Right! **क् + क = क्क** = kka = kka."
+    },
+    {
+      "type": "content",
+      "step_title": "Visual Comparison",
+      "content_markdown": "## Compare the Shapes\n\nLook closely at how these characters differ:\n\n- **क् + क = क्क** (kka) vs **प् + र = प्र** (pra)\n- **त् + र = त्र** (tra) vs **श् + र = श्र** (shra)\n\nNotice the subtle differences in strokes, dots, or curves!"
+    },
+    {
+      "type": "free_response",
+      "id": "q6",
+      "step_title": "Type the Sound",
+      "question": "What is the transliteration (Roman letters) for **श् + र = श्र**?",
+      "ai_grading": false,
+      "accepted_responses": [
+        "shra",
+        "shra",
+        "SHRA"
+      ],
+      "hint": "It sounds like 'shr'."
+    },
+    {
+      "type": "content",
+      "step_title": "Word Practice",
+      "content_markdown": "## Let's Read Words!\n\nUsing what you've learned, try reading these words:\n\n| Hindi | Transliteration | Meaning |\n|---------|-----------------|--------|\n| **प्रश्न** | prashn | question |\n| **विद्या** | vidyaa | knowledge |\n| **श्री** | shrii | Sri/Mr. |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q7",
+      "step_title": "Read: प्रश्न",
+      "question": "What does **प्रश्न** (prashn) mean?",
+      "options": [
+        "hello",
+        "question",
+        "Sri/Mr.",
+        "knowledge"
+      ],
+      "correct_answer": "question",
+      "feedback": "Correct! **प्रश्न** (prashn) means 'question'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q8",
+      "step_title": "Read: विद्या",
+      "question": "What does **विद्या** (vidyaa) mean?",
+      "options": [
+        "hello",
+        "question",
+        "knowledge",
+        "Sri/Mr."
+      ],
+      "correct_answer": "knowledge",
+      "feedback": "Correct! **विद्या** (vidyaa) means 'knowledge'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q9",
+      "step_title": "Read: श्री",
+      "question": "What does **श्री** (shrii) mean?",
+      "options": [
+        "hello",
+        "knowledge",
+        "question",
+        "Sri/Mr."
+      ],
+      "correct_answer": "Sri/Mr.",
+      "feedback": "Correct! **श्री** (shrii) means 'Sri/Mr.'."
+    },
+    {
+      "type": "free_response",
+      "id": "q10",
+      "step_title": "Transliterate the Word",
+      "question": "Type the transliteration for **प्रश्न** (meaning: question)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "prashn",
+        "prashn",
+        "prashn"
+      ],
+      "hint": "Sound it out character by character."
+    },
+    {
+      "type": "content",
+      "step_title": "Lesson Summary",
+      "content_markdown": "## Summary\n\nGreat job! Here's everything you learned:\n\n| Character | Transliteration | Sound |\n|-----------|----------------|-------|\n| **क् + क = क्क** | kka | kka |\n| **प् + र = प्र** | pra | pra |\n| **त् + र = त्र** | tra | tra |\n| **श् + र = श्र** | shra | shr |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q11",
+      "step_title": "Final Check",
+      "question": "How many new characters/concepts did we cover in this lesson?",
+      "options": [
+        "4",
+        "6",
+        "3",
+        "9"
+      ],
+      "correct_answer": "4",
+      "feedback": "Correct! We covered 4 characters today. Keep practicing!"
+    }
+  ]
+}

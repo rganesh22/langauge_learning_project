@@ -1,7 +1,7 @@
-INFO:     Will watch for changes in these directories: ['/Users/raghavganesh/Documents/Code Projects/Language Learning Project']
+INFO:     Will watch for changes in these directories: ['/Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app']
 INFO:     Uvicorn running on http://0.0.0.0:8080 (Press CTRL+C to quit)
-INFO:     Started reloader process [41086] using WatchFiles
-/Users/raghavganesh/Documents/Code Projects/Language Learning Project/backend/api_client.py:17: FutureWarning: 
+INFO:     Started reloader process [6690] using WatchFiles
+/Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/backend/api_client.py:17: FutureWarning: 
 
 All support for the `google.generativeai` package has ended. It will no longer be receiving 
 updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
@@ -10,145 +10,1824 @@ See README for more details:
 https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
 
   import google.generativeai as genai
-INFO:     Started server process [41090]
+INFO:     Started server process [6822]
 INFO:     Waiting for application startup.
 INFO:     Application startup complete.
 [Startup] Initializing database schema...
 [Startup] Database initialization complete
-[Startup] Note: Run 'python3 reload_lessons.py' to load lessons into database
-INFO:     127.0.0.1:50114 - "OPTIONS /api/srs/sync-quotas-all HTTP/1.1" 200 OK
+[Startup] Syncing lessons from filesystem (if available)...
+[LessonSync] Cleared existing lessons and units from database
+  [Unit] Reading Devanagari Script (hi)
+  [Unit] Reading Kannada Script (kn)
+  [Unit] Reading Tamil Script (ta)
+  [Unit] Reading Telugu Script (te)
+  [Unit] Reading Urdu Script (ur)
+[LessonSync] ✅ Loaded 5 units, 98 lessons from filesystem
+[Startup] Lesson sync complete
+INFO:     127.0.0.1:49685 - "OPTIONS /api/srs/sync-quotas-all HTTP/1.1" 200 OK
 ✓ Synced SRS quotas for 0 languages
-INFO:     127.0.0.1:50114 - "POST /api/srs/sync-quotas-all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49685 - "POST /api/srs/sync-quotas-all HTTP/1.1" 200 OK
 Getting dashboard data for kannada...
-INFO:     127.0.0.1:50119 - "GET /api/today-goals-all HTTP/1.1" 200 OK
 ✓ Synced SRS quotas for 0 languages
-INFO:     127.0.0.1:50122 - "POST /api/srs/sync-quotas-all HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50119 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49685 - "POST /api/srs/sync-quotas-all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49692 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49695 - "GET /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49693 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
 Dashboard data retrieved successfully
-INFO:     127.0.0.1:50114 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49690 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49685 - "GET /api/today-goals-all HTTP/1.1" 200 OK
 Getting dashboard data for kannada...
+INFO:     127.0.0.1:49692 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
 Dashboard data retrieved successfully
-INFO:     127.0.0.1:50119 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50114 - "GET /api/streak HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50119 - "GET /api/streak HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50124 - "GET /api/user-languages HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50120 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50124 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50120 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50124 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50854 - "GET /api/srs/stats/telugu HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50851 - "GET /api/srs/stats/kannada HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50853 - "GET /api/srs/stats/tamil HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50857 - "GET /api/srs/stats/malayalam HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50860 - "GET /api/srs/stats/urdu HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50859 - "GET /api/srs/stats/hindi HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50854 - "GET /api/srs/stats/kannada HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50857 - "GET /api/language-personalization/kannada HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50854 - "GET /api/words-for-review/kannada?limit=50 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50859 - "GET /api/srs/stats/kannada HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50854 - "GET /api/srs/preview/23520663 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49693 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49693 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49692 - "GET /api/streak HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49692 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49693 - "GET /api/streak HTTP/1.1" 200 OK
+Getting dashboard data for null...
+INFO:     127.0.0.1:49693 - "GET /api/user-preferences?keys=apply_to_all_srs,apply_to_all_lang HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49692 - "GET /api/profile HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49690 - "GET /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49695 - "GET /api/user-interests HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:49685 - "GET /api/dashboard/null HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49685 - "GET /api/languages/learning HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49685 - "GET /api/stats/daily?language=null&days=365 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49685 - "GET /api/stats/language/null HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49685 - "GET /api/srs/settings/null HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49685 - "GET /api/stats/language/null HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49685 - "GET /api/streak HTTP/1.1" 200 OK
+Getting dashboard data for kannada...
+INFO:     127.0.0.1:52525 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52526 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:52524 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52526 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52526 - "GET /api/streak HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52526 - "GET /api/srs/stats/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52526 - "GET /api/units/kannada HTTP/1.1" 200 OK
+Filters received - mastery: None (type: <class 'NoneType'>), word_class: None (type: <class 'NoneType'>), level: None (type: <class 'NoneType'>)
+Filters as strings - mastery: '', word_class: '', level: ''
+INFO:     127.0.0.1:52526 - "GET /api/vocabulary/kannada?limit=50&offset=0 HTTP/1.1" 200 OK
+Filters received - mastery: None (type: <class 'NoneType'>), word_class: None (type: <class 'NoneType'>), level: None (type: <class 'NoneType'>)
+Filters as strings - mastery: '', word_class: '', level: ''
+INFO:     127.0.0.1:52526 - "GET /api/vocabulary/kannada?limit=50&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52802 - "GET / HTTP/1.1" 200 OK
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [6822]
+INFO:     Stopping reloader process [6690]
+INFO:     Will watch for changes in these directories: ['/Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app']
+INFO:     Uvicorn running on http://0.0.0.0:8080 (Press CTRL+C to quit)
+INFO:     Started reloader process [20790] using WatchFiles
+/Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/backend/api_client.py:17: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+INFO:     Started server process [20915]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+[Startup] Initializing database schema...
+[Startup] Database initialization complete
+[Startup] Syncing lessons from filesystem (if available)...
+[LessonSync] Cleared existing lessons and units from database
+  [Unit] Reading Devanagari Script (hi)
+  [Unit] Reading Kannada Script (kn)
+  [Unit] Reading Tamil Script (ta)
+  [Unit] Reading Telugu Script (te)
+  [Unit] Reading Urdu Script (ur)
+[LessonSync] ✅ Loaded 5 units, 98 lessons from filesystem
+[Startup] Lesson sync complete
+INFO:     127.0.0.1:55097 - "OPTIONS /api/srs/sync-quotas-all HTTP/1.1" 200 OK
 ✓ Synced SRS quotas for 0 languages
-INFO:     127.0.0.1:51088 - "POST /api/srs/sync-quotas-all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55097 - "POST /api/srs/sync-quotas-all HTTP/1.1" 200 OK
 Getting dashboard data for kannada...
-INFO:     127.0.0.1:51092 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55102 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55103 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
 ✓ Synced SRS quotas for 0 languages
-INFO:     127.0.0.1:51096 - "POST /api/srs/sync-quotas-all HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51092 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55105 - "POST /api/srs/sync-quotas-all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55107 - "GET /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55102 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55109 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
 Dashboard data retrieved successfully
-INFO:     127.0.0.1:51088 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55097 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
 Getting dashboard data for kannada...
 Dashboard data retrieved successfully
-INFO:     127.0.0.1:51092 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51088 - "GET /api/streak HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51092 - "GET /api/streak HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51098 - "GET /api/user-languages HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51095 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51098 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51095 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51098 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52554 - "GET /api/daily-activities?date=2026-02-15 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52554 - "GET /api/daily-activities?date=2026-02-15 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52554 - "GET /api/units/kannada HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52576 - "GET /api/srs/stats/malayalam HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55102 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55102 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55109 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55097 - "GET /api/streak HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55109 - "GET /api/streak HTTP/1.1" 200 OK
+Filters received - mastery: None (type: <class 'NoneType'>), word_class: None (type: <class 'NoneType'>), level: None (type: <class 'NoneType'>)
+Filters as strings - mastery: '', word_class: '', level: ''
+INFO:     127.0.0.1:55109 - "GET /api/vocabulary/kannada?limit=50&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55147 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55232 - "GET /api/units/kannada HTTP/1.1" 200 OK
+Error getting lesson progress: no such table: lesson_progress
+Error getting lesson progress: no such table: lesson_progress
+Error getting lesson progress: no such table: lesson_progress
+Error getting lesson progress: no such table: lesson_progress
+Error getting lesson progress: no such table: lesson_progress
+Error getting lesson progress: no such table: lesson_progress
+Error getting lesson progress: no such table: lesson_progress
+Error getting lesson progress: no such table: lesson_progress
+Error getting lesson progress: no such table: lesson_progress
+Error getting lesson progress: no such table: lesson_progress
+Error getting lesson progress: no such table: lesson_progress
+Error getting lesson progress: no such table: lesson_progress
+Error getting lesson progress: no such table: lesson_progress
+Error getting lesson progress: no such table: lesson_progress
+Error getting lesson progress: no such table: lesson_progress
+Error getting lesson progress: no such table: lesson_progress
+Error getting lesson progress: no such table: lesson_progress
+Error getting lesson progress: no such table: lesson_progress
+Error getting lesson progress: no such table: lesson_progress
+Error getting lesson progress: no such table: lesson_progress
+INFO:     127.0.0.1:55232 - "GET /api/units/kn_unit_1/lessons HTTP/1.1" 200 OK
+Error getting lesson progress: no such table: lesson_progress
+INFO:     127.0.0.1:55232 - "GET /api/lessons/progress/kn_01_vowels_part_1 HTTP/1.1" 200 OK
+Error getting lesson progress: no such table: lesson_progress
+INFO:     127.0.0.1:55242 - "GET /api/lessons/progress/kn_02_vowels_part_2 HTTP/1.1" 200 OK
+Error getting lesson progress: no such table: lesson_progress
+INFO:     127.0.0.1:55244 - "GET /api/lessons/progress/kn_03_vowels_complete HTTP/1.1" 200 OK
+Error getting lesson progress: no such table: lesson_progress
+INFO:     127.0.0.1:55247 - "GET /api/lessons/progress/kn_04_velar_palatal HTTP/1.1" 200 OK
+Error getting lesson progress: no such table: lesson_progress
+Error getting lesson progress: no such table: lesson_progress
+INFO:     127.0.0.1:55250 - "GET /api/lessons/progress/kn_06_labial_semivowels HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55248 - "GET /api/lessons/progress/kn_05_retroflex_dental HTTP/1.1" 200 OK
+Error getting lesson progress: no such table: lesson_progress
+INFO:     127.0.0.1:55232 - "GET /api/lessons/progress/kn_07_sibilants_special HTTP/1.1" 200 OK
+Error getting lesson progress: no such table: lesson_progress
+INFO:     127.0.0.1:55242 - "GET /api/lessons/progress/kn_08_vowel_marks_1 HTTP/1.1" 200 OK
+Error getting lesson progress: no such table: lesson_progress
+INFO:     127.0.0.1:55244 - "GET /api/lessons/progress/kn_09_vowel_marks_2 HTTP/1.1" 200 OK
+Error getting lesson progress: no such table: lesson_progress
+INFO:     127.0.0.1:55247 - "GET /api/lessons/progress/kn_10_halant_virama HTTP/1.1" 200 OK
+Error getting lesson progress: no such table: lesson_progress
+INFO:     127.0.0.1:55250 - "GET /api/lessons/progress/kn_12_conjuncts_nasal HTTP/1.1" 200 OK
+Error getting lesson progress: no such table: lesson_progress
+INFO:     127.0.0.1:55248 - "GET /api/lessons/progress/kn_11_conjuncts_common HTTP/1.1" 200 OK
+Error getting lesson progress: no such table: lesson_progress
+INFO:     127.0.0.1:55232 - "GET /api/lessons/progress/kn_13_advanced_conjuncts HTTP/1.1" 200 OK
+Error getting lesson progress: no such table: lesson_progress
+INFO:     127.0.0.1:55242 - "GET /api/lessons/progress/kn_14_ottaksharas HTTP/1.1" 200 OK
+Error getting lesson progress: no such table: lesson_progress
+INFO:     127.0.0.1:55244 - "GET /api/lessons/progress/kn_15_reading_words HTTP/1.1" 200 OK
+Error getting lesson progress: no such table: lesson_progress
+INFO:     127.0.0.1:55247 - "GET /api/lessons/progress/kn_16_numbers HTTP/1.1" 200 OK
+Error getting lesson progress: no such table: lesson_progress
+INFO:     127.0.0.1:55250 - "GET /api/lessons/progress/kn_17_signage HTTP/1.1" 200 OK
+Error getting lesson progress: no such table: lesson_progress
+Error getting lesson progress: no such table: lesson_progress
+INFO:     127.0.0.1:55248 - "GET /api/lessons/progress/kn_18_loanwords HTTP/1.1" 200 OK
+Error getting lesson progress: no such table: lesson_progress
+INFO:     127.0.0.1:55232 - "GET /api/lessons/progress/kn_19_sentences HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55242 - "GET /api/lessons/progress/kn_20_final_review HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55232 - "OPTIONS /api/lessons/progress HTTP/1.1" 200 OK
+Error getting lesson progress: no such table: lesson_progress
+INFO:     127.0.0.1:55242 - "GET /api/lessons/progress/kn_01_vowels_part_1 HTTP/1.1" 200 OK
+Error saving lesson progress: no such table: lesson_progress
+Error saving lesson progress: 500: Failed to save progress
+INFO:     127.0.0.1:55232 - "POST /api/lessons/progress HTTP/1.1" 500 Internal Server Error
+Error saving lesson progress: no such table: lesson_progress
+Error saving lesson progress: 500: Failed to save progress
+INFO:     127.0.0.1:55232 - "POST /api/lessons/progress HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:55282 - "GET /api/srs/stats/kannada HTTP/1.1" 200 OK
+Getting dashboard data for null...
+INFO:     127.0.0.1:55304 - "GET /api/user-preferences?keys=apply_to_all_srs,apply_to_all_lang HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55308 - "GET /api/profile HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55310 - "GET /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55312 - "GET /api/user-interests HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:55309 - "GET /api/dashboard/null HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55309 - "GET /api/languages/learning HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55309 - "GET /api/stats/daily?language=null&days=365 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55309 - "GET /api/stats/language/null HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55309 - "GET /api/srs/settings/null HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55309 - "GET /api/stats/language/null HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55309 - "GET /api/streak HTTP/1.1" 200 OK
+WARNING:  WatchFiles detected changes in 'backend/main.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [20915]
+/Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/backend/api_client.py:17: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+INFO:     Started server process [23278]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [23278]
+[Startup] Initializing database schema...
+[Startup] Database initialization complete
+[Startup] Syncing lessons from filesystem (if available)...
+[LessonSync] Cleared existing lessons and units from database
+  [Unit] Reading Devanagari Script (hi)
+  [Unit] Reading Kannada Script (kn)
+  [Unit] Reading Tamil Script (ta)
+  [Unit] Reading Telugu Script (te)
+  [Unit] Reading Urdu Script (ur)
+[LessonSync] ✅ Loaded 5 units, 98 lessons from filesystem
+[Startup] Lesson sync complete
+INFO:     Will watch for changes in these directories: ['/Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app']
+INFO:     Uvicorn running on http://0.0.0.0:8080 (Press CTRL+C to quit)
+INFO:     Started reloader process [23926] using WatchFiles
+/Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/backend/api_client.py:17: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+/Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/backend/venv/lib/python3.13/site-packages/aksharamukha/Convert.py:78: SyntaxWarning: invalid escape sequence '\s'
+  punc =  '(' + '|'.join(["\u005C"+x for x in list(string.punctuation)]+ ['\s']
+/Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/backend/venv/lib/python3.13/site-packages/aksharamukha/Convert.py:79: SyntaxWarning: invalid escape sequence '\.'
+  + [x.replace('.', '\.') for x in GM.CrunchSymbols(GM.Signs,Source)[1:3]]) + ')'
+/Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/backend/venv/lib/python3.13/site-packages/aksharamukha/Convert.py:88: SyntaxWarning: invalid escape sequence '\s'
+  punc = '(\s)'
+/Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/backend/venv/lib/python3.13/site-packages/aksharamukha/Convert.py:182: SyntaxWarning: invalid escape sequence '\s'
+  punc =  '(' + '|'.join(["\u005C"+x for x in list(string.punctuation)]+ ['\s']
+/Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/backend/venv/lib/python3.13/site-packages/aksharamukha/Convert.py:183: SyntaxWarning: invalid escape sequence '\.'
+  + [x.replace('.', '\.') for x in GM.CrunchSymbols(GM.Signs,Source)[1:3]]) + ')'
+/Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/backend/venv/lib/python3.13/site-packages/aksharamukha/PreProcess.py:438: SyntaxWarning: invalid escape sequence '\W'
+  Strng = re.sub('([\u0628-\u0647])(?![\u0652\u064E\u0650\u064F\u0651\u064B\u064C\u064D\u0649])(?=(\W|$))', r'\1' + '\u0652', Strng)
+/Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/backend/venv/lib/python3.13/site-packages/aksharamukha/PreProcess.py:439: SyntaxWarning: invalid escape sequence '\W'
+  Strng = re.sub('([\u0628-\u0647]\u0651)(?![\u0652\u064E\u0650\u064F\u064B\u064C\u064D\u0649])(?=(\W|$))', r'\1' + '\u0652', Strng)
+/Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/backend/venv/lib/python3.13/site-packages/aksharamukha/PreProcess.py:440: SyntaxWarning: invalid escape sequence '\W'
+  Strng = re.sub('(?<!\u0650)([\u064A])(?![\u0651\u0652\u064E\u0650\u064F\u064B\u064C\u064D\u0649])(?=(\W|$))', r'\1' + '\u0652', Strng)
+/Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/backend/venv/lib/python3.13/site-packages/aksharamukha/PreProcess.py:441: SyntaxWarning: invalid escape sequence '\W'
+  Strng = re.sub('(?<!\u0650)([\u064A]\u0651)(?![\u0652\u064E\u0650\u064F\u064B\u064C\u064D\u0649])(?=(\W|$))', r'\1' + '\u0652', Strng)
+/Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/backend/venv/lib/python3.13/site-packages/aksharamukha/PreProcess.py:442: SyntaxWarning: invalid escape sequence '\W'
+  Strng = re.sub('(?<!\u064F)([\u0648])(?![\u0651\u0652\u064E\u0650\u064F\u064B\u064C\u064D\u0649])(?=(\W|$))', r'\1' + '\u0652', Strng)
+/Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/backend/venv/lib/python3.13/site-packages/aksharamukha/PreProcess.py:443: SyntaxWarning: invalid escape sequence '\W'
+  Strng = re.sub('(?<!\u064F)([\u0648]\u0651)(?![\u0652\u064E\u0650\u064F\u064B\u064C\u064D\u0649])(?=(\W|$))', r'\1' + '\u0652', Strng)
+/Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/backend/venv/lib/python3.13/site-packages/aksharamukha/PreProcess.py:515: SyntaxWarning: invalid escape sequence '\w'
+  Strng = re.sub('(?<!\w)' + vow1, vow2, Strng)
+/Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/backend/venv/lib/python3.13/site-packages/aksharamukha/PreProcess.py:1066: SyntaxWarning: invalid escape sequence '\s'
+  Strng = re.sub(ISyl + '('+ListC +')' + '(((\u17D2)' + '('+ListC +'))*)([៍៎៏]?)(?=[\s\n])', r'\1\8\9' + vir + r'\13', Strng) # kama -> kam
+/Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/backend/venv/lib/python3.13/site-packages/aksharamukha/PreProcess.py:1278: SyntaxWarning: invalid escape sequence '\s'
+  punc =  '(' + '|'.join(["\u005C"+x for x in list(string.punctuation)]+ ['\s']
+/Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/backend/venv/lib/python3.13/site-packages/aksharamukha/PreProcess.py:1279: SyntaxWarning: invalid escape sequence '\.'
+  + [x.replace('.', '\.') for x in GM.CrunchSymbols(GM.Signs,Source)[1:3]]) + ')'
+/Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/backend/venv/lib/python3.13/site-packages/aksharamukha/PreProcess.py:1286: SyntaxWarning: invalid escape sequence '\s'
+  punc = '(\s)'
+/Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/backend/venv/lib/python3.13/site-packages/aksharamukha/PreProcess.py:1315: SyntaxWarning: invalid escape sequence '\_'
+  alt_baraha = [('A', 'aa'), ('I', 'ee'), ('U', 'oo'), ('~loo', '~lU'), ('Roo', 'RU'), ('ou', 'au'), ('K', 'kh'), ('G','gh'), ('ch', 'c'), ('Ch', 'C'), ('J','jh'), ('P', 'ph'), ('B', 'bh'), ('w', 'v'), ('sh', 'S'), ('~h', '_h'), ('Y', 'yx'), ('^^', '{}'), ('^', '()'), ('tx', 'rx'), ('zh', 'Lx'), ('~e', '~a'), ('q', '\_'), ('#', "\\'"), ('$', '\\"')]
+/Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/backend/venv/lib/python3.13/site-packages/aksharamukha/PreProcess.py:1665: SyntaxWarning: invalid escape sequence '\s'
+  Strng = re.sub("("+ListC+ListV+")"+"("+"("+ListVS+")?"+"("+ListCS+")?"+")"+"("+ListC+")"+"("+vir+")"+"(?!\s)",r"\1\2\5\6 ",Strng)
+/Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/backend/venv/lib/python3.13/site-packages/aksharamukha/PreProcess.py:1723: SyntaxWarning: invalid escape sequence '\s'
+  punct = "|".join(['\\'+x for x in list(string.punctuation.replace(".","").replace("?",""))])+"|\s"
+/Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/backend/venv/lib/python3.13/site-packages/aksharamukha/PreProcess.py:1750: SyntaxWarning: invalid escape sequence '\s'
+  Strng = re.sub("("+'['+ListC[10]+ListSC[2]+']'+vir+')'+'(\s)'+'('+ListC[c]+')',r'\1\2'+ListC[5],Strng)
+/Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/backend/venv/lib/python3.13/site-packages/aksharamukha/PostProcess.py:457: SyntaxWarning: invalid escape sequence '\W'
+  Strng = re.sub('(\u0652)(\W|$)', r'\2', Strng)
+/Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/backend/venv/lib/python3.13/site-packages/aksharamukha/PostProcess.py:543: SyntaxWarning: invalid escape sequence '\p'
+  Strng = regex.sub('(\p{L}\p{M}*) (\p{L})', r'\1\2', Strng)
+/Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/backend/venv/lib/python3.13/site-packages/aksharamukha/PostProcess.py:544: SyntaxWarning: invalid escape sequence '\p'
+  Strng = regex.sub('(\p{L}\p{M}*) (\p{L})', r'\1\2', Strng)
+/Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/backend/venv/lib/python3.13/site-packages/aksharamukha/PostProcess.py:964: SyntaxWarning: invalid escape sequence '\B'
+  Strng = re.sub('\Ba', '', Strng)
+/Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/backend/venv/lib/python3.13/site-packages/aksharamukha/PostProcess.py:1110: SyntaxWarning: invalid escape sequence '\s'
+  Strng = re.sub('([\s^])(ந)'+ 'ல', r'\1' +  'ள', Strng)
+/Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/backend/venv/lib/python3.13/site-packages/aksharamukha/PostProcess.py:1133: SyntaxWarning: invalid escape sequence '\.'
+  Strng = re.sub('ந்' + '([\.।॥,!-])', 'ன்' + r'\1', Strng)
+/Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/backend/venv/lib/python3.13/site-packages/aksharamukha/PostProcess.py:1134: SyntaxWarning: invalid escape sequence '\s'
+  Strng = re.sub('ந்' + '(\s)', 'ன்' + r'\1', Strng)
+/Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/backend/venv/lib/python3.13/site-packages/aksharamukha/PostProcess.py:1600: SyntaxWarning: invalid escape sequence '\s'
+  Strng = re.sub('(\s)(ன)', r'\1' + 'ந', Strng)
+/Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/backend/venv/lib/python3.13/site-packages/aksharamukha/PostProcess.py:1618: SyntaxWarning: invalid escape sequence '\s'
+  Strng = re.sub('(\s)ഩ്', r'\1' + 'ന്‌', Strng)
+/Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/backend/venv/lib/python3.13/site-packages/aksharamukha/PostProcess.py:2463: SyntaxWarning: invalid escape sequence '\('
+  ListV = '|'.join(GM.CrunchSymbols(GM.Vowels+GM.VowelSigns+GM.Consonants,'Tamil')+[Tamil.SignMap[0].replace('(','\(').replace(')','\)')])
+/Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/backend/venv/lib/python3.13/site-packages/aksharamukha/PostProcess.py:2463: SyntaxWarning: invalid escape sequence '\)'
+  ListV = '|'.join(GM.CrunchSymbols(GM.Vowels+GM.VowelSigns+GM.Consonants,'Tamil')+[Tamil.SignMap[0].replace('(','\(').replace(')','\)')])
+/Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/backend/venv/lib/python3.13/site-packages/aksharamukha/PostProcess.py:3623: SyntaxWarning: invalid escape sequence '\.'
+  "(?<!\.\w)([\.?!]\s*)\w|"+     # after a ?/!/. and a space,
+/Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/backend/venv/lib/python3.13/site-packages/aksharamukha/PostProcess.py:3624: SyntaxWarning: invalid escape sequence '\w'
+  "\w(?:\.\w)|"+
+/Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/backend/venv/lib/python3.13/site-packages/aksharamukha/PostProcess.py:3625: SyntaxWarning: invalid escape sequence '\w'
+  "(\n)\w|"+               # start/middle of acronym
+/Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/backend/venv/lib/python3.13/site-packages/aksharamukha/PostProcess.py:3626: SyntaxWarning: invalid escape sequence '\w'
+  "(\n(\"|\“|\'|\‘))\w|"+
+/Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/backend/venv/lib/python3.13/site-packages/aksharamukha/PostProcess.py:3627: SyntaxWarning: invalid escape sequence '\w'
+  "(?<=\w\.)\w",               # end of acronym
+/Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/backend/venv/lib/python3.13/site-packages/aksharamukha/ConvertFix.py:30: SyntaxWarning: invalid escape sequence '\s'
+  Strng = re.sub('(\s)' + consonants + '(ə)', r'\1\2ʌ', Strng)
+/Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/backend/venv/lib/python3.13/site-packages/aksharamukha/ConvertFix.py:33: SyntaxWarning: invalid escape sequence '\s'
+  Strng = re.sub('(\s)' + consonants + consonants +'(ə)', r'\1\2ʌ', Strng)
+/Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/backend/venv/lib/python3.13/site-packages/aksharamukha/ConvertFix.py:36: SyntaxWarning: invalid escape sequence '\s'
+  Strng = re.sub('(\s)' + consonants + consonants + consonants +'(ə)', r'\1\2ʌ', Strng)
+/Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/backend/venv/lib/python3.13/site-packages/aksharamukha/ConvertFix.py:174: SyntaxWarning: invalid escape sequence '\^'
+  VowelSignList = '|'.join(GM.CrunchSymbols(GM.VowelSigns,Target)).replace('^','\^').replace('.','\.') # OR of all Consonants - k|kh etc
+/Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/backend/venv/lib/python3.13/site-packages/aksharamukha/ConvertFix.py:174: SyntaxWarning: invalid escape sequence '\.'
+  VowelSignList = '|'.join(GM.CrunchSymbols(GM.VowelSigns,Target)).replace('^','\^').replace('.','\.') # OR of all Consonants - k|kh etc
+/Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/backend/venv/lib/python3.13/site-packages/aksharamukha/ConvertFix.py:175: SyntaxWarning: invalid escape sequence '\^'
+  VowelList = '|'.join(GM.CrunchSymbols(GM.Vowels,Target)).replace('^','\^').replace('.','\.') # OR of all Vowels - a|A etc
+/Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/backend/venv/lib/python3.13/site-packages/aksharamukha/ConvertFix.py:175: SyntaxWarning: invalid escape sequence '\.'
+  VowelList = '|'.join(GM.CrunchSymbols(GM.Vowels,Target)).replace('^','\^').replace('.','\.') # OR of all Vowels - a|A etc
+/Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/backend/venv/lib/python3.13/site-packages/aksharamukha/ConvertFix.py:185: SyntaxWarning: invalid escape sequence '\^'
+  UnAspCons = '|'.join([TargetCons[i] for i in [0,2,5,7,10,12,15,17,20,22]]).replace('^','\^').replace('.','\.') # All Unaspirated Plosives
+/Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/backend/venv/lib/python3.13/site-packages/aksharamukha/ConvertFix.py:185: SyntaxWarning: invalid escape sequence '\.'
+  UnAspCons = '|'.join([TargetCons[i] for i in [0,2,5,7,10,12,15,17,20,22]]).replace('^','\^').replace('.','\.') # All Unaspirated Plosives
+/Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/backend/venv/lib/python3.13/site-packages/aksharamukha/ConvertFix.py:556: SyntaxWarning: invalid escape sequence '\s'
+  Strng = re.sub('(\s|^|\.|,|א)' + '(וֹ|וּ)', 'א' + r'\1\2' , Strng)
+/Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/backend/venv/lib/python3.13/site-packages/aksharamukha/ConvertFix.py:590: SyntaxWarning: invalid escape sequence '\s'
+  Strng = re.sub('(\s|\.|,|^)' + consonantsAll + '(ְ)', r'\1\2' + 'ֶ', Strng)
+/Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/backend/venv/lib/python3.13/site-packages/aksharamukha/ConvertFix.py:593: SyntaxWarning: invalid escape sequence '\s'
+  Strng = re.sub(consonantsAll + '(ְ)' + '(' + r'\1' + ')'+ '(?!(\s|\.|\n|,|$))', r'\1' + 'ֶ' + r'\3', Strng)
+/Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/backend/venv/lib/python3.13/site-packages/aksharamukha/ConvertFix.py:594: SyntaxWarning: invalid escape sequence '\s'
+  Strng = re.sub(consonantsAll + '(ְ)' + consonantsAll + '(ְ)' + '(?!(\s|\.|\n|,|$))', r'\1\2' + r'\3' + 'ֶ' , Strng)
+/Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/backend/venv/lib/python3.13/site-packages/aksharamukha/ConvertFix.py:1689: SyntaxWarning: invalid escape sequence '\s'
+  Strng = re.sub('(\s)\u06BE',r'\1'+'ہ', Strng)
+/Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/backend/venv/lib/python3.13/site-packages/aksharamukha/ConvertFix.py:2178: SyntaxWarning: invalid escape sequence '\s'
+  Strng = re.sub("(?<=\s)("+cons+")"+"("+vir+")"+"(["+EAIO+"])"+"("+cons+")",r"\3\1\2\4",Strng)
+/Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/backend/venv/lib/python3.13/site-packages/aksharamukha/ConvertFix.py:2258: SyntaxWarning: invalid escape sequence '\d'
+  Numbers = sorted(map(int,re.findall("\d+", Strng)),reverse=True)
+/Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/backend/venv/lib/python3.13/site-packages/aksharamukha/ConvertFix.py:2281: SyntaxWarning: invalid escape sequence '\d'
+  Numbers = sorted(map(int,re.findall("\d+", Strng)),reverse=True)
+/Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/backend/venv/lib/python3.13/site-packages/aksharamukha/ConvertFix.py:2415: SyntaxWarning: invalid escape sequence '\W'
+  Strng = re.sub('(\W)nj([aeiou])', r'\1' + 'ny' + r'\2', Strng)
+/Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/backend/venv/lib/python3.13/site-packages/aksharamukha/ConvertFix.py:2448: SyntaxWarning: invalid escape sequence '\W'
+  Strng = re.sub('(\W)nj([aeiou])', r'\1' + 'ny' + r'\2', Strng)
+/Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/backend/venv/lib/python3.13/site-packages/aksharamukha/ConvertFix.py:2984: SyntaxWarning: invalid escape sequence '\.'
+  Strng = re.sub('(?:(?<!\n)(?<!᠂)(?<![,\.\"\?\&\(\)]))' + "(?<!" + vir + ")" + '(' + ListC + ')' + vir + "((" + candraBindu +")?" + "("+ListC+"))",r"\1 \2", Strng) #\u02BF Virama
+/Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/backend/venv/lib/python3.13/site-packages/aksharamukha/ScriptMap/EastIndic/SiddhamRanjana.py:25: SyntaxWarning: invalid escape sequence '\P'
+  tree = ET.parse('C:\Personal Projects\\aksharamukha\ScriptMap\EastIndic\siddham.xml')
+/Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/backend/venv/lib/python3.13/site-packages/aksharamukha/ScriptMap/EastIndic/SiddhamRanjana.py:29: SyntaxWarning: invalid escape sequence '\P'
+  tree = ET.parse('C:\Personal Projects\\aksharamukha\ScriptMap\EastIndic\\ranjana.xml')
+/Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/backend/venv/lib/python3.13/site-packages/aksharamukha/ScriptMap/EastIndic/SiddhamRanjana.py:24: SyntaxWarning: "is" with 'str' literal. Did you mean "=="?
+  if Script is 'Siddham':
+/Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/backend/venv/lib/python3.13/site-packages/aksharamukha/ScriptMap/EastIndic/SiddhamRanjana.py:28: SyntaxWarning: "is" with 'str' literal. Did you mean "=="?
+  elif Script is 'Ranjana':
+INFO:     Started server process [24179]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+[Startup] Initializing database schema...
+[Startup] Database initialization complete
+[Startup] Syncing lessons from filesystem (if available)...
+[LessonSync] Cleared existing lessons and units from database
+  [Unit] Reading Devanagari Script (hi)
+  [Unit] Reading Kannada Script (kn)
+  [Unit] Reading Tamil Script (ta)
+  [Unit] Reading Telugu Script (te)
+  [Unit] Reading Urdu Script (ur)
+[LessonSync] ✅ Loaded 5 units, 98 lessons from filesystem
+[Startup] Lesson sync complete
+✓ Synced SRS quotas for 0 languages
+INFO:     127.0.0.1:55970 - "POST /api/srs/sync-quotas-all HTTP/1.1" 200 OK
+Getting dashboard data for kannada...
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:55970 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55970 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55970 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+✓ Synced SRS quotas for 0 languages
+INFO:     127.0.0.1:55970 - "POST /api/srs/sync-quotas-all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55970 - "GET /api/user-languages HTTP/1.1" 200 OK
+Getting dashboard data for kannada...
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:55970 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55970 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55980 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55978 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55978 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55982 - "GET /api/streak HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55978 - "GET /api/streak HTTP/1.1" 200 OK
+Getting dashboard data for kannada...
+INFO:     127.0.0.1:55974 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56020 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55974 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56022 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56020 - "GET /api/weekly-stats?days=7&offset=14 HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:55977 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
+Getting dashboard data for kannada...
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:56022 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55977 - "GET /api/streak HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56022 - "GET /api/streak HTTP/1.1" 200 OK
+Getting dashboard data for kannada...
+INFO:     127.0.0.1:55977 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56020 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55974 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:55977 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56022 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56020 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+Getting dashboard data for kannada...
+INFO:     127.0.0.1:56020 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:55974 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56022 - "GET /api/streak HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55974 - "GET /api/streak HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56028 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55974 - "GET /api/srs/stats/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56119 - "GET /api/units/kannada HTTP/1.1" 200 OK
+Filters received - mastery: None (type: <class 'NoneType'>), word_class: None (type: <class 'NoneType'>), level: None (type: <class 'NoneType'>)
+Filters as strings - mastery: '', word_class: '', level: ''
+INFO:     127.0.0.1:56119 - "GET /api/vocabulary/kannada?limit=50&offset=0 HTTP/1.1" 200 OK
+INFO:     Will watch for changes in these directories: ['/Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app']
+ERROR:    [Errno 48] Address already in use
+INFO:     127.0.0.1:56711 - "GET / HTTP/1.1" 200 OK
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [24179]
+INFO:     Will watch for changes in these directories: ['/Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app']
+INFO:     Uvicorn running on http://0.0.0.0:8080 (Press CTRL+C to quit)
+INFO:     Started reloader process [28760] using WatchFiles
+/Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/backend/api_client.py:17: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+INFO:     Started server process [29072]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+[Startup] Initializing database schema...
+[Startup] Database initialization complete
+[Startup] Syncing lessons from filesystem (if available)...
+[LessonSync] Cleared existing lessons and units from database
+  [Unit] Reading Devanagari Script (hi)
+  [Unit] Reading Kannada Script (kn)
+  [Unit] Reading Tamil Script (ta)
+  [Unit] Reading Telugu Script (te)
+  [Unit] Reading Urdu Script (ur)
+[LessonSync] ✅ Loaded 5 units, 98 lessons from filesystem
+[Startup] Lesson sync complete
+✓ Synced SRS quotas for 0 languages
+INFO:     127.0.0.1:57307 - "POST /api/srs/sync-quotas-all HTTP/1.1" 200 OK
+Getting dashboard data for kannada...
+INFO:     127.0.0.1:57312 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+✓ Synced SRS quotas for 0 languages
+INFO:     127.0.0.1:57315 - "POST /api/srs/sync-quotas-all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57313 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57317 - "GET /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57312 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:57307 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57315 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+Getting dashboard data for kannada...
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:57312 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57312 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57307 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57315 - "GET /api/streak HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57307 - "GET /api/streak HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57402 - "GET / HTTP/1.1" 200 OK
+WARNING:  WatchFiles detected changes in 'backend/main.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [29072]
+/Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/backend/api_client.py:17: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+INFO:     Started server process [29843]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+[Startup] Initializing database schema...
+[Startup] Database initialization complete
+[Startup] Syncing lessons from filesystem (if available)...
+[LessonSync] Cleared existing lessons and units from database
+  [Unit] Reading Devanagari Script (hi)
+  [Unit] Reading Kannada Script (kn)
+  [Unit] Reading Tamil Script (ta)
+  [Unit] Reading Telugu Script (te)
+  [Unit] Reading Urdu Script (ur)
+[LessonSync] ✅ Loaded 5 units, 98 lessons from filesystem
+[Startup] Lesson sync complete
+INFO:     127.0.0.1:58211 - "OPTIONS /api/srs/sync-quotas-all HTTP/1.1" 200 OK
+✓ Synced SRS quotas for 0 languages
+INFO:     127.0.0.1:58211 - "POST /api/srs/sync-quotas-all HTTP/1.1" 200 OK
+Getting dashboard data for kannada...
+INFO:     127.0.0.1:58216 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+✓ Synced SRS quotas for 0 languages
+INFO:     127.0.0.1:58219 - "POST /api/srs/sync-quotas-all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58217 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58221 - "GET /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58216 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:58211 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58219 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+Getting dashboard data for kannada...
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:58216 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58216 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58211 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58219 - "GET /api/streak HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58211 - "GET /api/streak HTTP/1.1" 200 OK
+Getting dashboard data for null...
+INFO:     127.0.0.1:58211 - "GET /api/user-preferences?keys=apply_to_all_srs,apply_to_all_lang HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58217 - "GET /api/user-interests HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58219 - "GET /api/profile HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58221 - "GET /api/user-languages HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:58216 - "GET /api/dashboard/null HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58216 - "GET /api/languages/learning HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58216 - "GET /api/stats/daily?language=null&days=365 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58216 - "GET /api/stats/language/null HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58216 - "GET /api/srs/settings/null HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58216 - "GET /api/stats/language/null HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58216 - "GET /api/streak HTTP/1.1" 200 OK
+Getting dashboard data for kannada...
+INFO:     127.0.0.1:58221 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58219 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:58216 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58216 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58219 - "GET /api/streak HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58223 - "GET /api/srs/stats/kannada HTTP/1.1" 200 OK
+✓ Synced SRS quotas for 0 languages
+INFO:     127.0.0.1:59541 - "POST /api/srs/sync-quotas-all HTTP/1.1" 200 OK
+Getting dashboard data for kannada...
+INFO:     127.0.0.1:59546 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+✓ Synced SRS quotas for 0 languages
+INFO:     127.0.0.1:59549 - "POST /api/srs/sync-quotas-all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59551 - "GET /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59547 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59546 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:59541 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59549 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+Getting dashboard data for kannada...
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:59546 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59546 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59541 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59549 - "GET /api/streak HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59541 - "GET /api/streak HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59541 - "GET /api/srs/stats/null HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59541 - "GET /api/units/null HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59541 - "GET /api/lessons/null HTTP/1.1" 200 OK
+Filters received - mastery: None (type: <class 'NoneType'>), word_class: None (type: <class 'NoneType'>), level: None (type: <class 'NoneType'>)
+Filters as strings - mastery: '', word_class: '', level: ''
+INFO:     127.0.0.1:59541 - "GET /api/vocabulary/null?limit=50&offset=0 HTTP/1.1" 200 OK
+Getting dashboard data for null...
+INFO:     127.0.0.1:59549 - "GET /api/profile HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59541 - "GET /api/user-preferences?keys=apply_to_all_srs,apply_to_all_lang HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59547 - "GET /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59551 - "GET /api/user-interests HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:59546 - "GET /api/dashboard/null HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59546 - "GET /api/languages/learning HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59546 - "GET /api/stats/daily?language=null&days=365 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59546 - "GET /api/stats/language/null HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59546 - "GET /api/srs/settings/null HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59546 - "GET /api/stats/language/null HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59546 - "GET /api/streak HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59553 - "GET /api/srs/stats/null HTTP/1.1" 200 OK
+Getting dashboard data for kannada...
+INFO:     127.0.0.1:59656 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59657 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:59553 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59553 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59657 - "GET /api/streak HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59657 - "GET /api/srs/stats/null HTTP/1.1" 200 OK
+Filters received - mastery: None (type: <class 'NoneType'>), word_class: None (type: <class 'NoneType'>), level: None (type: <class 'NoneType'>)
+Filters as strings - mastery: '', word_class: '', level: ''
+INFO:     127.0.0.1:59657 - "GET /api/vocabulary/null?limit=50&offset=0 HTTP/1.1" 200 OK
+Getting dashboard data for kannada...
+INFO:     127.0.0.1:59553 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59656 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:59657 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59657 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59656 - "GET /api/streak HTTP/1.1" 200 OK
+WARNING:  WatchFiles detected changes in 'backend/db.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [29843]
+/Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/backend/api_client.py:17: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+INFO:     Started server process [30040]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'backend/db.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [30040]
+/Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/backend/api_client.py:17: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+INFO:     Started server process [30048]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [30048]
+INFO:     Stopping reloader process [28760]
+INFO:     Will watch for changes in these directories: ['/Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app']
+INFO:     Uvicorn running on http://0.0.0.0:8080 (Press CTRL+C to quit)
+INFO:     Started reloader process [30497] using WatchFiles
+/Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/backend/api_client.py:17: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+INFO:     Started server process [30500]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+[Startup] Initializing database schema...
+[Startup] Database initialization complete
+[Startup] Syncing lessons from filesystem (if available)...
+[LessonSync] Cleared existing lessons and units from database
+  [Unit] Reading Devanagari Script (hi)
+  [Unit] Reading Kannada Script (kn)
+  [Unit] Reading Tamil Script (ta)
+  [Unit] Reading Telugu Script (te)
+  [Unit] Reading Urdu Script (ur)
+[LessonSync] ✅ Loaded 5 units, 98 lessons from filesystem
+[Startup] Lesson sync complete
+INFO:     127.0.0.1:60321 - "GET / HTTP/1.1" 200 OK
+✓ Synced SRS quotas for 0 languages
+INFO:     127.0.0.1:60593 - "POST /api/srs/sync-quotas-all HTTP/1.1" 200 OK
+Getting dashboard data for kannada...
+INFO:     127.0.0.1:60597 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+✓ Synced SRS quotas for 0 languages
+INFO:     127.0.0.1:60601 - "POST /api/srs/sync-quotas-all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60603 - "GET /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60599 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60597 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:60593 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60603 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+Getting dashboard data for kannada...
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:60597 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60597 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60593 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60603 - "GET /api/streak HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60593 - "GET /api/streak HTTP/1.1" 200 OK
+Getting dashboard data for null...
+INFO:     127.0.0.1:60593 - "GET /api/user-preferences?keys=apply_to_all_srs,apply_to_all_lang HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60601 - "GET /api/user-interests HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60599 - "GET /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60603 - "GET /api/profile HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:60597 - "GET /api/dashboard/null HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60597 - "GET /api/languages/learning HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60597 - "GET /api/stats/daily?language=null&days=365 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60597 - "GET /api/stats/language/null HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60597 - "GET /api/srs/settings/null HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60597 - "GET /api/stats/language/null HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60597 - "GET /api/streak HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60605 - "OPTIONS /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60605 - "POST /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60605 - "GET /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60605 - "GET /api/languages/learning HTTP/1.1" 200 OK
 Getting dashboard data for tamil...
-INFO:     127.0.0.1:52577 - "GET /api/srs/stats/hindi HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52577 - "GET /api/today-goals-all HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52572 - "GET /api/srs/stats/telugu HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52572 - "GET /api/units/tamil HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52569 - "GET /api/srs/stats/tamil HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52572 - "GET /api/lessons/kannada HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52573 - "GET /api/srs/stats/kannada HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52554 - "GET /api/srs/stats/urdu HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52572 - "GET /api/srs/stats/hindi HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52569 - "GET /api/srs/stats/malayalam HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52573 - "GET /api/srs/stats/tamil HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52554 - "GET /api/srs/stats/telugu HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52572 - "GET /api/lessons/by-id/ta_01_vowels_part_1 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52572 - "GET /api/units/ta_unit_1/lessons HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52572 - "GET /api/lessons/progress/ta_01_vowels_part_1 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52554 - "GET /api/lessons/progress/ta_02_vowels_part_2 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52554 - "GET /api/lessons/progress/ta_04_hard_consonants HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52572 - "GET /api/lessons/progress/ta_03_vowels_part_3 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52554 - "GET /api/lessons/progress/ta_05_soft_consonants HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52572 - "GET /api/lessons/progress/ta_06_medium_consonants HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52554 - "GET /api/lessons/progress/ta_07_the_pulli HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52572 - "GET /api/lessons/progress/ta_08_medial_softening_1 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52554 - "GET /api/lessons/progress/ta_09_medial_softening_2 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52572 - "GET /api/lessons/progress/ta_10_vowel_markers_1 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52554 - "GET /api/lessons/progress/ta_11_vowel_markers_2 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52572 - "GET /api/lessons/progress/ta_12_vowel_markers_3 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52554 - "GET /api/lessons/progress/ta_13_vowel_markers_4 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60672 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60673 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
 Dashboard data retrieved successfully
-INFO:     127.0.0.1:52572 - "GET /api/lessons/progress/ta_14_doubled_consonants HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52576 - "GET /api/dashboard/tamil HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52554 - "GET /api/lessons/progress/ta_15_nasal_plosive_pairs HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52572 - "GET /api/lessons/progress/ta_16_special_retroflexes HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52569 - "GET /api/srs/stats/urdu HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52576 - "GET /api/lessons/progress/ta_17_grantha_letters HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52573 - "GET /api/srs/stats/kannada HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52554 - "GET /api/lessons/progress/ta_18_word_reading HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52572 - "GET /api/streak HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52577 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52577 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52572 - "OPTIONS /api/lessons/progress HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52577 - "GET /api/lessons/progress/ta_01_vowels_part_1 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52572 - "POST /api/lessons/progress HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52572 - "POST /api/lessons/progress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60605 - "GET /api/dashboard/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60605 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60673 - "GET /api/streak HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60673 - "POST /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60673 - "GET /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60673 - "GET /api/languages/learning HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60673 - "POST /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60673 - "GET /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60673 - "GET /api/languages/learning HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60673 - "POST /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60673 - "GET /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60673 - "GET /api/languages/learning HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60673 - "POST /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60673 - "GET /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60673 - "GET /api/languages/learning HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60673 - "POST /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60673 - "GET /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60673 - "GET /api/languages/learning HTTP/1.1" 200 OK
+✓ Synced SRS quotas for 0 languages
+INFO:     127.0.0.1:60711 - "POST /api/srs/sync-quotas-all HTTP/1.1" 200 OK
+Getting dashboard data for kannada...
+INFO:     127.0.0.1:60715 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+✓ Synced SRS quotas for 0 languages
+INFO:     127.0.0.1:60719 - "POST /api/srs/sync-quotas-all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60717 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60715 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:60711 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
+Getting dashboard data for kannada...
+INFO:     127.0.0.1:60719 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60721 - "GET /api/user-languages HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:60715 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
 Getting dashboard data for tamil...
-INFO:     127.0.0.1:52577 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60715 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60711 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60717 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60715 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60723 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60711 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
 Dashboard data retrieved successfully
-INFO:     127.0.0.1:52572 - "GET /api/dashboard/tamil HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52572 - "GET /api/streak HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52554 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52554 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52554 - "GET /api/daily-activities?date=2026-02-15 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52554 - "GET /api/lessons/by-id/ta_01_vowels_part_1 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52554 - "GET /api/units/ta_unit_1/lessons HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52554 - "GET /api/lessons/progress/ta_01_vowels_part_1 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52625 - "GET /api/lessons/progress/ta_03_vowels_part_3 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52623 - "GET /api/lessons/progress/ta_02_vowels_part_2 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52627 - "GET /api/lessons/progress/ta_04_hard_consonants HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52554 - "GET /api/lessons/progress/ta_07_the_pulli HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52631 - "GET /api/lessons/progress/ta_06_medium_consonants HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52630 - "GET /api/lessons/progress/ta_05_soft_consonants HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52625 - "GET /api/lessons/progress/ta_08_medial_softening_1 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52623 - "GET /api/lessons/progress/ta_09_medial_softening_2 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52554 - "GET /api/lessons/progress/ta_11_vowel_markers_2 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52627 - "GET /api/lessons/progress/ta_10_vowel_markers_1 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52630 - "GET /api/lessons/progress/ta_13_vowel_markers_4 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52631 - "GET /api/lessons/progress/ta_12_vowel_markers_3 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52623 - "GET /api/lessons/progress/ta_14_doubled_consonants HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52625 - "GET /api/lessons/progress/ta_15_nasal_plosive_pairs HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52554 - "GET /api/lessons/progress/ta_16_special_retroflexes HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52627 - "GET /api/lessons/progress/ta_17_grantha_letters HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52630 - "GET /api/lessons/progress/ta_18_word_reading HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52630 - "GET /api/lessons/progress/ta_01_vowels_part_1 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52627 - "POST /api/lessons/progress HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52627 - "POST /api/lessons/progress HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60721 - "GET /api/dashboard/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60717 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
 Getting dashboard data for tamil...
-INFO:     127.0.0.1:52914 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60721 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
 Dashboard data retrieved successfully
-INFO:     127.0.0.1:52913 - "GET /api/dashboard/tamil HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52913 - "GET /api/streak HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52915 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52915 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60711 - "GET /api/dashboard/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60719 - "GET /api/streak HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60711 - "GET /api/streak HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60719 - "GET /api/streak HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60711 - "GET /api/streak HTTP/1.1" 200 OK
+Getting dashboard data for tamil...
+INFO:     127.0.0.1:60711 - "GET /api/user-preferences?keys=apply_to_all_srs,apply_to_all_lang HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60723 - "GET /api/user-interests HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60719 - "GET /api/profile HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60717 - "GET /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60715 - "GET /api/srs/stats/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60723 - "GET /api/language-personalization/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60719 - "GET /api/stats/daily?language=tamil&days=365 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60717 - "GET /api/stats/language/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60723 - "GET /api/language-personalization/tamil HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:60721 - "GET /api/dashboard/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60711 - "GET /api/srs/settings/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60715 - "GET /api/srs/stats/tamil HTTP/1.1" 200 OK
+Getting dashboard data for tamil...
+INFO:     127.0.0.1:60715 - "GET /api/stats/language/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60723 - "GET /api/srs/settings/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60721 - "GET /api/languages/learning HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:60717 - "GET /api/dashboard/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60723 - "GET /api/stats/daily?language=tamil&days=365 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60717 - "GET /api/stats/language/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60723 - "GET /api/stats/language/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60723 - "GET /api/srs/settings/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60723 - "GET /api/stats/language/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60723 - "GET /api/streak HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60793 - "POST /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60793 - "GET /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60793 - "GET /api/languages/learning HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60819 - "POST /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60819 - "GET /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60819 - "GET /api/languages/learning HTTP/1.1" 200 OK
+✓ Synced SRS quotas for 0 languages
+INFO:     127.0.0.1:60819 - "POST /api/srs/sync-quotas-all HTTP/1.1" 200 OK
+Getting dashboard data for kannada...
+INFO:     127.0.0.1:60838 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+✓ Synced SRS quotas for 0 languages
+INFO:     127.0.0.1:60841 - "POST /api/srs/sync-quotas-all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60839 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60838 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60843 - "GET /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60841 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:60819 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
+Getting dashboard data for kannada...
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:60841 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60841 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+Getting dashboard data for tamil...
+INFO:     127.0.0.1:60839 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60838 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60841 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60845 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:60843 - "GET /api/dashboard/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60839 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60841 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+Getting dashboard data for tamil...
+INFO:     127.0.0.1:60819 - "GET /api/streak HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60841 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:60838 - "GET /api/dashboard/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60839 - "GET /api/streak HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60838 - "GET /api/streak HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60839 - "GET /api/streak HTTP/1.1" 200 OK
+Getting dashboard data for tamil...
+INFO:     127.0.0.1:60838 - "GET /api/profile HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60839 - "GET /api/user-preferences?keys=apply_to_all_srs,apply_to_all_lang HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60843 - "GET /api/user-interests HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60845 - "GET /api/srs/stats/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60819 - "GET /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60839 - "GET /api/language-personalization/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60843 - "GET /api/stats/daily?language=tamil&days=365 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60845 - "GET /api/stats/language/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60838 - "GET /api/srs/settings/tamil HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:60841 - "GET /api/dashboard/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60819 - "GET /api/srs/stats/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60839 - "GET /api/language-personalization/tamil HTTP/1.1" 200 OK
+Getting dashboard data for tamil...
+INFO:     127.0.0.1:60819 - "GET /api/stats/language/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60845 - "GET /api/srs/settings/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60839 - "GET /api/languages/learning HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:60838 - "GET /api/dashboard/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60845 - "GET /api/stats/language/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60838 - "GET /api/stats/daily?language=tamil&days=365 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60838 - "GET /api/stats/language/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60838 - "GET /api/srs/settings/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60838 - "GET /api/stats/language/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60838 - "GET /api/streak HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60838 - "POST /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60838 - "GET /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60838 - "GET /api/languages/learning HTTP/1.1" 200 OK
+✓ Synced SRS quotas for 0 languages
+INFO:     127.0.0.1:60838 - "POST /api/srs/sync-quotas-all HTTP/1.1" 200 OK
+Getting dashboard data for kannada...
+INFO:     127.0.0.1:60879 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+✓ Synced SRS quotas for 0 languages
+INFO:     127.0.0.1:60882 - "POST /api/srs/sync-quotas-all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60880 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60879 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:60838 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60884 - "GET /api/user-languages HTTP/1.1" 200 OK
+Getting dashboard data for kannada...
+INFO:     127.0.0.1:60882 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:60879 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60879 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+Getting dashboard data for tamil...
+INFO:     127.0.0.1:60884 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60838 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60880 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60884 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:60838 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60879 - "GET /api/dashboard/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60880 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+Getting dashboard data for tamil...
+INFO:     127.0.0.1:60882 - "GET /api/streak HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60882 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:60884 - "GET /api/dashboard/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60880 - "GET /api/streak HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60884 - "GET /api/streak HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60880 - "GET /api/streak HTTP/1.1" 200 OK
+Getting dashboard data for tamil...
+INFO:     127.0.0.1:60884 - "GET /api/profile HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60880 - "GET /api/user-preferences?keys=apply_to_all_srs,apply_to_all_lang HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60879 - "GET /api/user-interests HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60886 - "GET /api/srs/stats/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60838 - "GET /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60879 - "GET /api/stats/daily?language=tamil&days=365 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60880 - "GET /api/language-personalization/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60886 - "GET /api/stats/language/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60838 - "GET /api/srs/stats/tamil HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:60884 - "GET /api/srs/settings/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60882 - "GET /api/dashboard/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60880 - "GET /api/language-personalization/tamil HTTP/1.1" 200 OK
+Getting dashboard data for tamil...
+INFO:     127.0.0.1:60886 - "GET /api/srs/settings/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60880 - "GET /api/languages/learning HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60884 - "GET /api/stats/language/tamil HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:60838 - "GET /api/dashboard/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60880 - "GET /api/stats/language/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60884 - "GET /api/stats/daily?language=tamil&days=365 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60884 - "GET /api/stats/language/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60884 - "GET /api/srs/settings/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60884 - "GET /api/stats/language/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60884 - "GET /api/streak HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62158 - "OPTIONS /api/srs/sync-quotas-all HTTP/1.1" 200 OK
+✓ Synced SRS quotas for 0 languages
+INFO:     127.0.0.1:62158 - "POST /api/srs/sync-quotas-all HTTP/1.1" 200 OK
+✓ Synced SRS quotas for 0 languages
+INFO:     127.0.0.1:62158 - "POST /api/srs/sync-quotas-all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62158 - "GET /api/user-languages HTTP/1.1" 200 OK
+Getting dashboard data for tamil...
+INFO:     127.0.0.1:62167 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62168 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:62158 - "GET /api/dashboard/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62167 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+Getting dashboard data for tamil...
+INFO:     127.0.0.1:62170 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:62168 - "GET /api/dashboard/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62170 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62168 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62167 - "GET /api/streak HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62168 - "GET /api/streak HTTP/1.1" 200 OK
+Getting dashboard data for tamil...
+INFO:     127.0.0.1:62168 - "GET /api/user-preferences?keys=apply_to_all_srs,apply_to_all_lang HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62167 - "GET /api/profile HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62172 - "GET /api/user-interests HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62167 - "GET /api/language-personalization/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62174 - "GET /api/srs/stats/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62172 - "GET /api/stats/daily?language=tamil&days=365 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62158 - "GET /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62168 - "GET /api/srs/settings/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62174 - "GET /api/language-personalization/tamil HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:62167 - "GET /api/stats/language/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62170 - "GET /api/dashboard/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62158 - "GET /api/srs/stats/tamil HTTP/1.1" 200 OK
+Getting dashboard data for tamil...
+INFO:     127.0.0.1:62167 - "GET /api/stats/language/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62172 - "GET /api/srs/settings/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62158 - "GET /api/languages/learning HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:62174 - "GET /api/dashboard/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62158 - "GET /api/stats/language/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62172 - "GET /api/stats/daily?language=tamil&days=365 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62172 - "GET /api/stats/language/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62172 - "GET /api/srs/settings/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62172 - "GET /api/stats/language/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62172 - "GET /api/streak HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62172 - "POST /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62172 - "GET /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62172 - "GET /api/languages/learning HTTP/1.1" 200 OK
+✓ Synced SRS quotas for 0 languages
+INFO:     127.0.0.1:62172 - "POST /api/srs/sync-quotas-all HTTP/1.1" 200 OK
+✓ Synced SRS quotas for 0 languages
+INFO:     127.0.0.1:62172 - "POST /api/srs/sync-quotas-all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62172 - "GET /api/user-languages HTTP/1.1" 200 OK
+Getting dashboard data for tamil...
+INFO:     127.0.0.1:62215 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62216 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:62172 - "GET /api/dashboard/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62215 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62218 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+Getting dashboard data for tamil...
+INFO:     127.0.0.1:62218 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:62216 - "GET /api/dashboard/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62172 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62215 - "GET /api/streak HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62172 - "GET /api/streak HTTP/1.1" 200 OK
+Getting dashboard data for tamil...
+INFO:     127.0.0.1:62215 - "GET /api/profile HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62172 - "GET /api/user-preferences?keys=apply_to_all_srs,apply_to_all_lang HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62220 - "GET /api/user-interests HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62226 - "GET /api/srs/stats/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62218 - "GET /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62172 - "GET /api/language-personalization/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62220 - "GET /api/stats/daily?language=tamil&days=365 HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:62216 - "GET /api/dashboard/tamil HTTP/1.1" 200 OK
+Getting dashboard data for tamil...
+INFO:     127.0.0.1:62226 - "GET /api/stats/language/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62172 - "GET /api/language-personalization/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62215 - "GET /api/srs/settings/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62218 - "GET /api/srs/stats/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62226 - "GET /api/languages/learning HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62216 - "GET /api/srs/settings/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62226 - "GET /api/stats/language/tamil HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:62220 - "GET /api/dashboard/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62218 - "GET /api/stats/daily?language=tamil&days=365 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62226 - "GET /api/stats/language/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62226 - "GET /api/stats/language/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62226 - "GET /api/srs/settings/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62226 - "GET /api/stats/language/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62226 - "GET /api/streak HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62226 - "GET /api/weekly-goals/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62226 - "GET /api/weekly-goals/telugu HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62226 - "GET /api/weekly-goals/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62226 - "GET /api/weekly-goals/malayalam HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62226 - "GET /api/weekly-goals/hindi HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62226 - "GET /api/weekly-goals/urdu HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62226 - "GET /api/week-overview?week_offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62226 - "POST /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62226 - "GET /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62226 - "GET /api/languages/learning HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62226 - "POST /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62226 - "GET /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62226 - "GET /api/languages/learning HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62226 - "POST /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62226 - "GET /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62226 - "GET /api/languages/learning HTTP/1.1" 200 OK
+✓ Synced SRS quotas for 0 languages
+INFO:     127.0.0.1:62747 - "POST /api/srs/sync-quotas-all HTTP/1.1" 200 OK
+✓ Synced SRS quotas for 0 languages
+INFO:     127.0.0.1:62747 - "POST /api/srs/sync-quotas-all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62747 - "GET /api/user-languages HTTP/1.1" 200 OK
+Getting dashboard data for tamil...
+INFO:     127.0.0.1:62753 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62751 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62753 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62751 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:62747 - "GET /api/dashboard/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62756 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+Getting dashboard data for tamil...
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:62751 - "GET /api/dashboard/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62756 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62747 - "GET /api/streak HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62751 - "GET /api/streak HTTP/1.1" 200 OK
+Getting dashboard data for tamil...
+INFO:     127.0.0.1:62747 - "GET /api/profile HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62757 - "GET /api/user-interests HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62751 - "GET /api/user-preferences?keys=apply_to_all_srs,apply_to_all_lang HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62764 - "GET /api/srs/stats/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62753 - "GET /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62757 - "GET /api/language-personalization/tamil HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:62751 - "GET /api/stats/daily?language=tamil&days=365 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62756 - "GET /api/dashboard/tamil HTTP/1.1" 200 OK
+Getting dashboard data for tamil...
+INFO:     127.0.0.1:62747 - "GET /api/srs/settings/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62764 - "GET /api/stats/language/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62757 - "GET /api/language-personalization/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62751 - "GET /api/languages/learning HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62764 - "GET /api/stats/language/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62753 - "GET /api/srs/stats/tamil HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:62751 - "GET /api/stats/daily?language=tamil&days=365 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62756 - "GET /api/dashboard/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62747 - "GET /api/srs/settings/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62751 - "GET /api/stats/language/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62747 - "GET /api/stats/language/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62747 - "GET /api/srs/settings/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62747 - "GET /api/stats/language/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62747 - "GET /api/streak HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62747 - "GET /api/weekly-goals/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62747 - "GET /api/weekly-goals/telugu HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62747 - "GET /api/weekly-goals/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62747 - "GET /api/weekly-goals/malayalam HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62747 - "GET /api/weekly-goals/hindi HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62747 - "GET /api/weekly-goals/urdu HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62862 - "GET /api/units/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62863 - "GET /api/srs/stats/tamil HTTP/1.1" 200 OK
+✓ Synced SRS quotas for 0 languages
+INFO:     127.0.0.1:62863 - "POST /api/srs/sync-quotas-all HTTP/1.1" 200 OK
+✓ Synced SRS quotas for 0 languages
+INFO:     127.0.0.1:62863 - "POST /api/srs/sync-quotas-all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62862 - "GET /api/user-languages HTTP/1.1" 200 OK
+Getting dashboard data for tamil...
+INFO:     127.0.0.1:62863 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62873 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62863 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62875 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:62862 - "GET /api/dashboard/tamil HTTP/1.1" 200 OK
+Getting dashboard data for tamil...
+INFO:     127.0.0.1:62875 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62873 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:62863 - "GET /api/dashboard/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62862 - "GET /api/streak HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62863 - "GET /api/streak HTTP/1.1" 200 OK
+Filters received - mastery: None (type: <class 'NoneType'>), word_class: None (type: <class 'NoneType'>), level: None (type: <class 'NoneType'>)
+Filters as strings - mastery: '', word_class: '', level: ''
+INFO:     127.0.0.1:62863 - "GET /api/vocabulary/tamil?limit=50&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62862 - "GET /api/srs/stats/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62862 - "GET /api/srs/stats/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62863 - "GET /api/srs/stats/tamil HTTP/1.1" 200 OK
+Filters received - mastery: None (type: <class 'NoneType'>), word_class: None (type: <class 'NoneType'>), level: None (type: <class 'NoneType'>)
+Filters as strings - mastery: '', word_class: '', level: ''
+INFO:     127.0.0.1:62911 - "GET /api/vocabulary/tamil?limit=50&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62912 - "GET /api/srs/stats/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62949 - "GET /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62951 - "POST /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62953 - "GET /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62955 - "GET /api/languages/learning HTTP/1.1" 200 OK
+WARNING:  WatchFiles detected changes in 'backend/main.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [30500]
+/Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/backend/api_client.py:17: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+INFO:     Started server process [32309]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'backend/main.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [32309]
+[Startup] Initializing database schema...
+[Startup] Database initialization complete
+[Startup] Syncing lessons from filesystem (if available)...
+[LessonSync] Cleared existing lessons and units from database
+  [Unit] Reading Devanagari Script (hi)
+  [Unit] Reading Kannada Script (kn)
+  [Unit] Reading Tamil Script (ta)
+  [Unit] Reading Telugu Script (te)
+  [Unit] Reading Urdu Script (ur)
+[LessonSync] ✅ Loaded 5 units, 98 lessons from filesystem
+[Startup] Lesson sync complete
+/Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/backend/api_client.py:17: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+INFO:     Started server process [32317]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'backend/main.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [32317]
+[Startup] Initializing database schema...
+[Startup] Database initialization complete
+[Startup] Syncing lessons from filesystem (if available)...
+[LessonSync] Cleared existing lessons and units from database
+  [Unit] Reading Devanagari Script (hi)
+  [Unit] Reading Kannada Script (kn)
+  [Unit] Reading Tamil Script (ta)
+  [Unit] Reading Telugu Script (te)
+  [Unit] Reading Urdu Script (ur)
+[LessonSync] ✅ Loaded 5 units, 98 lessons from filesystem
+[Startup] Lesson sync complete
+/Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/backend/api_client.py:17: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+INFO:     Started server process [32335]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'backend/main.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [32335]
+[Startup] Initializing database schema...
+[Startup] Database initialization complete
+[Startup] Syncing lessons from filesystem (if available)...
+[LessonSync] Cleared existing lessons and units from database
+  [Unit] Reading Devanagari Script (hi)
+  [Unit] Reading Kannada Script (kn)
+  [Unit] Reading Tamil Script (ta)
+  [Unit] Reading Telugu Script (te)
+  [Unit] Reading Urdu Script (ur)
+[LessonSync] ✅ Loaded 5 units, 98 lessons from filesystem
+[Startup] Lesson sync complete
+/Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/backend/api_client.py:17: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+INFO:     Started server process [32339]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [32339]
+[Startup] Initializing database schema...
+[Startup] Database initialization complete
+[Startup] Syncing lessons from filesystem (if available)...
+[LessonSync] Cleared existing lessons and units from database
+  [Unit] Reading Devanagari Script (hi)
+  [Unit] Reading Kannada Script (kn)
+  [Unit] Reading Tamil Script (ta)
+  [Unit] Reading Telugu Script (te)
+  [Unit] Reading Urdu Script (ur)
+[LessonSync] ✅ Loaded 5 units, 98 lessons from filesystem
+[Startup] Lesson sync complete
+INFO:     Stopping reloader process [30497]
+INFO:     Will watch for changes in these directories: ['/Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app']
+INFO:     Uvicorn running on http://0.0.0.0:8080 (Press CTRL+C to quit)
+INFO:     Started reloader process [32965] using WatchFiles
+/Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/backend/api_client.py:17: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+INFO:     Started server process [33088]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+[Startup] Initializing database schema...
+[Startup] Database initialization complete
+[Startup] Syncing lessons from filesystem (if available)...
+[LessonSync] Cleared existing lessons and units from database
+  [Unit] Reading Devanagari Script (hi)
+  [Unit] Reading Kannada Script (kn)
+  [Unit] Reading Tamil Script (ta)
+  [Unit] Reading Telugu Script (te)
+  [Unit] Reading Urdu Script (ur)
+[LessonSync] ✅ Loaded 5 units, 98 lessons from filesystem
+[Startup] Lesson sync complete
+INFO:     127.0.0.1:63581 - "GET /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63583 - "POST /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63585 - "GET /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63587 - "POST /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63589 - "GET /api/user-languages HTTP/1.1" 200 OK
+INFO:     Will watch for changes in these directories: ['/Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app']
+ERROR:    [Errno 48] Address already in use
+INFO:     127.0.0.1:63621 - "GET /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63623 - "POST /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63625 - "GET /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63627 - "POST /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63629 - "GET /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63703 - "POST /api/user-languages HTTP/1.1" 200 OK
+✓ Synced SRS quotas for 0 languages
+INFO:     127.0.0.1:63917 - "POST /api/srs/sync-quotas-all HTTP/1.1" 200 OK
+✓ Synced SRS quotas for 0 languages
+INFO:     127.0.0.1:63917 - "POST /api/srs/sync-quotas-all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63917 - "GET /api/user-languages HTTP/1.1" 200 OK
+Getting dashboard data for kannada...
+INFO:     127.0.0.1:63922 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63923 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:63917 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63922 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+Getting dashboard data for kannada...
+INFO:     127.0.0.1:63925 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63922 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:63923 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63925 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63917 - "GET /api/streak HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63925 - "GET /api/streak HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63925 - "GET /api/srs/stats/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63917 - "GET /api/srs/stats/kannada HTTP/1.1" 200 OK
+Getting dashboard data for kannada...
+INFO:     127.0.0.1:63917 - "GET /api/user-preferences?keys=apply_to_all_srs,apply_to_all_lang HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63925 - "GET /api/profile HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63935 - "GET /api/user-interests HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63922 - "GET /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63937 - "GET /api/srs/stats/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63925 - "GET /api/language-personalization/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63935 - "GET /api/stats/daily?language=kannada&days=365 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63925 - "GET /api/language-personalization/kannada HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:63922 - "GET /api/stats/language/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63923 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63937 - "GET /api/srs/stats/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63917 - "GET /api/srs/settings/kannada HTTP/1.1" 200 OK
+Getting dashboard data for kannada...
+INFO:     127.0.0.1:63917 - "GET /api/languages/learning HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63923 - "GET /api/stats/language/kannada HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:63922 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63937 - "GET /api/srs/settings/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63917 - "GET /api/stats/daily?language=kannada&days=365 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63937 - "GET /api/stats/language/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63917 - "GET /api/stats/language/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63917 - "GET /api/srs/settings/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63917 - "GET /api/stats/language/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63917 - "GET /api/streak HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63917 - "GET /api/weekly-goals/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63917 - "GET /api/weekly-goals/telugu HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63917 - "GET /api/weekly-goals/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63917 - "GET /api/weekly-goals/malayalam HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63917 - "GET /api/weekly-goals/hindi HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63917 - "GET /api/weekly-goals/urdu HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63917 - "OPTIONS /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63917 - "POST /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63917 - "GET /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63917 - "GET /api/languages/learning HTTP/1.1" 200 OK
+Getting dashboard data for kannada...
+INFO:     127.0.0.1:63970 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63971 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:63917 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63917 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63971 - "GET /api/streak HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63971 - "POST /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63971 - "GET /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63971 - "GET /api/languages/learning HTTP/1.1" 200 OK
+Getting dashboard data for kannada...
+INFO:     127.0.0.1:63970 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63917 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:63971 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63971 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63917 - "GET /api/streak HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63917 - "POST /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63917 - "GET /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63917 - "GET /api/languages/learning HTTP/1.1" 200 OK
+Getting dashboard data for kannada...
+INFO:     127.0.0.1:63971 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63970 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:63917 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63917 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63970 - "GET /api/streak HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63970 - "POST /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63970 - "GET /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63970 - "GET /api/languages/learning HTTP/1.1" 200 OK
+Getting dashboard data for kannada...
+INFO:     127.0.0.1:63917 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63971 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:63970 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63970 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63971 - "GET /api/streak HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63971 - "POST /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63971 - "GET /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63971 - "GET /api/languages/learning HTTP/1.1" 200 OK
+Getting dashboard data for kannada...
+INFO:     127.0.0.1:63970 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63917 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:63971 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63971 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63917 - "GET /api/streak HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64026 - "POST /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64026 - "GET /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64026 - "GET /api/languages/learning HTTP/1.1" 200 OK
+Getting dashboard data for kannada...
+INFO:     127.0.0.1:64029 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64030 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:64026 - "GET /api/dashboard/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64026 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64030 - "GET /api/streak HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64030 - "POST /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64030 - "GET /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64030 - "GET /api/languages/learning HTTP/1.1" 200 OK
+Getting dashboard data for telugu...
+INFO:     127.0.0.1:64029 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64026 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:64030 - "GET /api/dashboard/telugu HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64030 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64026 - "GET /api/streak HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64026 - "POST /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64026 - "GET /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64026 - "GET /api/languages/learning HTTP/1.1" 200 OK
+Getting dashboard data for malayalam...
+INFO:     127.0.0.1:64030 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64029 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:64026 - "GET /api/dashboard/malayalam HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64026 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64029 - "GET /api/streak HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64029 - "POST /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64029 - "GET /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64029 - "GET /api/languages/learning HTTP/1.1" 200 OK
+Getting dashboard data for hindi...
+INFO:     127.0.0.1:64026 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64030 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:64029 - "GET /api/dashboard/hindi HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64029 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64030 - "GET /api/streak HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64030 - "POST /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64030 - "GET /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64030 - "GET /api/languages/learning HTTP/1.1" 200 OK
+Getting dashboard data for urdu...
+INFO:     127.0.0.1:64029 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64026 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:64030 - "GET /api/dashboard/urdu HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64030 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64026 - "GET /api/streak HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64026 - "POST /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64026 - "GET /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64026 - "GET /api/languages/learning HTTP/1.1" 200 OK
+✓ Synced SRS quotas for 0 languages
+INFO:     127.0.0.1:64026 - "POST /api/srs/sync-quotas-all HTTP/1.1" 200 OK
+✓ Synced SRS quotas for 0 languages
+INFO:     127.0.0.1:64026 - "POST /api/srs/sync-quotas-all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64026 - "GET /api/user-languages HTTP/1.1" 200 OK
+Getting dashboard data for null...
+INFO:     127.0.0.1:64026 - "GET /api/user-preferences?keys=apply_to_all_srs,apply_to_all_lang HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64077 - "GET /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64074 - "GET /api/profile HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64078 - "GET /api/user-interests HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:64075 - "GET /api/dashboard/null HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64075 - "GET /api/languages/learning HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64075 - "GET /api/stats/daily?language=null&days=365 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64075 - "GET /api/stats/language/null HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64075 - "GET /api/srs/settings/null HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64075 - "GET /api/stats/language/null HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64075 - "GET /api/streak HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64114 - "POST /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64114 - "GET /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64114 - "GET /api/languages/learning HTTP/1.1" 200 OK
+Getting dashboard data for tamil...
+INFO:     127.0.0.1:64117 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64121 - "GET /api/units/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64119 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64122 - "GET /api/srs/stats/tamil HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:64114 - "GET /api/dashboard/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64114 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64122 - "GET /api/streak HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64122 - "POST /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64122 - "GET /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64122 - "GET /api/languages/learning HTTP/1.1" 200 OK
+Getting dashboard data for tamil...
+INFO:     127.0.0.1:64119 - "GET /api/units/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64114 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64121 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64128 - "GET /api/srs/stats/telugu HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64117 - "GET /api/srs/stats/tamil HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:64122 - "GET /api/dashboard/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64122 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64117 - "GET /api/streak HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64117 - "POST /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64117 - "GET /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64117 - "GET /api/languages/learning HTTP/1.1" 200 OK
+Getting dashboard data for tamil...
+INFO:     127.0.0.1:64122 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64128 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64121 - "GET /api/units/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64114 - "GET /api/srs/stats/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64119 - "GET /api/srs/stats/telugu HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64122 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64128 - "GET /api/srs/stats/kannada HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:64117 - "GET /api/dashboard/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64117 - "GET /api/streak HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64117 - "POST /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64117 - "GET /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64117 - "GET /api/languages/learning HTTP/1.1" 200 OK
+Getting dashboard data for tamil...
+INFO:     127.0.0.1:64119 - "GET /api/units/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64122 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64128 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64114 - "GET /api/srs/stats/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64121 - "GET /api/srs/stats/telugu HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:64117 - "GET /api/dashboard/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64119 - "GET /api/srs/stats/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64121 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64128 - "GET /api/srs/stats/malayalam HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64119 - "GET /api/streak HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64119 - "POST /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64119 - "GET /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64119 - "GET /api/languages/learning HTTP/1.1" 200 OK
+Getting dashboard data for tamil...
+INFO:     127.0.0.1:64128 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64117 - "GET /api/units/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64121 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64122 - "GET /api/srs/stats/telugu HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64114 - "GET /api/srs/stats/tamil HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:64117 - "GET /api/srs/stats/malayalam HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64119 - "GET /api/dashboard/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64128 - "GET /api/srs/stats/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64121 - "GET /api/srs/stats/hindi HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64114 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64114 - "GET /api/streak HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64114 - "POST /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64114 - "GET /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64114 - "GET /api/languages/learning HTTP/1.1" 200 OK
+Getting dashboard data for tamil...
+INFO:     127.0.0.1:64121 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64128 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64119 - "GET /api/units/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64117 - "GET /api/srs/stats/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64122 - "GET /api/srs/stats/telugu HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64121 - "GET /api/srs/stats/kannada HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:64114 - "GET /api/dashboard/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64128 - "GET /api/srs/stats/malayalam HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64119 - "GET /api/srs/stats/hindi HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64122 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64117 - "GET /api/srs/stats/urdu HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64119 - "GET /api/streak HTTP/1.1" 200 OK
+Filters received - mastery: None (type: <class 'NoneType'>), word_class: None (type: <class 'NoneType'>), level: None (type: <class 'NoneType'>)
+Filters as strings - mastery: '', word_class: '', level: ''
+INFO:     127.0.0.1:64119 - "GET /api/vocabulary/tamil?limit=50&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64121 - "GET /api/srs/stats/hindi HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64122 - "GET /api/srs/stats/telugu HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64128 - "GET /api/srs/stats/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64117 - "GET /api/srs/stats/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64114 - "GET /api/srs/stats/malayalam HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64119 - "GET /api/srs/stats/urdu HTTP/1.1" 200 OK
+✓ Synced SRS quotas for 0 languages
+INFO:     127.0.0.1:64179 - "POST /api/srs/sync-quotas-all HTTP/1.1" 200 OK
+✓ Synced SRS quotas for 0 languages
+INFO:     127.0.0.1:64179 - "POST /api/srs/sync-quotas-all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64179 - "GET /api/user-languages HTTP/1.1" 200 OK
+Getting dashboard data for tamil...
+INFO:     127.0.0.1:64184 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64185 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64184 - "GET /api/today-goals-all HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:64179 - "GET /api/dashboard/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64187 - "GET /api/weekly-stats?days=7&offset=0 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64185 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+Getting dashboard data for tamil...
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:64184 - "GET /api/dashboard/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64187 - "GET /api/weekly-stats?days=7&offset=7 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64185 - "GET /api/streak HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64187 - "GET /api/streak HTTP/1.1" 200 OK
+Getting dashboard data for tamil...
+INFO:     127.0.0.1:64185 - "GET /api/profile HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64189 - "GET /api/user-interests HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64187 - "GET /api/user-preferences?keys=apply_to_all_srs,apply_to_all_lang HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64191 - "GET /api/srs/stats/tamil HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:64184 - "GET /api/dashboard/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64189 - "GET /api/srs/stats/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64185 - "GET /api/srs/stats/telugu HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64187 - "GET /api/srs/stats/malayalam HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64191 - "GET /api/srs/stats/hindi HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64185 - "GET /api/language-personalization/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64184 - "GET /api/srs/stats/urdu HTTP/1.1" 200 OK
+Getting dashboard data for tamil...
+INFO:     127.0.0.1:64187 - "GET /api/stats/daily?language=tamil&days=365 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64191 - "GET /api/stats/language/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64189 - "GET /api/srs/settings/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64179 - "GET /api/user-languages HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64185 - "GET /api/srs/stats/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64191 - "GET /api/languages/learning HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64187 - "GET /api/srs/stats/kannada HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64189 - "GET /api/srs/stats/telugu HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64191 - "GET /api/language-personalization/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64185 - "GET /api/srs/stats/hindi HTTP/1.1" 200 OK
+Dashboard data retrieved successfully
+INFO:     127.0.0.1:64179 - "GET /api/srs/stats/malayalam HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64184 - "GET /api/dashboard/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64191 - "GET /api/stats/language/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64187 - "GET /api/srs/stats/urdu HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64185 - "GET /api/stats/daily?language=tamil&days=365 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64189 - "GET /api/srs/settings/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64189 - "GET /api/stats/language/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64185 - "GET /api/stats/language/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64189 - "GET /api/srs/settings/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64189 - "GET /api/stats/language/tamil HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64189 - "GET /api/streak HTTP/1.1" 200 OK
+WARNING:  WatchFiles detected changes in 'backend/db.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [33088]
+/Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/backend/api_client.py:17: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+INFO:     Started server process [37247]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'backend/main.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [37247]
+[Startup] Initializing database schema...
+[Startup] Database initialization complete
+[Startup] Syncing lessons from filesystem (if available)...
+[LessonSync] Cleared existing lessons and units from database
+  [Unit] Reading Devanagari Script (hi)
+  [Unit] Reading Kannada Script (kn)
+  [Unit] Reading Tamil Script (ta)
+  [Unit] Reading Telugu Script (te)
+  [Unit] Reading Urdu Script (ur)
+[LessonSync] ✅ Loaded 5 units, 98 lessons from filesystem
+[Startup] Lesson sync complete
+/Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/backend/api_client.py:17: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+INFO:     Started server process [37250]
+INFO:     Waiting for application startup.
+Traceback (most recent call last):
+  File "/Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/backend/main.py", line 82, in startup_event
+    summary = db.sync_vocab_from_csvs()
+  File "/Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/backend/db.py", line 914, in sync_vocab_from_csvs
+    load_vocabulary_from_csv(language)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/backend/db.py", line 1049, in load_vocabulary_from_csv
+    ensure_lesson_words_table()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/backend/db.py", line 1068, in ensure_lesson_words_table
+    cursor.execute('CREATE UNIQUE INDEX IF NOT EXISTS idx_lesson_words_unique ON lesson_words(language, lesson_id, text)')
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.OperationalError: no such column: lesson_id
+INFO:     Application startup complete.
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [37250]
+[Startup] Initializing database schema...
+[Startup] Database initialization complete
+[Startup] Syncing lessons from filesystem (if available)...
+[LessonSync] Cleared existing lessons and units from database
+  [Unit] Reading Devanagari Script (hi)
+  [Unit] Reading Kannada Script (kn)
+  [Unit] Reading Tamil Script (ta)
+  [Unit] Reading Telugu Script (te)
+  [Unit] Reading Urdu Script (ur)
+[LessonSync] ✅ Loaded 5 units, 98 lessons from filesystem
+[Startup] Lesson sync complete
+[Startup] Syncing vocabulary from CSVs...
+[VocabSync] kannada: mismatch_reload (csv=9877, db=8)
+Existing vocabulary for kannada detected (8 rows) - deleting and reloading...
+Loading vocabulary from /Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/vocab/kannada-oxford-5000.csv...
+  Loaded 9877 words from /Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/vocab/kannada-oxford-5000.csv (origin=default)
+[Startup] Vocabulary sync failed: no such column: lesson_id
+INFO:     Stopping reloader process [32965]
+/Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/backend/api_client.py:17: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+INFO:     Started server process [37895]
+INFO:     Waiting for application startup.
+Traceback (most recent call last):
+  File "/Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/backend/main.py", line 82, in startup_event
+    summary = db.sync_vocab_from_csvs()
+  File "/Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/backend/db.py", line 914, in sync_vocab_from_csvs
+    load_vocabulary_from_csv(language)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/backend/db.py", line 1049, in load_vocabulary_from_csv
+    ensure_lesson_words_table()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/backend/db.py", line 1068, in ensure_lesson_words_table
+    cursor.execute('CREATE UNIQUE INDEX IF NOT EXISTS idx_lesson_words_unique ON lesson_words(language, lesson_id, text)')
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.OperationalError: no such column: lesson_id
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8080 (Press CTRL+C to quit)
+/Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/backend/api_client.py:17: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+INFO:     Started server process [38639]
+INFO:     Waiting for application startup.
+Traceback (most recent call last):
+  File "/Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/backend/main.py", line 82, in startup_event
+    summary = db.sync_vocab_from_csvs()
+  File "/Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/backend/db.py", line 914, in sync_vocab_from_csvs
+    load_vocabulary_from_csv(language)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/backend/db.py", line 1049, in load_vocabulary_from_csv
+    ensure_lesson_words_table()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/backend/db.py", line 1068, in ensure_lesson_words_table
+    cursor.execute('CREATE UNIQUE INDEX IF NOT EXISTS idx_lesson_words_unique ON lesson_words(language, lesson_id, text)')
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.OperationalError: no such column: lesson_id
+INFO:     Application startup complete.
+ERROR:    [Errno 48] error while attempting to bind on address ('0.0.0.0', 8080): address already in use
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+[Startup] Initializing database schema...
+[Startup] Database initialization complete
+[Startup] Syncing lessons from filesystem (if available)...
+[LessonSync] Cleared existing lessons and units from database
+  [Unit] Reading Devanagari Script (hi)
+  [Unit] Reading Kannada Script (kn)
+  [Unit] Reading Tamil Script (ta)
+  [Unit] Reading Telugu Script (te)
+  [Unit] Reading Urdu Script (ur)
+[LessonSync] ✅ Loaded 5 units, 98 lessons from filesystem
+[Startup] Lesson sync complete
+[Startup] Syncing vocabulary from CSVs...
+[VocabSync] kannada: up-to-date (9877 rows), skipping
+[VocabSync] tamil: up-to-date (9877 rows), skipping
+[VocabSync] telugu: mismatch_reload (csv=9875, db=2)
+Existing vocabulary for telugu detected (2 rows) - deleting and reloading...
+Loading vocabulary from /Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/vocab/telugu-oxford-5000.csv...
+  Loaded 9875 words from /Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/vocab/telugu-oxford-5000.csv (origin=default)
+[Startup] Vocabulary sync failed: no such column: lesson_id
+/Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/backend/api_client.py:17: FutureWarning: 
+
+All support for the `google.generativeai` package has ended. It will no longer be receiving 
+updates or bug fixes. Please switch to the `google.genai` package as soon as possible.
+See README for more details:
+
+https://github.com/google-gemini/deprecated-generative-ai-python/blob/main/README.md
+
+  import google.generativeai as genai
+INFO:     Started server process [39114]
+INFO:     Waiting for application startup.
+Traceback (most recent call last):
+  File "/Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/backend/main.py", line 82, in startup_event
+    summary = db.sync_vocab_from_csvs()
+  File "/Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/backend/db.py", line 914, in sync_vocab_from_csvs
+    load_vocabulary_from_csv(language)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/backend/db.py", line 1049, in load_vocabulary_from_csv
+    ensure_lesson_words_table()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/backend/db.py", line 1068, in ensure_lesson_words_table
+    cursor.execute('CREATE UNIQUE INDEX IF NOT EXISTS idx_lesson_words_unique ON lesson_words(language, lesson_id, text)')
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.OperationalError: no such column: lesson_id
+INFO:     Application startup complete.
+ERROR:    [Errno 48] error while attempting to bind on address ('0.0.0.0', 8080): address already in use
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+[Startup] Initializing database schema...
+[Startup] Database initialization complete
+[Startup] Syncing lessons from filesystem (if available)...
+[LessonSync] Cleared existing lessons and units from database
+  [Unit] Reading Devanagari Script (hi)
+  [Unit] Reading Kannada Script (kn)
+  [Unit] Reading Tamil Script (ta)
+  [Unit] Reading Telugu Script (te)
+  [Unit] Reading Urdu Script (ur)
+[LessonSync] ✅ Loaded 5 units, 98 lessons from filesystem
+[Startup] Lesson sync complete
+[Startup] Syncing vocabulary from CSVs...
+[VocabSync] kannada: up-to-date (9877 rows), skipping
+[VocabSync] tamil: up-to-date (9877 rows), skipping
+[VocabSync] telugu: up-to-date (9875 rows), skipping
+[VocabSync] malayalam: initial_load (csv=9876, db=0)
+Loading vocabulary from /Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/vocab/malayalam-oxford-5000.csv...
+  Loaded 9876 words from /Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/vocab/malayalam-oxford-5000.csv (origin=default)
+[Startup] Vocabulary sync failed: no such column: lesson_id
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [37895]
+[Startup] Initializing database schema...
+[Startup] Database initialization complete
+[Startup] Syncing lessons from filesystem (if available)...
+[LessonSync] Cleared existing lessons and units from database
+  [Unit] Reading Devanagari Script (hi)
+  [Unit] Reading Kannada Script (kn)
+  [Unit] Reading Tamil Script (ta)
+  [Unit] Reading Telugu Script (te)
+  [Unit] Reading Urdu Script (ur)
+[LessonSync] ✅ Loaded 5 units, 98 lessons from filesystem
+[Startup] Lesson sync complete
+[Startup] Syncing vocabulary from CSVs...
+[VocabSync] kannada: up-to-date (9877 rows), skipping
+[VocabSync] tamil: initial_load (csv=9877, db=0)
+Loading vocabulary from /Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/vocab/tamil-oxford-5000.csv...
+  Loaded 9877 words from /Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/vocab/tamil-oxford-5000.csv (origin=default)
+[Startup] Vocabulary sync failed: no such column: lesson_id

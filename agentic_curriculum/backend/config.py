@@ -41,7 +41,7 @@ class Settings(BaseSettings):
     max_cost_per_task: float = Field(10.0, env="MAX_COST_PER_TASK")
     
     # Lesson Paths
-    lessons_base_path: str = Field("../backend/lessons", env="LESSONS_BASE_PATH")
+    lessons_base_path: str = Field("../language_learning_app/backend/lessons", env="LESSONS_BASE_PATH")
     
     class Config:
         env_file = _ENV_FILE

@@ -1,0 +1,182 @@
+{
+  "lesson_id": "ta_17_reading_words",
+  "language": "Tamil",
+  "title": "Reading Real Words",
+  "subtitle": "Putting it all together with common vocabulary",
+  "description": "Practice reading complete Tamil words using everything you've learned so far.",
+  "estimated_minutes": 18.0,
+  "cefr_level": "A0",
+  "tags": [
+    "script",
+    "reading",
+    "basics"
+  ],
+  "skills_learned": [
+    "Reading multi-syllable words",
+    "Applying all learned rules",
+    "Common vocabulary recognition"
+  ],
+  "steps": [
+    {
+      "type": "content",
+      "step_title": "Reading Real Words",
+      "content_markdown": "# Reading Real Words\n\nPractice reading complete Tamil words using everything you've learned so far."
+    },
+    {
+      "type": "content",
+      "step_title": "Word Practice",
+      "content_markdown": "## Let's Read Words!\n\nUsing what you've learned, try reading these words:\n\n| Tamil | Transliteration | Meaning |\n|---------|-----------------|--------|\n| **வணக்கம்** | vanakkam | hello/greetings |\n| **நன்றி** | nandri | thank you |\n| **தண்ணீர்** | thanniir | water |\n| **சாப்பாடு** | saappaadu | food/meal |\n| **புத்தகம்** | putthagam | book |\n| **பள்ளிக்கூடம்** | pallikuudam | school |\n| **மருந்து** | marunthu | medicine |\n| **கடை** | kadai | shop |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q1",
+      "step_title": "Read: வணக்கம்",
+      "question": "What does **வணக்கம்** (vanakkam) mean?",
+      "options": [
+        "hello/greetings",
+        "water",
+        "thank you",
+        "food/meal"
+      ],
+      "correct_answer": "hello/greetings",
+      "feedback": "Correct! **வணக்கம்** (vanakkam) means 'hello/greetings'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q2",
+      "step_title": "Read: நன்றி",
+      "question": "What does **நன்றி** (nandri) mean?",
+      "options": [
+        "thank you",
+        "food/meal",
+        "hello/greetings",
+        "water"
+      ],
+      "correct_answer": "thank you",
+      "feedback": "Correct! **நன்றி** (nandri) means 'thank you'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q3",
+      "step_title": "Read: தண்ணீர்",
+      "question": "What does **தண்ணீர்** (thanniir) mean?",
+      "options": [
+        "hello/greetings",
+        "food/meal",
+        "thank you",
+        "water"
+      ],
+      "correct_answer": "water",
+      "feedback": "Correct! **தண்ணீர்** (thanniir) means 'water'."
+    },
+    {
+      "type": "free_response",
+      "id": "q4",
+      "step_title": "Transliterate the Word",
+      "question": "Type the transliteration for **வணக்கம்** (meaning: hello/greetings)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "vanakkam",
+        "vanakkam",
+        "vanakkam"
+      ],
+      "hint": "Sound it out character by character."
+    },
+    {
+      "type": "content",
+      "step_title": "Lesson Summary",
+      "content_markdown": "## Summary\n\nExcellent reading practice! You worked through 8 words/phrases. Keep building your speed and confidence!"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q5",
+      "step_title": "Final Check",
+      "question": "What does **கடை** mean?",
+      "options": [
+        "shop",
+        "hello/greetings",
+        "water",
+        "school"
+      ],
+      "correct_answer": "shop",
+      "feedback": "Perfect! You're reading Tamil with confidence!"
+    },
+    {
+      "type": "free_response",
+      "id": "q6",
+      "step_title": "Practice: வணக்கம்",
+      "question": "Type the meaning of **வணக்கம்** (vanakkam)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "hello/greetings"
+      ],
+      "hint": "Transliteration: vanakkam"
+    },
+    {
+      "type": "free_response",
+      "id": "q7",
+      "step_title": "Practice: நன்றி",
+      "question": "Type the meaning of **நன்றி** (nandri)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "thank you"
+      ],
+      "hint": "Transliteration: nandri"
+    },
+    {
+      "type": "free_response",
+      "id": "q8",
+      "step_title": "Practice: தண்ணீர்",
+      "question": "Type the meaning of **தண்ணீர்** (thanniir)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "water"
+      ],
+      "hint": "Transliteration: thanniir"
+    },
+    {
+      "type": "free_response",
+      "id": "q9",
+      "step_title": "Practice: சாப்பாடு",
+      "question": "Type the meaning of **சாப்பாடு** (saappaadu)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "food/meal"
+      ],
+      "hint": "Transliteration: saappaadu"
+    },
+    {
+      "type": "free_response",
+      "id": "q10",
+      "step_title": "Practice: புத்தகம்",
+      "question": "Type the meaning of **புத்தகம்** (putthagam)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "book"
+      ],
+      "hint": "Transliteration: putthagam"
+    },
+    {
+      "type": "free_response",
+      "id": "q11",
+      "step_title": "Practice: பள்ளிக்கூடம்",
+      "question": "Type the meaning of **பள்ளிக்கூடம்** (pallikuudam)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "school"
+      ],
+      "hint": "Transliteration: pallikuudam"
+    },
+    {
+      "type": "free_response",
+      "id": "q12",
+      "step_title": "Practice: மருந்து",
+      "question": "Type the meaning of **மருந்து** (marunthu)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "medicine"
+      ],
+      "hint": "Transliteration: marunthu"
+    }
+  ]
+}

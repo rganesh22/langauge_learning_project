@@ -1,0 +1,17 @@
+Lemmatize these Kannada words to their base/dictionary forms.
+
+Rules for Kannada:
+- Verbs: convert to informal imperative/base form (e.g., ಹೋಗುತ್ತೇನೆ → ಹೋಗು).
+- Nouns: remove case endings and plurals (e.g., ಮನೆಯಲ್ಲಿ → ಮನೆ).
+- Adjectives: use base form.
+- Remove tense, aspect, plural, and agreement suffixes.
+
+CRITICAL REQUIREMENTS:
+1) Output ONLY in Kannada script (ಕನ್ನಡ). NO Latin/English letters.
+2) Remove any English words from the output.
+3) Return ONLY a JSON array with objects: {{"word": "base_form", "word_class": "noun/verb/..."}}
+
+Words to lemmatize:
+{words}
+
+Return ONLY the JSON array, no other text.

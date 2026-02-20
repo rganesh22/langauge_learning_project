@@ -1,0 +1,192 @@
+{
+  "lesson_id": "te_10_halant",
+  "language": "Telugu",
+  "title": "The Halant (Virama)",
+  "subtitle": "Removing the inherent vowel",
+  "description": "How the virama works in Telugu.",
+  "estimated_minutes": 20.4,
+  "cefr_level": "A0",
+  "tags": [
+    "script",
+    "reading",
+    "basics"
+  ],
+  "skills_learned": [
+    "Virama usage",
+    "Consonant clusters"
+  ],
+  "steps": [
+    {
+      "type": "content",
+      "step_title": "The Halant (Virama)",
+      "content_markdown": "# The Halant (Virama)\n\nHow the virama works in Telugu.\n\n### Today's Characters\n**క్ vs క** · **న్ vs న** · **ల్ vs ల**"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: క్ vs క (k vs ka)",
+      "content_markdown": "## క్ vs క — k vs ka\n\n**Sound:** pure k vs ka\n\n**Memory Trick:** Small tick = no vowel"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q1",
+      "step_title": "Identify: k vs ka",
+      "question": "Which character represents the sound **k vs ka** (pure k vs ka)?",
+      "options": [
+        "న్ vs న",
+        "ల్ vs ల",
+        "?",
+        "క్ vs క"
+      ],
+      "correct_answer": "క్ vs క",
+      "feedback": "Correct! **క్ vs క** is the pure k vs ka sound. Small tick = no vowel"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: న్ vs న (n vs na)",
+      "content_markdown": "## న్ vs న — n vs na\n\n**Sound:** pure n vs na\n\n**Memory Trick:** For consonant clusters\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **న్ vs న** | pure n vs na | n vs na |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q2",
+      "step_title": "Identify: n vs na",
+      "question": "Which character represents the sound **n vs na** (pure n vs na)?",
+      "options": [
+        "క్ vs క",
+        "ల్ vs ల",
+        "న్ vs న",
+        "?"
+      ],
+      "correct_answer": "న్ vs న",
+      "feedback": "Correct! **న్ vs న** is the pure n vs na sound. For consonant clusters"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ల్ vs ల (l vs la)",
+      "content_markdown": "## ల్ vs ల — l vs la\n\n**Sound:** pure l vs la\n\n**Memory Trick:** Word-final consonants"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q3",
+      "step_title": "Identify: l vs la",
+      "question": "Which character represents the sound **l vs la** (pure l vs la)?",
+      "options": [
+        "ల్ vs ల",
+        "క్ vs క",
+        "న్ vs న",
+        "?"
+      ],
+      "correct_answer": "ల్ vs ల",
+      "feedback": "Correct! **ల్ vs ల** is the pure l vs la sound. Word-final consonants"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q4",
+      "step_title": "Sound Match",
+      "question": "What sound does **క్ vs క** make?",
+      "options": [
+        "pure k vs ka",
+        "pure n vs na",
+        "pure l vs la"
+      ],
+      "correct_answer": "pure k vs ka",
+      "feedback": "Right! **క్ vs క** = k vs ka = pure k vs ka."
+    },
+    {
+      "type": "content",
+      "step_title": "Visual Comparison",
+      "content_markdown": "## Compare the Shapes\n\nLook closely at how these characters differ:\n\n- **క్ vs క** (k vs ka) vs **న్ vs న** (n vs na)\n\nNotice the subtle differences in strokes, dots, or curves!"
+    },
+    {
+      "type": "free_response",
+      "id": "q5",
+      "step_title": "Type the Sound",
+      "question": "What is the transliteration (Roman letters) for **ల్ vs ల**?",
+      "ai_grading": false,
+      "accepted_responses": [
+        "l vs la",
+        "l vs la",
+        "L VS LA"
+      ],
+      "hint": "It sounds like 'pure l vs la'."
+    },
+    {
+      "type": "content",
+      "step_title": "Word Practice",
+      "content_markdown": "## Let's Read Words!\n\nUsing what you've learned, try reading these words:\n\n| Telugu | Transliteration | Meaning |\n|---------|-----------------|--------|\n| **అక్క** | akka | elder sister |\n| **తెల్ల** | tella | white |\n| **విద్య** | vidya | education |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q6",
+      "step_title": "Read: అక్క",
+      "question": "What does **అక్క** (akka) mean?",
+      "options": [
+        "white",
+        "education",
+        "elder sister",
+        "hello"
+      ],
+      "correct_answer": "elder sister",
+      "feedback": "Correct! **అక్క** (akka) means 'elder sister'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q7",
+      "step_title": "Read: తెల్ల",
+      "question": "What does **తెల్ల** (tella) mean?",
+      "options": [
+        "hello",
+        "white",
+        "education",
+        "elder sister"
+      ],
+      "correct_answer": "white",
+      "feedback": "Correct! **తెల్ల** (tella) means 'white'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q8",
+      "step_title": "Read: విద్య",
+      "question": "What does **విద్య** (vidya) mean?",
+      "options": [
+        "education",
+        "hello",
+        "white",
+        "elder sister"
+      ],
+      "correct_answer": "education",
+      "feedback": "Correct! **విద్య** (vidya) means 'education'."
+    },
+    {
+      "type": "free_response",
+      "id": "q9",
+      "step_title": "Transliterate the Word",
+      "question": "Type the transliteration for **అక్క** (meaning: elder sister)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "akka",
+        "akka",
+        "akka"
+      ],
+      "hint": "Sound it out character by character."
+    },
+    {
+      "type": "content",
+      "step_title": "Lesson Summary",
+      "content_markdown": "## Summary\n\nGreat job! Here's everything you learned:\n\n| Character | Transliteration | Sound |\n|-----------|----------------|-------|\n| **క్ vs క** | k vs ka | pure k vs ka |\n| **న్ vs న** | n vs na | pure n vs na |\n| **ల్ vs ల** | l vs la | pure l vs la |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q10",
+      "step_title": "Final Check",
+      "question": "How many new characters/concepts did we cover in this lesson?",
+      "options": [
+        "3",
+        "5",
+        "2",
+        "8"
+      ],
+      "correct_answer": "3",
+      "feedback": "Correct! We covered 3 characters today. Keep practicing!"
+    }
+  ]
+}

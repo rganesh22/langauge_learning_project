@@ -1,0 +1,180 @@
+{
+  "lesson_id": "te_19_sentences",
+  "language": "Telugu",
+  "title": "Reading Sentences",
+  "subtitle": "Full sentence practice",
+  "description": "Read complete Telugu sentences.",
+  "estimated_minutes": 18.0,
+  "cefr_level": "A0",
+  "tags": [
+    "script",
+    "reading",
+    "basics"
+  ],
+  "skills_learned": [
+    "Sentence reading"
+  ],
+  "steps": [
+    {
+      "type": "content",
+      "step_title": "Reading Sentences",
+      "content_markdown": "# Reading Sentences\n\nRead complete Telugu sentences."
+    },
+    {
+      "type": "content",
+      "step_title": "Word Practice",
+      "content_markdown": "## Let's Read Words!\n\nUsing what you've learned, try reading these words:\n\n| Telugu | Transliteration | Meaning |\n|---------|-----------------|--------|\n| **నేను తెలుగు నేర్చుకుంటున్నాను** | neenu telugu neerchukuntunnaanu | I am learning Telugu |\n| **ఇది నా పుస్తకం** | idi naa pusthakam | This is my book |\n| **మీ పేరు ఏమిటి?** | mii peeru eemiti? | What is your name? |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q1",
+      "step_title": "Read: నేను తెలుగు నేర్చుకుంటున్నాను",
+      "question": "What does **నేను తెలుగు నేర్చుకుంటున్నాను** (neenu telugu neerchukuntunnaanu) mean?",
+      "options": [
+        "I am learning Telugu",
+        "What is your name?",
+        "hello",
+        "This is my book"
+      ],
+      "correct_answer": "I am learning Telugu",
+      "feedback": "Correct! **నేను తెలుగు నేర్చుకుంటున్నాను** (neenu telugu neerchukuntunnaanu) means 'I am learning Telugu'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q2",
+      "step_title": "Read: ఇది నా పుస్తకం",
+      "question": "What does **ఇది నా పుస్తకం** (idi naa pusthakam) mean?",
+      "options": [
+        "hello",
+        "I am learning Telugu",
+        "What is your name?",
+        "This is my book"
+      ],
+      "correct_answer": "This is my book",
+      "feedback": "Correct! **ఇది నా పుస్తకం** (idi naa pusthakam) means 'This is my book'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q3",
+      "step_title": "Read: మీ పేరు ఏమిటి?",
+      "question": "What does **మీ పేరు ఏమిటి?** (mii peeru eemiti?) mean?",
+      "options": [
+        "I am learning Telugu",
+        "This is my book",
+        "What is your name?",
+        "hello"
+      ],
+      "correct_answer": "What is your name?",
+      "feedback": "Correct! **మీ పేరు ఏమిటి?** (mii peeru eemiti?) means 'What is your name?'."
+    },
+    {
+      "type": "free_response",
+      "id": "q4",
+      "step_title": "Transliterate the Word",
+      "question": "Type the transliteration for **నేను తెలుగు నేర్చుకుంటున్నాను** (meaning: I am learning Telugu)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "neenu telugu neerchukuntunnaanu",
+        "neenu telugu neerchukuntunnaanu",
+        "neenuteluguneerchukuntunnaanu"
+      ],
+      "hint": "Sound it out character by character."
+    },
+    {
+      "type": "content",
+      "step_title": "Lesson Summary",
+      "content_markdown": "## Summary\n\nExcellent reading practice! You worked through 3 words/phrases. Keep building your speed and confidence!"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q5",
+      "step_title": "Final Check",
+      "question": "What does **మీ పేరు ఏమిటి?** mean?",
+      "options": [
+        "What is your name?",
+        "I am learning Telugu",
+        "water",
+        "school"
+      ],
+      "correct_answer": "What is your name?",
+      "feedback": "Perfect! You're reading Telugu with confidence!"
+    },
+    {
+      "type": "free_response",
+      "id": "q6",
+      "step_title": "Practice: మీ పేరు ఏమిటి?",
+      "question": "Type the meaning of **మీ పేరు ఏమిటి?** (mii peeru eemiti?)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "What is your name?"
+      ],
+      "hint": "Transliteration: mii peeru eemiti?"
+    },
+    {
+      "type": "free_response",
+      "id": "q7",
+      "step_title": "Practice: నేను తెలుగు నేర్చుకుంటున్నాను",
+      "question": "Type the meaning of **నేను తెలుగు నేర్చుకుంటున్నాను** (neenu telugu neerchukuntunnaanu)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "I am learning Telugu"
+      ],
+      "hint": "Transliteration: neenu telugu neerchukuntunnaanu"
+    },
+    {
+      "type": "free_response",
+      "id": "q8",
+      "step_title": "Practice: ఇది నా పుస్తకం",
+      "question": "Type the meaning of **ఇది నా పుస్తకం** (idi naa pusthakam)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "This is my book"
+      ],
+      "hint": "Transliteration: idi naa pusthakam"
+    },
+    {
+      "type": "free_response",
+      "id": "q9",
+      "step_title": "Practice: మీ పేరు ఏమిటి?",
+      "question": "Type the meaning of **మీ పేరు ఏమిటి?** (mii peeru eemiti?)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "What is your name?"
+      ],
+      "hint": "Transliteration: mii peeru eemiti?"
+    },
+    {
+      "type": "free_response",
+      "id": "q10",
+      "step_title": "Practice: నేను తెలుగు నేర్చుకుంటున్నాను",
+      "question": "Type the meaning of **నేను తెలుగు నేర్చుకుంటున్నాను** (neenu telugu neerchukuntunnaanu)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "I am learning Telugu"
+      ],
+      "hint": "Transliteration: neenu telugu neerchukuntunnaanu"
+    },
+    {
+      "type": "free_response",
+      "id": "q11",
+      "step_title": "Practice: ఇది నా పుస్తకం",
+      "question": "Type the meaning of **ఇది నా పుస్తకం** (idi naa pusthakam)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "This is my book"
+      ],
+      "hint": "Transliteration: idi naa pusthakam"
+    },
+    {
+      "type": "free_response",
+      "id": "q12",
+      "step_title": "Practice: మీ పేరు ఏమిటి?",
+      "question": "Type the meaning of **మీ పేరు ఏమిటి?** (mii peeru eemiti?)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "What is your name?"
+      ],
+      "hint": "Transliteration: mii peeru eemiti?"
+    }
+  ]
+}

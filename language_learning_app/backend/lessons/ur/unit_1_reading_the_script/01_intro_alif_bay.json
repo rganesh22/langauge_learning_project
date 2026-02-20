@@ -1,0 +1,213 @@
+{
+  "lesson_id": "ur_01_intro_alif_bay",
+  "language": "Urdu",
+  "title": "Introduction & First Letters",
+  "subtitle": "ا (alif), ب (bay), پ (pay), ت (tay)",
+  "description": "Learn the basics of Urdu script: right-to-left, connected letters, and your first four.",
+  "estimated_minutes": 22.8,
+  "cefr_level": "A0",
+  "tags": [
+    "script",
+    "reading",
+    "basics"
+  ],
+  "skills_learned": [
+    "Right-to-left reading",
+    "Letter connection basics",
+    "Dot-counting for ب پ ت"
+  ],
+  "steps": [
+    {
+      "type": "content",
+      "step_title": "Welcome to Urdu Script!",
+      "content_markdown": "# Welcome to Urdu Script! 🎉\n\nYou're about to learn to read Urdu — one of the beautiful writing systems of South Asia.\n\n## Today's Mission\nLearn **4 new characters** and start reading real words!\n\n### What You'll Learn\n- **ا** (alif) — a / aa\n- **ب** (bay) — b\n- **پ** (pay) — p\n- **ت** (tay) — t\n\nLet's begin! 💪"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ا (alif)",
+      "content_markdown": "## ا — alif\n\n**Sound:** a / aa\n\n**Memory Trick:** A simple vertical stroke — the foundation. It doesn't connect to the left."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q1",
+      "step_title": "Identify: alif",
+      "question": "Which character represents the sound **alif** (a / aa)?",
+      "options": [
+        "ا",
+        "ت",
+        "پ",
+        "ب"
+      ],
+      "correct_answer": "ا",
+      "feedback": "Correct! **ا** is the a / aa sound. A simple vertical stroke — the foundation. It doesn't connect to the left."
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ب (bay)",
+      "content_markdown": "## ب — bay\n\n**Sound:** b\n\n**Memory Trick:** A boat shape with ONE dot below\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **ب** | b | bay |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q2",
+      "step_title": "Identify: bay",
+      "question": "Which character represents the sound **bay** (b)?",
+      "options": [
+        "ب",
+        "ت",
+        "پ",
+        "ا"
+      ],
+      "correct_answer": "ب",
+      "feedback": "Correct! **ب** is the b sound. A boat shape with ONE dot below"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: پ (pay)",
+      "content_markdown": "## پ — pay\n\n**Sound:** p\n\n**Memory Trick:** Same boat, THREE dots below — Urdu-specific!\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **پ** | p | pay |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q3",
+      "step_title": "Identify: pay",
+      "question": "Which character represents the sound **pay** (p)?",
+      "options": [
+        "ا",
+        "پ",
+        "ب",
+        "ت"
+      ],
+      "correct_answer": "پ",
+      "feedback": "Correct! **پ** is the p sound. Same boat, THREE dots below — Urdu-specific!"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ت (tay)",
+      "content_markdown": "## ت — tay\n\n**Sound:** t\n\n**Memory Trick:** Same boat, TWO dots ABOVE"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q4",
+      "step_title": "Identify: tay",
+      "question": "Which character represents the sound **tay** (t)?",
+      "options": [
+        "ا",
+        "ب",
+        "پ",
+        "ت"
+      ],
+      "correct_answer": "ت",
+      "feedback": "Correct! **ت** is the t sound. Same boat, TWO dots ABOVE"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q5",
+      "step_title": "Sound Match",
+      "question": "What sound does **ا** make?",
+      "options": [
+        "a / aa",
+        "b",
+        "p",
+        "t"
+      ],
+      "correct_answer": "a / aa",
+      "feedback": "Right! **ا** = alif = a / aa."
+    },
+    {
+      "type": "content",
+      "step_title": "Visual Comparison",
+      "content_markdown": "## Compare the Shapes\n\nLook closely at how these characters differ:\n\n- **ا** (alif) vs **ب** (bay)\n- **پ** (pay) vs **ت** (tay)\n\nNotice the subtle differences in strokes, dots, or curves!"
+    },
+    {
+      "type": "free_response",
+      "id": "q6",
+      "step_title": "Type the Sound",
+      "question": "What is the transliteration (Roman letters) for **ت**?",
+      "ai_grading": false,
+      "accepted_responses": [
+        "tay",
+        "tay",
+        "TAY"
+      ],
+      "hint": "It sounds like 't'."
+    },
+    {
+      "type": "content",
+      "step_title": "Word Practice",
+      "content_markdown": "## Let's Read Words!\n\nUsing what you've learned, try reading these words:\n\n| Urdu | Transliteration | Meaning |\n|---------|-----------------|--------|\n| **اب** | ab | now |\n| **آپ** | aap | you (formal) |\n| **بات** | baat | talk/thing |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q7",
+      "step_title": "Read: اب",
+      "question": "What does **اب** (ab) mean?",
+      "options": [
+        "hello",
+        "now",
+        "talk/thing",
+        "you (formal)"
+      ],
+      "correct_answer": "now",
+      "feedback": "Correct! **اب** (ab) means 'now'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q8",
+      "step_title": "Read: آپ",
+      "question": "What does **آپ** (aap) mean?",
+      "options": [
+        "now",
+        "you (formal)",
+        "hello",
+        "talk/thing"
+      ],
+      "correct_answer": "you (formal)",
+      "feedback": "Correct! **آپ** (aap) means 'you (formal)'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q9",
+      "step_title": "Read: بات",
+      "question": "What does **بات** (baat) mean?",
+      "options": [
+        "you (formal)",
+        "now",
+        "hello",
+        "talk/thing"
+      ],
+      "correct_answer": "talk/thing",
+      "feedback": "Correct! **بات** (baat) means 'talk/thing'."
+    },
+    {
+      "type": "free_response",
+      "id": "q10",
+      "step_title": "Transliterate the Word",
+      "question": "Type the transliteration for **اب** (meaning: now)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "ab",
+        "ab",
+        "ab"
+      ],
+      "hint": "Sound it out character by character."
+    },
+    {
+      "type": "content",
+      "step_title": "Lesson Summary",
+      "content_markdown": "## Summary\n\nGreat job! Here's everything you learned:\n\n| Character | Transliteration | Sound |\n|-----------|----------------|-------|\n| **ا** | alif | a / aa |\n| **ب** | bay | b |\n| **پ** | pay | p |\n| **ت** | tay | t |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q11",
+      "step_title": "Final Check",
+      "question": "How many new characters/concepts did we cover in this lesson?",
+      "options": [
+        "4",
+        "6",
+        "3",
+        "9"
+      ],
+      "correct_answer": "4",
+      "feedback": "Correct! We covered 4 characters today. Keep practicing!"
+    }
+  ]
+}

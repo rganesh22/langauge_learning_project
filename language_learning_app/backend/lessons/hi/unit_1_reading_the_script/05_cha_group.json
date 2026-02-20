@@ -1,0 +1,230 @@
+{
+  "lesson_id": "hi_05_cha_group",
+  "language": "Hindi",
+  "title": "The Cha-Group (Palatals)",
+  "subtitle": "च, छ, ज, झ, ञ",
+  "description": "Palatal consonants — produced at the hard palate.",
+  "estimated_minutes": 25.2,
+  "cefr_level": "A0",
+  "tags": [
+    "script",
+    "reading",
+    "basics"
+  ],
+  "skills_learned": [
+    "Palatal consonants"
+  ],
+  "steps": [
+    {
+      "type": "content",
+      "step_title": "The Cha-Group (Palatals)",
+      "content_markdown": "# The Cha-Group (Palatals)\n\nPalatal consonants — produced at the hard palate.\n\n### Today's Characters\n**च** · **छ** · **ज** · **झ** · **ञ**"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: च (cha)",
+      "content_markdown": "## च — cha\n\n**Sound:** cha in chair\n\n**Memory Trick:** Palatal stop"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q1",
+      "step_title": "Identify: cha",
+      "question": "Which character represents the sound **cha** (cha in chair)?",
+      "options": [
+        "च",
+        "छ",
+        "झ",
+        "ज"
+      ],
+      "correct_answer": "च",
+      "feedback": "Correct! **च** is the cha in chair sound. Palatal stop"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: छ (chha)",
+      "content_markdown": "## छ — chha\n\n**Sound:** chha (aspirated)\n\n**Memory Trick:** ch + puff\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **छ** | chha (aspirated) | chha |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q2",
+      "step_title": "Identify: chha",
+      "question": "Which character represents the sound **chha** (chha (aspirated))?",
+      "options": [
+        "झ",
+        "च",
+        "छ",
+        "ज"
+      ],
+      "correct_answer": "छ",
+      "feedback": "Correct! **छ** is the chha (aspirated) sound. ch + puff"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ज (ja)",
+      "content_markdown": "## ज — ja\n\n**Sound:** ja in jar\n\n**Memory Trick:** Voiced ch\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **ज** | ja in jar | ja |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q3",
+      "step_title": "Identify: ja",
+      "question": "Which character represents the sound **ja** (ja in jar)?",
+      "options": [
+        "छ",
+        "झ",
+        "ज",
+        "च"
+      ],
+      "correct_answer": "ज",
+      "feedback": "Correct! **ज** is the ja in jar sound. Voiced ch"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: झ (jha)",
+      "content_markdown": "## झ — jha\n\n**Sound:** jha\n\n**Memory Trick:** Voiced + aspirated\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **झ** | jha | jha |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q4",
+      "step_title": "Identify: jha",
+      "question": "Which character represents the sound **jha** (jha)?",
+      "options": [
+        "झ",
+        "च",
+        "छ",
+        "ज"
+      ],
+      "correct_answer": "झ",
+      "feedback": "Correct! **झ** is the jha sound. Voiced + aspirated"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ञ (nya)",
+      "content_markdown": "## ञ — nya\n\n**Sound:** ny as in canyon\n\n**Memory Trick:** Rare standalone"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q5",
+      "step_title": "Identify: nya",
+      "question": "Which character represents the sound **nya** (ny as in canyon)?",
+      "options": [
+        "ञ",
+        "छ",
+        "ज",
+        "च"
+      ],
+      "correct_answer": "ञ",
+      "feedback": "Correct! **ञ** is the ny as in canyon sound. Rare standalone"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q6",
+      "step_title": "Sound Match",
+      "question": "What sound does **च** make?",
+      "options": [
+        "cha in chair",
+        "chha (aspirated)",
+        "ja in jar",
+        "jha"
+      ],
+      "correct_answer": "cha in chair",
+      "feedback": "Right! **च** = cha = cha in chair."
+    },
+    {
+      "type": "content",
+      "step_title": "Visual Comparison",
+      "content_markdown": "## Compare the Shapes\n\nLook closely at how these characters differ:\n\n- **च** (cha) vs **छ** (chha)\n- **ज** (ja) vs **झ** (jha)\n\nNotice the subtle differences in strokes, dots, or curves!"
+    },
+    {
+      "type": "free_response",
+      "id": "q7",
+      "step_title": "Type the Sound",
+      "question": "What is the transliteration (Roman letters) for **ञ**?",
+      "ai_grading": false,
+      "accepted_responses": [
+        "nya",
+        "nya",
+        "NYA"
+      ],
+      "hint": "It sounds like 'ny as in canyon'."
+    },
+    {
+      "type": "content",
+      "step_title": "Word Practice",
+      "content_markdown": "## Let's Read Words!\n\nUsing what you've learned, try reading these words:\n\n| Hindi | Transliteration | Meaning |\n|---------|-----------------|--------|\n| **चाय** | chaay | tea |\n| **जल** | jal | water |\n| **झूला** | jhoolaa | swing |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q8",
+      "step_title": "Read: चाय",
+      "question": "What does **चाय** (chaay) mean?",
+      "options": [
+        "swing",
+        "tea",
+        "water",
+        "hello"
+      ],
+      "correct_answer": "tea",
+      "feedback": "Correct! **चाय** (chaay) means 'tea'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q9",
+      "step_title": "Read: जल",
+      "question": "What does **जल** (jal) mean?",
+      "options": [
+        "swing",
+        "hello",
+        "water",
+        "tea"
+      ],
+      "correct_answer": "water",
+      "feedback": "Correct! **जल** (jal) means 'water'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q10",
+      "step_title": "Read: झूला",
+      "question": "What does **झूला** (jhoolaa) mean?",
+      "options": [
+        "hello",
+        "swing",
+        "water",
+        "tea"
+      ],
+      "correct_answer": "swing",
+      "feedback": "Correct! **झूला** (jhoolaa) means 'swing'."
+    },
+    {
+      "type": "free_response",
+      "id": "q11",
+      "step_title": "Transliterate the Word",
+      "question": "Type the transliteration for **चाय** (meaning: tea)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "chaay",
+        "chaay",
+        "chaay"
+      ],
+      "hint": "Sound it out character by character."
+    },
+    {
+      "type": "content",
+      "step_title": "Lesson Summary",
+      "content_markdown": "## Summary\n\nGreat job! Here's everything you learned:\n\n| Character | Transliteration | Sound |\n|-----------|----------------|-------|\n| **च** | cha | cha in chair |\n| **छ** | chha | chha (aspirated) |\n| **ज** | ja | ja in jar |\n| **झ** | jha | jha |\n| **ञ** | nya | ny as in canyon |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q12",
+      "step_title": "Final Check",
+      "question": "How many new characters/concepts did we cover in this lesson?",
+      "options": [
+        "5",
+        "7",
+        "4",
+        "10"
+      ],
+      "correct_answer": "5",
+      "feedback": "Correct! We covered 5 characters today. Keep practicing!"
+    }
+  ]
+}

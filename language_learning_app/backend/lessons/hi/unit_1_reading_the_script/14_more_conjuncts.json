@@ -1,0 +1,212 @@
+{
+  "lesson_id": "hi_14_more_conjuncts",
+  "language": "Hindi",
+  "title": "More Conjuncts & Special Forms",
+  "subtitle": "क्ष, त्र, ज्ञ, द्ध, ट्ट",
+  "description": "Important special conjunct forms.",
+  "estimated_minutes": 22.8,
+  "cefr_level": "A0",
+  "tags": [
+    "script",
+    "reading",
+    "basics"
+  ],
+  "skills_learned": [
+    "Special conjuncts",
+    "Reading literary Hindi"
+  ],
+  "steps": [
+    {
+      "type": "content",
+      "step_title": "More Conjuncts & Special Forms",
+      "content_markdown": "# More Conjuncts & Special Forms\n\nImportant special conjunct forms.\n\n### Today's Characters\n**क्ष** · **त्र** · **ज्ञ** · **द्ध**"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: क्ष (ksha)",
+      "content_markdown": "## क्ष — ksha\n\n**Sound:** ksh\n\n**Memory Trick:** Classic conjunct"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q1",
+      "step_title": "Identify: ksha",
+      "question": "Which character represents the sound **ksha** (ksh)?",
+      "options": [
+        "त्र",
+        "ज्ञ",
+        "क्ष",
+        "द्ध"
+      ],
+      "correct_answer": "क्ष",
+      "feedback": "Correct! **क्ष** is the ksh sound. Classic conjunct"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: त्र (tra)",
+      "content_markdown": "## त्र — tra\n\n**Sound:** tr\n\n**Memory Trick:** Has a special form\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **त्र** | tr | tra |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q2",
+      "step_title": "Identify: tra",
+      "question": "Which character represents the sound **tra** (tr)?",
+      "options": [
+        "क्ष",
+        "द्ध",
+        "ज्ञ",
+        "त्र"
+      ],
+      "correct_answer": "त्र",
+      "feedback": "Correct! **त्र** is the tr sound. Has a special form"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: ज्ञ (gya/jnya)",
+      "content_markdown": "## ज्ञ — gya/jnya\n\n**Sound:** gya\n\n**Memory Trick:** Pronounced 'gya' in Hindi\n\n| Character | Sound | Transliteration |\n|-----------|-------|-----------------|\n| **ज्ञ** | gya | gya/jnya |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q3",
+      "step_title": "Identify: gya/jnya",
+      "question": "Which character represents the sound **gya/jnya** (gya)?",
+      "options": [
+        "द्ध",
+        "ज्ञ",
+        "क्ष",
+        "त्र"
+      ],
+      "correct_answer": "ज्ञ",
+      "feedback": "Correct! **ज्ञ** is the gya sound. Pronounced 'gya' in Hindi"
+    },
+    {
+      "type": "content",
+      "step_title": "Learn: द्ध (ddha)",
+      "content_markdown": "## द्ध — ddha\n\n**Sound:** ddh\n\n**Memory Trick:** Common in words like बुद्ध"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q4",
+      "step_title": "Identify: ddha",
+      "question": "Which character represents the sound **ddha** (ddh)?",
+      "options": [
+        "क्ष",
+        "त्र",
+        "ज्ञ",
+        "द्ध"
+      ],
+      "correct_answer": "द्ध",
+      "feedback": "Correct! **द्ध** is the ddh sound. Common in words like बुद्ध"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q5",
+      "step_title": "Sound Match",
+      "question": "What sound does **क्ष** make?",
+      "options": [
+        "ksh",
+        "tr",
+        "gya",
+        "ddh"
+      ],
+      "correct_answer": "ksh",
+      "feedback": "Right! **क्ष** = ksha = ksh."
+    },
+    {
+      "type": "content",
+      "step_title": "Visual Comparison",
+      "content_markdown": "## Compare the Shapes\n\nLook closely at how these characters differ:\n\n- **क्ष** (ksha) vs **त्र** (tra)\n- **ज्ञ** (gya/jnya) vs **द्ध** (ddha)\n\nNotice the subtle differences in strokes, dots, or curves!"
+    },
+    {
+      "type": "free_response",
+      "id": "q6",
+      "step_title": "Type the Sound",
+      "question": "What is the transliteration (Roman letters) for **द्ध**?",
+      "ai_grading": false,
+      "accepted_responses": [
+        "ddha",
+        "ddha",
+        "DDHA"
+      ],
+      "hint": "It sounds like 'ddh'."
+    },
+    {
+      "type": "content",
+      "step_title": "Word Practice",
+      "content_markdown": "## Let's Read Words!\n\nUsing what you've learned, try reading these words:\n\n| Hindi | Transliteration | Meaning |\n|---------|-----------------|--------|\n| **अक्षर** | akshar | letter |\n| **ज्ञान** | gyaan | knowledge |\n| **बुद्ध** | buddh | Buddha |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q7",
+      "step_title": "Read: अक्षर",
+      "question": "What does **अक्षर** (akshar) mean?",
+      "options": [
+        "hello",
+        "knowledge",
+        "Buddha",
+        "letter"
+      ],
+      "correct_answer": "letter",
+      "feedback": "Correct! **अक्षर** (akshar) means 'letter'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q8",
+      "step_title": "Read: ज्ञान",
+      "question": "What does **ज्ञान** (gyaan) mean?",
+      "options": [
+        "hello",
+        "Buddha",
+        "knowledge",
+        "letter"
+      ],
+      "correct_answer": "knowledge",
+      "feedback": "Correct! **ज्ञान** (gyaan) means 'knowledge'."
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q9",
+      "step_title": "Read: बुद्ध",
+      "question": "What does **बुद्ध** (buddh) mean?",
+      "options": [
+        "hello",
+        "letter",
+        "knowledge",
+        "Buddha"
+      ],
+      "correct_answer": "Buddha",
+      "feedback": "Correct! **बुद्ध** (buddh) means 'Buddha'."
+    },
+    {
+      "type": "free_response",
+      "id": "q10",
+      "step_title": "Transliterate the Word",
+      "question": "Type the transliteration for **अक्षर** (meaning: letter)",
+      "ai_grading": false,
+      "accepted_responses": [
+        "akshar",
+        "akshar",
+        "akshar"
+      ],
+      "hint": "Sound it out character by character."
+    },
+    {
+      "type": "content",
+      "step_title": "Lesson Summary",
+      "content_markdown": "## Summary\n\nGreat job! Here's everything you learned:\n\n| Character | Transliteration | Sound |\n|-----------|----------------|-------|\n| **क्ष** | ksha | ksh |\n| **त्र** | tra | tr |\n| **ज्ञ** | gya/jnya | gya |\n| **द्ध** | ddha | ddh |"
+    },
+    {
+      "type": "multiple_choice",
+      "id": "q11",
+      "step_title": "Final Check",
+      "question": "How many new characters/concepts did we cover in this lesson?",
+      "options": [
+        "4",
+        "6",
+        "3",
+        "9"
+      ],
+      "correct_answer": "4",
+      "feedback": "Correct! We covered 4 characters today. Keep practicing!"
+    }
+  ]
+}
