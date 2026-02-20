@@ -894,6 +894,8 @@ export default function ConversationActivity({ route, navigation }) {
         onClose={() => dictionary.setShowDictionary(false)}
         language={language}
         initialSearchQuery={dictionary.initialSearchQuery}
+        dictionaryLanguage={dictionary.dictionaryLanguage}
+        setDictionaryLanguage={dictionary.setDictionaryLanguage}
       />
     </KeyboardAvoidingView>
   );

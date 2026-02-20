@@ -3921,8 +3921,6 @@ def get_activity_by_id(activity_id: int):
             activity['activity_data'] = {}
     
     return activity
-    
-    return {"history": history}
 
 @app.get("/api/daily-activities")
 def get_daily_activities(date: str):

@@ -679,7 +679,7 @@ export default function VocabLibraryScreen({ route, navigation }) {
                 {/* SRS Stats Chips - Right aligned, icon only */}
                 <View style={styles.languageSrsChips}>
                   <View style={styles.languageSrsChipNew}>
-                    <Ionicons name="add-circle" size={16} color="#5D8EDC" />
+                    <Ionicons name="add-circle" size={16} color="#4A90E2" />
                     <SafeText style={styles.languageSrsChipTextNew}>
                       {langStats.new_count || 0}
                     </SafeText>
@@ -1355,7 +1355,7 @@ const styles = StyleSheet.create({
   languageSrsChipTextNew: {
     fontSize: 13,
     fontWeight: '700',
-    color: '#5D8EDC',
+    color: '#4A90E2',
   },
   languageSrsChipDue: {
     flexDirection: 'row',

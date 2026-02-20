@@ -1,7 +1,7 @@
 export const MASTERY_FILTERS = [
   { label: 'All', value: '', emoji: '●', color: { bg: '#6C757D', text: '#FFFFFF' } },
-  { label: 'New', value: 'new', emoji: '+', color: { bg: '#999999', text: '#FFFFFF' } },
-  { label: 'Learning', value: 'learning', emoji: '▶', color: { bg: '#4A90E2', text: '#FFFFFF' } },
+  { label: 'New', value: 'new', emoji: '+', color: { bg: '#4A90E2', text: '#FFFFFF' } },
+  { label: 'Learning', value: 'learning', emoji: '▶', color: { bg: '#8B5CF6', text: '#FFFFFF' } },
   { label: 'Review', value: 'review', emoji: '↻', color: { bg: '#FF9500', text: '#FFFFFF' } },
   { label: 'Mastered', value: 'mastered', emoji: '✓', color: { bg: '#50C878', text: '#FFFFFF' } },
   { label: 'Due', value: 'due', icon: 'time-outline', color: { bg: '#FF6B6B', text: '#FFFFFF' } },

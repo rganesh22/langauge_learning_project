@@ -2,12 +2,19 @@
  * Hook for managing dictionary display and word click handling
  * Used by all activity components
  */
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export function useDictionary(defaultLanguage) {
   const [showDictionary, setShowDictionary] = useState(false);
   const [initialSearchQuery, setInitialSearchQuery] = useState('');
   const [dictionaryLanguage, setDictionaryLanguage] = useState(defaultLanguage);
+
+  // Sync dictionaryLanguage when the activity's language is resolved / changes
+  useEffect(() => {
+    if (defaultLanguage && defaultLanguage !== dictionaryLanguage) {
+      setDictionaryLanguage(defaultLanguage);
+    }
+  }, [defaultLanguage]);
 
   const handleWordClick = (word, wordLanguage = null) => {
     if (word && typeof word === 'string') {

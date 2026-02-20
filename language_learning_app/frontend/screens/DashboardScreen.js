@@ -280,9 +280,11 @@ export default function DashboardScreen({ navigation }) {
     if (activityType === 'flashcard' || activityType === 'flashcards') {
       navigation.navigate('Flashcards', { language: selectedLanguage });
     } else {
-      navigation.navigate('ActivityHistory', {
-        language: selectedLanguage,
+      navigation.navigate('Activity', {
+        activityId,
         activityType,
+        language: selectedLanguage,
+        fromHistory: true,
       });
     }
   };

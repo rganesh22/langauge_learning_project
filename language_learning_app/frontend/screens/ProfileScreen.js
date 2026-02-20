@@ -228,6 +228,7 @@ const ContributionGraph = ({ data, viewType, language, navigation }) => {
       navigation.navigate('Activity', {
         activityId,
         activityType,
+        language: language,
         fromHistory: true,
       });
     }, 300);
@@ -882,6 +883,24 @@ export default function ProfileScreen() {
       });
       if (!res.ok) throw new Error('Save failed');
 
+      // If the user deselected the currently active language, switch to another
+      const isRemovingCurrent = selectedLanguages.includes(langCode) && ctxLanguage === langCode;
+      if (isRemovingCurrent && newSelection.length > 0) {
+        setCtxLanguage(newSelection[0]);
+      } else if (newSelection.length === 0) {
+        setCtxLanguage(null);
+      }
+
+      // If the deselected language was the default, clear / update default
+      if (selectedLanguages.includes(langCode) && defaultLanguage === langCode) {
+        const newDefault = newSelection.length > 0 ? newSelection[0] : null;
+        if (newDefault) {
+          saveDefaultLanguage(newDefault);
+        } else {
+          setDefaultLanguage(null);
+        }
+      }
+
       // Reload context (propagates to all screens via React context)
       await loadUserLanguages();
       // Reload the Languages section icons/levels on this screen
@@ -972,6 +991,7 @@ export default function ProfileScreen() {
       navigation.navigate('Activity', {
         activityId,
         activityType,
+        language: profileLanguage || ctxLanguage,
         fromHistory: true,
       });
     }, 300);
@@ -1539,8 +1559,11 @@ export default function ProfileScreen() {
         {personalizationExpanded && (
           <View style={styles.personalizationContent}>
             <Text style={styles.personalizationSubtitle}>Languages You're Learning</Text>
+            <Text style={styles.personalizationDescription}>
+              Tap a language to set it as your default.
+            </Text>
 
-            {/* Selected Languages Display */}
+            {/* Selected Languages Display — tap to set default */}
             <View style={styles.selectedLanguagesPreview}>
               {selectedLanguages.length === 0 ? (
                 <Text style={styles.noLanguagesText}>No languages selected yet</Text>
@@ -1548,15 +1571,34 @@ export default function ProfileScreen() {
                 selectedLanguages.map(code => {
                   const lang = LANGUAGES.find(l => l.code === code);
                   if (!lang) return null;
+                  const isDefault = defaultLanguage === code || (!defaultLanguage && code === selectedLanguages[0]);
                   return (
-                    <View key={code} style={styles.languagePreviewChip}>
+                    <TouchableOpacity
+                      key={code}
+                      style={[
+                        styles.languagePreviewChip,
+                        isDefault && styles.languagePreviewChipSelected,
+                      ]}
+                      onPress={() => saveDefaultLanguage(code)}
+                      activeOpacity={0.7}
+                      disabled={savingDefaultLanguage}
+                    >
                       <View style={[styles.languagePreviewIcon, { backgroundColor: lang.color }]}>
-                        <Text style={styles.languagePreviewIconText}>
+                        <Text style={[
+                          styles.languagePreviewIconText,
+                          lang.code === 'urdu' && { fontFamily: 'Noto Nastaliq Urdu' },
+                        ]}>
                           {lang.nativeChar || lang.langCode.toUpperCase()}
                         </Text>
                       </View>
-                      <Text style={styles.languagePreviewName}>{lang.name}</Text>
-                    </View>
+                      <Text style={[
+                        styles.languagePreviewName,
+                        isDefault && { color: '#4A90E2', fontWeight: '600' },
+                      ]}>{lang.name}</Text>
+                      {isDefault && (
+                        <Ionicons name="star" size={16} color="#F59E0B" style={{ marginLeft: 2 }} />
+                      )}
+                    </TouchableOpacity>
                   );
                 })
               )}
@@ -1580,54 +1622,6 @@ export default function ProfileScreen() {
                 {selectedLanguages.length} language{selectedLanguages.length !== 1 ? 's' : ''} selected
               </Text>
             </View>
-
-            {/* Default Language Picker */}
-            {selectedLanguages.length > 0 && (
-              <>
-                <View style={styles.personalizationDivider} />
-                <Text style={styles.personalizationSubtitle}>Default Language</Text>
-                <Text style={styles.personalizationDescription}>
-                  This language opens automatically when you launch the app.
-                </Text>
-                <View style={styles.defaultLanguageRow}>
-                  {selectedLanguages.map(code => {
-                    const lang = LANGUAGES.find(l => l.code === code);
-                    if (!lang) return null;
-                    const isDefault = defaultLanguage === code || (!defaultLanguage && code === selectedLanguages[0]);
-                    return (
-                      <TouchableOpacity
-                        key={code}
-                        style={[
-                          styles.defaultLanguageChip,
-                          isDefault && styles.defaultLanguageChipSelected,
-                        ]}
-                        onPress={() => saveDefaultLanguage(code)}
-                        activeOpacity={0.7}
-                        disabled={savingDefaultLanguage}
-                      >
-                        <View style={[styles.defaultLanguageIcon, { backgroundColor: lang.color }]}>
-                          <Text style={[
-                            styles.defaultLanguageIconText,
-                            lang.code === 'urdu' && { fontFamily: 'Noto Nastaliq Urdu' }
-                          ]}>
-                            {lang.nativeChar || lang.langCode.toUpperCase()}
-                          </Text>
-                        </View>
-                        <Text style={[
-                          styles.defaultLanguageChipText,
-                          isDefault && styles.defaultLanguageChipTextSelected,
-                        ]}>
-                          {lang.name}
-                        </Text>
-                        {isDefault && (
-                          <Ionicons name="checkmark-circle" size={18} color="#4A90E2" style={{ marginLeft: 4 }} />
-                        )}
-                      </TouchableOpacity>
-                    );
-                  })}
-                </View>
-              </>
-            )}
 
             {/* Divider */}
             <View style={styles.personalizationDivider} />
@@ -4610,6 +4604,12 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     paddingHorizontal: 12,
     gap: 8,
+    borderWidth: 2,
+    borderColor: 'transparent',
+  },
+  languagePreviewChipSelected: {
+    backgroundColor: '#EEF4FF',
+    borderColor: '#4A90E2',
   },
   languagePreviewIcon: {
     width: 32,

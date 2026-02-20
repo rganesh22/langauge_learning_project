@@ -33,7 +33,9 @@ export default function VocabularyDictionary({
   dictionaryLanguage,
   setDictionaryLanguage
 }) {
-  const [language, setLanguage] = useState(dictionaryLanguage || initialLanguage || 'kannada');
+  // Prefer dictionaryLanguage (from useDictionary hook) > initialLanguage (activity's language)
+  const effectiveInitial = dictionaryLanguage || initialLanguage || 'kannada';
+  const [language, setLanguage] = useState(effectiveInitial);
   const [showLanguageMenu, setShowLanguageMenu] = useState(false);
   const [searchQuery, setSearchQuery] = useState(initialSearchQuery);
   const [words, setWords] = useState([]);
@@ -51,21 +53,16 @@ export default function VocabularyDictionary({
   const [reviewHistory, setReviewHistory] = useState(null);
   const [showReviewHistory, setShowReviewHistory] = useState(false);
 
-  // Update language when dictionaryLanguage prop changes (from hook)
+  // Sync language whenever the dictionary opens — prefer dictionaryLanguage, fallback to initialLanguage
   useEffect(() => {
-    if (visible && dictionaryLanguage && dictionaryLanguage !== language) {
-      console.log(`Dictionary: Updating language from ${language} to ${dictionaryLanguage}`);
-      setLanguage(dictionaryLanguage);
+    if (visible) {
+      const target = dictionaryLanguage || initialLanguage;
+      if (target && target !== language) {
+        console.log(`Dictionary: Syncing language to ${target} on open`);
+        setLanguage(target);
+      }
     }
-  }, [visible, dictionaryLanguage]);
-
-  // Update language when initialLanguage prop changes
-  useEffect(() => {
-    if (visible && initialLanguage && !dictionaryLanguage && initialLanguage !== language) {
-      console.log(`Dictionary: Updating language from ${language} to ${initialLanguage} (initial)`);
-      setLanguage(initialLanguage);
-    }
-  }, [visible, initialLanguage]);
+  }, [visible, dictionaryLanguage, initialLanguage]);
 
   // Load vocabulary when modal opens or filters change
   useEffect(() => {

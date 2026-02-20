@@ -286,6 +286,9 @@ export default function FlashcardScreen({ route, navigation }) {
   const [previousButtonDisabled, setPreviousButtonDisabled] = useState(false); // Track if previous button was just clicked
   const [pressedCorner, setPressedCorner] = useState(null); // Track which corner is being pressed for visual feedback
   
+  // Track the studyMode for which the deck has already been loaded (prevents re-load on stats refresh)
+  const loadedForModeRef = useRef(null);
+
   // Settings
   const [showSettings, setShowSettings] = useState(false);
   const [showFrontFirst, setShowFrontFirst] = useState(true); // true = front first, false = back first
@@ -626,10 +629,30 @@ export default function FlashcardScreen({ route, navigation }) {
 
   // Load words when study mode is selected
   useEffect(() => {
-    if (studyMode) {
-      loadWords(50, studyMode);
+    // Reset the loaded-mode tracker when returning to mode picker
+    if (!studyMode) {
+      loadedForModeRef.current = null;
+      return;
     }
-  }, [language, studyMode]);
+    // Don't reload the deck if it's already been loaded for this studyMode
+    if (loadedForModeRef.current === studyMode) return;
+    // Wait until srsStats are available so we can size the deck correctly
+    if (!srsStats) return;
+
+    loadedForModeRef.current = studyMode;
+
+    // Use the exact count from srsStats so the deck matches what the user expects
+    let limit;
+    if (studyMode === 'new') {
+      limit = srsStats.new_count || 10;
+    } else if (studyMode === 'reviews') {
+      limit = srsStats.due_count || 10;
+    } else {
+      // 'all' — combined
+      limit = (srsStats.due_count || 0) + (srsStats.new_count || 0) || 10;
+    }
+    loadWords(limit, studyMode);
+  }, [language, studyMode, srsStats]);
 
   // Load language-specific settings
   const loadLanguageSettings = async () => {
@@ -1062,21 +1085,38 @@ export default function FlashcardScreen({ route, navigation }) {
           }
           
           // Check if we're getting low on cards (last 10 cards) - preload more
-          if (nextIndex >= words.length - 10 && !loading) {
+          // But NOT in 'new' mode — in 'new' mode the session ends after the initial batch
+          if (nextIndex >= words.length - 10 && !loading && studyMode !== 'new') {
             console.log('[Flashcards] Running low on cards, loading more...');
             loadMoreCards();
           }
         } else {
-          // Finished current batch - load more cards automatically
-          console.log('[Flashcards] Batch complete, loading more cards...');
-          loadMoreCards();
+          // Finished current batch
+          if (studyMode === 'new') {
+            // In 'new' mode, the session is done after the initial batch
+            console.log('[Flashcards] New-words session complete!');
+            if (completedWords.length > 0) {
+              completeFlashcardActivity();
+            }
+            // Return to mode picker
+            setStudyMode(null);
+            setWords([]);
+            setCurrentIndex(0);
+            setCompletedWords([]);
+            setCompletedCardIndices([]);
+            loadSrsStats();
+          } else {
+            // For reviews/all, load more cards automatically
+            console.log('[Flashcards] Batch complete, loading more cards...');
+            loadMoreCards();
+          }
         }
       });
       
       // Return the next index
       return nextIndex < words.length ? nextIndex : prevIndex;
     });
-  }, [words, position, cardOpacity, flipAnimation, showFrontFirst, navigation, setActiveCorner, setCardTint, setBackgroundColor, cornerOpacities, cardTintOpacity, completeFlashcardActivity]);
+  }, [words, position, cardOpacity, flipAnimation, showFrontFirst, navigation, setActiveCorner, setCardTint, setBackgroundColor, cornerOpacities, cardTintOpacity, completeFlashcardActivity, studyMode, loadMoreCards, completedWords, loadSrsStats]);
 
   const flipCard = useCallback(() => {
     const newValue = isFlipped ? 0 : 180;
@@ -1223,11 +1263,11 @@ export default function FlashcardScreen({ route, navigation }) {
           {srsStats ? (
             <View style={{flexDirection: 'row', gap: 12, marginBottom: 20}}>
               <View style={{flex: 1, backgroundColor: '#FFFFFF', borderRadius: 12, padding: 16, alignItems: 'center', shadowColor: '#000', shadowOffset: {width: 0, height: 1}, shadowOpacity: 0.05, shadowRadius: 3, elevation: 2}}>
-                <SafeText style={{fontSize: 28, fontWeight: '700', color: '#4A90E2'}}>{String(dueCount)}</SafeText>
+                <SafeText style={{fontSize: 28, fontWeight: '700', color: '#FF6B6B'}}>{String(dueCount)}</SafeText>
                 <SafeText style={{fontSize: 12, color: '#888', marginTop: 2}}>{"Due"}</SafeText>
               </View>
               <View style={{flex: 1, backgroundColor: '#FFFFFF', borderRadius: 12, padding: 16, alignItems: 'center', shadowColor: '#000', shadowOffset: {width: 0, height: 1}, shadowOpacity: 0.05, shadowRadius: 3, elevation: 2}}>
-                <SafeText style={{fontSize: 28, fontWeight: '700', color: '#14B8A6'}}>{String(newCount)}</SafeText>
+                <SafeText style={{fontSize: 28, fontWeight: '700', color: '#4A90E2'}}>{String(newCount)}</SafeText>
                 <SafeText style={{fontSize: 12, color: '#888', marginTop: 2}}>{"New"}</SafeText>
               </View>
               <View style={{flex: 1, backgroundColor: '#FFFFFF', borderRadius: 12, padding: 16, alignItems: 'center', shadowColor: '#000', shadowOffset: {width: 0, height: 1}, shadowOpacity: 0.05, shadowRadius: 3, elevation: 2}}>
@@ -1235,7 +1275,7 @@ export default function FlashcardScreen({ route, navigation }) {
                 <SafeText style={{fontSize: 12, color: '#888', marginTop: 2}}>{"Learning"}</SafeText>
               </View>
               <View style={{flex: 1, backgroundColor: '#FFFFFF', borderRadius: 12, padding: 16, alignItems: 'center', shadowColor: '#000', shadowOffset: {width: 0, height: 1}, shadowOpacity: 0.05, shadowRadius: 3, elevation: 2}}>
-                <SafeText style={{fontSize: 28, fontWeight: '700', color: '#F59E0B'}}>{String(totalMastered)}</SafeText>
+                <SafeText style={{fontSize: 28, fontWeight: '700', color: '#50C878'}}>{String(totalMastered)}</SafeText>
                 <SafeText style={{fontSize: 12, color: '#888', marginTop: 2}}>{"Mastered"}</SafeText>
               </View>
             </View>
@@ -1243,12 +1283,12 @@ export default function FlashcardScreen({ route, navigation }) {
             <ActivityIndicator size="small" color="#14B8A6" style={{marginVertical: 24}} />
           )}
           <TouchableOpacity
-            style={{backgroundColor: '#FFFFFF', borderRadius: 12, padding: 18, marginBottom: 12, flexDirection: 'row', alignItems: 'center', gap: 14, borderLeftWidth: 4, borderLeftColor: '#4A90E2', shadowColor: '#000', shadowOffset: {width: 0, height: 1}, shadowOpacity: 0.05, shadowRadius: 3, elevation: 2, opacity: dueCount === 0 ? 0.4 : 1}}
+            style={{backgroundColor: '#FFFFFF', borderRadius: 12, padding: 18, marginBottom: 12, flexDirection: 'row', alignItems: 'center', gap: 14, borderLeftWidth: 4, borderLeftColor: '#FF6B6B', shadowColor: '#000', shadowOffset: {width: 0, height: 1}, shadowOpacity: 0.05, shadowRadius: 3, elevation: 2, opacity: dueCount === 0 ? 0.4 : 1}}
             onPress={() => setStudyMode('reviews')}
             disabled={dueCount === 0}
           >
-            <View style={{width: 42, height: 42, borderRadius: 10, backgroundColor: '#E8F4FD', alignItems: 'center', justifyContent: 'center'}}>
-              <Ionicons name="refresh-circle" size={22} color="#4A90E2" />
+            <View style={{width: 42, height: 42, borderRadius: 10, backgroundColor: '#FFE8E8', alignItems: 'center', justifyContent: 'center'}}>
+              <Ionicons name="refresh-circle" size={22} color="#FF6B6B" />
             </View>
             <View style={{flex: 1}}>
               <SafeText style={{fontSize: 16, fontWeight: '600', color: '#1A1A1A'}}>{"Review Due Words"}</SafeText>
@@ -1257,12 +1297,12 @@ export default function FlashcardScreen({ route, navigation }) {
             <Ionicons name="chevron-forward" size={20} color="#CCC" />
           </TouchableOpacity>
           <TouchableOpacity
-            style={{backgroundColor: '#FFFFFF', borderRadius: 12, padding: 18, marginBottom: 12, flexDirection: 'row', alignItems: 'center', gap: 14, borderLeftWidth: 4, borderLeftColor: '#14B8A6', shadowColor: '#000', shadowOffset: {width: 0, height: 1}, shadowOpacity: 0.05, shadowRadius: 3, elevation: 2, opacity: newCount === 0 ? 0.4 : 1}}
+            style={{backgroundColor: '#FFFFFF', borderRadius: 12, padding: 18, marginBottom: 12, flexDirection: 'row', alignItems: 'center', gap: 14, borderLeftWidth: 4, borderLeftColor: '#4A90E2', shadowColor: '#000', shadowOffset: {width: 0, height: 1}, shadowOpacity: 0.05, shadowRadius: 3, elevation: 2, opacity: newCount === 0 ? 0.4 : 1}}
             onPress={() => setStudyMode('new')}
             disabled={newCount === 0}
           >
-            <View style={{width: 42, height: 42, borderRadius: 10, backgroundColor: '#E0F7F4', alignItems: 'center', justifyContent: 'center'}}>
-              <Ionicons name="add-circle" size={22} color="#14B8A6" />
+            <View style={{width: 42, height: 42, borderRadius: 10, backgroundColor: '#E8F4FD', alignItems: 'center', justifyContent: 'center'}}>
+              <Ionicons name="add-circle" size={22} color="#4A90E2" />
             </View>
             <View style={{flex: 1}}>
               <SafeText style={{fontSize: 16, fontWeight: '600', color: '#1A1A1A'}}>{"Learn New Words"}</SafeText>

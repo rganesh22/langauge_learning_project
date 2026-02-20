@@ -1407,8 +1407,10 @@ export default function ListeningActivity({ route, navigation }) {
       <VocabularyDictionary
         visible={dictionary.showDictionary}
         onClose={() => dictionary.setShowDictionary(false)}
-        initialLanguage={language}
+        language={language}
         initialSearchQuery={dictionary.initialSearchQuery}
+        dictionaryLanguage={dictionary.dictionaryLanguage}
+        setDictionaryLanguage={dictionary.setDictionaryLanguage}
       />
 
       {/* API Debug Modal */}

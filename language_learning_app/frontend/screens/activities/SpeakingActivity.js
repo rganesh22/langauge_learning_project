@@ -1579,8 +1579,10 @@ export default function SpeakingActivity({ route, navigation }) {
       <VocabularyDictionary
         visible={dictionary.showDictionary}
         onClose={() => dictionary.setShowDictionary(false)}
-        initialLanguage={language}
+        language={language}
         initialSearchQuery={dictionary.initialSearchQuery}
+        dictionaryLanguage={dictionary.dictionaryLanguage}
+        setDictionaryLanguage={dictionary.setDictionaryLanguage}
       />
     </View>
   );
