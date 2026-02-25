@@ -289,12 +289,7 @@ export default function ReadingActivity({ route, navigation }) {
           >
             <Ionicons name={transliteration.showTransliterations ? "text" : "text-outline"} size={20} color="#FFFFFF" />
           </TouchableOpacity>
-          <TouchableOpacity
-            style={[styles.toggleButton, highlightVocab && styles.toggleButtonActive]}
-            onPress={() => setHighlightVocab(!highlightVocab)}
-          >
-            <Ionicons name={highlightVocab ? "color-palette" : "color-palette-outline"} size={20} color="#FFFFFF" />
-          </TouchableOpacity>
+          {/* Highlight vocab toggle retained (no color palette icon) */}
           <TouchableOpacity
             style={styles.toggleButton}
             onPress={() => setShowTranslationModal(true)}

@@ -23,7 +23,7 @@ import { useFonts } from 'expo-font';
 import { ActivityIndicator, View, Text as RNText } from 'react-native';
 import SafeText from './components/SafeText';
 
-const API_BASE_URL = __DEV__ ? 'http://localhost:8080' : 'http://localhost:8080';
+const API_BASE_URL = __DEV__ ? 'http://localhost:9090' : 'http://localhost:9090';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();

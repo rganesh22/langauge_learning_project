@@ -14,9 +14,10 @@ import { LANGUAGES } from '../contexts/LanguageContext';
 import { LanguageContext } from '../contexts/LanguageContext';
 import NoLanguageEmptyState from '../components/NoLanguageEmptyState';
 
-const API_BASE_URL = __DEV__ ? 'http://localhost:8080' : 'http://localhost:8080';
+const API_BASE_URL = __DEV__ ? 'http://localhost:9090' : 'http://localhost:9090';
 
 const ACTIVITY_COLORS = {
+  transliteration: { primary: '#EC4899', light: '#FCE7F3' },
   reading: { primary: '#4A90E2', light: '#E8F4FD' },
   listening: { primary: '#2B654A', light: '#E8F5EF' },
   writing: { primary: '#FF6B6B', light: '#FFE8E8' },
@@ -24,7 +25,8 @@ const ACTIVITY_COLORS = {
   translation: { primary: '#8B5CF6', light: '#F3E8FF' },
 };
 
-const PRACTICE_ACTIVITIES = ['reading', 'listening', 'writing', 'speaking', 'translation'];
+// Ordered with Transliteration first above Reading
+const PRACTICE_ACTIVITIES = ['transliteration', 'reading', 'listening', 'writing', 'speaking', 'translation'];
 
 export default function PracticeScreen({ navigation }) {
   const { selectedLanguage: ctxLanguage, setSelectedLanguage: setCtxLanguage, availableLanguages } = React.useContext(LanguageContext);

@@ -210,6 +210,18 @@ class TranslationGradingRequest(BaseModel):
     """Model for grading translation activity"""
     translations: List[Dict]  # List of {source_text, source_language, user_translation, expected_translation}
 
+
+class TransliterationGradingItem(BaseModel):
+    """Single item in transliteration grading request"""
+    id: int
+    text: str
+    user_transliteration: str
+
+
+class TransliterationGradingRequest(BaseModel):
+    """Model for grading transliteration activity"""
+    items: List[TransliterationGradingItem]
+
 class SpeakingGradingRequest(BaseModel):
     """Model for grading speaking activity with audio input"""
     audio_base64: str  # Base64-encoded audio data
@@ -2241,6 +2253,7 @@ def generate_listening_activity_background(
             "parse_error": activity.get("_parse_error"),
             "error": activity.get("_error"),
             "error_type": activity.get("_error_type"),
+            "error_traceback": activity.get("_error_traceback"),
             "tts_errors": activity.get("_tts_errors"),
             "tts_results": activity.get("_tts_results"),
             "warning": activity.get("_warning"),
@@ -3274,6 +3287,109 @@ def grade_translation_activity(language: str, request: TranslationGradingRequest
         traceback.print_exc()
         raise HTTPException(status_code=500, detail=f"Error grading translation activity: {str(e)}")
 
+
+@app.post("/api/activity/transliteration/{language}")
+def create_transliteration_activity(language: str):
+    """Create a transliteration activity using existing reading/listening content and vocabulary."""
+    try:
+        activity = api_client.generate_transliteration_activity(language)
+        if not activity:
+            raise HTTPException(status_code=500, detail="Failed to generate transliteration activity")
+        if activity.get("_error"):
+            raise HTTPException(
+                status_code=500,
+                detail=activity.get("_error", "Error generating transliteration activity"),
+            )
+
+        # Persist to history so activity can be reopened later
+        activity_json = json.dumps(activity)
+        activity_id = db.log_activity(language, 'transliteration', 0.0, activity_json)
+        if activity_id:
+            activity['activity_id'] = activity_id
+
+        api_details = {
+            "endpoint": f"POST /api/activity/transliteration/{language}",
+            "prompt": "",  # No LLM prompt – activity built from DB content
+            "response_time": 0,
+            "raw_response": "",
+            "token_info": {},
+        }
+
+        return {
+            "activity": activity,
+            "words_used": [],  # Not used for transliteration
+            "api_details": api_details,
+        }
+    except HTTPException:
+        raise
+    except Exception as e:
+        print(f"Error creating transliteration activity: {e}")
+        import traceback
+        traceback.print_exc()
+        raise HTTPException(status_code=500, detail=f"Error creating transliteration activity: {str(e)}")
+
+
+@app.post("/api/activity/transliteration/{language}/grade")
+def grade_transliteration_activity(language: str, request: TransliterationGradingRequest):
+    """Grade a transliteration activity locally using aksharamukha transliteration."""
+    try:
+        if not request.items or len(request.items) == 0:
+            raise HTTPException(status_code=400, detail="Items list cannot be empty")
+
+        def _normalize(s: str) -> str:
+            # Lowercase, remove spaces and basic punctuation to make comparison tolerant
+            if not s:
+                return ""
+            import re as _re
+            s_norm = s.lower()
+            s_norm = _re.sub(r'\s+', '', s_norm)
+            s_norm = _re.sub(r'[.,!?;:\-—()\[\]{}\"\'`]', '', s_norm)
+            return s_norm
+
+        results = []
+        correct_count = 0
+
+        for item in request.items:
+            expected = transliteration.transliterate_text(item.text, language, 'IAST')
+            user_val = item.user_transliteration or ""
+            norm_expected = _normalize(expected)
+            norm_user = _normalize(user_val)
+            is_correct = bool(norm_expected) and (norm_expected == norm_user)
+            if is_correct:
+                correct_count += 1
+
+            feedback = "Looks good!" if is_correct else "Check sounds and diacritics for this line."
+
+            results.append(
+                {
+                    "id": item.id,
+                    "text": item.text,
+                    "expected_transliteration": expected,
+                    "user_transliteration": user_val,
+                    "is_correct": is_correct,
+                    "feedback": feedback,
+                }
+            )
+
+        overall_score = int(round((correct_count / len(results)) * 100)) if results else 0
+
+        return {
+            "overall_score": overall_score,
+            "items": results,
+            "api_details": {
+                "endpoint": f"POST /api/activity/transliteration/{language}/grade",
+                "response_time": 0,
+                "raw_response": "",
+                "token_info": {},
+            },
+        }
+    except HTTPException:
+        raise
+    except Exception as e:
+        print(f"Error in grade_transliteration_activity: {str(e)}")
+        import traceback
+        traceback.print_exc()
+        raise HTTPException(status_code=500, detail=f"Error grading transliteration activity: {str(e)}")
 
 @app.post("/api/activity/conversation/{language}/intro-audio")
 def generate_intro_audio(language: str, request: Dict):
@@ -5390,7 +5506,7 @@ def save_user_preferences(preferences: dict):
 # Practice visible activities (which activity cards to show on Practice screen)
 # ============================================================================
 
-DEFAULT_PRACTICE_ACTIVITIES = ['reading', 'listening', 'writing', 'speaking', 'translation']
+DEFAULT_PRACTICE_ACTIVITIES = ['transliteration', 'reading', 'listening', 'writing', 'speaking', 'translation']
 
 
 class PracticeVisibleActivitiesUpdate(BaseModel):

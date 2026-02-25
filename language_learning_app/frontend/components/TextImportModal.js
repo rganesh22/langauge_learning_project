@@ -14,8 +14,9 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import { LanguageContext, LANGUAGES } from '../contexts/LanguageContext';
 import { WORD_CLASSES, LEVELS, LEVEL_COLORS } from '../constants/filters';
+import VocabImportDebugModal from './VocabImportDebugModal';
 
-const API_BASE_URL = __DEV__ ? 'http://localhost:8080' : 'http://localhost:8080';
+const API_BASE_URL = __DEV__ ? 'http://localhost:9090' : 'http://localhost:9090';
 
 // step: 'input' | 'review' | 'done'
 
@@ -53,8 +54,10 @@ export default function TextImportModal({ visible, onClose, language, onImportCo
   const [progress, setProgress] = useState(null); // { phase, batch, total_batches, words_done }
   const abortRef = useRef(null); // AbortController ref for SSE
 
-  // ── Done state ──
+  // ── Done state & debug ──
   const [importResult, setImportResult] = useState(null);
+  const [debugVisible, setDebugVisible] = useState(false);
+  const [debugData, setDebugData] = useState(null);
 
   const otherLanguages = LANGUAGES.filter(
     l => userSelectedLanguages.includes(l.code) && l.code !== language
@@ -252,6 +255,7 @@ export default function TextImportModal({ visible, onClose, language, onImportCo
       setLangData(newLangData);
       setActiveTab(language);
       setStep('review');
+      setDebugData(finalData);
     } catch (err) {
       if (err.name === 'AbortError') return; // user cancelled
       Alert.alert('Extract Error', err.message || 'Failed to extract words.');
@@ -330,6 +334,8 @@ export default function TextImportModal({ visible, onClose, language, onImportCo
     setImportResult(null);
     setCrossTranslateExpanded(false);
     setSelectedTargetLangs([]);
+    setDebugData(null);
+    setDebugVisible(false);
     onClose();
   };
 
@@ -820,6 +826,16 @@ export default function TextImportModal({ visible, onClose, language, onImportCo
                 <Text style={[styles.reviewStatNum, { color: '#4A90E2' }]}>{totalSelectedCount}</Text>
                 <Text style={styles.reviewStatLabel}>Selected</Text>
               </View>
+              {debugData && (
+                <TouchableOpacity
+                  style={styles.debugButton}
+                  onPress={() => setDebugVisible(true)}
+                  activeOpacity={0.7}
+                >
+                  <Ionicons name="bug-outline" size={16} color="#4B5563" />
+                  <Text style={styles.debugButtonText}>Debug</Text>
+                </TouchableOpacity>
+              )}
             </View>
 
             {/* Language Tabs — all visible (flex-wrap), no horizontal scroll */}
@@ -918,6 +934,12 @@ export default function TextImportModal({ visible, onClose, language, onImportCo
           </>
         )}
       </View>
+      <VocabImportDebugModal
+        visible={debugVisible && !!debugData}
+        onClose={() => setDebugVisible(false)}
+        data={debugData}
+        sourceLanguage={language}
+      />
     </Modal>
   );
 }

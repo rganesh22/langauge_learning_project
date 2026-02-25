@@ -20,7 +20,7 @@ import { MASTERY_FILTERS, WORD_CLASSES as SHARED_WORD_CLASSES, LEVELS as SHARED_
 import { Ionicons } from '@expo/vector-icons';
 import { useFocusEffect } from '@react-navigation/native';
 
-const API_BASE_URL = __DEV__ ? 'http://localhost:8080' : 'http://localhost:8080';
+const API_BASE_URL = __DEV__ ? 'http://localhost:9090' : 'http://localhost:9090';
 
 // Use shared LANGUAGES list imported from context for consistent language options across screens
 

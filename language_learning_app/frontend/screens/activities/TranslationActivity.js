@@ -185,7 +185,14 @@ export default function TranslationActivity({ route, navigation }) {
         }
         if (sentence.language_display) {
           transliteration.ensureNativeScriptForKey(`language_${idx}`, sentence.language_display);
-          transliteration.ensureAndShowTransliterationForKey(`language_${idx}`, sentence.language_display);
+          // Use the sentence's actual language for transliteration so that
+          // names like "தமிழ்" or "اردو" are romanized correctly instead of
+          // being re-shown in the same script.
+          transliteration.ensureAndShowTransliterationForKey(
+            `language_${idx}`,
+            sentence.language_display,
+            sentence.language
+          );
         }
       });
     }
@@ -400,12 +407,7 @@ export default function TranslationActivity({ route, navigation }) {
           >
             <Ionicons name={transliteration.showTransliterations ? "text" : "text-outline"} size={20} color="#FFFFFF" />
           </TouchableOpacity>
-          <TouchableOpacity
-            style={[styles.toggleButton, highlightVocab && styles.toggleButtonActive]}
-            onPress={() => setHighlightVocab(!highlightVocab)}
-          >
-            <Ionicons name={highlightVocab ? "color-palette" : "color-palette-outline"} size={20} color="#FFFFFF" />
-          </TouchableOpacity>
+          {/* Highlight vocab toggle retained (no color palette icon) */}
           <TouchableOpacity
             style={styles.toggleButton}
             onPress={() => setShowTranslationModal(true)}

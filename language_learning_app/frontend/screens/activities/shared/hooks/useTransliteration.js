@@ -5,7 +5,7 @@
 import { useState, useEffect } from 'react';
 import { transliterateText, coerceTranslitMapToStrings } from '../utils/textProcessing';
 
-const API_BASE_URL = __DEV__ ? 'http://localhost:8080' : 'http://localhost:8080';
+const API_BASE_URL = __DEV__ ? 'http://localhost:9090' : 'http://localhost:9090';
 
 export function useTransliteration(language, activity) {
   const [transliterations, setTransliterations] = useState({});
@@ -40,13 +40,17 @@ export function useTransliteration(language, activity) {
   }, [language]);
 
   // Ensure transliteration for a specific key and show transliterations
-  const ensureAndShowTransliterationForKey = async (key, sourceText) => {
+  // Optional sourceLanguageOverride lets callers control which language/script
+  // the text should be transliterated from (useful when the UI language differs
+  // from the sentence's actual language, e.g. translation activity badges).
+  const ensureAndShowTransliterationForKey = async (key, sourceText, sourceLanguageOverride = null) => {
     if (!sourceText || !key) return;
     try {
       setShowTransliterations(true);
       if (transliterations && transliterations[key]) return;
 
-      const t = await transliterateText(sourceText, language);
+      const fromLang = sourceLanguageOverride || language;
+      const t = await transliterateText(sourceText, fromLang);
       if (t) {
         setTransliterations(prev => ({ ...prev, [key]: t }));
       }

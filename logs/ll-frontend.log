@@ -229,3 +229,71 @@ Web Bundled 35ms (node_modules/expo/AppEntry.js)
 Web Bundled 1221ms (node_modules/expo/AppEntry.js)
 Web Bundled 322ms (node_modules/expo/AppEntry.js)
 Web Bundled 29ms (node_modules/expo/AppEntry.js)
+Web Bundled 592ms (node_modules/expo/AppEntry.js)
+Web Bundled 32ms (node_modules/expo/AppEntry.js)
+Web Bundled 375ms (node_modules/expo/AppEntry.js)
+Web Bundling failed 476ms (node_modules/expo/AppEntry.js)
+Unable to resolve "../../../components/SafeText" from "screens/activities/TransliterationActivity.js"
+Web Bundling failed 207ms (node_modules/expo/AppEntry.js)
+Unable to resolve "../../../components/SafeText" from "screens/activities/TransliterationActivity.js"
+Web Bundling failed 22ms (node_modules/expo/AppEntry.js)
+Unable to resolve "../../../components/SafeText" from "screens/activities/TransliterationActivity.js"
+Web Bundling failed 18ms (node_modules/expo/AppEntry.js)
+Unable to resolve "../../../components/SafeText" from "screens/activities/TransliterationActivity.js"
+Web Bundling failed 19ms (node_modules/expo/AppEntry.js)
+Unable to resolve "../../../components/SafeText" from "screens/activities/TransliterationActivity.js"
+Web Bundling failed 17ms (node_modules/expo/AppEntry.js)
+Unable to resolve "../../../components/SafeText" from "screens/activities/TransliterationActivity.js"
+Web Bundling failed 26ms (node_modules/expo/AppEntry.js)
+Unable to resolve "../../../components/SafeText" from "screens/activities/TransliterationActivity.js"
+Web Bundling failed 17ms (node_modules/expo/AppEntry.js)
+Unable to resolve "../../../components/SafeText" from "screens/activities/TransliterationActivity.js"
+Web Bundling failed 85ms (node_modules/expo/AppEntry.js)
+Unable to resolve "../../../components/TranslationToolModal" from "screens/activities/TransliterationActivity.js"
+Web Bundling failed 16ms (node_modules/expo/AppEntry.js)
+Unable to resolve "../../../components/TranslationToolModal" from "screens/activities/TransliterationActivity.js"
+Web Bundling failed 15ms (node_modules/expo/AppEntry.js)
+Unable to resolve "../../../components/TranslationToolModal" from "screens/activities/TransliterationActivity.js"
+Web Bundling failed 17ms (node_modules/expo/AppEntry.js)
+Unable to resolve "../../../components/TranslationToolModal" from "screens/activities/TransliterationActivity.js"
+Web Bundling failed 10ms (node_modules/expo/AppEntry.js)
+Unable to resolve "../../../components/TranslationToolModal" from "screens/activities/TransliterationActivity.js"
+Web Bundling failed 14ms (node_modules/expo/AppEntry.js)
+Unable to resolve "../../../components/TranslationToolModal" from "screens/activities/TransliterationActivity.js"
+Web Bundling failed 19ms (node_modules/expo/AppEntry.js)
+Unable to resolve "../../../components/TranslationToolModal" from "screens/activities/TransliterationActivity.js"
+Web Bundling failed 81ms (node_modules/expo/AppEntry.js)
+Unable to resolve "../../../constants/ui_labels" from "screens/activities/TransliterationActivity.js"
+Web Bundling failed 11ms (node_modules/expo/AppEntry.js)
+Unable to resolve "../../../constants/ui_labels" from "screens/activities/TransliterationActivity.js"
+Web Bundling failed 10ms (node_modules/expo/AppEntry.js)
+Unable to resolve "../../../constants/ui_labels" from "screens/activities/TransliterationActivity.js"
+Web Bundling failed 10ms (node_modules/expo/AppEntry.js)
+Unable to resolve "../../../constants/ui_labels" from "screens/activities/TransliterationActivity.js"
+Web Bundling failed 15ms (node_modules/expo/AppEntry.js)
+Unable to resolve "../../../constants/ui_labels" from "screens/activities/TransliterationActivity.js"
+Web Bundled 119ms (node_modules/expo/AppEntry.js)
+Web Bundled 45ms (node_modules/expo/AppEntry.js)
+Web Bundled 53ms (node_modules/expo/AppEntry.js)
+Starting project at /Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/frontend
+› Port 8081 is running this app in another window
+  /Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/frontend (pid 4420)
+Input is required, but 'npx expo' is in non-interactive mode.
+Required input:
+> Use port 8082 instead?
+› Skipping dev server
+Web Bundled 34ms (node_modules/expo/AppEntry.js)
+Web Bundled 28ms (node_modules/expo/AppEntry.js)
+Web Bundled 31ms (node_modules/expo/AppEntry.js)
+Starting project at /Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/frontend
+› Port 8081 is running this app in another window
+  /Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/frontend (pid 4420)
+Input is required, but 'npx expo' is in non-interactive mode.
+Required input:
+> Use port 8082 instead?
+› Skipping dev server
+Web Bundled 1417ms (node_modules/expo/AppEntry.js)
+Web Bundled 772ms (node_modules/expo/AppEntry.js)
+Web Bundled 126ms (node_modules/expo/AppEntry.js)
+Web Bundled 228ms (node_modules/expo/AppEntry.js)
+Web Bundled 28ms (node_modules/expo/AppEntry.js)

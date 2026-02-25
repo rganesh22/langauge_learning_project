@@ -2649,6 +2649,123 @@ def generate_translation_activity(
         }
 
 
+def generate_transliteration_activity(language: str, max_items: int = 20) -> dict:
+    """
+    Generate a transliteration activity consisting of up to `max_items` sentences
+    that the user must transliterate.
+
+    Uses existing content from the database (recent reading/listening activities
+    and vocabulary) to avoid extra LLM calls.
+    """
+    try:
+        import sqlite3
+        from . import transliteration as _translit
+
+        conn = sqlite3.connect(config.DB_PATH, timeout=10.0)
+        conn.row_factory = sqlite3.Row
+        cursor = conn.cursor()
+
+        sentences: list[str] = []
+
+        # Prefer passages from recent reading/listening activities
+        cursor.execute(
+            '''
+            SELECT activity_data
+            FROM activity_history
+            WHERE user_id = 1 AND language = ? AND activity_type IN ('reading', 'listening')
+            ORDER BY completed_at DESC
+            LIMIT 20
+            ''',
+            (language,),
+        )
+        rows = cursor.fetchall()
+        for row in rows:
+            try:
+                data = json.loads(row['activity_data'] or '{}')
+                # Longer chunks are better for transliteration practice
+                if data.get('story'):
+                    sentences.append(data['story'])
+                if data.get('passage'):
+                    sentences.append(data['passage'])
+            except Exception:
+                # Skip malformed JSON or unexpected shapes
+                continue
+
+        # If still not enough, fall back to vocabulary translations
+        if len(sentences) < max_items:
+            remaining = max_items - len(sentences)
+            cursor.execute(
+                '''
+                SELECT translation
+                FROM vocabulary
+                WHERE language = ?
+                ORDER BY RANDOM()
+                LIMIT ?
+                ''',
+                (language, remaining),
+            )
+            for row in cursor.fetchall():
+                if row['translation']:
+                    sentences.append(row['translation'])
+
+        conn.close()
+
+        # Deduplicate and cap
+        unique_sentences: list[str] = []
+        seen = set()
+        for s in sentences:
+            s_clean = (s or '').strip()
+            if not s_clean or s_clean in seen:
+                continue
+            seen.add(s_clean)
+            unique_sentences.append(s_clean)
+            if len(unique_sentences) >= max_items:
+                break
+
+        if not unique_sentences:
+            return {
+                '_error': 'No sentences available for transliteration',
+                '_error_type': 'no_data',
+            }
+
+        items = []
+        for idx, text in enumerate(unique_sentences, start=1):
+            # Expected transliteration (for grading only; not shown to user directly)
+            try:
+                expected = _translit.transliterate_text(text, language, 'IAST')
+            except Exception:
+                expected = ''
+            items.append(
+                {
+                    'id': idx,
+                    'text': text,
+                    'expected_transliteration': expected,
+                }
+            )
+
+        activity = {
+            'activity_id': None,
+            'activity_type': 'transliteration',
+            'language': language,
+            'activity_name': 'Transliteration Practice',
+            'instructions': 'Transliterate each sentence into Latin script as accurately as you can.',
+            'items': items,
+            '_token_info': {},
+        }
+        return activity
+    except Exception as e:
+        error_msg = f"Error generating transliteration activity: {str(e)}"
+        print(error_msg)
+        import traceback
+        traceback_str = traceback.format_exc()
+        traceback.print_exc()
+        return {
+            '_error': error_msg,
+            '_error_type': 'exception',
+            '_error_traceback': traceback_str,
+        }
+
+
 def grade_writing_activity(user_text: str, writing_prompt: str, required_words: list, evaluation_criteria: str, language: str, learned_words: list = None, learning_words: list = None, user_cefr_level: str = 'A1') -> dict:
     """Grade a writing activity using Gemini 2.5 Flash"""
     if not config.GEMINI_API_KEY:

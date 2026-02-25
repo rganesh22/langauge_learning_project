@@ -20,7 +20,7 @@ import { MASTERY_FILTERS, WORD_CLASSES, CEFR_LEVELS } from '../constants/filters
 import { LanguageContext, LANGUAGES } from '../contexts/LanguageContext';
 import { useTutor } from '../contexts/TutorContext';
 
-const API_BASE_URL = __DEV__ ? 'http://localhost:8080' : 'http://localhost:8080';
+const API_BASE_URL = __DEV__ ? 'http://localhost:9090' : 'http://localhost:9090';
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
 const CARD_WIDTH = SCREEN_WIDTH * 0.85;
@@ -3546,9 +3546,9 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
   },
   originChipRow: {
-    alignSelf: 'flex-end',
-    marginTop: 8,
-    marginRight: 4,
+    alignSelf: 'center',
+    marginTop: 12,
+    marginRight: 0,
   },
   originChip: {
     flexDirection: 'row',

@@ -90,7 +90,7 @@ export function LanguageProvider({ children }) {
     selectedLanguageRef.current = selectedLanguage;
   }, [selectedLanguage]);
 
-  const API_BASE_URL = 'http://localhost:8080';
+  const API_BASE_URL = 'http://localhost:9090';
 
   const loadUserLanguages = async () => {
     try {

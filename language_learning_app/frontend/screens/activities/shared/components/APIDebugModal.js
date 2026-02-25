@@ -174,6 +174,22 @@ export default function APIDebugModal({ visible, onClose, allApiDetails }) {
 
                       {isExpanded && (
                         <View style={styles.callContent}>
+                          {/* High-level error / warning from backend */}
+                          {apiCall.error && (
+                            <View style={styles.errorSection}>
+                              <Text style={styles.errorLabel}>❌ Activity Error:</Text>
+                              <Text style={styles.errorText}>
+                                {apiCall.errorType ? `${apiCall.errorType}: ` : ''}
+                                {apiCall.error}
+                              </Text>
+                            </View>
+                          )}
+                          {apiCall.warning && !apiCall.error && (
+                            <View style={styles.errorSection}>
+                              <Text style={styles.errorLabel}>⚠️ Warning:</Text>
+                              <Text style={styles.errorText}>{apiCall.warning}</Text>
+                            </View>
+                          )}
                           {/* Parse Error */}
                           {apiCall.parseError && (
                             <View style={styles.errorSection}>

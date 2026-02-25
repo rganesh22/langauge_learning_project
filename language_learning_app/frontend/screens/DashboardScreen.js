@@ -18,11 +18,12 @@ import { LanguageContext, LANGUAGES } from '../contexts/LanguageContext';
 import NoLanguageEmptyState from '../components/NoLanguageEmptyState';
 import { getLocalDateString, getShortWeekday, parseLocalDate } from '../utils/dateUtils';
 
-const API_BASE_URL = __DEV__ ? 'http://localhost:8080' : 'http://localhost:8080';
+const API_BASE_URL = __DEV__ ? 'http://localhost:9090' : 'http://localhost:9090';
 
-const ACTIVITY_ORDER = ['flashcards', 'reading', 'listening', 'writing', 'speaking', 'translation'];
+const ACTIVITY_ORDER = ['flashcards', 'transliteration', 'reading', 'listening', 'writing', 'speaking', 'translation'];
 
 const ACTIVITY_COLORS = {
+  transliteration: { primary: '#EC4899', light: '#FCE7F3' },
   reading: { primary: '#4A90E2', light: '#E8F4FD' },
   listening: { primary: '#2B654A', light: '#E8F5EF' },
   writing: { primary: '#FF6B6B', light: '#FFE8E8' },

@@ -25,7 +25,7 @@ import { useNavigation } from '@react-navigation/native';
 import SafeText from '../components/SafeText';
 import { LanguageContext, LANGUAGES } from '../contexts/LanguageContext';
 
-const API_BASE_URL = __DEV__ ? 'http://localhost:8080' : 'http://localhost:8080';
+const API_BASE_URL = __DEV__ ? 'http://localhost:9090' : 'http://localhost:9090';
 
 const CEFR_COLORS = {
   A0: '#6B7280',
@@ -2168,7 +2168,7 @@ const styles = StyleSheet.create({
   },
   historyLevelBadge: { width: 46, height: 46, borderRadius: 12, alignItems: 'center', justifyContent: 'center' },
   historyLevelText: { fontSize: 16, fontWeight: '900', color: '#FFF' },
-  historyRowBody: { flex: 1 },
+  historyRowBody: { flex: 1, marginLeft: 12 },
   historyDate: { fontSize: 13, fontWeight: '600', color: '#1F2937', marginBottom: 5 },
   historySkillRow: { flexDirection: 'row', flexWrap: 'wrap', gap: 4 },
   historySkillChip: { paddingHorizontal: 8, paddingVertical: 2, borderRadius: 6 },

@@ -61,12 +61,14 @@ INITIAL_INTERVAL = 1           # First review after learning
 EASY_INTERVAL_MULTIPLIER = 1.5 # For "easy" responses
 HARD_INTERVAL_MULTIPLIER = 0.5 # For "hard" responses
 
-# Default goals
+# Default goals (per-activity daily targets for streaks/goals)
 DEFAULT_DAILY_GOALS = {
     'reading': 2,
     'listening': 2,
     'writing': 2,
-    'conversation': 2,
+    'speaking': 2,
+    'translation': 2,
+    'transliteration': 2,
 }
 
 # Utility function to get current time in app timezone

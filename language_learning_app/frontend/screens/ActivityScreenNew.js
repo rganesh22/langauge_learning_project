@@ -5,6 +5,7 @@ import ListeningActivity from './activities/ListeningActivity';
 import WritingActivity from './activities/WritingActivity';
 import SpeakingActivity from './activities/SpeakingActivity';
 import TranslationActivity from './activities/TranslationActivity';
+import TransliterationActivity from './activities/TransliterationActivity';
 
 /**
  * Main ActivityScreen Router
@@ -15,6 +16,8 @@ export default function ActivityScreen({ route, navigation }) {
 
   // Route to appropriate activity component
   switch (activityType) {
+    case 'transliteration':
+      return <TransliterationActivity route={route} navigation={navigation} />;
     case 'reading':
       return <ReadingActivity route={route} navigation={navigation} />;
     case 'listening':

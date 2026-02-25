@@ -16,7 +16,7 @@ import SafeText from '../components/SafeText';
 import { LanguageContext, LANGUAGES } from '../contexts/LanguageContext';
 import NoLanguageEmptyState from '../components/NoLanguageEmptyState';
 
-const API_BASE_URL = __DEV__ ? 'http://localhost:8080' : 'http://localhost:8080';
+const API_BASE_URL = __DEV__ ? 'http://localhost:9090' : 'http://localhost:9090';
 
 const CEFR_COLORS = {
   A0: '#6B7280', A1: '#10B981', A2: '#3B82F6',

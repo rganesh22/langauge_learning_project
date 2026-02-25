@@ -25,6 +25,7 @@ import { LANGUAGES } from '../contexts/LanguageContext';
 
 /* ── colour / icon tables (kept in sync with Dashboard & activity screens) ── */
 const ACTIVITY_COLORS = {
+  transliteration: { primary: '#EC4899', light: '#FCE7F3' },
   reading:      { primary: '#4A90E2', light: '#E8F4FD' },
   listening:    { primary: '#2B654A', light: '#E8F5EF' },
   writing:      { primary: '#FF6B6B', light: '#FFE8E8' },
@@ -33,6 +34,7 @@ const ACTIVITY_COLORS = {
 };
 
 const ACTIVITY_ICONS = {
+  transliteration: 'text',
   reading:      'book',
   listening:    'headset',
   writing:      'create',
@@ -41,6 +43,7 @@ const ACTIVITY_ICONS = {
 };
 
 const ACTIVITY_LABELS = {
+  transliteration: 'Transliteration',
   reading:      'Reading',
   listening:    'Listening',
   writing:      'Writing',

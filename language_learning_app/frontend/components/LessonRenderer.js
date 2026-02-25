@@ -15,7 +15,7 @@ import Markdown from 'react-native-markdown-display';
 import SafeText from './SafeText';
 import VocabularyDictionary from '../screens/activities/shared/components/VocabularyDictionary';
 
-const API_BASE_URL = __DEV__ ? 'http://localhost:8080' : 'http://localhost:8080';
+const API_BASE_URL = __DEV__ ? 'http://localhost:9090' : 'http://localhost:9090';
 
 /**
  * LessonRenderer Component

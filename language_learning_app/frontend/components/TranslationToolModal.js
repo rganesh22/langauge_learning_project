@@ -32,8 +32,9 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import { LanguageContext, LANGUAGES } from '../contexts/LanguageContext';
 import { WORD_CLASSES, LEVELS, LEVEL_COLORS } from '../constants/filters';
+import VocabImportDebugModal from './VocabImportDebugModal';
 
-const API_BASE_URL = __DEV__ ? 'http://localhost:8080' : 'http://localhost:8080';
+const API_BASE_URL = __DEV__ ? 'http://localhost:9090' : 'http://localhost:9090';
 
 // ─── phase: 'translate' | 'cards_input' | 'cards_review' | 'cards_done' ───
 
@@ -79,6 +80,8 @@ export default function TranslationToolModal({
   const abortRef = useRef(null);
 
   const [importResult, setImportResult] = useState(null);
+  const [debugVisible, setDebugVisible] = useState(false);
+  const [debugData, setDebugData] = useState(null);
 
   // Languages available for translation target
   const allDisplayLanguages = LANGUAGES.filter(l => l.active !== false || userSelectedLanguages?.includes(l.code));
@@ -118,6 +121,8 @@ export default function TranslationToolModal({
     setStatus('');
     setProgress(null);
     setImportResult(null);
+    setDebugData(null);
+    setDebugVisible(false);
     onClose();
   };
 
@@ -149,6 +154,18 @@ export default function TranslationToolModal({
     return true;
   };
 
+  // Helper: fetch with timeout so translate phase can't hang forever
+  const fetchWithTimeout = async (url, options = {}, timeoutMs = 60000) => {
+    const controller = new AbortController();
+    const id = setTimeout(() => controller.abort(), timeoutMs);
+    try {
+      const res = await fetch(url, { ...options, signal: controller.signal });
+      return res;
+    } finally {
+      clearTimeout(id);
+    }
+  };
+
   // ── Phase 1: Translate ──
   const handleTranslate = async () => {
     const text = sourceText.trim();
@@ -162,34 +179,52 @@ export default function TranslationToolModal({
     setTranslating(true);
     setTranslationError('');
     setTranslation(null);
+    setStatus('Starting translation…');
     try {
       const targets =
         selectedTargetLangs.length > 0 ? selectedTargetLangs : ['english'];
 
       const results = {};
-      for (const code of targets) {
-        const res = await fetch(`${API_BASE_URL}/api/translate`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            text,
-            source_language: language,
-            target_language: code,
-          }),
-        });
+      for (let i = 0; i < targets.length; i++) {
+        const code = targets[i];
+        const meta = LANGUAGES.find(l => l.code === code);
+        const langName = meta?.name || code;
+        setStatus(`Translating to ${langName} (${i + 1}/${targets.length})…`);
+
+        let res;
+        try {
+          res = await fetchWithTimeout(`${API_BASE_URL}/api/translate`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              text,
+              source_language: language,
+              target_language: code,
+            }),
+          }, 60000);
+        } catch (e) {
+          if (e.name === 'AbortError') {
+            throw new Error(`Translation to ${langName} timed out after 60 seconds.`);
+          }
+          throw e;
+        }
+
         if (!res.ok) {
           const err = await res.json().catch(() => ({}));
-          throw new Error(err.detail || `Server error: ${res.status}`);
+          throw new Error(err.detail || `Server error (${res.status}) while translating to ${langName}.`);
         }
         const data = await res.json();
         results[code] = data;
       }
       setTranslation(results);
       setLanguagesToImportTo([]); // reset import selection after new translation
+      setStatus('Translation complete.');
     } catch (e) {
       setTranslationError(e.message || 'Translation failed.');
+      setStatus('Translation failed.');
     } finally {
       setTranslating(false);
+      // Leave final status visible; it will be cleared on close or next action
     }
   };
 
@@ -302,6 +337,7 @@ export default function TranslationToolModal({
       setLangData(newLangData);
       setActiveTab(language);
       setPhase('cards_review');
+      setDebugData(finalData);
     } catch (err) {
       if (err.name === 'AbortError') return;
       Alert.alert('Extract Error', err.message || 'Failed to extract words.');
@@ -895,6 +931,16 @@ export default function TranslationToolModal({
                 <Text style={[styles.reviewStatNum, { color: '#4A90E2' }]}>{totalSelectedCount}</Text>
                 <Text style={styles.reviewStatLabel}>Selected</Text>
               </View>
+              {debugData && (
+                <TouchableOpacity
+                  style={styles.debugButton}
+                  onPress={() => setDebugVisible(true)}
+                  activeOpacity={0.7}
+                >
+                  <Ionicons name="bug-outline" size={16} color="#4B5563" />
+                  <Text style={styles.debugButtonText}>Debug</Text>
+                </TouchableOpacity>
+              )}
             </View>
 
             {reviewTabs.length > 1 && (
@@ -987,6 +1033,12 @@ export default function TranslationToolModal({
           </>
         )}
       </View>
+      <VocabImportDebugModal
+        visible={debugVisible && !!debugData}
+        onClose={() => setDebugVisible(false)}
+        data={debugData}
+        sourceLanguage={language}
+      />
     </Modal>
   );
 }

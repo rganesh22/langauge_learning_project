@@ -23,7 +23,7 @@ import { MASTERY_FILTERS, WORD_CLASSES, LEVELS, LEVEL_COLORS } from '../../../..
 import { getSearchVocabularyLabel } from '../../../../constants/ui_labels';
 import { LANGUAGES } from '../../../../contexts/LanguageContext';
 
-const API_BASE_URL = __DEV__ ? 'http://localhost:8080' : 'http://localhost:8080';
+const API_BASE_URL = __DEV__ ? 'http://localhost:9090' : 'http://localhost:9090';
 
 export default function VocabularyDictionary({ 
   visible, 

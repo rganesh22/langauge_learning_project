@@ -87,7 +87,8 @@ export const getActivityTimeout = (activityType) => {
     listening: 300000, // 5 minutes (TTS generation can be slow)
     speaking: 60000,   // 1 minute
     writing: 60000,    // 1 minute
-    conversation: 60000 // 1 minute
+    conversation: 60000, // 1 minute
+    transliteration: 60000, // 1 minute
   };
   
   return timeouts[activityType] || 60000;
@@ -109,6 +110,11 @@ export const createApiDetails = (data, activityType, language) => {
     learningWords: data.api_details?.learning_words || [],
     tokenInfo: data.api_details?.token_info || null,
     parseError: data.api_details?.parse_error || null,
+    // High-level errors and warnings
+    error: data.api_details?.error || null,
+    errorType: data.api_details?.error_type || null,
+    warning: data.api_details?.warning || null,
+    errorTraceback: data.api_details?.error_traceback || null,
     ttsCost: data.api_details?.tts_cost || null,
     ttsResponseTime: data.api_details?.tts_response_time || null,
     totalCost: data.api_details?.total_cost || null,

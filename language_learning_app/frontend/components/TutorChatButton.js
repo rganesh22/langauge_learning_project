@@ -25,7 +25,7 @@ import TextImportModal from './TextImportModal';
 import TranslationToolModal from './TranslationToolModal';
 import { useTutor } from '../contexts/TutorContext';
 
-const API_BASE_URL = __DEV__ ? 'http://localhost:8080' : 'http://localhost:8080';
+const API_BASE_URL = __DEV__ ? 'http://localhost:9090' : 'http://localhost:9090';
 
 const COLORS = {
   primary: '#4A90E2',
