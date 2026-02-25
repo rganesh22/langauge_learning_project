@@ -13,6 +13,7 @@ import {
 } from 'react-native';
 import SafeText from '../components/SafeText';
 import TextImportModal from '../components/TextImportModal';
+import TranslationToolModal from '../components/TranslationToolModal';
 import { LanguageContext, LANGUAGES } from '../contexts/LanguageContext';
 import NoLanguageEmptyState from '../components/NoLanguageEmptyState';
 import { MASTERY_FILTERS, WORD_CLASSES as SHARED_WORD_CLASSES, LEVELS as SHARED_LEVELS, LEVEL_COLORS as SHARED_LEVEL_COLORS } from '../constants/filters';
@@ -43,6 +44,8 @@ export default function VocabLibraryScreen({ route, navigation }) {
   const [masteryFilter, setMasteryFilter] = useState([]); // Array for multiple selections
   const [wordClassFilter, setWordClassFilter] = useState([]); // Array for multiple selections
   const [levelFilter, setLevelFilter] = useState([]); // Array for multiple selections
+  const [originFilter, setOriginFilter] = useState([]); // Array for multiple selections
+  const [availableDecks, setAvailableDecks] = useState([]); // deck names for origin filter
   const [transliterations, setTransliterations] = useState({});
   // Default filters collapsed
   const [filtersExpanded, setFiltersExpanded] = useState(false);
@@ -54,6 +57,7 @@ export default function VocabLibraryScreen({ route, navigation }) {
   
   // Text import modal state
   const [showImportModal, setShowImportModal] = useState(false);
+  const [showTranslationModal, setShowTranslationModal] = useState(false);
   
   // Review history modal state
   const [selectedWord, setSelectedWord] = useState(null);
@@ -107,7 +111,13 @@ export default function VocabLibraryScreen({ route, navigation }) {
       setWords([]);
       loadVocabulary(0, true);
       loadAllLanguagesSrsStats();
-    }, [route?.params?.language, selectedLanguage, availableLanguages.length, searchQuery, masteryFilter, wordClassFilter, levelFilter, language])
+
+      // Load available decks for origin filter
+      fetch(`${API_BASE_URL}/api/vocab/decks?language=${selectedLanguage}`)
+        .then(r => r.ok ? r.json() : { decks: [] })
+        .then(data => setAvailableDecks((data.decks || []).filter(d => d.word_count > 0)))
+        .catch(() => {});
+    }, [route?.params?.language, selectedLanguage, availableLanguages.length, searchQuery, masteryFilter, wordClassFilter, levelFilter, originFilter, language])
   );
 
   // Note: removed separate useEffect for filters - now handled by useFocusEffect
@@ -162,6 +172,12 @@ export default function VocabLibraryScreen({ route, navigation }) {
       if (levelFilter.length > 0) {
         levelFilter.forEach(filter => {
           params.append('level_filter', filter);
+        });
+      }
+      // Handle origin filter
+      if (originFilter.length > 0) {
+        originFilter.forEach(filter => {
+          params.append('origin_filter', filter);
         });
       }
       params.append('limit', '50');
@@ -318,7 +334,31 @@ export default function VocabLibraryScreen({ route, navigation }) {
               </SafeText>
             </View>
           ) : null}
+          {item.deck_name ? (
+            <View style={[styles.tag, { backgroundColor: '#EDE9FE' }]}>
+              <Ionicons name="layers-outline" size={10} color="#7C3AED" style={{ marginRight: 3 }} />
+              <SafeText style={[styles.tagText, { color: '#7C3AED' }]} numberOfLines={1}>
+                {item.deck_name.length > 14 ? item.deck_name.substring(0, 14) + '…' : item.deck_name}
+              </SafeText>
+            </View>
+          ) : null}
         </View>
+        {/* Origin chip — same shape as other chips */}
+        {item.origin ? (() => {
+          const origin = item.origin;
+          let bg, textColor, label, icon;
+          if (origin === 'default') { bg = '#16A34A'; textColor = '#FFF'; label = 'Original Set'; icon = 'book-outline'; }
+          else if (origin === 'activity') { bg = '#2563EB'; textColor = '#FFF'; label = 'Activity'; icon = 'flash-outline'; }
+          else { bg = '#6B7280'; textColor = '#FFF'; label = 'User Upload'; icon = 'albums-outline'; }
+          return (
+            <View style={styles.originChipRow}>
+              <View style={[styles.tag, { backgroundColor: bg, flexDirection: 'row', alignItems: 'center' }]}>
+                <Ionicons name={icon} size={10} color={textColor} style={{ marginRight: 3 }} />
+                <SafeText style={[styles.tagText, { color: textColor }]}>{label}</SafeText>
+              </View>
+            </View>
+          );
+        })() : null}
       </View>
     );
   };
@@ -344,44 +384,58 @@ export default function VocabLibraryScreen({ route, navigation }) {
     <View style={styles.container}>
       {/* Header with Language Selector */}
       <View style={styles.header}>
-        <View style={styles.headerLeft}>
-          <Ionicons name="book" size={24} color="#4A90E2" style={styles.appIcon} />
-          <SafeText style={styles.appTitle}>Vocab Library</SafeText>
+        {/* Top row: title + language picker */}
+        <View style={styles.headerTopRow}>
+          <View style={styles.headerLeft}>
+            <Ionicons name="book" size={24} color="#4A90E2" style={styles.appIcon} />
+            <SafeText style={styles.appTitle}>Vocab Library</SafeText>
+          </View>
+          <View style={styles.headerRight}>
+            <TouchableOpacity
+              style={styles.languageButton}
+              onPress={() => setLanguageMenuVisible(true)}
+            >
+            {(currentLanguage?.nativeChar || currentLanguage?.langCode) && (
+              <View style={[styles.countryCodeBox, { backgroundColor: currentLanguage?.color || '#F5F5F5' }]}>
+                {currentLanguage?.nativeChar ? (
+                  <SafeText style={[
+                    styles.nativeCharText,
+                    currentLanguage?.code === 'urdu' && { fontFamily: 'Noto Nastaliq Urdu' }
+                  ]}>{currentLanguage.nativeChar}</SafeText>
+                ) : (
+                  <SafeText style={styles.countryCodeText}>{currentLanguage?.langCode?.toUpperCase()}</SafeText>
+                )}
+              </View>
+            )}
+            <View style={styles.languageButtonContent}>
+              <SafeText style={styles.languageName}>{currentLanguage?.name}</SafeText>
+              {currentLanguage?.nativeName && (
+                <SafeText style={[
+                  styles.languageNativeName,
+                  currentLanguage?.code === 'urdu' && { fontFamily: 'Noto Nastaliq Urdu', textAlign: 'left' }
+                ]}>{currentLanguage.nativeName}</SafeText>
+              )}
+            </View>
+            <Ionicons name="chevron-down" size={16} color="#666" />
+            </TouchableOpacity>
+          </View>
         </View>
-        <View style={styles.headerRight}>
+        {/* Second row: action buttons directly under title */}
+        <View style={styles.headerActionRow}>
+          <TouchableOpacity
+            style={styles.importButton}
+            onPress={() => setShowTranslationModal(true)}
+          >
+            <Ionicons name="language" size={18} color="#8B5CF6" />
+            <SafeText style={[styles.importButtonText, { color: '#8B5CF6' }]}>Translate</SafeText>
+          </TouchableOpacity>
           <TouchableOpacity
             style={styles.importButton}
             onPress={() => setShowImportModal(true)}
           >
-            <Ionicons name="add-circle-outline" size={24} color="#4A90E2" />
+            <Ionicons name="add-circle-outline" size={18} color="#4A90E2" />
+            <SafeText style={styles.importButtonText}>Import Vocab</SafeText>
           </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.languageButton}
-            onPress={() => setLanguageMenuVisible(true)}
-          >
-          {(currentLanguage?.nativeChar || currentLanguage?.langCode) && (
-            <View style={[styles.countryCodeBox, { backgroundColor: currentLanguage?.color || '#F5F5F5' }]}>
-              {currentLanguage?.nativeChar ? (
-                <SafeText style={[
-                  styles.nativeCharText,
-                  currentLanguage?.code === 'urdu' && { fontFamily: 'Noto Nastaliq Urdu' }
-                ]}>{currentLanguage.nativeChar}</SafeText>
-              ) : (
-                <SafeText style={styles.countryCodeText}>{currentLanguage?.langCode?.toUpperCase()}</SafeText>
-              )}
-            </View>
-          )}
-          <View style={styles.languageButtonContent}>
-            <SafeText style={styles.languageName}>{currentLanguage?.name}</SafeText>
-            {currentLanguage?.nativeName && (
-              <SafeText style={[
-                styles.languageNativeName,
-                currentLanguage?.code === 'urdu' && { fontFamily: 'Noto Nastaliq Urdu', textAlign: 'left' }
-              ]}>{currentLanguage.nativeName}</SafeText>
-            )}
-          </View>
-          <Ionicons name="chevron-down" size={16} color="#666" />
-        </TouchableOpacity>
         </View>
       </View>
 {/* Search Bar */}
@@ -570,6 +624,92 @@ export default function VocabLibraryScreen({ route, navigation }) {
               );
             })}
           </ScrollView>
+        </View>
+
+        {/* Origin / Source Filter */}
+        <View style={styles.filterGroup}>
+          <SafeText style={styles.filterGroupLabel}>Source</SafeText>
+          {/* Top-level origin chips — same container as Part of Speech */}
+          <View style={styles.filterWrapContainer}>
+            {[
+              { value: '', label: 'All', border: '#9CA3AF', text: '#374151', icon: 'list-outline', lightBg: '#F3F4F6' },
+              // Dark outline by default; selected = fill with border color, white text
+              { value: 'default', label: 'Original Set', border: '#16A34A', text: '#166534', icon: 'book-outline', lightBg: '#DCFCE7' },
+              { value: 'activity', label: 'Activity', border: '#2563EB', text: '#1D4ED8', icon: 'flash-outline', lightBg: '#DBEAFE' },
+              { value: 'deck', label: 'Imported Deck', border: '#7C3AED', text: '#5B21B6', icon: 'albums-outline', lightBg: '#EDE9FE' },
+            ].map(opt => {
+              const isAll = opt.value === '';
+              const isSelected = isAll ? originFilter.length === 0 : originFilter.includes(opt.value);
+              return (
+                <TouchableOpacity
+                  key={opt.value || '__all__'}
+                  style={[
+                    styles.filterChip,
+                    {
+                      backgroundColor: isSelected ? opt.border : 'transparent',
+                      borderColor: opt.border,
+                      borderWidth: 2,
+                    },
+                  ]}
+                  onPress={() => {
+                    if (isAll) {
+                      setOriginFilter([]);
+                    } else if (isSelected) {
+                      setOriginFilter(originFilter.filter(f => f !== opt.value));
+                    } else {
+                      setOriginFilter([...originFilter, opt.value]);
+                    }
+                  }}
+                >
+                  <View style={styles.filterChipContent}>
+                    <Ionicons name={opt.icon} size={14} color={isSelected ? '#FFFFFF' : opt.border} />
+                    <SafeText style={[styles.filterChipText, { color: isSelected ? '#FFFFFF' : opt.border, fontWeight: isSelected ? '700' : '500', marginLeft: 4 }]}>
+                      {opt.label}
+                    </SafeText>
+                  </View>
+                </TouchableOpacity>
+              );
+            })}
+          </View>
+          {/* Specific imported-deck chips */}
+          {availableDecks.length > 0 && (
+            <View>
+              <SafeText style={[styles.filterGroupLabel, { marginTop: 8 }]}>Specific Deck</SafeText>
+              <View style={styles.filterWrapContainer}>
+                {availableDecks.map(deck => {
+                  const isSelected = originFilter.includes(deck.name);
+                  const borderColor = '#7C3AED';
+                  return (
+                    <TouchableOpacity
+                      key={`deck_${deck.id}`}
+                      style={[
+                        styles.filterChip,
+                        {
+                          backgroundColor: isSelected ? borderColor : 'transparent',
+                          borderColor,
+                          borderWidth: 2,
+                        },
+                      ]}
+                      onPress={() => {
+                        if (isSelected) {
+                          setOriginFilter(originFilter.filter(f => f !== deck.name));
+                        } else {
+                          setOriginFilter([...originFilter, deck.name]);
+                        }
+                      }}
+                    >
+                      <View style={styles.filterChipContent}>
+                        <Ionicons name="albums-outline" size={14} color={isSelected ? '#FFFFFF' : borderColor} />
+                        <SafeText style={[styles.filterChipText, { color: isSelected ? '#FFFFFF' : borderColor, fontWeight: isSelected ? '700' : '500', marginLeft: 4 }]}>
+                          {deck.name.length > 20 ? deck.name.substring(0, 20) + '…' : deck.name}
+                        </SafeText>
+                      </View>
+                    </TouchableOpacity>
+                  );
+                })}
+              </View>
+            </View>
+          )}
         </View>
         </>
         )}
@@ -841,6 +981,18 @@ export default function VocabLibraryScreen({ route, navigation }) {
         </TouchableOpacity>
       </Modal>
 
+      {/* Translation Tool Modal */}
+      <TranslationToolModal
+        visible={showTranslationModal}
+        onClose={() => setShowTranslationModal(false)}
+        language={language}
+        onImportComplete={(data) => {
+          setOffset(0);
+          setWords([]);
+          loadVocabulary(0, true);
+        }}
+      />
+
       {/* Text Import Modal */}
       <TextImportModal
         visible={showImportModal}
@@ -862,14 +1014,22 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
   },
   header: {
+    paddingTop: 60,
+    paddingHorizontal: 20,
+    paddingBottom: 12,
+    borderBottomWidth: 1,
+    borderBottomColor: '#F0F0F0',
+  },
+  headerTopRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingTop: 60,
-    paddingHorizontal: 20,
-    paddingBottom: 20,
-    borderBottomWidth: 1,
-    borderBottomColor: '#F0F0F0',
+    marginBottom: 10,
+  },
+  headerActionRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
   },
   headerLeft: {
     flex: 1,
@@ -882,9 +1042,18 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   importButton: {
-    padding: 8,
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 7,
+    paddingHorizontal: 12,
     borderRadius: 8,
     backgroundColor: '#F0F7FF',
+    gap: 4,
+  },
+  importButtonText: {
+    fontSize: 13,
+    fontWeight: '600',
+    color: '#4A90E2',
   },
   appIcon: {
     marginRight: 8,
@@ -1182,6 +1351,21 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: '#666',
     fontWeight: '500',
+  },
+  originChipRow: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    marginTop: 8,
+  },
+  originChip: {
+    paddingHorizontal: 8,
+    paddingVertical: 3,
+    borderRadius: 6,
+  },
+  originChipText: {
+    fontSize: 10,
+    fontWeight: '700',
+    letterSpacing: 0.3,
   },
   centerContainer: {
     flex: 1,

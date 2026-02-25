@@ -5,6 +5,26 @@ Converts between various Indic scripts and Roman transliteration using IAST
 from aksharamukha import transliterate
 import re
 
+def devanagari_to_nastaliq(text: str) -> str:
+    """Convert Devanagari Urdu text to Nastaliq (Perso-Arabic/Urdu) script using aksharamukha.
+    
+    The DB stores Urdu words in Devanagari. This converts them to the native
+    Nastaliq script for display in the app.
+    
+    Returns the Nastaliq rendering, or original text on failure.
+    """
+    if not text or not text.strip():
+        return text
+    # Skip if already in Arabic/Perso-Arabic script
+    if re.search(r'[\u0600-\u06FF\uFB50-\uFDFF\uFE70-\uFEFF]', text):
+        return text
+    try:
+        result = transliterate.process('Devanagari', 'Urdu', text)
+        return result if result else text
+    except Exception as e:
+        print(f"[devanagari_to_nastaliq] error: {e}")
+        return text
+
 def transliterate_text(text: str, from_script: str = 'kannada', to_script: str = 'ISO', from_script_override: str = None) -> str:
     """
     Transliterate text from one script to another using aksharmukha with ISO (IAST-like) scheme

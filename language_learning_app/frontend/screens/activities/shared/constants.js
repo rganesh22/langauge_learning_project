@@ -6,5 +6,4 @@ export const ACTIVITY_COLORS = {
   writing: { primary: '#FF6B6B', light: '#FFE8E8' },
   speaking: { primary: '#FF9500', light: '#FFF4E6' },
   translation: { primary: '#8B5CF6', light: '#F3E8FF' },
-  conversation: { primary: '#9B59B6', light: '#F4E6FF' },
 };

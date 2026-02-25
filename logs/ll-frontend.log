@@ -84,3 +84,148 @@ Web Bundled 394ms (node_modules/expo/AppEntry.js)
 Web Bundled 30ms (node_modules/expo/AppEntry.js)
 Web Bundled 29ms (node_modules/expo/AppEntry.js)
 Web Bundled 34ms (node_modules/expo/AppEntry.js)
+Web Bundled 403ms (node_modules/expo/AppEntry.js)
+Web Bundled 19ms (node_modules/expo/AppEntry.js)
+Web Bundled 33ms (node_modules/expo/AppEntry.js)
+Web Bundled 30ms (node_modules/expo/AppEntry.js)
+Web Bundled 789ms (node_modules/expo/AppEntry.js)
+Web Bundled 27ms (node_modules/expo/AppEntry.js)
+Web Bundled 38ms (node_modules/expo/AppEntry.js)
+Web Bundled 40ms (node_modules/expo/AppEntry.js)
+Web Bundled 814ms (node_modules/expo/AppEntry.js)
+Starting project at /Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/frontend
+Starting Metro Bundler
+The following packages should be updated for best compatibility with the installed expo version:
+  @expo/metro-runtime@6.1.2 - expected version: ~3.1.3
+  expo-av@16.0.8 - expected version: ~13.10.6
+  expo-linear-gradient@12.6.0 - expected version: ~12.7.2
+  react-native@0.73.2 - expected version: 0.73.6
+Your project may not work correctly until you install the correct versions of the packages.
+Waiting on http://localhost:8081
+Logs for your project will appear below.
+Web Bundled 2357ms (node_modules/expo/AppEntry.js)
+Web Bundled 32ms (node_modules/expo/AppEntry.js)
+Web Bundled 721ms (node_modules/expo/AppEntry.js)
+Web Bundled 32ms (node_modules/expo/AppEntry.js)
+Web Bundled 33ms (node_modules/expo/AppEntry.js)
+Web Bundled 35ms (node_modules/expo/AppEntry.js)
+Web Bundled 224ms (node_modules/expo/AppEntry.js)
+Web Bundled 29ms (node_modules/expo/AppEntry.js)
+Starting project at /Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/frontend
+Starting Metro Bundler
+The following packages should be updated for best compatibility with the installed expo version:
+  @expo/metro-runtime@6.1.2 - expected version: ~3.1.3
+  expo-av@16.0.8 - expected version: ~13.10.6
+  expo-linear-gradient@12.6.0 - expected version: ~12.7.2
+  react-native@0.73.2 - expected version: 0.73.6
+Your project may not work correctly until you install the correct versions of the packages.
+Waiting on http://localhost:8081
+Logs for your project will appear below.
+Web Bundled 833ms (node_modules/expo/AppEntry.js)
+Starting project at /Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/frontend
+Starting Metro Bundler
+The following packages should be updated for best compatibility with the installed expo version:
+  @expo/metro-runtime@6.1.2 - expected version: ~3.1.3
+  expo-av@16.0.8 - expected version: ~13.10.6
+  expo-linear-gradient@12.6.0 - expected version: ~12.7.2
+  react-native@0.73.2 - expected version: 0.73.6
+Your project may not work correctly until you install the correct versions of the packages.
+Waiting on http://localhost:8081
+Logs for your project will appear below.
+Web Bundled 917ms (node_modules/expo/AppEntry.js)
+Web Bundled 932ms (node_modules/expo/AppEntry.js)
+Web Bundled 29ms (node_modules/expo/AppEntry.js)
+Web Bundled 30ms (node_modules/expo/AppEntry.js)
+Web Bundled 40ms (node_modules/expo/AppEntry.js)
+Web Bundled 756ms (node_modules/expo/AppEntry.js)
+Web Bundled 43ms (node_modules/expo/AppEntry.js)
+Web Bundled 23ms (node_modules/expo/AppEntry.js)
+Web Bundled 1624ms (node_modules/expo/AppEntry.js)
+Web Bundled 36ms (node_modules/expo/AppEntry.js)
+Web Bundled 104ms (node_modules/expo/AppEntry.js)
+Web Bundled 31ms (node_modules/expo/AppEntry.js)
+Web Bundled 120ms (node_modules/expo/AppEntry.js)
+Web Bundled 38ms (node_modules/expo/AppEntry.js)
+Starting project at /Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/frontend
+Starting Metro Bundler
+The following packages should be updated for best compatibility with the installed expo version:
+  @expo/metro-runtime@6.1.2 - expected version: ~3.1.3
+  expo-av@16.0.8 - expected version: ~13.10.6
+  expo-linear-gradient@12.6.0 - expected version: ~12.7.2
+  react-native@0.73.2 - expected version: 0.73.6
+Your project may not work correctly until you install the correct versions of the packages.
+Waiting on http://localhost:8081
+Logs for your project will appear below.
+Web Bundled 4973ms (node_modules/expo/AppEntry.js)
+Web Bundled 32ms (node_modules/expo/AppEntry.js)
+Web Bundled 953ms (node_modules/expo/AppEntry.js)
+Web Bundled 232ms (node_modules/expo/AppEntry.js)
+Web Bundled 930ms (node_modules/expo/AppEntry.js)
+Web Bundled 209ms (node_modules/expo/AppEntry.js)
+Web Bundled 27ms (node_modules/expo/AppEntry.js)
+Starting project at /Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/frontend
+› Port 8081 is running this app in another window
+  /Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/frontend (pid 4420)
+Input is required, but 'npx expo' is in non-interactive mode.
+Required input:
+> Use port 8082 instead?
+› Skipping dev server
+Web Bundled 30ms (node_modules/expo/AppEntry.js)
+Web Bundled 35ms (node_modules/expo/AppEntry.js)
+Web Bundled 29ms (node_modules/expo/AppEntry.js)
+Web Bundled 32ms (node_modules/expo/AppEntry.js)
+Web Bundled 39ms (node_modules/expo/AppEntry.js)
+Web Bundled 28ms (node_modules/expo/AppEntry.js)
+Web Bundled 28ms (node_modules/expo/AppEntry.js)
+Web Bundled 38ms (node_modules/expo/AppEntry.js)
+Web Bundled 236ms (node_modules/expo/AppEntry.js)
+Web Bundled 262ms (node_modules/expo/AppEntry.js)
+Web Bundled 34ms (node_modules/expo/AppEntry.js)
+Web Bundled 304ms (node_modules/expo/AppEntry.js)
+Web Bundled 36ms (node_modules/expo/AppEntry.js)
+Web Bundled 368ms (node_modules/expo/AppEntry.js)
+Web Bundled 304ms (node_modules/expo/AppEntry.js)
+Web Bundled 360ms (node_modules/expo/AppEntry.js)
+Web Bundled 86ms (node_modules/expo/AppEntry.js)
+Web Bundled 647ms (node_modules/expo/AppEntry.js)
+Web Bundled 42ms (node_modules/expo/AppEntry.js)
+Web Bundled 739ms (node_modules/expo/AppEntry.js)
+Web Bundled 40ms (node_modules/expo/AppEntry.js)
+Web Bundled 806ms (node_modules/expo/AppEntry.js)
+Web Bundled 885ms (node_modules/expo/AppEntry.js)
+Web Bundled 38ms (node_modules/expo/AppEntry.js)
+Web Bundled 34ms (node_modules/expo/AppEntry.js)
+Web Bundled 31ms (node_modules/expo/AppEntry.js)
+Web Bundled 34ms (node_modules/expo/AppEntry.js)
+Web Bundled 30ms (node_modules/expo/AppEntry.js)
+Web Bundled 41ms (node_modules/expo/AppEntry.js)
+Web Bundled 34ms (node_modules/expo/AppEntry.js)
+Web Bundled 75ms (node_modules/expo/AppEntry.js)
+Web Bundled 30ms (node_modules/expo/AppEntry.js)
+Web Bundled 30ms (node_modules/expo/AppEntry.js)
+Web Bundled 47ms (node_modules/expo/AppEntry.js)
+Web Bundled 54ms (node_modules/expo/AppEntry.js)
+Web Bundled 680ms (node_modules/expo/AppEntry.js)
+Web Bundled 27ms (node_modules/expo/AppEntry.js)
+Web Bundled 28ms (node_modules/expo/AppEntry.js)
+Web Bundled 21ms (node_modules/expo/AppEntry.js)
+Web Bundled 61ms (node_modules/expo/AppEntry.js)
+Web Bundled 31ms (node_modules/expo/AppEntry.js)
+Web Bundled 591ms (node_modules/expo/AppEntry.js)
+Web Bundled 586ms (node_modules/expo/AppEntry.js)
+Web Bundled 555ms (node_modules/expo/AppEntry.js)
+Web Bundled 30ms (node_modules/expo/AppEntry.js)
+Web Bundled 26ms (node_modules/expo/AppEntry.js)
+Web Bundled 259ms (node_modules/expo/AppEntry.js)
+Web Bundled 636ms (node_modules/expo/AppEntry.js)
+Web Bundled 91ms (node_modules/expo/AppEntry.js)
+Web Bundled 1177ms (node_modules/expo/AppEntry.js)
+Web Bundled 995ms (node_modules/expo/AppEntry.js)
+Web Bundled 30ms (node_modules/expo/AppEntry.js)
+Web Bundled 567ms (node_modules/expo/AppEntry.js)
+Web Bundled 597ms (node_modules/expo/AppEntry.js)
+Web Bundled 303ms (node_modules/expo/AppEntry.js)
+Web Bundled 35ms (node_modules/expo/AppEntry.js)
+Web Bundled 1221ms (node_modules/expo/AppEntry.js)
+Web Bundled 322ms (node_modules/expo/AppEntry.js)
+Web Bundled 29ms (node_modules/expo/AppEntry.js)

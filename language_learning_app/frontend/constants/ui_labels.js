@@ -261,6 +261,61 @@ export const SPEAKER_DETAILS_LABELS = {
   urdu: 'वक्ता की तफ़सीलात', // Devanagari - will be transliterated to Nastaliq
 };
 
+export const IMPORT_VOCAB_FROM_TRANSCRIPT_LABELS = {
+  kannada: 'ಲಿಪಿಯಿಂದ ಪದಗಳನ್ನು ಆಮದುಮಾಡಿ',
+  telugu: 'ట్రాన్స్క్రిప్ట్ నుండి పదాలను దిగుమతి చేయండి',
+  malayalam: 'ട്രാൻസ്‌ക്രിപ്റ്റിൽ നിന്ന് വാക്കുകൾ ഇറക്കുമതി ചെയ്യുക',
+  tamil: 'மொழிபெயர்ப்பு உரையிலிருந்து சொற்களை இறக்குமதி செய்க',
+  english: 'Import Vocab from Transcript',
+  hindi: 'ट्रांसक्रिप्ट से शब्दावली आयात करें',
+  urdu: 'लिप्यांतरण से शब्द आयात करें', // Devanagari - will be transliterated
+};
+
+export const getImportVocabFromTranscriptLabel = (language) => {
+  try {
+    const val = IMPORT_VOCAB_FROM_TRANSCRIPT_LABELS[language] || IMPORT_VOCAB_FROM_TRANSCRIPT_LABELS.english;
+    if (val === null || typeof val === 'undefined') return '';
+    if (typeof val === 'string') return val;
+    if (Array.isArray(val)) return val.filter(Boolean).join(' ');
+    if (typeof val === 'object') {
+      if (val.text && typeof val.text === 'string') return val.text;
+      if (val.label && typeof val.label === 'string') return val.label;
+      try { return JSON.stringify(val); } catch (e) { return String(val); }
+    }
+    return String(val);
+  } catch (e) {
+    return '';
+  }
+};
+
+/** Import Vocab from Story — for Reading activity. Urdu in Devanagari → Nastaliq. */
+export const IMPORT_VOCAB_FROM_STORY_LABELS = {
+  kannada: 'ಕಥೆಯಿಂದ ಪದಗಳನ್ನು ಆಮದುಮಾಡಿ',
+  telugu: 'కథ నుండి పదాలను దిగుమతి చేయండి',
+  malayalam: 'കഥയിൽ നിന്ന് വാക്കുകൾ ഇറക്കുമതി ചെയ്യുക',
+  tamil: 'கதையிலிருந்து சொற்களை இறக்குமதி செய்க',
+  english: 'Import Vocab from Story',
+  hindi: 'कहानी से शब्दावली आयात करें',
+  urdu: 'कहानी से शब्द आयात करें', // Devanagari - will be converted to Nastaliq
+};
+
+export const getImportVocabFromStoryLabel = (language) => {
+  try {
+    const val = IMPORT_VOCAB_FROM_STORY_LABELS[language] || IMPORT_VOCAB_FROM_STORY_LABELS.english;
+    if (val === null || typeof val === 'undefined') return '';
+    if (typeof val === 'string') return val;
+    if (Array.isArray(val)) return val.filter(Boolean).join(' ');
+    if (typeof val === 'object') {
+      if (val.text && typeof val.text === 'string') return val.text;
+      if (val.label && typeof val.label === 'string') return val.label;
+      try { return JSON.stringify(val); } catch (e) { return String(val); }
+    }
+    return String(val);
+  } catch (e) {
+    return '';
+  }
+};
+
 export const SHOW_TRANSCRIPT_LABELS = {
   kannada: 'ಪಠ್ಯ ತೋರಿಸಿ',
   telugu: 'వచనాన్ని చూపించు',
@@ -422,16 +477,6 @@ export const SPEAKING_HEADER_LABELS = {
   english: 'Speaking',
   hindi: 'बोलना',
   urdu: 'बोलना', // Devanagari - will be transliterated to Nastaliq
-};
-
-export const CONVERSATION_HEADER_LABELS = {
-  kannada: 'ಸಂಭಾಷಣೆ',
-  telugu: 'సంభాషణ',
-  malayalam: 'സംഭാഷണം',
-  tamil: 'உரையாடல்',
-  english: 'Conversation',
-  hindi: 'बातचीत',
-  urdu: 'बातचीत', // Devanagari - will be transliterated to Nastaliq
 };
 
 // Activity history specific labels
@@ -1141,44 +1186,6 @@ export const getSpeakerDetailsLabel = (language) => {
   }
 };
 
-const START_CONVERSATION_LABELS = {
-  kannada: 'ಸಂವಾದ ಪ್ರಾರಂಭಿಸಿ',
-  telugu: 'సంభాషణ ప్రారంభించండి',
-  malayalam: 'സംഭാഷണം ആരംഭിക്കുക',
-  tamil: 'உரையாடலைத் தொடங்கவும்',
-  english: 'Start Conversation',
-  hindi: 'बातचीत शुरू करें',
-  urdu: 'बातचीत शुरू करें',
-};
-
-export const getStartConversationLabel = (language) => {
-  try {
-    const val = START_CONVERSATION_LABELS[language] || START_CONVERSATION_LABELS.english || 'Start Conversation';
-    return typeof val === 'string' ? val : String(val);
-  } catch (e) {
-    return 'Start Conversation';
-  }
-};
-
-const RESET_CONVERSATION_LABELS = {
-  kannada: 'ಸಂವಾದ ಮರುಹೊಂದಿಸಿ',
-  telugu: 'సంభాషణను రీసెట్ చేయండి',
-  malayalam: 'സംഭാഷണം പുനഃസജ്ജമാക്കുക',
-  tamil: 'உரையாடலை மீட்டமைக்கவும்',
-  english: 'Reset Conversation',
-  hindi: 'बातचीत रीसेट करें',
-  urdu: 'बातचीत रीसेट करें',
-};
-
-export const getResetConversationLabel = (language) => {
-  try {
-    const val = RESET_CONVERSATION_LABELS[language] || RESET_CONVERSATION_LABELS.english || 'Reset Conversation';
-    return typeof val === 'string' ? val : String(val);
-  } catch (e) {
-    return 'Reset Conversation';
-  }
-};
-
 const SPEAKER_PROFILE_LABELS = {
   kannada: 'ಮಾತನಾಡುವವರ ವಿವರ',
   telugu: 'మాట్లాడేవారి వివరాలు',
@@ -1304,15 +1311,6 @@ export const getSpeakingHeaderLabel = (language) => {
     return typeof val === 'string' ? val : String(val);
   } catch (e) {
     return 'Speaking';
-  }
-};
-
-export const getConversationHeaderLabel = (language) => {
-  try {
-    const val = CONVERSATION_HEADER_LABELS[language] || CONVERSATION_HEADER_LABELS.english || 'Conversation';
-    return typeof val === 'string' ? val : String(val);
-  } catch (e) {
-    return 'Conversation';
   }
 };
 
@@ -1954,10 +1952,6 @@ export default {
   getWritingHeaderLabel,
   SPEAKING_HEADER_LABELS,
   getSpeakingHeaderLabel,
-  CONVERSATION_HEADER_LABELS,
-  getConversationHeaderLabel,
-  getStartConversationLabel,
-  getResetConversationLabel,
   getSpeakerProfileLabel,
   REOPEN_ACTIVITY_LABELS,
   getReopenActivityLabel,

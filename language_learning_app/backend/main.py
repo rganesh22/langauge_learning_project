@@ -15,6 +15,7 @@ from . import db
 from . import api_client
 from . import config
 from . import transliteration
+from . import srs_placement
 from .websocket_conversation import handle_websocket_conversation
 from .prompting.lesson_prompts import LESSON_FREE_RESPONSE_GRADING_PROMPT
 
@@ -360,6 +361,7 @@ def get_vocabulary(
     mastery_filter: Optional[list[str]] = Query(None),
     word_class_filter: Optional[list[str]] = Query(None),
     level_filter: Optional[list[str]] = Query(None),
+    origin_filter: Optional[list[str]] = Query(None),
     limit: int = 50,
     offset: int = 0
 ):
@@ -380,10 +382,7 @@ def get_vocabulary(
         mastery_filter_str = normalize_filter(mastery_filter)
         word_class_filter_str = normalize_filter(word_class_filter)
         level_filter_str = normalize_filter(level_filter)
-        
-        # Debug logging
-        print(f"Filters received - mastery: {mastery_filter} (type: {type(mastery_filter)}), word_class: {word_class_filter} (type: {type(word_class_filter)}), level: {level_filter} (type: {type(level_filter)})")
-        print(f"Filters as strings - mastery: '{mastery_filter_str}', word_class: '{word_class_filter_str}', level: '{level_filter_str}'")
+        origin_filter_str = normalize_filter(origin_filter)
         
         # Decode URL-encoded search query if needed
         import urllib.parse
@@ -399,6 +398,7 @@ def get_vocabulary(
             mastery_filter_str,
             word_class_filter_str,
             level_filter_str,
+            origin_filter_str,
             limit,
             offset
         )
@@ -439,6 +439,65 @@ def transliterate_endpoint(request: TransliterationRequest):
 
 
 # ============================================================================
+# Quick Translation Endpoint
+# ============================================================================
+
+class TranslateRequest(BaseModel):
+    text: str
+    source_language: str
+    target_language: str = "english"
+
+
+@app.post("/api/translate")
+async def translate_text(request: TranslateRequest):
+    """Translate arbitrary text from source_language into target_language using Gemini."""
+    import concurrent.futures
+
+    source = request.source_language.strip().lower()
+    target = request.target_language.strip().lower()
+    text   = request.text.strip()
+
+    if not text:
+        raise HTTPException(status_code=400, detail="text is required")
+
+    prompt = (
+        f"Translate the following {source} text into {target}.\n"
+        "Return ONLY a JSON object with exactly two keys:\n"
+        '  "translated_text": the full translation as a plain string\n'
+        '  "notes": a short (≤2 sentence) optional note about register, dialect, or ambiguity (empty string if none)\n\n'
+        "Do NOT add any markdown, code fences, or extra keys.\n\n"
+        f"Text to translate:\n{text}"
+    )
+
+    loop = asyncio.get_event_loop()
+    with concurrent.futures.ThreadPoolExecutor() as pool:
+        result_text, *_ = await loop.run_in_executor(
+            pool,
+            lambda: api_client.generate_text_with_gemini(prompt),
+        )
+
+    import json as _json, re as _re
+    # Strip markdown fences if present
+    cleaned = _re.sub(r"```(?:json)?|```", "", result_text).strip()
+    try:
+        data = _json.loads(cleaned)
+        return {
+            "translated_text": str(data.get("translated_text", "")),
+            "notes": str(data.get("notes", "")),
+            "source_language": source,
+            "target_language": target,
+        }
+    except Exception:
+        # Fallback: return raw text
+        return {
+            "translated_text": result_text.strip(),
+            "notes": "",
+            "source_language": source,
+            "target_language": target,
+        }
+
+
+# ============================================================================
 # Vocabulary Import Endpoint
 # ============================================================================
 
@@ -446,155 +505,240 @@ class TextImportRequest(BaseModel):
     text: str
     language: str
     target_languages: Optional[List[str]] = None  # Languages to cross-translate into
+    deck_name: Optional[str] = None  # Custom deck name for imported words
 
-@app.post("/api/vocab/import-text")
-async def import_text_to_vocab(request: TextImportRequest):
-    """Import text to vocabulary with lemmatization and translation
 
-    Process:
-    1. Split text into words
-    2. Batch lemmatize words (10 words per batch)
-    3. Check for existing entries
-    4. Batch translate new words
-    5. Transliterate using Aksharmukha
-    6. Insert into database with origin='user'
+class ExtractedWord(BaseModel):
+    word: str
+    english: str
+    word_class: str
+    level: Optional[str] = None
+    transliteration: Optional[str] = None
+
+
+class LangWordList(BaseModel):
+    new_words: List[ExtractedWord]
+    existing_words: List[dict] = []
+
+
+class CommitImportRequest(BaseModel):
+    language: str
+    words: Optional[List[ExtractedWord]] = None  # Source language words (backward compat)
+    synonyms: Optional[List[Dict]] = None  # Synonym words (will be merged into existing cards)
+    words_by_lang: Optional[Dict[str, List[ExtractedWord]]] = None  # Per-language words
+    deck_name: Optional[str] = None
+    target_languages: Optional[List[str]] = None
+
+
+@app.post("/api/vocab/extract-text")
+async def extract_text_to_vocab(request: TextImportRequest):
+    """Step 1: Extract and process words from text WITHOUT saving to DB.
+    Returns words with lemmatization, translation, and CEFR level for user review.
+    If target_languages provided, also cross-translates and returns per-language previews.
+    Batches run in parallel using asyncio for maximum speed.
     """
     try:
         import re
-        import traceback
-        from .prompting.vocab_import_prompts import get_lemmatization_prompt, get_translation_prompt
+        import asyncio
+        from concurrent.futures import ThreadPoolExecutor
+        from .prompting.vocab_import_prompts import get_lemmatization_translation_prompt, get_translation_prompt
 
-        # Use target_languages from request, or fall back to user's active languages
-        if request.target_languages and len(request.target_languages) > 0:
-            user_languages = request.target_languages
-        else:
-            user_languages = []
-
-        # Step 1: Split text into words
         words = re.findall(
-            r'[\w\u0900-\u097F\u0C00-\u0C7F\u0D00-\u0D7F\u0B80-\u0BFF\u0A80-\u0AFF\u0C80-\u0CFF]+',
+            r'[\w\u0900-\u097F\u0C00-\u0C7F\u0D00-\u0D7F\u0B80-\u0BFF\u0A80-\u0AFF\u0C80-\u0CFF\u0600-\u06FF\u0750-\u077F\uFB50-\uFDFF\uFE70-\uFEFF]+',
             request.text,
         )
-        words = list(dict.fromkeys(w.strip() for w in words if w.strip()))  # dedupe, preserve order
+        words = list(dict.fromkeys(w.strip() for w in words if w.strip()))
 
         if not words:
-            return {
-                "success": True,
-                "message": "No words found in text",
-                "new_words": 0, "existing_words": 0,
-                "added": [], "existing": []
-            }
+            return {"success": True, "words": [], "existing": [], "translations_by_lang": {}, "message": "No words found in text"}
 
         BATCH_SIZE = 10
-        all_lemmatized = []
+        batches = [words[i:i + BATCH_SIZE] for i in range(0, len(words), BATCH_SIZE)]
 
-        # Step 2: Batch lemmatize
-        for i in range(0, len(words), BATCH_SIZE):
-            batch = words[i:i + BATCH_SIZE]
-            prompt = get_lemmatization_prompt(request.language, batch)
+        # ── Step A: Parallel lemmatization + source translation ──
+        def process_lemma_batch(batch):
+            prompt = get_lemmatization_translation_prompt(request.language, batch)
             response_text, *_ = api_client.generate_text_with_gemini(
                 prompt, model_name=api_client.GEMINI_MODEL
             )
             try:
                 parsed = json.loads(response_text.strip().replace('```json', '').replace('```', ''))
-                if isinstance(parsed, list):
-                    all_lemmatized.extend(parsed)
+                return parsed if isinstance(parsed, list) else []
             except json.JSONDecodeError as e:
-                print(f"Lemmatization batch {i // BATCH_SIZE + 1} parse error: {e}")
-                continue
+                print(f"Extract lemma batch parse error: {e}")
+                return []
 
-        if not all_lemmatized:
-            raise HTTPException(status_code=400, detail="Failed to lemmatize words")
+        loop = asyncio.get_event_loop()
+        executor = ThreadPoolExecutor(max_workers=min(len(batches), 8))
+        lemma_tasks = [
+            loop.run_in_executor(executor, process_lemma_batch, batch)
+            for batch in batches
+        ]
+        lemma_results = await asyncio.gather(*lemma_tasks)
+        all_processed = [item for sublist in lemma_results for item in sublist]
 
-        # Step 3: Check existing entries
-        existing_words = []
-        new_words = []
-        seen = set()
+        if not all_processed:
+            raise HTTPException(status_code=400, detail="Failed to extract words from text")
 
-        for wd in all_lemmatized:
+        # ── Step B: Parallel DB lookups + transliteration ──
+        def enrich_word(wd):
             word = wd.get('word', '').strip()
-            if not word or word in seen:
-                continue
-            seen.add(word)
+            if not word:
+                return None, None
+            translit = transliteration.transliterate_text(word, request.language, 'IAST')
+            wd['transliteration'] = translit
+            nastaliq = transliteration.devanagari_to_nastaliq(word) if request.language == 'urdu' else None
             existing = db.find_word_by_translation(word, request.language)
             if existing:
-                translit = existing.get('transliteration', '')
-                if not translit and existing.get('translation'):
-                    translit = transliteration.transliterate_text(
-                        existing['translation'], request.language, 'IAST'
-                    )
-                existing_words.append({
+                entry = {
                     'word': word,
                     'transliteration': translit,
-                    'english_word': existing.get('english_word', ''),
-                    'word_class': existing.get('word_class', '')
-                })
+                    'english_word': existing.get('english_word', wd.get('english', '')),
+                    'word_class': existing.get('word_class', wd.get('word_class', '')),
+                    'level': existing.get('level', wd.get('level', '')),
+                    'mastery_level': existing.get('mastery_level', 'new'),
+                    'status': 'existing',
+                    'existing_id': existing.get('id'),
+                }
+                if nastaliq: entry['nastaliq'] = nastaliq
+                return 'existing', entry
+            # Check if this word is a synonym of an existing word (same English meaning)
+            english = wd.get('english', '')
+            synonym_match = db.find_synonym_by_english(english, request.language, exclude_word=word) if english else None
+            if synonym_match:
+                entry = {
+                    'word': word,
+                    'english': english,
+                    'word_class': wd.get('word_class', 'noun'),
+                    'level': wd.get('level', None),
+                    'transliteration': translit,
+                    'status': 'synonym',
+                    'synonym_of_word': synonym_match.get('translation', ''),
+                    'synonym_of_english': synonym_match.get('english_word', ''),
+                    'synonym_of_id': synonym_match.get('id'),
+                }
+                if nastaliq: entry['nastaliq'] = nastaliq
+                return 'synonym', entry
             else:
-                new_words.append(wd)
-
-        # Step 4: Batch translate new words
-        added_words = []
-        for i in range(0, len(new_words), BATCH_SIZE):
-            batch = new_words[i:i + BATCH_SIZE]
-            prompt = get_translation_prompt(request.language, batch, user_languages)
-            response_text, *_ = api_client.generate_text_with_gemini(
-                prompt, model_name=api_client.GEMINI_MODEL
-            )
-            try:
-                translations = json.loads(response_text.strip().replace('```json', '').replace('```', ''))
-            except json.JSONDecodeError as e:
-                print(f"Translation batch {i // BATCH_SIZE + 1} parse error: {e}")
-                continue
-
-            # Step 5: Transliterate with Aksharmukha and insert
-            for td in translations:
-                word = td.get('word', '').strip()
-                if not word:
-                    continue
-                word_class = next(
-                    (w['word_class'] for w in batch if w['word'] == word),
-                    td.get('word_class', 'noun')
-                )
-                translit = transliteration.transliterate_text(word, request.language, 'IAST')
-
-                db.insert_vocabulary_entry(
-                    language=request.language,
-                    english_word=td.get('english', ''),
-                    translation=word,
-                    transliteration=translit,
-                    word_class=word_class,
-                    level=None,
-                    origin='user',
-                )
-                added_words.append({
+                entry = {
                     'word': word,
+                    'english': english,
+                    'word_class': wd.get('word_class', 'noun'),
+                    'level': wd.get('level', None),
                     'transliteration': translit,
-                    'english_word': td.get('english', ''),
-                    'word_class': word_class,
-                })
+                    'status': 'new',
+                }
+                if nastaliq: entry['nastaliq'] = nastaliq
+                return 'new', entry
 
-                # Insert cross-language translations
-                for lang, trans_text in td.get('translations', {}).items():
-                    if lang in user_languages and trans_text:
-                        if not db.find_word_by_translation(trans_text, lang):
-                            t_translit = transliteration.transliterate_text(trans_text, lang, 'IAST')
-                            db.insert_vocabulary_entry(
-                                language=lang,
-                                english_word=td.get('english', ''),
-                                translation=trans_text,
-                                transliteration=t_translit,
-                                word_class=word_class,
-                                level=None,
-                                origin='user',
-                            )
+        enrich_tasks = [
+            loop.run_in_executor(executor, enrich_word, wd)
+            for wd in all_processed
+        ]
+        enrich_results = await asyncio.gather(*enrich_tasks)
+
+        new_words = []
+        existing_words_list = []
+        synonym_words_list = []
+        seen = set()
+        for kind, entry in enrich_results:
+            if kind is None or not entry:
+                continue
+            w = entry.get('word', '')
+            if w in seen:
+                continue
+            seen.add(w)
+            if kind == 'existing':
+                existing_words_list.append(entry)
+            elif kind == 'synonym':
+                synonym_words_list.append(entry)
+            else:
+                new_words.append(entry)
+
+        # ── Step C: Parallel cross-translation ──
+        translations_by_lang = {}
+        target_languages = request.target_languages or []
+
+        if target_languages and all_processed:
+            words_for_translation = [
+                {'word': w.get('word', ''), 'word_class': w.get('word_class', 'noun'), 'english': w.get('english', '')}
+                for w in all_processed if w.get('word')
+            ]
+            trans_batches = [words_for_translation[i:i + BATCH_SIZE] for i in range(0, len(words_for_translation), BATCH_SIZE)]
+
+            def process_trans_batch(batch):
+                prompt = get_translation_prompt(request.language, batch, target_languages)
+                if not prompt:
+                    return []
+                response_text, *_ = api_client.generate_text_with_gemini(
+                    prompt, model_name=api_client.GEMINI_MODEL
+                )
+                try:
+                    return json.loads(response_text.strip().replace('```json', '').replace('```', ''))
+                except json.JSONDecodeError:
+                    return []
+
+            trans_tasks = [
+                loop.run_in_executor(executor, process_trans_batch, batch)
+                for batch in trans_batches
+            ]
+            trans_results = await asyncio.gather(*trans_tasks)
+            translated_all = [item for sublist in trans_results for item in sublist]
+
+            # Build per-language entries (parallel DB lookups)
+            def enrich_translation(td, lang):
+                trans_text = td.get('translations', {}).get(lang, '')
+                if not trans_text:
+                    return lang, None
+                t_translit = transliteration.transliterate_text(trans_text, lang, 'IAST')
+                t_nastaliq = transliteration.devanagari_to_nastaliq(trans_text) if lang == 'urdu' else None
+                existing_in_lang = db.find_word_by_translation(trans_text, lang)
+                entry = {
+                    'word': trans_text,
+                    'english': td.get('english', ''),
+                    'word_class': td.get('word_class', 'noun'),
+                    'level': None,
+                    'transliteration': t_translit,
+                }
+                if t_nastaliq: entry['nastaliq'] = t_nastaliq
+                if existing_in_lang:
+                    ex = {
+                        'word': trans_text,
+                        'transliteration': t_translit,
+                        'english_word': existing_in_lang.get('english_word', td.get('english', '')),
+                        'word_class': existing_in_lang.get('word_class', td.get('word_class', '')),
+                        'level': existing_in_lang.get('level', ''),
+                        'mastery_level': existing_in_lang.get('mastery_level', 'new'),
+                    }
+                    if t_nastaliq: ex['nastaliq'] = t_nastaliq
+                    return lang, ('existing', ex)
+                return lang, ('new', entry)
+
+            lang_enrich_tasks = [
+                loop.run_in_executor(executor, enrich_translation, td, lang)
+                for td in translated_all
+                for lang in target_languages
+            ]
+            lang_enrich_results = await asyncio.gather(*lang_enrich_tasks)
+
+            for lang, result in lang_enrich_results:
+                if result is None:
+                    continue
+                kind, entry = result
+                if lang not in translations_by_lang:
+                    translations_by_lang[lang] = {'new_words': [], 'existing_words': []}
+                if kind == 'existing':
+                    translations_by_lang[lang]['existing_words'].append(entry)
+                else:
+                    translations_by_lang[lang]['new_words'].append(entry)
 
         return {
             "success": True,
-            "message": f"Added {len(added_words)} new words, {len(existing_words)} already exist",
-            "new_words": len(added_words),
-            "existing_words": len(existing_words),
-            "added": added_words,
-            "existing": existing_words,
+            "words": new_words,
+            "synonyms": synonym_words_list,
+            "existing": existing_words_list,
+            "translations_by_lang": translations_by_lang,
+            "total_extracted": len(all_processed),
         }
 
     except json.JSONDecodeError as e:
@@ -603,6 +747,385 @@ async def import_text_to_vocab(request: TextImportRequest):
     except Exception as e:
         import traceback; traceback.print_exc()
         raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.post("/api/vocab/extract-text-stream")
+async def extract_text_stream(request: TextImportRequest):
+    """Streaming SSE variant of extract-text. Sends progress events while processing.
+    Events: { type: 'progress', batch: N, total_batches: N, processed: N } 
+            { type: 'done', words: [...], existing: [...], translations_by_lang: {...} }
+            { type: 'error', message: '...' }
+    """
+    import re
+    import asyncio
+    import json as _json
+    from concurrent.futures import ThreadPoolExecutor
+    from .prompting.vocab_import_prompts import get_lemmatization_translation_prompt, get_translation_prompt
+
+    async def event_stream():
+        try:
+            words = re.findall(
+                r'[\w\u0900-\u097F\u0C00-\u0C7F\u0D00-\u0D7F\u0B80-\u0BFF\u0A80-\u0AFF\u0C80-\u0CFF\u0600-\u06FF\u0750-\u077F\uFB50-\uFDFF\uFE70-\uFEFF]+',
+                request.text,
+            )
+            words = list(dict.fromkeys(w.strip() for w in words if w.strip()))
+
+            if not words:
+                yield f"data: {_json.dumps({'type':'done','words':[],'existing':[],'translations_by_lang':{}})}\n\n"
+                return
+
+            BATCH_SIZE = 10
+            batches = [words[i:i + BATCH_SIZE] for i in range(0, len(words), BATCH_SIZE)]
+            total_batches = len(batches)
+            target_languages = request.target_languages or []
+            total_phases = total_batches + (total_batches if target_languages else 0)
+
+            yield f"data: {_json.dumps({'type':'start','total_words':len(words),'total_batches':total_batches,'has_translations': bool(target_languages)})}\n\n"
+
+            loop = asyncio.get_event_loop()
+            executor = ThreadPoolExecutor(max_workers=min(total_batches, 8))
+            all_processed = []
+
+            # Phase 1: Lemmatization batches — parallel but report progress per-batch
+            def process_lemma_batch(batch_idx_batch):
+                idx, batch = batch_idx_batch
+                prompt = get_lemmatization_translation_prompt(request.language, batch)
+                response_text, *_ = api_client.generate_text_with_gemini(prompt, model_name=api_client.GEMINI_MODEL)
+                try:
+                    parsed = _json.loads(response_text.strip().replace('```json','').replace('```',''))
+                    return idx, parsed if isinstance(parsed, list) else []
+                except Exception:
+                    return idx, []
+
+            futures = {
+                loop.run_in_executor(executor, process_lemma_batch, (i, b)): i
+                for i, b in enumerate(batches)
+            }
+            pending = set(futures.keys())
+            completed = 0
+            batch_results = [None] * total_batches
+
+            while pending:
+                done, pending = await asyncio.wait(pending, return_when=asyncio.FIRST_COMPLETED)
+                for f in done:
+                    idx, result = await f
+                    batch_results[idx] = result
+                    completed += 1
+                    yield f"data: {_json.dumps({'type':'progress','phase':'lemmatize','batch':completed,'total_batches':total_batches,'words_done':completed*BATCH_SIZE})}\n\n"
+
+            all_processed = [item for sublist in batch_results if sublist for item in sublist]
+
+            if not all_processed:
+                yield f"data: {_json.dumps({'type':'error','message':'Failed to extract words from text'})}\n\n"
+                return
+
+            # DB enrichment (parallel)
+            def enrich_word(wd):
+                word = wd.get('word', '').strip()
+                if not word:
+                    return None, None
+                translit = transliteration.transliterate_text(word, request.language, 'IAST')
+                wd['transliteration'] = translit
+                nastaliq = transliteration.devanagari_to_nastaliq(word) if request.language == 'urdu' else None
+                existing = db.find_word_by_translation(word, request.language)
+                if existing:
+                    entry = {
+                        'word': word, 'transliteration': translit,
+                        'english_word': existing.get('english_word', wd.get('english','')),
+                        'word_class': existing.get('word_class', wd.get('word_class','')),
+                        'level': existing.get('level', wd.get('level','')),
+                        'mastery_level': existing.get('mastery_level','new'),
+                        'status': 'existing',
+                        'existing_id': existing.get('id'),
+                    }
+                    if nastaliq: entry['nastaliq'] = nastaliq
+                    return 'existing', entry
+                english = wd.get('english', '')
+                synonym_match = db.find_synonym_by_english(english, request.language, exclude_word=word) if english else None
+                if synonym_match:
+                    entry = {
+                        'word': word, 'english': english,
+                        'word_class': wd.get('word_class','noun'),
+                        'level': wd.get('level', None), 'transliteration': translit,
+                        'status': 'synonym',
+                        'synonym_of_word': synonym_match.get('translation',''),
+                        'synonym_of_english': synonym_match.get('english_word',''),
+                        'synonym_of_id': synonym_match.get('id'),
+                    }
+                    if nastaliq: entry['nastaliq'] = nastaliq
+                    return 'synonym', entry
+                entry = {
+                    'word': word, 'english': english,
+                    'word_class': wd.get('word_class','noun'),
+                    'level': wd.get('level', None), 'transliteration': translit,
+                    'status': 'new',
+                }
+                if nastaliq: entry['nastaliq'] = nastaliq
+                return 'new', entry
+
+            enrich_tasks = [loop.run_in_executor(executor, enrich_word, wd) for wd in all_processed]
+            enrich_results = await asyncio.gather(*enrich_tasks)
+
+            new_words, existing_words_list, synonym_words_list, seen = [], [], [], set()
+            for kind, entry in enrich_results:
+                if not entry: continue
+                w = entry.get('word','')
+                if w in seen: continue
+                seen.add(w)
+                if kind == 'existing':
+                    existing_words_list.append(entry)
+                elif kind == 'synonym':
+                    synonym_words_list.append(entry)
+                else:
+                    new_words.append(entry)
+
+            yield f"data: {_json.dumps({'type':'progress','phase':'db_check','new':len(new_words),'synonyms':len(synonym_words_list),'existing':len(existing_words_list)})}\n\n"
+
+            # Phase 2: Translation (parallel)
+            translations_by_lang = {}
+            if target_languages:
+                words_for_translation = [
+                    {'word': w.get('word',''), 'word_class': w.get('word_class','noun'), 'english': w.get('english','')}
+                    for w in all_processed if w.get('word')
+                ]
+                trans_batches = [words_for_translation[i:i+BATCH_SIZE] for i in range(0,len(words_for_translation),BATCH_SIZE)]
+
+                def process_trans_batch(batch_idx_batch):
+                    idx, batch = batch_idx_batch
+                    prompt = get_translation_prompt(request.language, batch, target_languages)
+                    if not prompt: return idx, []
+                    response_text, *_ = api_client.generate_text_with_gemini(prompt, model_name=api_client.GEMINI_MODEL)
+                    try:
+                        return idx, _json.loads(response_text.strip().replace('```json','').replace('```',''))
+                    except Exception:
+                        return idx, []
+
+                trans_futures = {
+                    loop.run_in_executor(executor, process_trans_batch, (i, b)): i
+                    for i, b in enumerate(trans_batches)
+                }
+                pending_t = set(trans_futures.keys())
+                completed_t = 0
+                trans_results = [None] * len(trans_batches)
+
+                while pending_t:
+                    done_t, pending_t = await asyncio.wait(pending_t, return_when=asyncio.FIRST_COMPLETED)
+                    for f in done_t:
+                        idx, result = await f
+                        trans_results[idx] = result
+                        completed_t += 1
+                        yield f"data: {_json.dumps({'type':'progress','phase':'translate','batch':completed_t,'total_batches':len(trans_batches),'languages':target_languages})}\n\n"
+
+                translated_all = [item for sublist in trans_results if sublist for item in sublist]
+
+                def enrich_translation(td_lang):
+                    td, lang = td_lang
+                    trans_text = td.get('translations',{}).get(lang,'')
+                    if not trans_text: return lang, None
+                    t_translit = transliteration.transliterate_text(trans_text, lang, 'IAST')
+                    t_nastaliq = transliteration.devanagari_to_nastaliq(trans_text) if lang == 'urdu' else None
+                    existing_in_lang = db.find_word_by_translation(trans_text, lang)
+                    entry = {'word': trans_text, 'english': td.get('english',''), 'word_class': td.get('word_class','noun'), 'level': None, 'transliteration': t_translit}
+                    if t_nastaliq: entry['nastaliq'] = t_nastaliq
+                    if existing_in_lang:
+                        ex = {'word': trans_text, 'transliteration': t_translit,
+                            'english_word': existing_in_lang.get('english_word', td.get('english','')),
+                            'word_class': existing_in_lang.get('word_class', td.get('word_class','')),
+                            'level': existing_in_lang.get('level',''), 'mastery_level': existing_in_lang.get('mastery_level','new')}
+                        if t_nastaliq: ex['nastaliq'] = t_nastaliq
+                        return lang, ('existing', ex)
+                    return lang, ('new', entry)
+
+                lang_enrich_tasks = [loop.run_in_executor(executor, enrich_translation, (td, lang)) for td in translated_all for lang in target_languages]
+                lang_enrich_results = await asyncio.gather(*lang_enrich_tasks)
+                for lang, result in lang_enrich_results:
+                    if not result: continue
+                    kind, entry = result
+                    if lang not in translations_by_lang:
+                        translations_by_lang[lang] = {'new_words':[], 'existing_words':[]}
+                    translations_by_lang[lang]['new_words' if kind == 'new' else 'existing_words'].append(entry)
+
+            yield f"data: {_json.dumps({'type':'done','words':new_words,'synonyms':synonym_words_list,'existing':existing_words_list,'translations_by_lang':translations_by_lang,'total_extracted':len(all_processed)})}\n\n"
+
+        except Exception as e:
+            import traceback; traceback.print_exc()
+            yield f"data: {_json.dumps({'type':'error','message':str(e)})}\n\n"
+
+    return StreamingResponse(event_stream(), media_type="text/event-stream", headers={"Cache-Control": "no-cache", "X-Accel-Buffering": "no"})
+
+
+@app.post("/api/vocab/commit-import")
+async def commit_import_to_vocab(request: CommitImportRequest):
+    """Step 2: Save pre-extracted words to DB (after user review/filtering).
+    
+    - `words`: Completely new words — added as fresh entries to the deck.
+    - `synonyms`: Words that are synonyms of existing entries — merged into the existing card
+                  (appended to translation field as 'original / synonym') and also saved to deck.
+    - Saves all committed words to a CSV file in storage/imports/ for record-keeping.
+    """
+    try:
+        from datetime import datetime
+
+        deck_name = request.deck_name
+        if not deck_name:
+            deck_name = f"Deck {datetime.now().strftime('%Y-%m-%d %H:%M')}"
+
+        # Determine source words (backward compat: either `words` or `words_by_lang[language]`)
+        source_words = request.words or []
+        words_by_lang = request.words_by_lang or {}
+        synonym_words = request.synonyms or []
+
+        # Merge: source_words takes precedence; words_by_lang may also contain source lang
+        if not source_words and request.language in words_by_lang:
+            source_words = words_by_lang[request.language]
+
+        # Create deck only if there are words to import (any language)
+        total_across_langs = len(source_words) + len(synonym_words) + sum(len(v) for k, v in words_by_lang.items() if k != request.language)
+        deck_id = db.create_vocab_deck(request.language, deck_name) if total_across_langs > 0 else None
+
+        added_words = []
+        csv_words = []  # All words for CSV record
+
+        # Save source language words (completely new)
+        for wd in source_words:
+            word = wd.word.strip()
+            if not word:
+                continue
+            translit = wd.transliteration or transliteration.transliterate_text(word, request.language, 'IAST')
+            db.insert_vocabulary_entry(
+                language=request.language,
+                english_word=wd.english,
+                translation=word,
+                transliteration=translit,
+                word_class=wd.word_class,
+                level=wd.level,
+                origin='deck',
+                deck_id=deck_id,
+            )
+            added_words.append({'word': word, 'transliteration': translit, 'english_word': wd.english,
+                                 'word_class': wd.word_class, 'level': wd.level, 'language': request.language})
+            csv_words.append({'word': word, 'english': wd.english, 'transliteration': translit,
+                               'word_class': wd.word_class, 'level': wd.level, 'status': 'new'})
+
+        # Merge synonym words into existing cards + add to deck
+        merged_synonyms = []
+        for syn in synonym_words:
+            word = (syn.get('word') or '').strip()
+            if not word:
+                continue
+            syn_of_id = syn.get('synonym_of_id')
+            syn_of_word = syn.get('synonym_of_word', '')
+            translit = syn.get('transliteration') or transliteration.transliterate_text(word, request.language, 'IAST')
+            english = syn.get('english', '')
+            # Merge into existing card (append to translation string)
+            if syn_of_id:
+                db.add_synonym_to_word(
+                    word_id=syn_of_id,
+                    synonym_word=word,
+                    synonym_transliteration=translit,
+                    synonym_english=english,
+                )
+            # Also insert as a standalone entry in the deck for discovery
+            if not db.find_word_by_translation(word, request.language):
+                db.insert_vocabulary_entry(
+                    language=request.language,
+                    english_word=english,
+                    translation=word,
+                    transliteration=translit,
+                    word_class=syn.get('word_class', 'noun'),
+                    level=syn.get('level', None),
+                    origin='deck',
+                    deck_id=deck_id,
+                )
+            merged_synonyms.append({'word': word, 'synonym_of': syn_of_word, 'english': english})
+            csv_words.append({'word': word, 'english': english, 'transliteration': translit,
+                               'word_class': syn.get('word_class',''), 'level': syn.get('level',''),
+                               'status': 'synonym', 'synonym_of_word': syn_of_word, 'synonym_of_id': syn_of_id})
+
+        # Save per-language words (pre-translated, user-reviewed)
+        added_by_lang = {}
+        for lang, lang_words in words_by_lang.items():
+            if lang == request.language:
+                continue  # Already handled above
+            lang_added = []
+            for wd in lang_words:
+                word = wd.word.strip() if hasattr(wd, 'word') else wd.get('word', '').strip()
+                if not word:
+                    continue
+                english = wd.english if hasattr(wd, 'english') else wd.get('english', '')
+                wc = wd.word_class if hasattr(wd, 'word_class') else wd.get('word_class', 'noun')
+                lvl = wd.level if hasattr(wd, 'level') else wd.get('level', None)
+                translit = (wd.transliteration if hasattr(wd, 'transliteration') else wd.get('transliteration')) \
+                           or transliteration.transliterate_text(word, lang, 'IAST')
+                if not db.find_word_by_translation(word, lang):
+                    db.insert_vocabulary_entry(
+                        language=lang,
+                        english_word=english,
+                        translation=word,
+                        transliteration=translit,
+                        word_class=wc,
+                        level=lvl,
+                        origin='deck',
+                        deck_id=deck_id,
+                    )
+                    lang_added.append({'word': word, 'english_word': english, 'word_class': wc})
+            added_by_lang[lang] = lang_added
+
+        # Save CSV record of this import
+        if deck_id and csv_words:
+            db.save_import_to_csv(deck_id, deck_name, request.language, csv_words)
+
+        return {
+            "success": True,
+            "message": f"Imported {len(added_words)} new words, merged {len(merged_synonyms)} synonyms",
+            "new_words": len(added_words),
+            "merged_synonyms": len(merged_synonyms),
+            "added": added_words,
+            "synonyms_merged": merged_synonyms,
+            "added_by_lang": added_by_lang,
+            "deck_id": deck_id,
+            "deck_name": deck_name,
+        }
+
+    except Exception as e:
+        import traceback; traceback.print_exc()
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+# ============================================================================
+# Vocab Deck Endpoints
+# ============================================================================
+
+@app.get("/api/vocab/decks")
+def list_vocab_decks(language: Optional[str] = None):
+    """List all vocab decks with word counts, optionally filtered by language"""
+    decks = db.get_vocab_decks(language)
+    return {"decks": decks}
+
+
+@app.get("/api/vocab/decks/{deck_id}/words")
+def get_deck_words(deck_id: int, language: str):
+    """Get all words in a deck for flashcard study"""
+    words = db.get_words_for_deck(language, deck_id)
+    # Add Nastaliq rendering for Urdu words (stored as Devanagari in DB)
+    if language == 'urdu':
+        for w in words:
+            t = w.get('translation', '')
+            if t:
+                w['nastaliq'] = transliteration.devanagari_to_nastaliq(t)
+    return {"words": words, "deck_id": deck_id, "count": len(words)}
+
+
+class RenameDeckRequest(BaseModel):
+    name: str
+
+@app.put("/api/vocab/decks/{deck_id}")
+def rename_deck(deck_id: int, request: RenameDeckRequest):
+    """Rename a vocab deck"""
+    success = db.rename_vocab_deck(deck_id, request.name)
+    if not success:
+        raise HTTPException(status_code=404, detail="Deck not found")
+    return {"success": True, "deck_id": deck_id, "name": request.name}
 
 
 # ============================================================================
@@ -1001,7 +1524,452 @@ def get_words_for_review(language: str, limit: int = 10, mode: str = "all"):
             words = db.get_new_words_only(language, effective_limit)
     else:
         words = db.get_words_for_review(language, limit)
+    # Attach Nastaliq rendering for Urdu words (stored as Devanagari)
+    if language == 'urdu' and words:
+        for w in words:
+            t = w.get('translation', '')
+            if t:
+                w['nastaliq'] = transliteration.devanagari_to_nastaliq(t)
     return {"words": words}
+
+
+# ============================================================================
+# Placement Test Endpoints
+# ============================================================================
+
+@app.post("/api/placement-test/generate/{language}")
+async def generate_placement_test_endpoint(language: str):
+    """Generate a CEFR placement test for the given language."""
+    try:
+        test_data = api_client.generate_placement_test(language)
+        return {"test": test_data}
+    except Exception as e:
+        print(f"[PlacementTest] Generation error: {e}")
+        raise HTTPException(status_code=500, detail=f"Failed to generate placement test: {str(e)}")
+
+
+@app.get("/api/placement-test/generate-stream/{language}")
+async def generate_placement_test_stream(language: str):
+    """Stream placement test generation with real-time SSE status updates."""
+    import threading
+    import queue as _queue
+
+    progress_q: _queue.Queue = _queue.Queue()
+
+    def _run():
+        try:
+            progress_q.put(json.dumps({"type": "status", "stage": "building_prompt",
+                                        "message": "Building personalised prompt…", "progress": 0.05}))
+
+            # ── build prompt (mirrors generate_placement_test internals) ──
+            from .prompting import PLACEMENT_TEST_GENERATE_PROMPT
+            from .api_client import (
+                LANGUAGE_SCRIPT_NAMES, generate_text_with_gemini, parse_json_response
+            )
+            script_name = LANGUAGE_SCRIPT_NAMES.get(language.lower(), language.capitalize() + ' script')
+            language_name = language.capitalize()
+            language_for_prompt = 'Hindi/Devanagari' if language.lower() == 'urdu' else language_name
+            prompt = PLACEMENT_TEST_GENERATE_PROMPT.format(
+                language=language_for_prompt,
+                language_code=language.lower(),
+                script_name=script_name,
+            )
+
+            progress_q.put(json.dumps({"type": "status", "stage": "calling_gemini",
+                                        "message": "Calling Gemini AI — crafting 5 skill sections…", "progress": 0.10}))
+
+            # 16 000 tokens — full 25-question Indic-script test regularly exceeds 8 192
+            response_text, response_time, token_info, is_truncated, _ = generate_text_with_gemini(prompt, max_tokens=16000)
+
+            if not response_text or not response_text.strip():
+                raise Exception("Gemini returned an empty response. Please try again.")
+
+            progress_q.put(json.dumps({"type": "status", "stage": "parsing",
+                                        "message": f"Parsing test structure ({len(response_text)} chars)…", "progress": 0.90}))
+
+            result = parse_json_response(response_text, is_truncated)
+
+            if "_parse_error" in result:
+                raw_snippet = response_text[:800].replace('\n', '↵')
+                raise Exception(
+                    f"JSON parse error after {len(response_text)} chars (truncated={is_truncated}): "
+                    f"{result['_parse_error']}.\n\nResponse snippet:\n{raw_snippet}"
+                )
+            if "sections" not in result:
+                raise Exception(
+                    f"Gemini response parsed but missing 'sections'. "
+                    f"Keys found: {list(result.keys())}"
+                )
+
+            section_ids = [s['section_id'] for s in result.get('sections', [])]
+            print(f"[PlacementTest/SSE] Generated test with sections: {section_ids}")
+            progress_q.put(json.dumps({"type": "done", "test": result, "progress": 1.0,
+                                        "message": "Test ready!"}))
+        except Exception as exc:
+            import traceback
+            tb = traceback.format_exc()
+            print(f"[PlacementTest/SSE] Error: {exc}\n{tb}")
+            progress_q.put(json.dumps({"type": "error", "message": str(exc), "traceback": tb}))
+
+    threading.Thread(target=_run, daemon=True).start()
+
+    async def _event_stream():
+        loop = asyncio.get_event_loop()
+        while True:
+            try:
+                msg = await loop.run_in_executor(None, lambda: progress_q.get(timeout=0.25))
+                yield f"data: {msg}\n\n"
+                parsed = json.loads(msg)
+                if parsed.get("type") in ("done", "error"):
+                    break
+            except Exception:
+                # Empty queue timeout — send keepalive so connection stays open
+                yield ": keepalive\n\n"
+                await asyncio.sleep(0.1)
+
+    return StreamingResponse(_event_stream(), media_type="text/event-stream",
+                             headers={"Cache-Control": "no-cache", "X-Accel-Buffering": "no"})
+
+
+@app.post("/api/placement-test/submit-stream/{language}")
+async def submit_placement_test_stream(language: str, request: Request):
+    """Stream placement test submission/analysis with real-time SSE status updates."""
+    import threading
+    import queue as _queue
+
+    body = await request.json()
+    test_data_payload = body.get("test_data")
+    answers = body.get("answers", {})
+    overwrite_mastered = bool(body.get("overwrite_mastered", False))
+    practice_mode = bool(body.get("practice_mode", False))  # if True, skip saving + SRS update
+
+    progress_q: _queue.Queue = _queue.Queue()
+    _practice = practice_mode  # capture in closure
+
+    def _run():
+        try:
+            progress_q.put(json.dumps({"type": "status", "stage": "reviewing_answers",
+                                        "message": "Reviewing your answers…", "progress": 0.05}))
+
+            progress_q.put(json.dumps({"type": "status", "stage": "calling_gemini",
+                                        "message": "Calling Gemini AI — evaluating all sections…", "progress": 0.12}))
+
+            analysis = api_client.analyze_placement_test(language, test_data_payload, answers)
+
+            progress_q.put(json.dumps({"type": "status", "stage": "saving_result",
+                                        "message": "Saving your CEFR result…" if not _practice else "Analysing practice run…", "progress": 0.88}))
+
+            overall_level = analysis.get("overall_cefr_level", "A1")
+            # Ensure srs_cal is always defined before use
+            srs_cal = None
+            if not _practice:
+                db.save_placement_test_result(language, analysis, test_data_payload, answers, srs_calibration=srs_cal)
+                db.update_language_level_override(language, overall_level)
+
+            progress_q.put(json.dumps({"type": "status", "stage": "calibrating_srs",
+                                        "message": "Calibrating your flashcard queue…", "progress": 0.93}))
+
+            if not _practice:
+                srs_cal = srs_placement.apply_placement_states(
+                    language=language,
+                    user_cefr_level=overall_level,
+                    overwrite_mastered=overwrite_mastered,
+                )
+
+            progress_q.put(json.dumps({"type": "done", "result": analysis,
+                                        "srs_calibration": srs_cal, "progress": 1.0,
+                                        "practice_mode": _practice,
+                                        "message": "Practice complete! Results not saved." if _practice else "Analysis complete!"}))
+        except Exception as exc:
+            import traceback
+            tb = traceback.format_exc()
+            print(f"[PlacementTest/SSE submit] Error: {exc}\n{tb}")
+            progress_q.put(json.dumps({"type": "error", "message": str(exc), "traceback": tb}))
+
+    threading.Thread(target=_run, daemon=True).start()
+
+    async def _event_stream():
+        loop = asyncio.get_event_loop()
+        while True:
+            try:
+                msg = await loop.run_in_executor(None, lambda: progress_q.get(timeout=0.25))
+                yield f"data: {msg}\n\n"
+                parsed = json.loads(msg)
+                if parsed.get("type") in ("done", "error"):
+                    break
+            except Exception:
+                yield ": keepalive\n\n"
+                await asyncio.sleep(0.1)
+
+    return StreamingResponse(_event_stream(), media_type="text/event-stream",
+                             headers={"Cache-Control": "no-cache", "X-Accel-Buffering": "no"})
+
+
+@app.post("/api/placement-test/submit/{language}")
+async def submit_placement_test_endpoint(language: str, request: Request):
+    """Submit placement test answers, analyze them, save result, update CEFR override,
+    and automatically calibrate SRS states for the language vocabulary."""
+    try:
+        body = await request.json()
+        test_data = body.get("test_data")
+        answers = body.get("answers", {})
+        # If True, even already-mastered words will be re-evaluated
+        overwrite_mastered = bool(body.get("overwrite_mastered", False))
+
+        if not test_data:
+            raise HTTPException(status_code=400, detail="Missing test_data in request body")
+
+        # Run AI analysis
+        result = api_client.analyze_placement_test(language, test_data, answers)
+
+        # Persist result to DB
+        result_id = db.save_placement_test_result(language, result, test_data, answers)
+
+        # Update the CEFR override for this language
+        cefr_level = result.get("overall_cefr_level", "A1")
+        db.update_language_level_override(language, cefr_level)
+        print(f"[PlacementTest] Updated {language} CEFR override to {cefr_level}")
+
+        # Calibrate SRS states based on the assessed CEFR level
+        srs_summary = srs_placement.apply_placement_states(
+            language=language,
+            user_cefr_level=cefr_level,
+            overwrite_mastered=overwrite_mastered,
+        )
+        print(f"[PlacementTest] SRS calibration complete: {srs_summary}")
+
+        return {
+            "result_id": result_id,
+            "overall_cefr_level": cefr_level,
+            "result": result,
+            "srs_calibration": srs_summary,
+        }
+    except HTTPException:
+        raise
+    except Exception as e:
+        print(f"[PlacementTest] Submission error: {e}")
+        import traceback; traceback.print_exc()
+        raise HTTPException(status_code=500, detail=f"Failed to analyze placement test: {str(e)}")
+
+
+@app.get("/api/placement-test/latest/{language}")
+def get_latest_placement_result(language: str):
+    """Get the most recent placement test result for a language."""
+    result = db.get_latest_placement_result(language)
+    if not result:
+        return {"result": None}
+    return {"result": result}
+
+
+@app.post("/api/placement-test/listening-audio/{language}")
+async def generate_placement_listening_audio(language: str, request: Request):
+    """Generate TTS audio for a placement test listening transcript.
+
+    Supports multi-speaker dialogues via the `speakers` + `dialogue` fields.
+    Each speaker is assigned a distinct Gemini voice matched to their gender.
+    All per-utterance WAV segments are stitched into a single WAV file.
+
+    Body: {
+        "transcript_text": "...",          # flat fallback (single speaker)
+        "speakers": [...],                 # optional, list of {name, gender}
+        "dialogue": [...]                  # optional, list of {speaker_index, text}
+    }
+    Returns: { "audio_base64": "..." }
+    """
+    import struct, io as _io, random as _random
+
+    try:
+        body = await request.json()
+        speakers_meta = body.get("speakers") or []
+        dialogue_lines = body.get("dialogue") or []
+        transcript_text = body.get("transcript_text", "").strip()
+
+        LANGUAGE_TTS_CODES = {
+            'kannada': 'kn-IN', 'hindi': 'hi-IN', 'malayalam': 'ml-IN',
+            'tamil': 'ta-IN', 'telugu': 'te-IN', 'urdu': 'ur-IN',
+        }
+        lang_code = LANGUAGE_TTS_CODES.get(language.lower(), 'kn-IN')
+
+        # ── Assign a distinct voice per speaker ──────────────────────────────
+        # Choose voices that differ from each other for clarity
+        used_voices = set()
+
+        def pick_voice(gender: str) -> str:
+            pool = api_client.GEMINI_FEMALE_VOICES if gender == 'female' else api_client.GEMINI_MALE_VOICES
+            available = [v for v in pool if v not in used_voices]
+            if not available:
+                available = pool  # allow reuse if pool exhausted
+            voice = _random.choice(available)
+            used_voices.add(voice)
+            return voice
+
+        speaker_voices = []
+        if speakers_meta:
+            for sp in speakers_meta:
+                gender = str(sp.get("gender", "female")).lower()
+                speaker_voices.append(pick_voice(gender))
+        else:
+            # Single-speaker fallback
+            speaker_voices = [pick_voice("female")]
+
+        # ── Build ordered list of (text, voice) utterances ────────────────────
+        if dialogue_lines and speaker_voices:
+            utterances = []
+            for line in dialogue_lines:
+                idx = int(line.get("speaker_index", 0))
+                text = str(line.get("text", "")).strip()
+                if not text:
+                    continue
+                voice = speaker_voices[idx] if idx < len(speaker_voices) else speaker_voices[0]
+                utterances.append((text, voice))
+        elif transcript_text:
+            utterances = [(transcript_text, speaker_voices[0])]
+        else:
+            raise HTTPException(status_code=400, detail="No transcript text or dialogue provided")
+
+        print(f"[PlacementTest/TTS] Generating {len(utterances)} utterance(s) for {len(speaker_voices)} speaker(s)")
+        for i, (txt, v) in enumerate(utterances):
+            print(f"  [{i}] voice={v}  text={txt[:60]}")
+
+        # ── Generate TTS for each utterance (sequentially to preserve order) ──
+        pcm_segments: list[bytes] = []
+        sample_rate = 24000  # Gemini TTS output
+        SILENCE_FRAMES = int(sample_rate * 0.35)  # 350 ms gap between turns
+        silence_pcm = b'\x00\x00' * SILENCE_FRAMES  # 16-bit zero samples
+
+        for text, voice in utterances:
+            audio_data, _, _ = api_client.generate_tts(
+                text,
+                language=lang_code,
+                voice=voice,
+                style_instruction="in a clear, natural conversational tone",
+            )
+            if not audio_data or not audio_data.get("audio_base64"):
+                print(f"[PlacementTest/TTS] ⚠️  No audio for utterance: {text[:40]}")
+                continue
+
+            import base64 as _base64
+            wav_bytes = _base64.b64decode(audio_data["audio_base64"])
+
+            # Strip the 44-byte WAV header to get raw PCM
+            if wav_bytes[:4] == b'RIFF':
+                pcm_bytes = wav_bytes[44:]
+            else:
+                pcm_bytes = wav_bytes
+
+            pcm_segments.append(pcm_bytes)
+            pcm_segments.append(silence_pcm)  # brief silence between turns
+
+        if not pcm_segments:
+            raise HTTPException(status_code=500, detail="TTS generation produced no audio")
+
+        # ── Stitch all PCM segments into a single WAV ─────────────────────────
+        combined_pcm = b''.join(pcm_segments)
+        channels, sample_width = 1, 2
+        wav_buf = _io.BytesIO()
+        wav_buf.write(b'RIFF')
+        wav_buf.write(struct.pack('<I', 36 + len(combined_pcm)))
+        wav_buf.write(b'WAVE')
+        wav_buf.write(b'fmt ')
+        wav_buf.write(struct.pack('<I', 16))
+        wav_buf.write(struct.pack('<H', 1))                                       # PCM
+        wav_buf.write(struct.pack('<H', channels))
+        wav_buf.write(struct.pack('<I', sample_rate))
+        wav_buf.write(struct.pack('<I', sample_rate * channels * sample_width))   # byte rate
+        wav_buf.write(struct.pack('<H', channels * sample_width))                 # block align
+        wav_buf.write(struct.pack('<H', sample_width * 8))                        # bits/sample
+        wav_buf.write(b'data')
+        wav_buf.write(struct.pack('<I', len(combined_pcm)))
+        wav_buf.write(combined_pcm)
+        wav_bytes_final = wav_buf.getvalue()
+
+        import base64 as _b64
+        audio_base64 = _b64.b64encode(wav_bytes_final).decode('utf-8')
+        print(f"[PlacementTest/TTS] ✓ Stitched WAV: {len(wav_bytes_final)} bytes, {len(audio_base64)} base64 chars")
+
+        return {
+            "audio_base64": audio_base64,
+            "voices": speaker_voices,
+            "num_utterances": len(utterances),
+        }
+    except HTTPException:
+        raise
+    except Exception as e:
+        print(f"[PlacementTest] TTS error: {e}")
+        import traceback; traceback.print_exc()
+        raise HTTPException(status_code=500, detail=f"TTS error: {str(e)}")
+
+
+@app.get("/api/placement-test/history/{language}")
+def get_placement_test_history(language: str):
+    """Get all placement test results for a language, newest first."""
+    results = db.get_all_placement_results(language)
+    return {"results": results}
+
+
+@app.post("/api/placement-test/calibrate/{language}")
+async def calibrate_srs_from_placement(language: str, request: Request):
+    """Manually trigger SRS calibration for a language using the stored placement
+    result (or a level supplied in the request body).
+
+    Body (all optional):
+        { "cefr_level": "B1", "overwrite_mastered": false }
+
+    If cefr_level is omitted the most recent placement result is used.
+    """
+    try:
+        body = {}
+        try:
+            body = await request.json()
+        except Exception:
+            pass
+
+        cefr_level = body.get("cefr_level")
+        overwrite_mastered = bool(body.get("overwrite_mastered", False))
+
+        if not cefr_level:
+            stored = db.get_latest_placement_result(language)
+            if not stored:
+                raise HTTPException(
+                    status_code=404,
+                    detail=f"No placement result found for {language}. "
+                           "Pass cefr_level in the request body or take a placement test first.",
+                )
+            cefr_level = stored.get("overall_level", "A1")
+
+        summary = srs_placement.apply_placement_states(
+            language=language,
+            user_cefr_level=cefr_level,
+            overwrite_mastered=overwrite_mastered,
+        )
+        return summary
+    except HTTPException:
+        raise
+    except Exception as e:
+        print(f"[PlacementTest] Calibration error: {e}")
+        import traceback; traceback.print_exc()
+        raise HTTPException(status_code=500, detail=f"SRS calibration failed: {str(e)}")
+
+
+@app.get("/api/placement-test/calibrate/preview/{language}")
+async def preview_srs_calibration(language: str, cefr_level: str):
+    """Return a dry-run preview of the SRS calibration for a given CEFR level.
+
+    Query param: ?cefr_level=B1
+    Does NOT modify the database.
+    """
+    try:
+        if cefr_level.upper() not in srs_placement.CEFR_ORDER:
+            raise HTTPException(
+                status_code=400,
+                detail=f"Invalid cefr_level '{cefr_level}'. Must be one of {srs_placement.CEFR_ORDER}",
+            )
+        preview = srs_placement.preview_placement_distribution(language, cefr_level.upper())
+        return preview
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Preview failed: {str(e)}")
 
 
 # ============================================================================
@@ -1167,13 +2135,8 @@ async def listening_progress_sse(session_id: str):
                 try:
                     data = await asyncio.wait_for(queue.get(), timeout=30.0)
                     yield f"data: {json.dumps(data)}\n\n"
-                    
-                    # Check if all paragraphs are complete
-                    all_complete = all(
-                        status in ['complete', 'error'] 
-                        for status in tracker.progress.values()
-                    )
-                    if all_complete:
+                    # Only finish when backend task has written to completed_activities
+                    if data.get("type") == "generation_complete":
                         yield f"data: {json.dumps({'type': 'complete'})}\n\n"
                         break
                 except asyncio.TimeoutError:
@@ -1279,6 +2242,7 @@ def generate_listening_activity_background(
             "error": activity.get("_error"),
             "error_type": activity.get("_error_type"),
             "tts_errors": activity.get("_tts_errors"),
+            "tts_results": activity.get("_tts_results"),
             "warning": activity.get("_warning"),
             "debug_steps": activity.get("_debug_steps", []),
         }
@@ -3018,6 +3982,8 @@ class WeeklyGoalsUpdate(BaseModel):
 class LanguagePersonalizationUpdate(BaseModel):
     """Model for updating language personalization settings"""
     default_transliterate: bool
+    default_import_translate: Optional[bool] = None
+    default_import_target_langs: Optional[List[str]] = None
 
 
 @app.get("/api/weekly-goals/{language}")
@@ -3238,7 +4204,12 @@ def update_language_personalization(language: str, settings_update: LanguagePers
             }
     """
     try:
-        success = db.update_language_personalization(language, settings_update.default_transliterate)
+        success = db.update_language_personalization(
+            language,
+            settings_update.default_transliterate,
+            default_import_translate=settings_update.default_import_translate,
+            default_import_target_langs=settings_update.default_import_target_langs,
+        )
         if success:
             return {
                 "success": True,
@@ -4413,6 +5384,203 @@ def save_user_preferences(preferences: dict):
     conn.close()
     
     return {'success': True, 'saved': list(preferences.keys())}
+
+
+# ============================================================================
+# Practice visible activities (which activity cards to show on Practice screen)
+# ============================================================================
+
+DEFAULT_PRACTICE_ACTIVITIES = ['reading', 'listening', 'writing', 'speaking', 'translation']
+
+
+class PracticeVisibleActivitiesUpdate(BaseModel):
+    language: Optional[str] = None
+    visible_activities: Optional[List[str]] = None
+    apply_to_all: Optional[bool] = None
+
+
+@app.get("/api/practice-visible-activities")
+def get_practice_visible_activities(language: str = None):
+    """Get which activities are visible on the Practice screen for a language.
+    If language is omitted, returns the first available language's settings (for apply_to_all)."""
+    prefs = get_user_preferences(None)
+    apply_all = prefs.get('practice_visible_activities_apply_all') in (True, 'true')
+    key = f"practice_visible_activities_{language}" if language else None
+    if key:
+        raw = prefs.get(key)
+        if raw is not None:
+            try:
+                activities = json.loads(raw) if isinstance(raw, str) else raw
+                if isinstance(activities, list):
+                    return {"visible_activities": activities, "apply_to_all": apply_all}
+            except (TypeError, ValueError):
+                pass
+        return {"visible_activities": DEFAULT_PRACTICE_ACTIVITIES.copy(), "apply_to_all": apply_all}
+    # No language: return apply_to_all and first language's list or default
+    if apply_all:
+        # Get selected_languages to pick first
+        raw_langs = prefs.get('selected_languages')
+        if raw_langs:
+            try:
+                langs = json.loads(raw_langs) if isinstance(raw_langs, str) else raw_langs
+                if langs:
+                    first_key = f"practice_visible_activities_{langs[0]}"
+                    raw = prefs.get(first_key)
+                    if raw is not None:
+                        activities = json.loads(raw) if isinstance(raw, str) else raw
+                        if isinstance(activities, list):
+                            return {"visible_activities": activities, "apply_to_all": True}
+            except (TypeError, ValueError):
+                pass
+    return {"visible_activities": DEFAULT_PRACTICE_ACTIVITIES.copy(), "apply_to_all": False}
+
+
+@app.put("/api/practice-visible-activities")
+def put_practice_visible_activities(body: PracticeVisibleActivitiesUpdate):
+    """Set visible activities for a language, or for all languages.
+    Body: { "language": "tamil"?, "visible_activities": ["reading", ...], "apply_to_all": bool? }"""
+    visible = body.visible_activities if isinstance(body.visible_activities, list) else DEFAULT_PRACTICE_ACTIVITIES.copy()
+    apply_to_all = body.apply_to_all is True
+    language = body.language
+    to_save = {}
+    if apply_to_all:
+        raw = get_user_preferences(None).get("selected_languages")
+        try:
+            langs = json.loads(raw) if isinstance(raw, str) else raw if isinstance(raw, list) else []
+        except (TypeError, ValueError):
+            langs = []
+        for lang in (langs or []):
+            to_save[f"practice_visible_activities_{lang}"] = json.dumps(visible)
+        to_save["practice_visible_activities_apply_all"] = "true"
+    else:
+        if language:
+            to_save[f"practice_visible_activities_{language}"] = json.dumps(visible)
+        to_save["practice_visible_activities_apply_all"] = "false"
+    save_user_preferences(to_save)
+    return {"success": True, "visible_activities": visible, "apply_to_all": apply_to_all}
+
+
+# ============================================================================
+# Tutor AI Chat
+# ============================================================================
+
+class TutorChatRequest(BaseModel):
+    message: str
+    context: Optional[dict] = None  # { "screen": "Dashboard", "language": "tamil", "levels": {"tamil": "B1"} }
+    conversation_id: Optional[str] = None  # for continuing a conversation
+
+
+def _get_tutor_history():
+    """Load tutor chat history from user_preferences."""
+    try:
+        prefs = get_user_preferences("tutor_chat_history")
+        raw = prefs.get("tutor_chat_history")
+        if not raw:
+            return []
+        return json.loads(raw) if isinstance(raw, str) else raw
+    except Exception:
+        return []
+
+
+def _save_tutor_history(history: list):
+    """Persist tutor chat history (list of { id, title?, messages: [{ role, content }], updated_at })."""
+    save_user_preferences({"tutor_chat_history": json.dumps(history)})
+
+
+@app.get("/api/tutor/history")
+def get_tutor_history():
+    """Return list of past tutor conversations (id, title, updated_at, message_count)."""
+    history = _get_tutor_history()
+    return {
+        "conversations": [
+            {
+                "id": c.get("id"),
+                "title": c.get("title") or "Conversation",
+                "updated_at": c.get("updated_at"),
+                "message_count": len(c.get("messages", [])),
+            }
+            for c in history
+        ]
+    }
+
+
+@app.post("/api/tutor/chat")
+def tutor_chat(request: TutorChatRequest):
+    """Send a message to the tutor AI and get a reply. Optionally include app context."""
+    if not request.message or not request.message.strip():
+        raise HTTPException(status_code=400, detail="message is required")
+    context = request.context or {}
+    screen = context.get("screen", "Unknown")
+    language = context.get("language", "")
+    levels = context.get("levels") or {}
+    level_str = ", ".join(f"{k}: {v}" for k, v in levels.items()) if levels else "Not set"
+    activity_type = context.get("activity_type", "")
+    activity_history = context.get("activity_history") or []
+
+    try:
+        from .prompting import render_template
+        system_instruction = render_template("tutor_system.txt")
+    except Exception:
+        system_instruction = "You are a friendly, expert language tutor for the Fluo language learning app. You help with grammar, vocabulary, pronunciation, and cultural context. Keep responses clear, concise, and helpful."
+
+    context_block = f"""
+Current app context (use only to personalize answers; do not announce the user's location):
+- Screen: {screen}
+- Language being studied: {language or 'Not selected'}
+- User levels: {level_str}
+"""
+    if activity_type:
+        context_block += f"- Current activity type: {activity_type}\n"
+    if activity_history:
+        context_block += f"- Recent activity history: {activity_history}\n"
+    context_block = context_block.strip()
+
+    system_instruction = f"{system_instruction}\n\n{context_block}"
+
+    prompt = f"{system_instruction}\n\nUser: {request.message.strip()}\n\nTutor:"
+    try:
+        response_text, _, _, _, _ = api_client.generate_text_with_gemini(prompt, max_tokens=1024)
+        reply = (response_text or "").strip()
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Tutor error: {str(e)}")
+
+    # Append to or create conversation in history
+    history = _get_tutor_history()
+    conv_id = request.conversation_id
+    if conv_id:
+        for c in history:
+            if c.get("id") == conv_id:
+                c.setdefault("messages", []).append({"role": "user", "content": request.message.strip()})
+                c["messages"].append({"role": "assistant", "content": reply})
+                c["updated_at"] = datetime.utcnow().isoformat() + "Z"
+                _save_tutor_history(history)
+                return {"reply": reply, "conversation_id": conv_id}
+    import uuid
+    new_id = str(uuid.uuid4())[:8]
+    new_conv = {
+        "id": new_id,
+        "title": (request.message.strip()[:40] + "…") if len(request.message.strip()) > 40 else request.message.strip(),
+        "messages": [
+            {"role": "user", "content": request.message.strip()},
+            {"role": "assistant", "content": reply},
+        ],
+        "updated_at": datetime.utcnow().isoformat() + "Z",
+    }
+    history.insert(0, new_conv)
+    # Keep last 50 conversations
+    history = history[:50]
+    _save_tutor_history(history)
+    return {"reply": reply, "conversation_id": new_id}
+
+
+@app.get("/api/tutor/conversation/{conversation_id}")
+def get_tutor_conversation(conversation_id: str):
+    """Get full messages for a conversation."""
+    history = _get_tutor_history()
+    for c in history:
+        if c.get("id") == conversation_id:
+            return {"id": c.get("id"), "title": c.get("title"), "messages": c.get("messages", [])}
+    raise HTTPException(status_code=404, detail="Conversation not found")
 
 
 # ============================================================================

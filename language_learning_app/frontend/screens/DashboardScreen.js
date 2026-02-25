@@ -16,10 +16,11 @@ import { Ionicons } from '@expo/vector-icons';
 import SafeText from '../components/SafeText';
 import { LanguageContext, LANGUAGES } from '../contexts/LanguageContext';
 import NoLanguageEmptyState from '../components/NoLanguageEmptyState';
+import { getLocalDateString, getShortWeekday, parseLocalDate } from '../utils/dateUtils';
 
 const API_BASE_URL = __DEV__ ? 'http://localhost:8080' : 'http://localhost:8080';
 
-const ACTIVITY_ORDER = ['flashcards', 'reading', 'listening', 'writing', 'speaking', 'translation', 'conversation'];
+const ACTIVITY_ORDER = ['flashcards', 'reading', 'listening', 'writing', 'speaking', 'translation'];
 
 const ACTIVITY_COLORS = {
   reading: { primary: '#4A90E2', light: '#E8F4FD' },
@@ -27,7 +28,6 @@ const ACTIVITY_COLORS = {
   writing: { primary: '#FF6B6B', light: '#FFE8E8' },
   speaking: { primary: '#FF9500', light: '#FFF4E6' },
   translation: { primary: '#8B5CF6', light: '#F3E8FF' },
-  conversation: { primary: '#9B59B6', light: '#F4E6FF' },
   flashcards: { primary: '#14B8A6', light: '#E0F7F4' },
 };
 
@@ -141,7 +141,7 @@ export default function DashboardScreen({ navigation }) {
       }
       
       // Check if we need to sync SRS quotas (once per day)
-      const today = new Date().toISOString().split('T')[0];
+      const today = getLocalDateString();
       
       if (lastSrsSyncDate.current !== today) {
         syncSrsQuotas();
@@ -461,14 +461,14 @@ export default function DashboardScreen({ navigation }) {
                   const barHeight = totalCount === 0 
                     ? 4 
                     : Math.max((totalCount / maxTotal) * maxBarHeight, 10);
-                  const isToday = weekOffset === 0 && index === weeklyStats.length - 1;
-                  
-                  // Format date as M/D/YY (e.g., 1/2/26)
-                  const date = new Date(day.date);
-                  const month = date.getMonth() + 1; // No padding
-                  const dayNum = date.getDate(); // No padding
-                  const year = String(date.getFullYear()).slice(-2); // Last 2 digits
+                  const localDate = parseLocalDate(day.date);
+                  const isToday = getLocalDateString() === day.date;
+                  // Format date as M/D/YY (e.g., 1/2/26) in local time
+                  const month = localDate.getMonth() + 1;
+                  const dayNum = localDate.getDate();
+                  const year = String(localDate.getFullYear()).slice(-2);
                   const dateLabel = `${month}/${dayNum}/${year}`;
+                  const dayLabel = getShortWeekday(day.date);
                   
                   return (
                     <TouchableOpacity
@@ -498,7 +498,7 @@ export default function DashboardScreen({ navigation }) {
                       />
                       {/* Day label */}
                       <Text style={[styles.dayLabel, isToday && styles.todayLabel]}>
-                        {day.day}
+                        {dayLabel}
                       </Text>
                       {/* Date label */}
                       <Text style={styles.dateLabel}>
@@ -624,7 +624,6 @@ export default function DashboardScreen({ navigation }) {
                                 activity === 'writing' ? 'create' : 
                                 activity === 'speaking' ? 'mic' : 
                                 activity === 'translation' ? 'language' :
-                                activity === 'conversation' ? 'chatbubbles' : 
                                 activity === 'flashcards' ? 'albums' :
                                 'albums'
                               } 
@@ -672,7 +671,6 @@ export default function DashboardScreen({ navigation }) {
                                     activity === 'writing' ? 'create' : 
                                     activity === 'speaking' ? 'mic' : 
                                     activity === 'translation' ? 'language' :
-                                    activity === 'conversation' ? 'chatbubbles' : 
                                     activity === 'flashcards' ? 'albums' :
                                     'albums'
                                   } 
@@ -750,7 +748,6 @@ export default function DashboardScreen({ navigation }) {
                     writing: { primary: '#FF6B6B', light: '#FFE8E8' },
                     speaking: { primary: '#FF9500', light: '#FFF4E6' },
                     translation: { primary: '#8B5CF6', light: '#F3E8FF' },
-                    conversation: { primary: '#9B59B6', light: '#F4E6FF' },
                     flashcard: { primary: '#14B8A6', light: '#E0F7F4' },
                     lesson: { primary: '#F97316', light: '#FFF7ED' },  // Orange for lessons
                   };
@@ -817,7 +814,6 @@ export default function DashboardScreen({ navigation }) {
                             activityType === 'writing' ? 'create' : 
                             activityType === 'speaking' ? 'mic' : 
                             activityType === 'translation' ? 'language' :
-                            activityType === 'conversation' ? 'chatbubbles' : 
                             activityType === 'lesson' ? 'school' :
                             'albums'
                           } 

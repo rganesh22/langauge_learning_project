@@ -7,16 +7,20 @@ import {
   TouchableOpacity,
   TextInput,
   ActivityIndicator,
+  Alert,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import SafeText from '../../components/SafeText';
 import { LanguageContext } from '../../contexts/LanguageContext';
 import { useActivityData } from './shared/hooks/useActivityData';
+import { useGenerationCallbacks } from './shared/hooks/useGenerationCallbacks';
 import { useTransliteration } from './shared/hooks/useTransliteration';
 import { useDictionary } from './shared/hooks/useDictionary';
 import { useGrading } from './shared/hooks/useGrading';
 import { useActivityCompletion } from './shared/hooks/useActivityCompletion';
 import { VocabularyDictionary, APIDebugModal, TopicSelectionModal } from './shared/components';
+import TranslationToolModal from '../../components/TranslationToolModal';
+import TextImportModal from '../../components/TextImportModal';
 import { ACTIVITY_COLORS } from './shared/constants';
 import { normalizeText } from './shared/utils/textProcessing';
 import {
@@ -54,7 +58,8 @@ export default function WritingActivity({ route, navigation }) {
   const language = routeLang || ctxLanguage || null;
 
   // Use shared hooks
-  const activityData = useActivityData('writing', language, activityId, fromHistory, routeActivityData);
+  const genCallbacks = useGenerationCallbacks();
+  const activityData = useActivityData('writing', language, activityId, fromHistory, routeActivityData, null, genCallbacks);
   const transliteration = useTransliteration(language, activityData.activity);
   const dictionary = useDictionary(language);
   const grading = useGrading('writing', language);
@@ -65,6 +70,8 @@ export default function WritingActivity({ route, navigation }) {
   const [rubricExpanded, setRubricExpanded] = useState(false);
   const [showAPIDebug, setShowAPIDebug] = useState(false);
   const [showTopicModal, setShowTopicModal] = useState(!fromHistory);
+  const [showTranslationModal, setShowTranslationModal] = useState(false);
+  const [showImportModal, setShowImportModal] = useState(false);
 
   const colors = ACTIVITY_COLORS.writing;
 
@@ -315,9 +322,23 @@ export default function WritingActivity({ route, navigation }) {
 
   if (activityData.loading) {
     return (
-      <View style={styles.centerContainer}>
-        <ActivityIndicator size="large" color={colors.primary} />
-        <SafeText style={styles.loadingText}>{activityData.loadingStatus}</SafeText>
+      <View style={styles.container}>
+        <View style={[styles.header, { backgroundColor: colors.primary }]}>
+          <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
+            <Ionicons name="arrow-back" size={24} color="#FFFFFF" />
+          </TouchableOpacity>
+          <View style={styles.headerTitleContainer}>
+            <SafeText style={styles.headerTitle}>
+              {language === 'urdu' && transliteration.nativeScriptRenderings.headerLabel
+                ? transliteration.nativeScriptRenderings.headerLabel
+                : getWritingHeaderLabel(language)}
+            </SafeText>
+          </View>
+        </View>
+        <View style={styles.centerContainer}>
+          <ActivityIndicator size="large" color={colors.primary} />
+          <SafeText style={styles.loadingText}>{activityData.loadingStatus}</SafeText>
+        </View>
       </View>
     );
   }
@@ -357,6 +378,12 @@ export default function WritingActivity({ route, navigation }) {
             onPress={() => setHighlightVocab(!highlightVocab)}
           >
             <Ionicons name={highlightVocab ? "color-palette" : "color-palette-outline"} size={20} color="#FFFFFF" />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.toggleButton}
+            onPress={() => setShowTranslationModal(true)}
+          >
+            <Ionicons name="language" size={20} color="#FFFFFF" />
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.toggleButton}
@@ -435,6 +462,22 @@ export default function WritingActivity({ route, navigation }) {
                 </View>
               ))}
             </View>
+
+            {/* Import Vocab button – directly under writing prompt text */}
+            {activity && (
+              <View style={{ alignItems: 'flex-start', marginTop: 4, marginBottom: 16 }}>
+                <TouchableOpacity
+                  style={[styles.submitButton, { backgroundColor: colors.primary, flexDirection: 'row', alignItems: 'center', paddingHorizontal: 18 }]}
+                  onPress={() => setShowImportModal(true)}
+                  activeOpacity={0.85}
+                >
+                  <Ionicons name="cloud-upload-outline" size={18} color="#FFFFFF" style={{ marginRight: 8 }} />
+                  <Text style={[styles.submitButtonText, { fontSize: 16 }]}>
+                    Import Vocab from Prompt
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            )}
 
             {/* Required Words */}
             {activity.required_words && activity.required_words.length > 0 && (
@@ -851,6 +894,33 @@ export default function WritingActivity({ route, navigation }) {
         dictionaryLanguage={dictionary.dictionaryLanguage}
         setDictionaryLanguage={dictionary.setDictionaryLanguage}
         highlightVocab={highlightVocab}
+      />
+
+      {/* Translation Tool Modal */}
+      <TranslationToolModal
+        visible={showTranslationModal}
+        onClose={() => setShowTranslationModal(false)}
+        language={language}
+        prefillText={activityData.activity?.prompt || ''}
+        onMakeVocabCards={() => {
+          setShowTranslationModal(false);
+          setShowImportModal(true);
+        }}
+      />
+
+      {/* Import Vocab Modal — pre-filled with writing prompt text */}
+      <TextImportModal
+        visible={showImportModal}
+        onClose={() => setShowImportModal(false)}
+        language={language}
+        prefillText={promptText}
+        onImportComplete={(result) => {
+          setShowImportModal(false);
+          Alert.alert(
+            'Import Complete',
+            `${result.new_words} word${result.new_words !== 1 ? 's' : ''} added to your library${result.deck_name ? ` in deck "${result.deck_name}"` : ''}.`
+          );
+        }}
       />
 
       {/* API Debug Modal */}

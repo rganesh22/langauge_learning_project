@@ -113,7 +113,9 @@ export const createApiDetails = (data, activityType, language) => {
     ttsResponseTime: data.api_details?.tts_response_time || null,
     totalCost: data.api_details?.total_cost || null,
     voiceUsed: data.api_details?.voice_used || null,
-    ttsErrors: data.api_details?.tts_errors || null,
+    ttsError: data.api_details?.tts_error || data.api_details?._tts_error || null,
+    ttsErrors: data.api_details?.tts_errors || data.api_details?._tts_errors || null,
+    ttsResults: data.api_details?.tts_results || data.api_details?._tts_results || null,
     debugSteps: data.api_details?.debug_steps || null,
   };
 };

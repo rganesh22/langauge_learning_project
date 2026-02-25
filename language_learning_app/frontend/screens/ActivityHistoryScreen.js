@@ -42,7 +42,6 @@ const ACTIVITY_COLORS = {
   writing: { primary: '#FF6B6B', light: '#FFE8E8' },
   speaking: { primary: '#FF9500', light: '#FFF4E6' },
   translation: { primary: '#8B5CF6', light: '#F3E8FF' },
-  conversation: { primary: '#9B59B6', light: '#F4E6FF' },
 };
 
 export default function ActivityHistoryScreen({ route, navigation }) {
@@ -165,20 +164,6 @@ export default function ActivityHistoryScreen({ route, navigation }) {
           if (data.tasks && Array.isArray(data.tasks)) {
             data.tasks.forEach((task, tIdx) => {
               toFetch.push({ key: `task_${idx}_${tIdx}`, text: task });
-            });
-          }
-          
-          // Conversation activity
-          if (data.introduction) toFetch.push({ key: `introduction_${idx}`, text: data.introduction });
-          if (data.messages) {
-            data.messages.forEach((msg, mIdx) => {
-              if (msg.user_message) toFetch.push({ key: `userMessage_${idx}_${mIdx}`, text: msg.user_message });
-              if (msg.ai_response) toFetch.push({ key: `aiResponse_${idx}_${mIdx}`, text: msg.ai_response });
-            });
-          }
-          if (data.conversation_tasks) {
-            data.conversation_tasks.forEach((task, tIdx) => {
-              if (task) toFetch.push({ key: `convTask_${idx}_${tIdx}`, text: task });
             });
           }
           
@@ -724,56 +709,6 @@ export default function ActivityHistoryScreen({ route, navigation }) {
         );
       }
       
-      if (activityType === 'conversation') {
-        // Render conversation activity with messages
-        return (
-          <View>
-            {data.activity_name && (
-              <SafeText style={styles.activityStoryName}>{language === 'urdu' && nativeRenderings[`activityName_${idx}`] ? nativeRenderings[`activityName_${idx}`] : String(data.activity_name)}</SafeText>
-            )}
-            {data.introduction && (
-              <Text style={[styles.activityStory, { marginBottom: 16, fontStyle: 'italic', color: '#666' }]}>
-                {language === 'urdu' && nativeRenderings[`introduction_${idx}`] ? nativeRenderings[`introduction_${idx}`] : data.introduction}
-              </Text>
-            )}
-            {data.messages && Array.isArray(data.messages) && data.messages.length > 0 && (
-              <View style={{ marginTop: 16 }}>
-                <Text style={[styles.boldText, { marginBottom: 12, fontSize: 16 }]}>ಸಂಭಾಷಣೆ:</Text>
-                {data.messages.map((msg, mIdx) => {
-                  const hasUserMessage = msg.user_message && msg.user_message.trim();
-                  const hasAiResponse = msg.ai_response && msg.ai_response.trim();
-                  
-                  return (
-                    <View key={mIdx} style={{ marginBottom: 16 }}>
-                      {hasUserMessage ? (
-                        <View style={[styles.userMessageBox, { backgroundColor: colors.light, alignSelf: 'flex-end', maxWidth: '80%', marginBottom: 8 }]}>
-                          <SafeText style={styles.messageText}>{language === 'urdu' && nativeRenderings[`userMessage_${idx}_${mIdx}`] ? nativeRenderings[`userMessage_${idx}_${mIdx}`] : String(msg.user_message)}</SafeText>
-                        </View>
-                      ) : null}
-                      {hasAiResponse ? (
-                        <View style={[styles.aiMessageBox, { backgroundColor: '#F0F0F0', alignSelf: 'flex-start', maxWidth: '80%', marginTop: hasUserMessage ? 8 : 0 }]}>
-                          <SafeText style={styles.messageText}>{language === 'urdu' && nativeRenderings[`aiResponse_${idx}_${mIdx}`] ? nativeRenderings[`aiResponse_${idx}_${mIdx}`] : String(msg.ai_response)}</SafeText>
-                        </View>
-                      ) : null}
-                    </View>
-                  );
-                })}
-              </View>
-            )}
-            {data.tasks && Array.isArray(data.tasks) && data.tasks.length > 0 && (
-              <View style={{ marginTop: 16 }}>
-                <Text style={[styles.boldText, { marginBottom: 8 }]}>ಕಾರ್ಯಗಳು:</Text>
-                {data.tasks.map((task, tIdx) => (
-                  <Text key={tIdx} style={[styles.activityStory, { marginBottom: 4 }]}>
-                    {tIdx + 1}. {language === 'urdu' && nativeRenderings[`task_${idx}_${tIdx}`] ? nativeRenderings[`task_${idx}_${tIdx}`] : task}
-                  </Text>
-                ))}
-              </View>
-            )}
-          </View>
-        );
-      }
-      
       if (activityType === 'translation') {
         return (
           <View>
@@ -871,31 +806,7 @@ export default function ActivityHistoryScreen({ route, navigation }) {
                       </View>
                     )}
                     <View style={styles.historyInfo}>
-                      {activityData && activityType === 'conversation' ? (
-                        <>
-                          <SafeText style={styles.historyStoryName}>{language === 'urdu' && nativeRenderings[`activityName_${index}`] ? nativeRenderings[`activityName_${index}`] : String(activityData.activity_name || 'ಸಂಭಾಷಣೆ')}</SafeText>
-                          {item.completed_at && <SafeText style={styles.historyDate}>{formatDate(item.completed_at)}</SafeText>}
-                          {activityData.messages && activityData.messages.length > 0 ? (
-                            // Show first AI message if available, otherwise first user message
-                            (() => {
-                              const firstMsg = activityData.messages[0];
-                              const previewText = firstMsg.ai_response || firstMsg.user_message || '';
-                              const nativePreviewText = language === 'urdu' && nativeRenderings[`${firstMsg.ai_response ? 'aiResponse' : 'userMessage'}_${index}_0`] 
-                                ? nativeRenderings[`${firstMsg.ai_response ? 'aiResponse' : 'userMessage'}_${index}_0`]
-                                : previewText;
-                              return nativePreviewText ? (
-                                <SafeText style={[styles.historyType, { marginTop: 4, fontSize: 12, color: '#666' }]} numberOfLines={1}>
-                                  {String(nativePreviewText.substring(0, 50))}{nativePreviewText.length > 50 ? '...' : ''}
-                                </SafeText>
-                              ) : null;
-                            })()
-                          ) : activityData.introduction ? (
-                            <Text style={[styles.historyType, { marginTop: 4, fontSize: 12, color: '#666' }]} numberOfLines={1}>
-                              {language === 'urdu' && nativeRenderings[`introduction_${index}`] ? nativeRenderings[`introduction_${index}`].substring(0, 50) : activityData.introduction.substring(0, 50)}{(language === 'urdu' && nativeRenderings[`introduction_${index}`] ? nativeRenderings[`introduction_${index}`] : activityData.introduction).length > 50 ? '...' : ''}
-                            </Text>
-                          ) : null}
-                        </>
-                      ) : activityData && activityType === 'speaking' ? (
+                      {activityData && activityType === 'speaking' ? (
                         <>
                           <SafeText style={styles.historyStoryName}>{language === 'urdu' && nativeRenderings[`activityName_${index}`] ? nativeRenderings[`activityName_${index}`] : String(activityData.activity_name || 'ಭಾಷಣ ಅಭ್ಯಾಸ')}</SafeText>
                           {item.completed_at && <SafeText style={styles.historyDate}>{String(formatDate(item.completed_at))}</SafeText>}
@@ -936,9 +847,9 @@ export default function ActivityHistoryScreen({ route, navigation }) {
                         navigation.navigate('Activity', {
                           language: language,
                           activityType: activityType,
-                          activityData: activityData, // Pass the saved activity data
-                          activityId: item.id, // Pass the database ID for conversation activities
-                          fromHistory: true, // Flag to indicate this is from history
+                          activityData: activityData,
+                          activityId: item.id,
+                          fromHistory: true,
                         });
                       }}
                     >

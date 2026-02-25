@@ -5,7 +5,6 @@ import ListeningActivity from './activities/ListeningActivity';
 import WritingActivity from './activities/WritingActivity';
 import SpeakingActivity from './activities/SpeakingActivity';
 import TranslationActivity from './activities/TranslationActivity';
-import ConversationActivity from './activities/ConversationActivity';
 
 /**
  * Main ActivityScreen Router
@@ -26,8 +25,6 @@ export default function ActivityScreen({ route, navigation }) {
       return <SpeakingActivity route={route} navigation={navigation} />;
     case 'translation':
       return <TranslationActivity route={route} navigation={navigation} />;
-    case 'conversation':
-      return <ConversationActivity route={route} navigation={navigation} />;
     default:
       // Fallback - show error
       return (

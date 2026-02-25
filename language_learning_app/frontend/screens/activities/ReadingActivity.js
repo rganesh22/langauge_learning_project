@@ -12,13 +12,16 @@ import { Ionicons } from '@expo/vector-icons';
 import SafeText from '../../components/SafeText';
 import { LanguageContext } from '../../contexts/LanguageContext';
 import { useActivityData } from './shared/hooks/useActivityData';
+import { useGenerationCallbacks } from './shared/hooks/useGenerationCallbacks';
 import { useTransliteration } from './shared/hooks/useTransliteration';
 import { useDictionary } from './shared/hooks/useDictionary';
 import { useActivityCompletion } from './shared/hooks/useActivityCompletion';
 import { VocabularyDictionary, APIDebugModal, TopicSelectionModal } from './shared/components';
 import { ACTIVITY_COLORS } from './shared/constants';
 import { normalizeText, normalizeField } from './shared/utils/textProcessing';
-import { getQuestionLabel, getSubmitLabel, getShowAnswersLabel, getHideAnswersLabel, getReadingHeaderLabel, getYourScoreLabel, getCorrectAnswersLabel } from '../../constants/ui_labels';
+import { getQuestionLabel, getSubmitLabel, getShowAnswersLabel, getHideAnswersLabel, getReadingHeaderLabel, getYourScoreLabel, getCorrectAnswersLabel, getImportVocabFromStoryLabel } from '../../constants/ui_labels';
+import TextImportModal from '../../components/TextImportModal';
+import TranslationToolModal from '../../components/TranslationToolModal';
 
 /**
  * ReadingActivity Component
@@ -32,7 +35,8 @@ export default function ReadingActivity({ route, navigation }) {
   const language = routeLang || ctxLanguage || null;
 
   // Use shared hooks
-  const activityData = useActivityData('reading', language, activityId, fromHistory, routeActivityData);
+  const genCallbacks = useGenerationCallbacks();
+  const activityData = useActivityData('reading', language, activityId, fromHistory, routeActivityData, null, genCallbacks);
   const transliteration = useTransliteration(language, activityData.activity);
   const dictionary = useDictionary(language);
   const { complete } = useActivityCompletion(language, 'reading');
@@ -44,6 +48,8 @@ export default function ReadingActivity({ route, navigation }) {
   const [showAnswers, setShowAnswers] = useState(false);
   const [highlightVocab, setHighlightVocab] = useState(false);
   const [showTopicModal, setShowTopicModal] = useState(!fromHistory); // Show modal for new activities
+  const [showImportModal, setShowImportModal] = useState(false);
+  const [showTranslationModal, setShowTranslationModal] = useState(false);
 
   const colors = ACTIVITY_COLORS.reading;
 
@@ -114,6 +120,7 @@ export default function ReadingActivity({ route, navigation }) {
         hideAnswers: getHideAnswersLabel(language),
         yourScore: getYourScoreLabel(language),
         correctAnswers: getCorrectAnswersLabel(language),
+        importVocabFromStory: getImportVocabFromStoryLabel(language),
       };
 
       Object.entries(buttonLabels).forEach(([key, label]) => {
@@ -233,9 +240,23 @@ export default function ReadingActivity({ route, navigation }) {
 
   if (activityData.loading) {
     return (
-      <View style={styles.centerContainer}>
-        <ActivityIndicator size="large" color={colors.primary} />
-        <SafeText style={styles.loadingText}>{activityData.loadingStatus}</SafeText>
+      <View style={styles.container}>
+        <View style={[styles.header, { backgroundColor: colors.primary }]}>
+          <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
+            <Ionicons name="arrow-back" size={24} color="#FFFFFF" />
+          </TouchableOpacity>
+          <View style={styles.headerTitleContainer}>
+            <SafeText style={styles.headerTitle}>
+              {language === 'urdu' && transliteration.nativeScriptRenderings.headerLabel
+                ? transliteration.nativeScriptRenderings.headerLabel
+                : getReadingHeaderLabel(language)}
+            </SafeText>
+          </View>
+        </View>
+        <View style={styles.centerContainer}>
+          <ActivityIndicator size="large" color={colors.primary} />
+          <SafeText style={styles.loadingText}>{activityData.loadingStatus}</SafeText>
+        </View>
       </View>
     );
   }
@@ -273,6 +294,12 @@ export default function ReadingActivity({ route, navigation }) {
             onPress={() => setHighlightVocab(!highlightVocab)}
           >
             <Ionicons name={highlightVocab ? "color-palette" : "color-palette-outline"} size={20} color="#FFFFFF" />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.toggleButton}
+            onPress={() => setShowTranslationModal(true)}
+          >
+            <Ionicons name="language" size={20} color="#FFFFFF" />
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.toggleButton}
@@ -348,7 +375,30 @@ export default function ReadingActivity({ route, navigation }) {
                 });
 
                 return elements;
-              })()}
+                })()}
+            </View>
+
+            {/* Import Vocab from Story — right under the story, localized with Urdu Nastaliq + transliteration */}
+            <View style={{ alignItems: 'flex-start', marginTop: 8, marginBottom: 8 }}>
+              <TouchableOpacity
+                style={styles.importVocabButton}
+                onPress={() => setShowImportModal(true)}
+                activeOpacity={0.8}
+              >
+                <Ionicons name="cloud-upload-outline" size={18} color="#FFF" />
+                {renderText(
+                  (language === 'urdu' && transliteration.nativeScriptRenderings.importVocabFromStory)
+                    ? transliteration.nativeScriptRenderings.importVocabFromStory
+                    : getImportVocabFromStoryLabel(language),
+                  [styles.importVocabButtonText],
+                  false
+                )}
+                {transliteration.showTransliterations && transliteration.transliterations.importVocabFromStory && (
+                  <Text style={[styles.transliterationText, { fontSize: 12, color: 'rgba(255,255,255,0.9)', marginTop: 2 }]}>
+                    {transliteration.transliterations.importVocabFromStory}
+                  </Text>
+                )}
+              </TouchableOpacity>
             </View>
 
             {/* Questions */}
@@ -532,6 +582,52 @@ export default function ReadingActivity({ route, navigation }) {
                     }).length} / {activity.questions.length} {transliteration.transliterations.correctAnswers}
                   </SafeText>
                 )}
+
+                {/* Import Vocab from Story - also in results for convenience */}
+                <TouchableOpacity
+                  style={[styles.importVocabButton, { marginTop: 16 }]}
+                  onPress={() => setShowImportModal(true)}
+                  activeOpacity={0.8}
+                >
+                  <Ionicons name="cloud-upload-outline" size={18} color="#FFF" />
+                  {renderText(
+                    (language === 'urdu' && transliteration.nativeScriptRenderings.importVocabFromStory)
+                      ? transliteration.nativeScriptRenderings.importVocabFromStory
+                      : getImportVocabFromStoryLabel(language),
+                    [styles.importVocabButtonText],
+                    false
+                  )}
+                  {transliteration.showTransliterations && transliteration.transliterations.importVocabFromStory && (
+                    <Text style={[styles.transliterationText, { fontSize: 12, color: 'rgba(255,255,255,0.9)', marginTop: 2 }]}>
+                      {transliteration.transliterations.importVocabFromStory}
+                    </Text>
+                  )}
+                </TouchableOpacity>
+              </View>
+            )}
+
+            {/* Import Vocab button for history view (before submitting) - same as under story */}
+            {fromHistory && activity && !showResult && (
+              <View style={{ alignItems: 'flex-start', marginTop: 4 }}>
+                <TouchableOpacity
+                  style={[styles.importVocabButton, { backgroundColor: colors.primary }]}
+                  onPress={() => setShowImportModal(true)}
+                  activeOpacity={0.8}
+                >
+                  <Ionicons name="cloud-upload-outline" size={18} color="#FFF" />
+                  {renderText(
+                    (language === 'urdu' && transliteration.nativeScriptRenderings.importVocabFromStory)
+                      ? transliteration.nativeScriptRenderings.importVocabFromStory
+                      : getImportVocabFromStoryLabel(language),
+                    [styles.importVocabButtonText],
+                    false
+                  )}
+                  {transliteration.showTransliterations && transliteration.transliterations.importVocabFromStory && (
+                    <Text style={[styles.transliterationText, { fontSize: 12, color: 'rgba(255,255,255,0.9)', marginTop: 2 }]}>
+                      {transliteration.transliterations.importVocabFromStory}
+                    </Text>
+                  )}
+                </TouchableOpacity>
               </View>
             )}
           </View>
@@ -546,6 +642,30 @@ export default function ReadingActivity({ route, navigation }) {
         initialSearchQuery={dictionary.initialSearchQuery}
         dictionaryLanguage={dictionary.dictionaryLanguage}
         setDictionaryLanguage={dictionary.setDictionaryLanguage}
+      />
+
+      {/* Translation Tool Modal */}
+      <TranslationToolModal
+        visible={showTranslationModal}
+        onClose={() => setShowTranslationModal(false)}
+        language={language}
+        prefillText={activityData.activity?.story || ''}
+        onMakeVocabCards={() => {
+          setShowTranslationModal(false);
+          setShowImportModal(true);
+        }}
+      />
+
+      {/* Import Vocab Modal — pre-filled with story text */}
+      <TextImportModal
+        visible={showImportModal}
+        onClose={() => setShowImportModal(false)}
+        language={language}
+        prefillText={activityData.activity?.story || ''}
+        onImportComplete={(result) => {
+          setShowImportModal(false);
+          Alert.alert('Import Complete', `${result.new_words} word${result.new_words !== 1 ? 's' : ''} added to your library${result.deck_name ? ` in deck "${result.deck_name}"` : ''}.`);
+        }}
       />
 
       {/* API Debug Modal */}
@@ -764,5 +884,21 @@ const styles = StyleSheet.create({
   scoreSubtext: {
     fontSize: 16,
     color: '#666',
+  },
+  importVocabButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#10B981',
+    paddingVertical: 11,
+    paddingHorizontal: 20,
+    borderRadius: 10,
+    marginTop: 16,
+    gap: 8,
+  },
+  importVocabButtonText: {
+    color: '#FFF',
+    fontSize: 14,
+    fontWeight: '700',
   },
 });

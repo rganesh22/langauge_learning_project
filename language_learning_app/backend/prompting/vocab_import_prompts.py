@@ -1,9 +1,19 @@
 """
 Prompts for vocabulary import from text
-Loads prompts from template files
+Loads combined lemmatization+translation prompts from template files
 """
 import os
 from pathlib import Path
+
+# Map full language names (as used in the app) to 2-letter ISO codes
+LANGUAGE_CODE_MAP = {
+    'kannada': 'kn',
+    'malayalam': 'ml',
+    'tamil': 'ta',
+    'telugu': 'te',
+    'hindi': 'hi',
+    'urdu': 'ur',
+}
 
 
 def _load_prompt_template(filename: str) -> str:
@@ -19,52 +29,49 @@ def _load_prompt_template(filename: str) -> str:
         return ""
 
 
-def get_lemmatization_prompt(language: str, words: list) -> str:
-    """Generate lemmatization prompt for a batch of words
+def get_lemmatization_translation_prompt(language: str, words: list) -> str:
+    """Generate a combined lemmatization + translation prompt for a batch of words
     
     Args:
-        language: Target language
-        words: List of words to lemmatize (already split by spaces)
+        language: Target language (full name, e.g. 'kannada')
+        words: List of word strings to process
     
     Returns:
         Formatted prompt string
     """
-    # Load template for the specific language (files are named e.g. kannada.txt)
-    template_file = f"lemmatization/{language.lower()}.txt"
+    lang_code = LANGUAGE_CODE_MAP.get(language.lower(), language.lower()[:2])
+    template_file = f"lemmatization_translation_{lang_code}.txt"
     template = _load_prompt_template(template_file)
     
     # Fallback to kannada if template not found
     if not template:
-        template = _load_prompt_template("lemmatization/kannada.txt")
+        template = _load_prompt_template("lemmatization_translation_kn.txt")
     
     # Format the template with actual values
     prompt = template.format(
-        language=language,
         words=', '.join(words)
     )
     
     return prompt
 
 
+# Keep old functions for backward compatibility
+def get_lemmatization_prompt(language: str, words: list) -> str:
+    """Deprecated: Use get_lemmatization_translation_prompt instead."""
+    return get_lemmatization_translation_prompt(language, words)
+
+
 def get_translation_prompt(language: str, words: list, target_languages: list) -> str:
-    """Generate translation prompt for a batch of words
-    
-    Args:
-        language: Source language
-        words: List of words to translate (with word_class)
-        target_languages: Languages to translate to
-    
-    Returns:
-        Formatted prompt string
-    """
+    """Generate cross-translation prompt for words already processed.
+    Used only for cross-language translation to other user languages."""
     word_list = ', '.join([w['word'] for w in words])
     other_langs = [lang for lang in target_languages if lang != language]
     target_langs_str = ', '.join(other_langs) if other_langs else 'none'
     
-    # Load translation template (in vocab_import folder)
     template = _load_prompt_template("translation.txt")
+    if not template:
+        return ""
     
-    # Format the template
     prompt = template.format(
         source_language=language,
         target_languages=target_langs_str,

@@ -70,6 +70,13 @@ export function useTTSProgress(sessionId) {
           // Progress update for a specific paragraph
           console.log('[TTS Progress] 🔄 UPDATE - Paragraph', data.paragraph_index, 'status:', data.status);
           setProgress(data.progress || {});
+          // Keep denominator in sync: if backend sent more paragraphs than initial count, use progress size
+          if (data.progress && Object.keys(data.progress).length > 0) {
+            setParagraphCount(prev => {
+              const keys = Object.keys(data.progress).length;
+              return keys > prev ? keys : prev;
+            });
+          }
         }
       } catch (error) {
         console.error('[TTS Progress] ❌ Parse error:', error, 'Raw data:', event.data);

@@ -12,3 +12,39 @@
 > agentic-curriculum-ui@1.0.0 start
 > electron .
 
+
+> agentic-curriculum-ui@1.0.0 start
+> electron .
+
+
+> agentic-curriculum-ui@1.0.0 start
+> electron .
+
+
+> agentic-curriculum-ui@1.0.0 start
+> electron .
+
+2026-02-22 14:41:55.566 Electron Helper (Renderer)[65376:1040700] CoreText note: Client requested name ".CJKSymbolsFallbackSC-Regular", it will get TimesNewRomanPSMT rather than the intended font. All system UI font access should be through proper APIs such as CTFontCreateUIFontForLanguage() or +[NSFont systemFontOfSize:].
+2026-02-22 14:41:55.567 Electron Helper (Renderer)[65376:1040700] CoreText note: Set a breakpoint on CTFontLogSystemFontNameRequest to debug.
+2026-02-22 14:41:55.569 Electron Helper (Renderer)[65376:1040700] CoreText note: Client requested name ".CJKSymbolsFallbackSC-Regular", it will get TimesNewRomanPSMT rather than the intended font. All system UI font access should be through proper APIs such as CTFontCreateUIFontForLanguage() or +[NSFont systemFontOfSize:].
+2026-02-22 14:41:55.569 Electron Helper (Renderer)[65376:1040700] CoreText note: Client requested name ".CJKSymbolsFallbackSC-Regular", it will get TimesNewRomanPSMT rather than the intended font. All system UI font access should be through proper APIs such as CTFontCreateUIFontForLanguage() or +[NSFont systemFontOfSize:].
+2026-02-22 14:41:55.569 Electron Helper (Renderer)[65376:1040700] CoreText note: Client requested name ".CJKSymbolsFallbackSC-Regular", it will get TimesNewRomanPSMT rather than the intended font. All system UI font access should be through proper APIs such as CTFontCreateUIFontForLanguage() or +[NSFont systemFontOfSize:].
+2026-02-22 14:41:55.569 Electron Helper (Renderer)[65376:1040700] CoreText note: Client requested name ".CJKSymbolsFallbackSC-Regular", it will get TimesNewRomanPSMT rather than the intended font. All system UI font access should be through proper APIs such as CTFontCreateUIFontForLanguage() or +[NSFont systemFontOfSize:].
+2026-02-22 14:41:55.569 Electron Helper (Renderer)[65376:1040700] CoreText note: Client requested name ".CJKSymbolsFallbackSC-Regular", it will get TimesNewRomanPSMT rather than the intended font. All system UI font access should be through proper APIs such as CTFontCreateUIFontForLanguage() or +[NSFont systemFontOfSize:].
+2026-02-22 14:41:55.569 Electron Helper (Renderer)[65376:1040700] CoreText note: Client requested name ".CJKSymbolsFallbackSC-Regular", it will get TimesNewRomanPSMT rather than the intended font. All system UI font access should be through proper APIs such as CTFontCreateUIFontForLanguage() or +[NSFont systemFontOfSize:].
+2026-02-22 14:41:55.569 Electron Helper (Renderer)[65376:1040700] CoreText note: Client requested name ".CJKSymbolsFallbackSC-Regular", it will get TimesNewRomanPSMT rather than the intended font. All system UI font access should be through proper APIs such as CTFontCreateUIFontForLanguage() or +[NSFont systemFontOfSize:].
+2026-02-22 14:41:55.569 Electron Helper (Renderer)[65376:1040700] CoreText note: Client requested name ".CJKSymbolsFallbackSC-Regular", it will get TimesNewRomanPSMT rather than the intended font. All system UI font access should be through proper APIs such as CTFontCreateUIFontForLanguage() or +[NSFont systemFontOfSize:].
+2026-02-22 14:41:55.569 Electron Helper (Renderer)[65376:1040700] CoreText note: Client requested name ".CJKSymbolsFallbackSC-Regular", it will get TimesNewRomanPSMT rather than the intended font. All system UI font access should be through proper APIs such as CTFontCreateUIFontForLanguage() or +[NSFont systemFontOfSize:].
+2026-02-22 14:41:55.569 Electron Helper (Renderer)[65376:1040700] CoreText note: Client requested name ".CJKSymbolsFallbackSC-Regular", it will get TimesNewRomanPSMT rather than the intended font. All system UI font access should be through proper APIs such as CTFontCreateUIFontForLanguage() or +[NSFont systemFontOfSize:].
+2026-02-22 14:41:55.569 Electron Helper (Renderer)[65376:1040700] CoreText note: Client requested name ".CJKSymbolsFallbackSC-Regular", it will get TimesNewRomanPSMT rather than the intended font. All system UI font access should be through proper APIs such as CTFontCreateUIFontForLanguage() or +[NSFont systemFontOfSize:].
+2026-02-22 14:41:55.569 Electron Helper (Renderer)[65376:1040700] CoreText note: Client requested name ".CJKSymbolsFallbackSC-Regular", it will get TimesNewRomanPSMT rather than the intended font. All system UI font access should be through proper APIs such as CTFontCreateUIFontForLanguage() or +[NSFont systemFontOfSize:].
+2026-02-22 14:41:55.570 Electron Helper (Renderer)[65376:1040700] CoreText note: Client requested name ".CJKSymbolsFallbackSC-Regular", it will get TimesNewRomanPSMT rather than the intended font. All system UI font access should be through proper APIs such as CTFontCreateUIFontForLanguage() or +[NSFont systemFontOfSize:].
+2026-02-22 14:41:55.570 Electron Helper (Renderer)[65376:1040700] CoreText note: Client requested name ".CJKSymbolsFallbackSC-Regular", it will get TimesNewRomanPSMT rather than the intended font. All system UI font access should be through proper APIs such as CTFontCreateUIFontForLanguage() or +[NSFont systemFontOfSize:].
+
+> agentic-curriculum-ui@1.0.0 start
+> electron .
+
+
+> agentic-curriculum-ui@1.0.0 start
+> electron .
+

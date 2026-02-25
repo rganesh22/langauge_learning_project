@@ -154,6 +154,16 @@ def init_db():
         )
     ''')
     
+    # Vocab decks table (for imported vocabulary sets)
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS vocab_decks (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT NOT NULL,
+            language TEXT NOT NULL,
+            created_at TEXT DEFAULT CURRENT_TIMESTAMP
+        )
+    ''')
+    
     # Vocabulary words table
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS vocabulary (
@@ -166,9 +176,17 @@ def init_db():
             level TEXT,
             verb_transitivity TEXT,
             origin TEXT DEFAULT 'default',
-            created_at TEXT DEFAULT CURRENT_TIMESTAMP
+            deck_id INTEGER,
+            created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (deck_id) REFERENCES vocab_decks(id)
         )
     ''')
+    
+    # Migration: add deck_id column if not present (for existing databases)
+    try:
+        cursor.execute("SELECT deck_id FROM vocabulary LIMIT 1")
+    except sqlite3.OperationalError:
+        cursor.execute("ALTER TABLE vocabulary ADD COLUMN deck_id INTEGER REFERENCES vocab_decks(id)")
     
     # SRS word states table
     cursor.execute('''
@@ -278,6 +296,7 @@ def init_db():
             user_id INTEGER DEFAULT 1,
             language TEXT NOT NULL,
             activity_type TEXT NOT NULL,
+            started_at TEXT NOT NULL DEFAULT '',
             activity_data TEXT,
             score REAL,
             completed_at TEXT,
@@ -392,9 +411,30 @@ def init_db():
             updated_at TEXT DEFAULT CURRENT_TIMESTAMP
         )
     ''')
-    
+
+    # Placement test results table
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS placement_test_results (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            user_id INTEGER DEFAULT 1,
+            language TEXT NOT NULL,
+            overall_level TEXT NOT NULL,
+            skill_levels_json TEXT,
+            skill_scores_json TEXT,
+            level_breakdown_json TEXT,
+            strengths_json TEXT,
+            improvements_json TEXT,
+            recommendation TEXT,
+            analysis_notes TEXT,
+            test_data_json TEXT,
+            answers_json TEXT,
+            taken_at TEXT DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (user_id) REFERENCES user_profile(id)
+        )
+    ''')
+
     conn.commit()
-    
+
     # Initialize default user if not exists
     cursor.execute('SELECT COUNT(*) FROM user_profile')
     if cursor.fetchone()[0] == 0:
@@ -485,6 +525,16 @@ def init_db_schema():
         )
     ''')
     
+    # Vocab decks table (for imported vocabulary sets)
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS vocab_decks (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT NOT NULL,
+            language TEXT NOT NULL,
+            created_at TEXT DEFAULT CURRENT_TIMESTAMP
+        )
+    ''')
+    
     # Vocabulary words table
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS vocabulary (
@@ -497,9 +547,17 @@ def init_db_schema():
             level TEXT,
             verb_transitivity TEXT,
             origin TEXT DEFAULT 'default',
-            created_at TEXT DEFAULT CURRENT_TIMESTAMP
+            deck_id INTEGER,
+            created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (deck_id) REFERENCES vocab_decks(id)
         )
     ''')
+    
+    # Migration: add deck_id column if not present (for existing databases)
+    try:
+        cursor.execute("SELECT deck_id FROM vocabulary LIMIT 1")
+    except sqlite3.OperationalError:
+        cursor.execute("ALTER TABLE vocabulary ADD COLUMN deck_id INTEGER REFERENCES vocab_decks(id)")
     
     # SRS word states table
     cursor.execute('''
@@ -621,7 +679,7 @@ def init_db_schema():
     ''')
 
     # Migrate activity_history: add columns that may be missing in older DBs
-    for col, coldef in [('activity_data', 'TEXT'), ('score', 'REAL')]:
+    for col, coldef in [('activity_data', 'TEXT'), ('score', 'REAL'), ('started_at', "TEXT DEFAULT ''")]:
         try:
             cursor.execute(f'ALTER TABLE activity_history ADD COLUMN {col} {coldef}')
         except sqlite3.OperationalError:
@@ -745,7 +803,28 @@ def init_db_schema():
             updated_at TEXT DEFAULT CURRENT_TIMESTAMP
         )
     ''')
-    
+
+    # Placement test results table
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS placement_test_results (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            user_id INTEGER DEFAULT 1,
+            language TEXT NOT NULL,
+            overall_level TEXT NOT NULL,
+            skill_levels_json TEXT,
+            skill_scores_json TEXT,
+            level_breakdown_json TEXT,
+            strengths_json TEXT,
+            improvements_json TEXT,
+            recommendation TEXT,
+            analysis_notes TEXT,
+            test_data_json TEXT,
+            answers_json TEXT,
+            taken_at TEXT DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (user_id) REFERENCES user_profile(id)
+        )
+    ''')
+
     # Lesson words table (if it exists in init_db)
     try:
         cursor.execute('''
@@ -1157,14 +1236,22 @@ def calculate_goal_based_streak(user_id: int = 1) -> Dict[str, int]:
             check_date = today - timedelta(days=days_ago)
             date_str = check_date.strftime('%Y-%m-%d')
             
-            # Get all goals for this day
+            # Get all goals for this day (week-specific first, then fall back to 'default' template)
+            week_start_str = get_week_start(check_date).strftime('%Y-%m-%d')
+            day_name = check_date.strftime('%A').lower()
             cursor.execute('''
                 SELECT language, activity_type, target_count
                 FROM weekly_goals
                 WHERE week_start_date = ? AND day_of_week = ?
-            ''', (get_week_start(check_date).strftime('%Y-%m-%d'), check_date.strftime('%A').lower()))
-            
+            ''', (week_start_str, day_name))
             goals = cursor.fetchall()
+            if not goals:
+                cursor.execute('''
+                    SELECT language, activity_type, target_count
+                    FROM weekly_goals
+                    WHERE week_start_date = 'default' AND day_of_week = ?
+                ''', (day_name,))
+                goals = cursor.fetchall()
             
             # If no goals set for this day, skip it (don't break streak)
             if not goals:
@@ -1277,6 +1364,143 @@ def update_user_profile(name: Optional[str] = None, username: Optional[str] = No
     except Exception as e:
         print(f"Error updating user profile: {str(e)}")
         return False
+
+
+# ============================================================================
+# Placement Test Operations
+# ============================================================================
+
+def save_placement_test_result(language: str, result: Dict, test_data: Dict, answers: Dict, srs_calibration: Dict = None) -> Optional[int]:
+    """Save a completed placement test result to the DB and return its id."""
+    import json as _json
+    try:
+        conn = sqlite3.connect(config.DB_PATH, timeout=10.0)
+        cursor = conn.cursor()
+        # Ensure extra columns exist (added after initial schema)
+        for col_def in [
+            'item_feedback_json TEXT',
+            'srs_calibration_json TEXT',
+        ]:
+            try:
+                cursor.execute(f'ALTER TABLE placement_test_results ADD COLUMN {col_def}')
+                conn.commit()
+            except Exception:
+                pass  # column already exists
+        cursor.execute('''
+            INSERT INTO placement_test_results
+                (user_id, language, overall_level, skill_levels_json, skill_scores_json,
+                 level_breakdown_json, strengths_json, improvements_json,
+                 recommendation, analysis_notes, test_data_json, answers_json,
+                 item_feedback_json, srs_calibration_json, taken_at)
+            VALUES (1, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
+        ''', (
+            language,
+            result.get('overall_cefr_level', 'A1'),
+            _json.dumps(result.get('skill_levels', {})),
+            _json.dumps(result.get('skill_scores', {})),
+            _json.dumps(result.get('level_breakdown', {})),
+            _json.dumps(result.get('strengths', [])),
+            _json.dumps(result.get('areas_for_improvement', [])),
+            result.get('recommendation', ''),
+            result.get('analysis_notes', ''),
+            _json.dumps(test_data),
+            _json.dumps(answers),
+            _json.dumps(result.get('item_feedback', {})),
+            _json.dumps(srs_calibration or {}),
+        ))
+        row_id = cursor.lastrowid
+        conn.commit()
+        conn.close()
+        return row_id
+    except Exception as e:
+        print(f"Error saving placement test result: {e}")
+        return None
+
+
+def get_latest_placement_result(language: str) -> Optional[Dict]:
+    """Return the most recent placement test result for a language, or None."""
+    import json as _json
+    try:
+        conn = sqlite3.connect(config.DB_PATH, timeout=10.0)
+        conn.row_factory = sqlite3.Row
+        cursor = conn.cursor()
+        cursor.execute('''
+            SELECT * FROM placement_test_results
+            WHERE user_id = 1 AND language = ?
+            ORDER BY taken_at DESC LIMIT 1
+        ''', (language,))
+        row = cursor.fetchone()
+        conn.close()
+        if not row:
+            return None
+        d = dict(row)
+        for key in ('skill_levels_json', 'skill_scores_json', 'level_breakdown_json',
+                    'strengths_json', 'improvements_json'):
+            plain = key.replace('_json', '')
+            try:
+                d[plain] = _json.loads(d.get(key) or '{}')
+            except Exception:
+                d[plain] = {}
+        return d
+    except Exception as e:
+        print(f"Error getting placement result: {e}")
+        return None
+
+
+def get_all_placement_results(language: str) -> list:
+    """Return all placement test results for a language, newest first."""
+    import json as _json
+    try:
+        conn = sqlite3.connect(config.DB_PATH, timeout=10.0)
+        conn.row_factory = sqlite3.Row
+        cursor = conn.cursor()
+        # item_feedback_json and srs_calibration_json were added later — use COALESCE to avoid missing-column errors
+        cursor.execute('''
+            SELECT id, language, overall_level, skill_levels_json, skill_scores_json,
+                   level_breakdown_json, strengths_json, improvements_json,
+                   recommendation, analysis_notes, test_data_json, answers_json,
+                   COALESCE(item_feedback_json, '{}') AS item_feedback_json,
+                   COALESCE(srs_calibration_json, '{}') AS srs_calibration_json,
+                   taken_at
+            FROM placement_test_results
+            WHERE user_id = 1 AND language = ?
+            ORDER BY taken_at DESC
+        ''', (language,))
+        rows = cursor.fetchall()
+        conn.close()
+        results = []
+        for row in rows:
+            d = dict(row)
+            for key in ('skill_levels_json', 'skill_scores_json', 'level_breakdown_json',
+                        'strengths_json', 'improvements_json'):
+                plain = key.replace('_json', '')
+                try:
+                    d[plain] = _json.loads(d.get(key) or '{}')
+                except Exception:
+                    d[plain] = {}
+            # Decode test_data, answers, item_feedback, and srs_calibration JSON
+            for key in ('test_data_json', 'answers_json', 'item_feedback_json', 'srs_calibration_json'):
+                plain = key.replace('_json', '')
+                try:
+                    d[plain] = _json.loads(d.get(key) or '{}')
+                except Exception:
+                    d[plain] = {}
+            results.append(d)
+        return results
+    except Exception as e:
+        print(f"Error getting all placement results: {e}")
+        return []
+
+
+def update_language_level_override(language: str, cefr_level: str) -> bool:
+    """Persist a manually-set CEFR level override for a language in user_settings."""
+    return update_user_setting('placement_cefr_override', cefr_level, language)
+
+
+def get_language_level_override(language: str) -> Optional[str]:
+    """Return the placement-test CEFR override level for a language, if any."""
+    settings = get_user_settings(language)
+    return settings.get('placement_cefr_override')
 
 
 def get_user_settings(language: str = 'kannada') -> Dict[str, str]:
@@ -2005,6 +2229,18 @@ def check_and_log_flashcard_completion(language: str, user_id: int = 1) -> bool:
         
         goal_row = cursor.fetchone()
         
+        # Fall back to 'default' template if no week-specific goal found
+        if not goal_row:
+            cursor.execute('''
+                SELECT target_count
+                FROM weekly_goals
+                WHERE language = ?
+                  AND week_start_date = 'default'
+                  AND day_of_week = ?
+                  AND activity_type = 'flashcards'
+            ''', (language, day_of_week))
+            goal_row = cursor.fetchone()
+        
         # If no goal set for today, don't log completion
         if not goal_row or goal_row['target_count'] == 0:
             conn.close()
@@ -2035,11 +2271,12 @@ def check_and_log_flashcard_completion(language: str, user_id: int = 1) -> bool:
             conn.close()
             return True  # Already completed and logged
         
-        # Log flashcard activity
+        # Log flashcard activity (use app timezone for streak)
+        now_str = config.get_current_time().strftime('%Y-%m-%d %H:%M:%S')
         cursor.execute('''
-            INSERT INTO activity_history (user_id, language, activity_type, activity_data, score, completed_at)
-            VALUES (?, ?, 'flashcards', ?, 1.0, datetime('now'))
-        ''', (user_id, language, f'{{"new_completed": {quota["new_cards_completed"]}, "reviews_completed": {quota["reviews_completed"]}, "total_cards": {total_cards_completed}, "goal": {flashcard_goal}}}'))
+            INSERT INTO activity_history (user_id, language, activity_type, activity_data, score, started_at, completed_at)
+            VALUES (?, ?, 'flashcards', ?, 1.0, ?, ?)
+        ''', (user_id, language, f'{{"new_completed": {quota["new_cards_completed"]}, "reviews_completed": {quota["reviews_completed"]}, "total_cards": {total_cards_completed}, "goal": {flashcard_goal}}}', now_str, now_str))
         
         # Update daily progress
         cursor.execute('''
@@ -2301,6 +2538,7 @@ def get_vocabulary(
     mastery_filter: str = '',
     word_class_filter: str = '',
     level_filter: str = '',
+    origin_filter: str = '',
     limit: int = 50,
     offset: int = 0
 ) -> tuple:
@@ -2389,11 +2627,29 @@ def get_vocabulary(
             where_clause += ' AND v.level IN (' + ','.join(['?' for _ in level_values]) + ')'
             params.extend(level_values)
     
+    if origin_filter:
+        # Handle multiple origin filters (comma-separated)
+        # Values: 'default', 'activity', 'deck', or a specific deck name (matched via deck_name)
+        origin_values = [f.strip() for f in origin_filter.split(',') if f.strip()]
+        origin_codes = [v for v in origin_values if v in ('default', 'activity', 'deck', 'user')]
+        deck_name_filters = [v for v in origin_values if v not in ('default', 'activity', 'deck', 'user')]
+        conditions = []
+        if origin_codes:
+            conditions.append('v.origin IN (' + ','.join(['?' for _ in origin_codes]) + ')')
+            params.extend(origin_codes)
+        if deck_name_filters:
+            dn_conds = ' OR '.join(['LOWER(vd.name) = LOWER(?)' for _ in deck_name_filters])
+            conditions.append(f'({dn_conds})')
+            params.extend(deck_name_filters)
+        if conditions:
+            where_clause += ' AND (' + ' OR '.join(conditions) + ')'
+    
     # Count query
     count_query = f'''
         SELECT COUNT(*) as total
         FROM vocabulary v
         LEFT JOIN word_states ws ON v.id = ws.word_id AND ws.user_id = 1
+        LEFT JOIN vocab_decks vd ON v.deck_id = vd.id
         {where_clause}
     '''
     try:
@@ -2414,9 +2670,11 @@ def get_vocabulary(
         fetch_limit = min(limit * 10, 1000)  # Fetch up to 10x the limit or 1000, whichever is smaller
         data_query = f'''
             SELECT v.*, COALESCE(ws.mastery_level, 'new') as mastery_level,
-                   COALESCE(ws.next_review_date, '') as next_review_date
+                   COALESCE(ws.next_review_date, '') as next_review_date,
+                   vd.name as deck_name
             FROM vocabulary v
             LEFT JOIN word_states ws ON v.id = ws.word_id AND ws.user_id = 1
+            LEFT JOIN vocab_decks vd ON v.deck_id = vd.id
             {where_clause}
             LIMIT ?
         '''
@@ -2425,9 +2683,11 @@ def get_vocabulary(
         # Non-search: use SQL pagination
         data_query = f'''
             SELECT v.*, COALESCE(ws.mastery_level, 'new') as mastery_level,
-                   COALESCE(ws.next_review_date, '') as next_review_date
+                   COALESCE(ws.next_review_date, '') as next_review_date,
+                   vd.name as deck_name
             FROM vocabulary v
             LEFT JOIN word_states ws ON v.id = ws.word_id AND ws.user_id = 1
+            LEFT JOIN vocab_decks vd ON v.deck_id = vd.id
             {where_clause}
             ORDER BY v.english_word
             LIMIT ? OFFSET ?
@@ -2690,11 +2950,12 @@ def _cefr_to_numeric(cefr_level: str) -> int:
 
 
 def calculate_user_level(language: str) -> Dict:
-    """Calculate user's level based on the primary level of words in the vocabulary
-    
-    For languages where all words are at a single level (e.g., all Tamil at A1),
-    the user's level is set to that level directly, with progress based on mastered words.
-    
+    """Calculate user's level based on vocabulary mastery + placement test override.
+
+    If a placement test has been taken for this language the result is used as the
+    authoritative CEFR level, but progress is still derived from vocabulary mastery
+    so the level indicator reflects real-world progress.
+
     Level progression:
     - A0: Starting level (less than all A1 words mastered)
     - A1: All A1 words mastered (or current level if all words are A1)
@@ -2802,14 +3063,22 @@ def calculate_user_level(language: str) -> Dict:
                 break
         
         conn.close()
-        
-        return {
+
+        vocab_result = {
             'level': current_level,
             'progress': round(progress, 1),
             'total_mastered': total_mastered,
             'next_level': next_level,
             'total_words': sum(total_by_level.values())
         }
+
+        # Check for placement test override — use that as the displayed level
+        override = get_language_level_override(language)
+        if override:
+            vocab_result['level'] = override.upper()
+            vocab_result['placement_override'] = True
+
+        return vocab_result
     except Exception as e:
         print(f"Error in calculate_user_level: {str(e)}")
         import traceback
@@ -3460,7 +3729,8 @@ def log_activity(language: str, activity_type: str, score: float = 0.0, activity
         conn = sqlite3.connect(config.DB_PATH, timeout=10.0)
         cursor = conn.cursor()
         
-        today = datetime.now().strftime('%Y-%m-%d')
+        today = config.get_current_date_str()
+        now_str = config.get_current_time().strftime('%Y-%m-%d %H:%M:%S')
         
         # Verify activity_data is not empty and is valid JSON
         if activity_data:
@@ -3474,11 +3744,11 @@ def log_activity(language: str, activity_type: str, score: float = 0.0, activity
                 print(f"  WARNING: activity_data is not valid JSON: {e}")
                 print(f"  Data preview: {activity_data[:200]}")
         
-        # Log to activity history
+        # Log to activity history - use Python local time to match daily_progress.date
         cursor.execute('''
-            INSERT INTO activity_history (user_id, language, activity_type, activity_data, score, completed_at)
-            VALUES (1, ?, ?, ?, ?, datetime('now'))
-        ''', (language, activity_type, activity_data, score))
+            INSERT INTO activity_history (user_id, language, activity_type, activity_data, score, started_at, completed_at)
+            VALUES (1, ?, ?, ?, ?, ?, ?)
+        ''', (language, activity_type, activity_data, score, now_str, now_str))
         
         # Get the inserted ID to verify
         activity_id = cursor.lastrowid
@@ -3627,18 +3897,19 @@ def update_activity_score(language: str, activity_type: str, score: float, activ
                     # Use new data if merge fails
 
             # Update the existing activity with the new score, data, and completed_at timestamp
-            # This ensures activities only count toward streak when actually completed
+            # Use app timezone so streak calculation (DATE(completed_at)) matches local day
+            completed_at_str = config.get_current_time().strftime('%Y-%m-%d %H:%M:%S')
             cursor.execute('''
                 UPDATE activity_history
-                SET score = ?, activity_data = ?, completed_at = CURRENT_TIMESTAMP
+                SET score = ?, activity_data = ?, completed_at = ?
                 WHERE id = ?
-            ''', (score, activity_data, activity_id))
+            ''', (score, activity_data, completed_at_str, activity_id))
             print(f"✓ Updated activity {activity_id} with score {score} and new completion timestamp")
             
             # Update daily progress (only increment if this is a new completion, not just updating data)
             # For writing activities with multiple submissions, we only want to count once per day
             # So we check if we already updated progress today
-            today = datetime.now().strftime('%Y-%m-%d')
+            today = config.get_current_date_str()
             cursor.execute('''
                 SELECT count FROM daily_progress
                 WHERE user_id = 1 AND language = ? AND activity_type = ? AND date = ?
@@ -3737,17 +4008,10 @@ def get_daily_progress(language: str, date: Optional[str] = None) -> Dict:
         ''', (language, date))
         
         progress = {row['activity_type']: row['count'] for row in cursor.fetchall()}
-        
-        # Get goals
-        cursor.execute('''
-            SELECT activity_type, daily_target
-            FROM language_goals
-            WHERE language = ?
-        ''', (language,))
-        
-        goals = {row['activity_type']: row['daily_target'] for row in cursor.fetchall()}
-        
         conn.close()
+        
+        # Get today's goals from weekly_goals (the active schedule, falls back to 'default' template)
+        goals = get_today_goals(language)
         
         # Combine progress and goals
         result = {}
@@ -3939,6 +4203,7 @@ def get_today_goals(language: str) -> Dict:
     
     Returns a dict mapping activity_type -> target_count for today
     Example: {'reading': 2, 'listening': 1}
+    Falls back to the 'default' perpetual template if no week-specific goals exist.
     """
     try:
         from datetime import datetime, timedelta
@@ -3957,13 +4222,25 @@ def get_today_goals(language: str) -> Dict:
         conn.row_factory = sqlite3.Row
         cursor = conn.cursor()
         
+        # Try week-specific goals first
         cursor.execute('''
             SELECT activity_type, target_count
             FROM weekly_goals
             WHERE language = ? AND day_of_week = ? AND week_start_date = ?
         ''', (language, today_name, week_start_date))
         
-        today_goals = {row['activity_type']: row['target_count'] for row in cursor.fetchall()}
+        rows = cursor.fetchall()
+        
+        # Fall back to 'default' perpetual template if no week-specific goals
+        if not rows:
+            cursor.execute('''
+                SELECT activity_type, target_count
+                FROM weekly_goals
+                WHERE language = ? AND day_of_week = ? AND week_start_date = 'default'
+            ''', (language, today_name))
+            rows = cursor.fetchall()
+        
+        today_goals = {row['activity_type']: row['target_count'] for row in rows}
         
         conn.close()
         return today_goals
@@ -3977,6 +4254,7 @@ def get_all_languages_today_goals() -> Dict:
     
     Returns a dict mapping language -> {activity_type -> target_count}
     Example: {'kannada': {'reading': 2}, 'hindi': {'listening': 1}}
+    Falls back to 'default' perpetual template when no week-specific goals exist.
     """
     try:
         from datetime import datetime, timedelta
@@ -3994,15 +4272,27 @@ def get_all_languages_today_goals() -> Dict:
         conn.row_factory = sqlite3.Row
         cursor = conn.cursor()
         
+        # Try week-specific goals first
         cursor.execute('''
             SELECT language, activity_type, target_count
             FROM weekly_goals
             WHERE day_of_week = ? AND week_start_date = ?
         ''', (today_name, week_start_date))
         
+        rows = cursor.fetchall()
+        
+        # If no week-specific goals found at all, fall back to 'default' template
+        if not rows:
+            cursor.execute('''
+                SELECT language, activity_type, target_count
+                FROM weekly_goals
+                WHERE day_of_week = ? AND week_start_date = 'default'
+            ''', (today_name,))
+            rows = cursor.fetchall()
+        
         # Organize by language -> activity -> count
         all_goals = {}
-        for row in cursor.fetchall():
+        for row in rows:
             lang = row['language']
             activity = row['activity_type']
             count = row['target_count']
@@ -4138,7 +4428,19 @@ def get_language_personalization(language: str) -> Dict:
         conn = sqlite3.connect(config.DB_PATH)
         conn.row_factory = sqlite3.Row
         cursor = conn.cursor()
-        
+
+        # Migrate: add new columns if they don't exist
+        try:
+            cursor.execute("ALTER TABLE language_personalization ADD COLUMN default_import_translate INTEGER DEFAULT 0")
+            conn.commit()
+        except Exception:
+            pass
+        try:
+            cursor.execute("ALTER TABLE language_personalization ADD COLUMN default_import_target_langs TEXT DEFAULT NULL")
+            conn.commit()
+        except Exception:
+            pass
+
         cursor.execute('''
             SELECT * FROM language_personalization 
             WHERE language = ?
@@ -4148,9 +4450,13 @@ def get_language_personalization(language: str) -> Dict:
         conn.close()
         
         if row:
+            import json as _json
+            raw_langs = row['default_import_target_langs'] if 'default_import_target_langs' in row.keys() else None
             return {
                 'language': row['language'],
                 'default_transliterate': bool(row['default_transliterate']),
+                'default_import_translate': bool(row['default_import_translate']) if 'default_import_translate' in row.keys() else False,
+                'default_import_target_langs': _json.loads(raw_langs) if raw_langs else [],
                 'created_at': row['created_at'],
                 'updated_at': row['updated_at'],
             }
@@ -4159,6 +4465,8 @@ def get_language_personalization(language: str) -> Dict:
             return {
                 'language': language,
                 'default_transliterate': True,  # Default to showing transliterations
+                'default_import_translate': False,
+                'default_import_target_langs': [],
                 'created_at': None,
                 'updated_at': None,
             }
@@ -4167,27 +4475,46 @@ def get_language_personalization(language: str) -> Dict:
         return {
             'language': language,
             'default_transliterate': True,
+            'default_import_translate': False,
+            'default_import_target_langs': [],
             'created_at': None,
             'updated_at': None,
         }
 
 
-def update_language_personalization(language: str, default_transliterate: bool) -> bool:
+def update_language_personalization(language: str, default_transliterate: bool,
+                                   default_import_translate: bool = None,
+                                   default_import_target_langs: list = None) -> bool:
     """Update personalization settings for a language
     
     Args:
         language: Language code
         default_transliterate: Whether to show transliterations by default
+        default_import_translate: Whether to translate on import by default
+        default_import_target_langs: List of language codes to translate to by default
     
     Returns:
         True if successful, False otherwise
     """
     try:
+        import json as _json
         from datetime import datetime
         
         conn = sqlite3.connect(config.DB_PATH)
         cursor = conn.cursor()
         
+        # Ensure new columns exist
+        try:
+            cursor.execute("ALTER TABLE language_personalization ADD COLUMN default_import_translate INTEGER DEFAULT 0")
+            conn.commit()
+        except Exception:
+            pass
+        try:
+            cursor.execute("ALTER TABLE language_personalization ADD COLUMN default_import_target_langs TEXT DEFAULT NULL")
+            conn.commit()
+        except Exception:
+            pass
+
         # Check if settings exist
         cursor.execute('''
             SELECT id FROM language_personalization 
@@ -4196,21 +4523,33 @@ def update_language_personalization(language: str, default_transliterate: bool) 
         
         existing = cursor.fetchone()
         now = datetime.now().isoformat()
+        langs_json = _json.dumps(default_import_target_langs) if default_import_target_langs is not None else None
         
         if existing:
-            # Update existing settings
-            cursor.execute('''
-                UPDATE language_personalization 
-                SET default_transliterate = ?, updated_at = ?
-                WHERE language = ?
-            ''', (1 if default_transliterate else 0, now, language))
+            if default_import_translate is not None and langs_json is not None:
+                cursor.execute('''
+                    UPDATE language_personalization 
+                    SET default_transliterate = ?, default_import_translate = ?,
+                        default_import_target_langs = ?, updated_at = ?
+                    WHERE language = ?
+                ''', (1 if default_transliterate else 0,
+                      1 if default_import_translate else 0,
+                      langs_json, now, language))
+            else:
+                cursor.execute('''
+                    UPDATE language_personalization 
+                    SET default_transliterate = ?, updated_at = ?
+                    WHERE language = ?
+                ''', (1 if default_transliterate else 0, now, language))
         else:
-            # Insert new settings
             cursor.execute('''
                 INSERT INTO language_personalization 
-                (language, default_transliterate, created_at, updated_at)
-                VALUES (?, ?, ?, ?)
-            ''', (language, 1 if default_transliterate else 0, now, now))
+                (language, default_transliterate, default_import_translate,
+                 default_import_target_langs, created_at, updated_at)
+                VALUES (?, ?, ?, ?, ?, ?)
+            ''', (language, 1 if default_transliterate else 0,
+                  1 if (default_import_translate or False) else 0,
+                  langs_json or '[]', now, now))
         
         conn.commit()
         conn.close()
@@ -4759,27 +5098,123 @@ def get_user_active_languages(user_id: int = 1) -> List[str]:
 
 
 def find_word_by_translation(word: str, language: str) -> Optional[Dict]:
-    """Find if a word already exists in the vocabulary"""
+    """Find if a word already exists in the vocabulary.
+    Handles multi-term entries like 'term1 / term2' by checking each individual term.
+    """
     try:
         conn = sqlite3.connect(config.DB_PATH)
         conn.row_factory = sqlite3.Row
         cursor = conn.cursor()
-        
-        cursor.execute('''
-            SELECT * FROM vocabulary
-            WHERE language = ? AND LOWER(translation) = LOWER(?)
-            LIMIT 1
-        ''', (language, word))
-        
-        row = cursor.fetchone()
+
+        # Build list of terms to check: the original word, plus any "/" separated parts
+        terms_to_check = set()
+        terms_to_check.add(word.strip())
+        for part in word.split('/'):
+            part = part.strip()
+            if part:
+                terms_to_check.add(part)
+
+        for term in terms_to_check:
+            # Check both exact match and as a part of a multi-term entry
+            cursor.execute('''
+                SELECT * FROM vocabulary
+                WHERE language = ?
+                  AND (
+                    LOWER(translation) = LOWER(?)
+                    OR LOWER(translation) LIKE LOWER(?)
+                    OR LOWER(translation) LIKE LOWER(?)
+                    OR LOWER(translation) LIKE LOWER(?)
+                  )
+                LIMIT 1
+            ''', (language, term,
+                  f'%/ {term}',
+                  f'{term} /%',
+                  f'%/ {term} /%'))
+
+            row = cursor.fetchone()
+            if row:
+                conn.close()
+                return dict(row)
+
         conn.close()
-        
-        if row:
-            return dict(row)
         return None
     except Exception as e:
         print(f"Error finding word: {e}")
         return None
+
+
+def find_synonym_by_english(english_word: str, language: str, exclude_word: str = '') -> Optional[Dict]:
+    """Find a vocab entry whose English meaning is the same or very close.
+    Used to detect synonyms during import: if the new word has the same English gloss
+    as an existing entry, it's a synonym candidate.
+    """
+    try:
+        if not english_word:
+            return None
+        conn = sqlite3.connect(config.DB_PATH)
+        conn.row_factory = sqlite3.Row
+        cursor = conn.cursor()
+        # Split multi-word English gloss and check each main token
+        tokens = [t.strip().lower() for t in english_word.replace(',', ' ').replace(';', ' ').split() if len(t.strip()) >= 3]
+        if not tokens:
+            conn.close()
+            return None
+        like_conditions = ' OR '.join(['LOWER(english_word) LIKE ?' for _ in tokens])
+        params = [f'%{t}%' for t in tokens] + [language]
+        query = f'''
+            SELECT * FROM vocabulary
+            WHERE ({like_conditions})
+              AND language = ?
+        '''
+        if exclude_word:
+            query += ' AND LOWER(translation) != LOWER(?)'
+            params.append(exclude_word.lower())
+        query += ' ORDER BY id ASC LIMIT 1'
+        cursor.execute(query, params)
+        row = cursor.fetchone()
+        conn.close()
+        return dict(row) if row else None
+    except Exception as e:
+        print(f"Error finding synonym: {e}")
+        return None
+
+
+def add_synonym_to_word(word_id: int, synonym_word: str, synonym_transliteration: str = '',
+                        synonym_english: str = '') -> bool:
+    """Append a synonym string to an existing vocabulary entry's translation field.
+    Format: 'original / synonym1 / synonym2'
+    """
+    try:
+        conn = sqlite3.connect(config.DB_PATH)
+        conn.row_factory = sqlite3.Row
+        cursor = conn.cursor()
+        cursor.execute('SELECT * FROM vocabulary WHERE id = ?', (word_id,))
+        row = cursor.fetchone()
+        if not row:
+            conn.close()
+            return False
+        existing_translation = row['translation']
+        # Only add if not already present
+        existing_parts = [p.strip().lower() for p in existing_translation.split('/')]
+        if synonym_word.strip().lower() not in existing_parts:
+            new_translation = existing_translation.strip() + ' / ' + synonym_word.strip()
+            # Also update transliteration if provided
+            existing_translit = row['transliteration'] or ''
+            new_translit = existing_translit
+            if synonym_transliteration and synonym_transliteration.strip():
+                translit_parts = [p.strip() for p in existing_translit.split('/')]
+                if synonym_transliteration.strip() not in translit_parts:
+                    new_translit = (existing_translit.strip() + ' / ' + synonym_transliteration.strip()).strip(' /')
+            cursor.execute(
+                'UPDATE vocabulary SET translation = ?, transliteration = ? WHERE id = ?',
+                (new_translation, new_translit, word_id)
+            )
+            conn.commit()
+        conn.close()
+        return True
+    except Exception as e:
+        print(f"Error adding synonym: {e}")
+        return False
 
 
 def insert_vocabulary_entry(
@@ -4790,7 +5225,8 @@ def insert_vocabulary_entry(
     word_class: str,
     level: Optional[str] = None,
     origin: str = 'user',
-    verb_transitivity: Optional[str] = None
+    verb_transitivity: Optional[str] = None,
+    deck_id: Optional[int] = None
 ) -> int:
     """Insert a new vocabulary entry and return its ID"""
     try:
@@ -4799,9 +5235,9 @@ def insert_vocabulary_entry(
         
         cursor.execute('''
             INSERT INTO vocabulary 
-            (language, english_word, translation, transliteration, word_class, level, origin, verb_transitivity)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-        ''', (language, english_word, translation, transliteration, word_class, level, origin, verb_transitivity))
+            (language, english_word, translation, transliteration, word_class, level, origin, verb_transitivity, deck_id)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ''', (language, english_word, translation, transliteration, word_class, level, origin, verb_transitivity, deck_id))
         
         word_id = cursor.lastrowid
         conn.commit()
@@ -4811,6 +5247,157 @@ def insert_vocabulary_entry(
     except Exception as e:
         print(f"Error inserting vocabulary entry: {e}")
         return 0
+
+
+# ============================================================================
+# Vocab Deck Operations
+# ============================================================================
+
+def create_vocab_deck(language: str, name: str) -> int:
+    """Create a new vocab deck and return its ID"""
+    try:
+        conn = sqlite3.connect(config.DB_PATH)
+        cursor = conn.cursor()
+        cursor.execute('''
+            INSERT INTO vocab_decks (name, language)
+            VALUES (?, ?)
+        ''', (name, language))
+        deck_id = cursor.lastrowid
+        conn.commit()
+        conn.close()
+        return deck_id
+    except Exception as e:
+        print(f"Error creating vocab deck: {e}")
+        return 0
+
+
+def save_import_to_csv(deck_id: int, deck_name: str, language: str, words: list) -> str:
+    """Save imported words (new + synonyms) to a CSV file for the deck.
+    
+    Returns the path to the saved CSV.
+    Each row: word, english, transliteration, word_class, level, status (new|synonym), synonym_of
+    """
+    import csv, os, re
+    try:
+        imports_dir = os.path.join(os.path.dirname(config.DB_PATH), 'imports')
+        os.makedirs(imports_dir, exist_ok=True)
+        safe_name = re.sub(r'[^\w\-]', '_', deck_name)[:40]
+        filename = f"deck_{deck_id}_{language}_{safe_name}.csv"
+        filepath = os.path.join(imports_dir, filename)
+        with open(filepath, 'w', newline='', encoding='utf-8') as f:
+            writer = csv.DictWriter(f, fieldnames=['word', 'english', 'transliteration',
+                                                    'word_class', 'level', 'status', 'synonym_of',
+                                                    'synonym_of_id', 'language'])
+            writer.writeheader()
+            for w in words:
+                writer.writerow({
+                    'word': w.get('word', ''),
+                    'english': w.get('english', ''),
+                    'transliteration': w.get('transliteration', ''),
+                    'word_class': w.get('word_class', ''),
+                    'level': w.get('level', ''),
+                    'status': w.get('status', 'new'),
+                    'synonym_of': w.get('synonym_of_word', ''),
+                    'synonym_of_id': w.get('synonym_of_id', ''),
+                    'language': language,
+                })
+        return filepath
+    except Exception as e:
+        print(f"Error saving import CSV: {e}")
+        return ''
+
+
+def rename_vocab_deck(deck_id: int, new_name: str) -> bool:
+    """Rename a vocab deck"""
+    try:
+        conn = sqlite3.connect(config.DB_PATH)
+        cursor = conn.cursor()
+        cursor.execute('''
+            UPDATE vocab_decks SET name = ? WHERE id = ?
+        ''', (new_name, deck_id))
+        conn.commit()
+        conn.close()
+        return True
+    except Exception as e:
+        print(f"Error renaming vocab deck: {e}")
+        return False
+
+
+def get_vocab_decks(language: str = None) -> list:
+    """Get all vocab decks with word counts, optionally filtered by language"""
+    try:
+        conn = sqlite3.connect(config.DB_PATH)
+        conn.row_factory = sqlite3.Row
+        cursor = conn.cursor()
+        if language:
+            cursor.execute('''
+                SELECT vd.*,
+                    COUNT(v.id) AS word_count
+                FROM vocab_decks vd
+                LEFT JOIN vocabulary v ON v.deck_id = vd.id AND v.language = vd.language
+                WHERE vd.language = ?
+                GROUP BY vd.id
+                ORDER BY vd.created_at DESC
+            ''', (language,))
+        else:
+            cursor.execute('''
+                SELECT vd.*,
+                    COUNT(v.id) AS word_count
+                FROM vocab_decks vd
+                LEFT JOIN vocabulary v ON v.deck_id = vd.id AND v.language = vd.language
+                GROUP BY vd.id
+                ORDER BY vd.created_at DESC
+            ''')
+        decks = [dict(row) for row in cursor.fetchall()]
+        conn.close()
+        return decks
+    except Exception as e:
+        print(f"Error getting vocab decks: {e}")
+        return []
+
+
+def get_words_for_deck(language: str, deck_id: int, limit: int = 200) -> List[Dict]:
+    """Get all words belonging to a specific vocab deck for flashcard study"""
+    try:
+        conn = sqlite3.connect(config.DB_PATH)
+        conn.row_factory = sqlite3.Row
+        cursor = conn.cursor()
+        cursor.execute('''
+            SELECT v.*,
+                   COALESCE(ws.mastery_level, 'new') AS mastery_level,
+                   ws.next_review_date,
+                   ws.review_count,
+                   ws.ease_factor,
+                   ws.interval_days,
+                   vd.name AS deck_name
+            FROM vocabulary v
+            LEFT JOIN word_states ws ON ws.vocabulary_id = v.id AND ws.user_id = 1
+            LEFT JOIN vocab_decks vd ON vd.id = v.deck_id
+            WHERE v.language = ? AND v.deck_id = ?
+            ORDER BY v.id
+            LIMIT ?
+        ''', (language, deck_id, limit))
+        words = [dict(row) for row in cursor.fetchall()]
+        conn.close()
+        return words
+    except Exception as e:
+        print(f"Error getting deck words: {e}")
+        return []
+
+
+def get_vocab_deck_name(deck_id: int) -> Optional[str]:
+    """Get the name of a vocab deck by ID"""
+    try:
+        conn = sqlite3.connect(config.DB_PATH)
+        conn.row_factory = sqlite3.Row
+        cursor = conn.cursor()
+        cursor.execute('SELECT name FROM vocab_decks WHERE id = ?', (deck_id,))
+        row = cursor.fetchone()
+        conn.close()
+        return row['name'] if row else None
+    except Exception as e:
+        print(f"Error getting vocab deck name: {e}")
+        return None
 
 
 # ============================================================================

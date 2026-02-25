@@ -20,14 +20,14 @@ import WeeklyOverviewSection from '../components/WeeklyOverviewSection';
 
 const API_BASE_URL = __DEV__ ? 'http://localhost:8080' : 'http://localhost:8080';
 
-const ACTIVITIES = ['reading', 'listening', 'writing', 'speaking', 'translation', 'conversation', 'flashcards'];
+const ACTIVITIES = ['reading', 'listening', 'writing', 'speaking', 'translation', 'flashcards'];
+const PRACTICE_ACTIVITIES = ['reading', 'listening', 'writing', 'speaking', 'translation'];
 const ACTIVITY_COLORS = {
   reading: { primary: '#4A90E2', light: '#E8F4FD' },
   listening: { primary: '#2B654A', light: '#E8F5EF' },
   writing: { primary: '#FF6B6B', light: '#FFE8E8' },
   speaking: { primary: '#FF9500', light: '#FFF4E6' },
   translation: { primary: '#8B5CF6', light: '#F3E8FF' },
-  conversation: { primary: '#9B59B6', light: '#F4E6FF' },
   flashcards: { primary: '#EC4899', light: '#FCE7F3' },
 };
 
@@ -384,7 +384,6 @@ const ContributionGraph = ({ data, viewType, language, navigation }) => {
                     writing: { primary: '#FF6B6B', light: '#FFE8E8' },
                     speaking: { primary: '#FF9500', light: '#FFF4E6' },
                     translation: { primary: '#8B5CF6', light: '#F3E8FF' },
-                    conversation: { primary: '#9B59B6', light: '#F4E6FF' },
                     flashcard: { primary: '#14B8A6', light: '#E0F7F4' },
                   };
                   const colors = activityColors[activityType] || { primary: '#666', light: '#F5F5F5' };
@@ -437,8 +436,7 @@ const ContributionGraph = ({ data, viewType, language, navigation }) => {
                             activityType === 'listening' ? 'headset' :
                             activityType === 'writing' ? 'create' : 
                             activityType === 'speaking' ? 'mic' : 
-                            activityType === 'translation' ? 'language' :
-                            activityType === 'conversation' ? 'chatbubbles' : 
+                            activityType === 'translation' ? 'language' : 
                             'albums'
                           } 
                           size={18} 
@@ -466,6 +464,7 @@ export default function ProfileScreen() {
   const navigation = useNavigation();
   const [profile, setProfile] = useState({});
   const [level, setLevel] = useState({ level: 'A1', progress: 0, total_mastered: 0 });
+  const [languageLevels, setLanguageLevels] = useState({}); // CEFR levels for all selected languages
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   // Global language for goals, stats, and SRS settings
@@ -531,8 +530,12 @@ export default function ProfileScreen() {
   const [langSettingsExpanded, setLangSettingsExpanded] = useState(false);
   const [langSettingsLanguage, setLangSettingsLanguage] = useState(profileLanguage);
   const [defaultTransliterate, setDefaultTransliterate] = useState(true);
+  const [defaultImportTranslate, setDefaultImportTranslate] = useState(false);
+  const [defaultImportTargetLangs, setDefaultImportTargetLangs] = useState([]);
   const [savingLangSettings, setSavingLangSettings] = useState(false);
   const [applyLangSettingsToAll, setApplyLangSettingsToAll] = useState(false);
+  const [practiceVisibleActivities, setPracticeVisibleActivities] = useState(PRACTICE_ACTIVITIES.slice());
+  const [practiceApplyToAll, setPracticeApplyToAll] = useState(false);
   
   // All languages SRS stats for language selector
   const [allLanguagesSrsStats, setAllLanguagesSrsStats] = useState({});
@@ -700,6 +703,8 @@ export default function ProfileScreen() {
   
   // New Weekly Goals and Overview state
   const [weeklyGoalsExpanded, setWeeklyGoalsExpanded] = useState(false);
+  const [placementExpanded, setPlacementExpanded] = useState(false);
+  const [placementResults, setPlacementResults] = useState({}); // code -> result
   const [weeklyOverviewExpanded, setWeeklyOverviewExpanded] = useState(false);
   const [weeklyOverviewKey, setWeeklyOverviewKey] = useState(0); // Key to force reload
   
@@ -709,6 +714,8 @@ export default function ProfileScreen() {
   // Language Personalization
   const [personalizationExpanded, setPersonalizationExpanded] = useState(false);
   const [selectedLanguages, setSelectedLanguages] = useState([]);
+  const [pendingLanguages, setPendingLanguages] = useState([]); // Unsaved changes in modal
+  const [languagesDirty, setLanguagesDirty] = useState(false);
   const [savingLanguages, setSavingLanguages] = useState(false);
   const [languageSelectionModalVisible, setLanguageSelectionModalVisible] = useState(false);
   // Default language preference
@@ -717,9 +724,12 @@ export default function ProfileScreen() {
 
   // Interests/Tags
   const [selectedInterests, setSelectedInterests] = useState([]);
+  const [pendingInterests, setPendingInterests] = useState([]); // Unsaved changes in modal
+  const [interestsDirty, setInterestsDirty] = useState(false); // Track if changes need saving
   const [customInterestInput, setCustomInterestInput] = useState('');
   const [interestsModalVisible, setInterestsModalVisible] = useState(false);
   const [savingInterests, setSavingInterests] = useState(false);
+  const [interestsNeedSave, setInterestsNeedSave] = useState(false); // For the inline X button
 
   // Predefined interests with icons
   const PREDEFINED_INTERESTS = [
@@ -767,6 +777,14 @@ export default function ProfileScreen() {
       loadLangSettings(profileLanguage);
     }
   }, []);
+
+  // Load CEFR levels whenever the selected languages list changes
+  useEffect(() => {
+    if (selectedLanguages.length > 0) {
+      loadAllLanguageLevels();
+      loadAllPlacementResults();
+    }
+  }, [selectedLanguages]);
 
   useEffect(() => {
     // Reload all data when global language changes
@@ -849,12 +867,12 @@ export default function ProfileScreen() {
     }
   };
 
-  const toggleLanguageSelection = async (langCode) => {
+  const toggleLanguageSelection = (langCode) => {
     // List of available languages
     const availableLanguageCodes = ['tamil', 'telugu', 'kannada', 'malayalam', 'hindi', 'urdu'];
     
     // Check if trying to select an unavailable language
-    if (!availableLanguageCodes.includes(langCode) && !selectedLanguages.includes(langCode)) {
+    if (!availableLanguageCodes.includes(langCode) && !pendingLanguages.includes(langCode)) {
       Alert.alert(
         'Coming Soon',
         'This language is not available yet, but will be in the future!',
@@ -863,37 +881,45 @@ export default function ProfileScreen() {
       return;
     }
     
-    const newSelection = selectedLanguages.includes(langCode)
-      ? selectedLanguages.filter(code => code !== langCode)
-      : [...selectedLanguages, langCode];
+    const newSelection = pendingLanguages.includes(langCode)
+      ? pendingLanguages.filter(code => code !== langCode)
+      : [...pendingLanguages, langCode];
     
-    // Capture the old selection now (before any async work) so we can revert on failure
-    const previousSelection = [...selectedLanguages];
+    setPendingLanguages(newSelection);
+    setLanguagesDirty(true);
+  };
 
-    // Update local state immediately for instant UI feedback
-    setSelectedLanguages(newSelection);
-    
-    // Save to backend and then reload context + learningLanguages
+  const openLanguagesModal = () => {
+    setPendingLanguages([...selectedLanguages]);
+    setLanguagesDirty(false);
+    setLanguageSelectionModalVisible(true);
+  };
+
+  const saveLanguagesFromModal = async () => {
+    const previousSelection = [...selectedLanguages];
+    setSelectedLanguages([...pendingLanguages]);
+
     try {
       setSavingLanguages(true);
       const res = await fetch(`${API_BASE_URL}/api/user-languages`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ languages: newSelection })
+        body: JSON.stringify({ languages: pendingLanguages })
       });
       if (!res.ok) throw new Error('Save failed');
 
-      // If the user deselected the currently active language, switch to another
-      const isRemovingCurrent = selectedLanguages.includes(langCode) && ctxLanguage === langCode;
-      if (isRemovingCurrent && newSelection.length > 0) {
-        setCtxLanguage(newSelection[0]);
-      } else if (newSelection.length === 0) {
-        setCtxLanguage(null);
+      // If the user removed the currently active language, switch to another
+      if (ctxLanguage && !pendingLanguages.includes(ctxLanguage)) {
+        if (pendingLanguages.length > 0) {
+          setCtxLanguage(pendingLanguages[0]);
+        } else {
+          setCtxLanguage(null);
+        }
       }
 
-      // If the deselected language was the default, clear / update default
-      if (selectedLanguages.includes(langCode) && defaultLanguage === langCode) {
-        const newDefault = newSelection.length > 0 ? newSelection[0] : null;
+      // If the removed language was the default, update default
+      if (defaultLanguage && !pendingLanguages.includes(defaultLanguage)) {
+        const newDefault = pendingLanguages.length > 0 ? pendingLanguages[0] : null;
         if (newDefault) {
           saveDefaultLanguage(newDefault);
         } else {
@@ -903,11 +929,11 @@ export default function ProfileScreen() {
 
       // Reload context (propagates to all screens via React context)
       await loadUserLanguages();
-      // Reload the Languages section icons/levels on this screen
       await loadLearningLanguages();
+      setLanguagesDirty(false);
+      setLanguageSelectionModalVisible(false);
     } catch (error) {
       console.error('Error saving language selection:', error);
-      // Revert to old selection on failure
       setSelectedLanguages(previousSelection);
       Alert.alert('Error', 'Failed to save language selection');
     } finally {
@@ -928,44 +954,86 @@ export default function ProfileScreen() {
     }
   };
 
-  const toggleInterestSelection = async (interest) => {
-    const newSelection = selectedInterests.includes(interest)
-      ? selectedInterests.filter(i => i !== interest)
-      : [...selectedInterests, interest];
+  const toggleInterestSelection = (interest) => {
+    const newSelection = pendingInterests.includes(interest)
+      ? pendingInterests.filter(i => i !== interest)
+      : [...pendingInterests, interest];
     
-    setSelectedInterests(newSelection);
-    await saveInterests(newSelection);
+    setPendingInterests(newSelection);
+    setInterestsDirty(true);
   };
 
-  const addCustomInterest = async () => {
+  const addCustomInterest = () => {
     const trimmedInterest = customInterestInput.trim();
     if (!trimmedInterest) return;
     
-    if (selectedInterests.includes(trimmedInterest)) {
+    if (pendingInterests.includes(trimmedInterest)) {
       Alert.alert('Already Added', 'This interest is already in your list.');
       return;
     }
     
-    const newSelection = [...selectedInterests, trimmedInterest];
-    setSelectedInterests(newSelection);
+    const newSelection = [...pendingInterests, trimmedInterest];
+    setPendingInterests(newSelection);
     setCustomInterestInput('');
-    await saveInterests(newSelection);
+    setInterestsDirty(true);
   };
 
-  const removeInterest = async (interest) => {
+  const removeInterest = (interest) => {
     const newSelection = selectedInterests.filter(i => i !== interest);
     setSelectedInterests(newSelection);
-    await saveInterests(newSelection);
+    setInterestsNeedSave(true);
   };
 
-  const saveInterests = async (interests) => {
+  const saveInterestsInline = async () => {
     try {
       setSavingInterests(true);
       await fetch(`${API_BASE_URL}/api/user-interests`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ interests })
+        body: JSON.stringify({ interests: selectedInterests })
       });
+      setInterestsNeedSave(false);
+    } catch (error) {
+      console.error('Error saving interests:', error);
+      Alert.alert('Error', 'Failed to save interests');
+    } finally {
+      setSavingInterests(false);
+    }
+  };
+
+  const selectAllInterests = () => {
+    const allNames = PREDEFINED_INTERESTS.map(i => i.name);
+    // Also keep any custom interests already in pending
+    const customOnes = pendingInterests.filter(i => isCustomInterest(i));
+    const merged = [...new Set([...allNames, ...customOnes])];
+    setPendingInterests(merged);
+    setInterestsDirty(true);
+  };
+
+  const deselectAllInterests = () => {
+    // Keep only custom interests
+    const customOnes = pendingInterests.filter(i => isCustomInterest(i));
+    setPendingInterests(customOnes);
+    setInterestsDirty(true);
+  };
+
+  const openInterestsModal = () => {
+    setPendingInterests([...selectedInterests]);
+    setInterestsDirty(false);
+    setInterestsModalVisible(true);
+  };
+
+  const saveInterestsFromModal = async () => {
+    try {
+      setSavingInterests(true);
+      await fetch(`${API_BASE_URL}/api/user-interests`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ interests: pendingInterests })
+      });
+      setSelectedInterests([...pendingInterests]);
+      setInterestsDirty(false);
+      setInterestsModalVisible(false);
     } catch (error) {
       console.error('Error saving interests:', error);
       Alert.alert('Error', 'Failed to save interests');
@@ -1103,26 +1171,65 @@ export default function ProfileScreen() {
       if (response.ok) {
         const data = await response.json();
         setDefaultTransliterate(data.default_transliterate !== false); // Default to true
+        setDefaultImportTranslate(data.default_import_translate === true);
+        setDefaultImportTargetLangs(Array.isArray(data.default_import_target_langs) ? data.default_import_target_langs : []);
       } else {
         setDefaultTransliterate(true);
+        setDefaultImportTranslate(false);
+        setDefaultImportTargetLangs([]);
       }
       setLangSettingsLanguage(language);
+      // Load practice visible activities for this language
+      const prefsRes = await fetch(`${API_BASE_URL}/api/practice-visible-activities?language=${encodeURIComponent(language)}`);
+      if (prefsRes.ok) {
+        const prefs = await prefsRes.json();
+        setPracticeVisibleActivities(Array.isArray(prefs.visible_activities) ? prefs.visible_activities : PRACTICE_ACTIVITIES.slice());
+        setPracticeApplyToAll(!!prefs.apply_to_all);
+      }
     } catch (error) {
       console.error('Error loading language settings:', error);
       setDefaultTransliterate(true);
+      setDefaultImportTranslate(false);
+      setDefaultImportTargetLangs([]);
+    }
+  };
+
+  const savePracticeVisibleActivities = async (visible, applyAll) => {
+    try {
+      const res = await fetch(`${API_BASE_URL}/api/practice-visible-activities`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          language: applyAll ? undefined : langSettingsLanguage,
+          visible_activities: visible,
+          apply_to_all: applyAll,
+        }),
+      });
+      if (res.ok) {
+        const data = await res.json();
+        setPracticeVisibleActivities(data.visible_activities || visible);
+        setPracticeApplyToAll(!!data.apply_to_all);
+      }
+    } catch (e) {
+      console.error('Error saving practice visible activities:', e);
     }
   };
 
   const saveLangSettings = async () => {
     setSavingLangSettings(true);
     try {
+      const body = {
+        default_transliterate: defaultTransliterate,
+        default_import_translate: defaultImportTranslate,
+        default_import_target_langs: defaultImportTargetLangs,
+      };
       if (applyLangSettingsToAll) {
         // Apply to all languages
         const promises = availableLanguages.map(lang =>
           fetch(`${API_BASE_URL}/api/language-personalization/${lang.code}`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ default_transliterate: defaultTransliterate }),
+            body: JSON.stringify(body),
           })
         );
         await Promise.all(promises);
@@ -1132,7 +1239,7 @@ export default function ProfileScreen() {
         const response = await fetch(`${API_BASE_URL}/api/language-personalization/${langSettingsLanguage}`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ default_transliterate: defaultTransliterate }),
+          body: JSON.stringify(body),
         });
 
         if (response.ok) {
@@ -1178,6 +1285,51 @@ export default function ProfileScreen() {
       setAllLanguagesSrsStats(statsMap);
     } catch (error) {
       console.error('Error loading all languages SRS stats:', error);
+    }
+  };
+
+  // Load CEFR levels for all selected languages
+  const loadAllLanguageLevels = async () => {
+    try {
+      const promises = selectedLanguages.map(async (code) => {
+        try {
+          const res = await fetch(`${API_BASE_URL}/api/dashboard/${code}`);
+          if (res.ok) {
+            const data = await res.json();
+            return { code, level: data.level?.level || 'A0' };
+          }
+        } catch (e) {
+          // ignore per-language errors
+        }
+        return { code, level: 'A0' };
+      });
+      const results = await Promise.all(promises);
+      const map = {};
+      results.forEach(r => { map[r.code] = r.level; });
+      setLanguageLevels(map);
+    } catch (e) {
+      console.error('Error loading language levels:', e);
+    }
+  };
+
+  const loadAllPlacementResults = async () => {
+    try {
+      const promises = selectedLanguages.map(async (code) => {
+        try {
+          const res = await fetch(`${API_BASE_URL}/api/placement-test/latest/${code}`);
+          if (res.ok) {
+            const data = await res.json();
+            return { code, result: data.result || null };
+          }
+        } catch (_) {}
+        return { code, result: null };
+      });
+      const arr = await Promise.all(promises);
+      const map = {};
+      arr.forEach(({ code, result }) => { if (result) map[code] = result; });
+      setPlacementResults(map);
+    } catch (e) {
+      console.error('Error loading placement results:', e);
     }
   };
 
@@ -1526,6 +1678,7 @@ export default function ProfileScreen() {
                             <Text style={styles.languageIconCode}>{lang.langCode?.toUpperCase() || lang.countryCode}</Text>
                           )}
                         </View>
+                        <Text style={styles.languageIconLangCode}>{(lang.langCode || lang.countryCode || '').toUpperCase()}</Text>
                         <View style={[styles.levelBadgeSmall, { backgroundColor: LEVEL_COLORS[item.level]?.bg || '#6C757D' }]}>
                           <Text style={styles.levelBadgeSmallText}>{item.level}</Text>
                         </View>
@@ -1596,7 +1749,7 @@ export default function ProfileScreen() {
                         isDefault && { color: '#4A90E2', fontWeight: '600' },
                       ]}>{lang.name}</Text>
                       {isDefault && (
-                        <Ionicons name="star" size={16} color="#F59E0B" style={{ marginLeft: 2 }} />
+                        <Ionicons name="star" size={16} color="#F59E0B" style={{ marginLeft: 4 }} />
                       )}
                     </TouchableOpacity>
                   );
@@ -1607,7 +1760,7 @@ export default function ProfileScreen() {
             {/* Button to open language selection modal */}
             <TouchableOpacity
               style={styles.selectLanguagesButton}
-              onPress={() => setLanguageSelectionModalVisible(true)}
+              onPress={openLanguagesModal}
               activeOpacity={0.7}
             >
               <Ionicons name="add-circle-outline" size={20} color="#4A90E2" />
@@ -1668,10 +1821,29 @@ export default function ProfileScreen() {
               )}
             </View>
 
+            {/* Save button when interests removed inline */}
+            {interestsNeedSave && (
+              <TouchableOpacity
+                style={styles.saveChangesButton}
+                onPress={saveInterestsInline}
+                disabled={savingInterests}
+                activeOpacity={0.7}
+              >
+                {savingInterests ? (
+                  <ActivityIndicator size="small" color="#FFFFFF" />
+                ) : (
+                  <>
+                    <Ionicons name="checkmark-circle" size={18} color="#FFFFFF" />
+                    <Text style={styles.saveChangesButtonText}>Save Changes</Text>
+                  </>
+                )}
+              </TouchableOpacity>
+            )}
+
             {/* Button to open interests modal */}
             <TouchableOpacity
               style={styles.selectLanguagesButton}
-              onPress={() => setInterestsModalVisible(true)}
+              onPress={openInterestsModal}
               activeOpacity={0.7}
             >
               <Ionicons name="pricetag-outline" size={20} color="#4A90E2" />
@@ -1737,11 +1909,33 @@ export default function ProfileScreen() {
                 </View>
               </View>
 
-              {/* Predefined Interests */}
-              <Text style={styles.predefinedInterestsLabel}>Popular Interests</Text>
+              {/* Predefined Interests Header with Select All */}
+              <View style={styles.interestsHeaderRow}>
+                <Text style={styles.predefinedInterestsLabel}>Popular Interests</Text>
+                <TouchableOpacity
+                  onPress={() => {
+                    const allPredefined = PREDEFINED_INTERESTS.map(i => i.name);
+                    const allSelected = allPredefined.every(n => pendingInterests.includes(n));
+                    if (allSelected) {
+                      deselectAllInterests();
+                    } else {
+                      selectAllInterests();
+                    }
+                  }}
+                  style={styles.selectAllButton}
+                  activeOpacity={0.7}
+                >
+                  <Ionicons
+                    name={PREDEFINED_INTERESTS.every(i => pendingInterests.includes(i.name)) ? 'checkbox' : 'square-outline'}
+                    size={18}
+                    color="#4A90E2"
+                  />
+                  <Text style={styles.selectAllText}>Select All</Text>
+                </TouchableOpacity>
+              </View>
               <View style={styles.interestsGrid}>
                 {PREDEFINED_INTERESTS.map((interestItem) => {
-                  const isSelected = selectedInterests.includes(interestItem.name);
+                  const isSelected = pendingInterests.includes(interestItem.name);
                   return (
                     <TouchableOpacity
                       key={interestItem.name}
@@ -1773,11 +1967,11 @@ export default function ProfileScreen() {
               </View>
 
               {/* Custom Interests Section */}
-              {selectedInterests.filter(interest => isCustomInterest(interest)).length > 0 && (
+              {pendingInterests.filter(interest => isCustomInterest(interest)).length > 0 && (
                 <>
                   <Text style={styles.predefinedInterestsLabel}>Your Custom Interests</Text>
                   <View style={styles.interestsGrid}>
-                    {selectedInterests.filter(interest => isCustomInterest(interest)).map((customInterest) => (
+                    {pendingInterests.filter(interest => isCustomInterest(interest)).map((customInterest) => (
                       <TouchableOpacity
                         key={customInterest}
                         style={[styles.interestGridItem, styles.interestGridItemSelected, styles.interestGridItemCustom]}
@@ -1801,12 +1995,24 @@ export default function ProfileScreen() {
               )}
             </ScrollView>
 
-            {savingInterests && (
-              <View style={styles.savingIndicator}>
-                <ActivityIndicator size="small" color="#4A90E2" />
-                <Text style={styles.savingText}>Saving...</Text>
-              </View>
-            )}
+            {/* Save button at bottom of modal */}
+            <View style={styles.modalSaveContainer}>
+              <TouchableOpacity
+                style={[styles.modalSaveButton, !interestsDirty && styles.modalSaveButtonDisabled]}
+                onPress={saveInterestsFromModal}
+                disabled={!interestsDirty || savingInterests}
+                activeOpacity={0.7}
+              >
+                {savingInterests ? (
+                  <ActivityIndicator size="small" color="#FFFFFF" />
+                ) : (
+                  <>
+                    <Ionicons name="checkmark-circle" size={20} color="#FFFFFF" />
+                    <Text style={styles.modalSaveButtonText}>Save Changes</Text>
+                  </>
+                )}
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
       </Modal>
@@ -1848,7 +2054,7 @@ export default function ProfileScreen() {
                     <Text style={styles.familyHeader}>{family}</Text>
                     <View style={styles.languageGrid}>
                       {languages.map((lang) => {
-                        const isSelected = selectedLanguages.includes(lang.code);
+                        const isSelected = pendingLanguages.includes(lang.code);
                         const isRTL = ['persian', 'arabic', 'urdu'].includes(lang.code);
                         const isAvailable = availableLanguageCodes.includes(lang.code);
                         
@@ -1899,12 +2105,24 @@ export default function ProfileScreen() {
               })}
             </ScrollView>
 
-            {savingLanguages && (
-              <View style={styles.savingIndicator}>
-                <ActivityIndicator size="small" color="#4A90E2" />
-                <Text style={styles.savingText}>Saving...</Text>
-              </View>
-            )}
+            {/* Save button at bottom of modal */}
+            <View style={styles.modalSaveContainer}>
+              <TouchableOpacity
+                style={[styles.modalSaveButton, !languagesDirty && styles.modalSaveButtonDisabled]}
+                onPress={saveLanguagesFromModal}
+                disabled={!languagesDirty || savingLanguages}
+                activeOpacity={0.7}
+              >
+                {savingLanguages ? (
+                  <ActivityIndicator size="small" color="#FFFFFF" />
+                ) : (
+                  <>
+                    <Ionicons name="checkmark-circle" size={20} color="#FFFFFF" />
+                    <Text style={styles.modalSaveButtonText}>Save Changes</Text>
+                  </>
+                )}
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
       </Modal>
@@ -2631,6 +2849,64 @@ export default function ProfileScreen() {
               Configure per-language settings. These preferences will apply to all activities for {LANGUAGES.find(l => l.code === langSettingsLanguage)?.name}.
             </Text>
 
+            {/* Practice settings subheader and activity visibility */}
+            <View style={styles.srsSection}>
+              <Text style={styles.srsSectionTitle}>Practice settings</Text>
+              <Text style={styles.srsSectionSubtitle}>
+                Choose which activities appear on the Practice screen for this language
+              </Text>
+              <View style={styles.practiceVisibilityGrid}>
+                {PRACTICE_ACTIVITIES.map((activity) => {
+                  const colors = ACTIVITY_COLORS[activity];
+                  const isVisible = practiceVisibleActivities.includes(activity);
+                  return (
+                    <TouchableOpacity
+                      key={activity}
+                      style={[
+                        styles.practiceVisibilityItem,
+                        { borderColor: colors.primary, backgroundColor: isVisible ? colors.light : '#F5F5F5' },
+                      ]}
+                      onPress={() => {
+                        const next = isVisible
+                          ? practiceVisibleActivities.filter((x) => x !== activity)
+                          : [...practiceVisibleActivities, activity];
+                        setPracticeVisibleActivities(next);
+                        savePracticeVisibleActivities(next, practiceApplyToAll);
+                      }}
+                    >
+                      <View style={[styles.practiceVisibilityIcon, { backgroundColor: isVisible ? colors.primary : '#CCC' }]}>
+                        <Ionicons
+                          name={activity === 'reading' ? 'book' : activity === 'listening' ? 'headset' : activity === 'writing' ? 'create' : activity === 'speaking' ? 'mic' : activity === 'translation' ? 'language' : 'chatbubbles'}
+                          size={20}
+                          color="#FFF"
+                        />
+                      </View>
+                      <Text style={styles.practiceVisibilityLabel}>{activity.charAt(0).toUpperCase() + activity.slice(1)}</Text>
+                      {isVisible && <Ionicons name="checkmark-circle" size={18} color={colors.primary} />}
+                    </TouchableOpacity>
+                  );
+                })}
+              </View>
+              <TouchableOpacity
+                style={[styles.applyToAllContainer, { marginTop: 8 }]}
+                onPress={() => {
+                  const next = !practiceApplyToAll;
+                  setPracticeApplyToAll(next);
+                  savePracticeVisibleActivities(practiceVisibleActivities, next);
+                }}
+              >
+                <View style={styles.applyToAllLeft}>
+                  <Ionicons name={practiceApplyToAll ? 'checkmark-circle' : 'ellipse-outline'} size={24} color={practiceApplyToAll ? '#4A90E2' : '#999'} />
+                  <View style={styles.applyToAllTextContainer}>
+                    <Text style={styles.applyToAllText}>Apply to all languages</Text>
+                    <Text style={styles.applyToAllSubtext}>
+                      Use these activity visibility settings for every language
+                    </Text>
+                  </View>
+                </View>
+              </TouchableOpacity>
+            </View>
+
             {/* Default Transliteration Setting */}
             <View style={styles.srsSection}>
               <Text style={styles.srsSectionTitle}>Default Transliteration</Text>
@@ -2662,6 +2938,92 @@ export default function ProfileScreen() {
                 </View>
               </TouchableOpacity>
             </View>
+
+            {/* Default Import Translation Settings */}
+            {(() => {
+              const otherLangs = LANGUAGES.filter(
+                l => availableLanguages.some(al => al.code === l.code) && l.code !== langSettingsLanguage
+              );
+              if (otherLangs.length === 0) return null;
+              return (
+                <View style={styles.srsSection}>
+                  <Text style={styles.srsSectionTitle}>Default Import Translations</Text>
+                  <Text style={styles.srsSectionSubtitle}>
+                    When importing text, automatically translate to other languages
+                  </Text>
+
+                  {/* Toggle: translate on import */}
+                  <TouchableOpacity
+                    style={styles.applyToAllContainer}
+                    onPress={() => {
+                      const next = !defaultImportTranslate;
+                      setDefaultImportTranslate(next);
+                      if (!next) setDefaultImportTargetLangs([]);
+                    }}
+                    activeOpacity={0.7}
+                  >
+                    <View style={styles.applyToAllLeft}>
+                      <Ionicons
+                        name={defaultImportTranslate ? "checkmark-circle" : "ellipse-outline"}
+                        size={24}
+                        color={defaultImportTranslate ? "#4A90E2" : "#999"}
+                      />
+                      <View style={styles.applyToAllTextContainer}>
+                        <Text style={styles.applyToAllText}>Translate when importing</Text>
+                        <Text style={styles.applyToAllSubtext}>
+                          Automatically cross-translate imported words to other languages
+                        </Text>
+                      </View>
+                    </View>
+                  </TouchableOpacity>
+
+                  {/* Language picker (only visible when translate is on) */}
+                  {defaultImportTranslate && (
+                    <View style={{ marginTop: 8, paddingLeft: 4 }}>
+                      <Text style={[styles.applyToAllSubtext, { marginBottom: 8, color: '#555' }]}>
+                        Translate to:
+                      </Text>
+                      {otherLangs.map(lang => {
+                        const isSel = defaultImportTargetLangs.includes(lang.code);
+                        return (
+                          <TouchableOpacity
+                            key={lang.code}
+                            style={[
+                              styles.applyToAllContainer,
+                              { marginBottom: 4, backgroundColor: isSel ? '#EFF6FF' : '#F8F9FA', borderColor: isSel ? '#4A90E2' : '#E0E0E0', borderWidth: 1, borderRadius: 10 }
+                            ]}
+                            onPress={() => {
+                              setDefaultImportTargetLangs(prev =>
+                                prev.includes(lang.code)
+                                  ? prev.filter(c => c !== lang.code)
+                                  : [...prev, lang.code]
+                              );
+                            }}
+                            activeOpacity={0.7}
+                          >
+                            <View style={styles.applyToAllLeft}>
+                              <View style={[{ width: 30, height: 30, borderRadius: 8, alignItems: 'center', justifyContent: 'center', backgroundColor: lang.color || '#4A90E2', marginRight: 2 }]}>
+                                {lang.nativeChar
+                                  ? <Text style={[{ fontSize: 14, color: '#FFF', fontWeight: '500' }, lang.code === 'urdu' && { fontFamily: 'Noto Nastaliq Urdu' }]}>{lang.nativeChar}</Text>
+                                  : <Text style={{ fontSize: 10, fontWeight: 'bold', color: '#FFF' }}>{lang.langCode?.toUpperCase()}</Text>}
+                              </View>
+                              <View style={styles.applyToAllTextContainer}>
+                                <Text style={styles.applyToAllText}>{lang.name}</Text>
+                              </View>
+                              <Ionicons
+                                name={isSel ? "checkmark-circle" : "ellipse-outline"}
+                                size={22}
+                                color={isSel ? "#4A90E2" : "#CCC"}
+                              />
+                            </View>
+                          </TouchableOpacity>
+                        );
+                      })}
+                    </View>
+                  )}
+                </View>
+              );
+            })()}
 
             {/* Apply to All Languages Toggle */}
             <TouchableOpacity
@@ -3565,8 +3927,8 @@ const styles = StyleSheet.create({
     marginBottom: 28,
   },
   srsSectionTitle: {
-    fontSize: 17,
-    fontWeight: '700',
+    fontSize: 20,
+    fontWeight: 'bold',
     color: '#1A1A1A',
     marginBottom: 4,
   },
@@ -3574,6 +3936,32 @@ const styles = StyleSheet.create({
     fontSize: 13,
     color: '#666',
     marginBottom: 16,
+  },
+  practiceVisibilityGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 10,
+  },
+  practiceVisibilityItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 8,
+    paddingHorizontal: 10,
+    borderRadius: 10,
+    borderWidth: 2,
+    gap: 6,
+  },
+  practiceVisibilityIcon: {
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  practiceVisibilityLabel: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#1A1A1A',
   },
   srsOptionsGrid: {
     flexDirection: 'row',
@@ -4314,6 +4702,14 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     letterSpacing: 0.5,
   },
+  languageIconLangCode: {
+    fontSize: 10,
+    fontWeight: '700',
+    color: '#555',
+    letterSpacing: 0.5,
+    textAlign: 'center',
+    marginTop: 2,
+  },
   languageChip: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -4628,6 +5024,102 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     color: '#1A1A1A',
   },
+  languagePreviewBadges: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+  },
+  langCodeBadge: {
+    backgroundColor: '#E5E7EB',
+    borderRadius: 6,
+    paddingHorizontal: 6,
+    paddingVertical: 2,
+  },
+  langCodeBadgeText: {
+    fontSize: 10,
+    fontWeight: '700',
+    color: '#374151',
+    letterSpacing: 0.5,
+  },
+  cefrBadge: {
+    borderRadius: 6,
+    paddingHorizontal: 6,
+    paddingVertical: 2,
+  },
+  cefrBadgeText: {
+    fontSize: 10,
+    fontWeight: '700',
+    color: '#FFFFFF',
+  },
+  placementTestIconBtn: {
+    width: 24,
+    height: 24,
+    borderRadius: 6,
+    backgroundColor: '#F3F4F6',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginLeft: 2,
+  },
+  saveChangesButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#4A90E2',
+    borderRadius: 12,
+    paddingVertical: 10,
+    paddingHorizontal: 16,
+    gap: 6,
+    marginTop: 8,
+    marginBottom: 4,
+  },
+  saveChangesButtonText: {
+    color: '#FFFFFF',
+    fontSize: 14,
+    fontWeight: '600',
+  },
+  interestsHeaderRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 8,
+    paddingHorizontal: 4,
+  },
+  selectAllButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+    paddingVertical: 4,
+    paddingHorizontal: 8,
+  },
+  selectAllText: {
+    fontSize: 13,
+    color: '#4A90E2',
+    fontWeight: '500',
+  },
+  modalSaveContainer: {
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    borderTopWidth: 1,
+    borderTopColor: '#E5E7EB',
+    backgroundColor: '#FFFFFF',
+  },
+  modalSaveButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#4A90E2',
+    borderRadius: 12,
+    paddingVertical: 14,
+    gap: 8,
+  },
+  modalSaveButtonDisabled: {
+    backgroundColor: '#B0C4DE',
+  },
+  modalSaveButtonText: {
+    color: '#FFFFFF',
+    fontSize: 16,
+    fontWeight: '600',
+  },
   defaultLanguageRow: {
     flexDirection: 'row',
     flexWrap: 'wrap',
@@ -4916,7 +5408,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: '600',
     color: '#1A1A1A',
-    marginBottom: 16,
+    marginBottom: 8,
   },
   interestsGrid: {
     flexDirection: 'row',
@@ -4975,6 +5467,97 @@ const styles = StyleSheet.create({
     fontSize: 13,
     fontWeight: '700',
     color: '#FFFFFF',
+  },
+  // Placement Tests Section
+  sectionCard: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 16,
+    marginHorizontal: 16,
+    marginBottom: 16,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.06,
+    shadowRadius: 8,
+    elevation: 2,
+    overflow: 'hidden',
+  },
+  sectionHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 16,
+    paddingVertical: 14,
+  },
+  sectionHeaderLeft: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
+  },
+  sectionTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#1A1A1A',
+  },
+  sectionContent: {
+    paddingHorizontal: 16,
+    paddingBottom: 16,
+    borderTopWidth: 1,
+    borderTopColor: '#F3F4F6',
+  },
+  placementEmptyText: {
+    fontSize: 13,
+    color: '#9CA3AF',
+    textAlign: 'center',
+    paddingVertical: 16,
+    lineHeight: 20,
+  },
+  placementLangRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#F3F4F6',
+  },
+  placementLangIcon: {
+    width: 38,
+    height: 38,
+    borderRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 12,
+  },
+  placementLangIconText: {
+    fontSize: 16,
+    color: '#FFF',
+    fontWeight: '700',
+  },
+  placementLangInfo: {
+    flex: 1,
+  },
+  placementLangName: {
+    fontSize: 15,
+    fontWeight: '600',
+    color: '#1F2937',
+    marginBottom: 2,
+  },
+  placementLangLevel: {
+    fontSize: 13,
+    fontWeight: '700',
+  },
+  placementLangNoResult: {
+    fontSize: 12,
+    color: '#9CA3AF',
+  },
+  placementTakeBtn: {
+    borderWidth: 1.5,
+    borderRadius: 8,
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    marginLeft: 8,
+  },
+  placementTakeBtnText: {
+    fontSize: 13,
+    fontWeight: '600',
   },
 });
 

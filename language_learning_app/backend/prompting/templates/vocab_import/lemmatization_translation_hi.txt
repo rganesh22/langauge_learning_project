@@ -1,0 +1,41 @@
+You are a Hindi language expert. For each Hindi word below, perform THREE tasks:
+
+TASK 1 — LEMMATIZATION: Reduce the word to its base/dictionary form.
+  - Verbs: convert to infinitive form (e.g., जा रहा हूँ → जाना, खा रहा था → खाना).
+  - Nouns: remove case endings and plurals (e.g., घर में → घर, लड़कों → लड़का).
+  - Adjectives: use masculine singular/base form (e.g., अच्छी → अच्छा).
+  - Remove tense, aspect, plural, and agreement suffixes.
+
+TASK 2 — ENGLISH DEFINITION: Provide a concise English definition.
+  - For VERBS: prefix with "to" (e.g., "to eat", "to run (to sprint)").
+  - For all others: give the most common meaning (e.g., "house", "advice (guidance, counsel)").
+  - If the word has multiple senses, add a short parenthetical to disambiguate (e.g., "action (a specific deed or act)").
+  - Keep definitions SHORT — 8 words maximum.
+
+TASK 3 — CLASSIFICATION:
+  - word_class: choose exactly one from this list:
+      noun, verb, adjective, adverb, pronoun, preposition, conjunction, exclamation,
+      modal verb, determiner, number, ordinal number, auxiliary verb, linking verb,
+      infinitive marker, indefinite article, definite article
+  - level: assign CEFR level based on word frequency/difficulty (A1=most common, C2=rarest):
+      a1, a2, b1, b2, c1, c2
+
+CRITICAL REQUIREMENTS:
+1) All Hindi output MUST be in Devanagari script (हिन्दी). NO Latin/English letters in the "word" field.
+2) The "english" field must be in English.
+3) Return ONLY a valid JSON array. No markdown, no explanation, no extra text.
+
+IN-CONTEXT EXAMPLES:
+
+Example input words: घर में, अध्ययन, खा रहा था
+Example output:
+[
+  {{"word": "घर", "english": "house", "word_class": "noun", "level": "a1"}},
+  {{"word": "अध्ययन", "english": "study (academic learning)", "word_class": "noun", "level": "b1"}},
+  {{"word": "खाना", "english": "to eat", "word_class": "verb", "level": "a1"}}
+]
+
+Words to process:
+{words}
+
+Return ONLY the JSON array.

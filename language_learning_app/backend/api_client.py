@@ -25,7 +25,7 @@ except ImportError:
     print("Warning: google.genai not available, falling back to google.cloud.texttospeech")
 from google.cloud import texttospeech
 from . import config
-from .prompting import render_template
+from .prompting import render_template, PLACEMENT_TEST_GENERATE_PROMPT, PLACEMENT_TEST_ANALYZE_PROMPT
 
 # Initialize Gemini API
 if config.GEMINI_API_KEY:
@@ -190,7 +190,7 @@ def calculate_token_costs(token_info: dict, model_name: str = None) -> dict:
     
     return token_info_with_costs
 
-def generate_text_with_gemini(prompt: str, model_name: str = None) -> tuple:
+def generate_text_with_gemini(prompt: str, model_name: str = None, max_tokens: int = 8192) -> tuple:
     """Generate text using Gemini API
     
     Returns:
@@ -232,7 +232,7 @@ def generate_text_with_gemini(prompt: str, model_name: str = None) -> tuple:
                     "temperature": 0.7,
                     "top_p": 0.95,
                     "top_k": 40,
-                    "max_output_tokens": 8192,
+                    "max_output_tokens": max_tokens,
                 }
             )
         
@@ -840,6 +840,45 @@ async def generate_all_tts_parallel(paragraphs: list, language: str = 'kn-IN', v
     return output
 
 
+async def generate_all_tts_sequential_with_retry(
+    paragraphs: list,
+    language: str = 'kn-IN',
+    voice_for_line=None,
+    style_instruction: str = None,
+    progress_callback=None,
+    delay_between_paragraphs: float = 1.5,
+    retry_delay: float = 2.0,
+) -> list:
+    """Generate TTS for each paragraph sequentially with retry on failure. More reliable than parallel for listening."""
+    default_voice = list(GEMINI_TTS_VOICES)[0] if GEMINI_TTS_VOICES else 'Aoede'
+    get_voice = voice_for_line if callable(voice_for_line) else (lambda i: (voice_for_line or default_voice))
+    output = []
+    for idx, para in enumerate(paragraphs):
+        if progress_callback:
+            progress_callback(idx, 'in_progress', None)
+        voice_name = get_voice(idx)
+        for attempt in range(2):
+            try:
+                result = await generate_tts_async(para, language, voice_name, style_instruction, idx)
+                _, audio_data, voice_used, cost_info = result
+                if audio_data and audio_data.get('format') != 'text_only':
+                    if progress_callback:
+                        progress_callback(idx, 'complete', audio_data)
+                    output.append((audio_data, voice_used, cost_info))
+                    break
+            except Exception as e:
+                print(f"[TTS Sequential] Paragraph {idx} attempt {attempt + 1} failed: {e}")
+            if attempt == 0:
+                await asyncio.sleep(retry_delay)
+        else:
+            if progress_callback:
+                progress_callback(idx, 'error', 'TTS failed after retry')
+            output.append((None, None, None))
+        if idx < len(paragraphs) - 1:
+            await asyncio.sleep(delay_between_paragraphs)
+    return output
+
+
 def transcribe_audio(audio_data: bytes, language_code: str = 'kn-IN', audio_format: str = None) -> str:
     """Transcribe audio using Google Cloud Speech-to-Text
     
@@ -933,6 +972,39 @@ def transcribe_audio(audio_data: bytes, language_code: str = 'kn-IN', audio_form
 # Activity Generation Functions
 # ============================================================================
 
+def _escape_literal_newlines_in_json_strings(text: str) -> str:
+    """Walk the text character-by-character and replace literal newlines/tabs/CR
+    inside JSON string values with their proper escape sequences.
+    This fixes the most common Gemini parse failure: multi-line string values.
+    """
+    result = []
+    in_string = False
+    i = 0
+    while i < len(text):
+        c = text[i]
+        if c == '\\' and in_string:
+            # Already-escaped sequence – pass both chars through unchanged
+            result.append(c)
+            i += 1
+            if i < len(text):
+                result.append(text[i])
+            i += 1
+            continue
+        if c == '"':
+            in_string = not in_string
+            result.append(c)
+        elif in_string and c == '\n':
+            result.append('\\n')
+        elif in_string and c == '\r':
+            result.append('\\r')
+        elif in_string and c == '\t':
+            result.append('\\t')
+        else:
+            result.append(c)
+        i += 1
+    return ''.join(result)
+
+
 def parse_json_response(response_text: str, is_truncated: bool = False) -> dict:
     """Parse JSON response, handling truncation and markdown code blocks"""
     # Handle empty or None response
@@ -969,28 +1041,31 @@ def parse_json_response(response_text: str, is_truncated: bool = False) -> dict:
     
     # Additional cleanup: remove any remaining markdown artifacts
     cleaned_text = cleaned_text.strip()
-    
+
+    # ── Pre-pass: escape literal newlines/tabs inside JSON string values ──
+    # Gemini sometimes emits multi-line string values (real \n in the text) which
+    # is invalid JSON.  Fix that before the first parse attempt so we don't waste
+    # multiple retries on the most common failure mode.
+    cleaned_text = _escape_literal_newlines_in_json_strings(cleaned_text)
+
     # Strip markdown formatting characters (**, *, backticks, etc.) from the text
     # This helps clean up any markdown that might be in string values
     def strip_markdown_from_strings(obj):
-        """Recursively strip markdown from string values in JSON objects"""
+        """Recursively strip markdown from string values in JSON objects.
+        Only strips bold (**text**) and inline code (`text`).
+        Does NOT touch underscores or single asterisks — those appear in IDs,
+        icon names, cross-reference keys, and other technical strings.
+        """
         if isinstance(obj, dict):
             return {k: strip_markdown_from_strings(v) for k, v in obj.items()}
         elif isinstance(obj, list):
             return [strip_markdown_from_strings(item) for item in obj]
         elif isinstance(obj, str):
-            # Strip markdown formatting: **bold**, *italic*, `code`, etc.
             text = obj
-            # Remove bold (**text**)
+            # Remove **bold** markers (keep the inner text)
             text = re.sub(r'\*\*([^*]+)\*\*', r'\1', text)
-            # Remove italic (*text* or _text_)
-            text = re.sub(r'(?<!\*)\*([^*]+)\*(?!\*)', r'\1', text)
-            text = re.sub(r'_([^_]+)_', r'\1', text)
-            # Remove code backticks (`text`)
+            # Remove inline `code` backticks (keep the inner text)
             text = re.sub(r'`([^`]+)`', r'\1', text)
-            # Remove any remaining single asterisks or underscores used for formatting
-            text = re.sub(r'(?<!\*)\*(?!\*)', '', text)
-            text = re.sub(r'(?<!_)_(?!_)', '', text)
             return text
         return obj
     
@@ -1004,163 +1079,51 @@ def parse_json_response(response_text: str, is_truncated: bool = False) -> dict:
         # Strip markdown from all string values in the parsed JSON
         parsed_json = strip_markdown_from_strings(parsed_json)
         return parsed_json
-    except json.JSONDecodeError as e:
-        # Always try to fix JSON errors (both truncated and non-truncated)
-        error_msg = str(e)
-        print(f"JSON parse error: {error_msg}")
-        print(f"Attempting to fix JSON...")
-        
-        # Check if it's an unterminated string error
-        is_unterminated_string = "Unterminated string" in error_msg or "Unterminated" in error_msg
-        
-        fixed_text = cleaned_text
-        
-        if is_unterminated_string:
-            # Find all string positions and check for unterminated ones
-            # Strategy: Find the last quote that's not escaped and see if it starts an unterminated string
-            quote_positions = []
-            i = 0
-            while i < len(fixed_text):
-                if fixed_text[i] == '"':
-                    # Check if it's escaped
-                    escape_count = 0
-                    j = i - 1
-                    while j >= 0 and fixed_text[j] == '\\':
-                        escape_count += 1
-                        j -= 1
-                    if escape_count % 2 == 0:  # Not escaped, this is a real quote
-                        quote_positions.append(i)
-                i += 1
-            
-            # If we have an odd number of quotes, the last one starts an unterminated string
-            if len(quote_positions) % 2 == 1:
-                # Find the last quote position
-                last_quote_pos = quote_positions[-1]
-                # Check if it's actually part of an unterminated string
-                # Look for a colon, comma, or opening brace before it (indicating it's a key or value)
-                search_start = max(0, last_quote_pos - 200)  # Look back 200 chars
-                context = fixed_text[search_start:last_quote_pos]
-                
-                # If we see : or , before the quote, it's likely a value that needs closing
-                # Close the string by adding a quote at the end (after the last character)
-                fixed_text = fixed_text + '"'
-                print(f"[JSON Fix] Closed unterminated string starting at position {last_quote_pos}")
-        
-        # Count unclosed brackets/braces
-        open_braces = fixed_text.count('{') - fixed_text.count('}')
-        open_brackets = fixed_text.count('[') - fixed_text.count(']')
-        
-        # Close unclosed structures
-        if open_brackets > 0:
-            fixed_text += ']' * open_brackets
-            print(f"[JSON Fix] Closed {open_brackets} unclosed brackets")
-        if open_braces > 0:
-            fixed_text += '}' * open_braces
-            print(f"[JSON Fix] Closed {open_braces} unclosed braces")
-        
-        # Try parsing the fixed text
+    except json.JSONDecodeError as first_err:
+        error_msg = str(first_err)
+        print(f"[JSON Parse] Initial parse failed: {error_msg}")
+        print(f"[JSON Parse] Attempting repair with json_repair …")
+
+        # ── Primary repair: json_repair handles unescaped quotes, trailing commas,
+        #    single-quoted strings, comments, and dozens of other LLM quirks ──
         try:
-            parsed_json = json.loads(fixed_text)
-            # Strip markdown from all string values in the parsed JSON
+            from json_repair import repair_json
+            repaired = repair_json(cleaned_text, return_objects=True, skip_json_loads=True)
+            if isinstance(repaired, (dict, list)):
+                if isinstance(repaired, dict):
+                    repaired = strip_markdown_from_strings(repaired)
+                print(f"[JSON Parse] json_repair succeeded")
+                return repaired
+            # repair_json returned a string — parse it
+            if isinstance(repaired, str) and repaired.strip():
+                parsed_json = json.loads(repaired)
+                parsed_json = strip_markdown_from_strings(parsed_json)
+                print(f"[JSON Parse] json_repair (string path) succeeded")
+                return parsed_json
+        except Exception as repair_err:
+            print(f"[JSON Parse] json_repair failed: {repair_err}")
+
+        # ── Fallback: close unclosed brackets/braces then re-parse ──
+        try:
+            fixed = cleaned_text
+            open_braces   = fixed.count('{') - fixed.count('}')
+            open_brackets = fixed.count('[') - fixed.count(']')
+            if open_brackets > 0:
+                fixed += ']' * open_brackets
+            if open_braces > 0:
+                fixed += '}' * open_braces
+            parsed_json = json.loads(fixed)
             parsed_json = strip_markdown_from_strings(parsed_json)
-            print(f"[JSON Fix] Successfully fixed and parsed JSON")
+            print(f"[JSON Parse] Bracket-close fallback succeeded")
             return parsed_json
-        except json.JSONDecodeError as e2:
-            print(f"[JSON Fix] Still failed after fixing attempt: {e2}")
-            print(f"[JSON Fix] Fixed text preview (first 500 chars): {fixed_text[:500]}")
-            
-            # Try one more aggressive fix: escape unescaped quotes in string values
-            # This is a last resort - try to fix common JSON issues
-            try:
-                # Find the error position
-                error_pos = getattr(e2, 'pos', None)
-                if error_pos:
-                    # Try to fix quotes around the error position
-                    # Look for unescaped quotes in string values (between : and , or })
-                    fixed_text2 = fixed_text
-                    # Replace unescaped quotes that are inside string values
-                    # This is a heuristic: if we see : " followed by text with quotes, escape them
-                    # Pattern: find string values and escape quotes inside them
-                    # Match: "key": "value with "quotes" here"
-                    # Replace inner quotes with escaped quotes
-                    def escape_inner_quotes(match):
-                        key_part = match.group(1)  # "key":
-                        value_start = match.group(2)  # "
-                        value_content = match.group(3)  # content
-                        value_end = match.group(4)  # "
-                        # Escape any unescaped quotes in the content
-                        escaped_content = value_content.replace('"', '\\"')
-                        return f'{key_part}{value_start}{escaped_content}{value_end}'
-                    
-                    # Try to fix common pattern: "key": "value with "problematic" quotes"
-                    # This regex is more complex, so let's try a simpler approach
-                    # Just escape quotes that appear between : " and " (not already escaped)
-                    lines = fixed_text2.split('\n')
-                    fixed_lines = []
-                    in_string = False
-                    for i, line in enumerate(lines):
-                        if i < len(lines) - 1:  # Not the last line
-                            # Check if this line has a colon followed by quote (start of value)
-                            if '": "' in line or ': "' in line:
-                                # Try to escape quotes in this line that aren't at the start/end
-                                # Simple heuristic: if we see "text"text", escape the middle quote
-                                fixed_line = re.sub(r'([^\\])"([^",}\]]+)', r'\1\\"\2', line)
-                                # But don't escape the first quote after colon
-                                fixed_line = re.sub(r'(:\s*)"([^"]*)"', r'\1"\2"', fixed_line)
-                                fixed_lines.append(fixed_line)
-                            else:
-                                fixed_lines.append(line)
-                        else:
-                            fixed_lines.append(line)
-                    
-                    fixed_text2 = '\n'.join(fixed_lines)
-                    
-                    # Try parsing again
-                    try:
-                        parsed_json = json.loads(fixed_text2)
-                        parsed_json = strip_markdown_from_strings(parsed_json)
-                        print(f"[JSON Fix] Successfully fixed with aggressive quote escaping")
-                        return parsed_json
-                    except Exception as inner_e:
-                        print(f"[JSON Fix] Inner fix attempt also failed: {inner_e}")
-                        # Fall through to final error handling below
-            except Exception:
-                # If the inner try block fails, fall through to final error handling
-                pass
-            
-            # If all else fails, return partial data with error info
-            print(f"JSON parse error (final): {e2}")
-            print(f"Response preview (first 1000 chars): {cleaned_text[:1000]}")
-            # Try to extract at least the story_name and story fields if possible using regex
-            partial_data = {}
-            story_name_match = re.search(r'"story_name"\s*:\s*"([^"]*)"', cleaned_text)
-            if story_name_match:
-                partial_data['story_name'] = story_name_match.group(1)
-            
-            story_match = re.search(r'"story"\s*:\s*"([^"]*(?:"[^",}]*")*)', cleaned_text, re.DOTALL)
-            if story_match:
-                # Try to extract the full story (may be multiline)
-                story_start = cleaned_text.find('"story"')
-                if story_start != -1:
-                    # Find the opening quote after story
-                    quote_start = cleaned_text.find('"', story_start + 7)
-                    if quote_start != -1:
-                        # Try to find the closing quote (may span multiple lines)
-                        # Look for " followed by , or }
-                        quote_end = cleaned_text.find('",', quote_start + 1)
-                        if quote_end == -1:
-                            quote_end = cleaned_text.find('"}', quote_start + 1)
-                        if quote_end != -1:
-                            partial_data['story'] = cleaned_text[quote_start + 1:quote_end].replace('\\n', '\n')
-            
-            if partial_data:
-                partial_data['_parse_error'] = str(e2)
-                partial_data['_raw_response'] = response_text
-                partial_data['_partial_extraction'] = True
-                print(f"[JSON Fix] Extracted partial data: {list(partial_data.keys())}")
-                return partial_data
-            
-            return {"_parse_error": str(e2), "_raw_response": response_text}
+        except Exception:
+            pass
+
+        # ── Nothing worked ──
+        raw_snippet = cleaned_text[:400].replace('\n', '↵')
+        print(f"[JSON Parse] All repair attempts failed. Snippet: {raw_snippet}")
+        return {"_parse_error": error_msg, "_raw_response": response_text}
+
 
 
 def generate_speaker_profile(region: str, formality: str, voice: str, language: str = 'kannada') -> dict:
@@ -1890,288 +1853,179 @@ def generate_listening_activity(word_bank: list, language: str, required_learnin
             result['_debug_steps'] = debug_steps
             return result
         
-        # Generate TTS audio for each paragraph
+        # Generate TTS audio for each paragraph / dialogue line
         debug_steps.append({'step': 'extracting_passage', 'status': 'in_progress'})
+        
+        # Support new multi-speaker dialogue format AND legacy single-passage format
+        dialogue_lines = result.get('dialogue', [])
+        speakers = result.get('speakers', [])
         passage_text = result.get('passage', '')
-        if not passage_text:
-            debug_steps.append({'step': 'extracting_passage', 'status': 'error', 'error': 'No passage text in response'})
-            result['_error'] = "No passage text in response"
+        
+        # Build paragraphs for TTS (dialogue lines take priority)
+        if dialogue_lines:
+            paragraphs = [line['text'] for line in dialogue_lines if line.get('text')]
+        else:
+            paragraphs = passage_text.split('\n\n') if passage_text else []
+            paragraphs = [p.strip() for p in paragraphs if p.strip()]
+        
+        if not paragraphs:
+            debug_steps.append({'step': 'extracting_passage', 'status': 'error', 'error': 'No text to TTS'})
+            result['_error'] = "No passage or dialogue text in response"
             result['_error_type'] = "missing_passage"
             result['_debug_steps'] = debug_steps
             return result
+
+        # Limit to 20 lines max
+        if len(paragraphs) > 20:
+            paragraphs = paragraphs[:20]
+            if dialogue_lines:
+                dialogue_lines = dialogue_lines[:20]
+
+        debug_steps.append({'step': 'extracting_passage', 'status': 'success', 'paragraph_count': len(paragraphs), 'is_dialogue': bool(dialogue_lines)})
         
-        paragraphs = passage_text.split('\n\n') if passage_text else []
-        paragraphs = [p.strip() for p in paragraphs if p.strip()]
-        
-        # Limit to maximum 5 paragraphs
-        original_count = len(paragraphs)
-        if len(paragraphs) > 5:
-            paragraphs = paragraphs[:5]
-            print(f"⚠️ Passage had {original_count} paragraphs, limited to 5")
-            # Update passage_text to reflect the limited paragraphs
-            result['passage'] = '\n\n'.join(paragraphs)
-        
-        debug_steps.append({'step': 'extracting_passage', 'status': 'success', 'paragraph_count': len(paragraphs), 'passage_length': len(passage_text)})
-        
-        if not paragraphs:
-            debug_steps.append({'step': 'paragraph_validation', 'status': 'error', 'error': 'No paragraphs found'})
-            result['_error'] = "No paragraphs found in passage"
-            result['_error_type'] = "no_paragraphs"
-            result['_debug_steps'] = debug_steps
-            return result
-        
-        # Select voice based on speaker profile gender (if available)
-        # Get speaker profile from Gemini response, or fallback to generated one
-        speaker_profile = result.get('speaker_profile')
-        if not speaker_profile:
-            # Fallback: Generate speaker profile if not in response
-            speaker_profile = generate_speaker_profile(selected_region, formality_choice, None, language)
-        
-        # Select voice based on speaker profile gender
-        # Gender should now be in English ("male" or "female") for language-agnostic support
-        speaker_gender = speaker_profile.get('gender', '').lower()
-        speaker_age = speaker_profile.get('age', '')
-        
-        print(f"[Voice Selection] Speaker profile - Gender: {speaker_gender}, Age: {speaker_age}")
-        
-        # Normalize gender to English
-        if speaker_gender in ['female', 'ಹೆಣ್ಣು', 'महिला', 'औरत', 'பெண்', 'స్త్రీ', 'സ്ത്രീ']:
-            available_voices = GEMINI_FEMALE_VOICES
-            gender_label = 'female'
-            print(f"[Voice Selection] Gender: {speaker_gender} -> Selected female voice pool")
-            print(f"[Voice Selection] Available female voices ({len(GEMINI_FEMALE_VOICES)}): {', '.join(GEMINI_FEMALE_VOICES[:5])}...")
-        elif speaker_gender in ['male', 'ಗಂಡು', 'पुरुष', 'मर्द', 'ஆண்', 'పురుషుడు', 'പുരുഷൻ']:
-            available_voices = GEMINI_MALE_VOICES
-            gender_label = 'male'
-            print(f"[Voice Selection] Gender: {speaker_gender} -> Selected male voice pool")
-            print(f"[Voice Selection] Available male voices ({len(GEMINI_MALE_VOICES)}): {', '.join(GEMINI_MALE_VOICES[:5])}...")
+        # ── Voice assignment ─────────────────────────────────────────────────
+        def pick_voice(gender_str: str, used_voices: set) -> str:
+            g = (gender_str or '').lower()
+            if g in ('female', 'ಹೆಣ್ಣು', 'महिला', 'औरत', 'பெண்', 'స్త్రీ', 'സ്ത്രീ'):
+                pool = GEMINI_FEMALE_VOICES
+            elif g in ('male', 'ಗಂಡು', 'पुरुष', 'मर्द', 'ஆண்', 'పురుషుడు', 'പുരുഷൻ'):
+                pool = GEMINI_MALE_VOICES
+            else:
+                pool = GEMINI_TTS_VOICES
+            available = [v for v in pool if v not in used_voices] or pool
+            return random.choice(available)
+
+        speakers = result.get('speakers', [])
+        dialogue_lines_stored = result.get('dialogue', dialogue_lines)
+
+        if dialogue_lines_stored and speakers:
+            used_voices_set: set = set()
+            speaker_voices: list = []
+            for sp in speakers:
+                v = pick_voice(sp.get('gender', ''), used_voices_set)
+                speaker_voices.append(v)
+                used_voices_set.add(v)
+            def voice_for_line(line_idx: int) -> str:
+                sp_idx = dialogue_lines_stored[line_idx].get('speaker_index', 0) if line_idx < len(dialogue_lines_stored) else 0
+                return speaker_voices[sp_idx] if sp_idx < len(speaker_voices) else speaker_voices[0]
         else:
-            # Fallback: random selection from all voices
-            available_voices = GEMINI_TTS_VOICES
-            gender_label = 'unknown'
-            print(f"[Voice Selection] WARNING: Unknown gender '{speaker_gender}' -> Using all voices")
-        
-        # Select voice from available pool
-        selected_voice = random.choice(available_voices)
-        print(f"[Voice Selection] FINAL SELECTION: {selected_voice} (gender: {gender_label}, from pool of {len(available_voices)} voices)")
-        print(f"[Voice Selection] This voice will be used consistently for ALL paragraphs in this listening activity")
-        
-        debug_steps.append({
-            'step': 'voice_selection',
-            'status': 'success',
-            'speaker_gender': speaker_gender,
-            'speaker_age': speaker_age,
-            'selected_voice': selected_voice,
-            'voice_gender': GEMINI_VOICE_GENDERS.get(selected_voice, 'unknown'),
-            'available_pool_size': len(available_voices)
-        })
-        
-        audio_data_list = []
-        total_tts_cost = 0.0
-        tts_errors = []
-        tts_debug_info = []
-        
-        # Generate style instruction for TTS based on content, dialect, formality, and speaker profile
-        debug_steps.append({'step': 'generating_tts_style', 'status': 'in_progress'})
+            sp_profile_legacy = result.get('speaker_profile') or generate_speaker_profile(selected_region, formality_choice, None, language)
+            single_voice = pick_voice(sp_profile_legacy.get('gender', preferred_gender), set())
+            speaker_voices = [single_voice]
+            def voice_for_line(line_idx: int) -> str:
+                return single_voice
+
+        selected_voice = speaker_voices[0] if speaker_voices else random.choice(GEMINI_TTS_VOICES)
+
+        # Build primary speaker_profile for legacy consumers
+        if speakers:
+            speaker_profile = {'name': speakers[0].get('name', ''), 'gender': speakers[0].get('gender', preferred_gender), 'age': speakers[0].get('age', ''), 'background': speakers[0].get('background', '')}
+        elif result.get('speaker_profile'):
+            speaker_profile = result['speaker_profile']
+        else:
+            speaker_profile = generate_speaker_profile(selected_region, formality_choice, None, language)
+
+        debug_steps.append({'step': 'voice_selection', 'status': 'success', 'speaker_voices': speaker_voices})
+
         style_instruction = generate_tts_style_instruction(
-            passage_text, 
+            passage_text or ' '.join(paragraphs),
             result.get('passage_name', ''),
             selected_region=selected_region,
             formality_choice=formality_choice,
             speaker_profile=speaker_profile
         )
-        debug_steps.append({'step': 'generating_tts_style', 'status': 'success', 'style_instruction': style_instruction, 'speaker_profile': speaker_profile})
-        
-        debug_steps.append({'step': 'tts_generation', 'status': 'in_progress', 'paragraph_count': len(paragraphs), 'selected_voice': selected_voice})
-        
-        # Get the existing progress tracker for this session
+
+        # Update progress tracker to actual count
         if session_id and progress_store is not None:
             progress_tracker = progress_store.get(session_id)
             if progress_tracker:
-                # Update the tracker if the actual paragraph count differs from the initial estimate
-                actual_paragraph_count = len(paragraphs)
-                if progress_tracker.total_paragraphs != actual_paragraph_count:
-                    print(f"[TTS Progress] Updating tracker from {progress_tracker.total_paragraphs} to {actual_paragraph_count} paragraphs")
-                    progress_tracker.total_paragraphs = actual_paragraph_count
-                    progress_tracker.progress = {i: 'pending' for i in range(actual_paragraph_count)}
-                    # Notify all connected SSE clients about the updated paragraph count
+                actual_count = len(paragraphs)
+                if progress_tracker.total_paragraphs != actual_count:
+                    progress_tracker.total_paragraphs = actual_count
+                    progress_tracker.progress = {i: 'pending' for i in range(actual_count)}
                     for queue in progress_tracker.queues:
                         try:
-                            queue.put_nowait({
-                                'type': 'update_count',
-                                'total_paragraphs': actual_paragraph_count,
-                                'progress': progress_tracker.progress.copy()
-                            })
+                            queue.put_nowait({'type': 'update_count', 'total_paragraphs': actual_count, 'progress': progress_tracker.progress.copy()})
                         except:
                             pass
-                print(f"[TTS Progress] Using tracker for session {session_id} with {actual_paragraph_count} paragraphs")
-            else:
-                print(f"[TTS Progress] Warning: No tracker found for session {session_id}")
-                progress_tracker = None
         else:
             progress_tracker = None
-        
-        # Generate TTS for all paragraphs in parallel using asyncio
-        print(f"Starting parallel TTS generation for {len(paragraphs)} paragraphs...")
-        tts_start_time = time.time()
-        
-        # Track progress for each paragraph
-        tts_progress = {}
-        def progress_callback(idx, status, result):
-            tts_progress[idx] = {'status': status, 'result': result}
-            print(f"[TTS Progress] Paragraph {idx + 1}: {status}")
-            
-            # Update progress tracker for SSE clients
+
+        def progress_callback(idx, status, _res):
             if progress_tracker:
-                print(f"[TTS Progress] Updating tracker for session {session_id}, paragraph {idx}: {status}")
                 progress_tracker.update(idx, status)
-                print(f"[TTS Progress] Tracker updated. Current progress: {progress_tracker.progress}")
-            else:
-                print(f"[TTS Progress] WARNING: No progress_tracker available for updates")
-        
-        # Run parallel TTS generation
+
+        language_code_map = {
+            'kannada': 'kn-IN', 'hindi': 'hi-IN', 'urdu': 'ur-PK',
+            'tamil': 'ta-IN', 'telugu': 'te-IN', 'malayalam': 'ml-IN', 'english': 'en-US'
+        }
+        language_code = language_code_map.get(language.lower(), 'kn-IN')
+
+        tts_start_time = time.time()
+        unique_voices = list(set(voice_for_line(i) for i in range(len(paragraphs))))
+
+        # Use sequential TTS with retry for reliability (avoids rate limits and partial failures)
         try:
-            print(f"[Voice Consistency Check] Starting parallel TTS generation with voice: {selected_voice}")
-            print(f"[Voice Consistency Check] This voice will be used for all {len(paragraphs)} paragraphs")
-            
-            # Map language names to Google TTS language codes
-            language_code_map = {
-                'kannada': 'kn-IN',
-                'hindi': 'hi-IN',
-                'urdu': 'ur-PK',
-                'tamil': 'ta-IN',
-                'telugu': 'te-IN',
-                'malayalam': 'ml-IN',
-                'english': 'en-US'
-            }
-            language_code = language_code_map.get(language.lower(), 'kn-IN')
-            print(f"[Language] Using language code: {language_code} for language: {language}")
-            
-            tts_results = asyncio.run(generate_all_tts_parallel(
+            tts_results = asyncio.run(generate_all_tts_sequential_with_retry(
                 paragraphs,
                 language=language_code,
-                voice=selected_voice,
+                voice_for_line=voice_for_line,
                 style_instruction=style_instruction,
-                progress_callback=progress_callback
+                progress_callback=progress_callback,
+                delay_between_paragraphs=1.5,
+                retry_delay=2.0,
             ))
-        except Exception as parallel_error:
-            print(f"[TTS Parallel] Error in parallel generation: {str(parallel_error)}")
-            # Fallback to sequential if parallel fails
-            print("[TTS Parallel] Falling back to sequential generation...")
-            
-            # Map language names to Google TTS language codes
-            language_code_map = {
-                'kannada': 'kn-IN',
-                'hindi': 'hi-IN',
-                'urdu': 'ur-PK',
-                'tamil': 'ta-IN',
-                'telugu': 'te-IN',
-                'malayalam': 'ml-IN',
-                'english': 'en-US'
-            }
-            language_code = language_code_map.get(language.lower(), 'kn-IN')
-            
-            tts_results = []
-            for idx, para in enumerate(paragraphs):
-                try:
-                    audio_data, voice_used, cost_info = generate_tts(para, language=language_code, voice=selected_voice, style_instruction=style_instruction)
-                    tts_results.append((audio_data, voice_used, cost_info))
-                except Exception as e:
-                    tts_results.append((None, None, None))
-        
+        except Exception as e:
+            print(f"[TTS] Sequential generation error: {e}")
+            tts_results = [(None, None, None)] * len(paragraphs)
+            for idx in range(len(paragraphs)):
+                if progress_callback:
+                    progress_callback(idx, 'error', str(e))
+
         total_tts_time = time.time() - tts_start_time
-        print(f"✓ Parallel TTS generation completed in {total_tts_time:.2f}s (vs ~{sum([r[2].get('response_time', 0) if r[2] else 0 for r in tts_results]):.2f}s sequential)")
-        
-        # Process results
+
         audio_data_list = []
         total_tts_cost = 0.0
         total_tts_response_time = 0.0
         tts_errors = []
-        tts_debug_info = []
-        
+        tts_results_messages = []  # One line per TTS call for debug: "Line N: OK" or "Line N: error"
+
         for idx, (audio_data, voice_used, cost_info) in enumerate(tts_results):
-            para_debug = {
-                'paragraph_index': idx + 1,
-                'paragraph_length': len(paragraphs[idx]),
-                'paragraph_preview': paragraphs[idx][:100] + '...' if len(paragraphs[idx]) > 100 else paragraphs[idx],
-                'paragraph_text': paragraphs[idx],  # Full text for debug
-            }
-            
             if audio_data and cost_info:
-                # Track TTS response time
-                if cost_info.get('response_time'):
-                    total_tts_response_time += cost_info.get('response_time', 0.0)
-                
-                para_debug['tts_api_call'] = {
-                    'model': GEMINI_TTS_MODEL,
-                    'voice': voice_used,
-                    'language_code': language_code,
-                    'style_instruction': cost_info.get('style_instruction'),
-                    'input_characters': cost_info.get('input_characters', 0),
-                    'cost_per_1k_chars': cost_info.get('cost_per_1k_chars', 0.0),
-                    'total_cost': cost_info.get('total_cost', 0.0),
-                    'response_time': cost_info.get('response_time', 0.0),
-                }
-                
-                para_debug['tts_result'] = {
-                    'has_audio_data': audio_data is not None,
-                    'format': audio_data.get('format') if audio_data else None,
-                    'audio_base64_length': len(audio_data.get('audio_base64', '')) if audio_data else 0,
-                    'audio_size_bytes': cost_info.get('audio_size_bytes', 0),
-                    'sample_rate': audio_data.get('sample_rate') if audio_data else None,
-                    'channels': audio_data.get('channels') if audio_data else None,
-                    'voice_used': voice_used,
-                }
-                
+                total_tts_response_time += cost_info.get('response_time', 0.0)
+                total_tts_cost += cost_info.get('total_cost', 0.0)
                 if audio_data.get('format') != 'text_only':
                     audio_data_list.append(audio_data)
-                    total_tts_cost += cost_info.get('total_cost', 0.0)
-                    para_debug['status'] = 'success'
-                    debug_steps.append({'step': f'tts_paragraph_{idx + 1}', 'status': 'success', 'details': para_debug})
+                    tts_results_messages.append(f"Line {idx + 1}: OK")
                 else:
-                    error_msg = f"Paragraph {idx + 1}: TTS generation failed or returned text-only"
-                    tts_errors.append(error_msg)
-                    para_debug['status'] = 'failed'
-                    para_debug['error'] = error_msg
-                    para_debug['tts_error_details'] = audio_data.get('error', 'Unknown error') if audio_data else None
-                    debug_steps.append({'step': f'tts_paragraph_{idx + 1}', 'status': 'failed', 'details': para_debug})
+                    tts_errors.append(f"Line {idx + 1}: TTS failed")
+                    tts_results_messages.append(f"Line {idx + 1}: TTS failed")
+                    audio_data_list.append({'format': 'text_only'})
             else:
-                error_msg = f"Paragraph {idx + 1}: TTS generation returned None"
-                tts_errors.append(error_msg)
-                para_debug['status'] = 'error'
-                para_debug['error'] = error_msg
-                debug_steps.append({'step': f'tts_paragraph_{idx + 1}', 'status': 'error', 'details': para_debug})
-            
-            tts_debug_info.append(para_debug)
-        
-        debug_steps.append({
-            'step': 'tts_generation_complete',
-            'status': 'success' if audio_data_list else 'error',
-            'total_paragraphs': len(paragraphs),
-            'successful_tts': len(audio_data_list),
-            'failed_tts': len(tts_errors),
-            'total_time': total_tts_time,
-            'tts_details': tts_debug_info,
-        })
-        
-        # Speaker profile should already be set above when selecting voice
-        # Store it in result if not already there
-        if 'speaker_profile' not in result:
-            result['_speaker_profile'] = speaker_profile
-        
-        # Store TTS results and errors
+                tts_errors.append(f"Line {idx + 1}: TTS returned None")
+                tts_results_messages.append(f"Line {idx + 1}: TTS returned None")
+                audio_data_list.append({'format': 'text_only'})
+
+        debug_steps.append({'step': 'tts_generation_complete', 'status': 'success', 'total_time': total_tts_time})
+
         result['_audio_data'] = audio_data_list
         result['_voice_used'] = selected_voice
+        result['_speaker_voices'] = speaker_voices
         result['_tts_cost'] = total_tts_cost
         result['_tts_response_time'] = total_tts_response_time
         result['_speaker_profile'] = speaker_profile
-        
+        if speakers:
+            result['_speakers'] = speakers
+        if dialogue_lines_stored:
+            result['_dialogue'] = dialogue_lines_stored
+
         if tts_errors:
             result['_tts_errors'] = tts_errors
-            result['_warning'] = f"Some TTS generation failed: {len(tts_errors)}/{len(paragraphs)} paragraphs"
-            print(f"Warning: TTS errors occurred: {tts_errors}")
-        
-        if not audio_data_list:
+            result['_warning'] = f"Some TTS generation failed: {len(tts_errors)}/{len(paragraphs)} lines"
+        result['_tts_results'] = tts_results_messages  # Per-call result for debug (all calls)
+
+        real_audio = [a for a in audio_data_list if a.get('format') != 'text_only']
+        if not real_audio:
             debug_steps.append({'step': 'tts_validation', 'status': 'error', 'error': 'All TTS generation failed'})
             result['_error'] = "All TTS generation failed"
             result['_error_type'] = "tts_failure"
@@ -3941,3 +3795,228 @@ def rate_conversation_performance(conversation_transcript: str, tasks: list, top
             "_response_time": response_time if 'response_time' in locals() else 0,
             "_token_info": token_info if 'token_info' in locals() else {},
         }
+
+
+# ============================================================================
+# Placement Test Functions
+# ============================================================================
+
+# Map language codes to human-readable script names for the prompt
+LANGUAGE_SCRIPT_NAMES = {
+    'kannada':   'ಕನ್ನಡ (Kannada script)',
+    'telugu':    'తెలుగు (Telugu script)',
+    'malayalam': 'മലയാളം (Malayalam script)',
+    'tamil':     'தமிழ் (Tamil script)',
+    'hindi':     'देवनागरी (Devanagari)',
+    'urdu':      'देवनागरी (Devanagari — client converts to Nastaliq)',
+}
+
+
+def generate_placement_test(language: str) -> dict:
+    """Generate a full CEFR placement test for the given language.
+
+    Returns the parsed test JSON dict or raises on failure.
+    """
+    if not config.GEMINI_API_KEY:
+        raise Exception("GEMINI_API_KEY not set")
+
+    script_name = LANGUAGE_SCRIPT_NAMES.get(language.lower(), language.capitalize() + ' script')
+    language_name = language.capitalize()
+    # Urdu is authored in Devanagari; the front-end converts to Nastaliq if needed
+    language_for_prompt = 'Hindi/Devanagari' if language.lower() == 'urdu' else language_name
+
+    prompt = PLACEMENT_TEST_GENERATE_PROMPT.format(
+        language=language_for_prompt,
+        language_code=language.lower(),
+        script_name=script_name,
+    )
+
+    print(f"[PlacementTest] Generating test for {language} …")
+    # Use 16 000 tokens — a full 25-question test in Indic script regularly exceeds 8 192
+    response_text, response_time, token_info, is_truncated, _ = generate_text_with_gemini(prompt, max_tokens=16000)
+    text = response_text
+
+    if not text or not text.strip():
+        raise Exception("Gemini returned an empty response. Please try again.")
+
+    print(f"[PlacementTest] Response received ({len(text)} chars, truncated={is_truncated}), parsing JSON …")
+
+    # Use the robust parser (handles literal newlines, markdown fences, truncation, etc.)
+    result = parse_json_response(text, is_truncated)
+
+    if "_parse_error" in result:
+        # Include the error, the raw length, and a snippet long enough to be useful
+        raw_snippet = text[:800].replace('\n', '↵')
+        raise Exception(
+            f"JSON parse error after {len(text)} chars (truncated={is_truncated}): "
+            f"{result['_parse_error']}.\n\nResponse snippet:\n{raw_snippet}"
+        )
+
+    if "sections" not in result:
+        raise Exception(
+            f"Gemini response parsed but missing 'sections' field. "
+            f"Keys found: {list(result.keys())}"
+        )
+
+    print(f"[PlacementTest] Generated test with sections: {[s['section_id'] for s in result.get('sections', [])]}")
+    return result
+
+
+def analyze_placement_test(language: str, test_data: dict, answers: dict) -> dict:
+    """Analyze a learner's placement test answers and return a CEFR assessment.
+
+    Args:
+        language: Language code
+        test_data: The original generated test JSON
+        answers: Dict mapping item_id -> answer (index for MCQ, str for free-response)
+
+    Returns:
+        Parsed analysis dict with overall_cefr_level, skill_levels, etc.
+    """
+    if not config.GEMINI_API_KEY:
+        raise Exception("GEMINI_API_KEY not set")
+
+    # Build structured result summaries for each section
+    reading_lines = []
+    listening_lines = []
+    vocab_grammar_lines = []
+    translation_lines = []
+    writing_lines = []
+    speaking_lines = []
+
+    for section in test_data.get('sections', []):
+        sid = section['section_id']
+        for item in section.get('items', []):
+            iid = item['item_id']
+            itype = item['type']
+            cefr = item.get('cefr_target', '?')
+            answer = answers.get(iid)
+
+            if itype in ('passage', 'transcript'):
+                continue  # Reference material, not a question
+
+            elif itype in ('multiple_choice', 'translation_choice', 'translation_choice_reverse'):
+                correct_idx = item.get('correct_index', -1)
+                if answer is not None:
+                    is_correct = (answer == correct_idx)
+                    result_str = 'correct' if is_correct else f'wrong (chose {answer}, correct {correct_idx})'
+                else:
+                    result_str = 'skipped'
+                line = f"  [{cefr}] {iid}: {result_str}"
+
+                if sid == 'reading':
+                    reading_lines.append(line)
+                elif sid == 'listening':
+                    listening_lines.append(line)
+                elif sid == 'vocabulary_grammar':
+                    vocab_grammar_lines.append(line)
+                elif sid == 'translation':
+                    translation_lines.append(line)
+
+            elif itype == 'free_response':
+                response_text = answer if isinstance(answer, str) and answer else '(no response)'
+                prompt_native = item.get('prompt_native', item.get('question_en', ''))
+                writing_lines.append(
+                    f"  [{cefr}] Prompt: {prompt_native}\n  Response: {response_text}\n"
+                )
+
+            elif itype == 'speaking_prompt':
+                if isinstance(answer, dict) and answer.get('audio_base64'):
+                    # Will be sent as audio to Gemini — flag it
+                    response_text = '[AUDIO_RESPONSE]'
+                elif isinstance(answer, str) and answer:
+                    response_text = answer
+                else:
+                    response_text = '(no response)'
+                prompt_native = item.get('prompt_native', item.get('prompt_en', ''))
+                speaking_lines.append(
+                    f"  [{cefr}] Prompt: {prompt_native}\n  Response: {response_text}\n"
+                )
+
+    def fmt(lines, default='  (no data)'):
+        return '\n'.join(lines) if lines else default
+
+    language_name = language.capitalize()
+    from datetime import datetime as _dt
+    timestamp = _dt.utcnow().strftime('%Y-%m-%d %H:%M UTC')
+
+    prompt = PLACEMENT_TEST_ANALYZE_PROMPT.format(
+        language=language_name,
+        timestamp=timestamp,
+        reading_results=fmt(reading_lines),
+        listening_results=fmt(listening_lines),
+        vocab_grammar_results=fmt(vocab_grammar_lines),
+        translation_results=fmt(translation_lines),
+        writing_responses=fmt(writing_lines),
+        speaking_responses=fmt(speaking_lines),
+    )
+
+    print(f"[PlacementTest] Analyzing results for {language} …")
+
+    # Collect any audio answers for speaking prompts (multimodal)
+    audio_parts = []
+    for section in test_data.get('sections', []):
+        if section['section_id'] != 'speaking':
+            continue
+        for item in section.get('items', []):
+            if item['type'] != 'speaking_prompt':
+                continue
+            answer = answers.get(item['item_id'])
+            if isinstance(answer, dict) and answer.get('audio_base64'):
+                audio_fmt = answer.get('audio_format', 'm4a')
+                mime = {
+                    'm4a': 'audio/mp4', 'webm': 'audio/webm',
+                    'wav': 'audio/wav', 'flac': 'audio/flac',
+                }.get(audio_fmt, 'audio/mp4')
+                import base64 as _b64
+                audio_parts.append({
+                    'inline_data': {
+                        'mime_type': mime,
+                        'data': answer['audio_base64'],
+                    }
+                })
+
+    if audio_parts:
+        # Multimodal request: text prompt + audio blobs
+        model = genai.GenerativeModel(GEMINI_MODEL)
+        content_parts = [prompt] + audio_parts
+        response = model.generate_content(
+            content_parts,
+            generation_config={"temperature": 0.3, "max_output_tokens": 8192}
+        )
+        response_text = response.text
+        is_truncated = False
+        if hasattr(response, 'candidates') and response.candidates:
+            finish_reason = getattr(response.candidates[0], 'finish_reason', None)
+            is_truncated = finish_reason in ('MAX_TOKENS', 'OTHER')
+    else:
+        response_text, _, _, is_truncated, _ = generate_text_with_gemini(prompt, max_tokens=8192)
+    text = response_text
+
+    if not text or not text.strip():
+        raise Exception("Gemini returned an empty response during analysis. Please try again.")
+
+    print(f"[PlacementTest] Analysis response received ({len(text)} chars), parsing JSON …")
+
+    # Extra pre-processing: strip trailing commas before parsing (common Gemini quirk)
+    # e.g.,  { "a": 1, } -> { "a": 1 }
+    import re as _re
+    text_cleaned = _re.sub(r',\s*([\]\}])', r'\1', text)
+
+    result = parse_json_response(text_cleaned, is_truncated)
+
+    if "_parse_error" in result:
+        raw_snippet = text[:400].replace('\n', '↵')
+        raise Exception(
+            f"JSON parse error in analysis: {result['_parse_error']}. "
+            f"Response snippet: {raw_snippet}"
+        )
+
+    if "overall_cefr_level" not in result:
+        raise Exception(
+            f"Analysis response parsed but missing 'overall_cefr_level'. "
+            f"Keys found: {list(result.keys())}"
+        )
+
+    print(f"[PlacementTest] Analysis complete. Overall level: {result.get('overall_cefr_level')}")
+    return result

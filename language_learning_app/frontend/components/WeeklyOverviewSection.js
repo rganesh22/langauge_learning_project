@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { LANGUAGES } from '../contexts/LanguageContext';
+import { getLocalDateString } from '../utils/dateUtils';
 
 const API_BASE_URL = __DEV__ ? 'http://localhost:8080' : 'http://localhost:8080';
 
@@ -18,7 +19,6 @@ const ACTIVITY_COLORS = {
   writing: { primary: '#FF6B6B', light: '#FFE8E8' },
   speaking: { primary: '#FF9500', light: '#FFF4E6' },
   translation: { primary: '#8B5CF6', light: '#F3E8FF' },
-  conversation: { primary: '#9B59B6', light: '#F4E6FF' },
   flashcards: { primary: '#14B8A6', light: '#E0F7F4' },
 };
 
@@ -174,10 +174,10 @@ export default function WeeklyOverviewSection({ expanded, onToggle }) {
 
   const getDateForDay = (dayIndex) => {
     if (!weekData) return '';
-    const weekStart = new Date(weekData.week_start + 'T00:00:00'); // Add time to ensure correct parsing
+    const weekStart = new Date(weekData.week_start + 'T12:00:00');
     const targetDate = new Date(weekStart);
     targetDate.setDate(targetDate.getDate() + dayIndex);
-    return targetDate.toISOString().split('T')[0];
+    return getLocalDateString(targetDate);
   };
 
   const isToday = (dayIndex) => {
@@ -341,7 +341,7 @@ export default function WeeklyOverviewSection({ expanded, onToggle }) {
                       if (languageActivities.size === 0) return null;
                       
                       // Define activity order
-                      const activityOrder = ['flashcards', 'reading', 'listening', 'writing', 'speaking', 'conversation'];
+                      const activityOrder = ['flashcards', 'reading', 'listening', 'writing', 'speaking'];
                       
                       return (
                         <View style={styles.dayActivities}>

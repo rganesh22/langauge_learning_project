@@ -2,12 +2,22 @@
  * Hook for loading and managing activity data
  * Handles API calls, error states, and loading states
  */
-import { useState, useEffect } from 'react';
+import { useState, useRef } from 'react';
 import { fetchActivityData, getActivityTimeout, createApiDetails } from '../utils/apiHelpers';
 import { sanitizeActivity } from '../utils/textProcessing';
 import { API_BASE_URL } from '../constants';
 
-export function useActivityData(activityType, language, activityId, fromHistory, providedActivityData, customTopic = null) {
+export function useActivityData(
+  activityType,
+  language,
+  activityId,
+  fromHistory,
+  providedActivityData,
+  customTopic = null,
+  /** Optional callbacks for background generation tracking */
+  generationCallbacks = null,
+  // generationCallbacks shape: { createJob, completeJob, failJob, updateJobStatus }
+) {
   const [activity, setActivity] = useState(null);
   const [loading, setLoading] = useState(fromHistory ? true : false); // Only start loading if from history
   const [loadingStatus, setLoadingStatus] = useState('Initializing...');
@@ -19,6 +29,9 @@ export function useActivityData(activityType, language, activityId, fromHistory,
   const [resolvedActivityId, setResolvedActivityId] = useState(activityId || null);
   const [showApiModal, setShowApiModal] = useState(false);
   const [topic, setTopic] = useState(customTopic);
+
+  // Track the current background job id so we can complete/fail it later
+  const bgJobIdRef = useRef(null);
 
   const loadActivity = async (selectedTopic = null) => {
     // Update topic if provided
@@ -60,6 +73,13 @@ export function useActivityData(activityType, language, activityId, fromHistory,
       return;
     }
 
+    // ── Background generation job tracking ────────────────────────────────
+    let jobId = null;
+    if (generationCallbacks?.createJob) {
+      jobId = generationCallbacks.createJob(activityType, language);
+      bgJobIdRef.current = jobId;
+    }
+
     try {
       setLoading(true);
       
@@ -69,9 +89,11 @@ export function useActivityData(activityType, language, activityId, fromHistory,
         reading: 'Generating story and questions...',
         writing: 'Generating writing prompt...',
         speaking: 'Generating speaking topic...',
-        conversation: 'Starting conversation...'
       };
       setLoadingStatus(loadingMessages[activityType] || 'Loading activity...');
+      if (jobId && generationCallbacks?.updateJobStatus) {
+        generationCallbacks.updateJobStatus(jobId, loadingMessages[activityType] || 'Loading activity...');
+      }
 
       // Create abort controller with timeout
       const controller = new AbortController();
@@ -82,16 +104,15 @@ export function useActivityData(activityType, language, activityId, fromHistory,
       let statusInterval;
       if (activityType === 'listening') {
         // Don't set paragraph count yet - SSE will provide the actual count
-        // The backend initially estimates 5 paragraphs, but actual can be 3-5
         setLoadingStatus('Initializing activity generation...');
+        if (jobId && generationCallbacks?.updateJobStatus) {
+          generationCallbacks.updateJobStatus(jobId, 'Initializing activity generation...');
+        }
       }
 
       let response;
       try {
-        // For conversation activities, use the /create endpoint
-        const endpoint = activityType === 'conversation' 
-          ? `${API_BASE_URL}/api/activity/${activityType}/${language}/create`
-          : `${API_BASE_URL}/api/activity/${activityType}/${language}`;
+        const endpoint = `${API_BASE_URL}/api/activity/${activityType}/${language}`;
         
         // Prepare request body if topic is provided
         const fetchOptions = {
@@ -129,8 +150,12 @@ export function useActivityData(activityType, language, activityId, fromHistory,
         console.log('[Activity Data] Received session_id:', data.session_id);
         setSessionId(data.session_id);
         setLoadingStatus('Generating passage and questions...');
-        // SSE will handle progress updates, and when complete, we'll fetch the result
+        if (jobId && generationCallbacks?.updateJobStatus) {
+          generationCallbacks.updateJobStatus(jobId, 'Generating passage and questions...');
+        }
+        // SSE will handle progress updates
         // The ListeningActivity component will handle fetching the final activity
+        // NOTE: for listening, completeJob is called from notifyGenerationComplete()
         return;  // Don't set loading=false yet, SSE will drive that
       }
 
@@ -139,7 +164,8 @@ export function useActivityData(activityType, language, activityId, fromHistory,
         throw new Error('Server returned empty activity. Please try again.');
       }
 
-      setActivity(sanitizeActivity(data.activity));
+      const sanitized = sanitizeActivity(data.activity);
+      setActivity(sanitized);
       setWordsUsed(data.words_used || []);
       
       // Store API details for debugging
@@ -148,13 +174,60 @@ export function useActivityData(activityType, language, activityId, fromHistory,
         setAllApiDetails([apiCall]);
       }
 
-      setResolvedActivityId(data.activity.id || Date.now());
+      const resolvedId = data.activity.id || Date.now();
+      setResolvedActivityId(resolvedId);
       setLoading(false);
+
+      // Derive a human-friendly title for the generation tray
+      const derivedTitle =
+        sanitized?.activity_name ||
+        sanitized?.passage_name ||
+        sanitized?.title ||
+        sanitized?.topic ||
+        sanitized?.writing_prompt ||
+        null;
+
+      // ── Notify tray: done ──
+      if (jobId && generationCallbacks?.completeJob) {
+        generationCallbacks.completeJob(jobId, {
+          title: derivedTitle,
+          activityId: String(resolvedId),
+          activityData: sanitized,
+        });
+      }
       
     } catch (error) {
       console.error('Error loading activity:', error);
-      alert(`Error: ${error.message}`);
       setLoading(false);
+      // ── Notify tray: error ──
+      if (jobId && generationCallbacks?.failJob) {
+        generationCallbacks.failJob(jobId, error.message);
+      }
+      alert(`Error: ${error.message}`);
+    }
+  };
+
+  /**
+   * Call this from the ListeningActivity SSE handler once the activity
+   * is fully generated so the background tray card gets updated.
+   */
+  const notifyGenerationComplete = ({ title, activityId: aId, activityData: aData } = {}) => {
+    const jobId = bgJobIdRef.current;
+    if (jobId && generationCallbacks?.completeJob) {
+      generationCallbacks.completeJob(jobId, {
+        title: title || null,
+        activityId: aId ? String(aId) : null,
+        activityData: aData || null,
+      });
+      bgJobIdRef.current = null;
+    }
+  };
+
+  const notifyGenerationFailed = (errorMsg) => {
+    const jobId = bgJobIdRef.current;
+    if (jobId && generationCallbacks?.failJob) {
+      generationCallbacks.failJob(jobId, errorMsg || 'Generation failed');
+      bgJobIdRef.current = null;
     }
   };
 
@@ -180,6 +253,14 @@ export function useActivityData(activityType, language, activityId, fromHistory,
     setShowApiModal,
     topic,
     setTopic,
+    notifyGenerationComplete,
+    notifyGenerationFailed,
+    /** Call to update the tray status message (e.g. listening "Generating audio: 2 of 5...") */
+    updateTrayStatus: (message) => {
+      if (bgJobIdRef.current && generationCallbacks?.updateJobStatus) {
+        generationCallbacks.updateJobStatus(bgJobIdRef.current, message);
+      }
+    },
     // Add a new method to fetch completed activity
     fetchCompletedActivity: async (sessionId) => {
       try {
@@ -202,7 +283,8 @@ export function useActivityData(activityType, language, activityId, fromHistory,
         }
         
         console.log('[Activity Data] Completed activity received');
-        setActivity(sanitizeActivity(data.activity));
+        const sanitized = sanitizeActivity(data.activity);
+        setActivity(sanitized);
         setWordsUsed(data.words_used || []);
         
         // Store API details for debugging
@@ -211,7 +293,8 @@ export function useActivityData(activityType, language, activityId, fromHistory,
           setAllApiDetails([apiCall]);
         }
         
-        setResolvedActivityId(data.activity.id || Date.now());
+        const resolvedId = data.activity.id || Date.now();
+        setResolvedActivityId(resolvedId);
         return data;
       } catch (error) {
         console.error('[Activity Data] Error fetching completed activity:', error);

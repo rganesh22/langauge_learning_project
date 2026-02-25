@@ -31,6 +31,7 @@ export const AudioPlayer = ({
   showVolumeControl = true,
   paragraphLabel = null,
   language = null,  // Add language prop for Urdu font handling
+  compact = false,
 }) => {
   // Format time in MM:SS
   const formatTime = (seconds) => {
@@ -50,6 +51,27 @@ export const AudioPlayer = ({
 
   const [showVolumeSlider, setShowVolumeSlider] = useState(false);
   const [showSpeedMenu, setShowSpeedMenu] = useState(false);
+
+  // Extremely compact mode: just a small play/pause button (for per-line dialogue)
+  if (compact) {
+    return (
+      <View style={styles.compactContainer}>
+        {paragraphLabel && (
+          <SafeText style={styles.compactLabel}>{paragraphLabel}</SafeText>
+        )}
+        <TouchableOpacity
+          style={[styles.compactPlayButton, { backgroundColor: primaryColor }]}
+          onPress={onPlayPause}
+        >
+          <Ionicons
+            name={isPlaying ? 'pause' : 'play'}
+            size={18}
+            color="#FFFFFF"
+          />
+        </TouchableOpacity>
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>
@@ -173,6 +195,23 @@ export const AudioPlayer = ({
 };
 
 const styles = StyleSheet.create({
+  compactContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    gap: 8,
+  },
+  compactLabel: {
+    fontSize: 12,
+    color: '#4B5563',
+  },
+  compactPlayButton: {
+    width: 28,
+    height: 28,
+    borderRadius: 14,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   container: {
     backgroundColor: '#F5F5F5',
     borderRadius: 12,

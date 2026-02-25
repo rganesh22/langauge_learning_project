@@ -1,0 +1,36 @@
+word,english,transliteration,word_class,level,status,synonym_of,synonym_of_id,language
+నన్నయ,Nannaya (Telugu poet),nannaya,noun,b1,new,,,telugu
+తిక్కన,Tikkana (Telugu poet),tikkana,noun,b1,new,,,telugu
+ఎర్రన,Errana (Telugu poet),errana,noun,b1,new,,,telugu
+తెలుగు,"Telugu (language, people)",telugu,noun,a1,synonym,ఇద్దరు,138487,telugu
+అజంత,"vowel-ending (word, stem)",ajaṁta,adjective,c1,synonym,పదం / పారిభాషిక పదం / మాట,141056,telugu
+సౌందర్యం,beauty,sauṁdaryaṁ,noun,b1,synonym,అందగత్తె / అందగాడు / సౌందర్యవతి,141619,telugu
+నిలయం,"abode, home, repository",nilayaṁ,noun,b2,synonym,ఇంటికి / గృహానికి,138845,telugu
+కవిత్రయం,"poet trio (Nannaya, Tikkana, Errana)",kavitrayaṁ,noun,b2,synonym,గీతం / పద్యం / కీర్తన,139355,telugu
+మహాభారతం,Mahabharata (ancient Indian epic),mahābhārataṁ,noun,b1,synonym,దక్షిణం / దక్షిణ దేశం,139436,telugu
+కావ్యం,"poem (epic, poetic work)",kāvyaṁ,noun,b1,synonym,గీతం / పద్యం / కీర్తన,139355,telugu
+అభ్యుదయ,"progressive, advancement",abhyudaya,adjective,b2,synonym,ప్రగతిశీల / ఆధునిక భావాలు గల / పురోగమన,144460,telugu
+కవిత్వం,"poetry (poetic art, verse)",kavitvaṁ,noun,b1,synonym,అపార్ట్‌మెంట్ / ఫ్లాట్ / గృహం,138413,telugu
+పరిమితం,limited (restricted),parimitaṁ,adjective,b1,synonym,పరిమితమైన / సంకుచితమైన,140666,telugu
+రగిలించు,"to ignite, to provoke",ragiliṁcu,verb,b2,synonym,రెచ్చగొట్టు / ప్రేరేపించు / పురికొల్పు,147857,telugu
+మానవీయ,"humane, humanitarian",mānavīya,adjective,b1,synonym,మానవతావాద / దయగల / మానవీయమైన,141988,telugu
+ప్రబోధించు,"to preach, to propagate (ideals)",prabōdhiṁcu,verb,c1,synonym,బోధించు / ప్రసంగించు,147844,telugu
+కీలక,"key, crucial, pivotal",kīlaka,adjective,b1,synonym,ముఖ్యమైన / ప్రధానమైన,138897,telugu
+ద్రవిడ,Dravidian (relating to Dravidian people/languages),draviḍa,adjective,b2,synonym,విద్యుత్ / ఎలక్ట్రిక్,140269,telugu
+సంపాదించుకో,"to acquire, to earn, to obtain",saṁpādiṁcukō,verb,b2,synonym,గుణపాఠం / పాఠం,138926,telugu
+తన,one's own (reflexive possessive),tana,pronoun,a2,synonym,గోధుమ రంగు / కాఫీ రంగు / కపిల వర్ణం,138502,telugu
+ఇటాలియన్,Italian (language or person),iṭāliyan,noun,b1,synonym,ఎవరైనా,139963,telugu
+ఆఫ్,"of (preposition, belonging to)",āph,preposition,a1,synonym,ఎక్కడికి,139847,telugu
+ది,the (definite article),di,definite article,a1,synonym,బోవు,138361,telugu
+ఈస్ట్,East (cardinal direction),īsṭ,noun,a2,synonym,వద్ద / కు / పై,138432,telugu
+అను,"to say, to call (as in 'named')",anu,verb,a2,synonym,కేక / అరుపు / పిలుపు,138516,telugu
+ఖ్యాతి,"fame, reputation, renown",khyāti,noun,b1,synonym,ప్రసిద్ధ / ప్రముఖ / పేరుపొందిన / సుప్రసిద్ధ,140321,telugu
+సార్థకం,"meaningful, purposeful, successful (accomplished)",sārthakaṁ,adjective,b2,synonym,విజయవంతమైన / సఫలమైన / కృతార్థమైన,141021,telugu
+చేసుకో,"to do/make for oneself, to achieve",cēsukō,verb,b1,synonym,కళాకారుడు / ఆర్టిస్ట్,138427,telugu
+ప్రపంచవ్యాప్తం,"worldwide, globally",prapaṁcavyāptaṁ,adjective,b1,synonym,ప్రపంచవ్యాప్తంగా / ప్రపంచమంతటా / విశ్వవ్యాప్తంగా,143059,telugu
+కోట్లాది,"tens of millions, millions of",kōṭlādi,determiner,b1,synonym,ఎక్కువ / అధిక / తీవ్ర,138830,telugu
+మంది,"people, persons (classifier)",maṁdi,noun,a2,synonym,అందరూ / అంతా,138386,telugu
+భద్రం,"safe, secure",bhadraṁ,adjective,b2,synonym,గట్టి / స్థిరమైన,138706,telugu
+కొలువుండు,to reside (to be present),koluvuṁḍu,verb,b2,synonym,అవతలికి / అటువైపు,138367,telugu
+పరిరక్షించు,"to protect (to safeguard, to preserve)",parirakṣiṁcu,verb,b2,synonym,అవతలికి / అటువైపు,138367,telugu
+తెలుగువాడు,Telugu person (man),teluguvāḍu,noun,a2,synonym,పెద్దలు / వయోజనులు,138373,telugu

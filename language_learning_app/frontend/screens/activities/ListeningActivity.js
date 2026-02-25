@@ -12,12 +12,15 @@ import { Ionicons } from '@expo/vector-icons';
 import SafeText from '../../components/SafeText';
 import { LanguageContext } from '../../contexts/LanguageContext';
 import { useActivityData } from './shared/hooks/useActivityData';
+import { useGenerationCallbacks } from './shared/hooks/useGenerationCallbacks';
 import { useTransliteration } from './shared/hooks/useTransliteration';
 import { useDictionary } from './shared/hooks/useDictionary';
 import { useAudio } from './shared/hooks/useAudio';
 import { useTTSProgress } from './shared/hooks/useTTSProgress';
 import { useActivityCompletion } from './shared/hooks/useActivityCompletion';
-import { VocabularyDictionary, APIDebugModal, TTSProgressIndicator, AudioPlayer, TopicSelectionModal } from './shared/components';
+import { VocabularyDictionary, APIDebugModal, AudioPlayer, TopicSelectionModal } from './shared/components';
+import TranslationToolModal from '../../components/TranslationToolModal';
+import TextImportModal from '../../components/TextImportModal';
 import { ACTIVITY_COLORS } from './shared/constants';
 import { normalizeText } from './shared/utils/textProcessing';
 import { 
@@ -45,6 +48,7 @@ import {
   getParagraphLabel,
   getOfLabel,
   formatParagraphLabel,
+  getImportVocabFromTranscriptLabel,
 } from '../../constants/ui_labels';
 
 /**
@@ -60,7 +64,8 @@ export default function ListeningActivity({ route, navigation }) {
   const language = routeLang || ctxLanguage || null;
 
   // Use shared hooks
-  const activityData = useActivityData('listening', language, activityId, fromHistory, routeActivityData);
+  const genCallbacks = useGenerationCallbacks();
+  const activityData = useActivityData('listening', language, activityId, fromHistory, routeActivityData, null, genCallbacks);
   const transliteration = useTransliteration(language, activityData.activity);
   const dictionary = useDictionary(language);
   const audio = useAudio();
@@ -76,7 +81,10 @@ export default function ListeningActivity({ route, navigation }) {
   const [currentParagraphIndex, setCurrentParagraphIndex] = useState(0);
   const [showTranscript, setShowTranscript] = useState(false);
   const [speakerProfileExpanded, setSpeakerProfileExpanded] = useState(false);
+  const [dialogueExpanded, setDialogueExpanded] = useState(true);
   const [showTopicModal, setShowTopicModal] = useState(!fromHistory);
+  const [showTranslationModal, setShowTranslationModal] = useState(false);
+  const [showImportModal, setShowImportModal] = useState(false);
   
   // Listen to All functionality
   const [isListeningToAll, setIsListeningToAll] = useState(false);
@@ -122,20 +130,22 @@ export default function ListeningActivity({ route, navigation }) {
       if (activityData.loading) {
         if (completed === 0) {
           activityData.setLoadingStatus('Starting audio generation...');
+          activityData.updateTrayStatus?.('Starting audio generation...');
         } else if (completed < total) {
           activityData.setLoadingStatus(`Generating audio: ${completed} of ${total} paragraphs complete...`);
+          activityData.updateTrayStatus?.(`Generating audio: ${completed} of ${total}...`);
         } else if (completed === total) {
           activityData.setLoadingStatus('All audio complete! Loading activity...');
+          activityData.updateTrayStatus?.('All audio complete! Loading...');
         }
       }
     }
     
-    if (ttsProgress.paragraphCount > 0 && activityData.paragraphCount === 0) {
-      // Initialize paragraph count and progress structure
+    if (ttsProgress.paragraphCount > 0 && ttsProgress.paragraphCount > activityData.paragraphCount) {
+      // Sync paragraph count when backend sends update_count (e.g. actual 18 vs initial 5)
       activityData.setParagraphCount(ttsProgress.paragraphCount);
       console.log('[ListeningActivity] Set paragraph count:', ttsProgress.paragraphCount);
       
-      // Initialize progress with all paragraphs as 'pending' if not already set
       if (!ttsProgress.progress || Object.keys(ttsProgress.progress).length === 0) {
         const initialProgress = {};
         for (let i = 0; i < ttsProgress.paragraphCount; i++) {
@@ -146,33 +156,45 @@ export default function ListeningActivity({ route, navigation }) {
       }
     }
     
-    // When TTS is complete, fetch the completed activity
+    // When TTS is complete, fetch the completed activity (with retry if still generating)
     if (ttsProgress.isComplete && !ttsComplete && activityData.sessionId) {
       console.log('[ListeningActivity] TTS Complete! Fetching final activity...');
       setTtsComplete(true);
       activityData.setLoadingStatus('Finalizing activity...');
-      
-      // Fetch the completed activity from the server
-      activityData.fetchCompletedActivity(activityData.sessionId)
-        .then(data => {
-          if (data) {
-            console.log('[ListeningActivity] Activity fetched successfully');
-            activityData.setLoadingStatus('Activity ready!');
-            setTimeout(() => {
-              console.log('[ListeningActivity] Showing activity');
+      activityData.updateTrayStatus?.('Finalizing activity...');
+
+      const pollForResult = (retriesLeft = 10) => {
+        activityData.fetchCompletedActivity(activityData.sessionId)
+          .then(data => {
+            if (data) {
+              console.log('[ListeningActivity] Activity fetched successfully');
+              activityData.setLoadingStatus('Activity ready!');
+              activityData.updateTrayStatus?.('Activity ready!');
+              const act = data.activity || {};
+              const derivedTitle = act.activity_name || act.passage_name || act.title || act.topic || null;
+              activityData.notifyGenerationComplete({
+                title: derivedTitle,
+                activityId: act.id || null,
+                activityData: act,
+              });
+              setTimeout(() => {
+                activityData.setLoading(false);
+              }, 300);
+            } else if (retriesLeft > 0) {
+              activityData.setLoadingStatus('Loading activity...');
+              setTimeout(() => pollForResult(retriesLeft - 1), 2000);
+            } else {
+              activityData.notifyGenerationFailed('Activity took too long to load');
               activityData.setLoading(false);
-            }, 300);
-          } else {
-            console.log('[ListeningActivity] Activity not ready yet, will retry...');
-            // Retry after a short delay
-            setTimeout(() => setTtsComplete(false), 1000);
-          }
-        })
-        .catch(error => {
-          console.error('[ListeningActivity] Error fetching activity:', error);
-          alert(`Error loading activity: ${error.message}`);
-          activityData.setLoading(false);
-        });
+            }
+          })
+          .catch(error => {
+            console.error('[ListeningActivity] Error fetching activity:', error);
+            activityData.notifyGenerationFailed(error.message);
+            activityData.setLoading(false);
+          });
+      };
+      pollForResult();
     }
   }, [ttsProgress.progress, ttsProgress.paragraphCount, ttsProgress.isComplete, ttsComplete, activityData.sessionId]);
 
@@ -514,6 +536,19 @@ export default function ListeningActivity({ route, navigation }) {
     }
   }, [activityData.activity, language, transliteration.showTransliterations]);
 
+  // Import Vocab button label: native script (Urdu Nastaliq) + transliteration
+  useEffect(() => {
+    if (activityData.activity) {
+      const label = getImportVocabFromTranscriptLabel(language);
+      if (language === 'urdu' && label && !transliteration.nativeScriptRenderings.importVocabFromTranscript) {
+        transliteration.ensureNativeScriptForKey('importVocabFromTranscript', label);
+      }
+      if (transliteration.showTransliterations && label && !transliteration.transliterations.importVocabFromTranscript) {
+        transliteration.ensureAndShowTransliterationForKey('importVocabFromTranscript', label);
+      }
+    }
+  }, [activityData.activity, language, transliteration.showTransliterations]);
+
   // Enhanced text renderer with word-level click support for dictionary
   const renderText = (text, style = {}, enableWordClick = false) => {
     const safeText = normalizeText(text);
@@ -616,28 +651,48 @@ export default function ListeningActivity({ route, navigation }) {
   }
 
   if (activityData.loading) {
+    const progressKeys = activityData.ttsProgress ? Object.keys(activityData.ttsProgress).length : 0;
+    const total = Math.max(activityData.paragraphCount || 1, progressKeys, 1);
+    const completed = activityData.ttsProgress
+      ? Object.values(activityData.ttsProgress).filter(s => s === 'complete').length
+      : 0;
+    const chunksLabel = total > 0 ? `${completed} of ${total} chunks` : 'Initializing…';
+
     return (
-      <View style={styles.centerContainer}>
-        <ActivityIndicator size="large" color={colors.primary} />
-        <SafeText style={styles.loadingText}>{activityData.loadingStatus}</SafeText>
-        
-        {/* Show TTS Progress for Listening Activities - only show when TTS generation has started */}
-        {activityData.paragraphCount > 0 && activityData.ttsProgress && Object.keys(activityData.ttsProgress).length > 0 && (
-          (() => {
-            // Check if any paragraph has started processing (not all are 'pending')
-            const hasStarted = Object.values(activityData.ttsProgress).some(status => status !== 'pending');
-            const actualParagraphCount = Object.keys(activityData.ttsProgress).length;
-            
-            return hasStarted ? (
-              <View style={{ marginTop: 20, width: '90%', maxWidth: 500 }}>
-                <TTSProgressIndicator 
-                  paragraphCount={actualParagraphCount}
-                  currentStatus={activityData.ttsProgress}
-                />
-              </View>
-            ) : null;
-          })()
-        )}
+      <View style={styles.container}>
+        <View style={[styles.header, { backgroundColor: colors.primary }]}>
+          <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
+            <Ionicons name="arrow-back" size={24} color="#FFFFFF" />
+          </TouchableOpacity>
+          <View style={styles.headerTitleContainer}>
+            <SafeText style={styles.headerTitle}>
+              {language === 'urdu' && transliteration.nativeScriptRenderings.headerLabel
+                ? transliteration.nativeScriptRenderings.headerLabel
+                : getListeningHeaderLabel(language)}
+            </SafeText>
+            {transliteration.showTransliterations && transliteration.transliterations.headerLabel && (
+              <SafeText style={styles.headerTransliteration}>
+                {transliteration.transliterations.headerLabel}
+              </SafeText>
+            )}
+          </View>
+        </View>
+
+        <View style={styles.centerContainer}>
+          <SafeText style={styles.loadingTitle}>Generating listening activity</SafeText>
+          <SafeText style={styles.loadingSubtext}>{chunksLabel}</SafeText>
+          <View style={styles.loadingProgressBarBg}>
+            <View
+              style={[
+                styles.loadingProgressBarFill,
+                {
+                  width: `${total > 0 ? (completed / total) * 100 : 0}%`,
+                  backgroundColor: colors.primary,
+                },
+              ]}
+            />
+          </View>
+        </View>
       </View>
     );
   }
@@ -677,6 +732,12 @@ export default function ListeningActivity({ route, navigation }) {
             onPress={() => setHighlightVocab(!highlightVocab)}
           >
             <Ionicons name={highlightVocab ? "color-palette" : "color-palette-outline"} size={20} color="#FFFFFF" />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.toggleButton}
+            onPress={() => setShowTranslationModal(true)}
+          >
+            <Ionicons name="language" size={20} color="#FFFFFF" />
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.toggleButton}
@@ -1036,193 +1097,301 @@ export default function ListeningActivity({ route, navigation }) {
                   [styles.transcriptToggleText, { color: colors.primary }],
                   false
                 )}
-                {transliteration.showTransliterations && (
-                  <Text style={[styles.transliterationText, { fontSize: 11, color: colors.primary }]}>
-                    {showTranscript 
-                      ? transliteration.transliterations.hideTranscript
-                      : transliteration.transliterations.showTranscript}
-                  </Text>
-                )}
               </View>
             </TouchableOpacity>
 
-            {/* Audio Paragraphs */}
-            <ScrollView
-              ref={paragraphScrollViewRef}
-              horizontal
-              pagingEnabled
-              showsHorizontalScrollIndicator={false}
-              onScroll={(event) => {
-                // Don't update index during "Listen to All" auto-play to prevent race conditions
-                if (isListeningToAll) return;
-                
-                // Update on scroll for immediate feedback
-                const index = Math.round(
-                  event.nativeEvent.contentOffset.x / Dimensions.get('window').width
-                );
-                if (index !== currentParagraphIndex && index >= 0 && index < paragraphs.length) {
-                  setCurrentParagraphIndex(index);
-                }
-              }}
-              scrollEventThrottle={16}
-              onMomentumScrollEnd={(event) => {
-                // Don't update index during "Listen to All" auto-play to prevent race conditions
-                if (isListeningToAll) return;
-                
-                // Final update when scroll ends
-                const index = Math.round(
-                  event.nativeEvent.contentOffset.x / Dimensions.get('window').width
-                );
-                setCurrentParagraphIndex(index);
-              }}
-            >
-              {paragraphs.map((para, index) => (
-                <View key={index} style={styles.paragraphContainer}>
-                  <View style={styles.textBox}>
-                    {/* Audio Player - Traditional Interface */}
-                    <AudioPlayer
-                      isPlaying={audio.playingParagraph === index}
-                      currentTime={(audio.audioPosition[index] || 0) / 1000}
-                      duration={(audio.audioDuration[index] || 0) / 1000}
-                      onPlayPause={() => {
-                        if (audio.playingParagraph === index) {
-                          // Manual pause - stop "Listen to All" if active
-                          if (isListeningToAll) {
-                            console.log('[Listen to All] Stopped by manual pause');
-                            setIsListeningToAll(false);
-                            listenToAllStartIndexRef.current = null;
-                          }
-                          audio.pauseAudio(index);
-                        } else {
-                          // Stop "Listen to All" if playing a different paragraph
-                          if (isListeningToAll) {
-                            setIsListeningToAll(false);
-                            listenToAllStartIndexRef.current = null;
-                          }
-                          audio.playAudio(index);
-                        }
-                      }}
-                      onSeek={(time) => audio.seekAudio(index, time)}
-                      onReplay={() => audio.seekAudio(index, 0)}
-                      volume={1.0}
-                      onVolumeChange={(volume) => {
-                        // Volume control - can be implemented if needed
-                        // audio.setVolume(index, volume);
-                      }}
-                      primaryColor={colors.primary}
-                      language={language}
-                      paragraphLabel={(() => {
-                        const key = `paragraphLabel_${index}`;
-                        const baseLabel = language === 'urdu' && transliteration.nativeScriptRenderings[key]
-                          ? transliteration.nativeScriptRenderings[key]
-                          : formatParagraphLabel(language, index, paragraphs.length);
-                        
-                        // Add transliteration if available
-                        if (transliteration.showTransliterations && transliteration.transliterations[key]) {
-                          return `${baseLabel}\n${transliteration.transliterations[key]}`;
-                        }
-                        return baseLabel;
-                      })()}
-                      showVolumeControl={false}
-                      showSpeedControl={false}
-                    />
+            {/* ── DIALOGUE MODE (multi-speaker) ── */}
+            {(() => {
+              const dialogueLines = activity._dialogue || [];
+              const speakers = activity._speakers || [];
+              const SPEAKER_COLORS = ['#3B82F6', '#EF4444', '#10B981', '#F59E0B', '#8B5CF6'];
+              const audioDataList = activity._audio_data || [];
 
-                    {/* Transcript (conditionally shown) */}
-                    {showTranscript && (
-                      <View style={{ marginTop: 16 }}>
+              if (dialogueLines.length > 0) {
+                return (
+                  <View style={{ marginBottom: 8 }}>
+                    {/* Collapsible header for full conversation section */}
+                    <TouchableOpacity
+                      style={styles.transcriptToggle}
+                      onPress={() => setDialogueExpanded(!dialogueExpanded)}
+                    >
+                      <Ionicons name={dialogueExpanded ? 'chatbubbles' : 'chatbubbles-outline'} size={20} color={colors.primary} />
+                      <View style={{ marginLeft: 8, flex: 1 }}>
                         {renderText(
-                          (language === 'urdu' && transliteration.nativeScriptRenderings[`passage_para_${index}`])
-                            ? transliteration.nativeScriptRenderings[`passage_para_${index}`]
-                            : para.trim(),
-                          styles.targetText,
+                          getListeningHeaderLabel(language),
+                          [styles.transcriptToggleText, { color: colors.primary }],
                           true
                         )}
-                        {transliteration.showTransliterations && transliteration.transliterations[`passage_para_${index}`] && (
-                          <View style={{ marginTop: 8 }}>
-                            {renderText(transliteration.transliterations[`passage_para_${index}`], styles.transliterationText, true)}
+                      </View>
+                      <Ionicons
+                        name={dialogueExpanded ? 'chevron-up' : 'chevron-down'}
+                        size={18}
+                        color={colors.primary}
+                      />
+                    </TouchableOpacity>
+
+                    {dialogueExpanded && (
+                      <>
+                        {/* Optional play-all for conversation */}
+                        <View style={{ alignItems: 'flex-start', marginBottom: 8 }}>
+                          {!isListeningToAll ? (
+                            <TouchableOpacity
+                              style={[styles.listenToAllButton, { backgroundColor: colors.primary, paddingHorizontal: 14, paddingVertical: 8 }]}
+                              onPress={handleListenToAll}
+                            >
+                              <Ionicons name="play-skip-forward" size={18} color="#FFFFFF" style={{ marginRight: 6 }} />
+                              <SafeText style={[styles.listenToAllButtonText, { fontSize: 14 }]}>
+                                {getListenToAllLabel(language)}
+                              </SafeText>
+                            </TouchableOpacity>
+                          ) : (
+                            <TouchableOpacity
+                              style={[styles.listenToAllButton, { backgroundColor: '#666666', paddingHorizontal: 14, paddingVertical: 8 }]}
+                              onPress={handleStopListenToAll}
+                            >
+                              <Ionicons name="stop" size={18} color="#FFFFFF" style={{ marginRight: 6 }} />
+                              <SafeText style={[styles.listenToAllButtonText, { fontSize: 14 }]}>
+                                {getStopAutoPlayLabel(language)}
+                              </SafeText>
+                            </TouchableOpacity>
+                          )}
+                        </View>
+
+                        {/* Speaker legend */}
+                        {speakers.length > 1 && (
+                          <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 8, marginBottom: 12 }}>
+                            {speakers.map((sp, i) => (
+                              <View
+                                key={i}
+                                style={{
+                                  flexDirection: 'row',
+                                  alignItems: 'center',
+                                  gap: 4,
+                                  backgroundColor: SPEAKER_COLORS[i % SPEAKER_COLORS.length] + '18',
+                                  paddingHorizontal: 10,
+                                  paddingVertical: 5,
+                                  borderRadius: 20,
+                                }}
+                              >
+                                <Ionicons
+                                  name="person-outline"
+                                  size={14}
+                                  color={SPEAKER_COLORS[i % SPEAKER_COLORS.length]}
+                                />
+                                <Text
+                                  style={{
+                                    fontSize: 13,
+                                    fontWeight: '600',
+                                    color: SPEAKER_COLORS[i % SPEAKER_COLORS.length],
+                                  }}
+                                >
+                                  {sp.name}
+                                </Text>
+                              </View>
+                            ))}
                           </View>
                         )}
-                      </View>
+
+                        {/* Dialogue lines — each has its own tiny play button */}
+                        {dialogueLines.map((line, lineIdx) => {
+                          const spIdx = line.speaker_index ?? 0;
+                          const sp = speakers[spIdx] || {};
+                          const color = SPEAKER_COLORS[spIdx % SPEAKER_COLORS.length];
+                          const isRight = spIdx % 2 === 1;
+                          const hasAudio =
+                            audioDataList[lineIdx] &&
+                            audioDataList[lineIdx].audio_base64 &&
+                            audioDataList[lineIdx].format !== 'text_only';
+
+                          return (
+                            <View key={lineIdx} style={{ marginBottom: 10 }}>
+                              {/* Bubble */}
+                              <View
+                                style={[
+                                  { flexDirection: 'row', alignItems: 'flex-start', gap: 6 },
+                                  isRight && { flexDirection: 'row-reverse' },
+                                ]}
+                              >
+                                <Ionicons
+                                  name="person-circle-outline"
+                                  size={24}
+                                  color={color}
+                                  style={{ marginTop: 4 }}
+                                />
+                                <View
+                                  style={{
+                                    flex: 1,
+                                    backgroundColor: color + '15',
+                                    borderRadius: 14,
+                                    padding: 12,
+                                    borderWidth: 1,
+                                    borderColor: color + '30',
+                                    maxWidth: '85%',
+                                  }}
+                                >
+                                  {showTranscript && (
+                                    <View style={{ marginBottom: hasAudio ? 6 : 0 }}>
+                                      {renderText(
+                                        line.text,
+                                        [styles.targetText, { fontSize: 16, color: '#111827' }],
+                                        true
+                                      )}
+                                    </View>
+                                  )}
+                                  {hasAudio && (
+                                    <AudioPlayer
+                                      isPlaying={audio.playingParagraph === lineIdx}
+                                      currentTime={(audio.audioPosition[lineIdx] || 0) / 1000}
+                                      duration={(audio.audioDuration[lineIdx] || 0) / 1000}
+                                      onPlayPause={() => {
+                                        if (audio.playingParagraph === lineIdx) {
+                                          audio.pauseAudio(lineIdx);
+                                        } else {
+                                          audio.playAudio(lineIdx);
+                                        }
+                                      }}
+                                      onSeek={(time) => audio.seekAudio(lineIdx, time)}
+                                      onReplay={() => audio.seekAudio(lineIdx, 0)}
+                                      primaryColor={color}
+                                      language={language}
+                                      paragraphLabel={sp.name || `Speaker ${spIdx + 1}`}
+                                      showVolumeControl={false}
+                                      showSpeedControl={false}
+                                      compact
+                                    />
+                                  )}
+                                </View>
+                              </View>
+                            </View>
+                          );
+                        })}
+                      </>
                     )}
                   </View>
-                </View>
-              ))}
-            </ScrollView>
+                );
+              }
 
-            {/* Listen to All Button */}
-            <View style={{ alignItems: 'center', marginVertical: 12 }}>
-              {!isListeningToAll ? (
+              // ── Grid of paragraph cards (no horizontal paging) ──
+              const screenWidth = Dimensions.get('window').width;
+              const gap = 12;
+              const numCols = 2;
+              const cardWidth = (screenWidth - 40 - gap * (numCols - 1)) / numCols; // 40 = horizontal padding
+
+              return (
+                <>
+                  <ScrollView
+                    ref={paragraphScrollViewRef}
+                    showsVerticalScrollIndicator={true}
+                    contentContainerStyle={{ paddingBottom: 16 }}
+                  >
+                    <View style={[styles.paragraphGrid, { gap }]}>
+                      {paragraphs.map((para, index) => (
+                        <View key={index} style={[styles.paragraphContainer, { width: cardWidth }]}>
+                          <View style={styles.textBox}>
+                            <AudioPlayer
+                              isPlaying={audio.playingParagraph === index}
+                              currentTime={(audio.audioPosition[index] || 0) / 1000}
+                              duration={(audio.audioDuration[index] || 0) / 1000}
+                              onPlayPause={() => {
+                                if (audio.playingParagraph === index) {
+                                  if (isListeningToAll) { setIsListeningToAll(false); listenToAllStartIndexRef.current = null; }
+                                  audio.pauseAudio(index);
+                                } else {
+                                  if (isListeningToAll) { setIsListeningToAll(false); listenToAllStartIndexRef.current = null; }
+                                  audio.playAudio(index);
+                                }
+                              }}
+                              onSeek={(time) => audio.seekAudio(index, time)}
+                              onReplay={() => audio.seekAudio(index, 0)}
+                              primaryColor={colors.primary}
+                              language={language}
+                              paragraphLabel={formatParagraphLabel(language, index, paragraphs.length)}
+                              showVolumeControl={false}
+                              showSpeedControl={false}
+                            />
+                            {showTranscript && (
+                              <View style={{ marginTop: 16 }}>
+                                {renderText(
+                                  (language === 'urdu' && transliteration.nativeScriptRenderings[`passage_para_${index}`])
+                                    ? transliteration.nativeScriptRenderings[`passage_para_${index}`]
+                                    : para.trim(),
+                                  styles.targetText,
+                                  true
+                                )}
+                                {transliteration.showTransliterations && transliteration.transliterations[`passage_para_${index}`] && (
+                                  <View style={{ marginTop: 8 }}>
+                                    {renderText(transliteration.transliterations[`passage_para_${index}`], styles.transliterationText, true)}
+                                  </View>
+                                )}
+                              </View>
+                            )}
+                          </View>
+                        </View>
+                      ))}
+                    </View>
+                  </ScrollView>
+
+                  {/* Listen to All Button */}
+                  <View style={{ alignItems: 'center', marginVertical: 12 }}>
+                    {!isListeningToAll ? (
+                      <TouchableOpacity style={[styles.listenToAllButton, { backgroundColor: colors.primary }]} onPress={handleListenToAll}>
+                        <Ionicons name="play-skip-forward" size={20} color="#FFFFFF" style={{ marginRight: 8 }} />
+                        {renderText(getListenToAllLabel(language), styles.listenToAllButtonText, false)}
+                      </TouchableOpacity>
+                    ) : (
+                      <TouchableOpacity style={[styles.listenToAllButton, { backgroundColor: '#666' }]} onPress={handleStopListenToAll}>
+                        <Ionicons name="stop" size={20} color="#FFFFFF" style={{ marginRight: 8 }} />
+                        {renderText(getStopAutoPlayLabel(language), styles.listenToAllButtonText, false)}
+                      </TouchableOpacity>
+                    )}
+                  </View>
+
+                  {/* Page indicator removed for grid; optional: dot strip for current playing */}
+                  {paragraphs.length > 0 && (
+                    <View style={[styles.pageIndicator, { flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', gap: 6 }]}>
+                      {paragraphs.map((_, index) => (
+                        <TouchableOpacity
+                          key={index}
+                          onPress={() => {
+                            if (isListeningToAll) { setIsListeningToAll(false); listenToAllStartIndexRef.current = null; }
+                            setCurrentParagraphIndex(index);
+                            paragraphScrollViewRef.current?.scrollTo({ y: Math.floor(index / numCols) * 200, animated: true });
+                          }}
+                          style={[styles.pageIndicatorDot, index === currentParagraphIndex && { backgroundColor: colors.primary }]}
+                        />
+                      ))}
+                    </View>
+                  )}
+                </>
+              );
+            })()}
+
+            {/* Import Vocab button – directly under transcript; native text first, transliteration below; no dictionary on tap */}
+            {activity && (
+              <View style={{ alignItems: 'flex-start', marginTop: 4, marginBottom: 16 }}>
                 <TouchableOpacity
-                  style={[styles.listenToAllButton, { backgroundColor: colors.primary }]}
-                  onPress={handleListenToAll}
+                  style={[styles.listenToAllButton, { backgroundColor: colors.primary, paddingVertical: 10, paddingHorizontal: 14 }]}
+                  onPress={() => setShowImportModal(true)}
+                  activeOpacity={0.85}
                 >
-                  <Ionicons name="play-skip-forward" size={20} color="#FFFFFF" style={{ marginRight: 8 }} />
+                  <Ionicons name="cloud-upload-outline" size={18} color="#FFFFFF" style={{ marginRight: 8 }} />
                   <View>
                     {renderText(
-                      language === 'urdu' && transliteration.nativeScriptRenderings.listenToAll
-                        ? transliteration.nativeScriptRenderings.listenToAll
-                        : getListenToAllLabel(language),
-                      styles.listenToAllButtonText,
+                      (language === 'urdu' && transliteration.nativeScriptRenderings.importVocabFromTranscript)
+                        ? transliteration.nativeScriptRenderings.importVocabFromTranscript
+                        : getImportVocabFromTranscriptLabel(language),
+                      [styles.listenToAllButtonText, { fontSize: 14 }],
                       false
                     )}
-                    {transliteration.showTransliterations && transliteration.transliterations.listenToAll && (
-                      <Text style={[styles.transliterationText, { fontSize: 11, color: '#FFFFFF', textAlign: 'center' }]}>
-                        {transliteration.transliterations.listenToAll}
+                    {transliteration.showTransliterations && transliteration.transliterations.importVocabFromTranscript ? (
+                      <Text style={[styles.transliterationText, { fontSize: 12, color: 'rgba(255,255,255,0.9)', marginTop: 4 }]}>
+                        {transliteration.transliterations.importVocabFromTranscript}
                       </Text>
-                    )}
+                    ) : null}
                   </View>
                 </TouchableOpacity>
-              ) : (
-                <TouchableOpacity
-                  style={[styles.listenToAllButton, { backgroundColor: '#666' }]}
-                  onPress={handleStopListenToAll}
-                >
-                  <Ionicons name="stop" size={20} color="#FFFFFF" style={{ marginRight: 8 }} />
-                  <View>
-                    {renderText(
-                      language === 'urdu' && transliteration.nativeScriptRenderings.stopAutoPlay
-                        ? transliteration.nativeScriptRenderings.stopAutoPlay
-                        : getStopAutoPlayLabel(language),
-                      styles.listenToAllButtonText,
-                      false
-                    )}
-                    {transliteration.showTransliterations && transliteration.transliterations.stopAutoPlay && (
-                      <Text style={[styles.transliterationText, { fontSize: 11, color: '#FFFFFF', textAlign: 'center' }]}>
-                        {transliteration.transliterations.stopAutoPlay}
-                      </Text>
-                    )}
-                  </View>
-                </TouchableOpacity>
-              )}
-            </View>
-
-            {/* Page Indicator - Clickable */}
-            <View style={styles.pageIndicator}>
-              {paragraphs.map((_, index) => (
-                <TouchableOpacity
-                  key={index}
-                  onPress={() => {
-                    // Stop "Listen to All" if switching paragraphs manually
-                    if (isListeningToAll) {
-                      setIsListeningToAll(false);
-                      listenToAllStartIndexRef.current = null;
-                    }
-                    
-                    // Scroll to selected paragraph
-                    const screenWidth = Dimensions.get('window').width;
-                    paragraphScrollViewRef.current?.scrollTo({
-                      x: index * screenWidth,
-                      animated: true,
-                    });
-                    setCurrentParagraphIndex(index);
-                  }}
-                  style={[
-                    styles.pageIndicatorDot,
-                    index === currentParagraphIndex && { backgroundColor: colors.primary },
-                  ]}
-                />
-              ))}
-            </View>
+              </View>
+            )}
 
             {/* Questions - Same as Reading Activity */}
             {activity.questions && activity.questions.length > 0 && (
@@ -1403,6 +1572,32 @@ export default function ListeningActivity({ route, navigation }) {
         )}
       </ScrollView>
 
+      {/* Translation Tool Modal */}
+      <TranslationToolModal
+        visible={showTranslationModal}
+        onClose={() => setShowTranslationModal(false)}
+        language={language}
+        prefillText={(activityData.activity?.paragraphs || []).map(p => p.text || p.content || '').join(' ')}
+        onMakeVocabCards={(text) => {
+          setShowTranslationModal(false);
+          setShowImportModal(true);
+        }}
+      />
+
+      {/* Import Vocab Modal — pre-filled with listening transcript (paragraphs or dialogue or passage) */}
+      <TextImportModal
+        visible={showImportModal}
+        onClose={() => setShowImportModal(false)}
+        language={language}
+        prefillText={
+          (activityData.activity?.paragraphs && activityData.activity.paragraphs.length > 0)
+            ? activityData.activity.paragraphs.map(p => p.text || p.content || '').join(' ')
+            : (activityData.activity?._dialogue && activityData.activity._dialogue.length > 0)
+            ? activityData.activity._dialogue.map(d => d.text || '').join(' ')
+            : (activityData.activity?.passage || '')
+        }
+      />
+
       {/* Dictionary Modal */}
       <VocabularyDictionary
         visible={dictionary.showDictionary}
@@ -1438,6 +1633,29 @@ const styles = StyleSheet.create({
     marginTop: 16,
     fontSize: 16,
     color: '#666',
+  },
+  loadingTitle: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: '#1A1A1A',
+    marginBottom: 4,
+  },
+  loadingSubtext: {
+    fontSize: 14,
+    color: '#666',
+    marginBottom: 12,
+  },
+  loadingProgressBarBg: {
+    width: '80%',
+    maxWidth: 320,
+    height: 8,
+    backgroundColor: '#E5E5E5',
+    borderRadius: 4,
+    overflow: 'hidden',
+  },
+  loadingProgressBarFill: {
+    height: '100%',
+    borderRadius: 4,
   },
   header: {
     flexDirection: 'row',
@@ -1548,6 +1766,10 @@ const styles = StyleSheet.create({
   paragraphContainer: {
     width: Dimensions.get('window').width - 40,
     paddingHorizontal: 0,
+  },
+  paragraphGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
   },
   audioControls: {
     flexDirection: 'row',

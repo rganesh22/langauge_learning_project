@@ -1,6 +1,6 @@
-Generate a {language} listening activity with a passage and comprehension questions.
+Generate a {language} listening comprehension activity in a CONVERSATION/DIALOGUE format with 1–4 speakers and comprehension questions.
 
-IMPORTANT: The user's current CEFR level is {user_cefr_level}. Tailor the passage complexity, vocabulary, and sentence structures to be appropriate for this level.
+IMPORTANT: The user's current CEFR level is {user_cefr_level}. Tailor the dialogue complexity, vocabulary, and sentence structures to be appropriate for this level.
 
 Topic: {selected_topic}
 
@@ -13,39 +13,46 @@ Language Style: {formality_instruction}
 {learning_section}
 
 Instructions:
-1. Write an engaging passage in {language_for_template} script appropriate for {user_cefr_level} level language learners. Adjust complexity, sentence length, and vocabulary difficulty to match this level.
+1. Create a natural conversation/dialogue in {language_for_template} script between 1–4 people on the given topic. Choose the number of speakers (1–4) that feels most natural for the topic (e.g., 2 people for a conversation, 3–4 for a group discussion, 1 for a monologue/narration). Adjust complexity to match {user_cefr_level} level.
 2. {usage_instruction}
 3. {learning_instruction}
-4. The passage should be maximum 5 paragraphs long (3-5 paragraphs), separated by \\n\\n between paragraphs. Formatting should be simple - no markdown symbols (**, *, backticks) or special formatting.
-5. After the passage, create 5 multiple-choice comprehension questions in {language_for_template} script. Make questions appropriate for {user_cefr_level} level.
-6. Each question should have 4 options in {language_for_template} script, with one correct answer.
-7. Generate a creative, unique name for this passage in {language_for_template} script.
-8. Create a speaker profile with name (in {language_for_template} script), gender (MUST be ONLY "{preferred_gender}" to match the preferred speaker), age range, city (in {language_for_template} script), state/province (in {language_for_template} script), country (in {language_for_template} script), dialect description (in {language_for_template} script), and background/profession (in {language_for_template} script). All fields except gender must be in {language_for_template} script and should match the regional dialect and formality level specified. The gender field MUST be ONLY "{preferred_gender}" for voice selection.
+4. The full dialogue text (all lines concatenated) should be substantial — equivalent to 3–5 paragraphs.
+5. Each "line" of the dialogue must include: the index of the speaker (0-based), and the text.
+6. After the dialogue, create 5 multiple-choice comprehension questions in {language_for_template} script.
+7. Each question should have 4 options in {language_for_template} script, with one correct answer.
+8. Generate a creative title for this listening activity in {language_for_template} script.
+9. Create a speaker profile for EACH speaker with:
+   - name (in {language_for_template} script) — use clearly male or female names matching the gender below
+   - gender — MUST be "male" or "female" (in English, no other values). The TTS system will use a male voice for male speakers and a female voice for female speakers; ensure each speaker's name and gender are consistent (e.g. male name → "male", female name → "female").
+   - age range (e.g., "25-35")
+   - dialect / background description (brief, in {language_for_template} script)
+   The FIRST speaker's gender should be "{preferred_gender}". Assign varied genders/ages to other speakers for diversity.
+10. For the "passage" field (used for transliteration/TTS), concatenate all dialogue lines in order, separated by \\n\\n, WITHOUT speaker names (pure text only).
 
-Return ONLY valid JSON in this exact format:
-- In JSON, if any string values contain quotes ("), they must be escaped as \\"
-- No markdown symbols (**, *, `) or formatting should be present
-- Return ONLY valid JSON, no text outside the JSON string
+Return ONLY valid JSON in this exact format (no markdown, no text outside JSON):
 
 {{
-    "passage_name": "passage name in {language_for_template} script",
-    "passage": "passage text in {language_for_template} script, separated by \\n\\n between paragraphs",
+    "passage_name": "activity title in {language_for_template} script",
+    "passage": "concatenated dialogue lines in {language_for_template} script, separated by \\n\\n (no speaker labels, pure text for TTS)",
+    "speakers": [
+        {{
+            "name": "speaker name in {language_for_template} script",
+            "gender": "male or female",
+            "age": "age range e.g. 25-35",
+            "background": "brief background in {language_for_template} script"
+        }}
+    ],
+    "dialogue": [
+        {{
+            "speaker_index": 0,
+            "text": "line of dialogue in {language_for_template} script"
+        }}
+    ],
     "questions": [
         {{
             "question": "question text in {language_for_template} script",
             "options": ["option1", "option2", "option3", "option4"],
             "correct": 0
-        }},
-        ... (4 more questions)
-    ],
-    "speaker_profile": {{
-        "name": "name in {language_for_template} script",
-        "gender": "{preferred_gender}",
-        "age": "age range (e.g., 25-35)",
-        "city": "city name in {language_for_template} script",
-        "state": "state/province name in {language_for_template} script",
-        "country": "country name in {language_for_template} script",
-        "dialect": "dialect description in {language_for_template} script",
-        "background": "profession/background in {language_for_template} script"
-    }}
+        }}
+    ]
 }}

@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react';
-import { NavigationContainer } from '@react-navigation/native';
+import React, { useEffect, useRef, useState } from 'react';
+import { NavigationContainer, useNavigationState } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StatusBar } from 'expo-status-bar';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import DashboardScreen from './screens/DashboardScreen';
 import VocabLibraryScreen from './screens/VocabLibraryScreen';
 import ProfileScreen from './screens/ProfileScreen';
@@ -11,8 +12,13 @@ import LessonsScreen from './screens/LessonsScreen';
 import ActivityScreen from './screens/ActivityScreenNew';
 import ActivityHistoryScreen from './screens/ActivityHistoryScreen';
 import FlashcardScreen from './screens/FlashcardScreen';
+import PlacementTestScreen from './screens/PlacementTestScreen';
 import { Ionicons } from '@expo/vector-icons';
 import LanguageProvider from './contexts/LanguageContext';
+import { ActivityGenerationProvider } from './contexts/ActivityGenerationContext';
+import ActivityGenerationTray from './components/ActivityGenerationTray';
+import { TutorChatButton } from './components/TutorChatButton';
+import { TutorProvider } from './contexts/TutorContext';
 import { useFonts } from 'expo-font';
 import { ActivityIndicator, View, Text as RNText } from 'react-native';
 import SafeText from './components/SafeText';
@@ -21,6 +27,14 @@ const API_BASE_URL = __DEV__ ? 'http://localhost:8080' : 'http://localhost:8080'
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
+
+function TutorVisibilityGate() {
+  const routeName = useNavigationState(state => {
+    const r = state?.routes?.[state.index];
+    return r?.name ?? '';
+  });
+  return <TutorChatButton visible={routeName !== 'PlacementTest'} />;
+}
 
 function MainTabs() {
   return (
@@ -64,6 +78,8 @@ function MainTabs() {
 }
 
 export default function App() {
+  const navigationRef = useRef(null);
+
   // Load app fonts (ensure assets/fonts/Noto_Nastaliq_Urdu/static/* exists)
   // We register separate family names for weight variants so components can select
   // the correct font when a fontWeight is requested.
@@ -122,16 +138,41 @@ export default function App() {
     global.__SafeText_createElement_patched = true;
   }
   return (
-    <LanguageProvider>
-      <NavigationContainer>
-        <StatusBar style="auto" />
-        <Stack.Navigator screenOptions={{ headerShown: false }}>
-          <Stack.Screen name="Main" component={MainTabs} />
-          <Stack.Screen name="Activity" component={ActivityScreen} />
-          <Stack.Screen name="ActivityHistory" component={ActivityHistoryScreen} />
-          <Stack.Screen name="Flashcards" component={FlashcardScreen} />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </LanguageProvider>
+    <SafeAreaProvider>
+      <LanguageProvider>
+        <ActivityGenerationProvider>
+          <TutorProvider>
+          <NavigationContainer ref={navigationRef}>
+            <>
+              <StatusBar style="auto" />
+              <Stack.Navigator screenOptions={{ headerShown: false }}>
+                <Stack.Screen name="Main" component={MainTabs} />
+                <Stack.Screen name="Activity" component={ActivityScreen} />
+                <Stack.Screen name="ActivityHistory" component={ActivityHistoryScreen} />
+                <Stack.Screen name="Flashcards" component={FlashcardScreen} />
+                <Stack.Screen name="PlacementTest" component={PlacementTestScreen} />
+              </Stack.Navigator>
+              <ActivityGenerationTray
+                onPressJob={(job) => {
+                  if (!job || !navigationRef.current?.isReady()) return;
+                  const params = {
+                    activityType: job.activityType,
+                    language: job.language,
+                  };
+                  if (job.status === 'done' && job.activityId) {
+                    params.activityId = job.activityId;
+                    params.fromHistory = true;
+                    if (job.activityData) params.activityData = job.activityData;
+                  }
+                  navigationRef.current.navigate('Activity', params);
+                }}
+              />
+              <TutorVisibilityGate />
+            </>
+          </NavigationContainer>
+          </TutorProvider>
+        </ActivityGenerationProvider>
+      </LanguageProvider>
+    </SafeAreaProvider>
   );
 }

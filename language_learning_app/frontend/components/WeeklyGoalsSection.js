@@ -15,14 +15,13 @@ import { LANGUAGES } from '../contexts/LanguageContext';
 
 const API_BASE_URL = __DEV__ ? 'http://localhost:8080' : 'http://localhost:8080';
 
-const ACTIVITIES = ['flashcards', 'reading', 'listening', 'writing', 'speaking', 'translation', 'conversation'];
+const ACTIVITIES = ['flashcards', 'reading', 'listening', 'writing', 'speaking', 'translation'];
 const ACTIVITY_COLORS = {
   reading: { primary: '#4A90E2', light: '#E8F4FD' },
   listening: { primary: '#2B654A', light: '#E8F5EF' },
   writing: { primary: '#FF6B6B', light: '#FFE8E8' },
   speaking: { primary: '#FF9500', light: '#FFF4E6' },
   translation: { primary: '#8B5CF6', light: '#F3E8FF' },
-  conversation: { primary: '#9B59B6', light: '#F4E6FF' },
   flashcards: { primary: '#14B8A6', light: '#E0F7F4' },
 };
 
@@ -323,7 +322,7 @@ export default function WeeklyGoalsSection({ expanded, onToggle, onGoalsSaved })
                           });
                           
                           // Define activity order (matches ACTIVITIES constant)
-                          const activityOrder = ['flashcards', 'reading', 'listening', 'writing', 'speaking', 'translation', 'conversation'];
+                          const activityOrder = ['flashcards', 'reading', 'listening', 'writing', 'speaking', 'translation'];
                           
                           return Array.from(languageActivities.entries()).map(([lang, activities]) => {
                             const language = LANGUAGES.find(l => l.code === lang);
@@ -423,7 +422,10 @@ export default function WeeklyGoalsSection({ expanded, onToggle, onGoalsSaved })
         <TouchableOpacity
           style={styles.modalOverlay}
           activeOpacity={1}
-          onPress={() => setShowAddModal(false)}
+          onPress={() => {
+            setShowAddModal(false);
+            loadWeeklyGoals();
+          }}
         >
           <TouchableWithoutFeedback>
             <View style={styles.modalContent}>
@@ -431,7 +433,10 @@ export default function WeeklyGoalsSection({ expanded, onToggle, onGoalsSaved })
                 <Text style={styles.modalTitle}>
                   Add Activity - {selectedDay ? WEEKDAY_LABELS[selectedDay] : ''}
                 </Text>
-                <TouchableOpacity onPress={() => setShowAddModal(false)}>
+                <TouchableOpacity onPress={() => {
+                  setShowAddModal(false);
+                  loadWeeklyGoals();
+                }}>
                   <Ionicons name="close" size={28} color="#666" />
                 </TouchableOpacity>
               </View>
@@ -472,6 +477,41 @@ export default function WeeklyGoalsSection({ expanded, onToggle, onGoalsSaved })
                           )}
                         </TouchableOpacity>
                         <Text style={styles.langName}>{lang.name}</Text>
+                        {/* Activity icon+count for this day/language when they have goals */}
+                        {selectedDay && (() => {
+                          const activities = weeklyGoals[selectedDay]?.[lang.code];
+                          if (!activities || Object.keys(activities).length === 0) return null;
+                          const activityOrder = ['flashcards', 'reading', 'listening', 'writing', 'speaking', 'translation'];
+                          return (
+                            <View style={styles.modalLangActivityIcons}>
+                              {activityOrder.map((activity) => {
+                                const count = activities[activity];
+                                if (!count) return null;
+                                const colors = ACTIVITY_COLORS[activity];
+                                return (
+                                  <View key={activity} style={styles.modalLangActivityIconWrap}>
+                                    <View style={[styles.modalLangActivityIconCircle, { backgroundColor: colors.light }]}>
+                                      <Ionicons
+                                        name={activity === 'flashcards' ? 'albums' :
+                                              activity === 'reading' ? 'book' :
+                                              activity === 'listening' ? 'headset' :
+                                              activity === 'writing' ? 'create' :
+                                              activity === 'speaking' ? 'mic' :
+                                              activity === 'translation' ? 'language' :
+                                              'chatbubbles'}
+                                        size={12}
+                                        color={colors.primary}
+                                      />
+                                      <View style={styles.modalLangActivityCountBadge}>
+                                        <Text style={styles.modalLangActivityCountBadgeText}>{count}</Text>
+                                      </View>
+                                    </View>
+                                  </View>
+                                );
+                              })}
+                            </View>
+                          );
+                        })()}
                       </View>
                     </TouchableOpacity>
 
@@ -481,7 +521,7 @@ export default function WeeklyGoalsSection({ expanded, onToggle, onGoalsSaved })
                         {ACTIVITIES.map((activity) => {
                           const colors = ACTIVITY_COLORS[activity];
                           const currentCount = getActivityCountForDay(lang.code, activity);
-                          const isDisabled = activity === 'conversation';
+                          const isDisabled = false;
                           
                           return (
                             <View
@@ -858,6 +898,44 @@ const styles = StyleSheet.create({
   langName: {
     fontSize: 18,
     fontWeight: '700',
+    color: '#1A1A1A',
+  },
+  modalLangActivityIcons: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+    marginLeft: 8,
+  },
+  modalLangActivityIconWrap: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 2,
+  },
+  modalLangActivityIconCircle: {
+    width: 22,
+    height: 22,
+    borderRadius: 11,
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'relative',
+  },
+  modalLangActivityCountBadge: {
+    position: 'absolute',
+    top: -6,
+    right: -6,
+    backgroundColor: '#FFFFFF',
+    borderRadius: 8,
+    minWidth: 14,
+    height: 14,
+    paddingHorizontal: 3,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: 1.5,
+    borderColor: '#E0E0E0',
+  },
+  modalLangActivityCountBadgeText: {
+    fontSize: 9,
+    fontWeight: 'bold',
     color: '#1A1A1A',
   },
   activitiesGrid: {

@@ -22,8 +22,9 @@ const ACTIVITY_COLORS = {
   writing: { primary: '#FF6B6B', light: '#FFE8E8' },
   speaking: { primary: '#FF9500', light: '#FFF4E6' },
   translation: { primary: '#8B5CF6', light: '#F3E8FF' },
-  conversation: { primary: '#9B59B6', light: '#F4E6FF' },
 };
+
+const PRACTICE_ACTIVITIES = ['reading', 'listening', 'writing', 'speaking', 'translation'];
 
 export default function PracticeScreen({ navigation }) {
   const { selectedLanguage: ctxLanguage, setSelectedLanguage: setCtxLanguage, availableLanguages } = React.useContext(LanguageContext);
@@ -32,15 +33,52 @@ export default function PracticeScreen({ navigation }) {
   const [languageMenuVisible, setLanguageMenuVisible] = useState(false);
   const [srsStats, setSrsStats] = useState(null);
   const [allLanguagesSrsStats, setAllLanguagesSrsStats] = useState({});
-
+  const [visibleActivities, setVisibleActivities] = useState(PRACTICE_ACTIVITIES.slice());
+  const [practiceFilterModalVisible, setPracticeFilterModalVisible] = useState(false);
+  const [applyToAllLanguages, setApplyToAllLanguages] = useState(false);
   useFocusEffect(
     React.useCallback(() => {
       if (selectedLanguage) {
         fetchSrsStats();
         loadAllLanguagesSrsStats();
+        loadPracticeVisibleActivities();
       }
     }, [selectedLanguage, availableLanguages.length])
   );
+
+  const loadPracticeVisibleActivities = async () => {
+    try {
+      const res = await fetch(`${API_BASE_URL}/api/practice-visible-activities?language=${encodeURIComponent(selectedLanguage || '')}`);
+      if (res.ok) {
+        const data = await res.json();
+        setVisibleActivities(Array.isArray(data.visible_activities) ? data.visible_activities : PRACTICE_ACTIVITIES.slice());
+        setApplyToAllLanguages(!!data.apply_to_all);
+      }
+    } catch (e) {
+      console.error('Error loading practice visible activities:', e);
+    }
+  };
+
+  const savePracticeVisibleActivities = async (visible, applyAll) => {
+    try {
+      const res = await fetch(`${API_BASE_URL}/api/practice-visible-activities`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          language: applyAll ? undefined : selectedLanguage,
+          visible_activities: visible,
+          apply_to_all: applyAll,
+        }),
+      });
+      if (res.ok) {
+        const data = await res.json();
+        setVisibleActivities(data.visible_activities || visible);
+        setApplyToAllLanguages(!!data.apply_to_all);
+      }
+    } catch (e) {
+      console.error('Error saving practice visible activities:', e);
+    }
+  };
   
   const fetchSrsStats = async () => {
     try {
@@ -210,10 +248,18 @@ export default function PracticeScreen({ navigation }) {
 
         {/* Activity Cards */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Practice Activities</Text>
-          {['reading', 'listening', 'writing', 'speaking', 'translation', 'conversation'].map((activity) => {
+          <View style={styles.sectionTitleRow}>
+            <Text style={styles.sectionTitle}>Practice Activities</Text>
+            <TouchableOpacity
+              style={styles.filterIconButton}
+              onPress={() => setPracticeFilterModalVisible(true)}
+            >
+              <Ionicons name="options-outline" size={22} color="#4A90E2" />
+            </TouchableOpacity>
+          </View>
+          {PRACTICE_ACTIVITIES.filter((a) => visibleActivities.includes(a)).map((activity) => {
             const colors = ACTIVITY_COLORS[activity];
-            const isDisabled = activity === 'conversation';
+            const isDisabled = false;
             return (
               <View key={activity} style={styles.activityCardContainer}>
                 <TouchableOpacity
@@ -287,6 +333,77 @@ export default function PracticeScreen({ navigation }) {
           })}
         </View>
       </ScrollView>
+
+      {/* Practice activities filter modal */}
+      <Modal
+        visible={practiceFilterModalVisible}
+        transparent
+        animationType="fade"
+        onRequestClose={() => setPracticeFilterModalVisible(false)}
+      >
+        <TouchableOpacity
+          style={styles.modalOverlay}
+          activeOpacity={1}
+          onPress={() => setPracticeFilterModalVisible(false)}
+        >
+          <View style={styles.practiceFilterModal} onStartShouldSetResponder={() => true}>
+            <View style={styles.practiceFilterHeader}>
+              <Text style={styles.practiceFilterTitle}>Show activities</Text>
+              <TouchableOpacity onPress={() => setPracticeFilterModalVisible(false)}>
+                <Ionicons name="close" size={26} color="#666" />
+              </TouchableOpacity>
+            </View>
+            <Text style={styles.practiceFilterSubtitle}>Choose which activities appear on the Practice screen</Text>
+            <View style={styles.practiceFilterGrid}>
+              {PRACTICE_ACTIVITIES.map((activity) => {
+                const colors = ACTIVITY_COLORS[activity];
+                const isVisible = visibleActivities.includes(activity);
+                return (
+                  <TouchableOpacity
+                    key={activity}
+                    style={[
+                      styles.practiceFilterItem,
+                      { borderColor: colors.primary, backgroundColor: isVisible ? colors.light : '#F5F5F5' },
+                    ]}
+                    onPress={() => {
+                      const next = isVisible
+                        ? visibleActivities.filter((x) => x !== activity)
+                        : [...visibleActivities, activity];
+                      setVisibleActivities(next);
+                    }}
+                  >
+                    <View style={[styles.practiceFilterIcon, { backgroundColor: isVisible ? colors.primary : '#CCC' }]}>
+                      <Ionicons
+                        name={activity === 'reading' ? 'book' : activity === 'listening' ? 'headset' : activity === 'writing' ? 'create' : activity === 'speaking' ? 'mic' : activity === 'translation' ? 'language' : 'chatbubbles'}
+                        size={24}
+                        color="#FFF"
+                      />
+                    </View>
+                    <Text style={styles.practiceFilterLabel}>{activity.charAt(0).toUpperCase() + activity.slice(1)}</Text>
+                    {isVisible && <Ionicons name="checkmark-circle" size={20} color={colors.primary} />}
+                  </TouchableOpacity>
+                );
+              })}
+            </View>
+            <TouchableOpacity
+              style={[styles.applyToAllRow, applyToAllLanguages && styles.applyToAllRowActive]}
+              onPress={() => setApplyToAllLanguages(!applyToAllLanguages)}
+            >
+              <Ionicons name={applyToAllLanguages ? 'checkmark-circle' : 'ellipse-outline'} size={24} color={applyToAllLanguages ? '#4A90E2' : '#999'} />
+              <Text style={styles.applyToAllText}>Apply to all languages</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.practiceFilterDone}
+              onPress={() => {
+                savePracticeVisibleActivities(visibleActivities, applyToAllLanguages);
+                setPracticeFilterModalVisible(false);
+              }}
+            >
+              <Text style={styles.practiceFilterDoneText}>Done</Text>
+            </TouchableOpacity>
+          </View>
+        </TouchableOpacity>
+      </Modal>
 
       {/* Language Selector Modal */}
       <Modal
@@ -468,6 +585,15 @@ const styles = StyleSheet.create({
     color: '#1A1A1A',
     marginBottom: 16,
   },
+  sectionTitleRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 16,
+  },
+  filterIconButton: {
+    padding: 8,
+  },
   activityCardContainer: {
     marginBottom: 16,
   },
@@ -553,6 +679,80 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  practiceFilterModal: {
+    backgroundColor: '#FFF',
+    borderRadius: 16,
+    padding: 20,
+    width: '100%',
+    maxWidth: 400,
+  },
+  practiceFilterHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 4,
+  },
+  practiceFilterTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#1A1A1A',
+  },
+  practiceFilterSubtitle: {
+    fontSize: 14,
+    color: '#666',
+    marginBottom: 16,
+  },
+  practiceFilterGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 10,
+    marginBottom: 16,
+  },
+  practiceFilterItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 10,
+    paddingHorizontal: 12,
+    borderRadius: 12,
+    borderWidth: 2,
+    gap: 8,
+  },
+  practiceFilterIcon: {
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  practiceFilterLabel: {
+    fontSize: 15,
+    fontWeight: '600',
+    color: '#1A1A1A',
+    flex: 1,
+  },
+  applyToAllRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 12,
+    gap: 10,
+    marginBottom: 8,
+  },
+  applyToAllRowActive: {},
+  applyToAllText: {
+    fontSize: 16,
+    color: '#1A1A1A',
+  },
+  practiceFilterDone: {
+    backgroundColor: '#4A90E2',
+    paddingVertical: 14,
+    borderRadius: 10,
+    alignItems: 'center',
+  },
+  practiceFilterDoneText: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#FFF',
   },
   languageMenu: {
     backgroundColor: '#FFFFFF',
@@ -663,5 +863,40 @@ const styles = StyleSheet.create({
     fontSize: 13,
     fontWeight: '700',
     color: '#FF6B6B',
+  },
+  generationBanner: {
+    paddingHorizontal: 20,
+    paddingTop: 8,
+  },
+  generationCard: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#F2F2F2',
+    borderRadius: 10,
+    paddingHorizontal: 10,
+    paddingVertical: 8,
+    borderLeftWidth: 4,
+    marginBottom: 8,
+  },
+  generationIcon: {
+    width: 32,
+    height: 32,
+    borderRadius: 7,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  generationInfo: {
+    flex: 1,
+    marginLeft: 10,
+  },
+  generationTitle: {
+    fontSize: 13,
+    fontWeight: '700',
+    color: '#1A1A1A',
+  },
+  generationStatus: {
+    fontSize: 11,
+    color: '#555',
+    marginLeft: 6,
   },
 });

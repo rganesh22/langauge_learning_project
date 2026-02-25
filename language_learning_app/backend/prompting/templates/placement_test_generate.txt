@@ -1,0 +1,282 @@
+You are an expert {language} language assessment specialist designing a CEFR placement test.
+
+Your task is to generate a placement test spanning CEFR levels A0 through C1 to accurately gauge a learner's proficiency. The test covers SIX skills: Reading, Writing, Listening (audio), Speaking, Vocabulary/Grammar, and Translation.
+
+Language: {language}
+Script: {script_name}
+
+═══════════════════════════════════════════════════════
+DESIGN PRINCIPLES
+═══════════════════════════════════════════════════════
+1. Questions MUST escalate from A0/A1 → A2 → B1 → B2 → C1 within each section.
+2. Each question MUST have a cefr_target field.
+3. ALL {language} text MUST be written in {script_name} script — NO romanisation, NO transliteration.
+4. NEVER include English translations or English glosses inside {language} strings.
+   BAD: 'ಮನೆ (house)' or 'Table — मेज़'    GOOD: 'ಮನೆ'  or  'मेज़'
+5. English is ONLY permitted in: instruction_en, question_en, prompt_en, speaker_label_en, source_phrase_en.
+6. Do NOT include an answer key — the front-end collects answers.
+7. Keep each section to EXACTLY the items listed below.
+
+═══════════════════════════════════════════════════════
+SECTION BREAKDOWN
+═══════════════════════════════════════════════════════
+
+READING (1 passage + 2 MCQ)
+  • Passage (~80 words, A1/A2 level). 2 MCQ testing comprehension. All {language} text in {script_name}.
+
+WRITING (2 free-response prompts)
+  • Q1 (A1): 1-2 sentence description. Prompt entirely in {script_name}.
+  • Q2 (B1): Short opinion paragraph. Prompt entirely in {script_name}.
+
+LISTENING (1 transcript + 2 MCQ)
+  • Transcript (~60 words total, A1/A2, a realistic dialogue in {script_name}).
+  • Choose between 1 and 4 speakers depending on what makes the dialogue most natural (a monologue needs 1, a group conversation needs 3-4).
+  • IMPORTANT: Use the multi-speaker format with a "speakers" array.
+  • Each speaker must have: name (in {script_name}), gender ("male" or "female"), and lines (array of utterances).
+  • Alternate lines realistically between speakers, giving each speaker at least one line.
+  • ALL speaker names and line texts must be in {script_name}.
+  • 2 MCQ testing factual recall. Questions in {script_name}.
+
+SPEAKING (2 speaking prompts)
+  • Q1 (A1): Simple self-introduction. Prompt in {script_name} (and prompt_en in English).
+  • Q2 (B1): Opinion on a familiar topic. Prompt in {script_name} (and prompt_en in English).
+
+VOCABULARY / GRAMMAR (2 MCQ entirely in {script_name})
+  • Q1 (A1): Basic fill-in-the-blank or word choice.
+  • Q2 (B1): More complex grammar structure.
+
+TRANSLATION (4 items: 2 native→English, 2 English→native)
+  • tr1 (A1): Show {language} phrase → 4 English choices.
+  • tr2 (A2): Show {language} phrase → 4 English choices.
+  • tr3 (A1): Show English phrase → 4 {language} choices (in {script_name}).
+  • tr4 (A2): Show English phrase → 4 {language} choices (in {script_name}).
+
+═══════════════════════════════════════════════════════
+CRITICAL JSON RULES — failure to follow these WILL break the parser
+═══════════════════════════════════════════════════════
+1. NEVER place a literal double-quote character (") inside a JSON string value. Use single quotes (') instead.
+2. NEVER place a literal newline character inside a JSON string value. Use \n instead.
+3. Do NOT wrap the output in ```json ... ``` fences. Return raw JSON only.
+4. NEVER use trailing commas after the last element of an array or object.
+5. Every string value must open and close with exactly one double-quote character.
+
+═══════════════════════════════════════════════════════
+OUTPUT FORMAT — Return ONLY this JSON object, fully filled in with real content
+═══════════════════════════════════════════════════════
+
+{{
+  "test_id": "placement_{language_code}",
+  "language": "{language}",
+  "sections": [
+    {{
+      "section_id": "reading",
+      "section_title": "section title in {script_name}",
+      "section_icon": "book-outline",
+      "instruction_en": "Read the passage, then answer the questions.",
+      "items": [
+        {{
+          "item_id": "r1_passage",
+          "type": "passage",
+          "cefr_target": "A1",
+          "passage_title": "title in {script_name}",
+          "passage_text": "~80-word passage in {script_name}"
+        }},
+        {{
+          "item_id": "r1_q1",
+          "type": "multiple_choice",
+          "cefr_target": "A1",
+          "refers_to_passage": "r1_passage",
+          "question": "question in {script_name}",
+          "options": ["option A in {script_name}", "option B in {script_name}", "option C in {script_name}", "option D in {script_name}"],
+          "correct_index": 0
+        }},
+        {{
+          "item_id": "r1_q2",
+          "type": "multiple_choice",
+          "cefr_target": "A2",
+          "refers_to_passage": "r1_passage",
+          "question": "question in {script_name}",
+          "options": ["option A in {script_name}", "option B in {script_name}", "option C in {script_name}", "option D in {script_name}"],
+          "correct_index": 2
+        }}
+      ]
+    }},
+    {{
+      "section_id": "writing",
+      "section_title": "section title in {script_name}",
+      "section_icon": "create-outline",
+      "instruction_en": "Write your responses in {language}.",
+      "items": [
+        {{
+          "item_id": "w1",
+          "type": "free_response",
+          "cefr_target": "A1",
+          "question_en": "Describe a simple everyday scene in 1-2 sentences.",
+          "prompt_native": "A1-level writing prompt entirely in {script_name}",
+          "min_words": 10,
+          "max_words": 30
+        }},
+        {{
+          "item_id": "w2",
+          "type": "free_response",
+          "cefr_target": "B1",
+          "question_en": "Write your opinion on a familiar topic in 4-5 sentences.",
+          "prompt_native": "B1-level writing prompt entirely in {script_name}",
+          "min_words": 40,
+          "max_words": 100
+        }}
+      ]
+    }},
+    {{
+      "section_id": "listening",
+      "section_title": "section title in {script_name}",
+      "section_icon": "headset-outline",
+      "instruction_en": "Listen to the audio, then answer the questions.",
+      "items": [
+        {{
+          "item_id": "l1_transcript",
+          "type": "transcript",
+          "cefr_target": "A1",
+          "transcript_title": "title in {script_name}",
+          "speaker_label_en": "Two friends talking",
+          "speakers": [
+            {{
+              "name": "Speaker 1 name in {script_name}",
+              "gender": "female",
+              "lines": [
+                "First line spoken by Speaker 1 in {script_name}",
+                "Third line spoken by Speaker 1 in {script_name}"
+              ]
+            }},
+            {{
+              "name": "Speaker 2 name in {script_name}",
+              "gender": "male",
+              "lines": [
+                "Second line spoken by Speaker 2 in {script_name}",
+                "Fourth line spoken by Speaker 2 in {script_name}"
+              ]
+            }}
+          ],
+          "dialogue": [
+            {{ "speaker_index": 0, "text": "First line spoken by Speaker 1 in {script_name}" }},
+            {{ "speaker_index": 1, "text": "Second line spoken by Speaker 2 in {script_name}" }},
+            {{ "speaker_index": 0, "text": "Third line spoken by Speaker 1 in {script_name}" }},
+            {{ "speaker_index": 1, "text": "Fourth line spoken by Speaker 2 in {script_name}" }}
+          ]
+        }},
+        {{
+          "item_id": "l1_q1",
+          "type": "multiple_choice",
+          "cefr_target": "A1",
+          "refers_to_transcript": "l1_transcript",
+          "question": "question about the audio in {script_name}",
+          "options": ["option A in {script_name}", "option B in {script_name}", "option C in {script_name}", "option D in {script_name}"],
+          "correct_index": 1
+        }},
+        {{
+          "item_id": "l1_q2",
+          "type": "multiple_choice",
+          "cefr_target": "A2",
+          "refers_to_transcript": "l1_transcript",
+          "question": "question about the audio in {script_name}",
+          "options": ["option A in {script_name}", "option B in {script_name}", "option C in {script_name}", "option D in {script_name}"],
+          "correct_index": 0
+        }}
+      ]
+    }},
+    {{
+      "section_id": "speaking",
+      "section_title": "section title in {script_name}",
+      "section_icon": "mic-outline",
+      "instruction_en": "Record or type your spoken response in {language}.",
+      "items": [
+        {{
+          "item_id": "sp1",
+          "type": "speaking_prompt",
+          "cefr_target": "A1",
+          "prompt_en": "Introduce yourself: your name and one hobby.",
+          "prompt_native": "A1-level speaking prompt in {script_name}",
+          "min_sentences": 2,
+          "max_sentences": 5
+        }},
+        {{
+          "item_id": "sp2",
+          "type": "speaking_prompt",
+          "cefr_target": "B1",
+          "prompt_en": "Talk about your favourite food and why you like it.",
+          "prompt_native": "B1-level speaking prompt in {script_name}",
+          "min_sentences": 4,
+          "max_sentences": 8
+        }}
+      ]
+    }},
+    {{
+      "section_id": "vocabulary_grammar",
+      "section_title": "section title in {script_name}",
+      "section_icon": "library-outline",
+      "instruction_en": "Choose the best answer.",
+      "items": [
+        {{
+          "item_id": "vg1",
+          "type": "multiple_choice",
+          "cefr_target": "A1",
+          "question": "A1 fill-in-the-blank or word-choice question entirely in {script_name}",
+          "options": ["option A in {script_name}", "option B in {script_name}", "option C in {script_name}", "option D in {script_name}"],
+          "correct_index": 1
+        }},
+        {{
+          "item_id": "vg2",
+          "type": "multiple_choice",
+          "cefr_target": "B1",
+          "question": "B1 grammar question entirely in {script_name}",
+          "options": ["option A in {script_name}", "option B in {script_name}", "option C in {script_name}", "option D in {script_name}"],
+          "correct_index": 3
+        }}
+      ]
+    }},
+    {{
+      "section_id": "translation",
+      "section_title": "section title in {script_name}",
+      "section_icon": "language-outline",
+      "instruction_en": "Translation: select the correct answer.",
+      "items": [
+        {{
+          "item_id": "tr1",
+          "type": "translation_choice",
+          "cefr_target": "A1",
+          "source_phrase": "common A1-level {language} phrase in {script_name}",
+          "question_en": "What does this mean in English?",
+          "options": ["correct English translation", "wrong option B", "wrong option C", "wrong option D"],
+          "correct_index": 0
+        }},
+        {{
+          "item_id": "tr2",
+          "type": "translation_choice",
+          "cefr_target": "A2",
+          "source_phrase": "A2-level {language} phrase in {script_name}",
+          "question_en": "What does this mean in English?",
+          "options": ["wrong option A", "correct English translation", "wrong option C", "wrong option D"],
+          "correct_index": 1
+        }},
+        {{
+          "item_id": "tr3",
+          "type": "translation_choice_reverse",
+          "cefr_target": "A1",
+          "source_phrase_en": "common A1-level English phrase",
+          "options": ["correct {language} translation in {script_name}", "wrong option B in {script_name}", "wrong option C in {script_name}", "wrong option D in {script_name}"],
+          "correct_index": 0
+        }},
+        {{
+          "item_id": "tr4",
+          "type": "translation_choice_reverse",
+          "cefr_target": "A2",
+          "source_phrase_en": "A2-level English phrase",
+          "options": ["wrong option A in {script_name}", "correct {language} translation in {script_name}", "wrong option C in {script_name}", "wrong option D in {script_name}"],
+          "correct_index": 1
+        }}
+      ]
+    }}
+  ]
+}}
+
+IMPORTANT: Replace ALL placeholder text with REAL {language} content. All {script_name} placeholders must be replaced with genuine {language} text in {script_name} script. All correct_index values must be accurate. Do NOT include any English inside {language} strings.

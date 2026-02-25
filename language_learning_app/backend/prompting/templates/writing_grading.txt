@@ -39,15 +39,16 @@ IMPORTANT: Structure the feedback deterministically:
 - Second paragraph: Vocabulary usage (including required words)
 - Third paragraph: Grammar and accuracy
 - Fourth paragraph: Coherence and clarity
-- Use \\n\\n between paragraphs for proper transliteration chunking
+- Use the two-character escape sequence \n\n (backslash-n backslash-n) between paragraphs — do NOT use a real line break inside any JSON string value
 
-Return ONLY valid JSON (no markdown wrappers) in this exact format:
+Return ONLY valid JSON (no markdown wrappers, no code fences, no trailing text) in this exact format.
+ALL string values must be on a single logical line — use the escape sequence \n to represent newlines inside strings, never a real newline character:
 {{
     "score": 85,
     "vocabulary_score": 90,
     "grammar_score": 80,
     "coherence_score": 85,
-    "feedback": "detailed feedback in Kannada script, structured with \\n\\n between paragraphs",
+    "feedback": "first paragraph in Kannada\n\nsecond paragraph in Kannada\n\nthird paragraph\n\nfourth paragraph",
     "required_words_feedback": {{
         "word1": "feedback in Kannada",
         "word2": "feedback in Kannada"

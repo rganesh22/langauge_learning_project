@@ -14,6 +14,7 @@ import * as FileSystem from 'expo-file-system';
 import SafeText from '../../components/SafeText';
 import { LanguageContext } from '../../contexts/LanguageContext';
 import { useActivityData } from './shared/hooks/useActivityData';
+import { useGenerationCallbacks } from './shared/hooks/useGenerationCallbacks';
 import { useTransliteration } from './shared/hooks/useTransliteration';
 import { useDictionary } from './shared/hooks/useDictionary';
 import { useGrading } from './shared/hooks/useGrading';
@@ -22,6 +23,8 @@ import { useRecording } from './shared/hooks/useRecording';
 import { VocabularyDictionary, APIDebugModal, TopicSelectionModal, AudioPlayer } from './shared/components';
 import { ACTIVITY_COLORS } from './shared/constants';
 import { normalizeText } from './shared/utils/textProcessing';
+import TextImportModal from '../../components/TextImportModal';
+import TranslationToolModal from '../../components/TranslationToolModal';
 import {
   getProgressTitleLabel,
   getSentenceNumberLabel,
@@ -67,7 +70,8 @@ export default function TranslationActivity({ route, navigation }) {
   const language = routeLang || ctxLanguage || null;
 
   // Use shared hooks
-  const activityData = useActivityData('translation', language, activityId, fromHistory, routeActivityData);
+  const genCallbacks = useGenerationCallbacks();
+  const activityData = useActivityData('translation', language, activityId, fromHistory, routeActivityData, null, genCallbacks);
   const transliteration = useTransliteration(language, activityData.activity);
   const dictionary = useDictionary(language);
   const grading = useGrading('translation', language);
@@ -79,6 +83,8 @@ export default function TranslationActivity({ route, navigation }) {
   const [highlightVocab, setHighlightVocab] = useState(false);
   const [showAPIDebug, setShowAPIDebug] = useState(false);
   const [showTopicModal, setShowTopicModal] = useState(!fromHistory);
+  const [showImportModal, setShowImportModal] = useState(false);
+  const [showTranslationModal, setShowTranslationModal] = useState(false);
   const [allSentencesExpanded, setAllSentencesExpanded] = useState(false); // Start collapsed
   
   // Audio recording state
@@ -314,6 +320,14 @@ export default function TranslationActivity({ route, navigation }) {
   if (activityData.loading) {
     return (
       <View style={styles.container}>
+        <View style={[styles.header, { backgroundColor: colors.primary }]}>
+          <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
+            <Ionicons name="arrow-back" size={24} color="#FFFFFF" />
+          </TouchableOpacity>
+          <View style={styles.headerTitleContainer}>
+            <SafeText style={styles.headerTitle}>Translation</SafeText>
+          </View>
+        </View>
         <View style={styles.loadingContainer}>
           <ActivityIndicator size="large" color={colors.primary} />
           <SafeText style={styles.loadingText}>Loading translation activity...</SafeText>
@@ -391,6 +405,12 @@ export default function TranslationActivity({ route, navigation }) {
             onPress={() => setHighlightVocab(!highlightVocab)}
           >
             <Ionicons name={highlightVocab ? "color-palette" : "color-palette-outline"} size={20} color="#FFFFFF" />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.toggleButton}
+            onPress={() => setShowTranslationModal(true)}
+          >
+            <Ionicons name="language" size={20} color="#FFFFFF" />
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.toggleButton}
@@ -1050,6 +1070,16 @@ export default function TranslationActivity({ route, navigation }) {
                     )}
                   </View>
                 </TouchableOpacity>
+
+                {/* Import Vocab from Sentences */}
+                <TouchableOpacity
+                  style={styles.importVocabButton}
+                  onPress={() => setShowImportModal(true)}
+                  activeOpacity={0.8}
+                >
+                  <Ionicons name="cloud-upload-outline" size={18} color="#FFF" />
+                  <Text style={styles.importVocabButtonText}>Import Vocab from Sentences</Text>
+                </TouchableOpacity>
               </View>
             )}
           </>
@@ -1064,6 +1094,31 @@ export default function TranslationActivity({ route, navigation }) {
         initialSearchQuery={dictionary.initialSearchQuery}
         dictionaryLanguage={dictionary.dictionaryLanguage}
         setDictionaryLanguage={dictionary.setDictionaryLanguage}
+      />
+
+      {/* Translation Tool Modal */}
+      <TranslationToolModal
+        visible={showTranslationModal}
+        onClose={() => setShowTranslationModal(false)}
+        language={language}
+        prefillText={(activityData.activity?.sentences || []).map(s => s.source || s.target || '').join(' ')}
+        onMakeVocabCards={() => {
+          setShowTranslationModal(false);
+          setShowImportModal(true);
+        }}
+      />
+
+      {/* Import Vocab Modal — pre-filled with all source sentences */}
+      <TextImportModal
+        visible={showImportModal}
+        onClose={() => setShowImportModal(false)}
+        language={language}
+        prefillText={(activityData.activity?.sentences || []).map(s => s.source || s.target || '').join(' ')}
+        onImportComplete={(result) => {
+          setShowImportModal(false);
+          const { Alert } = require('react-native');
+          Alert.alert('Import Complete', `${result.new_words} word${result.new_words !== 1 ? 's' : ''} added to your library${result.deck_name ? ` in deck "${result.deck_name}"` : ''}.`);
+        }}
       />
 
       {/* API Debug Modal */}
@@ -1617,5 +1672,21 @@ const styles = StyleSheet.create({
     opacity: 0.9,
     fontStyle: 'italic',
     marginTop: 2,
+  },
+  importVocabButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#6366F1',
+    paddingVertical: 11,
+    paddingHorizontal: 20,
+    borderRadius: 10,
+    marginTop: 12,
+    gap: 8,
+  },
+  importVocabButtonText: {
+    color: '#FFF',
+    fontSize: 14,
+    fontWeight: '700',
   },
 });

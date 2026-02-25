@@ -287,6 +287,21 @@ export default function VocabularyDictionary({
             </View>
           ) : null}
         </View>
+        {/* Origin chip — same shape as other chips */}
+        {item.origin ? (() => {
+          const origin = item.origin;
+          let bg, textColor, label;
+          if (origin === 'default') { bg = '#16A34A'; textColor = '#FFF'; label = 'Original Set'; }
+          else if (origin === 'activity') { bg = '#2563EB'; textColor = '#FFF'; label = 'Activity'; }
+          else { bg = '#6B7280'; textColor = '#FFF'; label = 'User Upload'; }
+          return (
+            <View style={styles.originChipRow}>
+              <View style={[styles.tag, { backgroundColor: bg }]}>
+                <SafeText style={[styles.tagText, { color: textColor }]}>{label}</SafeText>
+              </View>
+            </View>
+          );
+        })() : null}
       </View>
       </TouchableOpacity>
     );
@@ -1016,6 +1031,21 @@ const styles = StyleSheet.create({
   tagText: {
     fontSize: 11,
     fontWeight: '600',
+  },
+  originChipRow: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    marginTop: 8,
+  },
+  originChip: {
+    paddingHorizontal: 8,
+    paddingVertical: 3,
+    borderRadius: 6,
+  },
+  originChipText: {
+    fontSize: 10,
+    fontWeight: '700',
+    letterSpacing: 0.3,
   },
   loadingFooter: {
     padding: 16,

@@ -14,6 +14,7 @@ import * as FileSystem from 'expo-file-system';
 import SafeText from '../../components/SafeText';
 import { LanguageContext } from '../../contexts/LanguageContext';
 import { useActivityData } from './shared/hooks/useActivityData';
+import { useGenerationCallbacks } from './shared/hooks/useGenerationCallbacks';
 import { useTransliteration } from './shared/hooks/useTransliteration';
 import { useDictionary } from './shared/hooks/useDictionary';
 import { useGrading } from './shared/hooks/useGrading';
@@ -53,6 +54,7 @@ import {
 import VocabularyDictionary from './shared/components/VocabularyDictionary';
 import { AudioPlayer } from './shared/components/AudioPlayer';
 import { TopicSelectionModal } from './shared/components';
+import TranslationToolModal from '../../components/TranslationToolModal';
 import { API_BASE_URL } from './shared/constants';
 
 /**
@@ -67,7 +69,8 @@ export default function SpeakingActivity({ route, navigation }) {
   const language = routeLang || ctxLanguage || null;
 
   // Use shared hooks - pass providedActivityData for history reopening
-  const activityData = useActivityData('speaking', language, activityId, fromHistory, providedActivityData);
+  const genCallbacks = useGenerationCallbacks();
+  const activityData = useActivityData('speaking', language, activityId, fromHistory, providedActivityData, null, genCallbacks);
   const transliteration = useTransliteration(language, activityData.activity);
   const dictionary = useDictionary(language);
   
@@ -82,8 +85,8 @@ export default function SpeakingActivity({ route, navigation }) {
   const [highlightVocab, setHighlightVocab] = useState(false);
   const [rubricExpanded, setRubricExpanded] = useState(false);
   const [tasksExpanded, setTasksExpanded] = useState(true);
-  const [useAudioInput, setUseAudioInput] = useState(true);
   const [showTopicModal, setShowTopicModal] = useState(!fromHistory);
+  const [showTranslationModal, setShowTranslationModal] = useState(false);
   
   // Submission audio playback state
   const [submissionAudioStates, setSubmissionAudioStates] = useState({});
@@ -578,7 +581,7 @@ export default function SpeakingActivity({ route, navigation }) {
   };
 
   const handleSubmit = async () => {
-    if (useAudioInput) {
+    // Always use audio input for speaking activities
       // Audio input mode - send audio directly to backend
       if (!recording.recordingUri) {
         alert('No audio recording found. Please record your speech first.');
@@ -611,16 +614,6 @@ export default function SpeakingActivity({ route, navigation }) {
         console.error('Error preparing audio for submission:', error);
         alert('Failed to prepare audio. Please try again.');
       }
-    } else {
-      // Text input mode (if we want to keep this option)
-      if (!grading.userAnswer || !grading.userAnswer.trim()) {
-        alert('Please type your response before submitting.');
-        return;
-      }
-      // For text mode, we'd need to implement text-based grading
-      // For now, just show a message
-      alert('Please use audio recording mode for speaking activities.');
-    }
   };
 
   // Show topic modal first if it's a new activity
@@ -645,9 +638,25 @@ export default function SpeakingActivity({ route, navigation }) {
 
   if (activityData.loading) {
     return (
-      <View style={styles.centerContainer}>
-        <ActivityIndicator size="large" color={colors.primary} />
-        <SafeText style={styles.loadingText}>{activityData.loadingStatus}</SafeText>
+      <View style={styles.container}>
+        <View style={[styles.header, { backgroundColor: colors.primary }]}>
+          <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
+            <Ionicons name="arrow-back" size={24} color="#FFFFFF" />
+          </TouchableOpacity>
+          <View style={{ flex: 1 }}>
+            {renderText(
+              language === 'urdu' && transliteration.nativeScriptRenderings.headerTitle
+                ? transliteration.nativeScriptRenderings.headerTitle
+                : getSpeakingHeaderLabel(language),
+              styles.headerTitle,
+              true
+            )}
+          </View>
+        </View>
+        <View style={styles.centerContainer}>
+          <ActivityIndicator size="large" color={colors.primary} />
+          <SafeText style={styles.loadingText}>{activityData.loadingStatus}</SafeText>
+        </View>
       </View>
     );
   }
@@ -700,6 +709,12 @@ export default function SpeakingActivity({ route, navigation }) {
             onPress={() => setHighlightVocab(!highlightVocab)}
           >
             <Ionicons name={highlightVocab ? "color-palette" : "color-palette-outline"} size={20} color="#FFFFFF" />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.toggleButton}
+            onPress={() => setShowTranslationModal(true)}
+          >
+            <Ionicons name="language" size={20} color="#FFFFFF" />
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.toggleButton}
@@ -948,9 +963,9 @@ export default function SpeakingActivity({ route, navigation }) {
               </View>
             )}
 
-            {/* Input Mode Toggle */}
+            {/* Input Method – audio only */}
             <View style={[styles.inputModeBox, { backgroundColor: colors.light }]}>
-              <View style={{ marginBottom: 12 }}>
+              <View style={{ marginBottom: 8 }}>
                 <View style={language === 'urdu' && { alignItems: 'flex-start' }}>
                   {renderText(
                     language === 'urdu' && transliteration.nativeScriptRenderings.inputMethodLabel
@@ -966,72 +981,32 @@ export default function SpeakingActivity({ route, navigation }) {
                   </View>
                 )}
               </View>
-              <View style={{ flexDirection: 'row', gap: 8 }}>
-                <TouchableOpacity
-                  onPress={() => setUseAudioInput(false)}
-                  style={[
-                    styles.modeButton,
-                    !useAudioInput && { backgroundColor: colors.primary }
-                  ]}
-                >
-                  <View style={{ flexDirection: 'row', alignItems: 'center', flexWrap: 'wrap' }}>
-                    <Ionicons 
-                      name="create-outline" 
-                      size={20} 
-                      color={!useAudioInput ? '#FFFFFF' : '#666'}
-                      style={{ marginRight: 8 }}
-                    />
-                    <View style={{ flex: 1 }}>
-                      {renderText(
-                        language === 'urdu' && transliteration.nativeScriptRenderings.textMode
-                          ? transliteration.nativeScriptRenderings.textMode
-                          : getTextInputModeLabel(language),
-                        [styles.modeButtonText, !useAudioInput && { color: '#FFFFFF' }]
-                      )}
-                      {transliteration.showTransliterations && transliteration.transliterations.textMode && (
-                        renderTransliteration(
-                          transliteration.transliterations.textMode,
-                          [styles.transliterationText, { fontSize: 11, color: !useAudioInput ? '#FFFFFF' : '#666' }]
-                        )
-                      )}
-                    </View>
-                  </View>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  onPress={() => setUseAudioInput(true)}
-                  style={[
-                    styles.modeButton,
-                    useAudioInput && { backgroundColor: colors.primary }
-                  ]}
-                >
-                  <View style={{ flexDirection: 'row', alignItems: 'center', flexWrap: 'wrap' }}>
-                    <Ionicons 
-                      name="mic-outline" 
-                      size={20} 
-                      color={useAudioInput ? '#FFFFFF' : '#666'}
-                      style={{ marginRight: 8 }}
-                    />
-                    <View style={{ flex: 1 }}>
-                      {renderText(
-                        language === 'urdu' && transliteration.nativeScriptRenderings.audioMode
-                          ? transliteration.nativeScriptRenderings.audioMode
-                          : getAudioInputModeLabel(language),
-                        [styles.modeButtonText, useAudioInput && { color: '#FFFFFF' }]
-                      )}
-                      {transliteration.showTransliterations && transliteration.transliterations.audioMode && (
-                        renderTransliteration(
-                          transliteration.transliterations.audioMode,
-                          [styles.transliterationText, { fontSize: 11, color: useAudioInput ? '#FFFFFF' : '#666' }]
-                        )
-                      )}
-                    </View>
-                  </View>
-                </TouchableOpacity>
+              <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
+                <Ionicons 
+                  name="mic-outline" 
+                  size={20} 
+                  color={colors.primary}
+                  style={{ marginRight: 4 }}
+                />
+                <View style={{ flex: 1 }}>
+                  {renderText(
+                    language === 'urdu' && transliteration.nativeScriptRenderings.audioMode
+                      ? transliteration.nativeScriptRenderings.audioMode
+                      : getAudioInputModeLabel(language),
+                    [styles.modeButtonText, { color: colors.primary }],
+                  )}
+                  {transliteration.showTransliterations && transliteration.transliterations.audioMode && (
+                    renderTransliteration(
+                      transliteration.transliterations.audioMode,
+                      [styles.transliterationText, { fontSize: 11, color: colors.primary }]
+                    )
+                  )}
+                </View>
               </View>
             </View>
 
-            {/* Audio Input Mode */}
-            {useAudioInput ? (
+            {/* Audio Input Mode (only) */}
+            {
               <View>
                 {/* Recording Controls - Only show if no recording exists */}
                 {!recording.recordingUri && (
@@ -1146,29 +1121,10 @@ export default function SpeakingActivity({ route, navigation }) {
                   </View>
                 )}
               </View>
-            ) : (
-              /* Text Input Mode */
-              <TextInput
-                style={[
-                  styles.textInput,
-                  language === 'urdu' && { fontFamily: 'Noto Nastaliq Urdu', textAlign: 'right' }
-                ]}
-                placeholder={
-                  language === 'urdu' && transliteration.nativeScriptRenderings.placeholder
-                    ? transliteration.nativeScriptRenderings.placeholder
-                    : getTypeResponsePlaceholderLabel(language)
-                }
-                value={grading.userAnswer}
-                onChangeText={grading.setUserAnswer}
-                multiline
-                numberOfLines={10}
-                editable={!grading.gradingLoading}
-                placeholderTextColor="#999"
-              />
-            )}
+            }
 
             {/* Submit Button */}
-            {((useAudioInput && recording.recordingUri) || (!useAudioInput && grading.userAnswer)) && !grading.gradingResult && (
+            {recording.recordingUri && !grading.gradingResult && (
               <TouchableOpacity
                 style={[styles.submitButton, { backgroundColor: colors.primary }]}
                 onPress={handleSubmit}
@@ -1574,6 +1530,14 @@ export default function SpeakingActivity({ route, navigation }) {
           </View>
         )}
       </ScrollView>
+
+      {/* Translation Tool Modal */}
+      <TranslationToolModal
+        visible={showTranslationModal}
+        onClose={() => setShowTranslationModal(false)}
+        language={language}
+        prefillText={activityData.activity?.activity_name || ''}
+      />
 
       {/* Vocabulary Dictionary Modal */}
       <VocabularyDictionary

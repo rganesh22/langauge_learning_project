@@ -192,6 +192,33 @@ export default function APIDebugModal({ visible, onClose, allApiDetails }) {
                             </View>
                           )}
 
+                          {/* Per-call TTS / audio generation results (listening etc.) */}
+                          {apiCall.ttsErrors && Array.isArray(apiCall.ttsErrors) && apiCall.ttsErrors.length > 0 && (
+                            <View style={styles.errorSection}>
+                              <Text style={styles.errorLabel}>
+                                🔊 Audio generation errors ({apiCall.ttsErrors.length} call{apiCall.ttsErrors.length !== 1 ? 's' : ''}):
+                              </Text>
+                              {apiCall.ttsErrors.map((msg, idx) => (
+                                <Text key={idx} style={styles.errorText}>
+                                  {idx + 1}. {msg}
+                                </Text>
+                              ))}
+                            </View>
+                          )}
+                          {/* Per-call TTS results (all calls: OK or error) */}
+                          {apiCall.ttsResults && Array.isArray(apiCall.ttsResults) && apiCall.ttsResults.length > 0 && (
+                            <View style={styles.detailSection}>
+                              <Text style={styles.detailLabel}>
+                                🔊 Audio generation results ({apiCall.ttsResults.length} call{apiCall.ttsResults.length !== 1 ? 's' : ''}):
+                              </Text>
+                              {apiCall.ttsResults.map((msg, idx) => (
+                                <Text key={idx} style={styles.detailValue}>
+                                  {msg}
+                                </Text>
+                              ))}
+                            </View>
+                          )}
+
                           {/* Token Stats */}
                           {tokenInfo && (inputTokens > 0 || outputTokens > 0) && (
                             <View style={styles.detailSection}>

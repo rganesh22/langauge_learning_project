@@ -10,6 +10,7 @@ import {
   Modal,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 import LessonRenderer from '../components/LessonRenderer';
 import SafeText from '../components/SafeText';
 import { LanguageContext, LANGUAGES } from '../contexts/LanguageContext';
@@ -17,12 +18,19 @@ import NoLanguageEmptyState from '../components/NoLanguageEmptyState';
 
 const API_BASE_URL = __DEV__ ? 'http://localhost:8080' : 'http://localhost:8080';
 
+const CEFR_COLORS = {
+  A0: '#6B7280', A1: '#10B981', A2: '#3B82F6',
+  B1: '#F59E0B', B2: '#EF4444', C1: '#8B5CF6', C2: '#EC4899',
+};
+
 const LessonsScreen = ({ route }) => {
+  const navigation = useNavigation();
   const { selectedLanguage: ctxLanguage, setSelectedLanguage: setCtxLanguage, availableLanguages } = useContext(LanguageContext);
   const selectedLanguage = ctxLanguage;
   const setSelectedLanguage = (l) => setCtxLanguage(l);
   const [languageMenuVisible, setLanguageMenuVisible] = useState(false);
   const [allLanguagesSrsStats, setAllLanguagesSrsStats] = useState({});
+  const [placementResult, setPlacementResult] = useState(null);
   
   // State management
   const [units, setUnits] = useState([]);
@@ -41,6 +49,7 @@ const LessonsScreen = ({ route }) => {
     if (selectedLanguage) {
       loadUnits();
       loadAllLanguagesSrsStats();
+      loadPlacementResult();
     }
   }, [selectedLanguage, availableLanguages.length]);
 
@@ -142,8 +151,17 @@ const LessonsScreen = ({ route }) => {
     }
   };
 
-  const loadUnits = async () => {
-    setLoading(true);
+  const loadPlacementResult = async () => {
+    try {
+      const res = await fetch(`${API_BASE_URL}/api/placement-test/latest/${selectedLanguage}`);
+      if (res.ok) {
+        const data = await res.json();
+        setPlacementResult(data.result || null);
+      }
+    } catch (_) {}
+  };
+
+  const loadUnits = async () => {    setLoading(true);
     try {
       const response = await fetch(`${API_BASE_URL}/api/units/${selectedLanguage}`);
       if (response.ok) {
@@ -666,6 +684,37 @@ const LessonsScreen = ({ route }) => {
           <Ionicons name="chevron-down" size={16} color="#666" />
         </TouchableOpacity>
       </View>
+
+      {/* Placement Test Banner — only show on units view */}
+      {viewMode === 'units' && (
+        <TouchableOpacity
+          style={[styles.placementBanner, { borderColor: languageColor }]}
+          onPress={() => navigation.navigate('PlacementTest', { language: selectedLanguage })}
+          activeOpacity={0.85}
+        >
+          <View style={[styles.placementBannerIcon, { backgroundColor: languageColor + '18' }]}>
+            <Ionicons name="analytics-outline" size={22} color={languageColor} />
+          </View>
+          <View style={styles.placementBannerContent}>
+            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
+              <SafeText style={styles.placementBannerTitle}>
+                {placementResult ? 'Your Level' : 'Placement Test'}
+              </SafeText>
+              {placementResult && (
+                <View style={[styles.placementLevelChip, { backgroundColor: CEFR_COLORS[placementResult.overall_level] || '#9CA3AF' }]}>
+                  <SafeText style={styles.placementLevelChipText}>{placementResult.overall_level}</SafeText>
+                </View>
+              )}
+            </View>
+            <SafeText style={styles.placementBannerSubtitle}>
+              {placementResult
+                ? 'Retake to update your CEFR level'
+                : 'Find your reading, writing, listening & speaking level'}
+            </SafeText>
+          </View>
+          <Ionicons name="chevron-forward" size={18} color={languageColor} />
+        </TouchableOpacity>
+      )}
 
       {loading ? (
         <View style={styles.loadingContainer}>
@@ -1281,6 +1330,56 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: '600',
     marginLeft: 8,
+  },
+  // Placement test banner
+  placementBanner: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginHorizontal: 16,
+    marginTop: 10,
+    marginBottom: 4,
+    padding: 14,
+    backgroundColor: '#FFFFFF',
+    borderRadius: 14,
+    borderWidth: 1.5,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.07,
+    shadowRadius: 6,
+    elevation: 2,
+  },
+  placementBannerIcon: {
+    width: 44,
+    height: 44,
+    borderRadius: 12,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 12,
+  },
+  placementBannerContent: {
+    flex: 1,
+  },
+  placementBannerTitle: {
+    fontSize: 15,
+    fontWeight: '700',
+    color: '#1F2937',
+    marginBottom: 2,
+  },
+  placementBannerSubtitle: {
+    fontSize: 12,
+    color: '#6B7280',
+  },
+  placementLevelChip: {
+    paddingHorizontal: 10,
+    paddingVertical: 3,
+    borderRadius: 8,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  placementLevelChipText: {
+    fontSize: 13,
+    fontWeight: '800',
+    color: '#FFFFFF',
   },
 });
 
