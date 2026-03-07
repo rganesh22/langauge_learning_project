@@ -20,9 +20,10 @@ import WeeklyOverviewSection from '../components/WeeklyOverviewSection';
 
 const API_BASE_URL = __DEV__ ? 'http://localhost:9090' : 'http://localhost:9090';
 
-const ACTIVITIES = ['reading', 'listening', 'writing', 'speaking', 'translation', 'flashcards'];
-const PRACTICE_ACTIVITIES = ['reading', 'listening', 'writing', 'speaking', 'translation'];
+const ACTIVITIES = ['transliteration', 'reading', 'listening', 'writing', 'speaking', 'translation', 'flashcards'];
+const PRACTICE_ACTIVITIES = ['transliteration', 'reading', 'listening', 'writing', 'speaking', 'translation'];
 const ACTIVITY_COLORS = {
+  transliteration: { primary: '#EC4899', light: '#FCE7F3' },
   reading: { primary: '#4A90E2', light: '#E8F4FD' },
   listening: { primary: '#2B654A', light: '#E8F5EF' },
   writing: { primary: '#FF6B6B', light: '#FFE8E8' },
@@ -32,6 +33,7 @@ const ACTIVITY_COLORS = {
 };
 
 import { LANGUAGES, LanguageContext } from '../contexts/LanguageContext';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const LEVEL_COLORS = {
   'All': { bg: '#6C757D', text: '#FFFFFF' },
@@ -432,6 +434,7 @@ const ContributionGraph = ({ data, viewType, language, navigation }) => {
                       <View style={[styles.historicalActivityIconCircle, { backgroundColor: colors.light }]}>
                         <Ionicons 
                           name={
+                            activityType === 'transliteration' ? 'swap-horizontal' :
                             activityType === 'reading' ? 'book' : 
                             activityType === 'listening' ? 'headset' :
                             activityType === 'writing' ? 'create' : 
@@ -461,6 +464,7 @@ const ContributionGraph = ({ data, viewType, language, navigation }) => {
 };
 
 export default function ProfileScreen() {
+  const insets = useSafeAreaInsets();
   const navigation = useNavigation();
   const [profile, setProfile] = useState({});
   const [level, setLevel] = useState({ level: 'A1', progress: 0, total_mastered: 0 });
@@ -707,7 +711,9 @@ export default function ProfileScreen() {
   const [placementResults, setPlacementResults] = useState({}); // code -> result
   const [weeklyOverviewExpanded, setWeeklyOverviewExpanded] = useState(false);
   const [weeklyOverviewKey, setWeeklyOverviewKey] = useState(0); // Key to force reload
-  
+  const [defaultTranslateToLangs, setDefaultTranslateToLangs] = useState([]);
+  const [defaultTranslateExpanded, setDefaultTranslateExpanded] = useState(false);
+
   // Languages being learned
   const [learningLanguages, setLearningLanguages] = useState([]);
   
@@ -769,6 +775,7 @@ export default function ProfileScreen() {
     loadProfile();
     loadSelectedLanguages();
     loadDefaultLanguage();
+    loadDefaultTranslateToLangs();
     loadSelectedInterests();
     loadAllLanguagesSrsStats(); // Load SRS stats for all languages
     // Load SRS settings for current language on mount
@@ -845,6 +852,36 @@ export default function ProfileScreen() {
       }
     } catch (error) {
       console.error('Error loading default language:', error);
+    }
+  };
+
+  const loadDefaultTranslateToLangs = async () => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/user-preferences?keys=default_translate_target_languages`);
+      if (response.ok) {
+        const data = await response.json();
+        const raw = data.default_translate_target_languages;
+        if (raw != null) {
+          const arr = typeof raw === 'string' ? (() => { try { return JSON.parse(raw); } catch { return []; } })() : (Array.isArray(raw) ? raw : []);
+          setDefaultTranslateToLangs(Array.isArray(arr) ? arr : []);
+        }
+      }
+    } catch (error) {
+      console.error('Error loading default translate-to languages:', error);
+    }
+  };
+
+  const saveDefaultTranslateToLangs = async (langs) => {
+    try {
+      await fetch(`${API_BASE_URL}/api/user-preferences`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ default_translate_target_languages: JSON.stringify(langs) }),
+      });
+      setDefaultTranslateToLangs(langs);
+    } catch (error) {
+      console.error('Error saving default translate-to languages:', error);
+      Alert.alert('Error', 'Failed to save default translate-to languages');
     }
   };
 
@@ -1520,7 +1557,7 @@ export default function ProfileScreen() {
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
       {/* Profile Header */}
-      <View style={styles.profileHeader}>
+      <View style={[styles.profileHeader, { paddingTop: insets.top + 8 }]}>
         <View style={styles.avatarContainer}>
           <TouchableOpacity
             onPress={() => setEditingProfile(true)}
@@ -2141,6 +2178,77 @@ export default function ProfileScreen() {
         onToggle={() => setWeeklyOverviewExpanded(!weeklyOverviewExpanded)}
       />
 
+      {/* Default translate-to languages (used by Translation tool) */}
+      <View style={styles.section}>
+        <TouchableOpacity
+          style={styles.statsCardHeader}
+          onPress={() => setDefaultTranslateExpanded(!defaultTranslateExpanded)}
+          activeOpacity={0.7}
+        >
+          <View style={styles.statsCardHeaderLeft}>
+            <Ionicons
+              name={defaultTranslateExpanded ? 'chevron-down' : 'chevron-forward'}
+              size={20}
+              color="#666"
+              style={styles.statsCardChevron}
+            />
+            <Text style={styles.sectionTitle}>General Settings</Text>
+          </View>
+        </TouchableOpacity>
+
+        {defaultTranslateExpanded && (
+          <View style={styles.defaultTranslateContent}>
+            <Text style={styles.sectionSubtitle}>
+              Default translation languages
+            </Text>
+            <Text style={styles.defaultTranslateHint}>
+              Choose which languages the Translation tool should translate into by default. You can override this inside the tool at any time.
+            </Text>
+            <View style={styles.chipRow}>
+              {[LANGUAGES.find(l => l.code === 'english'), ...LANGUAGES.filter(l => l.code !== 'english' && (l.active === true))].filter(Boolean).map((l) => {
+                const isSelected = defaultTranslateToLangs.includes(l.code);
+                return (
+                  <TouchableOpacity
+                    key={l.code}
+                    style={[
+                      styles.defaultTranslateChip,
+                      isSelected && styles.defaultTranslateChipSelected,
+                    ]}
+                    onPress={() => {
+                      const next = isSelected
+                        ? defaultTranslateToLangs.filter((c) => c !== l.code)
+                        : [...defaultTranslateToLangs, l.code];
+                      saveDefaultTranslateToLangs(next);
+                    }}
+                    activeOpacity={0.7}
+                  >
+                    <View style={[
+                      styles.languagePreviewIcon,
+                      { backgroundColor: l.color || '#4A90E2' },
+                    ]}>
+                      <Text style={[
+                        styles.languagePreviewIconText,
+                        l.code === 'urdu' && { fontFamily: 'Noto Nastaliq Urdu' },
+                      ]}>
+                        {l.nativeChar || l.langCode?.toUpperCase() || l.code?.slice(0, 2)}
+                      </Text>
+                    </View>
+                    <Text
+                      style={[
+                        styles.defaultTranslateChipLabel,
+                        isSelected && { color: l.color || '#4A90E2', fontWeight: '600' },
+                      ]}
+                    >
+                      {l.name}
+                    </Text>
+                  </TouchableOpacity>
+                );
+              })}
+            </View>
+          </View>
+        )}
+      </View>
+
       {/* Language Specific Settings Divider */}
       <View style={styles.languageSettingsDivider}>
         <Text style={styles.dividerTitle}>Language Specific Settings</Text>
@@ -2226,41 +2334,63 @@ export default function ProfileScreen() {
             {/* Language Stats Summary */}
             {languageStats && Object.keys(languageStats).length > 0 && (
               <View style={styles.languageStatsSummary}>
-                <View style={styles.languageStatItem}>
-                  <Ionicons 
-                    name="trophy" 
-                    size={20} 
-                    color={LEVEL_COLORS[level.level]?.bg || '#6C757D'} 
-                  />
-                  <Text style={styles.languageStatValue}>{level.level}</Text>
-                  <Text style={styles.languageStatLabel}>Level</Text>
+                {/* Row 1: Level, Progress, Activities, Words Mastered */}
+                <View style={styles.languageStatsRow}>
+                  <View style={styles.languageStatItem}>
+                    <Ionicons
+                      name="trophy"
+                      size={20}
+                      color={LEVEL_COLORS[level.level]?.bg || '#6C757D'}
+                    />
+                    <Text style={styles.languageStatValue}>{level.level}</Text>
+                    <Text style={styles.languageStatLabel}>Level</Text>
+                  </View>
+                  <View style={styles.languageStatItem}>
+                    <Ionicons name="trending-up" size={20} color="#FF6B6B" />
+                    <Text style={styles.languageStatValue}>
+                      {level.progress !== undefined ? `${Math.round(level.progress)}%` : '0%'}
+                    </Text>
+                    <Text style={styles.languageStatLabel}>Progress</Text>
+                  </View>
+                  <View style={styles.languageStatItem}>
+                    <Ionicons name="book" size={20} color="#4A90E2" />
+                    <Text style={styles.languageStatValue}>{languageStats.total_activities || 0}</Text>
+                    <Text style={styles.languageStatLabel}>Activities</Text>
+                  </View>
+                  <View style={styles.languageStatItem}>
+                    <Ionicons name="checkmark-circle" size={20} color="#50C878" />
+                    <Text style={styles.languageStatValue}>{languageStats.words_mastered || 0}</Text>
+                    <Text style={styles.languageStatLabel}>Words Mastered</Text>
+                  </View>
                 </View>
-                <View style={styles.languageStatItem}>
-                  <Ionicons name="trending-up" size={20} color="#FF6B6B" />
-                  <Text style={styles.languageStatValue}>
-                    {level.progress !== undefined ? `${Math.round(level.progress)}%` : '0%'}
-                  </Text>
-                  <Text style={styles.languageStatLabel}>Progress</Text>
-                </View>
-                <View style={styles.languageStatItem}>
-                  <Ionicons name="book" size={20} color="#4A90E2" />
-                  <Text style={styles.languageStatValue}>{languageStats.total_activities || 0}</Text>
-                  <Text style={styles.languageStatLabel}>Activities</Text>
-                </View>
-                <View style={styles.languageStatItem}>
-                  <Ionicons name="checkmark-circle" size={20} color="#50C878" />
-                  <Text style={styles.languageStatValue}>{languageStats.words_mastered || 0}</Text>
-                  <Text style={styles.languageStatLabel}>Words Mastered</Text>
-                </View>
-                <View style={styles.languageStatItem}>
-                  <Ionicons name="school" size={20} color="#FF9500" />
-                  <Text style={styles.languageStatValue}>{languageStats.words_learning || 0}</Text>
-                  <Text style={styles.languageStatLabel}>Learning</Text>
-                </View>
-                <View style={styles.languageStatItem}>
-                  <Ionicons name="star" size={20} color="#9B59B6" />
-                  <Text style={styles.languageStatValue}>{languageStats.average_score || 0}%</Text>
-                  <Text style={styles.languageStatLabel}>Avg Score</Text>
+                {/* Row 2: Learning, Avg Score, Lessons, Time spent */}
+                <View style={[styles.languageStatsRow, styles.languageStatsRowLast]}>
+                  <View style={styles.languageStatItem}>
+                    <Ionicons name="school" size={20} color="#FF9500" />
+                    <Text style={styles.languageStatValue}>{languageStats.words_learning || 0}</Text>
+                    <Text style={styles.languageStatLabel}>Learning</Text>
+                  </View>
+                  <View style={styles.languageStatItem}>
+                    <Ionicons name="star" size={20} color="#9B59B6" />
+                    <Text style={styles.languageStatValue}>{languageStats.average_score || 0}%</Text>
+                    <Text style={styles.languageStatLabel}>Avg Score</Text>
+                  </View>
+                  <View style={styles.languageStatItem}>
+                    <Ionicons name="library" size={20} color="#4A90E2" />
+                    <Text style={styles.languageStatValue}>{languageStats.lessons_completed ?? 0}</Text>
+                    <Text style={styles.languageStatLabel}>Lessons</Text>
+                  </View>
+                  <View style={styles.languageStatItem}>
+                    <Ionicons name="time" size={20} color="#6C757D" />
+                    <Text style={styles.languageStatValue}>
+                      {(() => {
+                        const m = languageStats.time_spent_minutes ?? 0;
+                        if (m >= 60) return `${Math.floor(m / 60)}h ${m % 60}m`;
+                        return `${m}m`;
+                      })()}
+                    </Text>
+                    <Text style={styles.languageStatLabel}>Time spent</Text>
+                  </View>
                 </View>
               </View>
             )}
@@ -2876,7 +3006,7 @@ export default function ProfileScreen() {
                     >
                       <View style={[styles.practiceVisibilityIcon, { backgroundColor: isVisible ? colors.primary : '#CCC' }]}>
                         <Ionicons
-                          name={activity === 'reading' ? 'book' : activity === 'listening' ? 'headset' : activity === 'writing' ? 'create' : activity === 'speaking' ? 'mic' : activity === 'translation' ? 'language' : 'chatbubbles'}
+                          name={activity === 'transliteration' ? 'swap-horizontal' : activity === 'reading' ? 'book' : activity === 'listening' ? 'headset' : activity === 'writing' ? 'create' : activity === 'speaking' ? 'mic' : activity === 'translation' ? 'language' : 'chatbubbles'}
                           size={20}
                           color="#FFF"
                         />
@@ -2983,42 +3113,43 @@ export default function ProfileScreen() {
                       <Text style={[styles.applyToAllSubtext, { marginBottom: 8, color: '#555' }]}>
                         Translate to:
                       </Text>
-                      {otherLangs.map(lang => {
-                        const isSel = defaultImportTargetLangs.includes(lang.code);
-                        return (
-                          <TouchableOpacity
-                            key={lang.code}
-                            style={[
-                              styles.applyToAllContainer,
-                              { marginBottom: 4, backgroundColor: isSel ? '#EFF6FF' : '#F8F9FA', borderColor: isSel ? '#4A90E2' : '#E0E0E0', borderWidth: 1, borderRadius: 10 }
-                            ]}
-                            onPress={() => {
-                              setDefaultImportTargetLangs(prev =>
-                                prev.includes(lang.code)
-                                  ? prev.filter(c => c !== lang.code)
-                                  : [...prev, lang.code]
-                              );
-                            }}
-                            activeOpacity={0.7}
-                          >
-                            <View style={styles.applyToAllLeft}>
-                              <View style={[{ width: 30, height: 30, borderRadius: 8, alignItems: 'center', justifyContent: 'center', backgroundColor: lang.color || '#4A90E2', marginRight: 2 }]}>
+                      <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 10 }}>
+                        {otherLangs.map(lang => {
+                          const isSel = defaultImportTargetLangs.includes(lang.code);
+                          const accent = lang.color || '#4A90E2';
+                          return (
+                            <TouchableOpacity
+                              key={lang.code}
+                              style={{
+                                flexDirection: 'row',
+                                alignItems: 'center',
+                                gap: 10,
+                                backgroundColor: isSel ? '#FFF' : '#ECECEC',
+                                borderRadius: 10,
+                                borderWidth: 1.5,
+                                borderColor: isSel ? accent : '#D0D0D0',
+                                paddingHorizontal: 12,
+                                paddingVertical: 10,
+                              }}
+                              onPress={() => {
+                                setDefaultImportTargetLangs(prev =>
+                                  prev.includes(lang.code)
+                                    ? prev.filter(c => c !== lang.code)
+                                    : [...prev, lang.code]
+                                );
+                              }}
+                              activeOpacity={0.7}
+                            >
+                              <View style={[{ width: 28, height: 28, borderRadius: 8, alignItems: 'center', justifyContent: 'center', backgroundColor: accent }]}>
                                 {lang.nativeChar
-                                  ? <Text style={[{ fontSize: 14, color: '#FFF', fontWeight: '500' }, lang.code === 'urdu' && { fontFamily: 'Noto Nastaliq Urdu' }]}>{lang.nativeChar}</Text>
+                                  ? <Text style={[{ fontSize: 12, color: '#FFF', fontWeight: '700' }, lang.code === 'urdu' && { fontFamily: 'Noto Nastaliq Urdu' }]}>{lang.nativeChar}</Text>
                                   : <Text style={{ fontSize: 10, fontWeight: 'bold', color: '#FFF' }}>{lang.langCode?.toUpperCase()}</Text>}
                               </View>
-                              <View style={styles.applyToAllTextContainer}>
-                                <Text style={styles.applyToAllText}>{lang.name}</Text>
-                              </View>
-                              <Ionicons
-                                name={isSel ? "checkmark-circle" : "ellipse-outline"}
-                                size={22}
-                                color={isSel ? "#4A90E2" : "#CCC"}
-                              />
-                            </View>
-                          </TouchableOpacity>
-                        );
-                      })}
+                              <Text style={{ fontSize: 14, color: isSel ? accent : '#333', fontWeight: isSel ? '700' : '500' }}>{lang.name}</Text>
+                            </TouchableOpacity>
+                          );
+                        })}
+                      </View>
                     </View>
                   )}
                 </View>
@@ -3086,7 +3217,6 @@ const styles = StyleSheet.create({
   },
   profileHeader: {
     alignItems: 'center',
-    paddingTop: 60,
     paddingBottom: 30,
     paddingHorizontal: 20,
     borderBottomWidth: 1,
@@ -3188,6 +3318,37 @@ const styles = StyleSheet.create({
     color: '#1A1A1A',
     marginBottom: 8,
   },
+  defaultTranslateHint: {
+    fontSize: 13,
+    color: '#666',
+    marginBottom: 12,
+  },
+  defaultTranslateContent: {
+    marginTop: 4,
+  },
+  chipRow: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 8,
+  },
+  defaultTranslateChip: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    borderRadius: 10,
+    borderWidth: 1.5,
+    borderColor: '#E0E0E0',
+    backgroundColor: '#F5F5F5',
+    gap: 6,
+  },
+  defaultTranslateChipSelected: {
+    borderWidth: 2,
+    backgroundColor: '#FFFFFF',
+  },
+  defaultTranslateChipChar: { fontSize: 14, color: '#333', fontWeight: '600' },
+  defaultTranslateChipCode: { fontSize: 11, color: '#333', fontWeight: 'bold' },
+  defaultTranslateChipLabel: { fontSize: 14, color: '#444' },
   statsSectionHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -3456,13 +3617,20 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
   languageStatsSummary: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
+    flexDirection: 'column',
     paddingVertical: 16,
     paddingHorizontal: 8,
     backgroundColor: '#F8F8F8',
     borderRadius: 12,
     marginBottom: 16,
+  },
+  languageStatsRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    marginBottom: 8,
+  },
+  languageStatsRowLast: {
+    marginBottom: 0,
   },
   languageStatItem: {
     alignItems: 'center',

@@ -1,9 +1,10 @@
 You are an Urdu language expert. For each Urdu word below, perform THREE tasks:
 
 TASK 1 — LEMMATIZATION: Reduce the word to its base/dictionary form.
-  - Verbs: convert to infinitive form (e.g., جا رہا ہوں → جانا, کھا رہا تھا → کھانا).
-  - Nouns: remove case endings and plurals (e.g., گھر میں → گھر, لڑکوں → لڑکا).
-  - Adjectives: use masculine singular/base form (e.g., اچھی → اچھا).
+  - Output MUST be in Devanagari script only (see CRITICAL REQUIREMENTS below).
+  - Verbs: convert to infinitive form (e.g., जा रहा हूँ → जाना, खा रहा था → खाना).
+  - Nouns: remove case endings and plurals (e.g., घर में → घर, लड़कों → लड़का).
+  - Adjectives: use masculine singular/base form (e.g., अच्छी → अच्छा).
   - Remove tense, aspect, plural, and agreement suffixes.
 
 TASK 2 — ENGLISH DEFINITION: Provide a concise English definition.
@@ -17,22 +18,32 @@ TASK 3 — CLASSIFICATION:
       noun, verb, adjective, adverb, pronoun, preposition, conjunction, exclamation,
       modal verb, determiner, number, ordinal number, auxiliary verb, linking verb,
       infinitive marker, indefinite article, definite article
+    CRITICAL: You MUST pick the word_class from this list ONLY. Do NOT invent new tags.
+    Even if none is a perfect grammatical match, choose the CLOSEST option
+    (for example, treat Urdu postpositions as "preposition").
   - level: assign CEFR level based on word frequency/difficulty (A1=most common, C2=rarest):
       a1, a2, b1, b2, c1, c2
+  - gender: REQUIRED for every noun and every adjective — use "m" (masculine) or "f" (feminine). Omit only for verb, adverb, and other non-noun/adjective word classes.
+  - verb_transitivity: for VERBS ONLY, set one of:
+      "transitive", "intransitive", "ditransitive".
+    Do NOT use "ambitransitive" — pick whichever of transitive or intransitive is the primary usage.
+    For all non-verbs, set verb_transitivity to "N/A".
 
 CRITICAL REQUIREMENTS:
-1) All Urdu output MUST be in Perso-Arabic/Nastaliq script (اردو). NO Latin/English/Devanagari letters in the "word" field.
-2) The "english" field must be in English.
-3) Return ONLY a valid JSON array. No markdown, no explanation, no extra text.
+1) You MUST return the "word" field in DEVANAGARI script ONLY (देवनागरी). Do NOT use Perso-Arabic/Nastaliq/Urdu script (ا، و، ہ، etc.) anywhere in the "word" field. The system stores Urdu in Devanagari and will convert to Nastaliq for display. Input may be in Devanagari or Nastaliq; your output "word" MUST be Devanagari only.
+2) You MUST include "gender" for every noun and adjective (value "m" or "f"). Omit only for other word classes. The app displays (m) or (f) next to the word when you provide this.
+3) The "english" field must be in English.
+4) Return exactly ONE word per array element. Do not put multiple words in a single "word" field; use separate array elements for each word.
+5) Return ONLY a valid JSON array. No markdown, no explanation, no extra text.
 
-IN-CONTEXT EXAMPLES:
+IN-CONTEXT EXAMPLES (all "word" values in Devanagari):
 
-Example input words: گھر میں, تعلیم, کھا رہا تھا
+Example input words: घर में, शिक्षा, खा रहा था
 Example output:
 [
-  {{"word": "گھر", "english": "house", "word_class": "noun", "level": "a1"}},
-  {{"word": "تعلیم", "english": "education (formal learning)", "word_class": "noun", "level": "b1"}},
-  {{"word": "کھانا", "english": "to eat", "word_class": "verb", "level": "a1"}}
+  {{"word": "घर", "english": "house", "word_class": "noun", "level": "a1", "gender": "m", "verb_transitivity": "N/A"}},
+  {{"word": "शिक्षा", "english": "education (formal learning)", "word_class": "noun", "level": "b1", "gender": "f", "verb_transitivity": "N/A"}},
+  {{"word": "खाना", "english": "to eat", "word_class": "verb", "level": "a1", "verb_transitivity": "transitive"}}
 ]
 
 Words to process:

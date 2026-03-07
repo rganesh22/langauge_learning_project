@@ -10,6 +10,7 @@ from typing import List, Optional, Dict
 from datetime import datetime, timedelta
 import asyncio
 import json
+import re
 import sqlite3
 from . import db
 from . import api_client
@@ -464,6 +465,8 @@ class TranslateRequest(BaseModel):
 async def translate_text(request: TranslateRequest):
     """Translate arbitrary text from source_language into target_language using Gemini."""
     import concurrent.futures
+    import time as _time
+    _t0 = _time.time()
 
     source = request.source_language.strip().lower()
     target = request.target_language.strip().lower()
@@ -472,12 +475,29 @@ async def translate_text(request: TranslateRequest):
     if not text:
         raise HTTPException(status_code=400, detail="text is required")
 
+    script_instructions = ""
+    if target in ("hindi", "urdu"):
+        script_instructions = (
+            "\n\nCRITICAL SCRIPT REQUIREMENT:\n"
+            "- You MUST write the ENTIRE translation in DEVANAGARI script (U+0900–U+097F) ONLY.\n"
+            "- Do NOT use Perso-Arabic / Nastaliq script, even for Urdu.\n"
+            "- Do NOT use Latin / Roman script.\n"
+            "- For Urdu: use Nuktas for Urdu-specific consonants (ज़, फ़, ख़, ग़, क़).\n"
+            "- The system will convert Devanagari to Nastaliq for Urdu display automatically.\n"
+        )
+        if target == "urdu":
+            script_instructions += (
+                "- Prefer Urdu register: use Persian/Arabic-derived vocabulary where natural.\n"
+                "- Maintain formal academic register where the source text is formal.\n"
+            )
+
     prompt = (
         f"Translate the following {source} text into {target}.\n"
         "Return ONLY a JSON object with exactly two keys:\n"
         '  "translated_text": the full translation as a plain string\n'
         '  "notes": a short (≤2 sentence) optional note about register, dialect, or ambiguity (empty string if none)\n\n'
-        "Do NOT add any markdown, code fences, or extra keys.\n\n"
+        "Do NOT add any markdown, code fences, or extra keys.\n"
+        f"{script_instructions}\n"
         f"Text to translate:\n{text}"
     )
 
@@ -489,24 +509,75 @@ async def translate_text(request: TranslateRequest):
         )
 
     import json as _json, re as _re
-    # Strip markdown fences if present
     cleaned = _re.sub(r"```(?:json)?|```", "", result_text).strip()
     try:
         data = _json.loads(cleaned)
-        return {
-            "translated_text": str(data.get("translated_text", "")),
-            "notes": str(data.get("notes", "")),
-            "source_language": source,
-            "target_language": target,
-        }
+        translated = str(data.get("translated_text", ""))
+        notes = str(data.get("notes", ""))
     except Exception:
-        # Fallback: return raw text
-        return {
-            "translated_text": result_text.strip(),
-            "notes": "",
-            "source_language": source,
-            "target_language": target,
-        }
+        translated = result_text.strip()
+        notes = ""
+
+    resp = {
+        "translated_text": translated,
+        "notes": notes,
+        "source_language": source,
+        "target_language": target,
+    }
+
+    if target == "urdu" and translated:
+        is_devanagari = bool(_re.search(r'[\u0900-\u097F]', translated))
+        is_nastaliq = bool(_re.search(r'[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF]', translated))
+        if is_nastaliq and not is_devanagari:
+            translated = transliteration.nastaliq_to_devanagari(translated)
+        resp["translated_text_devanagari"] = translated
+        resp["translated_text"] = transliteration.devanagari_to_nastaliq(translated)
+
+    _elapsed = round(_time.time() - _t0, 1)
+    print(f"[translate] {source} → {target} completed in {_elapsed}s ({len(text)} chars)")
+    return resp
+
+
+# ============================================================================
+# Translation History Endpoints
+# ============================================================================
+
+class SaveTranslationHistoryRequest(BaseModel):
+    source_text: str
+    source_language: str
+    target_languages: List[str]
+    results: Dict
+    duration_seconds: Optional[float] = None
+
+
+@app.post("/api/translation-history")
+def save_translation(req: SaveTranslationHistoryRequest):
+    row_id = db.save_translation_history(
+        req.source_text, req.source_language, req.target_languages, req.results,
+        duration_seconds=req.duration_seconds,
+    )
+    if row_id is None:
+        raise HTTPException(status_code=500, detail="Failed to save translation")
+    return {"id": row_id, "success": True}
+
+
+@app.get("/api/translation-history")
+def list_translation_history(language: Optional[str] = None, limit: int = 50):
+    return {"history": db.get_translation_history(limit=limit, language=language)}
+
+
+@app.get("/api/translation-history/{history_id}")
+def get_translation_history_entry(history_id: int):
+    entry = db.get_translation_history_by_id(history_id)
+    if not entry:
+        raise HTTPException(status_code=404, detail="Not found")
+    return entry
+
+
+@app.delete("/api/translation-history/{history_id}")
+def delete_translation_history_entry(history_id: int):
+    db.delete_translation_history(history_id)
+    return {"success": True}
 
 
 # ============================================================================
@@ -526,6 +597,7 @@ class ExtractedWord(BaseModel):
     word_class: str
     level: Optional[str] = None
     transliteration: Optional[str] = None
+    verb_transitivity: Optional[str] = None
 
 
 class LangWordList(BaseModel):
@@ -540,6 +612,10 @@ class CommitImportRequest(BaseModel):
     words_by_lang: Optional[Dict[str, List[ExtractedWord]]] = None  # Per-language words
     deck_name: Optional[str] = None
     target_languages: Optional[List[str]] = None
+    # IDs of existing vocabulary entries that should also be attached to this deck
+    existing_ids: Optional[List[int]] = None
+    # Per-language existing vocab IDs to attach to sibling decks (for target languages)
+    existing_by_lang: Optional[Dict[str, List[int]]] = None
 
 
 @app.post("/api/vocab/extract-text")
@@ -552,8 +628,10 @@ async def extract_text_to_vocab(request: TextImportRequest):
     try:
         import re
         import asyncio
+        import time as _time
         from concurrent.futures import ThreadPoolExecutor
-        from .prompting.vocab_import_prompts import get_lemmatization_translation_prompt, get_translation_prompt
+        _extract_start = _time.time()
+        from .prompting.vocab_import_prompts import get_lemmatization_translation_prompt, get_translation_prompt, get_synonym_decision_prompt, get_synonym_decision_prompt
 
         words = re.findall(
             r'[\w\u0900-\u097F\u0C00-\u0C7F\u0D00-\u0D7F\u0B80-\u0BFF\u0A80-\u0AFF\u0C80-\u0CFF\u0600-\u06FF\u0750-\u077F\uFB50-\uFDFF\uFE70-\uFEFF]+',
@@ -581,13 +659,29 @@ async def extract_text_to_vocab(request: TextImportRequest):
                 return []
 
         loop = asyncio.get_event_loop()
-        executor = ThreadPoolExecutor(max_workers=min(len(batches), 8))
+        executor = ThreadPoolExecutor(max_workers=min(len(batches), 10))
         lemma_tasks = [
             loop.run_in_executor(executor, process_lemma_batch, batch)
             for batch in batches
         ]
         lemma_results = await asyncio.gather(*lemma_tasks)
         all_processed = [item for sublist in lemma_results for item in sublist]
+
+        # Expand any comma-separated words into separate entries so each word is classified correctly (new/synonym/existing)
+        expanded = []
+        for wd in all_processed:
+            raw_word = (wd.get('word') or '').strip()
+            if not raw_word:
+                continue
+            parts = [p.strip() for p in raw_word.split(',') if p.strip()]
+            if not parts:
+                continue
+            for one_word in parts:
+                expanded.append({
+                    **wd,
+                    'word': one_word,
+                })
+        all_processed = expanded
 
         if not all_processed:
             raise HTTPException(status_code=400, detail="Failed to extract words from text")
@@ -597,6 +691,13 @@ async def extract_text_to_vocab(request: TextImportRequest):
             word = wd.get('word', '').strip()
             if not word:
                 return None, None
+            def _gender(w):
+                g = (w.get('gender') or w.get('Gender') or '').strip().lower()
+                return g if g in ('m', 'f') else None
+            # Urdu: normalize to Devanagari so we derive Latin + Nastaliq from one source
+            if request.language == 'urdu' and re.search(r'[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF]', word):
+                word = transliteration.nastaliq_to_devanagari(word)
+                wd['word'] = word
             translit = transliteration.transliterate_text(word, request.language, 'IAST')
             wd['transliteration'] = translit
             nastaliq = transliteration.devanagari_to_nastaliq(word) if request.language == 'urdu' else None
@@ -611,13 +712,67 @@ async def extract_text_to_vocab(request: TextImportRequest):
                     'mastery_level': existing.get('mastery_level', 'new'),
                     'status': 'existing',
                     'existing_id': existing.get('id'),
+                    'verb_transitivity': existing.get('verb_transitivity', wd.get('verb_transitivity', '')),
                 }
                 if nastaliq: entry['nastaliq'] = nastaliq
+                if _gender(wd): entry['gender'] = _gender(wd)
                 return 'existing', entry
             # Check if this word is a synonym of an existing word (same English meaning)
             english = wd.get('english', '')
-            synonym_match = db.find_synonym_by_english(english, request.language, exclude_word=word) if english else None
+            synonym_match = None
+            if english:
+                candidates = db.search_vocabulary_by_english(english, request.language, limit=20)
+                if candidates:
+                    # Fast path: single candidate and word not on it → use as synonym without AI
+                    if len(candidates) == 1:
+                        c = candidates[0]
+                        syn_variants = [v.strip() for v in (c.get('translation') or '').split(' /') if v.strip()]
+                        if word.strip() not in syn_variants and word not in syn_variants:
+                            synonym_match = c
+                    if synonym_match is None and len(candidates) >= 2:
+                        try:
+                            prompt = get_synonym_decision_prompt(
+                                word, translit, english, request.language, candidates
+                            )
+                            if prompt:
+                                response_text, *_ = api_client.generate_text_with_gemini(
+                                    prompt, model_name=api_client.GEMINI_MODEL
+                                )
+                                raw = response_text.strip().replace('```json', '').replace('```', '').strip()
+                                decision = json.loads(raw)
+                                if decision.get('action') == 'synonym':
+                                    eid = decision.get('existing_id')
+                                    for c in candidates:
+                                        if c.get('id') == eid:
+                                            synonym_match = c
+                                            break
+                        except (json.JSONDecodeError, KeyError, TypeError):
+                            pass
+                if synonym_match is None:
+                    synonym_match = db.find_synonym_by_english(english, request.language, exclude_word=word)
             if synonym_match:
+                # Synonym = card exists but this word is NOT on it yet (could be added). If word is already on the card → existing.
+                syn_translation = (synonym_match.get('translation') or '').strip()
+                syn_variants = [v.strip() for v in syn_translation.split(' /') if v.strip()]
+                if word.strip() in syn_variants or word in syn_variants:
+                    # Word already on this card → treat as existing, not synonym
+                    entry = {
+                        'word': word,
+                        'transliteration': translit,
+                        'english_word': synonym_match.get('english_word', english),
+                        'word_class': synonym_match.get('word_class', wd.get('word_class', '')),
+                        'level': synonym_match.get('level', wd.get('level', '')),
+                        'mastery_level': synonym_match.get('mastery_level', 'new'),
+                        'status': 'existing',
+                        'existing_id': synonym_match.get('id'),
+                        'verb_transitivity': synonym_match.get('verb_transitivity', wd.get('verb_transitivity', '')),
+                    }
+                    if nastaliq: entry['nastaliq'] = nastaliq
+                    if _gender(wd): entry['gender'] = _gender(wd)
+                    return 'existing', entry
+                syn_translit = (synonym_match.get('transliteration') or '').strip()
+                if request.language in ('hindi', 'urdu'):
+                    syn_translit = transliteration.delete_final_schwa(syn_translit, request.language)
                 entry = {
                     'word': word,
                     'english': english,
@@ -625,11 +780,16 @@ async def extract_text_to_vocab(request: TextImportRequest):
                     'level': wd.get('level', None),
                     'transliteration': translit,
                     'status': 'synonym',
+                    'verb_transitivity': wd.get('verb_transitivity', ''),
                     'synonym_of_word': synonym_match.get('translation', ''),
+                    'synonym_of_transliteration': syn_translit,
                     'synonym_of_english': synonym_match.get('english_word', ''),
                     'synonym_of_id': synonym_match.get('id'),
                 }
                 if nastaliq: entry['nastaliq'] = nastaliq
+                if request.language == 'urdu':
+                    entry['synonym_of_word_nastaliq'] = transliteration.devanagari_to_nastaliq(synonym_match.get('translation', '') or '')
+                if _gender(wd): entry['gender'] = _gender(wd)
                 return 'synonym', entry
             else:
                 entry = {
@@ -639,8 +799,10 @@ async def extract_text_to_vocab(request: TextImportRequest):
                     'level': wd.get('level', None),
                     'transliteration': translit,
                     'status': 'new',
+                    'verb_transitivity': wd.get('verb_transitivity', ''),
                 }
                 if nastaliq: entry['nastaliq'] = nastaliq
+                if _gender(wd): entry['gender'] = _gender(wd)
                 return 'new', entry
 
         enrich_tasks = [
@@ -672,9 +834,18 @@ async def extract_text_to_vocab(request: TextImportRequest):
         target_languages = request.target_languages or []
 
         if target_languages and all_processed:
+            # Preserve mapping from each translated entry back to its source lemma
+            # so the frontend can show "translated lemmas" for a clicked word.
             words_for_translation = [
-                {'word': w.get('word', ''), 'word_class': w.get('word_class', 'noun'), 'english': w.get('english', '')}
-                for w in all_processed if w.get('word')
+                {
+                    'word': w.get('word', ''),
+                    'word_class': w.get('word_class', 'noun'),
+                    'english': w.get('english', ''),
+                    'level': w.get('level'),
+                    'verb_transitivity': w.get('verb_transitivity', ''),
+                }
+                for w in all_processed
+                if w.get('word')
             ]
             trans_batches = [words_for_translation[i:i + BATCH_SIZE] for i in range(0, len(words_for_translation), BATCH_SIZE)]
 
@@ -696,12 +867,23 @@ async def extract_text_to_vocab(request: TextImportRequest):
             ]
             trans_results = await asyncio.gather(*trans_tasks)
             translated_all = [item for sublist in trans_results for item in sublist]
+            # Pass through source lemma metadata to each translated entry (same index)
+            for i, td in enumerate(translated_all):
+                if i < len(words_for_translation):
+                    src = words_for_translation[i]
+                    td['level'] = src.get('level')
+                    td['verb_transitivity'] = src.get('verb_transitivity', '')
+                    td['source_word'] = src.get('word', '')
+                    td['source_english'] = src.get('english', '')
 
             # Build per-language entries (parallel DB lookups)
             def enrich_translation(td, lang):
                 trans_text = td.get('translations', {}).get(lang, '')
                 if not trans_text:
                     return lang, None
+                # Urdu: normalize to Devanagari so we derive Latin + Nastaliq from one source
+                if lang == 'urdu' and re.search(r'[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF]', trans_text):
+                    trans_text = transliteration.nastaliq_to_devanagari(trans_text)
                 t_translit = transliteration.transliterate_text(trans_text, lang, 'IAST')
                 t_nastaliq = transliteration.devanagari_to_nastaliq(trans_text) if lang == 'urdu' else None
                 existing_in_lang = db.find_word_by_translation(trans_text, lang)
@@ -709,21 +891,59 @@ async def extract_text_to_vocab(request: TextImportRequest):
                     'word': trans_text,
                     'english': td.get('english', ''),
                     'word_class': td.get('word_class', 'noun'),
-                    'level': None,
+                    'level': td.get('level'),
                     'transliteration': t_translit,
+                    # Propagate verb transitivity and linkage back to the source lemma
+                    'verb_transitivity': td.get('verb_transitivity', ''),
+                    'source_word': td.get('source_word', ''),
+                    'source_english': td.get('source_english', ''),
                 }
+                if lang == 'hindi' and td.get('gender_hindi'):
+                    entry['gender'] = td.get('gender_hindi')
+                if lang == 'urdu' and td.get('gender_urdu'):
+                    entry['gender'] = td.get('gender_urdu')
                 if t_nastaliq: entry['nastaliq'] = t_nastaliq
                 if existing_in_lang:
                     ex = {
+                        'id': existing_in_lang.get('id'),
                         'word': trans_text,
                         'transliteration': t_translit,
                         'english_word': existing_in_lang.get('english_word', td.get('english', '')),
                         'word_class': existing_in_lang.get('word_class', td.get('word_class', '')),
                         'level': existing_in_lang.get('level', ''),
                         'mastery_level': existing_in_lang.get('mastery_level', 'new'),
+                        'verb_transitivity': existing_in_lang.get('verb_transitivity', td.get('verb_transitivity', '')),
+                        'existing_id': existing_in_lang.get('id'),
+                        'source_word': td.get('source_word', ''),
+                        'source_english': td.get('source_english', ''),
                     }
                     if t_nastaliq: ex['nastaliq'] = t_nastaliq
                     return lang, ('existing', ex)
+                # Not existing: check if synonym of an existing word (only if this word is NOT already on that card)
+                english = td.get('english', '')
+                synonym_match = db.find_synonym_by_english(english, lang, exclude_word=trans_text) if english else None
+                if synonym_match:
+                    syn_variants = [v.strip() for v in (synonym_match.get('translation') or '').split(' /') if v.strip()]
+                    if trans_text.strip() in syn_variants or trans_text in syn_variants:
+                        # Already on card → treat as existing
+                        ex = {
+                            'id': synonym_match.get('id'),
+                            'word': trans_text,
+                            'transliteration': t_translit,
+                            'english_word': synonym_match.get('english_word', td.get('english', '')),
+                            'word_class': synonym_match.get('word_class', td.get('word_class', '')),
+                            'level': synonym_match.get('level', td.get('level', '')),
+                            'mastery_level': synonym_match.get('mastery_level', 'new'),
+                            'verb_transitivity': synonym_match.get('verb_transitivity', td.get('verb_transitivity', '')),
+                            'existing_id': synonym_match.get('id'),
+                        }
+                        if t_nastaliq: ex['nastaliq'] = t_nastaliq
+                        return lang, ('existing', ex)
+                    entry['synonym_of_word'] = synonym_match.get('translation', '')
+                    entry['synonym_of_transliteration'] = synonym_match.get('transliteration', '')
+                    entry['synonym_of_id'] = synonym_match.get('id')
+                if synonym_match and lang == 'urdu':
+                    entry['synonym_of_word_nastaliq'] = transliteration.devanagari_to_nastaliq(synonym_match.get('translation', '') or '')
                 return lang, ('new', entry)
 
             lang_enrich_tasks = [
@@ -744,6 +964,10 @@ async def extract_text_to_vocab(request: TextImportRequest):
                 else:
                     translations_by_lang[lang]['new_words'].append(entry)
 
+        _extract_elapsed = round(_time.time() - _extract_start, 1)
+        print(f"[extract-text] completed in {_extract_elapsed}s — "
+              f"{len(new_words)} new, {len(synonym_words_list)} synonyms, "
+              f"{len(existing_words_list)} existing, {len(translations_by_lang)} target langs")
         return {
             "success": True,
             "words": new_words,
@@ -751,6 +975,7 @@ async def extract_text_to_vocab(request: TextImportRequest):
             "existing": existing_words_list,
             "translations_by_lang": translations_by_lang,
             "total_extracted": len(all_processed),
+            "processing_time_seconds": _extract_elapsed,
         }
 
     except json.JSONDecodeError as e:
@@ -772,7 +997,7 @@ async def extract_text_stream(request: TextImportRequest):
     import asyncio
     import json as _json
     from concurrent.futures import ThreadPoolExecutor
-    from .prompting.vocab_import_prompts import get_lemmatization_translation_prompt, get_translation_prompt
+    from .prompting.vocab_import_prompts import get_lemmatization_translation_prompt, get_translation_prompt, get_synonym_decision_prompt
 
     async def event_stream():
         try:
@@ -795,7 +1020,7 @@ async def extract_text_stream(request: TextImportRequest):
             yield f"data: {_json.dumps({'type':'start','total_words':len(words),'total_batches':total_batches,'has_translations': bool(target_languages)})}\n\n"
 
             loop = asyncio.get_event_loop()
-            executor = ThreadPoolExecutor(max_workers=min(total_batches, 8))
+            executor = ThreadPoolExecutor(max_workers=min(total_batches, 10))
             all_processed = []
 
             # Phase 1: Lemmatization batches — parallel but report progress per-batch
@@ -827,6 +1052,19 @@ async def extract_text_stream(request: TextImportRequest):
 
             all_processed = [item for sublist in batch_results if sublist for item in sublist]
 
+            # Expand comma-separated words into separate entries
+            expanded = []
+            for wd in all_processed:
+                raw_word = (wd.get('word') or '').strip()
+                if not raw_word:
+                    continue
+                parts = [p.strip() for p in raw_word.split(',') if p.strip()]
+                if not parts:
+                    continue
+                for one_word in parts:
+                    expanded.append({ **wd, 'word': one_word })
+            all_processed = expanded
+
             if not all_processed:
                 yield f"data: {_json.dumps({'type':'error','message':'Failed to extract words from text'})}\n\n"
                 return
@@ -836,6 +1074,13 @@ async def extract_text_stream(request: TextImportRequest):
                 word = wd.get('word', '').strip()
                 if not word:
                     return None, None
+                def _gender(w):
+                    g = (w.get('gender') or w.get('Gender') or '').strip().lower()
+                    return g if g in ('m', 'f') else None
+                # Urdu: normalize to Devanagari so we derive Latin + Nastaliq from one source
+                if request.language == 'urdu' and re.search(r'[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF]', word):
+                    word = transliteration.nastaliq_to_devanagari(word)
+                    wd['word'] = word
                 translit = transliteration.transliterate_text(word, request.language, 'IAST')
                 wd['transliteration'] = translit
                 nastaliq = transliteration.devanagari_to_nastaliq(word) if request.language == 'urdu' else None
@@ -849,30 +1094,87 @@ async def extract_text_stream(request: TextImportRequest):
                         'mastery_level': existing.get('mastery_level','new'),
                         'status': 'existing',
                         'existing_id': existing.get('id'),
+                        'verb_transitivity': existing.get('verb_transitivity', wd.get('verb_transitivity','')),
                     }
                     if nastaliq: entry['nastaliq'] = nastaliq
+                    if _gender(wd): entry['gender'] = _gender(wd)
                     return 'existing', entry
                 english = wd.get('english', '')
-                synonym_match = db.find_synonym_by_english(english, request.language, exclude_word=word) if english else None
+                synonym_match = None
+                if english:
+                    candidates = db.search_vocabulary_by_english(english, request.language, limit=20)
+                    if candidates:
+                        if len(candidates) == 1:
+                            c = candidates[0]
+                            syn_variants = [v.strip() for v in (c.get('translation') or '').split(' /') if v.strip()]
+                            if word.strip() not in syn_variants and word not in syn_variants:
+                                synonym_match = c
+                        if synonym_match is None and len(candidates) >= 2:
+                            try:
+                                prompt = get_synonym_decision_prompt(
+                                    word, translit, english, request.language, candidates
+                                )
+                                if prompt:
+                                    response_text, *_ = api_client.generate_text_with_gemini(
+                                        prompt, model_name=api_client.GEMINI_MODEL
+                                    )
+                                    raw = response_text.strip().replace('```json', '').replace('```', '').strip()
+                                    decision = _json.loads(raw)
+                                    if decision.get('action') == 'synonym':
+                                        eid = decision.get('existing_id')
+                                        for c in candidates:
+                                            if c.get('id') == eid:
+                                                synonym_match = c
+                                                break
+                            except (Exception,):
+                                pass
+                    if synonym_match is None:
+                        synonym_match = db.find_synonym_by_english(english, request.language, exclude_word=word)
                 if synonym_match:
+                    # Synonym only when word is NOT already on the card; else existing
+                    syn_translation = (synonym_match.get('translation') or '').strip()
+                    syn_variants = [v.strip() for v in syn_translation.split(' /') if v.strip()]
+                    if word.strip() in syn_variants or word in syn_variants:
+                        entry = {
+                            'word': word, 'transliteration': translit,
+                            'english_word': synonym_match.get('english_word', english),
+                            'word_class': synonym_match.get('word_class', wd.get('word_class','')),
+                            'level': synonym_match.get('level', wd.get('level','')),
+                            'mastery_level': synonym_match.get('mastery_level','new'),
+                            'status': 'existing', 'existing_id': synonym_match.get('id'),
+                            'verb_transitivity': synonym_match.get('verb_transitivity', wd.get('verb_transitivity','')),
+                        }
+                        if nastaliq: entry['nastaliq'] = nastaliq
+                        if _gender(wd): entry['gender'] = _gender(wd)
+                        return 'existing', entry
+                    syn_translit = (synonym_match.get('transliteration') or '').strip()
+                    if request.language in ('hindi', 'urdu'):
+                        syn_translit = transliteration.delete_final_schwa(syn_translit, request.language)
                     entry = {
                         'word': word, 'english': english,
                         'word_class': wd.get('word_class','noun'),
                         'level': wd.get('level', None), 'transliteration': translit,
                         'status': 'synonym',
+                        'verb_transitivity': wd.get('verb_transitivity',''),
                         'synonym_of_word': synonym_match.get('translation',''),
+                        'synonym_of_transliteration': syn_translit,
                         'synonym_of_english': synonym_match.get('english_word',''),
                         'synonym_of_id': synonym_match.get('id'),
                     }
                     if nastaliq: entry['nastaliq'] = nastaliq
+                    if request.language == 'urdu':
+                        entry['synonym_of_word_nastaliq'] = transliteration.devanagari_to_nastaliq(synonym_match.get('translation', '') or '')
+                    if _gender(wd): entry['gender'] = _gender(wd)
                     return 'synonym', entry
                 entry = {
                     'word': word, 'english': english,
                     'word_class': wd.get('word_class','noun'),
                     'level': wd.get('level', None), 'transliteration': translit,
                     'status': 'new',
+                    'verb_transitivity': wd.get('verb_transitivity',''),
                 }
                 if nastaliq: entry['nastaliq'] = nastaliq
+                if _gender(wd): entry['gender'] = _gender(wd)
                 return 'new', entry
 
             enrich_tasks = [loop.run_in_executor(executor, enrich_word, wd) for wd in all_processed]
@@ -896,9 +1198,17 @@ async def extract_text_stream(request: TextImportRequest):
             # Phase 2: Translation (parallel)
             translations_by_lang = {}
             if target_languages:
+                # Keep full linkage from each translation back to its source lemma
                 words_for_translation = [
-                    {'word': w.get('word',''), 'word_class': w.get('word_class','noun'), 'english': w.get('english','')}
-                    for w in all_processed if w.get('word')
+                    {
+                        'word': w.get('word',''),
+                        'word_class': w.get('word_class','noun'),
+                        'english': w.get('english',''),
+                        'level': w.get('level'),
+                        'verb_transitivity': w.get('verb_transitivity',''),
+                    }
+                    for w in all_processed
+                    if w.get('word')
                 ]
                 trans_batches = [words_for_translation[i:i+BATCH_SIZE] for i in range(0,len(words_for_translation),BATCH_SIZE)]
 
@@ -929,23 +1239,81 @@ async def extract_text_stream(request: TextImportRequest):
                         yield f"data: {_json.dumps({'type':'progress','phase':'translate','batch':completed_t,'total_batches':len(trans_batches),'languages':target_languages})}\n\n"
 
                 translated_all = [item for sublist in trans_results if sublist for item in sublist]
+                for i, td in enumerate(translated_all):
+                    if i < len(words_for_translation):
+                        src = words_for_translation[i]
+                        td['level'] = src.get('level')
+                        td['verb_transitivity'] = src.get('verb_transitivity','')
+                        td['source_word'] = src.get('word','')
+                        td['source_english'] = src.get('english','')
 
                 def enrich_translation(td_lang):
                     td, lang = td_lang
                     trans_text = td.get('translations',{}).get(lang,'')
-                    if not trans_text: return lang, None
+                    if not trans_text:
+                        return lang, None
+                    # Urdu: normalize to Devanagari so we derive Latin + Nastaliq from one source
+                    if lang == 'urdu' and re.search(r'[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF]', trans_text):
+                        trans_text = transliteration.nastaliq_to_devanagari(trans_text)
                     t_translit = transliteration.transliterate_text(trans_text, lang, 'IAST')
                     t_nastaliq = transliteration.devanagari_to_nastaliq(trans_text) if lang == 'urdu' else None
                     existing_in_lang = db.find_word_by_translation(trans_text, lang)
-                    entry = {'word': trans_text, 'english': td.get('english',''), 'word_class': td.get('word_class','noun'), 'level': None, 'transliteration': t_translit}
-                    if t_nastaliq: entry['nastaliq'] = t_nastaliq
+                    entry = {
+                        'word': trans_text,
+                        'english': td.get('english',''),
+                        'word_class': td.get('word_class','noun'),
+                        'level': td.get('level'),
+                        'transliteration': t_translit,
+                        # Propagate verb transitivity and linkage back to the source lemma
+                        'verb_transitivity': td.get('verb_transitivity',''),
+                        'source_word': td.get('source_word',''),
+                        'source_english': td.get('source_english',''),
+                    }
+                    if lang == 'hindi' and td.get('gender_hindi'):
+                        entry['gender'] = td.get('gender_hindi')
+                    if lang == 'urdu' and td.get('gender_urdu'):
+                        entry['gender'] = td.get('gender_urdu')
+                    if t_nastaliq:
+                        entry['nastaliq'] = t_nastaliq
                     if existing_in_lang:
-                        ex = {'word': trans_text, 'transliteration': t_translit,
+                        ex = {
+                            'word': trans_text,
+                            'transliteration': t_translit,
                             'english_word': existing_in_lang.get('english_word', td.get('english','')),
                             'word_class': existing_in_lang.get('word_class', td.get('word_class','')),
-                            'level': existing_in_lang.get('level',''), 'mastery_level': existing_in_lang.get('mastery_level','new')}
-                        if t_nastaliq: ex['nastaliq'] = t_nastaliq
+                            'level': existing_in_lang.get('level',''),
+                            'mastery_level': existing_in_lang.get('mastery_level','new'),
+                            'existing_id': existing_in_lang.get('id'),
+                            'verb_transitivity': existing_in_lang.get('verb_transitivity', td.get('verb_transitivity','')),
+                            'source_word': td.get('source_word',''),
+                            'source_english': td.get('source_english',''),
+                        }
+                        if t_nastaliq:
+                            ex['nastaliq'] = t_nastaliq
                         return lang, ('existing', ex)
+                    # Not existing: check if synonym of an existing word (only if this word is NOT already on that card)
+                    english = td.get('english', '')
+                    synonym_match = db.find_synonym_by_english(english, lang, exclude_word=trans_text) if english else None
+                    if synonym_match:
+                        syn_variants = [v.strip() for v in (synonym_match.get('translation') or '').split(' /') if v.strip()]
+                        if trans_text.strip() in syn_variants or trans_text in syn_variants:
+                            ex = {
+                                'word': trans_text,
+                                'transliteration': t_translit,
+                                'english_word': synonym_match.get('english_word', td.get('english','')),
+                                'word_class': synonym_match.get('word_class', td.get('word_class','')),
+                                'level': synonym_match.get('level',''),
+                                'mastery_level': synonym_match.get('mastery_level','new'),
+                                'existing_id': synonym_match.get('id'),
+                            }
+                            if t_nastaliq:
+                                ex['nastaliq'] = t_nastaliq
+                            return lang, ('existing', ex)
+                        entry['synonym_of_word'] = synonym_match.get('translation', '')
+                        entry['synonym_of_transliteration'] = synonym_match.get('transliteration', '')
+                        entry['synonym_of_id'] = synonym_match.get('id')
+                    if synonym_match and lang == 'urdu':
+                        entry['synonym_of_word_nastaliq'] = transliteration.devanagari_to_nastaliq(synonym_match.get('translation', '') or '')
                     return lang, ('new', entry)
 
                 lang_enrich_tasks = [loop.run_in_executor(executor, enrich_translation, (td, lang)) for td in translated_all for lang in target_languages]
@@ -957,7 +1325,7 @@ async def extract_text_stream(request: TextImportRequest):
                         translations_by_lang[lang] = {'new_words':[], 'existing_words':[]}
                     translations_by_lang[lang]['new_words' if kind == 'new' else 'existing_words'].append(entry)
 
-            yield f"data: {_json.dumps({'type':'done','words':new_words,'synonyms':synonym_words_list,'existing':existing_words_list,'translations_by_lang':translations_by_lang,'total_extracted':len(all_processed)})}\n\n"
+            yield f"data: {_json.dumps({'type':'done','words':new_words,'synonyms':synonym_words_list,'existing':existing_words_list,'translations_by_lang':translations_by_lang,'total_extracted':len(all_processed),'input_text':request.text,'raw_tokens':words,'lemma_tokens':all_processed})}\n\n"
 
         except Exception as e:
             import traceback; traceback.print_exc()
@@ -977,6 +1345,8 @@ async def commit_import_to_vocab(request: CommitImportRequest):
     """
     try:
         from datetime import datetime
+        import time as _time
+        _commit_start = _time.time()
 
         deck_name = request.deck_name
         if not deck_name:
@@ -991,19 +1361,49 @@ async def commit_import_to_vocab(request: CommitImportRequest):
         if not source_words and request.language in words_by_lang:
             source_words = words_by_lang[request.language]
 
-        # Create deck only if there are words to import (any language)
-        total_across_langs = len(source_words) + len(synonym_words) + sum(len(v) for k, v in words_by_lang.items() if k != request.language)
-        deck_id = db.create_vocab_deck(request.language, deck_name) if total_across_langs > 0 else None
+        # Create decks only if there are words to import (any language).
+        # We create a separate deck per language so that each language
+        # shows its own deck in the Flashcards tab, but all share the
+        # same human-visible name.
+        total_across_langs = (
+            len(source_words)
+            + len(synonym_words)
+            + sum(len(v) for k, v in words_by_lang.items() if k != request.language)
+        )
+        deck_ids_by_lang: Dict[str, Optional[int]] = {}
+        if total_across_langs > 0:
+            # Source-language deck: base_language is the import language itself
+            deck_ids_by_lang[request.language] = db.create_vocab_deck(request.language, deck_name, base_language=request.language)
+            for lang, lang_words in words_by_lang.items():
+                if lang == request.language:
+                    continue
+                if not lang_words:
+                    continue
+                # Only create a deck for this target language if there are words for it.
+                # base_language remains the source import language so we can mark these as translated.
+                deck_ids_by_lang[lang] = db.create_vocab_deck(lang, deck_name, base_language=request.language)
 
         added_words = []
         csv_words = []  # All words for CSV record
+
+        # Attach existing source-language vocabulary entries to this deck (no duplicates)
+        source_existing_ids = request.existing_ids or []
+        source_deck_id = deck_ids_by_lang.get(request.language)
+        if source_existing_ids and source_deck_id:
+            db.attach_words_to_deck(source_existing_ids, source_deck_id)
 
         # Save source language words (completely new)
         for wd in source_words:
             word = wd.word.strip()
             if not word:
                 continue
+            # Urdu: ALWAYS normalize to Devanagari before storing, even if the
+            # model returned Nastaliq / mixed script. All DB entries for Urdu
+            # use Devanagari and we derive Latin + Nastaliq for display only.
+            if request.language == 'urdu' and re.search(r'[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF]', word):
+                word = transliteration.nastaliq_to_devanagari(word)
             translit = wd.transliteration or transliteration.transliterate_text(word, request.language, 'IAST')
+            vt = getattr(wd, 'verb_transitivity', None) if hasattr(wd, 'verb_transitivity') else getattr(wd, 'verb_transitivity', None)
             db.insert_vocabulary_entry(
                 language=request.language,
                 english_word=wd.english,
@@ -1011,13 +1411,14 @@ async def commit_import_to_vocab(request: CommitImportRequest):
                 transliteration=translit,
                 word_class=wd.word_class,
                 level=wd.level,
+                verb_transitivity=vt,
                 origin='deck',
-                deck_id=deck_id,
+                deck_id=deck_ids_by_lang.get(request.language),
             )
             added_words.append({'word': word, 'transliteration': translit, 'english_word': wd.english,
-                                 'word_class': wd.word_class, 'level': wd.level, 'language': request.language})
+                                 'word_class': wd.word_class, 'level': wd.level, 'verb_transitivity': vt, 'language': request.language})
             csv_words.append({'word': word, 'english': wd.english, 'transliteration': translit,
-                               'word_class': wd.word_class, 'level': wd.level, 'status': 'new'})
+                               'word_class': wd.word_class, 'level': wd.level, 'verb_transitivity': vt, 'status': 'new'})
 
         # Merge synonym words into existing cards + add to deck
         merged_synonyms = []
@@ -1025,9 +1426,12 @@ async def commit_import_to_vocab(request: CommitImportRequest):
             word = (syn.get('word') or '').strip()
             if not word:
                 continue
+            if request.language == 'urdu' and re.search(r'[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF]', word):
+                word = transliteration.nastaliq_to_devanagari(word)
             syn_of_id = syn.get('synonym_of_id')
             syn_of_word = syn.get('synonym_of_word', '')
             translit = syn.get('transliteration') or transliteration.transliterate_text(word, request.language, 'IAST')
+            vt_syn = syn.get('verb_transitivity')
             english = syn.get('english', '')
             # Merge into existing card (append to translation string)
             if syn_of_id:
@@ -1046,15 +1450,16 @@ async def commit_import_to_vocab(request: CommitImportRequest):
                     transliteration=translit,
                     word_class=syn.get('word_class', 'noun'),
                     level=syn.get('level', None),
+                    verb_transitivity=vt_syn,
                     origin='deck',
-                    deck_id=deck_id,
+                    deck_id=deck_ids_by_lang.get(request.language),
                 )
-            merged_synonyms.append({'word': word, 'synonym_of': syn_of_word, 'english': english})
+            merged_synonyms.append({'word': word, 'synonym_of': syn_of_word, 'english': english, 'verb_transitivity': vt_syn})
             csv_words.append({'word': word, 'english': english, 'transliteration': translit,
-                               'word_class': syn.get('word_class',''), 'level': syn.get('level',''),
+                               'word_class': syn.get('word_class',''), 'level': syn.get('level',''), 'verb_transitivity': vt_syn,
                                'status': 'synonym', 'synonym_of_word': syn_of_word, 'synonym_of_id': syn_of_id})
 
-        # Save per-language words (pre-translated, user-reviewed)
+        # Save per-language words (pre-translated, user-reviewed) and attach existing ones
         added_by_lang = {}
         for lang, lang_words in words_by_lang.items():
             if lang == request.language:
@@ -1064,11 +1469,20 @@ async def commit_import_to_vocab(request: CommitImportRequest):
                 word = wd.word.strip() if hasattr(wd, 'word') else wd.get('word', '').strip()
                 if not word:
                     continue
+                if lang == 'urdu' and re.search(r'[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF]', word):
+                    word = transliteration.nastaliq_to_devanagari(word)
                 english = wd.english if hasattr(wd, 'english') else wd.get('english', '')
                 wc = wd.word_class if hasattr(wd, 'word_class') else wd.get('word_class', 'noun')
                 lvl = wd.level if hasattr(wd, 'level') else wd.get('level', None)
-                translit = (wd.transliteration if hasattr(wd, 'transliteration') else wd.get('transliteration')) \
-                           or transliteration.transliterate_text(word, lang, 'IAST')
+                vt_tgt = getattr(wd, 'verb_transitivity', None) if hasattr(wd, 'verb_transitivity') else wd.get('verb_transitivity', None) if isinstance(wd, dict) else None
+                # For Urdu we always recompute transliteration from the
+                # normalized Devanagari form so Latin never comes from a
+                # mixed-script input.
+                base_translit = wd.transliteration if hasattr(wd, 'transliteration') else wd.get('transliteration')
+                if lang == 'urdu':
+                    translit = transliteration.transliterate_text(word, lang, 'IAST')
+                else:
+                    translit = base_translit or transliteration.transliterate_text(word, lang, 'IAST')
                 if not db.find_word_by_translation(word, lang):
                     db.insert_vocabulary_entry(
                         language=lang,
@@ -1077,16 +1491,27 @@ async def commit_import_to_vocab(request: CommitImportRequest):
                         transliteration=translit,
                         word_class=wc,
                         level=lvl,
-                        origin='deck',
-                        deck_id=deck_id,
+                        verb_transitivity=vt_tgt,
+                        origin='translated',
+                        deck_id=deck_ids_by_lang.get(lang),
                     )
-                    lang_added.append({'word': word, 'english_word': english, 'word_class': wc})
+                    lang_added.append({'word': word, 'english_word': english, 'word_class': wc, 'verb_transitivity': vt_tgt})
             added_by_lang[lang] = lang_added
 
-        # Save CSV record of this import
-        if deck_id and csv_words:
-            db.save_import_to_csv(deck_id, deck_name, request.language, csv_words)
+        # Attach existing target-language vocabulary entries to their sibling decks
+        if request.existing_by_lang:
+            for lang, ids in request.existing_by_lang.items():
+                deck_id = deck_ids_by_lang.get(lang)
+                if deck_id and ids:
+                    db.attach_words_to_deck(ids, deck_id)
 
+        # Save CSV record of this import (source language deck only)
+        if source_deck_id and csv_words:
+            db.save_import_to_csv(source_deck_id, deck_name, request.language, csv_words)
+
+        _commit_elapsed = round(_time.time() - _commit_start, 1)
+        print(f"[commit-import] completed in {_commit_elapsed}s — "
+              f"{len(added_words)} new, {len(merged_synonyms)} synonyms, deck '{deck_name}'")
         return {
             "success": True,
             "message": f"Imported {len(added_words)} new words, merged {len(merged_synonyms)} synonyms",
@@ -1095,8 +1520,9 @@ async def commit_import_to_vocab(request: CommitImportRequest):
             "added": added_words,
             "synonyms_merged": merged_synonyms,
             "added_by_lang": added_by_lang,
-            "deck_id": deck_id,
+            "deck_id": source_deck_id,
             "deck_name": deck_name,
+            "commit_time_seconds": _commit_elapsed,
         }
 
     except Exception as e:
@@ -1125,7 +1551,32 @@ def get_deck_words(deck_id: int, language: str):
             t = w.get('translation', '')
             if t:
                 w['nastaliq'] = transliteration.devanagari_to_nastaliq(t)
-    return {"words": words, "deck_id": deck_id, "count": len(words)}
+    deck_info = db.get_vocab_deck_info(deck_id)
+    return {
+        "words": words,
+        "deck_id": deck_id,
+        "count": len(words),
+        "import_duration_seconds": deck_info.get('import_duration_seconds') if deck_info else None,
+        "created_at": deck_info.get('created_at') if deck_info else None,
+    }
+
+
+@app.patch("/api/vocab/decks/{deck_id}/duration")
+def update_deck_duration(deck_id: int, duration_seconds: float = 0):
+    """Store the total import processing duration on a deck."""
+    db.update_deck_import_duration(deck_id, duration_seconds)
+    return {"success": True}
+
+
+@app.get("/api/vocab/decks/{deck_id}/siblings")
+def get_deck_siblings(deck_id: int):
+    """Get all vocab decks that share the same name as this deck (different languages)."""
+    deck_name = db.get_vocab_deck_name(deck_id)
+    if not deck_name:
+        raise HTTPException(status_code=404, detail="Deck not found")
+    from . import db as db_module
+    decks = db_module.get_vocab_decks_by_name(deck_name)
+    return {"decks": decks, "deck_name": deck_name}
 
 
 class RenameDeckRequest(BaseModel):
@@ -1133,11 +1584,62 @@ class RenameDeckRequest(BaseModel):
 
 @app.put("/api/vocab/decks/{deck_id}")
 def rename_deck(deck_id: int, request: RenameDeckRequest):
-    """Rename a vocab deck"""
-    success = db.rename_vocab_deck(deck_id, request.name)
-    if not success:
+    """Rename a vocab deck.
+
+    This will rename ALL decks that share the same human-visible name
+    (i.e., sibling decks in other languages created from the same import)
+    so that translated decks stay in sync with the source deck name.
+    """
+    # Look up the current deck name
+    old_name = db.get_vocab_deck_name(deck_id)
+    if not old_name:
         raise HTTPException(status_code=404, detail="Deck not found")
+
+    # Find all decks with this name
+    from . import db as db_module
+    sibling_decks = db_module.get_vocab_decks_by_name(old_name)
+    if not sibling_decks:
+        raise HTTPException(status_code=404, detail="No decks found for this name")
+
+    any_success = False
+    for d in sibling_decks:
+        if db.rename_vocab_deck(d["id"], request.name):
+            any_success = True
+
+    if not any_success:
+        raise HTTPException(status_code=500, detail="Failed to rename decks")
+
     return {"success": True, "deck_id": deck_id, "name": request.name}
+
+
+@app.delete("/api/vocab/decks/{deck_id}")
+def delete_deck(deck_id: int, all_languages: bool = False):
+    """Delete a vocab deck and all associated words for the current user.
+    
+    If all_languages=True, deletes ALL decks (all languages) that share the
+    same deck name, along with their words and SRS state.
+    """
+    if all_languages:
+        # Find this deck's name, then remove all decks with that name.
+        deck_name = db.get_vocab_deck_name(deck_id)
+        if not deck_name:
+            raise HTTPException(status_code=404, detail="Deck not found")
+        from . import db as db_module  # avoid circular import type hints
+        decks = db_module.get_vocab_decks_by_name(deck_name)
+        if not decks:
+            raise HTTPException(status_code=404, detail="No decks found for this name")
+        any_deleted = False
+        for d in decks:
+            if db.delete_vocab_deck(d["id"]):
+                any_deleted = True
+        if not any_deleted:
+            raise HTTPException(status_code=500, detail="Failed to delete decks")
+        return {"success": True, "deleted_all_languages": True, "deck_name": deck_name}
+    else:
+        success = db.delete_vocab_deck(deck_id)
+        if not success:
+            raise HTTPException(status_code=404, detail="Deck not found or could not be deleted")
+        return {"success": True, "deck_id": deck_id, "deleted_all_languages": False}
 
 
 # ============================================================================
@@ -3289,16 +3791,30 @@ def grade_translation_activity(language: str, request: TranslationGradingRequest
 
 
 @app.post("/api/activity/transliteration/{language}")
-def create_transliteration_activity(language: str):
-    """Create a transliteration activity using existing reading/listening content and vocabulary."""
+async def create_transliteration_activity(language: str, request: Request):
+    """Create a transliteration activity (from DB content or fallback sentences). Accepts optional JSON body: { \"topic\": \"custom theme\" }."""
     try:
-        activity = api_client.generate_transliteration_activity(language)
+        topic = None
+        try:
+            body = await request.json()
+            if isinstance(body, dict):
+                topic = body.get("topic")
+        except Exception:
+            pass
+        activity = api_client.generate_transliteration_activity(language, topic=topic)
         if not activity:
             raise HTTPException(status_code=500, detail="Failed to generate transliteration activity")
-        if activity.get("_error"):
+        # If generator returned an error (e.g. no_data), do not surface 500; return 200 with empty activity so frontend can show "try again" or topic modal
+        if activity.get("_error") and activity.get("_error_type") != "no_data":
             raise HTTPException(
                 status_code=500,
                 detail=activity.get("_error", "Error generating transliteration activity"),
+            )
+        # If no_data still slipped through, do not persist; return 500 so frontend retries
+        if activity.get("_error") and activity.get("_error_type") == "no_data":
+            raise HTTPException(
+                status_code=500,
+                detail="No sentences available for this language. Try another topic or language.",
             )
 
         # Persist to history so activity can be reopened later
@@ -5635,7 +6151,7 @@ def tutor_chat(request: TutorChatRequest):
 
     try:
         from .prompting import render_template
-        system_instruction = render_template("tutor_system.txt")
+        system_instruction = render_template("tutor/tutor_system.txt")
     except Exception:
         system_instruction = "You are a friendly, expert language tutor for the Fluo language learning app. You help with grammar, vocabulary, pronunciation, and cultural context. Keep responses clear, concise, and helpful."
 

@@ -1,7 +1,9 @@
 You are a Telugu language expert. For each Telugu word below, perform THREE tasks:
 
 TASK 1 — LEMMATIZATION: Reduce the word to its base/dictionary form.
-  - Verbs: convert to informal imperative/base form (e.g., వెళ్తున్నాను → వెళ్ళు).
+  - Verbs: ALWAYS convert to the INFORMAL IMPERATIVE / command form (the shortest root used when giving a casual command to one person).
+    Examples: వెళ్తున్నాను → వెళ్ళు, తింటున్నాను → తిను, వస్తున్నాను → రా, చదువుతున్నాను → చదువు, చేస్తున్నాను → చెయ్యి.
+    Do NOT use the infinitive (-డం/-టం form) or any conjugated form. The correct lemma is the bare imperative root.
   - Nouns: remove case endings and plurals (e.g., ఇంటిలో → ఇల్లు).
   - Adjectives: use base form.
   - Remove tense, aspect, plural, and agreement suffixes.
@@ -19,23 +21,36 @@ TASK 3 — CLASSIFICATION:
       infinitive marker, indefinite article, definite article
   - level: assign CEFR level based on word frequency/difficulty (A1=most common, C2=rarest):
       a1, a2, b1, b2, c1, c2
+  - verb_transitivity: for VERBS ONLY, set one of:
+      "transitive", "intransitive", "ditransitive".
+    Do NOT use "ambitransitive" — pick whichever of transitive or intransitive is the primary usage.
+    For all non-verbs, set verb_transitivity to "N/A".
 
 CRITICAL REQUIREMENTS:
 1) All Telugu output MUST be in Telugu script (తెలుగు). NO Latin/English letters in the "word" field.
 2) The "english" field must be in English.
-3) Return ONLY a valid JSON array. No markdown, no explanation, no extra text.
+3) Verb lemmas MUST be the informal imperative form (e.g., వెళ్ళు, రా, తిను, చదువు) — NOT the infinitive or any conjugated form.
+4) Return ONLY a valid JSON array. No markdown, no explanation, no extra text.
+
+REMINDER — VERB LEMMA FORM:
+The Telugu verb lemma is the informal singular imperative (command to a friend):
+  వెళ్తున్నాను → వెళ్ళు (NOT వెళ్ళడం)
+  వస్తున్నాను → రా (NOT రావడం)
+  తింటున్నాను → తిను (NOT తినడం)
+  చేస్తున్నాను → చెయ్యి (NOT చేయడం)
+Always use this short command form.
 
 IN-CONTEXT EXAMPLES:
 
 Example input words: ఇంటిలో, అధ్యయనం, తింటున్నాను
 Example output:
 [
-  {{"word": "ఇల్లు", "english": "house", "word_class": "noun", "level": "a1"}},
-  {{"word": "అధ్యయనం", "english": "study (academic learning)", "word_class": "noun", "level": "b1"}},
-  {{"word": "తిను", "english": "to eat", "word_class": "verb", "level": "a1"}}
+  {{"word": "ఇల్లు", "english": "house", "word_class": "noun", "level": "a1", "verb_transitivity": "N/A"}},
+  {{"word": "అధ్యయనం", "english": "study (academic learning)", "word_class": "noun", "level": "b1", "verb_transitivity": "N/A"}},
+  {{"word": "తిను", "english": "to eat", "word_class": "verb", "level": "a1", "verb_transitivity": "transitive"}}
 ]
 
 Words to process:
 {words}
 
-Return ONLY the JSON array.
+Return ONLY the JSON array. Remember: verb lemmas = informal imperative form.

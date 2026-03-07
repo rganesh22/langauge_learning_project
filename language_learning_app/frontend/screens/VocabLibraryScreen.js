@@ -19,6 +19,7 @@ import NoLanguageEmptyState from '../components/NoLanguageEmptyState';
 import { MASTERY_FILTERS, WORD_CLASSES as SHARED_WORD_CLASSES, LEVELS as SHARED_LEVELS, LEVEL_COLORS as SHARED_LEVEL_COLORS } from '../constants/filters';
 import { Ionicons } from '@expo/vector-icons';
 import { useFocusEffect } from '@react-navigation/native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const API_BASE_URL = __DEV__ ? 'http://localhost:9090' : 'http://localhost:9090';
 
@@ -30,6 +31,7 @@ const LEVELS = SHARED_LEVELS;
 const LEVEL_COLORS = SHARED_LEVEL_COLORS;
 
 export default function VocabLibraryScreen({ route, navigation }) {
+  const insets = useSafeAreaInsets();
   const { selectedLanguage: ctxLanguage, setSelectedLanguage: setCtxLanguage, availableLanguages } = useContext(LanguageContext);
   // Use global selected language and keep context in sync
   const selectedLanguage = route?.params?.language || ctxLanguage || null;
@@ -335,12 +337,23 @@ export default function VocabLibraryScreen({ route, navigation }) {
             </View>
           ) : null}
           {item.deck_name ? (
-            <View style={[styles.tag, { backgroundColor: '#EDE9FE' }]}>
-              <Ionicons name="layers-outline" size={10} color="#7C3AED" style={{ marginRight: 3 }} />
-              <SafeText style={[styles.tagText, { color: '#7C3AED' }]} numberOfLines={1}>
-                {item.deck_name.length > 14 ? item.deck_name.substring(0, 14) + '…' : item.deck_name}
-              </SafeText>
-            </View>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('DeckDetail', {
+                  language: selectedLanguage,
+                  deckId: item.deck_id,
+                  deckName: item.deck_name,
+                });
+              }}
+              activeOpacity={0.7}
+            >
+              <View style={[styles.tag, { backgroundColor: '#EDE9FE', flexDirection: 'row', alignItems: 'center' }]}>
+                <Ionicons name="layers-outline" size={10} color="#7C3AED" style={{ marginRight: 3 }} />
+                <SafeText style={[styles.tagText, { color: '#7C3AED' }]} numberOfLines={1}>
+                  {item.deck_name.length > 14 ? item.deck_name.substring(0, 14) + '…' : item.deck_name}
+                </SafeText>
+              </View>
+            </TouchableOpacity>
           ) : null}
         </View>
         {/* Origin chip — same shape as other chips */}
@@ -369,7 +382,7 @@ export default function VocabLibraryScreen({ route, navigation }) {
   if (!selectedLanguage || availableLanguages.length === 0) {
     return (
       <View style={styles.container}>
-        <View style={styles.header}>
+        <View style={[styles.header, { paddingTop: insets.top + 8 }]}>
           <View style={styles.headerLeft}>
             <Ionicons name="book" size={24} color="#4A90E2" style={styles.appIcon} />
             <SafeText style={styles.appTitle}>Vocab Library</SafeText>
@@ -383,7 +396,7 @@ export default function VocabLibraryScreen({ route, navigation }) {
   return (
     <View style={styles.container}>
       {/* Header with Language Selector */}
-      <View style={styles.header}>
+      <View style={[styles.header, { paddingTop: insets.top + 8 }]}>
         {/* Top row: title + language picker */}
         <View style={styles.headerTopRow}>
           <View style={styles.headerLeft}>
@@ -626,18 +639,16 @@ export default function VocabLibraryScreen({ route, navigation }) {
           </ScrollView>
         </View>
 
-        {/* Origin / Source Filter */}
+        {/* Origin / Source Filter — same chip style as Part of Speech and Level */}
         <View style={styles.filterGroup}>
           <SafeText style={styles.filterGroupLabel}>Source</SafeText>
-          {/* Top-level origin chips — same container as Part of Speech */}
           <View style={styles.filterWrapContainer}>
             {[
-              { value: '', label: 'All', border: '#9CA3AF', text: '#374151', icon: 'list-outline', lightBg: '#F3F4F6' },
-              // Dark outline by default; selected = fill with border color, white text
-              { value: 'default', label: 'Original Set', border: '#16A34A', text: '#166534', icon: 'book-outline', lightBg: '#DCFCE7' },
-              { value: 'activity', label: 'Activity', border: '#2563EB', text: '#1D4ED8', icon: 'flash-outline', lightBg: '#DBEAFE' },
-              { value: 'deck', label: 'Imported Deck', border: '#7C3AED', text: '#5B21B6', icon: 'albums-outline', lightBg: '#EDE9FE' },
-            ].map(opt => {
+              { value: '', label: 'All', bg: '#9CA3AF', text: '#FFFFFF', icon: 'list-outline' },
+              { value: 'default', label: 'Original Set', bg: '#16A34A', text: '#FFFFFF', icon: 'book-outline' },
+              { value: 'activity', label: 'Activity', bg: '#2563EB', text: '#FFFFFF', icon: 'flash-outline' },
+              { value: 'deck', label: 'Imported Deck', bg: '#7C3AED', text: '#FFFFFF', icon: 'albums-outline' },
+            ].map((opt) => {
               const isAll = opt.value === '';
               const isSelected = isAll ? originFilter.length === 0 : originFilter.includes(opt.value);
               return (
@@ -646,9 +657,8 @@ export default function VocabLibraryScreen({ route, navigation }) {
                   style={[
                     styles.filterChip,
                     {
-                      backgroundColor: isSelected ? opt.border : 'transparent',
-                      borderColor: opt.border,
-                      borderWidth: 2,
+                      backgroundColor: isSelected ? opt.bg : opt.bg + '20',
+                      borderColor: opt.bg,
                     },
                   ]}
                   onPress={() => {
@@ -662,8 +672,8 @@ export default function VocabLibraryScreen({ route, navigation }) {
                   }}
                 >
                   <View style={styles.filterChipContent}>
-                    <Ionicons name={opt.icon} size={14} color={isSelected ? '#FFFFFF' : opt.border} />
-                    <SafeText style={[styles.filterChipText, { color: isSelected ? '#FFFFFF' : opt.border, fontWeight: isSelected ? '700' : '500', marginLeft: 4 }]}>
+                    <Ionicons name={opt.icon} size={14} color={isSelected ? opt.text : opt.bg} />
+                    <SafeText style={[styles.filterChipText, { color: isSelected ? opt.text : opt.bg, marginLeft: 4 }]}>
                       {opt.label}
                     </SafeText>
                   </View>
@@ -671,23 +681,22 @@ export default function VocabLibraryScreen({ route, navigation }) {
               );
             })}
           </View>
-          {/* Specific imported-deck chips */}
+          {/* Specific imported-deck chips — same style */}
           {availableDecks.length > 0 && (
             <View>
               <SafeText style={[styles.filterGroupLabel, { marginTop: 8 }]}>Specific Deck</SafeText>
               <View style={styles.filterWrapContainer}>
-                {availableDecks.map(deck => {
+                {availableDecks.map((deck) => {
                   const isSelected = originFilter.includes(deck.name);
-                  const borderColor = '#7C3AED';
+                  const deckColor = { bg: '#7C3AED', text: '#FFFFFF' };
                   return (
                     <TouchableOpacity
                       key={`deck_${deck.id}`}
                       style={[
                         styles.filterChip,
                         {
-                          backgroundColor: isSelected ? borderColor : 'transparent',
-                          borderColor,
-                          borderWidth: 2,
+                          backgroundColor: isSelected ? deckColor.bg : deckColor.bg + '20',
+                          borderColor: deckColor.bg,
                         },
                       ]}
                       onPress={() => {
@@ -699,8 +708,8 @@ export default function VocabLibraryScreen({ route, navigation }) {
                       }}
                     >
                       <View style={styles.filterChipContent}>
-                        <Ionicons name="albums-outline" size={14} color={isSelected ? '#FFFFFF' : borderColor} />
-                        <SafeText style={[styles.filterChipText, { color: isSelected ? '#FFFFFF' : borderColor, fontWeight: isSelected ? '700' : '500', marginLeft: 4 }]}>
+                        <Ionicons name="albums-outline" size={14} color={isSelected ? deckColor.text : deckColor.bg} />
+                        <SafeText style={[styles.filterChipText, { color: isSelected ? deckColor.text : deckColor.bg, marginLeft: 4 }]}>
                           {deck.name.length > 20 ? deck.name.substring(0, 20) + '…' : deck.name}
                         </SafeText>
                       </View>
@@ -1014,7 +1023,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
   },
   header: {
-    paddingTop: 60,
     paddingHorizontal: 20,
     paddingBottom: 12,
     borderBottomWidth: 1,

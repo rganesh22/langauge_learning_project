@@ -12,6 +12,7 @@ import LessonsScreen from './screens/LessonsScreen';
 import ActivityScreen from './screens/ActivityScreenNew';
 import ActivityHistoryScreen from './screens/ActivityHistoryScreen';
 import FlashcardScreen from './screens/FlashcardScreen';
+import DeckDetailScreen from './screens/DeckDetailScreen';
 import PlacementTestScreen from './screens/PlacementTestScreen';
 import { Ionicons } from '@expo/vector-icons';
 import LanguageProvider from './contexts/LanguageContext';
@@ -150,6 +151,7 @@ export default function App() {
                 <Stack.Screen name="Activity" component={ActivityScreen} />
                 <Stack.Screen name="ActivityHistory" component={ActivityHistoryScreen} />
                 <Stack.Screen name="Flashcards" component={FlashcardScreen} />
+                <Stack.Screen name="DeckDetail" component={DeckDetailScreen} />
                 <Stack.Screen name="PlacementTest" component={PlacementTestScreen} />
               </Stack.Navigator>
               <ActivityGenerationTray

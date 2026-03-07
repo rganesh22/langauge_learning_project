@@ -14,6 +14,7 @@ import {
 import { useFocusEffect } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import SafeText from '../components/SafeText';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { LanguageContext, LANGUAGES } from '../contexts/LanguageContext';
 import NoLanguageEmptyState from '../components/NoLanguageEmptyState';
 import { getLocalDateString, getShortWeekday, parseLocalDate } from '../utils/dateUtils';
@@ -43,6 +44,7 @@ const LEVEL_COLORS = {
 };
 
 export default function DashboardScreen({ navigation }) {
+  const insets = useSafeAreaInsets();
   const [streak, setStreak] = useState(0);
   const [level, setLevel] = useState({ level: 'A1', progress: 0 });
   const [progress, setProgress] = useState({});
@@ -362,7 +364,7 @@ export default function DashboardScreen({ navigation }) {
   if (!selectedLanguage || availableLanguages.length === 0) {
     return (
       <View style={styles.container}>
-        <View style={styles.header}>
+        <View style={[styles.header, { paddingTop: insets.top + 8 }]}>
           <View style={styles.headerLeft}>
             <Ionicons name="language" size={24} color="#4A90E2" style={styles.appIcon} />
             <Text style={styles.appTitle}>Fluo</Text>
@@ -384,7 +386,7 @@ export default function DashboardScreen({ navigation }) {
   return (
     <View style={styles.container}>
       {/* Header */}
-      <View style={styles.header}>
+      <View style={[styles.header, { paddingTop: insets.top + 8 }]}>
         <View style={styles.headerLeft}>
           <Ionicons name="language" size={24} color="#4A90E2" style={styles.appIcon} />
           <Text style={styles.appTitle}>Fluo</Text>
@@ -810,6 +812,7 @@ export default function DashboardScreen({ navigation }) {
                       <View style={[styles.historicalActivityIconCircle, { backgroundColor: colors.light }]}>
                         <Ionicons 
                           name={
+                            activityType === 'transliteration' ? 'swap-horizontal' :
                             activityType === 'reading' ? 'book' : 
                             activityType === 'listening' ? 'headset' :
                             activityType === 'writing' ? 'create' : 
@@ -854,7 +857,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingTop: 60,
     paddingHorizontal: 20,
     paddingBottom: 20,
     borderBottomWidth: 1,

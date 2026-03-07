@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import SafeText from '../../components/SafeText';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { LanguageContext } from '../../contexts/LanguageContext';
 import { useActivityData } from './shared/hooks/useActivityData';
 import { useGenerationCallbacks } from './shared/hooks/useGenerationCallbacks';
@@ -28,6 +29,7 @@ import TranslationToolModal from '../../components/TranslationToolModal';
  * Handles reading comprehension activities with story and multiple-choice questions
  */
 export default function ReadingActivity({ route, navigation }) {
+  const insets = useSafeAreaInsets();
   const { activityId, fromHistory, activityData: routeActivityData } = route.params || {};
   const { selectedLanguage: ctxLanguage } = useContext(LanguageContext);
   const routeLang = (route && route.params && route.params.language) || null;
@@ -241,7 +243,7 @@ export default function ReadingActivity({ route, navigation }) {
   if (activityData.loading) {
     return (
       <View style={styles.container}>
-        <View style={[styles.header, { backgroundColor: colors.primary }]}>
+        <View style={[styles.header, { backgroundColor: colors.primary, paddingTop: insets.top + 8 }]}>
           <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
             <Ionicons name="arrow-back" size={24} color="#FFFFFF" />
           </TouchableOpacity>
@@ -266,7 +268,7 @@ export default function ReadingActivity({ route, navigation }) {
   return (
     <View style={styles.container}>
       {/* Header */}
-      <View style={[styles.header, { backgroundColor: colors.primary }]}>
+      <View style={[styles.header, { backgroundColor: colors.primary, paddingTop: insets.top + 8 }]}>
         <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
           <Ionicons name="arrow-back" size={24} color="#FFFFFF" />
         </TouchableOpacity>
@@ -376,7 +378,7 @@ export default function ReadingActivity({ route, navigation }) {
             {/* Import Vocab from Story — right under the story, localized with Urdu Nastaliq + transliteration */}
             <View style={{ alignItems: 'flex-start', marginTop: 8, marginBottom: 8 }}>
               <TouchableOpacity
-                style={styles.importVocabButton}
+                style={[styles.importVocabButton, { backgroundColor: colors.primary }]}
                 onPress={() => setShowImportModal(true)}
                 activeOpacity={0.8}
               >
@@ -578,53 +580,28 @@ export default function ReadingActivity({ route, navigation }) {
                   </SafeText>
                 )}
 
-                {/* Import Vocab from Story - also in results for convenience */}
-                <TouchableOpacity
-                  style={[styles.importVocabButton, { marginTop: 16 }]}
-                  onPress={() => setShowImportModal(true)}
-                  activeOpacity={0.8}
-                >
-                  <Ionicons name="cloud-upload-outline" size={18} color="#FFF" />
-                  {renderText(
-                    (language === 'urdu' && transliteration.nativeScriptRenderings.importVocabFromStory)
-                      ? transliteration.nativeScriptRenderings.importVocabFromStory
-                      : getImportVocabFromStoryLabel(language),
-                    [styles.importVocabButtonText],
-                    false
-                  )}
-                  {transliteration.showTransliterations && transliteration.transliterations.importVocabFromStory && (
-                    <Text style={[styles.transliterationText, { fontSize: 12, color: 'rgba(255,255,255,0.9)', marginTop: 2 }]}>
-                      {transliteration.transliterations.importVocabFromStory}
-                    </Text>
-                  )}
-                </TouchableOpacity>
-              </View>
-            )}
-
-            {/* Import Vocab button for history view (before submitting) - same as under story */}
-            {fromHistory && activity && !showResult && (
-              <View style={{ alignItems: 'flex-start', marginTop: 4 }}>
-                <TouchableOpacity
-                  style={[styles.importVocabButton, { backgroundColor: colors.primary }]}
-                  onPress={() => setShowImportModal(true)}
-                  activeOpacity={0.8}
-                >
-                  <Ionicons name="cloud-upload-outline" size={18} color="#FFF" />
-                  {renderText(
-                    (language === 'urdu' && transliteration.nativeScriptRenderings.importVocabFromStory)
-                      ? transliteration.nativeScriptRenderings.importVocabFromStory
-                      : getImportVocabFromStoryLabel(language),
-                    [styles.importVocabButtonText],
-                    false
-                  )}
-                  {transliteration.showTransliterations && transliteration.transliterations.importVocabFromStory && (
-                    <Text style={[styles.transliterationText, { fontSize: 12, color: 'rgba(255,255,255,0.9)', marginTop: 2 }]}>
-                      {transliteration.transliterations.importVocabFromStory}
-                    </Text>
-                  )}
-                </TouchableOpacity>
-              </View>
-            )}
+            {/* Import Vocab from Story - also in results for convenience (re-use top button style) */}
+            <TouchableOpacity
+              style={[styles.importVocabButton, { marginTop: 16, backgroundColor: colors.primary }]}
+              onPress={() => setShowImportModal(true)}
+              activeOpacity={0.8}
+            >
+              <Ionicons name="cloud-upload-outline" size={18} color="#FFF" />
+              {renderText(
+                (language === 'urdu' && transliteration.nativeScriptRenderings.importVocabFromStory)
+                  ? transliteration.nativeScriptRenderings.importVocabFromStory
+                  : getImportVocabFromStoryLabel(language),
+                [styles.importVocabButtonText],
+                false
+              )}
+              {transliteration.showTransliterations && transliteration.transliterations.importVocabFromStory && (
+                <Text style={[styles.transliterationText, { fontSize: 12, color: 'rgba(255,255,255,0.9)', marginTop: 2 }]}>
+                  {transliteration.transliterations.importVocabFromStory}
+                </Text>
+              )}
+            </TouchableOpacity>
+          </View>
+        )}
           </View>
         )}
       </ScrollView>
@@ -692,7 +669,6 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingTop: 60,
     paddingBottom: 20,
     paddingHorizontal: 20,
   },

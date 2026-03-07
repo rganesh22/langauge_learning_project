@@ -26,6 +26,7 @@ except ImportError:
 from google.cloud import texttospeech
 from . import config
 from .prompting import render_template, PLACEMENT_TEST_GENERATE_PROMPT, PLACEMENT_TEST_ANALYZE_PROMPT
+from .prompting.transliteration_sentences import FALLBACK_SENTENCES
 
 # Initialize Gemini API
 if config.GEMINI_API_KEY:
@@ -36,14 +37,14 @@ if config.GEMINI_API_KEY:
 # ============================================================================
 
 # Gemini model to use throughout the application
-GEMINI_MODEL = "gemini-2.5-flash"
+GEMINI_MODEL = "gemini-3-flash-preview"
 GEMINI_MODEL_LIVE = "gemini-2.5-flash-native-audio-preview-12-2025"  # For live API (real-time audio)
 
 # ============================================================================
 # Text Generation Functions
 # ============================================================================
 
-# Gemini 2.5 Flash pricing (January 2026)
+# Gemini 3.0 Flash Preview pricing (placeholder, update when final)
 # Text: Input $0.30/1M tokens, Output $2.50/1M tokens  
 # Audio: Input $1.00/1M tokens, Output (not applicable for text model)
 # Gemini 2.5 Flash Native Audio pricing (January 2026)
@@ -1264,7 +1265,7 @@ def generate_speaker_profile(region: str, formality: str, voice: str, language: 
         
         # Generate prompt using template
         prompt = render_template(
-            'speaker_profile.txt',
+            'activities/speaker_profile.txt',
             language=language.capitalize(),
             selected_region=region,
             formality_instruction=formality_instruction,
@@ -1471,7 +1472,7 @@ def generate_reading_activity(word_bank: list, learned_words: list, language: st
         # (so transliteration to Perso-Arabic/Urdu and to Roman can be derived).
         language_for_template = 'Devanagari' if (language and language.lower() == 'urdu') else language
         prompt = render_template(
-            'reading_activity.txt',
+            'activities/reading_activity.txt',
             language=language,
             language_for_template=language_for_template,
             script_requirement=get_script_requirement(language),
@@ -1771,7 +1772,7 @@ def generate_listening_activity(word_bank: list, language: str, required_learnin
         language_for_template = 'Devanagari' if (language and language.lower() == 'urdu') else language
         
         prompt = render_template(
-            'listening_activity.txt',
+            'activities/listening_activity.txt',
             language=language,
             language_for_template=language_for_template,
             user_cefr_level=user_cefr_level,
@@ -2168,7 +2169,7 @@ def generate_writing_activity(word_bank: list, language: str, required_learning_
         general_guidelines = WRITING_GUIDELINES.get(language, WRITING_GUIDELINES['english'])
         
         prompt = render_template(
-            'writing_activity.txt',
+            'activities/writing_activity.txt',
             language=language,
             script_requirement=get_script_requirement(language),
             user_cefr_level=user_cefr_level,
@@ -2337,7 +2338,7 @@ def generate_speaking_activity(word_bank: list, language: str, required_learning
             learning_instruction = ""
         
         prompt = render_template(
-            'speaking_activity.txt',
+            'activities/speaking_activity.txt',
             language=language,
             script_requirement=get_script_requirement(language),
             user_cefr_level=user_cefr_level,
@@ -2530,7 +2531,7 @@ def generate_translation_activity(
         
         # Create prompt for translation activity
         prompt = render_template(
-            'translation_activity.txt',
+            'activities/translation_activity.txt',
             target_language=target_language,
             target_script_requirement=get_script_requirement(target_language),
             target_level=target_level,
@@ -2649,13 +2650,14 @@ def generate_translation_activity(
         }
 
 
-def generate_transliteration_activity(language: str, max_items: int = 20) -> dict:
+def generate_transliteration_activity(language: str, max_items: int = 20, topic: str = None) -> dict:
     """
     Generate a transliteration activity consisting of up to `max_items` sentences
     that the user must transliterate.
 
     Uses existing content from the database (recent reading/listening activities
-    and vocabulary) to avoid extra LLM calls.
+    and vocabulary), or fallback sentences from prompting, so it always succeeds when language is supported.
+    Optional `topic` is used for the activity name (e.g. "Transliteration: travel").
     """
     try:
         import sqlite3
@@ -2722,6 +2724,21 @@ def generate_transliteration_activity(language: str, max_items: int = 20) -> dic
             if len(unique_sentences) >= max_items:
                 break
 
+        # If no content from DB, use fallback sentences (standalone practice)
+        if not unique_sentences:
+            fallback = FALLBACK_SENTENCES.get(language)
+            if fallback:
+                k = min(max_items, len(fallback))
+                unique_sentences = random.sample(fallback, k)
+        # If still no sentences (unsupported language), use any available fallback so activity always succeeds
+        if not unique_sentences and FALLBACK_SENTENCES:
+            any_sentences = []
+            for _lang, sents in FALLBACK_SENTENCES.items():
+                any_sentences.extend(sents)
+            if any_sentences:
+                k = min(max_items, len(any_sentences))
+                unique_sentences = random.sample(any_sentences, k)
+
         if not unique_sentences:
             return {
                 '_error': 'No sentences available for transliteration',
@@ -2747,7 +2764,7 @@ def generate_transliteration_activity(language: str, max_items: int = 20) -> dic
             'activity_id': None,
             'activity_type': 'transliteration',
             'language': language,
-            'activity_name': 'Transliteration Practice',
+            'activity_name': f"Transliteration{f': {topic}' if topic else ' Practice'}",
             'instructions': 'Transliterate each sentence into Latin script as accurately as you can.',
             'items': items,
             '_token_info': {},
@@ -2783,7 +2800,7 @@ def grade_writing_activity(user_text: str, writing_prompt: str, required_words: 
             learning_context = f"\nUser's learning/review words (encourage usage of these): {', '.join(learning_list)}"
         
         prompt = render_template(
-            'writing_grading.txt',
+            'activities/writing_grading.txt',
             language=language,
             script_requirement=get_script_requirement(language),
             user_cefr_level=user_cefr_level,
@@ -2872,7 +2889,7 @@ def grade_translation_activity(translations: list, target_language: str, user_ce
         translations_formatted = "\n\n".join(translations_text)
         
         prompt = render_template(
-            'translation_grading.txt',
+            'activities/translation_grading.txt',
             target_language=target_language,
             target_script_requirement=get_script_requirement(target_language),
             user_cefr_level=user_cefr_level,
@@ -2938,7 +2955,7 @@ def grade_speaking_activity(user_transcript: str, speaking_topic: str, tasks: li
         tasks_list = '\n'.join([f"- {task}" for task in tasks]) if tasks else ""
         
         prompt = render_template(
-            'speaking_grading.txt',
+            'activities/speaking_grading.txt',
             language=language,
             script_requirement=get_script_requirement(language),
             user_cefr_level=user_cefr_level,
@@ -3056,7 +3073,7 @@ def grade_speaking_activity_with_audio(audio_data: bytes, audio_format: str, spe
         
         # Create prompt for audio grading
         prompt = render_template(
-            'speaking_grading.txt',
+            'activities/speaking_grading.txt',
             language=language,
             script_requirement=get_script_requirement(language),
             user_cefr_level=user_cefr_level,
@@ -3353,7 +3370,7 @@ def generate_conversation_activity(words: list, language: str, user_cefr_level: 
         # The template will handle language-specific formality instructions
         
         prompt = render_template(
-            'conversation_activity.txt',
+            'activities/conversation_activity.txt',
             language=language,
             user_cefr_level=user_cefr_level,
             topic=topic,
@@ -3593,7 +3610,7 @@ def generate_conversation_response(message: str, words: list, language: str, use
             }
         
         prompt = render_template(
-            'conversation_response.txt',
+            'activities/conversation_response.txt',
             language=language,
             user_cefr_level=user_cefr_level,
             topic_context=topic_context,
@@ -3857,7 +3874,7 @@ def rate_conversation_performance(conversation_transcript: str, tasks: list, top
         tasks_list = "\n".join([f"- {task}" for task in tasks])
         
         prompt = render_template(
-            'conversation_rating.txt',
+            'activities/conversation_rating.txt',
             language=language,
             user_cefr_level=user_cefr_level,
             topic=topic,

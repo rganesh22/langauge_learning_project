@@ -34,7 +34,7 @@ const ACTIVITY_COLORS = {
 };
 
 const ACTIVITY_ICONS = {
-  transliteration: 'text',
+  transliteration: 'swap-horizontal',
   reading:      'book',
   listening:    'headset',
   writing:      'create',
@@ -127,18 +127,12 @@ function GenerationCard({ job, onDismiss, onPressJob }) {
         </Text>
       </View>
 
-      {/* Activity icon / spinner: always show icon; when generating show spinner next to it */}
-      <View style={[styles.activityIconCircle, { backgroundColor: colors.light }]}>
-        {isGenerating ? (
+      {/* Activity icon / spinner: only show spinner on the right while generating */}
+      {isGenerating && (
+        <View style={[styles.activityIconCircle, { backgroundColor: colors.light }]}>
           <ActivityIndicator size="small" color={colors.primary} />
-        ) : (
-          <Ionicons
-            name={isError ? 'warning-outline' : iconName}
-            size={20}
-            color={isError ? '#EF4444' : colors.primary}
-          />
-        )}
-      </View>
+        </View>
+      )}
 
       {/* Dismiss button — always show so user can close even while generating */}
       <TouchableOpacity style={styles.dismissBtn} onPress={() => onDismiss(job.id)} hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}>

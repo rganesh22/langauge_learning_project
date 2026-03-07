@@ -12,6 +12,7 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import * as FileSystem from 'expo-file-system';
 import SafeText from '../../components/SafeText';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { LanguageContext } from '../../contexts/LanguageContext';
 import { useActivityData } from './shared/hooks/useActivityData';
 import { useGenerationCallbacks } from './shared/hooks/useGenerationCallbacks';
@@ -63,6 +64,7 @@ import {
  * Language-agnostic design with full transliteration and dictionary support
  */
 export default function TranslationActivity({ route, navigation }) {
+  const insets = useSafeAreaInsets();
   const { activityId, fromHistory, activityData: routeActivityData } = route.params || {};
   const { selectedLanguage: ctxLanguage } = useContext(LanguageContext);
   const routeLang = (route && route.params && route.params.language) || null;
@@ -327,7 +329,7 @@ export default function TranslationActivity({ route, navigation }) {
   if (activityData.loading) {
     return (
       <View style={styles.container}>
-        <View style={[styles.header, { backgroundColor: colors.primary }]}>
+        <View style={[styles.header, { backgroundColor: colors.primary, paddingTop: insets.top + 8 }]}>
           <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
             <Ionicons name="arrow-back" size={24} color="#FFFFFF" />
           </TouchableOpacity>
@@ -380,7 +382,7 @@ export default function TranslationActivity({ route, navigation }) {
   return (
     <View style={styles.container}>
       {/* Header */}
-      <View style={[styles.header, { backgroundColor: colors.primary }]}>
+      <View style={[styles.header, { backgroundColor: colors.primary, paddingTop: insets.top + 8 }]}>
         <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
           <Ionicons name="arrow-back" size={24} color="#FFF" />
         </TouchableOpacity>
@@ -1187,7 +1189,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingTop: 50,
     paddingBottom: 16,
     paddingHorizontal: 16,
   },

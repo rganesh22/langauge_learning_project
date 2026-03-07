@@ -17,22 +17,32 @@ TASK 3 — CLASSIFICATION:
       noun, verb, adjective, adverb, pronoun, preposition, conjunction, exclamation,
       modal verb, determiner, number, ordinal number, auxiliary verb, linking verb,
       infinitive marker, indefinite article, definite article
+    CRITICAL: You MUST pick the word_class from this list ONLY. Do NOT invent new tags.
+    Even if none is a perfect grammatical match, choose the CLOSEST option
+    (for example, treat Hindi postpositions as "preposition").
   - level: assign CEFR level based on word frequency/difficulty (A1=most common, C2=rarest):
       a1, a2, b1, b2, c1, c2
+  - gender: REQUIRED for every noun and every adjective — use "m" (masculine) or "f" (feminine). Omit only for verb, adverb, and other non-noun/adjective word classes.
+  - verb_transitivity: for VERBS ONLY, set one of:
+      "transitive", "intransitive", "ditransitive".
+    Do NOT use "ambitransitive" — pick whichever of transitive or intransitive is the primary usage.
+    For all non-verbs, set verb_transitivity to "N/A".
 
 CRITICAL REQUIREMENTS:
 1) All Hindi output MUST be in Devanagari script (हिन्दी). NO Latin/English letters in the "word" field.
-2) The "english" field must be in English.
-3) Return ONLY a valid JSON array. No markdown, no explanation, no extra text.
+2) You MUST include "gender" for every noun and adjective (value "m" or "f"). Omit only for other word classes. The app displays (m) or (f) next to the word when you provide this.
+3) The "english" field must be in English.
+4) Return exactly ONE word per array element. Do not put multiple words in a single "word" field (e.g. "word1, word2"); use separate array elements for each word.
+5) Return ONLY a valid JSON array. No markdown, no explanation, no extra text.
 
 IN-CONTEXT EXAMPLES:
 
 Example input words: घर में, अध्ययन, खा रहा था
 Example output:
 [
-  {{"word": "घर", "english": "house", "word_class": "noun", "level": "a1"}},
-  {{"word": "अध्ययन", "english": "study (academic learning)", "word_class": "noun", "level": "b1"}},
-  {{"word": "खाना", "english": "to eat", "word_class": "verb", "level": "a1"}}
+  {{"word": "घर", "english": "house", "word_class": "noun", "level": "a1", "gender": "m", "verb_transitivity": "N/A"}},
+  {{"word": "अध्ययन", "english": "study (academic learning)", "word_class": "noun", "level": "b1", "gender": "m", "verb_transitivity": "N/A"}},
+  {{"word": "खाना", "english": "to eat", "word_class": "verb", "level": "a1", "verb_transitivity": "transitive"}}
 ]
 
 Words to process:

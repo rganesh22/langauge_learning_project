@@ -16,9 +16,10 @@ import {
 import SafeText from '../components/SafeText';
 import { Ionicons } from '@expo/vector-icons';
 import { useFocusEffect } from '@react-navigation/native';
-import { MASTERY_FILTERS, WORD_CLASSES, CEFR_LEVELS } from '../constants/filters';
+import { MASTERY_FILTERS, WORD_CLASSES, CEFR_LEVELS, VERB_TRANSITIVITY_FILTERS } from '../constants/filters';
 import { LanguageContext, LANGUAGES } from '../contexts/LanguageContext';
 import { useTutor } from '../contexts/TutorContext';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const API_BASE_URL = __DEV__ ? 'http://localhost:9090' : 'http://localhost:9090';
 
@@ -269,7 +270,13 @@ const getWordClassColor = (wordClass) => {
 };
 
 export default function FlashcardScreen({ route, navigation }) {
-  const { language: routeLanguage = 'kannada', studyMode: initialStudyMode = null } = route.params || {};
+  const insets = useSafeAreaInsets();
+  const {
+    language: routeLanguage = 'kannada',
+    studyMode: routeStudyMode = null,
+    deckId: routeDeckId = null,
+    deckName: routeDeckName = '',
+  } = route.params || {};
 
   // ── Language context + in-screen picker ──
   const { selectedLanguage: ctxLanguage, setSelectedLanguage: setCtxLanguage, availableLanguages } = useContext(LanguageContext);
@@ -287,14 +294,23 @@ export default function FlashcardScreen({ route, navigation }) {
 
   const currentLanguage = LANGUAGES.find(l => l.code === language);
 
-  const [studyMode, setStudyMode] = useState(initialStudyMode); // null = show picker, 'reviews', 'new', 'all', 'deck'
-  const [activeDeckId, setActiveDeckId] = useState(null); // set when studyMode='deck'
-  const [activeDeckName, setActiveDeckName] = useState(''); // display label in header
+  const [studyMode, setStudyMode] = useState(routeStudyMode); // null = picker, 'reviews', 'new', 'all', 'deck'
+  const [activeDeckId, setActiveDeckId] = useState(routeDeckId); // set when studyMode='deck'
+  const [activeDeckName, setActiveDeckName] = useState(routeDeckName || ''); // display label in header
+  const [deckStartMode, setDeckStartMode] = useState(route.params?.deckStartMode || 'mixed');
 
   // Imported decks for the picker
   const [decks, setDecks] = useState([]);
   const [decksLoading, setDecksLoading] = useState(false);
   const [decksExpanded, setDecksExpanded] = useState(false);
+  const [showDeleteDeckModal, setShowDeleteDeckModal] = useState(false);
+  const [deleteDeckList, setDeleteDeckList] = useState([]);
+  const [deleteDeckSelectedIds, setDeleteDeckSelectedIds] = useState(new Set());
+  const [showDeleteChoiceModal, setShowDeleteChoiceModal] = useState(false);
+  const [deletePendingDeck, setDeletePendingDeck] = useState(null);
+  const [showDeleteConfirmModal, setShowDeleteConfirmModal] = useState(false);
+  const [deleteConfirmMode, setDeleteConfirmMode] = useState('single');
+  const [deleteSingleDeckId, setDeleteSingleDeckId] = useState(null);
   const [words, setWords] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isFlipped, setIsFlipped] = useState(false);
@@ -644,7 +660,7 @@ export default function FlashcardScreen({ route, navigation }) {
     }
   };
 
-  const loadDeckWords = async (deckId) => {
+  const loadDeckWords = async (deckId, startMode = 'mixed') => {
     try {
       setLoading(true);
       let deckWords = [];
@@ -666,7 +682,25 @@ export default function FlashcardScreen({ route, navigation }) {
         deckWords = data.words || [];
       }
 
-      if (deckWords.length === 0) {
+      // Filter by startMode: 'new', 'due', or 'mixed'
+      const today = new Date();
+      let filteredWords = deckWords;
+      if (startMode === 'new') {
+        filteredWords = deckWords.filter(w => (w.mastery_level || 'new') === 'new');
+      } else if (startMode === 'due') {
+        filteredWords = deckWords.filter(w => {
+          const ml = w.mastery_level || 'new';
+          if (ml === 'new') return false;
+          if (!w.next_review_date) return false;
+          return new Date(w.next_review_date) <= today;
+        });
+      }
+
+      if (filteredWords.length === 0) {
+        Alert.alert(
+          startMode === 'new' ? 'No New Cards' : startMode === 'due' ? 'No Due Cards' : 'No Cards',
+          'This deck has no cards for this mode yet.'
+        );
         Alert.alert('No Words', 'This deck has no words yet.');
         setLoading(false);
         return;
@@ -674,7 +708,7 @@ export default function FlashcardScreen({ route, navigation }) {
 
       // Build bidirectional cards from deck words
       const cardsWithBothDirections = [];
-      deckWords.forEach(word => {
+      filteredWords.forEach(word => {
         cardsWithBothDirections.push({ ...word, cardDirection: 'english-to-native', originalWordId: word.id });
         cardsWithBothDirections.push({ ...word, cardDirection: 'native-to-english', originalWordId: word.id });
       });
@@ -767,10 +801,10 @@ export default function FlashcardScreen({ route, navigation }) {
     // Deck mode: load words by deck
     if (studyMode === 'deck') {
       if (!activeDeckId) return;
-      const modeKey = `deck-${activeDeckId}`;
+      const modeKey = `deck-${activeDeckId}-${deckStartMode || 'mixed'}`;
       if (loadedForModeRef.current === modeKey) return;
       loadedForModeRef.current = modeKey;
-      loadDeckWords(activeDeckId);
+      loadDeckWords(activeDeckId, deckStartMode || 'mixed');
       return;
     }
 
@@ -782,7 +816,7 @@ export default function FlashcardScreen({ route, navigation }) {
     // Pass a large limit — the backend enforces the daily quota for mode=new,
     // and for reviews/all the server caps at the available due count.
     loadWords(100, studyMode);
-  }, [language, studyMode, activeDeckId]);
+  }, [language, studyMode, activeDeckId, deckStartMode]);
 
   // Load language-specific settings
   const loadLanguageSettings = async () => {
@@ -851,6 +885,15 @@ export default function FlashcardScreen({ route, navigation }) {
       loadSrsStats();
       loadDecks();
 
+      // If we were navigated to with a specific deck + deck study mode,
+      // respect that on focus.
+      if (routeDeckId && routeStudyMode === 'deck') {
+        setActiveDeckId(routeDeckId);
+        setActiveDeckName(routeDeckName || '');
+        setDeckStartMode(route.params?.deckStartMode || 'mixed');
+        setStudyMode('deck');
+      }
+
       // Reset card position/flip state
       setCurrentIndex(0);
       setIsFlipped(!showFrontFirst);
@@ -870,7 +913,7 @@ export default function FlashcardScreen({ route, navigation }) {
         setCompletedCardIndices([]);
         loadedForModeRef.current = null;
       };
-    }, [showFrontFirst])
+    }, [showFrontFirst, routeDeckId, routeDeckName, routeStudyMode])
   );
 
   // Keyboard support for moving card to corners
@@ -1414,18 +1457,96 @@ export default function FlashcardScreen({ route, navigation }) {
     const totalLearning = srsStats?.total_learning || 0;
     const totalMastered = srsStats?.total_mastered || 0;
 
-    const startDeck = (deck) => {
-      setActiveDeckId(deck.id);
-      setActiveDeckName(deck.name);
-      setStudyMode('deck');
-      setCurrentIndex(0);
-      setCompletedWords([]);
-      setCompletedCardIndices([]);
+    const openDeckDetail = (deck) => {
+      navigation.navigate('DeckDetail', {
+        language,
+        deckId: deck.id,
+        deckName: deck.name,
+      });
+    };
+
+    const startDeleteDeck = (deck) => {
+      const id = deck?.id;
+      if (!id) return;
+      setDeletePendingDeck(deck);
+      setShowDeleteChoiceModal(true);
+    };
+
+    const handleDeleteChoiceThisDeckOnly = () => {
+      const deck = deletePendingDeck;
+      setShowDeleteChoiceModal(false);
+      setDeletePendingDeck(null);
+      if (!deck?.id) return;
+      setDeleteSingleDeckId(deck.id);
+      setDeleteConfirmMode('single');
+      setShowDeleteConfirmModal(true);
+    };
+
+    const handleDeleteChoiceAlsoOtherLanguages = async () => {
+      const deck = deletePendingDeck;
+      if (!deck?.id) return;
+      try {
+        const res = await fetch(`${API_BASE_URL}/api/vocab/decks/${deck.id}/siblings`);
+        const data = res.ok ? await res.json() : { decks: [] };
+        const siblings = data.decks || [];
+        const list = siblings.length > 0 ? siblings : [{ id: deck.id, name: deck.name, language: deck.language || language }];
+        setDeleteDeckList(list);
+        setDeleteDeckSelectedIds(new Set(list.map((d) => d.id)));
+        setShowDeleteChoiceModal(false);
+        setDeletePendingDeck(null);
+        setShowDeleteDeckModal(true);
+      } catch (e) {
+        console.error('Error loading siblings:', e);
+        setShowDeleteChoiceModal(false);
+        setDeletePendingDeck(null);
+      }
+    };
+
+    const executeDeleteSingle = async () => {
+      const id = deleteSingleDeckId;
+      setShowDeleteConfirmModal(false);
+      setDeleteSingleDeckId(null);
+      if (!id) return;
+      try {
+        await fetch(`${API_BASE_URL}/api/vocab/decks/${id}`, { method: 'DELETE' });
+        loadDecks();
+      } catch (e) {
+        console.error('Error deleting deck:', e);
+      }
+    };
+
+    const openMultiDeleteConfirm = () => {
+      const selected = Array.from(deleteDeckSelectedIds);
+      if (selected.length === 0) return;
+      setShowDeleteDeckModal(false);
+      setDeleteConfirmMode('multi');
+      setShowDeleteConfirmModal(true);
+    };
+
+    const executeDeleteMulti = async () => {
+      const selected = Array.from(deleteDeckSelectedIds);
+      setShowDeleteConfirmModal(false);
+      setDeleteDeckList([]);
+      setDeleteDeckSelectedIds(new Set());
+      for (const id of selected) {
+        try {
+          await fetch(`${API_BASE_URL}/api/vocab/decks/${id}`, { method: 'DELETE' });
+        } catch (e) {
+          console.error('Error deleting deck:', e);
+        }
+      }
+      loadDecks();
+    };
+
+    const confirmDeleteSelectedDecks = () => {
+      const selected = Array.from(deleteDeckSelectedIds);
+      if (selected.length === 0) return;
+      openMultiDeleteConfirm();
     };
 
     return (
       <View style={styles.container}>
-        <View style={styles.header}>
+        <View style={[styles.header, { paddingTop: insets.top + 8 }]}>
           <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
             <Ionicons name="arrow-back" size={24} color="#FFFFFF" />
           </TouchableOpacity>
@@ -1433,7 +1554,10 @@ export default function FlashcardScreen({ route, navigation }) {
             <View style={styles.headerTitleRow}>
               <SafeText style={styles.headerTitle}>{"Flashcards"}</SafeText>
               <TouchableOpacity onPress={openTutor} style={styles.tutorIconBtn} hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}>
-                <Ionicons name="school" size={20} color="#4A90E2" />
+                <View style={{ alignItems: 'center' }}>
+                  <Ionicons name="school" size={20} color="#4A90E2" />
+                  <SafeText style={styles.tutorIconLabel}>Tutor</SafeText>
+                </View>
               </TouchableOpacity>
             </View>
           </View>
@@ -1462,7 +1586,7 @@ export default function FlashcardScreen({ route, navigation }) {
               <View style={styles.languageButtonContent}>
                 <SafeText style={styles.languageName} numberOfLines={1}>{currentLanguage?.name}</SafeText>
                 {currentLanguage?.nativeName ? (
-                  <SafeText style={[styles.languageNativeName, currentLanguage?.code === 'urdu' && { fontFamily: 'Noto Nastaliq Urdu' }]} numberOfLines={1}>
+                  <SafeText style={[styles.languageNativeName, currentLanguage?.code === 'urdu' && { fontFamily: 'Noto Nastaliq Urdu', textAlign: 'left', writingDirection: 'ltr' }]} numberOfLines={1}>
                     {currentLanguage.nativeName}
                   </SafeText>
                 ) : null}
@@ -1593,31 +1717,220 @@ export default function FlashcardScreen({ route, navigation }) {
                 </TouchableOpacity>
 
                 {/* Individual decks */}
-                {decks.map((deck) => (
-                  <TouchableOpacity
+                {decks.map((deck) => {
+                  const isTranslated = deck.is_translated === 1 || deck.is_translated === true || (deck.base_language && deck.base_language !== language);
+                  return (
+                  <View
                     key={deck.id}
                     style={{backgroundColor: '#FFFFFF', borderRadius: 12, padding: 16, flexDirection: 'row', alignItems: 'center', gap: 14, borderLeftWidth: 4, borderLeftColor: '#16A34A', shadowColor: '#000', shadowOffset: {width: 0, height: 1}, shadowOpacity: 0.05, shadowRadius: 3, elevation: 2}}
-                    onPress={() => startDeck(deck)}
                   >
-                    <View style={{width: 42, height: 42, borderRadius: 10, backgroundColor: '#FEF3C7', alignItems: 'center', justifyContent: 'center'}}>
-                      <Ionicons name="albums" size={22} color="#16A34A" />
-                    </View>
-                    <View style={{flex: 1}}>
-                      <SafeText style={{fontSize: 15, fontWeight: '600', color: '#1A1A1A'}} numberOfLines={1}>
-                        {deck.name || `Deck ${deck.id}`}
-                      </SafeText>
-                      <SafeText style={{fontSize: 12, color: '#888', marginTop: 2}}>
-                        {`${deck.word_count || 0} word${(deck.word_count || 0) !== 1 ? 's' : ''}`}
-                        {deck.created_at ? `  ·  ${new Date(deck.created_at).toLocaleDateString()}` : ''}
-                      </SafeText>
-                    </View>
-                    <Ionicons name="chevron-forward" size={20} color="#CCC" />
-                  </TouchableOpacity>
-                ))}
+                    <TouchableOpacity
+                      style={{ flex: 1, flexDirection: 'row', alignItems: 'center', gap: 14 }}
+                      onPress={() => openDeckDetail(deck)}
+                      activeOpacity={0.7}
+                    >
+                      <View style={{width: 42, height: 42, borderRadius: 10, backgroundColor: '#FEF3C7', alignItems: 'center', justifyContent: 'center'}}>
+                        <Ionicons name="albums" size={22} color="#16A34A" />
+                      </View>
+                      <View style={{flex: 1}}>
+                        <View style={{ flexDirection: 'row', alignItems: 'center', flexWrap: 'wrap', gap: 6 }}>
+                          <SafeText style={{fontSize: 15, fontWeight: '600', color: '#1A1A1A'}} numberOfLines={1}>
+                            {deck.name || `Deck ${deck.id}`}
+                          </SafeText>
+                          {isTranslated && (
+                            <View style={{ backgroundColor: '#EEF2FF', borderRadius: 999, paddingHorizontal: 8, paddingVertical: 2, flexDirection: 'row', alignItems: 'center' }}>
+                              <Ionicons name="language-outline" size={11} color="#4F46E5" style={{ marginRight: 3 }} />
+                              <SafeText style={{ fontSize: 11, fontWeight: '600', color: '#4F46E5' }}>Translated</SafeText>
+                            </View>
+                          )}
+                        </View>
+                        <SafeText style={{fontSize: 12, color: '#888', marginTop: 2}}>
+                          {`${deck.word_count || 0} word${(deck.word_count || 0) !== 1 ? 's' : ''}`}
+                          {deck.created_at ? `  ·  ${new Date(deck.created_at).toLocaleDateString()}` : ''}
+                        </SafeText>
+                      </View>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      onPress={() => startDeleteDeck(deck)}
+                      style={{ padding: 12, minWidth: 44, minHeight: 44, justifyContent: 'center', alignItems: 'center' }}
+                      hitSlop={{ top: 12, bottom: 12, left: 12, right: 12 }}
+                      activeOpacity={0.7}
+                    >
+                      <Ionicons name="trash-outline" size={22} color="#B91C1C" />
+                    </TouchableOpacity>
+                  </View>
+                )})}
               </View>
             )
           )}
         </ScrollView>
+        {/* Delete choice modal: this deck only vs also other languages */}
+        <Modal
+          visible={showDeleteChoiceModal}
+          transparent
+          animationType="fade"
+          onRequestClose={() => { setShowDeleteChoiceModal(false); setDeletePendingDeck(null); }}
+        >
+          <TouchableOpacity
+            style={styles.langModalOverlay}
+            activeOpacity={1}
+            onPress={() => { setShowDeleteChoiceModal(false); setDeletePendingDeck(null); }}
+          >
+            <View style={styles.langModalMenu} onStartShouldSetResponder={() => true}>
+              <SafeText style={styles.langModalTitle}>Delete deck</SafeText>
+              <SafeText style={{ fontSize: 14, color: '#4B5563', marginBottom: 16 }}>
+                Delete only this deck, or also delete this deck in other languages?
+              </SafeText>
+              <View style={{ flexDirection: 'row', justifyContent: 'flex-end', flexWrap: 'wrap', gap: 8 }}>
+                <TouchableOpacity
+                  style={{ paddingVertical: 10, paddingHorizontal: 16 }}
+                  onPress={() => { setShowDeleteChoiceModal(false); setDeletePendingDeck(null); }}
+                >
+                  <SafeText style={{ fontSize: 15, color: '#6B7280' }}>Cancel</SafeText>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={{ paddingVertical: 10, paddingHorizontal: 16, backgroundColor: '#E5E7EB', borderRadius: 8 }}
+                  onPress={handleDeleteChoiceThisDeckOnly}
+                >
+                  <SafeText style={{ fontSize: 15, fontWeight: '600', color: '#374151' }}>This deck only</SafeText>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={{ paddingVertical: 10, paddingHorizontal: 16, backgroundColor: '#B91C1C', borderRadius: 8 }}
+                  onPress={handleDeleteChoiceAlsoOtherLanguages}
+                >
+                  <SafeText style={{ fontSize: 15, fontWeight: '600', color: '#FFFFFF' }}>Also delete in other languages</SafeText>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </TouchableOpacity>
+        </Modal>
+        {/* Delete confirm modal */}
+        <Modal
+          visible={showDeleteConfirmModal}
+          transparent
+          animationType="fade"
+          onRequestClose={() => { setShowDeleteConfirmModal(false); setDeleteSingleDeckId(null); }}
+        >
+          <TouchableOpacity
+            style={styles.langModalOverlay}
+            activeOpacity={1}
+            onPress={() => { setShowDeleteConfirmModal(false); setDeleteSingleDeckId(null); }}
+          >
+            <View style={styles.langModalMenu} onStartShouldSetResponder={() => true}>
+              <SafeText style={styles.langModalTitle}>Are you sure?</SafeText>
+              <SafeText style={{ fontSize: 14, color: '#4B5563', marginBottom: 16 }}>
+                {deleteConfirmMode === 'single'
+                  ? 'This will permanently delete this deck and all its cards. This cannot be undone.'
+                  : `This will permanently delete ${deleteDeckSelectedIds.size} deck(s) and all their cards. This cannot be undone.`}
+              </SafeText>
+              <View style={{ flexDirection: 'row', justifyContent: 'flex-end', gap: 8 }}>
+                <TouchableOpacity
+                  style={{ paddingVertical: 10, paddingHorizontal: 16 }}
+                  onPress={() => { setShowDeleteConfirmModal(false); setDeleteSingleDeckId(null); }}
+                >
+                  <SafeText style={{ fontSize: 15, color: '#6B7280' }}>Cancel</SafeText>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={{ paddingVertical: 10, paddingHorizontal: 16, backgroundColor: '#B91C1C', borderRadius: 8 }}
+                  onPress={deleteConfirmMode === 'single' ? executeDeleteSingle : executeDeleteMulti}
+                >
+                  <SafeText style={{ fontSize: 15, fontWeight: '600', color: '#FFFFFF' }}>Delete</SafeText>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </TouchableOpacity>
+        </Modal>
+        {/* Delete deck(s) selection modal */}
+        <Modal
+          visible={showDeleteDeckModal}
+          transparent
+          animationType="fade"
+          onRequestClose={() => setShowDeleteDeckModal(false)}
+        >
+          <TouchableOpacity
+            style={styles.langModalOverlay}
+            activeOpacity={1}
+            onPress={() => setShowDeleteDeckModal(false)}
+          >
+            <TouchableOpacity
+              style={[styles.langModalMenu, { maxHeight: '70%' }]}
+              activeOpacity={1}
+              onPress={(e) => e.stopPropagation()}
+            >
+              <SafeText style={styles.langModalTitle}>Select decks to delete</SafeText>
+              <ScrollView style={{ maxHeight: 320 }}>
+                {deleteDeckList.map((d) => {
+                  const langMeta = availableLanguages?.find((l) => l.code === d.language) || { name: d.language };
+                  const selected = deleteDeckSelectedIds.has(d.id);
+                  const cardBg = selected ? '#EFF6FF' : '#F5F5F5';
+                  const borderColor = selected ? '#3B82F6' : 'transparent';
+                  return (
+                    <TouchableOpacity
+                      key={d.id}
+                      style={[styles.langModalOption, { backgroundColor: cardBg, borderColor }]}
+                      onPress={() => {
+                        setDeleteDeckSelectedIds((prev) => {
+                          const next = new Set(prev);
+                          if (next.has(d.id)) next.delete(d.id);
+                          else next.add(d.id);
+                          return next;
+                        });
+                      }}
+                      activeOpacity={0.8}
+                    >
+                      <View style={[styles.langModalCodeBox, { backgroundColor: langMeta.color || '#4A90E2' }]}>
+                        {langMeta.nativeChar ? (
+                          <SafeText
+                            style={[
+                              styles.langModalNativeChar,
+                              langMeta.code === 'urdu' && { fontFamily: 'Noto Nastaliq Urdu' },
+                            ]}
+                          >
+                            {String(langMeta.nativeChar)}
+                          </SafeText>
+                        ) : (
+                          <SafeText style={styles.langModalCodeText}>
+                            {String(langMeta.langCode?.toUpperCase() || d.language?.slice(0, 2).toUpperCase())}
+                          </SafeText>
+                        )}
+                      </View>
+                      <View style={styles.langModalOptionContent}>
+                        <SafeText
+                          style={[
+                            styles.langModalOptionText,
+                            selected && styles.langModalOptionTextSelected,
+                          ]}
+                        >
+                          {String(langMeta.name)}
+                        </SafeText>
+                        <SafeText style={{ fontSize: 12, color: '#666', marginTop: 2 }}>{d.name}</SafeText>
+                      </View>
+                      <Ionicons
+                        name={selected ? 'checkbox' : 'square-outline'}
+                        size={22}
+                        color={selected ? '#16A34A' : '#9CA3AF'}
+                      />
+                    </TouchableOpacity>
+                  );
+                })}
+              </ScrollView>
+              <View style={{ flexDirection: 'row', justifyContent: 'flex-end', marginTop: 12, gap: 8 }}>
+                <TouchableOpacity
+                  style={{ paddingVertical: 8, paddingHorizontal: 16 }}
+                  onPress={() => setShowDeleteDeckModal(false)}
+                >
+                  <SafeText style={{ fontSize: 15, color: '#6B7280' }}>Cancel</SafeText>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={{ paddingVertical: 8, paddingHorizontal: 16, backgroundColor: '#B91C1C', borderRadius: 8 }}
+                  onPress={confirmDeleteSelectedDecks}
+                >
+                  <SafeText style={{ fontSize: 15, fontWeight: '600', color: '#FFFFFF' }}>Delete</SafeText>
+                </TouchableOpacity>
+              </View>
+            </TouchableOpacity>
+          </TouchableOpacity>
+        </Modal>
         {/* Language Selector Modal */}
         <Modal
           visible={languageMenuVisible}
@@ -1635,28 +1948,56 @@ export default function FlashcardScreen({ route, navigation }) {
               {availableLanguages.map((lang) => {
                 const isSelected = language === lang.code;
                 const langStats = allLanguagesSrsStats[lang.code] || { new_count: 0, due_count: 0 };
+                const cardBg = isSelected ? '#EFF6FF' : '#F5F5F5';
+                const borderColor = isSelected ? '#3B82F6' : 'transparent';
+                const nameColor = isSelected ? '#2563EB' : '#1A1A1A';
+                const nativeColor = isSelected ? '#2563EB' : '#666666';
                 return (
                   <TouchableOpacity
                     key={lang.code}
-                    style={[styles.langModalOption, isSelected && styles.langModalOptionSelected]}
+                    style={[styles.langModalOption, { backgroundColor: cardBg, borderColor }]}
                     onPress={() => {
                       setSelectedLanguage(lang.code);
                       setLanguageMenuVisible(false);
                     }}
+                    activeOpacity={0.8}
                   >
                     {(lang.nativeChar || lang.langCode) && (
-                      <View style={[styles.langModalCodeBox, { backgroundColor: lang.color }]}>
+                      <View style={[styles.langModalCodeBox, { backgroundColor: lang.color || '#4A90E2' }]}>
                         {lang.nativeChar ? (
-                          <SafeText style={[styles.langModalNativeChar, lang.code === 'urdu' && { fontFamily: 'Noto Nastaliq Urdu' }]}>{String(lang.nativeChar)}</SafeText>
+                          <SafeText
+                            style={[
+                              styles.langModalNativeChar,
+                              lang.code === 'urdu' && { fontFamily: 'Noto Nastaliq Urdu' },
+                            ]}
+                          >
+                            {String(lang.nativeChar)}
+                          </SafeText>
                         ) : (
                           <SafeText style={styles.langModalCodeText}>{String(lang.langCode?.toUpperCase())}</SafeText>
                         )}
                       </View>
                     )}
                     <View style={styles.langModalOptionContent}>
-                      <SafeText style={[styles.langModalOptionText, isSelected && styles.langModalOptionTextSelected, !lang.active && styles.langModalOptionTextDisabled]}>{String(lang.name)}</SafeText>
+                      <SafeText
+                        style={[
+                          styles.langModalOptionText,
+                          { color: nameColor },
+                          !lang.active && styles.langModalOptionTextDisabled,
+                        ]}
+                      >
+                        {String(lang.name)}
+                      </SafeText>
                       {lang.nativeName && (
-                        <SafeText style={[styles.langModalNativeName, isSelected && styles.langModalNativeNameSelected, lang.code === 'urdu' && { fontFamily: 'Noto Nastaliq Urdu', textAlign: 'left' }]}>{String(lang.nativeName)}</SafeText>
+                        <SafeText
+                          style={[
+                            styles.langModalNativeName,
+                            { color: nativeColor },
+                            lang.code === 'urdu' && { fontFamily: 'Noto Nastaliq Urdu', textAlign: 'left' },
+                          ]}
+                        >
+                          {String(lang.nativeName)}
+                        </SafeText>
                       )}
                     </View>
                     <View style={styles.langSrsChips}>
@@ -1683,7 +2024,7 @@ export default function FlashcardScreen({ route, navigation }) {
   if (loading) {
     return (
       <View style={styles.container}>
-        <View style={styles.header}>
+        <View style={[styles.header, { paddingTop: insets.top + 8 }]}>
           <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
             <Ionicons name="arrow-back" size={24} color="#FFFFFF" />
           </TouchableOpacity>
@@ -1691,7 +2032,10 @@ export default function FlashcardScreen({ route, navigation }) {
             <View style={styles.headerTitleRow}>
               <SafeText style={styles.headerTitle}>Flashcards</SafeText>
               <TouchableOpacity onPress={openTutor} style={styles.tutorIconBtn} hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}>
-                <Ionicons name="school" size={20} color="#4A90E2" />
+                <View style={{ alignItems: 'center' }}>
+                  <Ionicons name="school" size={20} color="#4A90E2" />
+                  <SafeText style={styles.tutorIconLabel}>Tutor</SafeText>
+                </View>
               </TouchableOpacity>
             </View>
           </View>
@@ -1720,7 +2064,7 @@ export default function FlashcardScreen({ route, navigation }) {
               <View style={styles.languageButtonContent}>
                 <SafeText style={styles.languageName} numberOfLines={1}>{currentLanguage?.name}</SafeText>
                 {currentLanguage?.nativeName ? (
-                  <SafeText style={[styles.languageNativeName, currentLanguage?.code === 'urdu' && { fontFamily: 'Noto Nastaliq Urdu' }]} numberOfLines={1}>
+                  <SafeText style={[styles.languageNativeName, currentLanguage?.code === 'urdu' && { fontFamily: 'Noto Nastaliq Urdu', textAlign: 'left', writingDirection: 'ltr' }]} numberOfLines={1}>
                     {currentLanguage.nativeName}
                   </SafeText>
                 ) : null}
@@ -1741,22 +2085,59 @@ export default function FlashcardScreen({ route, navigation }) {
               {availableLanguages.map((lang) => {
                 const isSelected = language === lang.code;
                 const langStats = allLanguagesSrsStats[lang.code] || { new_count: 0, due_count: 0 };
+                const cardBg = isSelected ? '#EFF6FF' : '#F5F5F5';
+                const borderColor = isSelected ? '#3B82F6' : 'transparent';
+                const nameColor = isSelected ? '#2563EB' : '#1A1A1A';
+                const nativeColor = isSelected ? '#2563EB' : '#666666';
                 return (
-                  <TouchableOpacity key={lang.code} style={[styles.langModalOption, isSelected && styles.langModalOptionSelected]}
-                    onPress={() => { setSelectedLanguage(lang.code); setLanguageMenuVisible(false); }}>
+                  <TouchableOpacity
+                    key={lang.code}
+                    style={[styles.langModalOption, { backgroundColor: cardBg, borderColor }]}
+                    onPress={() => { setSelectedLanguage(lang.code); setLanguageMenuVisible(false); }}
+                    activeOpacity={0.8}
+                  >
                     {(lang.nativeChar || lang.langCode) && (
-                      <View style={[styles.langModalCodeBox, { backgroundColor: lang.color }]}>
-                        {lang.nativeChar ? <SafeText style={[styles.langModalNativeChar, lang.code === 'urdu' && { fontFamily: 'Noto Nastaliq Urdu' }]}>{String(lang.nativeChar)}</SafeText>
-                          : <SafeText style={styles.langModalCodeText}>{String(lang.langCode?.toUpperCase())}</SafeText>}
+                      <View style={[styles.langModalCodeBox, { backgroundColor: lang.color || '#4A90E2' }]}>
+                        {lang.nativeChar ? (
+                          <SafeText style={[styles.langModalNativeChar, lang.code === 'urdu' && { fontFamily: 'Noto Nastaliq Urdu' }]}>
+                            {String(lang.nativeChar)}
+                          </SafeText>
+                        ) : (
+                          <SafeText style={styles.langModalCodeText}>{String(lang.langCode?.toUpperCase())}</SafeText>
+                        )}
                       </View>
                     )}
                     <View style={styles.langModalOptionContent}>
-                      <SafeText style={[styles.langModalOptionText, isSelected && styles.langModalOptionTextSelected, !lang.active && styles.langModalOptionTextDisabled]}>{String(lang.name)}</SafeText>
-                      {lang.nativeName && <SafeText style={[styles.langModalNativeName, isSelected && styles.langModalNativeNameSelected, lang.code === 'urdu' && { fontFamily: 'Noto Nastaliq Urdu', textAlign: 'left' }]}>{String(lang.nativeName)}</SafeText>}
+                      <SafeText
+                        style={[
+                          styles.langModalOptionText,
+                          { color: nameColor },
+                          !lang.active && styles.langModalOptionTextDisabled,
+                        ]}
+                      >
+                        {String(lang.name)}
+                      </SafeText>
+                      {lang.nativeName && (
+                        <SafeText
+                          style={[
+                            styles.langModalNativeName,
+                            { color: nativeColor },
+                            lang.code === 'urdu' && { fontFamily: 'Noto Nastaliq Urdu', textAlign: 'left' },
+                          ]}
+                        >
+                          {String(lang.nativeName)}
+                        </SafeText>
+                      )}
                     </View>
                     <View style={styles.langSrsChips}>
-                      <View style={styles.langSrsChipNew}><Ionicons name="add-circle" size={16} color="#4A90E2" /><SafeText style={styles.langSrsChipTextNew}>{langStats.new_count || 0}</SafeText></View>
-                      <View style={styles.langSrsChipDue}><Ionicons name="alarm" size={16} color="#FF6B6B" /><SafeText style={styles.langSrsChipTextDue}>{langStats.due_count || 0}</SafeText></View>
+                      <View style={styles.langSrsChipNew}>
+                        <Ionicons name="add-circle" size={16} color="#4A90E2" />
+                        <SafeText style={styles.langSrsChipTextNew}>{langStats.new_count || 0}</SafeText>
+                      </View>
+                      <View style={styles.langSrsChipDue}>
+                        <Ionicons name="alarm" size={16} color="#FF6B6B" />
+                        <SafeText style={styles.langSrsChipTextDue}>{langStats.due_count || 0}</SafeText>
+                      </View>
                     </View>
                     {!lang.active && <Ionicons name="lock-closed" size={16} color="#CCC" />}
                   </TouchableOpacity>
@@ -1775,7 +2156,7 @@ export default function FlashcardScreen({ route, navigation }) {
     
     return (
       <View style={styles.container}>
-        <View style={styles.header}>
+        <View style={[styles.header, { paddingTop: insets.top + 8 }]}>
           <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
             <Ionicons name="arrow-back" size={24} color="#FFFFFF" />
           </TouchableOpacity>
@@ -1783,7 +2164,10 @@ export default function FlashcardScreen({ route, navigation }) {
             <View style={styles.headerTitleRow}>
               <SafeText style={styles.headerTitle}>{localizedText.headerTitle.text}</SafeText>
               <TouchableOpacity onPress={openTutor} style={styles.tutorIconBtn} hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}>
-                <Ionicons name="school" size={20} color="#4A90E2" />
+                <View style={{ alignItems: 'center' }}>
+                  <Ionicons name="school" size={20} color="#4A90E2" />
+                  <SafeText style={styles.tutorIconLabel}>Tutor</SafeText>
+                </View>
               </TouchableOpacity>
             </View>
             {showTransliterations && (
@@ -1815,7 +2199,7 @@ export default function FlashcardScreen({ route, navigation }) {
               <View style={styles.languageButtonContent}>
                 <SafeText style={styles.languageName} numberOfLines={1}>{currentLanguage?.name}</SafeText>
                 {currentLanguage?.nativeName ? (
-                  <SafeText style={[styles.languageNativeName, currentLanguage?.code === 'urdu' && { fontFamily: 'Noto Nastaliq Urdu' }]} numberOfLines={1}>
+                  <SafeText style={[styles.languageNativeName, currentLanguage?.code === 'urdu' && { fontFamily: 'Noto Nastaliq Urdu', textAlign: 'left', writingDirection: 'ltr' }]} numberOfLines={1}>
                     {currentLanguage.nativeName}
                   </SafeText>
                 ) : null}
@@ -1983,22 +2367,59 @@ export default function FlashcardScreen({ route, navigation }) {
               {availableLanguages.map((lang) => {
                 const isSelected = language === lang.code;
                 const langStats = allLanguagesSrsStats[lang.code] || { new_count: 0, due_count: 0 };
+                const cardBg = isSelected ? '#EFF6FF' : '#F5F5F5';
+                const borderColor = isSelected ? '#3B82F6' : 'transparent';
+                const nameColor = isSelected ? '#2563EB' : '#1A1A1A';
+                const nativeColor = isSelected ? '#2563EB' : '#666666';
                 return (
-                  <TouchableOpacity key={lang.code} style={[styles.langModalOption, isSelected && styles.langModalOptionSelected]}
-                    onPress={() => { setSelectedLanguage(lang.code); setLanguageMenuVisible(false); }}>
+                  <TouchableOpacity
+                    key={lang.code}
+                    style={[styles.langModalOption, { backgroundColor: cardBg, borderColor }]}
+                    onPress={() => { setSelectedLanguage(lang.code); setLanguageMenuVisible(false); }}
+                    activeOpacity={0.8}
+                  >
                     {(lang.nativeChar || lang.langCode) && (
-                      <View style={[styles.langModalCodeBox, { backgroundColor: lang.color }]}>
-                        {lang.nativeChar ? <SafeText style={[styles.langModalNativeChar, lang.code === 'urdu' && { fontFamily: 'Noto Nastaliq Urdu' }]}>{String(lang.nativeChar)}</SafeText>
-                          : <SafeText style={styles.langModalCodeText}>{String(lang.langCode?.toUpperCase())}</SafeText>}
+                      <View style={[styles.langModalCodeBox, { backgroundColor: lang.color || '#4A90E2' }]}>
+                        {lang.nativeChar ? (
+                          <SafeText style={[styles.langModalNativeChar, lang.code === 'urdu' && { fontFamily: 'Noto Nastaliq Urdu' }]}>
+                            {String(lang.nativeChar)}
+                          </SafeText>
+                        ) : (
+                          <SafeText style={styles.langModalCodeText}>{String(lang.langCode?.toUpperCase())}</SafeText>
+                        )}
                       </View>
                     )}
                     <View style={styles.langModalOptionContent}>
-                      <SafeText style={[styles.langModalOptionText, isSelected && styles.langModalOptionTextSelected, !lang.active && styles.langModalOptionTextDisabled]}>{String(lang.name)}</SafeText>
-                      {lang.nativeName && <SafeText style={[styles.langModalNativeName, isSelected && styles.langModalNativeNameSelected, lang.code === 'urdu' && { fontFamily: 'Noto Nastaliq Urdu', textAlign: 'left' }]}>{String(lang.nativeName)}</SafeText>}
+                      <SafeText
+                        style={[
+                          styles.langModalOptionText,
+                          { color: nameColor },
+                          !lang.active && styles.langModalOptionTextDisabled,
+                        ]}
+                      >
+                        {String(lang.name)}
+                      </SafeText>
+                      {lang.nativeName && (
+                        <SafeText
+                          style={[
+                            styles.langModalNativeName,
+                            { color: nativeColor },
+                            lang.code === 'urdu' && { fontFamily: 'Noto Nastaliq Urdu', textAlign: 'left' },
+                          ]}
+                        >
+                          {String(lang.nativeName)}
+                        </SafeText>
+                      )}
                     </View>
                     <View style={styles.langSrsChips}>
-                      <View style={styles.langSrsChipNew}><Ionicons name="add-circle" size={16} color="#4A90E2" /><SafeText style={styles.langSrsChipTextNew}>{langStats.new_count || 0}</SafeText></View>
-                      <View style={styles.langSrsChipDue}><Ionicons name="alarm" size={16} color="#FF6B6B" /><SafeText style={styles.langSrsChipTextDue}>{langStats.due_count || 0}</SafeText></View>
+                      <View style={styles.langSrsChipNew}>
+                        <Ionicons name="add-circle" size={16} color="#4A90E2" />
+                        <SafeText style={styles.langSrsChipTextNew}>{langStats.new_count || 0}</SafeText>
+                      </View>
+                      <View style={styles.langSrsChipDue}>
+                        <Ionicons name="alarm" size={16} color="#FF6B6B" />
+                        <SafeText style={styles.langSrsChipTextDue}>{langStats.due_count || 0}</SafeText>
+                      </View>
                     </View>
                     {!lang.active && <Ionicons name="lock-closed" size={16} color="#CCC" />}
                   </TouchableOpacity>
@@ -2038,7 +2459,7 @@ export default function FlashcardScreen({ route, navigation }) {
   return (
     <View style={[styles.container, { backgroundColor }]}>
       {/* Header */}
-      <View style={styles.header}>
+      <View style={[styles.header, { paddingTop: insets.top + 8 }]}>
         <TouchableOpacity onPress={handleBackPress} style={styles.backButton}>
           <Ionicons name="arrow-back" size={24} color="#FFFFFF" />
         </TouchableOpacity>
@@ -2046,7 +2467,10 @@ export default function FlashcardScreen({ route, navigation }) {
           <View style={styles.headerTitleRow}>
             <SafeText style={styles.headerTitle} numberOfLines={1}>{headerDisplayTitle}</SafeText>
             <TouchableOpacity onPress={openTutor} style={styles.tutorIconBtn} hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}>
-              <Ionicons name="school" size={20} color="#4A90E2" />
+              <View style={{ alignItems: 'center' }}>
+                <Ionicons name="school" size={20} color="#4A90E2" />
+                <SafeText style={styles.tutorIconLabel}>Tutor</SafeText>
+              </View>
             </TouchableOpacity>
           </View>
           {showTransliterations && studyMode !== 'deck' && (
@@ -2363,13 +2787,17 @@ export default function FlashcardScreen({ route, navigation }) {
                     </View>
                   );
                 })() : null}
-{currentWord?.verb_transitivity && (
-                  <View style={styles.transitivityBadge}>
-                    <SafeText style={styles.transitivityBadgeText}>
-                      {currentWord.verb_transitivity}
-                    </SafeText>
-                  </View>
-                )}
+{currentWord?.verb_transitivity && currentWord.verb_transitivity !== 'N/A' ? (() => {
+                  const vtf = VERB_TRANSITIVITY_FILTERS.find(f => f.value.toLowerCase() === currentWord.verb_transitivity.toLowerCase());
+                  const vtColor = vtf ? vtf.color : { bg: '#6B7280', text: '#FFFFFF' };
+                  return (
+                    <View style={[styles.transitivityBadge, { backgroundColor: vtColor.bg }]}>
+                      <SafeText style={[styles.transitivityBadgeText, { color: vtColor.text }]}>
+                        {currentWord.verb_transitivity}
+                      </SafeText>
+                    </View>
+                  );
+                })() : null}
               </View>
               
               <View style={styles.flipButton}>
@@ -2496,13 +2924,17 @@ export default function FlashcardScreen({ route, navigation }) {
                     </View>
                   );
                 })() : null}
-{currentWord?.verb_transitivity && (
-                  <View style={styles.transitivityBadge}>
-                    <SafeText style={styles.transitivityBadgeText}>
-                      {currentWord.verb_transitivity}
-                    </SafeText>
-                  </View>
-                )}
+{currentWord?.verb_transitivity && currentWord.verb_transitivity !== 'N/A' ? (() => {
+                  const vtf = VERB_TRANSITIVITY_FILTERS.find(f => f.value.toLowerCase() === currentWord.verb_transitivity.toLowerCase());
+                  const vtColor = vtf ? vtf.color : { bg: '#6B7280', text: '#FFFFFF' };
+                  return (
+                    <View style={[styles.transitivityBadge, { backgroundColor: vtColor.bg }]}>
+                      <SafeText style={[styles.transitivityBadgeText, { color: vtColor.text }]}>
+                        {currentWord.verb_transitivity}
+                      </SafeText>
+                    </View>
+                  );
+                })() : null}
               </View>
               
               <View style={styles.flipButton}>
@@ -2515,8 +2947,8 @@ export default function FlashcardScreen({ route, navigation }) {
                 </View>
               </View>
 
-              {/* Origin chip — tapping navigates to the deck picker */}
-              {currentWord?.origin && (
+              {/* Translated chip + Origin chip row */}
+              {(currentWord?.origin || currentWord?.deck_name) && (
                 <TouchableOpacity
                   style={styles.originChipRow}
                   onPress={(e) => {
@@ -2538,6 +2970,7 @@ export default function FlashcardScreen({ route, navigation }) {
                 >
                   {(() => {
                     const o = currentWord.origin;
+                    const isTranslated = o === 'translated';
                     const bg = o === 'default' ? '#16A34A'
                              : o === 'activity' ? '#2563EB'
                              : '#6B7280';
@@ -2545,10 +2978,20 @@ export default function FlashcardScreen({ route, navigation }) {
                                 : o === 'activity' ? 'Activity'
                                 : currentWord.deck_name ? currentWord.deck_name : 'User Upload';
                     return (
-                      <View style={[styles.originChip, { backgroundColor: bg }]}>
-                        <Ionicons name={o === 'default' ? 'star' : o === 'activity' ? 'flash' : 'cloud-upload'} size={10} color="#FFF" />
-                        <SafeText style={styles.originChipText}>{label}</SafeText>
-                        {o !== 'default' && <Ionicons name="arrow-forward" size={10} color="#FFF" style={{ marginLeft: 2 }} />}
+                      <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}>
+                        {isTranslated && (
+                          <View style={[styles.originChip, { backgroundColor: '#EEF2FF', marginRight: 0 }]}>
+                            <Ionicons name="language-outline" size={10} color="#4F46E5" />
+                            <SafeText style={[styles.originChipText, { color: '#4F46E5' }]}>Translated</SafeText>
+                          </View>
+                        )}
+                        {o && (
+                          <View style={[styles.originChip, { backgroundColor: bg }]}>
+                            <Ionicons name={o === 'default' ? 'star' : o === 'activity' ? 'flash' : 'cloud-upload'} size={10} color="#FFF" />
+                            <SafeText style={styles.originChipText}>{label}</SafeText>
+                            {o !== 'default' && <Ionicons name="arrow-forward" size={10} color="#FFF" style={{ marginLeft: 2 }} />}
+                          </View>
+                        )}
                       </View>
                     );
                   })()}
@@ -2577,7 +3020,7 @@ export default function FlashcardScreen({ route, navigation }) {
                   )}
                   <View style={styles.langModalOptionContent}>
                     <SafeText style={[styles.langModalOptionText, isSelected && styles.langModalOptionTextSelected, !lang.active && styles.langModalOptionTextDisabled]}>{String(lang.name)}</SafeText>
-                    {lang.nativeName && <SafeText style={[styles.langModalNativeName, isSelected && styles.langModalNativeNameSelected, lang.code === 'urdu' && { fontFamily: 'Noto Nastaliq Urdu', textAlign: 'left' }]}>{String(lang.nativeName)}</SafeText>}
+                    {lang.nativeName && <SafeText style={[styles.langModalNativeName, isSelected && styles.langModalNativeNameSelected, lang.code === 'urdu' && { fontFamily: 'Noto Nastaliq Urdu', textAlign: 'left', writingDirection: 'ltr' }]}>{String(lang.nativeName)}</SafeText>}
                   </View>
                   <View style={styles.langSrsChips}>
                     <View style={styles.langSrsChipNew}><Ionicons name="add-circle" size={16} color="#4A90E2" /><SafeText style={styles.langSrsChipTextNew}>{langStats.new_count || 0}</SafeText></View>
@@ -2764,7 +3207,6 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingTop: 60,
     paddingBottom: 20,
     paddingHorizontal: 20,
     backgroundColor: '#14B8A6',
@@ -2792,15 +3234,21 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   tutorIconBtn: {
-    marginLeft: 6,
-    width: 32,
-    height: 32,
-    borderRadius: 16,
+    marginLeft: 8,
+    paddingHorizontal: 10,
+    paddingVertical: 6,
+    borderRadius: 18,
     backgroundColor: '#FFFFFF',
     borderWidth: 2,
     borderColor: '#4A90E2',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  tutorIconLabel: {
+    marginTop: 2,
+    fontSize: 9,
+    fontWeight: '600',
+    color: '#4A90E2',
   },
   headerTitle: {
     fontSize: 18,
@@ -2814,7 +3262,9 @@ const styles = StyleSheet.create({
     marginTop: 2,
   },
   settingsButton: {
-    padding: 8,
+    paddingVertical: 8,
+    paddingRight: 8,
+    paddingLeft: 12,
   },
   headerRight: {
     flexDirection: 'row',
@@ -3745,8 +4195,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     padding: 12,
-    borderRadius: 8,
+    borderRadius: 10,
     marginBottom: 8,
+    backgroundColor: '#F5F5F5',
+    borderWidth: 1,
+    borderColor: 'transparent',
   },
   langModalOptionSelected: {
     backgroundColor: '#F0F7FF',

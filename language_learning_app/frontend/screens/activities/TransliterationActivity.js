@@ -10,21 +10,25 @@ import {
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import SafeText from '../../components/SafeText';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { LanguageContext } from '../../contexts/LanguageContext';
 import { useActivityData } from './shared/hooks/useActivityData';
+import { useGenerationCallbacks } from './shared/hooks/useGenerationCallbacks';
 import { useTransliteration } from './shared/hooks/useTransliteration';
 import { useDictionary } from './shared/hooks/useDictionary';
 import { ACTIVITY_COLORS, API_BASE_URL } from './shared/constants';
-import { APIDebugModal, VocabularyDictionary } from './shared/components';
+import { APIDebugModal, VocabularyDictionary, TopicSelectionModal } from './shared/components';
 import TranslationToolModal from '../../components/TranslationToolModal';
 
 export default function TransliterationActivity({ route, navigation }) {
+  const insets = useSafeAreaInsets();
   const { activityId, fromHistory, activityData: routeActivityData } = route.params || {};
   const { selectedLanguage: ctxLanguage } = useContext(LanguageContext);
   const routeLang = (route && route.params && route.params.language) || null;
   const language = routeLang || ctxLanguage || null;
 
-  const activityData = useActivityData('transliteration', language, activityId, fromHistory, routeActivityData, null, null);
+  const genCallbacks = useGenerationCallbacks();
+  const activityData = useActivityData('transliteration', language, activityId, fromHistory, routeActivityData, null, genCallbacks);
   const transliteration = useTransliteration(language, activityData.activity);
   const dictionary = useDictionary(language);
 
@@ -33,6 +37,7 @@ export default function TransliterationActivity({ route, navigation }) {
   const [userInputs, setUserInputs] = useState({});
   const [grading, setGrading] = useState(false);
   const [gradingResult, setGradingResult] = useState(null);
+  const [showTopicModal, setShowTopicModal] = useState(!fromHistory);
 
   const colors = ACTIVITY_COLORS.transliteration;
 
@@ -49,6 +54,16 @@ export default function TransliterationActivity({ route, navigation }) {
     }
   }, [activityData.activity, language]);
 
+  const handleTopicSelection = (selectedTopic) => {
+    setShowTopicModal(false);
+    activityData.loadActivity(selectedTopic);
+  };
+
+  const handleCloseTopicModal = () => {
+    setShowTopicModal(false);
+    navigation.goBack();
+  };
+
   if (!language) {
     return (
       <View style={styles.centered}>
@@ -57,11 +72,35 @@ export default function TransliterationActivity({ route, navigation }) {
     );
   }
 
-  if (activityData.loading || !activityData.activity) {
+  if (activityData.loading) {
+    return (
+      <View style={styles.container}>
+        <View style={[styles.header, { backgroundColor: colors.primary, paddingTop: insets.top + 8 }]}>
+          <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
+            <Ionicons name="arrow-back" size={24} color="#FFFFFF" />
+          </TouchableOpacity>
+          <View style={styles.headerTitleContainer}>
+            <SafeText style={styles.headerTitle}>Transliteration</SafeText>
+          </View>
+        </View>
+        <View style={styles.centerContainer}>
+          <ActivityIndicator size="large" color={colors.primary} />
+          <SafeText style={styles.loadingText}>{activityData.loadingStatus || 'Loading transliteration activity...'}</SafeText>
+        </View>
+      </View>
+    );
+  }
+
+  if (!activityData.activity) {
     return (
       <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color={colors.primary} />
-        <SafeText style={styles.loadingText}>{activityData.loadingStatus || 'Loading transliteration activity...'}</SafeText>
+        <SafeText style={styles.loadingText}>Unable to load transliteration activity. Please try again.</SafeText>
+        <TouchableOpacity onPress={() => setShowTopicModal(true)} style={[styles.gradeButton, { marginTop: 16 }]}>
+          <Text style={styles.gradeButtonText}>Choose topic & generate</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.goBack()} style={[styles.gradeButton, { marginTop: 8, backgroundColor: '#6B7280' }]}>
+          <Text style={styles.gradeButtonText}>Back</Text>
+        </TouchableOpacity>
       </View>
     );
   }
@@ -126,8 +165,15 @@ export default function TransliterationActivity({ route, navigation }) {
 
   return (
     <View style={styles.container}>
+      <TopicSelectionModal
+        visible={showTopicModal}
+        onSelect={handleTopicSelection}
+        onClose={handleCloseTopicModal}
+        activityType="transliteration"
+        color={colors.primary}
+      />
       {/* Header */}
-      <View style={[styles.header, { backgroundColor: colors.primary }]}>
+      <View style={[styles.header, { backgroundColor: colors.primary, paddingTop: insets.top + 8 }]}>
         <View style={styles.headerLeft}>
           <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
             <Ionicons name="arrow-back" size={22} color="#FFFFFF" />
@@ -294,6 +340,13 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingHorizontal: 16,
     paddingVertical: 12,
+  },
+  headerTitleContainer: { flex: 1, marginLeft: 12 },
+  centerContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 24,
   },
   headerLeft: { flexDirection: 'row', alignItems: 'center', gap: 12 },
   backButton: { padding: 4 },

@@ -3,8 +3,9 @@ Database operations for Fluo
 Handles SQLite database interactions, SRS logic, and vocabulary management
 """
 import sqlite3
+import re
 from datetime import datetime, timedelta
-from typing import List, Dict, Optional
+from typing import List, Dict, Optional, Tuple
 import csv
 import random
 import json
@@ -160,7 +161,8 @@ def init_db():
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             name TEXT NOT NULL,
             language TEXT NOT NULL,
-            created_at TEXT DEFAULT CURRENT_TIMESTAMP
+            created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+            base_language TEXT
         )
     ''')
     
@@ -187,7 +189,30 @@ def init_db():
         cursor.execute("SELECT deck_id FROM vocabulary LIMIT 1")
     except sqlite3.OperationalError:
         cursor.execute("ALTER TABLE vocabulary ADD COLUMN deck_id INTEGER REFERENCES vocab_decks(id)")
-    
+
+    # Migration: add base_language column to vocab_decks if not present
+    try:
+        cursor.execute("SELECT base_language FROM vocab_decks LIMIT 1")
+    except sqlite3.OperationalError:
+        cursor.execute("ALTER TABLE vocab_decks ADD COLUMN base_language TEXT")
+
+    # Migration: add import_duration_seconds to vocab_decks
+    try:
+        cursor.execute("SELECT import_duration_seconds FROM vocab_decks LIMIT 1")
+    except sqlite3.OperationalError:
+        cursor.execute("ALTER TABLE vocab_decks ADD COLUMN import_duration_seconds REAL")
+
+    # Junction table: allows a word to appear in multiple decks without moving it
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS vocab_deck_refs (
+            deck_id INTEGER NOT NULL,
+            word_id INTEGER NOT NULL,
+            PRIMARY KEY (deck_id, word_id),
+            FOREIGN KEY (deck_id) REFERENCES vocab_decks(id) ON DELETE CASCADE,
+            FOREIGN KEY (word_id) REFERENCES vocabulary(id) ON DELETE CASCADE
+        )
+    ''')
+
     # SRS word states table
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS word_states (
@@ -433,6 +458,32 @@ def init_db():
         )
     ''')
 
+    # Translation history table
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS translation_history (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            user_id INTEGER DEFAULT 1,
+            source_text TEXT NOT NULL,
+            source_language TEXT NOT NULL,
+            target_languages TEXT NOT NULL,
+            results_json TEXT NOT NULL,
+            duration_seconds REAL,
+            created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (user_id) REFERENCES user_profile(id)
+        )
+    ''')
+
+    cursor.execute('''
+        CREATE INDEX IF NOT EXISTS idx_translation_history_user
+        ON translation_history(user_id, created_at DESC)
+    ''')
+
+    # Migration: add duration_seconds column to translation_history
+    try:
+        cursor.execute("SELECT duration_seconds FROM translation_history LIMIT 1")
+    except sqlite3.OperationalError:
+        cursor.execute("ALTER TABLE translation_history ADD COLUMN duration_seconds REAL")
+
     conn.commit()
 
     # Initialize default user if not exists
@@ -531,10 +582,35 @@ def init_db_schema():
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             name TEXT NOT NULL,
             language TEXT NOT NULL,
-            created_at TEXT DEFAULT CURRENT_TIMESTAMP
+            created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+            base_language TEXT,
+            import_duration_seconds REAL
         )
     ''')
-    
+
+    # Migration: add base_language column to vocab_decks if not present
+    try:
+        cursor.execute("SELECT base_language FROM vocab_decks LIMIT 1")
+    except sqlite3.OperationalError:
+        cursor.execute("ALTER TABLE vocab_decks ADD COLUMN base_language TEXT")
+
+    # Migration: add import_duration_seconds to vocab_decks
+    try:
+        cursor.execute("SELECT import_duration_seconds FROM vocab_decks LIMIT 1")
+    except sqlite3.OperationalError:
+        cursor.execute("ALTER TABLE vocab_decks ADD COLUMN import_duration_seconds REAL")
+
+    # Junction table: allows a word to appear in multiple decks without moving it
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS vocab_deck_refs (
+            deck_id INTEGER NOT NULL,
+            word_id INTEGER NOT NULL,
+            PRIMARY KEY (deck_id, word_id),
+            FOREIGN KEY (deck_id) REFERENCES vocab_decks(id) ON DELETE CASCADE,
+            FOREIGN KEY (word_id) REFERENCES vocabulary(id) ON DELETE CASCADE
+        )
+    ''')
+
     # Vocabulary words table
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS vocabulary (
@@ -2532,6 +2608,184 @@ def normalize_iast_diacritics(text: str) -> str:
     return normalized
 
 
+def _is_mostly_latin(s: str) -> bool:
+    """True if the string is mostly ASCII/Latin letters (used to decide if we should transliterate for native-script match)."""
+    if not s or not s.strip():
+        return False
+    letters = re.findall(r'[a-zA-Z\u00C0-\u024F]', s)  # Latin + common diacritics
+    other = re.findall(r'[\u0900-\u0DFF\u0600-\u06FF]', s)  # Indic + Arabic
+    total = len(letters) + len(other)
+    return total > 0 and len(letters) >= total * 0.7
+
+
+def _vocabulary_search_variants(search: str, language: str) -> Tuple[List[str], List[str]]:
+    """
+    Build search variants for fuzzy, cross-script vocabulary search.
+    Returns (latin_variants, native_variants).
+    - latin_variants: used for LOWER(transliteration), LOWER(english_word) LIKE %v%.
+    - native_variants: used for translation LIKE %v% (native script); only set when search is Latin and language is Indic.
+    """
+    search = (search or '').strip()
+    if not search:
+        return [], []
+    lang_lower = (language or '').lower()
+    # Urdu: DB stores Devanagari; normalize Nastaliq/Arabic input so search matches
+    if lang_lower == 'urdu' and re.search(r'[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF]', search):
+        try:
+            from . import transliteration
+            search = transliteration.nastaliq_to_devanagari(search).strip() or search
+        except Exception:
+            pass
+    try:
+        normalized = normalize_iast_diacritics(search)
+    except Exception:
+        normalized = search.lower()
+    latin_variants = list({search.lower(), normalized})
+    # Hindi/Urdu: schwa variants so "hona" matches "hon" and vice versa
+    if lang_lower in ('hindi', 'urdu'):
+        if search.lower().endswith('a') and len(search) > 1:
+            latin_variants.append(search.lower()[:-1])
+            latin_variants.append(normalized[:-1] if normalized.endswith('a') else normalized)
+        if not search.lower().endswith('a'):
+            latin_variants.append(search.lower() + 'a')
+            latin_variants.append((normalized + 'a') if normalized else normalized)
+    latin_variants = list(dict.fromkeys(latin_variants))  # dedupe preserving order
+    native_variants = []
+    # When user types in native script (e.g. होना), always match translation column
+    if not _is_mostly_latin(search):
+        native_variants.append(search.strip())
+    elif lang_lower in ('hindi', 'urdu', 'kannada', 'telugu', 'tamil', 'malayalam'):
+        try:
+            from . import transliteration
+            native = transliteration.latin_to_native_script(search, language)
+            if native and native != search and not _is_mostly_latin(native):
+                native_variants.append(native.strip())
+        except Exception:
+            pass
+    return latin_variants, native_variants
+
+
+def vocab_search_matches(query: str, language: str, limit: int = 50) -> List[Dict]:
+    """
+    Single unified entry point for searching vocabulary by word/script.
+    Used by find_word_by_translation and for consistent lookup elsewhere.
+    Matches translation (native), transliteration (Latin, normalized), english_word.
+    For Urdu, Nastaliq/Arabic input is normalized to Devanagari (DB storage script) before search.
+    """
+    query = (query or '').strip()
+    if not query:
+        return []
+    # Urdu: normalize Nastaliq → Devanagari so we match DB (idempotent if already Devanagari)
+    if (language or '').lower() == 'urdu':
+        try:
+            from . import transliteration
+            query = (transliteration.nastaliq_to_devanagari(query) or query).strip()
+        except Exception:
+            pass
+    conn = sqlite3.connect(config.DB_PATH)
+    conn.row_factory = sqlite3.Row
+    cursor = conn.cursor()
+    try:
+        normalized_query = normalize_iast_diacritics(query)
+    except Exception:
+        normalized_query = query.lower()
+    latin_variants, native_variants = _vocabulary_search_variants(query, language)
+    where_parts = []
+    params = [language]
+    for v in latin_variants:
+        t = f'%{v}%'
+        where_parts.append('(LOWER(english_word) LIKE LOWER(?) OR LOWER(transliteration) LIKE LOWER(?))')
+        params.extend([t, t])
+    for n in native_variants:
+        # Exact variant match only (translation = n or n is a token in "a / b")
+        where_parts.append('(translation = ? OR translation LIKE ? OR translation LIKE ? OR translation LIKE ?)')
+        params.extend([n, n + ' /%', '%/ ' + n, '%/ ' + n + ' /%'])
+    if not where_parts:
+        where_parts.append('(LOWER(english_word) LIKE LOWER(?) OR translation LIKE ? OR LOWER(transliteration) LIKE LOWER(?))')
+        params.extend([f'%{query}%', f'%{query}%', f'%{query}%'])
+    where_clause = ' AND (' + ' OR '.join(where_parts) + ')'
+    # Case-insensitive language so 'urdu' and 'Urdu' both match
+    cursor.execute(
+        'SELECT * FROM vocabulary WHERE LOWER(language) = LOWER(?) ' + where_clause + ' LIMIT ?',
+        params + [min(limit * 2, 200)]
+    )
+    words = [dict(row) for row in cursor.fetchall()]
+    if query and _is_mostly_latin(query):
+        cursor.execute(
+            '''SELECT * FROM vocabulary WHERE LOWER(language) = LOWER(?) AND transliteration IS NOT NULL AND TRIM(transliteration) != '' LIMIT 500''',
+            (language,)
+        )
+        seen = {w['id'] for w in words}
+        for row in cursor.fetchall():
+            if row['id'] in seen:
+                continue
+            translit = (row['transliteration'] or '')
+            for part in translit.split(' /'):
+                part = (part or '').strip()
+                if not part:
+                    continue
+                try:
+                    n = normalize_iast_diacritics(part)
+                    if normalized_query in n or n in normalized_query or n.startswith(normalized_query) or normalized_query.startswith(n):
+                        words.append(dict(row))
+                        seen.add(row['id'])
+                        break
+                except Exception:
+                    pass
+    normalized_lower = normalized_query.lower()
+    filtered = []
+    for w in words:
+        trans = (w.get('translation') or '')
+        engl = (w.get('english_word') or '').lower()
+        translit = (w.get('transliteration') or '').lower()
+        if query.lower() in engl:
+            filtered.append(w)
+            continue
+        trans_variants = [x.strip() for x in trans.split(' /') if x.strip()]
+        if _is_mostly_latin(query):
+            if query in trans or any(query in v for v in trans_variants):
+                filtered.append(w)
+                continue
+        else:
+            if any(v == query for v in trans_variants):
+                filtered.append(w)
+                continue
+        for v in translit.split(' /'):
+            v = (v or '').strip()
+            if query.lower() in v:
+                filtered.append(w)
+                break
+        else:
+            for v in translit.split(' /'):
+                v = (v or '').strip()
+                try:
+                    n = normalize_iast_diacritics(v)
+                    if normalized_lower in n or n in normalized_lower or n.startswith(normalized_lower) or normalized_lower.startswith(n):
+                        filtered.append(w)
+                        break
+                except Exception:
+                    pass
+    conn.close()
+    return filtered[:limit]
+
+
+def search_vocabulary_by_english(english: str, language: str, limit: int = 20) -> List[Dict]:
+    """Return vocabulary rows whose english_word matches the given English (substring, for candidate lookup)."""
+    if not (english or '').strip():
+        return []
+    conn = sqlite3.connect(config.DB_PATH)
+    conn.row_factory = sqlite3.Row
+    cursor = conn.cursor()
+    pattern = f'%{(english or "").strip()}%'
+    cursor.execute(
+        '''SELECT * FROM vocabulary WHERE LOWER(language) = LOWER(?) AND LOWER(english_word) LIKE LOWER(?) LIMIT ?''',
+        (language, pattern, limit)
+    )
+    rows = [dict(row) for row in cursor.fetchall()]
+    conn.close()
+    return rows
+
+
 def get_vocabulary(
     language: str, 
     search: str = '', 
@@ -2547,11 +2801,18 @@ def get_vocabulary(
     conn.row_factory = sqlite3.Row
     cursor = conn.cursor()
     
-    # Base WHERE clause
-    where_clause = 'WHERE v.language = ?'
+    # Case-insensitive language so 'urdu' and 'Urdu' both match
+    where_clause = 'WHERE LOWER(v.language) = LOWER(?)'
     params = [language]
     
     if search:
+        # Urdu: normalize Nastaliq/Arabic to Devanagari so we match DB (idempotent if already Devanagari)
+        if (language or '').lower() == 'urdu':
+            try:
+                from . import transliteration
+                search = (transliteration.nastaliq_to_devanagari(search) or search).strip()
+            except Exception:
+                pass
         # Normalize search query (remove diacritics for fuzzy matching)
         try:
             normalized_search = normalize_iast_diacritics(search)
@@ -2561,36 +2822,29 @@ def get_vocabulary(
             normalized_search = search
             normalized_search_term = f'%{search}%'
         
-        # Search is case-insensitive and works with:
-        # 1. English word (exact match)
-        # 2. Kannada text (exact match)
-        # 3. Transliteration (exact match)
-        # 4. Normalized transliteration (fuzzy match - ignores diacritics)
-        # For fuzzy matching, we fetch a broader set of candidates based on:
-        # - Exact matches in English, Kannada, or transliteration
-        # - Matches in transliteration that might match after normalization
-        # Then we filter in Python by normalizing transliterations
-        search_term = f'%{search}%'
-        normalized_search_term = f'%{normalized_search}%'
-        
-        # Broader query: check if search appears in any field
-        # We'll do fuzzy matching in Python after fetching candidates
-        # For SQL, fetch candidates that might match after normalization
-        # Check both original search and normalized search, and also check for significant substrings
-        # Extract significant parts (3+ chars) from search for substring matching
-        significant_parts = [search[i:i+3] for i in range(len(search)-2)] if len(search) >= 3 else [search]
-        part_conditions = ' OR '.join(['LOWER(v.transliteration) LIKE LOWER(?)' for _ in significant_parts])
-        part_params = [f'%{part}%' for part in significant_parts]
-        
-        where_clause += f''' AND (
-            LOWER(v.english_word) LIKE LOWER(?) 
-            OR v.translation LIKE ? 
-            OR LOWER(v.transliteration) LIKE LOWER(?)
-            OR LOWER(v.english_word) LIKE LOWER(?)
-            OR {part_conditions}
-        )'''
-        # Use search term and normalized search, plus significant parts
-        params.extend([search_term, search_term, search_term, search_term] + part_params)
+        # Cross-script search: Latin variants (transliteration/english) + native script variant (translation)
+        latin_variants, native_variants = _vocabulary_search_variants(search, language)
+        search_conditions = []
+        search_params = []
+        for v in latin_variants:
+            term = f'%{v}%'
+            search_conditions.append('(LOWER(v.english_word) LIKE LOWER(?) OR LOWER(v.transliteration) LIKE LOWER(?))')
+            search_params.extend([term, term])
+        for n in native_variants:
+            # Match only when native term is a full variant (exact or "a / b" token), not substring
+            search_conditions.append('(v.translation = ? OR v.translation LIKE ? OR v.translation LIKE ? OR v.translation LIKE ?)')
+            search_params.extend([n, n + ' /%', '%/ ' + n, '%/ ' + n + ' /%'])
+        if search_conditions:
+            where_clause += ' AND (' + ' OR '.join(search_conditions) + ')'
+            params.extend(search_params)
+        else:
+            search_term = f'%{search}%'
+            where_clause += ''' AND (
+                LOWER(v.english_word) LIKE LOWER(?)
+                OR v.translation LIKE ?
+                OR LOWER(v.transliteration) LIKE LOWER(?)
+            )'''
+            params.extend([search_term, search_term, search_term])
     
     if mastery_filter:
         # Handle multiple mastery filters (comma-separated or multiple values)
@@ -2658,7 +2912,7 @@ def get_vocabulary(
     except sqlite3.OperationalError as e:
         print(f"Error in count query: {e}")
         # Fallback: use simpler count without filters
-        cursor.execute(f'SELECT COUNT(*) as total FROM vocabulary v WHERE v.language = ?', [language])
+        cursor.execute(f'SELECT COUNT(*) as total FROM vocabulary v WHERE LOWER(v.language) = LOWER(?)', [language])
         total_count = cursor.fetchone()['total']
     
     # Data query - fetch more results if searching (we'll sort and paginate in Python)
@@ -2699,7 +2953,7 @@ def get_vocabulary(
     except sqlite3.OperationalError as e:
         print(f"Error in data query: {e}")
         # Fallback: simpler query without complex filters
-        where_clause_simple = f'WHERE v.language = ?'
+        where_clause_simple = f'WHERE LOWER(v.language) = LOWER(?)'
         if search:
             where_clause_simple += ' AND (LOWER(v.english_word) LIKE LOWER(?) OR v.translation LIKE ? OR LOWER(v.transliteration) LIKE LOWER(?))'
             params_simple = [language, f'%{search}%', f'%{search}%', f'%{search}%', limit, offset]
@@ -2718,6 +2972,37 @@ def get_vocabulary(
     
     words = [dict(row) for row in cursor.fetchall()]
     
+    # When search is Latin, also fetch candidates by normalized transliteration (e.g. "hona" matches "hōnā")
+    if search and _is_mostly_latin(search):
+        try:
+            norm_search = normalize_iast_diacritics(search)
+            cursor.execute('''
+                SELECT v.*, COALESCE(ws.mastery_level, 'new') as mastery_level,
+                       COALESCE(ws.next_review_date, '') as next_review_date,
+                       vd.name as deck_name
+                FROM vocabulary v
+                LEFT JOIN word_states ws ON v.id = ws.word_id AND ws.user_id = 1
+                LEFT JOIN vocab_decks vd ON v.deck_id = vd.id
+                WHERE LOWER(v.language) = LOWER(?) AND v.transliteration IS NOT NULL AND TRIM(v.transliteration) != ''
+                LIMIT 500
+            ''', (language,))
+            extra = [dict(row) for row in cursor.fetchall()]
+            seen_ids = {w['id'] for w in words}
+            for row in extra:
+                if row['id'] in seen_ids:
+                    continue
+                translit = (row.get('transliteration') or '')
+                for part in translit.split(' /'):
+                    part = part.strip()
+                    if not part:
+                        continue
+                    if norm_search in normalize_iast_diacritics(part) or normalize_iast_diacritics(part) in norm_search:
+                        words.append(row)
+                        seen_ids.add(row['id'])
+                        break
+        except Exception as e:
+            print(f"Fallback normalized translit search: {e}")
+    
     # If search was provided, filter by normalized transliteration for fuzzy matching
     # This ensures diacritic-agnostic search works correctly
     if search:
@@ -2731,15 +3016,14 @@ def get_vocabulary(
             # Check English word
             english_match = search.lower() in word_english
             
-            # Check Kannada - split by " /" and check each variant (same as transliterations)
+            # Translation (native): when search is native script, require exact variant match only
             kannada_match = False
             if word_kannada:
-                kannada_variants = word_kannada.split(' /')
-                for variant in kannada_variants:
-                    variant = variant.strip()
-                    if search in variant:
-                        kannada_match = True
-                        break
+                variants = [v.strip() for v in word_kannada.split(' /') if v.strip()]
+                if _is_mostly_latin(search):
+                    kannada_match = any(search in v for v in variants)
+                else:
+                    kannada_match = any(v == search for v in variants)
             
             # Check transliteration - split by " /" and check each variant
             translit_match = False
@@ -3714,7 +3998,40 @@ def get_language_stats(language: str) -> Dict:
     ''', (language,))
     result = cursor.fetchone()
     stats['average_score'] = round(result['avg_score'], 2) if result and result['avg_score'] else 0
-    
+
+    # Lessons completed (lesson_completions + lessons; match language by code: lessons.language can be 'Kannada' or 'kannada')
+    cursor.execute('''
+        SELECT COUNT(*) as count
+        FROM lesson_completions lc
+        JOIN lessons l ON lc.lesson_id = l.lesson_id
+        WHERE lc.user_id = 1 AND LOWER(TRIM(l.language)) = LOWER(?)
+    ''', (language,))
+    result = cursor.fetchone()
+    stats['lessons_completed'] = result['count'] if result else 0
+
+    # Time spent (sum of activity duration in minutes; started_at, completed_at in activity_history)
+    cursor.execute('''
+        SELECT started_at, completed_at
+        FROM activity_history
+        WHERE user_id = 1 AND language = ? AND started_at IS NOT NULL AND completed_at IS NOT NULL
+    ''', (language,))
+    rows = cursor.fetchall()
+    total_seconds = 0
+    for row in rows:
+        try:
+            from datetime import datetime as _dt
+            sa = (row['started_at'] or '')[:19].replace('T', ' ')
+            ca = (row['completed_at'] or '')[:19].replace('T', ' ')
+            if len(sa) >= 19 and len(ca) >= 19:
+                start = _dt.strptime(sa, '%Y-%m-%d %H:%M:%S')
+                end = _dt.strptime(ca, '%Y-%m-%d %H:%M:%S')
+                total_seconds += max(0, (end - start).total_seconds())
+            else:
+                total_seconds += 300
+        except (ValueError, TypeError):
+            total_seconds += 300
+    stats['time_spent_minutes'] = int(total_seconds // 60)
+
     conn.close()
     return stats
 
@@ -5098,82 +5415,142 @@ def get_user_active_languages(user_id: int = 1) -> List[str]:
 
 
 def find_word_by_translation(word: str, language: str) -> Optional[Dict]:
-    """Find if a word already exists in the vocabulary.
-    Handles multi-term entries like 'term1 / term2' by checking each individual term.
+    """Find if a word already exists.
+
+    For most languages this delegates to vocab_search_matches (which considers
+    translation, transliteration, and English). For Urdu we need special
+    handling because legacy DB entries store translations in Perso‑Arabic
+    script while newer pipelines sometimes work in Devanagari.
     """
-    try:
+    if not (word or '').strip():
+        return None
+
+    lang_lower = (language or '').lower()
+
+    # Special path for Urdu: normalize BOTH query and DB translations via
+    # nastaliq_to_devanagari and compare tokens in Devanagari.
+    if lang_lower == 'urdu':
+        try:
+            from . import transliteration
+        except Exception:
+            transliteration = None
+
         conn = sqlite3.connect(config.DB_PATH)
         conn.row_factory = sqlite3.Row
         cursor = conn.cursor()
+        cursor.execute(
+            "SELECT * FROM vocabulary WHERE LOWER(language) = 'urdu'"
+        )
+        rows = cursor.fetchall()
+        conn.close()
 
-        # Build list of terms to check: the original word, plus any "/" separated parts
-        terms_to_check = set()
-        terms_to_check.add(word.strip())
+        if transliteration is None or not rows:
+            return None
+
+        # Build normalized terms to check (Devanagari), splitting on "/"
+        raw_terms = set()
+        raw_terms.add(word.strip())
         for part in word.split('/'):
             part = part.strip()
             if part:
-                terms_to_check.add(part)
+                raw_terms.add(part)
+        norm_terms = set()
+        for t in raw_terms:
+            try:
+                norm = transliteration.nastaliq_to_devanagari(t) or t
+            except Exception:
+                norm = t
+            norm_terms.add(norm.strip())
 
-        for term in terms_to_check:
-            # Check both exact match and as a part of a multi-term entry
-            cursor.execute('''
-                SELECT * FROM vocabulary
-                WHERE language = ?
-                  AND (
-                    LOWER(translation) = LOWER(?)
-                    OR LOWER(translation) LIKE LOWER(?)
-                    OR LOWER(translation) LIKE LOWER(?)
-                    OR LOWER(translation) LIKE LOWER(?)
-                  )
-                LIMIT 1
-            ''', (language, term,
-                  f'%/ {term}',
-                  f'{term} /%',
-                  f'%/ {term} /%'))
-
-            row = cursor.fetchone()
-            if row:
-                conn.close()
-                return dict(row)
-
-        conn.close()
+        for row in rows:
+            tr = row['translation'] or ''
+            try:
+                norm_tr = transliteration.nastaliq_to_devanagari(tr) or tr
+            except Exception:
+                norm_tr = tr
+            parts = [p.strip() for p in norm_tr.split('/') if p.strip()]
+            for p in parts:
+                if p in norm_terms:
+                    return dict(row)
         return None
-    except Exception as e:
-        print(f"Error finding word: {e}")
-        return None
+
+    # Default path: use unified fuzzy search
+    terms_to_check = {word.strip()}
+    for part in word.split('/'):
+        part = part.strip()
+        if part:
+            terms_to_check.add(part)
+    for term in terms_to_check:
+        matches = vocab_search_matches(term, language, limit=1)
+        if matches:
+            return matches[0]
+    return None
 
 
 def find_synonym_by_english(english_word: str, language: str, exclude_word: str = '') -> Optional[Dict]:
     """Find a vocab entry whose English meaning is the same or very close.
-    Used to detect synonyms during import: if the new word has the same English gloss
-    as an existing entry, it's a synonym candidate.
+    Uses the first CONTENT word (skips stopwords like "to", "a", "the") so that
+    "to build" matches "to build" / "build" but not "to become", and multi-word
+    phrases only match when the first content word aligns.
     """
     try:
         if not english_word:
             return None
+        # Stopwords that must not be used as the primary match (would over-match)
+        STOPWORDS = {'to', 'a', 'an', 'the', 'of', 'and', 'or', 'for', 'in', 'on', 'at', 'be', 'is', 'are', 'was', 'were', 'as', 'by', 'with'}
+        raw_tokens = [
+            t.strip().lower()
+            for t in re.sub(r'[,;()]', ' ', english_word).split()
+            if t.strip()
+        ]
+        # First content word: skip stopwords and require at least 3 chars to avoid "be", "go"
+        content_tokens = [t for t in raw_tokens if t not in STOPWORDS and len(t) >= 3]
+        primary = content_tokens[0] if content_tokens else (raw_tokens[0] if raw_tokens and len(raw_tokens[0]) >= 2 else None)
+        if not primary:
+            return None
         conn = sqlite3.connect(config.DB_PATH)
         conn.row_factory = sqlite3.Row
         cursor = conn.cursor()
-        # Split multi-word English gloss and check each main token
-        tokens = [t.strip().lower() for t in english_word.replace(',', ' ').replace(';', ' ').split() if len(t.strip()) >= 3]
-        if not tokens:
-            conn.close()
-            return None
-        like_conditions = ' OR '.join(['LOWER(english_word) LIKE ?' for _ in tokens])
-        params = [f'%{t}%' for t in tokens] + [language]
-        query = f'''
+        # Match rows whose english_word starts with primary (with optional "to " prefix for verbs)
+        like_patterns = [primary + ' ', primary + ',', primary + '(', 'to ' + primary, 'to ' + primary + ' ', 'to ' + primary + ',', 'to ' + primary + '(']
+        placeholders = [language, primary] + [p + '%' for p in like_patterns]
+        if exclude_word:
+            placeholders.append(exclude_word.lower())
+        query = '''
             SELECT * FROM vocabulary
-            WHERE ({like_conditions})
-              AND language = ?
+            WHERE language = ?
+              AND (
+                LOWER(TRIM(english_word)) = ?
+                OR LOWER(english_word) LIKE ?
+                OR LOWER(english_word) LIKE ?
+                OR LOWER(english_word) LIKE ?
+                OR LOWER(english_word) LIKE ?
+                OR LOWER(english_word) LIKE ?
+                OR LOWER(english_word) LIKE ?
+              )
         '''
         if exclude_word:
-            query += ' AND LOWER(translation) != LOWER(?)'
-            params.append(exclude_word.lower())
-        query += ' ORDER BY id ASC LIMIT 1'
-        cursor.execute(query, params)
-        row = cursor.fetchone()
+            query += ' AND LOWER(translation) != ?'
+        query += ' ORDER BY LENGTH(TRIM(english_word)) ASC, id ASC LIMIT 20'
+        cursor.execute(query, placeholders)
+        rows = cursor.fetchall()
         conn.close()
-        return dict(row) if row else None
+        if not rows:
+            return None
+        # Prefer row whose first content word exactly matches primary (and if we have a second content word, prefer same second)
+        secondary = content_tokens[1] if len(content_tokens) > 1 else None
+        for row in rows:
+            existing_english = (row['english_word'] or '').strip().lower()
+            existing_tokens = [t for t in re.sub(r'[,;()]', ' ', existing_english).split() if t.strip()]
+            existing_content = [t for t in existing_tokens if t not in STOPWORDS and len(t) >= 3]
+            if not existing_content:
+                existing_content = existing_tokens
+            if existing_content[0] != primary:
+                continue
+            if secondary and len(existing_content) > 1 and existing_content[1] != secondary:
+                continue
+            return dict(row)
+        return dict(rows[0]) if rows else None
     except Exception as e:
         print(f"Error finding synonym: {e}")
         return None
@@ -5253,15 +5630,20 @@ def insert_vocabulary_entry(
 # Vocab Deck Operations
 # ============================================================================
 
-def create_vocab_deck(language: str, name: str) -> int:
-    """Create a new vocab deck and return its ID"""
+def create_vocab_deck(language: str, name: str, base_language: Optional[str] = None) -> int:
+    """Create a new vocab deck and return its ID.
+
+    base_language:
+        - For the source-language deck, this should be the same as `language`.
+        - For translated decks, this should be the source language the deck was imported from.
+    """
     try:
         conn = sqlite3.connect(config.DB_PATH)
         cursor = conn.cursor()
         cursor.execute('''
-            INSERT INTO vocab_decks (name, language)
-            VALUES (?, ?)
-        ''', (name, language))
+            INSERT INTO vocab_decks (name, language, base_language)
+            VALUES (?, ?, ?)
+        ''', (name, language, base_language or language))
         deck_id = cursor.lastrowid
         conn.commit()
         conn.close()
@@ -5269,6 +5651,36 @@ def create_vocab_deck(language: str, name: str) -> int:
     except Exception as e:
         print(f"Error creating vocab deck: {e}")
         return 0
+
+
+def update_deck_import_duration(deck_id: int, duration_seconds: float):
+    """Store the total import duration on a deck."""
+    try:
+        conn = sqlite3.connect(config.DB_PATH)
+        cursor = conn.cursor()
+        cursor.execute(
+            'UPDATE vocab_decks SET import_duration_seconds = ? WHERE id = ?',
+            (duration_seconds, deck_id),
+        )
+        conn.commit()
+        conn.close()
+    except Exception as e:
+        print(f"Error updating deck import duration: {e}")
+
+
+def get_vocab_decks_by_name(name: str) -> list:
+    """Get all vocab decks (any language) that share the same name."""
+    try:
+        conn = sqlite3.connect(config.DB_PATH)
+        conn.row_factory = sqlite3.Row
+        cursor = conn.cursor()
+        cursor.execute('SELECT * FROM vocab_decks WHERE name = ?', (name,))
+        decks = [dict(row) for row in cursor.fetchall()]
+        conn.close()
+        return decks
+    except Exception as e:
+        print(f"Error getting vocab decks by name '{name}': {e}")
+        return []
 
 
 def save_import_to_csv(deck_id: int, deck_name: str, language: str, words: list) -> str:
@@ -5324,7 +5736,7 @@ def rename_vocab_deck(deck_id: int, new_name: str) -> bool:
 
 
 def get_vocab_decks(language: str = None) -> list:
-    """Get all vocab decks with word counts, optionally filtered by language"""
+    """Get all vocab decks with word counts (direct + referenced), optionally filtered by language"""
     try:
         conn = sqlite3.connect(config.DB_PATH)
         conn.row_factory = sqlite3.Row
@@ -5332,20 +5744,24 @@ def get_vocab_decks(language: str = None) -> list:
         if language:
             cursor.execute('''
                 SELECT vd.*,
-                    COUNT(v.id) AS word_count
+                       (SELECT COUNT(*) FROM vocabulary v WHERE v.deck_id = vd.id AND v.language = vd.language)
+                       + (SELECT COUNT(*) FROM vocab_deck_refs dr JOIN vocabulary v2 ON v2.id = dr.word_id WHERE dr.deck_id = vd.id AND v2.language = vd.language)
+                       AS word_count,
+                       CASE WHEN vd.base_language IS NOT NULL AND vd.base_language <> vd.language
+                            THEN 1 ELSE 0 END AS is_translated
                 FROM vocab_decks vd
-                LEFT JOIN vocabulary v ON v.deck_id = vd.id AND v.language = vd.language
                 WHERE vd.language = ?
-                GROUP BY vd.id
                 ORDER BY vd.created_at DESC
             ''', (language,))
         else:
             cursor.execute('''
                 SELECT vd.*,
-                    COUNT(v.id) AS word_count
+                       (SELECT COUNT(*) FROM vocabulary v WHERE v.deck_id = vd.id AND v.language = vd.language)
+                       + (SELECT COUNT(*) FROM vocab_deck_refs dr JOIN vocabulary v2 ON v2.id = dr.word_id WHERE dr.deck_id = vd.id AND v2.language = vd.language)
+                       AS word_count,
+                       CASE WHEN vd.base_language IS NOT NULL AND vd.base_language <> vd.language
+                            THEN 1 ELSE 0 END AS is_translated
                 FROM vocab_decks vd
-                LEFT JOIN vocabulary v ON v.deck_id = vd.id AND v.language = vd.language
-                GROUP BY vd.id
                 ORDER BY vd.created_at DESC
             ''')
         decks = [dict(row) for row in cursor.fetchall()]
@@ -5356,8 +5772,13 @@ def get_vocab_decks(language: str = None) -> list:
         return []
 
 
-def get_words_for_deck(language: str, deck_id: int, limit: int = 200) -> List[Dict]:
-    """Get all words belonging to a specific vocab deck for flashcard study"""
+def get_words_for_deck(language: str, deck_id: int, limit: int = 500) -> List[Dict]:
+    """Get all words belonging to a specific vocab deck for flashcard study.
+
+    Includes:
+      - Words whose deck_id equals this deck (directly created during import)
+      - Words referenced via vocab_deck_refs (existing words attached to the deck)
+    """
     try:
         conn = sqlite3.connect(config.DB_PATH)
         conn.row_factory = sqlite3.Row
@@ -5369,20 +5790,63 @@ def get_words_for_deck(language: str, deck_id: int, limit: int = 200) -> List[Di
                    ws.review_count,
                    ws.ease_factor,
                    ws.interval_days,
-                   vd.name AS deck_name
+                   vd_deck.name AS deck_name,
+                   CASE WHEN vd_deck.base_language IS NOT NULL AND vd_deck.base_language <> vd_deck.language
+                        THEN 1 ELSE 0 END AS is_translated,
+                   0 AS is_ref
             FROM vocabulary v
-            LEFT JOIN word_states ws ON ws.vocabulary_id = v.id AND ws.user_id = 1
-            LEFT JOIN vocab_decks vd ON vd.id = v.deck_id
+            LEFT JOIN word_states ws ON ws.word_id = v.id AND ws.user_id = 1
+            LEFT JOIN vocab_decks vd_deck ON vd_deck.id = ?
             WHERE v.language = ? AND v.deck_id = ?
-            ORDER BY v.id
+
+            UNION ALL
+
+            SELECT v.*,
+                   COALESCE(ws.mastery_level, 'new') AS mastery_level,
+                   ws.next_review_date,
+                   ws.review_count,
+                   ws.ease_factor,
+                   ws.interval_days,
+                   vd_deck.name AS deck_name,
+                   CASE WHEN vd_deck.base_language IS NOT NULL AND vd_deck.base_language <> vd_deck.language
+                        THEN 1 ELSE 0 END AS is_translated,
+                   1 AS is_ref
+            FROM vocab_deck_refs dr
+            JOIN vocabulary v ON v.id = dr.word_id
+            LEFT JOIN word_states ws ON ws.word_id = v.id AND ws.user_id = 1
+            LEFT JOIN vocab_decks vd_deck ON vd_deck.id = ?
+            WHERE dr.deck_id = ? AND v.language = ? AND (v.deck_id IS NULL OR v.deck_id != ?)
+
+            ORDER BY is_ref ASC, id ASC
             LIMIT ?
-        ''', (language, deck_id, limit))
+        ''', (deck_id, language, deck_id, deck_id, deck_id, language, deck_id, limit))
         words = [dict(row) for row in cursor.fetchall()]
         conn.close()
         return words
     except Exception as e:
         print(f"Error getting deck words: {e}")
         return []
+
+
+def attach_words_to_deck(word_ids: List[int], deck_id: int) -> None:
+    """Attach existing vocabulary rows to a deck via the junction table.
+
+    Non-destructive: the word's own deck_id / origin columns are untouched
+    so it keeps its original provenance (e.g. 'default')."""
+    if not word_ids or deck_id is None:
+        return
+    try:
+        conn = sqlite3.connect(config.DB_PATH)
+        cursor = conn.cursor()
+        for wid in word_ids:
+            cursor.execute(
+                "INSERT OR IGNORE INTO vocab_deck_refs (deck_id, word_id) VALUES (?, ?)",
+                (deck_id, wid),
+            )
+        conn.commit()
+        conn.close()
+    except Exception as e:
+        print(f"Error attaching words {word_ids} to deck {deck_id}: {e}")
 
 
 def get_vocab_deck_name(deck_id: int) -> Optional[str]:
@@ -5398,6 +5862,150 @@ def get_vocab_deck_name(deck_id: int) -> Optional[str]:
     except Exception as e:
         print(f"Error getting vocab deck name: {e}")
         return None
+
+
+def get_vocab_deck_info(deck_id: int) -> Optional[Dict]:
+    """Get full info for a vocab deck by ID."""
+    try:
+        conn = sqlite3.connect(config.DB_PATH)
+        conn.row_factory = sqlite3.Row
+        cursor = conn.cursor()
+        cursor.execute('SELECT * FROM vocab_decks WHERE id = ?', (deck_id,))
+        row = cursor.fetchone()
+        conn.close()
+        return dict(row) if row else None
+    except Exception as e:
+        print(f"Error getting vocab deck info: {e}")
+        return None
+
+
+def delete_vocab_deck(deck_id: int) -> bool:
+    """Delete a vocab deck and all words belonging to it (and their SRS state).
+
+    Referenced words (via vocab_deck_refs) are NOT deleted — only the reference
+    row is removed so the original word stays intact in its source deck/set."""
+    try:
+        conn = sqlite3.connect(config.DB_PATH)
+        conn.row_factory = sqlite3.Row
+        cursor = conn.cursor()
+        # Remove junction-table references for this deck
+        cursor.execute('DELETE FROM vocab_deck_refs WHERE deck_id = ?', (deck_id,))
+        # Find all word ids directly owned by this deck
+        cursor.execute('SELECT id FROM vocabulary WHERE deck_id = ?', (deck_id,))
+        word_ids = [row['id'] for row in cursor.fetchall()]
+        if word_ids:
+            cursor.execute(
+                f'DELETE FROM word_states WHERE word_id IN ({",".join(["?"] * len(word_ids))})',
+                word_ids
+            )
+            cursor.execute(
+                f'DELETE FROM vocabulary WHERE id IN ({",".join(["?"] * len(word_ids))})',
+                word_ids
+            )
+        cursor.execute('DELETE FROM vocab_decks WHERE id = ?', (deck_id,))
+        conn.commit()
+        conn.close()
+        return True
+    except Exception as e:
+        print(f"Error deleting vocab deck {deck_id}: {e}")
+        return False
+
+# ============================================================================
+# Translation History
+# ============================================================================
+
+def save_translation_history(source_text: str, source_language: str,
+                              target_languages: List[str],
+                              results: Dict,
+                              duration_seconds: float = None) -> Optional[int]:
+    """Save a completed translation to history. Returns the new row id."""
+    import json as _json
+    try:
+        conn = sqlite3.connect(config.DB_PATH)
+        cursor = conn.cursor()
+        cursor.execute('''
+            INSERT INTO translation_history (source_text, source_language, target_languages, results_json, duration_seconds)
+            VALUES (?, ?, ?, ?, ?)
+        ''', (
+            source_text.strip(),
+            source_language.strip().lower(),
+            _json.dumps(target_languages),
+            _json.dumps(results),
+            duration_seconds,
+        ))
+        row_id = cursor.lastrowid
+        conn.commit()
+        conn.close()
+        return row_id
+    except Exception as e:
+        print(f"Error saving translation history: {e}")
+        return None
+
+
+def get_translation_history(limit: int = 50, language: Optional[str] = None) -> List[Dict]:
+    """Return recent translations, newest first."""
+    import json as _json
+    try:
+        conn = sqlite3.connect(config.DB_PATH)
+        conn.row_factory = sqlite3.Row
+        cursor = conn.cursor()
+        if language:
+            cursor.execute('''
+                SELECT * FROM translation_history
+                WHERE source_language = ?
+                ORDER BY created_at DESC LIMIT ?
+            ''', (language.lower(), limit))
+        else:
+            cursor.execute('''
+                SELECT * FROM translation_history
+                ORDER BY created_at DESC LIMIT ?
+            ''', (limit,))
+        rows = []
+        for row in cursor.fetchall():
+            d = dict(row)
+            d['target_languages'] = _json.loads(d.get('target_languages') or '[]')
+            d['results_json'] = _json.loads(d.get('results_json') or '{}')
+            rows.append(d)
+        conn.close()
+        return rows
+    except Exception as e:
+        print(f"Error getting translation history: {e}")
+        return []
+
+
+def get_translation_history_by_id(history_id: int) -> Optional[Dict]:
+    """Get a single translation history entry by id."""
+    import json as _json
+    try:
+        conn = sqlite3.connect(config.DB_PATH)
+        conn.row_factory = sqlite3.Row
+        cursor = conn.cursor()
+        cursor.execute('SELECT * FROM translation_history WHERE id = ?', (history_id,))
+        row = cursor.fetchone()
+        conn.close()
+        if not row:
+            return None
+        d = dict(row)
+        d['target_languages'] = _json.loads(d.get('target_languages') or '[]')
+        d['results_json'] = _json.loads(d.get('results_json') or '{}')
+        return d
+    except Exception as e:
+        print(f"Error getting translation history entry: {e}")
+        return None
+
+
+def delete_translation_history(history_id: int) -> bool:
+    """Delete a single translation history entry."""
+    try:
+        conn = sqlite3.connect(config.DB_PATH)
+        cursor = conn.cursor()
+        cursor.execute('DELETE FROM translation_history WHERE id = ?', (history_id,))
+        conn.commit()
+        conn.close()
+        return True
+    except Exception as e:
+        print(f"Error deleting translation history: {e}")
+        return False
 
 
 # ============================================================================

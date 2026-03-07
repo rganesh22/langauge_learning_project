@@ -15,6 +15,7 @@ import LessonRenderer from '../components/LessonRenderer';
 import SafeText from '../components/SafeText';
 import { LanguageContext, LANGUAGES } from '../contexts/LanguageContext';
 import NoLanguageEmptyState from '../components/NoLanguageEmptyState';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const API_BASE_URL = __DEV__ ? 'http://localhost:9090' : 'http://localhost:9090';
 
@@ -24,6 +25,7 @@ const CEFR_COLORS = {
 };
 
 const LessonsScreen = ({ route }) => {
+  const insets = useSafeAreaInsets();
   const navigation = useNavigation();
   const { selectedLanguage: ctxLanguage, setSelectedLanguage: setCtxLanguage, availableLanguages } = useContext(LanguageContext);
   const selectedLanguage = ctxLanguage;
@@ -473,7 +475,7 @@ const LessonsScreen = ({ route }) => {
   if (!selectedLanguage || availableLanguages.length === 0) {
     return (
       <View style={styles.container}>
-        <View style={styles.header}>
+        <View style={[styles.header, { paddingTop: insets.top + 8 }]}>
           <View style={styles.headerLeft}>
             <Ionicons name="school" size={24} color="#4A90E2" style={styles.appIcon} />
             <Text style={styles.appTitle}>Units</Text>
@@ -649,7 +651,7 @@ const LessonsScreen = ({ route }) => {
   return (
     <View style={styles.container}>
       {/* Header */}
-      <View style={styles.header}>
+      <View style={[styles.header, { paddingTop: insets.top + 8 }]}>
         <View style={styles.headerLeft}>
           <Ionicons name="school" size={24} color="#4A90E2" style={styles.appIcon} />
           <Text style={styles.appTitle}>
@@ -877,7 +879,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingTop: 60,
     paddingBottom: 20,
     paddingHorizontal: 20,
     backgroundColor: '#FFFFFF',

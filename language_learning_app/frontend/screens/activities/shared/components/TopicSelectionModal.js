@@ -43,6 +43,8 @@ export default function TopicSelectionModal({ visible, onClose, onSelectTopic, a
       listening: 'Listening',
       writing: 'Writing',
       speaking: 'Speaking',
+      translation: 'Translation',
+      transliteration: 'Transliteration',
     };
     return labels[activityType] || 'Activity';
   };

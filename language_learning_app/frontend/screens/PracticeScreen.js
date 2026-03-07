@@ -13,6 +13,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import { LANGUAGES } from '../contexts/LanguageContext';
 import { LanguageContext } from '../contexts/LanguageContext';
 import NoLanguageEmptyState from '../components/NoLanguageEmptyState';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const API_BASE_URL = __DEV__ ? 'http://localhost:9090' : 'http://localhost:9090';
 
@@ -29,6 +30,7 @@ const ACTIVITY_COLORS = {
 const PRACTICE_ACTIVITIES = ['transliteration', 'reading', 'listening', 'writing', 'speaking', 'translation'];
 
 export default function PracticeScreen({ navigation }) {
+  const insets = useSafeAreaInsets();
   const { selectedLanguage: ctxLanguage, setSelectedLanguage: setCtxLanguage, availableLanguages } = React.useContext(LanguageContext);
   const selectedLanguage = ctxLanguage;
   const setSelectedLanguage = (l) => setCtxLanguage(l);
@@ -130,7 +132,7 @@ export default function PracticeScreen({ navigation }) {
   if (!selectedLanguage || availableLanguages.length === 0) {
     return (
       <View style={styles.container}>
-        <View style={styles.header}>
+        <View style={[styles.header, { paddingTop: insets.top + 8 }]}>
           <View style={styles.headerLeft}>
             <Ionicons name="language" size={24} color="#4A90E2" style={styles.appIcon} />
             <Text style={styles.appTitle}>Practice</Text>
@@ -158,7 +160,7 @@ export default function PracticeScreen({ navigation }) {
   return (
     <View style={styles.container}>
       {/* Header */}
-      <View style={styles.header}>
+      <View style={[styles.header, { paddingTop: insets.top + 8 }]}>
         <View style={styles.headerLeft}>
           <Ionicons name="language" size={24} color="#4A90E2" style={styles.appIcon} />
           <Text style={styles.appTitle}>Practice</Text>
@@ -280,11 +282,12 @@ export default function PracticeScreen({ navigation }) {
                       { backgroundColor: isDisabled ? '#E0E0E0' : colors.light }
                     ]}>
                       <Ionicons 
-                        name={activity === 'reading' ? 'book' : 
+                        name={activity === 'transliteration' ? 'swap-horizontal' :
+                              activity === 'reading' ? 'book' : 
                               activity === 'listening' ? 'headset' :
                               activity === 'writing' ? 'create' : 
                               activity === 'speaking' ? 'mic' : 
-                              activity === 'translation' ? 'language' : 'chatbubbles'} 
+                              activity === 'translation' ? 'language' : 'albums'}  
                         size={24} 
                         color={isDisabled ? '#999' : colors.primary} 
                       />
@@ -376,7 +379,7 @@ export default function PracticeScreen({ navigation }) {
                   >
                     <View style={[styles.practiceFilterIcon, { backgroundColor: isVisible ? colors.primary : '#CCC' }]}>
                       <Ionicons
-                        name={activity === 'reading' ? 'book' : activity === 'listening' ? 'headset' : activity === 'writing' ? 'create' : activity === 'speaking' ? 'mic' : activity === 'translation' ? 'language' : 'chatbubbles'}
+                        name={activity === 'transliteration' ? 'swap-horizontal' : activity === 'reading' ? 'book' : activity === 'listening' ? 'headset' : activity === 'writing' ? 'create' : activity === 'speaking' ? 'mic' : activity === 'translation' ? 'language' : 'chatbubbles'}
                         size={24}
                         color="#FFF"
                       />
@@ -512,7 +515,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingTop: 60,
     paddingBottom: 20,
     paddingHorizontal: 20,
     backgroundColor: '#FFFFFF',

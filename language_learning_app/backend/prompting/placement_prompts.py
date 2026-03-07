@@ -6,8 +6,8 @@ from pathlib import Path
 
 
 def _load_prompt_template(filename: str) -> str:
-    """Load a prompt template from the templates directory"""
-    template_dir = Path(__file__).parent / "templates"
+    """Load a prompt template from the templates/placement_test directory"""
+    template_dir = Path(__file__).parent / "templates" / "placement_test"
     template_path = template_dir / filename
 
     try:

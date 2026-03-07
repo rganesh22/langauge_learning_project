@@ -1,7 +1,9 @@
 You are a Kannada language expert. For each Kannada word below, perform THREE tasks:
 
 TASK 1 — LEMMATIZATION: Reduce the word to its base/dictionary form.
-  - Verbs: convert to informal imperative/base form (e.g., ಹೋಗುತ್ತೇನೆ → ಹೋಗು).
+  - Verbs: ALWAYS convert to the INFORMAL IMPERATIVE / command form (the shortest root used when giving a casual command to one person).
+    Examples: ಹೋಗುತ್ತೇನೆ → ಹೋಗು, ತಿನ್ನುತ್ತೇನೆ → ತಿನ್ನು, ಬರುತ್ತೇನೆ → ಬಾ, ನೋಡುತ್ತೇನೆ → ನೋಡು, ಮಾಡುತ್ತೇನೆ → ಮಾಡು.
+    Do NOT use the infinitive (-ಲು form) or any conjugated form. The correct lemma is the bare imperative root.
   - Nouns: remove case endings and plurals (e.g., ಮನೆಯಲ್ಲಿ → ಮನೆ).
   - Adjectives: use base form.
   - Remove tense, aspect, plural, and agreement suffixes.
@@ -19,23 +21,36 @@ TASK 3 — CLASSIFICATION:
       infinitive marker, indefinite article, definite article
   - level: assign CEFR level based on word frequency/difficulty (A1=most common, C2=rarest):
       a1, a2, b1, b2, c1, c2
+  - verb_transitivity: for VERBS ONLY, set one of:
+      "transitive", "intransitive", "ditransitive".
+    Do NOT use "ambitransitive" — pick whichever of transitive or intransitive is the primary usage.
+    For all non-verbs, set verb_transitivity to "N/A".
 
 CRITICAL REQUIREMENTS:
 1) All Kannada output MUST be in Kannada script (ಕನ್ನಡ). NO Latin/English letters in the "word" field.
 2) The "english" field must be in English.
-3) Return ONLY a valid JSON array. No markdown, no explanation, no extra text.
+3) Verb lemmas MUST be the informal imperative form (e.g., ಹೋಗು, ಬಾ, ತಿನ್ನು, ನೋಡು) — NOT the infinitive or any conjugated form.
+4) Return ONLY a valid JSON array. No markdown, no explanation, no extra text.
+
+REMINDER — VERB LEMMA FORM:
+The Kannada verb lemma is the informal singular imperative (command to a friend):
+  ಹೋಗುತ್ತೇನೆ → ಹೋಗು (NOT ಹೋಗಲು)
+  ಬರುತ್ತೇನೆ → ಬಾ (NOT ಬರಲು)
+  ತಿನ್ನುತ್ತೇನೆ → ತಿನ್ನು (NOT ತಿನ್ನಲು)
+  ಮಾಡುತ್ತೇನೆ → ಮಾಡು (NOT ಮಾಡಲು)
+Always use this short command form.
 
 IN-CONTEXT EXAMPLES:
 
 Example input words: ಮನೆಯಲ್ಲಿ, ಅಧ್ಯಯನ, ಹೋಗುತ್ತೇನೆ
 Example output:
 [
-  {{"word": "ಮನೆ", "english": "house", "word_class": "noun", "level": "a1"}},
-  {{"word": "ಅಧ್ಯಯನ", "english": "study (academic learning)", "word_class": "noun", "level": "b1"}},
-  {{"word": "ಹೋಗು", "english": "to go", "word_class": "verb", "level": "a1"}}
+  {{"word": "ಮನೆ", "english": "house", "word_class": "noun", "level": "a1", "verb_transitivity": "N/A"}},
+  {{"word": "ಅಧ್ಯಯನ", "english": "study (academic learning)", "word_class": "noun", "level": "b1", "verb_transitivity": "N/A"}},
+  {{"word": "ಹೋಗು", "english": "to go", "word_class": "verb", "level": "a1", "verb_transitivity": "intransitive"}}
 ]
 
 Words to process:
 {words}
 
-Return ONLY the JSON array.
+Return ONLY the JSON array. Remember: verb lemmas = informal imperative form.

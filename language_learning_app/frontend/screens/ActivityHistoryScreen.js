@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import SafeText from '../components/SafeText';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { 
   QUESTIONS_LABELS, 
   getQuestionLabel,
@@ -37,6 +38,7 @@ import { Audio } from 'expo-av';
 const API_BASE_URL = __DEV__ ? 'http://localhost:9090' : 'http://localhost:9090';
 
 const ACTIVITY_COLORS = {
+  transliteration: { primary: '#EC4899', light: '#FCE7F3' },
   reading: { primary: '#4A90E2', light: '#E8F4FD' },
   listening: { primary: '#2B654A', light: '#E8F5EF' },
   writing: { primary: '#FF6B6B', light: '#FFE8E8' },
@@ -45,6 +47,7 @@ const ACTIVITY_COLORS = {
 };
 
 export default function ActivityHistoryScreen({ route, navigation }) {
+  const insets = useSafeAreaInsets();
   const { language, activityType } = route.params;
   const [history, setHistory] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -709,6 +712,23 @@ export default function ActivityHistoryScreen({ route, navigation }) {
         );
       }
       
+      if (activityType === 'transliteration') {
+        const items = data.items || [];
+        return (
+          <View>
+            {data.activity_name && (
+              <SafeText style={styles.activityStoryName}>{String(data.activity_name)}</SafeText>
+            )}
+            {data.instructions && (
+              <SafeText style={styles.activityStory}>{String(data.instructions)}</SafeText>
+            )}
+            {items.length > 0 && (
+              <SafeText style={styles.activityStory}>{items.length} sentences</SafeText>
+            )}
+          </View>
+        );
+      }
+      
       if (activityType === 'translation') {
         return (
           <View>
@@ -757,7 +777,7 @@ export default function ActivityHistoryScreen({ route, navigation }) {
   return (
     <View style={styles.container}>
       {/* Header */}
-      <View style={[styles.header, { backgroundColor: colors.primary }]}>
+      <View style={[styles.header, { backgroundColor: colors.primary, paddingTop: insets.top + 8 }]}>
         <TouchableOpacity
           style={styles.backButton}
           onPress={() => navigation.goBack()}
@@ -886,7 +906,6 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingTop: 60,
     paddingBottom: 20,
     paddingHorizontal: 20,
   },

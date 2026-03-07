@@ -60,7 +60,10 @@ export function TutorChatButton({ visible = true, onOpenChange }) {
           onPress={() => { openTutor(); onOpenChange?.(true); }}
           activeOpacity={0.85}
         >
-          <Ionicons name="school" size={24} color="#4A90E2" />
+          <View style={styles.fabIconWrapper}>
+            <Ionicons name="school" size={24} color="#4A90E2" />
+            <Text style={styles.fabLabel}>Tutor</Text>
+          </View>
         </TouchableOpacity>
       )}
       <TutorModal
@@ -367,9 +370,9 @@ const styles = StyleSheet.create({
   fab: {
     position: 'absolute',
     right: 20,
-    width: 56,
-    height: 56,
-    borderRadius: 28,
+    width: 64,
+    height: 72,
+    borderRadius: 20,
     backgroundColor: '#FFFFFF',
     borderWidth: 2,
     borderColor: '#4A90E2',
@@ -380,6 +383,16 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.15,
     shadowRadius: 4,
     elevation: 4,
+  },
+  fabIconWrapper: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  fabLabel: {
+    marginTop: 4,
+    fontSize: 11,
+    fontWeight: '600',
+    color: '#4A90E2',
   },
   modalOverlay: {
     flex: 1,

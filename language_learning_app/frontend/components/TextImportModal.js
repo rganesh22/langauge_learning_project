@@ -13,10 +13,13 @@ import {
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { LanguageContext, LANGUAGES } from '../contexts/LanguageContext';
-import { WORD_CLASSES, LEVELS, LEVEL_COLORS } from '../constants/filters';
+import { WORD_CLASSES, LEVELS, LEVEL_COLORS, CEFR_LEVELS, VERB_TRANSITIVITY_FILTERS } from '../constants/filters';
 import VocabImportDebugModal from './VocabImportDebugModal';
 
 const API_BASE_URL = __DEV__ ? 'http://localhost:9090' : 'http://localhost:9090';
+
+// Display multiple terms with ' / ' instead of comma
+const formatMultiTerm = (s) => (s || '').replace(/\s*,\s*/g, ' / ');
 
 // step: 'input' | 'review' | 'done'
 
@@ -28,6 +31,7 @@ export default function TextImportModal({ visible, onClose, language, onImportCo
   const [deckName, setDeckName] = useState('');
   const [crossTranslateExpanded, setCrossTranslateExpanded] = useState(false);
   const [selectedTargetLangs, setSelectedTargetLangs] = useState([]);
+  const [personalization, setPersonalization] = useState(null);
 
   // ── Step 2: Review state ──
   const [step, setStep] = useState('input');
@@ -46,6 +50,8 @@ export default function TextImportModal({ visible, onClose, language, onImportCo
   // Filters (per-tab, keyed by lang code)
   const [wordClassFilter, setWordClassFilter] = useState({});
   const [levelFilter, setLevelFilter] = useState({});
+  const [transitivityFilter, setTransitivityFilter] = useState({});
+  const [filtersExpanded, setFiltersExpanded] = useState(true);
 
   // ── Processing + real-time progress ──
   const [processing, setProcessing] = useState(false);
@@ -53,11 +59,19 @@ export default function TextImportModal({ visible, onClose, language, onImportCo
   const [status, setStatus] = useState('');
   const [progress, setProgress] = useState(null); // { phase, batch, total_batches, words_done }
   const abortRef = useRef(null); // AbortController ref for SSE
+  const importStartTimeRef = useRef(null);
 
   // ── Done state & debug ──
   const [importResult, setImportResult] = useState(null);
   const [debugVisible, setDebugVisible] = useState(false);
   const [debugData, setDebugData] = useState(null);
+
+  // ── Lemma explorer (sentence + lemma modal) ──
+  const [lemmaPanelExpanded, setLemmaPanelExpanded] = useState(false);
+  const [lemmaModalVisible, setLemmaModalVisible] = useState(false);
+  const [lemmaModalWord, setLemmaModalWord] = useState('');
+  const [lemmaModalLemmas, setLemmaModalLemmas] = useState([]);
+  const [lemmaModalTranslations, setLemmaModalTranslations] = useState({});
 
   const otherLanguages = LANGUAGES.filter(
     l => userSelectedLanguages.includes(l.code) && l.code !== language
@@ -106,6 +120,7 @@ export default function TextImportModal({ visible, onClose, language, onImportCo
         const res = await fetch(`${API_BASE_URL}/api/language-personalization/${language}`);
         if (res.ok) {
           const data = await res.json();
+          setPersonalization(data);
           if (data.default_import_translate && data.default_import_target_langs?.length > 0) {
             setSelectedTargetLangs(data.default_import_target_langs);
             setCrossTranslateExpanded(true);
@@ -166,6 +181,7 @@ export default function TextImportModal({ visible, onClose, language, onImportCo
     setProcessing(true);
     setProgress(null);
     setStatus(selectedTargetLangs.length > 0 ? 'Extracting & translating words…' : 'Extracting words…');
+    importStartTimeRef.current = Date.now();
     const controller = new AbortController();
     abortRef.current = controller;
 
@@ -279,12 +295,28 @@ export default function TextImportModal({ visible, onClose, language, onImportCo
     setImporting(true);
     setStatus('Importing words…');
     try {
-      // Build words_by_lang for target languages
+      // Build words_by_lang for target languages (new words only)
       const wordsByLang = {};
+      const existingByLang = {};
       for (const [lang, ld] of Object.entries(langData)) {
         const selected = ld.new_words.filter(w => ld.selected.has(w.word));
-        if (selected.length > 0) wordsByLang[lang] = selected;
+        if (selected.length > 0) {
+          wordsByLang[lang] = selected;
+        }
+        // Collect existing vocabulary IDs (if provided by backend) so we can
+        // attach them to sibling decks without duplicating entries.
+        const existingIds = (ld.existing_words || [])
+          .map(w => w.existing_id || w.id)
+          .filter(Boolean);
+        if (existingIds.length > 0) {
+          existingByLang[lang] = existingIds;
+        }
       }
+
+      // Source-language existing vocab IDs
+      const existingIds = (existingWords || [])
+        .map(w => w.existing_id || w.id)
+        .filter(Boolean);
 
       const res = await fetch(`${API_BASE_URL}/api/vocab/commit-import`, {
         method: 'POST',
@@ -295,6 +327,8 @@ export default function TextImportModal({ visible, onClose, language, onImportCo
           synonyms: synonymsToMerge,
           words_by_lang: wordsByLang,
           deck_name: deckName.trim() || null,
+          existing_ids: existingIds.length > 0 ? existingIds : undefined,
+          existing_by_lang: Object.keys(existingByLang).length > 0 ? existingByLang : undefined,
         }),
       });
       if (!res.ok) {
@@ -302,6 +336,13 @@ export default function TextImportModal({ visible, onClose, language, onImportCo
         throw new Error(err.detail || `Server error: ${res.status}`);
       }
       const data = await res.json();
+      const totalDuration = importStartTimeRef.current
+        ? Math.round((Date.now() - importStartTimeRef.current) / 100) / 10
+        : null;
+      if (totalDuration != null) data.import_duration_seconds = totalDuration;
+      if (data.deck_id && totalDuration != null) {
+        fetch(`${API_BASE_URL}/api/vocab/decks/${data.deck_id}/duration?duration_seconds=${totalDuration}`, { method: 'PATCH' }).catch(() => {});
+      }
       setImportResult(data);
       setStep('done');
       if ((data.new_words > 0 || data.merged_synonyms > 0) && onImportComplete) onImportComplete(data);
@@ -327,6 +368,7 @@ export default function TextImportModal({ visible, onClose, language, onImportCo
     setLangData({});
     setWordClassFilter({});
     setLevelFilter({});
+    setTransitivityFilter({});
     setProcessing(false);
     setImporting(false);
     setStatus('');
@@ -336,6 +378,12 @@ export default function TextImportModal({ visible, onClose, language, onImportCo
     setSelectedTargetLangs([]);
     setDebugData(null);
     setDebugVisible(false);
+    setLemmaPanelExpanded(false);
+    setLemmaModalVisible(false);
+    setLemmaModalWord('');
+    setLemmaModalLemmas([]);
+    setLemmaModalTranslations({});
+    setFiltersExpanded(true);
     onClose();
   };
 
@@ -376,9 +424,18 @@ export default function TextImportModal({ visible, onClose, language, onImportCo
     return langData[tabLang]?.new_words || [];
   };
 
+  /** New words only (excludes synonym-type entries). For target langs, synonym-type new words are in getTabSynonyms. */
+  const getTabNewWordsOnly = (tabLang) => {
+    if (tabLang === language) return extractedWords;
+    const words = langData[tabLang]?.new_words || [];
+    return words.filter(w => !w.synonym_of_word);
+  };
+
+  /** Synonym entries: source = synonymWords; target = new_words that are synonym of an existing word. */
   const getTabSynonyms = (tabLang) => {
     if (tabLang === language) return synonymWords;
-    return [];
+    const words = langData[tabLang]?.new_words || [];
+    return words.filter(w => w.synonym_of_word);
   };
 
   const getTabExisting = (tabLang) => {
@@ -393,30 +450,121 @@ export default function TextImportModal({ visible, onClose, language, onImportCo
 
   const getTabWcFilter = (tabLang) => wordClassFilter[tabLang] || '';
   const getTabLvFilter = (tabLang) => levelFilter[tabLang] || '';
+  const getTabTrFilter = (tabLang) => transitivityFilter[tabLang] || '';
+
+  // Open lemma detail modal for a clicked surface token
+  const openLemmaModal = (surfaceWord) => {
+    if (!debugData) return;
+    const lemmaTokens = debugData.lemma_tokens || debugData.lemmatized_tokens || [];
+    const translationsByLang = debugData.translations_by_lang || {};
+    const trimmed = (surfaceWord || '').trim();
+    if (!trimmed) return;
+    const trimmedLower = trimmed.toLowerCase();
+
+    // Source lemmas whose word matches this surface token (exact or substring)
+    const lemmas = lemmaTokens.filter(tok => {
+      const w = (tok.word || '').trim().toLowerCase();
+      return w === trimmedLower || trimmedLower.includes(w) || w.includes(trimmedLower);
+    });
+    const lemmaWords = lemmas
+      .map(lem => (lem.word || '').trim())
+      .filter(Boolean);
+
+    // Helper to normalize English definitions: lowercase + strip parentheses
+    const normalizeEnglish = (s) =>
+      (s || '')
+        .toLowerCase()
+        .replace(/\s*\([^)]*\)/g, '')
+        .trim();
+
+    // Merge translations for all lemmas of this surface word.
+    // First try an explicit source_word linkage (preferred),
+    // then fall back to fuzzy English-gloss matching.
+    const mergedTranslations = {};
+    if (lemmas.length > 0) {
+      const lemmaNorms = lemmas
+        .map(lem => normalizeEnglish(lem.english))
+        .filter(Boolean);
+
+      Object.entries(translationsByLang).forEach(([langCode, info]) => {
+        const all = [...(info.new_words || []), ...(info.existing_words || [])];
+        const matches = [];
+        all.forEach(w => {
+          const sourceWord = (w.source_word || '').trim();
+          const eng = (w.english || w.english_word || '').trim();
+          const norm = normalizeEnglish(eng);
+
+          // 1) Strong match: explicit linkage from backend by source_word
+          if (sourceWord && lemmaWords.includes(sourceWord)) {
+            matches.push(w);
+            return;
+          }
+
+          // 2) Fallback: fuzzy English gloss match (backwards compatible)
+          if (!norm) return;
+          const isMatch = lemmaNorms.some(l => norm === l || norm.includes(l) || l.includes(norm));
+          if (isMatch) {
+            matches.push(w);
+          }
+        });
+        if (matches.length > 0) {
+          mergedTranslations[langCode] = matches;
+        }
+      });
+    }
+
+    setLemmaModalWord(trimmed);
+    setLemmaModalLemmas(lemmas);
+    setLemmaModalTranslations(mergedTranslations);
+    setLemmaModalVisible(true);
+  };
 
   const setTabWcFilter = (tabLang, val) => setWordClassFilter(prev => ({ ...prev, [tabLang]: val }));
   const setTabLvFilter = (tabLang, val) => setLevelFilter(prev => ({ ...prev, [tabLang]: val }));
+  const setTabTrFilter = (tabLang, val) => setTransitivityFilter(prev => ({ ...prev, [tabLang]: val }));
 
   const getFilteredWords = (tabLang) => {
-    const words = getTabWords(tabLang);
+    const words = getTabNewWordsOnly(tabLang);
     const wc = getTabWcFilter(tabLang);
     const lv = getTabLvFilter(tabLang);
+    const tr = getTabTrFilter(tabLang);
     return words.filter(w => {
       if (wc && w.word_class !== wc) return false;
       if (lv && (w.level || '').toLowerCase() !== lv.toLowerCase()) return false;
+      if (tr && (w.verb_transitivity || '').toLowerCase() !== tr.toLowerCase()) return false;
+      return true;
+    });
+  };
+
+  const getFilteredSynonyms = (tabLang) => {
+    const synonyms = getTabSynonyms(tabLang);
+    const wc = getTabWcFilter(tabLang);
+    const lv = getTabLvFilter(tabLang);
+    const tr = getTabTrFilter(tabLang);
+    return synonyms.filter(w => {
+      if (wc && w.word_class !== wc) return false;
+      if (lv && (w.level || '').toLowerCase() !== lv.toLowerCase()) return false;
+      if (tr && (w.verb_transitivity || '').toLowerCase() !== tr.toLowerCase()) return false;
       return true;
     });
   };
 
   const selectAllTab = (tabLang) => {
     const filtered = getFilteredWords(tabLang);
+    const filteredSyn = getFilteredSynonyms(tabLang);
     if (tabLang === language) {
       setSelectedWords(new Set(filtered.map(w => w.word)));
+      setSelectedSynonyms(prev => {
+        const next = new Set(prev);
+        filteredSyn.forEach(w => next.add(w.word));
+        return next;
+      });
     } else {
       setLangData(prev => {
         const ld = prev[tabLang];
         if (!ld) return prev;
-        return { ...prev, [tabLang]: { ...ld, selected: new Set(filtered.map(w => w.word)) } };
+        const allSelected = new Set([...filtered.map(w => w.word), ...filteredSyn.map(w => w.word)]);
+        return { ...prev, [tabLang]: { ...ld, selected: allSelected } };
       });
     }
   };
@@ -451,6 +599,10 @@ export default function TextImportModal({ visible, onClose, language, onImportCo
     const wcc = getWordClassColor(item.word_class);
     const levelColor = LEVEL_COLORS[(item.level || '').toUpperCase()] || { bg: '#E8F4FD', text: '#4A90E2' };
     const isUrdu = tabLang === 'urdu';
+    const isHindi = tabLang === 'hindi';
+    const baseNative = formatMultiTerm(item.nastaliq || item.word || '');
+    const alreadyHasGender = /\((m|f)\)/i.test(baseNative);
+    const genderSuffix = (isHindi || isUrdu) && item.gender && !alreadyHasGender ? ` (${item.gender})` : '';
     return (
       <TouchableOpacity
         key={`${item.word}_${index}`}
@@ -463,9 +615,26 @@ export default function TextImportModal({ visible, onClose, language, onImportCo
             <Text style={[
               styles.wordCardNative,
               isUrdu && { fontFamily: 'Noto Nastaliq Urdu', textAlign: 'left', writingDirection: 'rtl' },
-            ]}>{item.nastaliq || item.word}</Text>
-            {item.transliteration ? <Text style={styles.wordCardTranslit}>{item.transliteration}</Text> : null}
+            ]}>{baseNative}{genderSuffix}</Text>
+            {item.transliteration ? <Text style={styles.wordCardTranslit}>{formatMultiTerm(item.transliteration)}</Text> : null}
             <Text style={styles.wordCardEnglish}>{item.english}</Text>
+            {tabLang !== language && item.synonym_of_word ? (
+              <View style={styles.synonymOfSection}>
+                <View style={styles.synonymOfBadge}>
+                  <Ionicons name="git-merge-outline" size={12} color="#92400E" />
+                  <Text style={styles.synonymOfLabel}>Synonym of</Text>
+                </View>
+                <Text style={[
+                  styles.synonymOfNative,
+                  isUrdu && { fontFamily: 'Noto Nastaliq Urdu', textAlign: 'left', writingDirection: 'rtl' },
+                ]}>
+                  {(isUrdu && item.synonym_of_word_nastaliq) ? item.synonym_of_word_nastaliq : formatMultiTerm(item.synonym_of_word)}
+                </Text>
+                {item.synonym_of_transliteration ? (
+                  <Text style={[styles.synonymOfTranslit, (isHindi || isUrdu) && { fontFamily: Platform.select({ ios: 'System', android: 'sans-serif' }) }]}>{formatMultiTerm(item.synonym_of_transliteration)}</Text>
+                ) : null}
+              </View>
+            ) : null}
           </View>
           <View style={[styles.wordCardCheckbox, isSelected && styles.wordCardCheckboxActive]}>
             {isSelected && <Ionicons name="checkmark" size={14} color="#FFF" />}
@@ -477,11 +646,16 @@ export default function TextImportModal({ visible, onClose, language, onImportCo
               <Text style={[styles.tagText, { color: wcc.text }]}>{item.word_class}</Text>
             </View>
           ) : null}
-          {item.level ? (
-            <View style={[styles.tag, { backgroundColor: levelColor.bg }]}>
-              <Text style={[styles.tagText, { color: levelColor.text }]}>{item.level.toUpperCase()}</Text>
+          <View style={[styles.tag, { backgroundColor: (item.level && LEVEL_COLORS[item.level.toUpperCase()]) ? levelColor.bg : '#E5E7EB' }]}>
+            <Text style={[styles.tagText, { color: (item.level && LEVEL_COLORS[item.level.toUpperCase()]) ? levelColor.text : '#6B7280' }]}>
+              {item.level ? item.level.toUpperCase() : '—'}
+            </Text>
+          </View>
+          {item.verb_transitivity && (item.word_class || '').toLowerCase().includes('verb') && item.verb_transitivity !== 'N/A' && (
+            <View style={[styles.tag, { backgroundColor: '#6B7280' }]}>
+              <Text style={[styles.tagText, { color: '#FFF' }]}>{String(item.verb_transitivity)}</Text>
             </View>
-          ) : null}
+          )}
         </View>
       </TouchableOpacity>
     );
@@ -490,58 +664,121 @@ export default function TextImportModal({ visible, onClose, language, onImportCo
   // ── Render tab content ──
   const renderTabContent = (tabLang) => {
     const filtered = getFilteredWords(tabLang);
+    const filteredSynonyms = getFilteredSynonyms(tabLang);
     const existing = getTabExisting(tabLang);
     const synonyms = getTabSynonyms(tabLang);
-    const allWords = getTabWords(tabLang);
+    const allWords = tabLang === language
+      ? [...getTabNewWordsOnly(tabLang), ...synonyms]
+      : (langData[tabLang]?.new_words || []);
     const wc = getTabWcFilter(tabLang);
     const lv = getTabLvFilter(tabLang);
+    const tr = getTabTrFilter(tabLang);
 
-    // Present filter options from this tab's words
+    // Present filter options from this tab's words + synonyms
     const presentWcSet = new Set(allWords.map(w => w.word_class).filter(Boolean));
     const presentWc = WORD_CLASSES.filter(c => c.value !== 'All' && presentWcSet.has(c.value));
     const presentLvSet = new Set(allWords.map(w => (w.level || '').toLowerCase()).filter(Boolean));
     const presentLv = LEVELS.filter(l => l !== 'All' && presentLvSet.has(l.toLowerCase()));
+    // Show only CEFR levels that are actually present in this tab's words
+    const cefrLevels = CEFR_LEVELS.filter(l => presentLvSet.has((l.value || '').toLowerCase()));
+    const presentTrSet = new Set(
+      allWords
+        .filter(w => (w.word_class || '').toLowerCase().includes('verb'))
+        .map(w => (w.verb_transitivity || '').toLowerCase())
+        .filter(Boolean)
+    );
+    const trFilters = VERB_TRANSITIVITY_FILTERS.filter(f => presentTrSet.has(f.value.toLowerCase()));
 
     return (
       <View style={{ flex: 1 }}>
-        {/* Filters */}
-        {(presentWc.length > 0 || presentLv.length > 0) && (
-          <View style={styles.filterBar}>
-            <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.filterScroll}>
-              {presentWc.map(c => {
-                const active = wc === c.value;
-                return (
-                  <TouchableOpacity
-                    key={c.value}
-                    style={[styles.filterChip, { backgroundColor: active ? c.color.bg : c.color.bg + '22', borderColor: c.color.bg }]}
-                    onPress={() => setTabWcFilter(tabLang, active ? '' : c.value)}
-                  >
-                    <Text style={[styles.filterChipText, { color: active ? c.color.text : c.color.bg }]}>{c.label}</Text>
-                  </TouchableOpacity>
-                );
-              })}
-              {presentWc.length > 0 && presentLv.length > 0 && <View style={styles.filterDivider} />}
-              {presentLv.map(l => {
-                const lc = LEVEL_COLORS[l.toUpperCase()] || { bg: '#999', text: '#FFF' };
-                const active = lv.toUpperCase() === l.toUpperCase();
-                return (
-                  <TouchableOpacity
-                    key={l}
-                    style={[styles.filterChip, { backgroundColor: active ? lc.bg : lc.bg + '22', borderColor: lc.bg }]}
-                    onPress={() => setTabLvFilter(tabLang, active ? '' : l)}
-                  >
-                    <Text style={[styles.filterChipText, { color: active ? lc.text : lc.bg }]}>{l}</Text>
-                  </TouchableOpacity>
-                );
-              })}
-            </ScrollView>
+        {/* Collapsible filters header */}
+        {(presentWc.length > 0 || cefrLevels.length > 0 || trFilters.length > 0) && (
+          <View style={[styles.filterBar, { paddingVertical: 6, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }]}>
+            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}>
+              <Ionicons name="options-outline" size={16} color="#4B5563" />
+              <Text style={{ fontSize: 12, fontWeight: '600', color: '#374151' }}>Filters</Text>
+              {(wc || lv || tr) ? (
+                <Text style={{ fontSize: 11, color: '#6B7280' }}>Active</Text>
+              ) : (
+                <Text style={{ fontSize: 11, color: '#9CA3AF' }}>None</Text>
+              )}
+            </View>
+            <TouchableOpacity onPress={() => setFiltersExpanded(prev => !prev)} style={{ paddingHorizontal: 8, paddingVertical: 4 }}>
+              <Ionicons name={filtersExpanded ? 'chevron-up' : 'chevron-down'} size={18} color="#4B5563" />
+            </TouchableOpacity>
           </View>
+        )}
+
+        {/* Filters body */}
+        {filtersExpanded && (
+          <>
+            {/* Row 1: POS filters — wrap so all visible without horizontal scroll */}
+            {presentWc.length > 0 && (
+              <View style={[styles.filterBar, { borderTopWidth: 0 }]}>
+                <View style={styles.filterWrap}>
+                  {presentWc.map(c => {
+                    const active = wc === c.value;
+                    return (
+                      <TouchableOpacity
+                        key={c.value}
+                        style={[styles.filterChip, { backgroundColor: active ? c.color.bg : c.color.bg + '22', borderColor: c.color.bg }]}
+                        onPress={() => setTabWcFilter(tabLang, active ? '' : c.value)}
+                      >
+                        <Text style={[styles.filterChipText, { color: active ? c.color.text : c.color.bg }]}>{c.label}</Text>
+                      </TouchableOpacity>
+                    );
+                  })}
+                </View>
+              </View>
+            )}
+            {/* Row 2: CEFR level filters — wrap so all visible without horizontal scroll */}
+            {cefrLevels.length > 0 && (
+              <View style={[styles.filterBar, { marginTop: 0 }]}>
+                <View style={styles.filterWrap}>
+                  {cefrLevels.map(l => {
+                    const lc = LEVEL_COLORS[l.value?.toUpperCase()] || { bg: '#999', text: '#FFF' };
+                    const active = (lv || '').toLowerCase() === (l.value || '').toLowerCase();
+                    return (
+                      <TouchableOpacity
+                        key={l.value}
+                        style={[styles.filterChip, { backgroundColor: active ? lc.bg : lc.bg + '22', borderColor: lc.bg }]}
+                        onPress={() => setTabLvFilter(tabLang, active ? '' : l.value)}
+                      >
+                        <Text style={[styles.filterChipText, { color: active ? lc.text : lc.bg }]}>{l.label}</Text>
+                      </TouchableOpacity>
+                    );
+                  })}
+                </View>
+              </View>
+            )}
+            {/* Row 3: Verb transitivity filters */}
+            {trFilters.length > 0 && (
+              <View style={[styles.filterBar, { marginTop: 0 }]}>
+                <View style={styles.filterWrap}>
+                  {trFilters.map(f => {
+                    const active = (tr || '').toLowerCase() === f.value.toLowerCase();
+                    const bg = f.color.bg;
+                    const text = f.color.text;
+                    return (
+                      <TouchableOpacity
+                        key={f.value}
+                        style={[styles.filterChip, { backgroundColor: active ? bg : bg + '22', borderColor: bg }]}
+                        onPress={() => setTabTrFilter(tabLang, active ? '' : f.value)}
+                      >
+                        <Text style={[styles.filterChipText, { color: active ? text : bg }]}>{f.label}</Text>
+                      </TouchableOpacity>
+                    );
+                  })}
+                </View>
+              </View>
+            )}
+          </>
         )}
 
         {/* Select All / None */}
         <View style={styles.selectAllRow}>
           <TouchableOpacity onPress={() => selectAllTab(tabLang)} style={styles.selectAllBtn}>
-            <Text style={styles.selectAllText}>Select All ({filtered.length})</Text>
+            <Text style={styles.selectAllText}>Select All ({filtered.length + filteredSynonyms.length})</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => selectNoneTab(tabLang)} style={styles.selectAllBtn}>
             <Text style={styles.selectAllText}>Select None</Text>
@@ -562,23 +799,30 @@ export default function TextImportModal({ visible, onClose, language, onImportCo
           )}
 
           {/* ── Synonym words (merged into existing card) ── */}
-          {synonyms.length > 0 && (
+          {filteredSynonyms.length > 0 && (
             <View style={styles.categorySection}>
               <View style={styles.categoryHeader}>
                 <View style={[styles.categoryDot, { backgroundColor: '#D97706' }]} />
-                <Text style={styles.categorySectionTitle}>🔗 Synonyms ({synonyms.length})</Text>
-                <Text style={styles.categoryHint}>Will be merged into existing card</Text>
+                <Text style={styles.categorySectionTitle}>🔗 Synonyms ({filteredSynonyms.length})</Text>
+                <Text style={styles.categoryHint}>
+                  {tabLang === language ? 'Will be merged into existing card' : 'New words linked to an existing entry'}
+                </Text>
               </View>
-              {synonyms.map((w, idx) => {
-                const isSel = selectedSynonyms.has(w.word);
+              {filteredSynonyms.map((w, idx) => {
+                const isSourceSynonym = tabLang === language;
+                const isSel = isSourceSynonym ? selectedSynonyms.has(w.word) : getTabSelected(tabLang).has(w.word);
                 const wcc = getWordClassColor(w.word_class);
                 const levelColor = LEVEL_COLORS[(w.level || '').toUpperCase()] || { bg: '#E8F4FD', text: '#4A90E2' };
                 const isUrdu = tabLang === 'urdu';
+                const isHindi = tabLang === 'hindi';
+                const baseNative = formatMultiTerm(w.nastaliq || w.word || '');
+                const alreadyHasGender = /\((m|f)\)/i.test(baseNative);
+                const genderSuffix = (isHindi || isUrdu) && w.gender && !alreadyHasGender ? ` (${w.gender})` : '';
                 return (
                   <TouchableOpacity
                     key={`syn_${w.word}_${idx}`}
                     style={[styles.wordCard, styles.synonymCard, isSel && styles.synonymCardSelected]}
-                    onPress={() => toggleSynonym(w.word)}
+                    onPress={() => isSourceSynonym ? toggleSynonym(w.word) : toggleWord(tabLang, w.word)}
                     activeOpacity={0.7}
                   >
                     <View style={styles.wordCardHeader}>
@@ -586,15 +830,24 @@ export default function TextImportModal({ visible, onClose, language, onImportCo
                         <Text style={[
                           styles.wordCardNative,
                           isUrdu && { fontFamily: 'Noto Nastaliq Urdu', textAlign: 'left', writingDirection: 'rtl' },
-                        ]}>{w.nastaliq || w.word}</Text>
-                        {w.transliteration ? <Text style={styles.wordCardTranslit}>{w.transliteration}</Text> : null}
+                        ]}>{baseNative}{genderSuffix}</Text>
+                        {w.transliteration ? <Text style={[styles.wordCardTranslit, { marginTop: 2 }]}>{formatMultiTerm(w.transliteration)}</Text> : null}
                         <Text style={styles.wordCardEnglish}>{w.english}</Text>
-                        {/* Synonym-of label */}
-                        <View style={styles.synonymOfBadge}>
-                          <Ionicons name="git-merge-outline" size={12} color="#92400E" />
-                          <Text style={styles.synonymOfText}>
-                            Synonym of "{w.synonym_of_word}"
+                        {/* Synonym-of: own section with native script + transliteration below */}
+                        <View style={styles.synonymOfSection}>
+                          <View style={styles.synonymOfBadge}>
+                            <Ionicons name="git-merge-outline" size={12} color="#92400E" />
+                            <Text style={styles.synonymOfLabel}>Synonym of</Text>
+                          </View>
+                          <Text style={[
+                            styles.synonymOfNative,
+                            isUrdu && { fontFamily: 'Noto Nastaliq Urdu', textAlign: 'left', writingDirection: 'rtl' },
+                          ]}>
+                            {isUrdu && w.synonym_of_word_nastaliq ? w.synonym_of_word_nastaliq : formatMultiTerm(w.synonym_of_word || '')}
                           </Text>
+                          {w.synonym_of_transliteration ? (
+                            <Text style={[styles.synonymOfTranslit, (isHindi || isUrdu) && { fontFamily: Platform.select({ ios: 'System', android: 'sans-serif' }) }]}>{formatMultiTerm(w.synonym_of_transliteration)}</Text>
+                          ) : null}
                         </View>
                       </View>
                       <View style={[styles.wordCardCheckbox, isSel && styles.synonymCheckboxActive]}>
@@ -602,8 +855,21 @@ export default function TextImportModal({ visible, onClose, language, onImportCo
                       </View>
                     </View>
                     <View style={styles.wordCardTags}>
-                      {w.word_class ? <View style={[styles.tag, { backgroundColor: wcc.bg }]}><Text style={[styles.tagText, { color: wcc.text }]}>{w.word_class}</Text></View> : null}
-                      {w.level ? <View style={[styles.tag, { backgroundColor: levelColor.bg }]}><Text style={[styles.tagText, { color: levelColor.text }]}>{w.level.toUpperCase()}</Text></View> : null}
+                      {w.word_class ? (
+                        <View style={[styles.tag, { backgroundColor: wcc.bg }]}>
+                          <Text style={[styles.tagText, { color: wcc.text }]}>{w.word_class}</Text>
+                        </View>
+                      ) : null}
+                      <View style={[styles.tag, { backgroundColor: (w.level && LEVEL_COLORS[w.level.toUpperCase()]) ? levelColor.bg : '#E5E7EB' }]}>
+                        <Text style={[styles.tagText, { color: (w.level && LEVEL_COLORS[w.level.toUpperCase()]) ? levelColor.text : '#6B7280' }]}>
+                          {w.level ? w.level.toUpperCase() : '—'}
+                        </Text>
+                      </View>
+                      {w.verb_transitivity && (w.word_class || '').toLowerCase().includes('verb') && w.verb_transitivity !== 'N/A' && (
+                        <View style={[styles.tag, { backgroundColor: '#F97316' }]}>
+                          <Text style={[styles.tagText, { color: '#FFF' }]}>{String(w.verb_transitivity)}</Text>
+                        </View>
+                      )}
                     </View>
                   </TouchableOpacity>
                 );
@@ -622,14 +888,34 @@ export default function TextImportModal({ visible, onClose, language, onImportCo
               {existing.map((w, i) => {
                 const wcc = getWordClassColor(w.word_class);
                 const levelColor = LEVEL_COLORS[(w.level || '').toUpperCase()] || { bg: '#E8F4FD', text: '#4A90E2' };
+                const isUrdu = tabLang === 'urdu';
+                const baseNative = formatMultiTerm(isUrdu && w.nastaliq ? w.nastaliq : w.word || '');
                 return (
                   <View key={`ex_${i}`} style={styles.existingCard}>
-                    <Text style={styles.existingNative}>{w.word}</Text>
-                    {w.transliteration ? <Text style={styles.wordCardTranslit}>{w.transliteration}</Text> : null}
+                    <Text style={[
+                      styles.existingNative,
+                      isUrdu && { fontFamily: 'Noto Nastaliq Urdu', textAlign: 'left', writingDirection: 'rtl' },
+                    ]}>
+                      {baseNative}
+                    </Text>
+                    {w.transliteration ? <Text style={styles.wordCardTranslit}>{formatMultiTerm(w.transliteration)}</Text> : null}
                     <Text style={styles.wordCardEnglish}>{w.english_word}</Text>
                     <View style={[styles.wordCardTags, { marginTop: 8 }]}>
-                      {w.word_class ? <View style={[styles.tag, { backgroundColor: wcc.bg }]}><Text style={[styles.tagText, { color: wcc.text }]}>{w.word_class}</Text></View> : null}
-                      {w.level ? <View style={[styles.tag, { backgroundColor: levelColor.bg }]}><Text style={[styles.tagText, { color: levelColor.text }]}>{w.level.toUpperCase()}</Text></View> : null}
+                      {w.word_class ? (
+                        <View style={[styles.tag, { backgroundColor: wcc.bg }]}>
+                          <Text style={[styles.tagText, { color: wcc.text }]}>{w.word_class}</Text>
+                        </View>
+                      ) : null}
+                      <View style={[styles.tag, { backgroundColor: (w.level && LEVEL_COLORS[(w.level || '').toUpperCase()]) ? levelColor.bg : '#E5E7EB' }]}>
+                        <Text style={[styles.tagText, { color: (w.level && LEVEL_COLORS[(w.level || '').toUpperCase()]) ? levelColor.text : '#6B7280' }]}>
+                          {w.level ? w.level.toUpperCase() : '—'}
+                        </Text>
+                      </View>
+                      {w.verb_transitivity && (w.word_class || '').toLowerCase().includes('verb') && w.verb_transitivity !== 'N/A' && (
+                        <View style={[styles.tag, { backgroundColor: '#F97316' }]}>
+                          <Text style={[styles.tagText, { color: '#FFF' }]}>{String(w.verb_transitivity)}</Text>
+                        </View>
+                      )}
                     </View>
                   </View>
                 );
@@ -637,7 +923,7 @@ export default function TextImportModal({ visible, onClose, language, onImportCo
             </View>
           )}
 
-          {filtered.length === 0 && synonyms.length === 0 && existing.length === 0 && (
+          {filtered.length === 0 && filteredSynonyms.length === 0 && existing.length === 0 && (
             <View style={styles.emptyContainer}>
               <Ionicons name="filter-outline" size={40} color="#CCC" />
               <Text style={styles.emptyText}>
@@ -658,9 +944,21 @@ export default function TextImportModal({ visible, onClose, language, onImportCo
           <TouchableOpacity onPress={step === 'review' ? () => setStep('input') : handleClose} style={styles.closeBtn}>
             <Ionicons name={step === 'review' ? 'arrow-back' : 'close'} size={24} color="#666" />
           </TouchableOpacity>
-          <Text style={styles.title}>
-            {step === 'input' ? 'Import Text' : step === 'review' ? 'Review Words' : 'Import Complete'}
-          </Text>
+          <View style={styles.headerCenter}>
+            {(() => {
+              const langMeta = LANGUAGES.find(l => l.code === language);
+              return langMeta ? (
+                <View style={[styles.headerLangIcon, { backgroundColor: langMeta.color || '#0FA896' }]}>
+                  <Text style={[styles.headerLangIconText, langMeta.code === 'urdu' && { fontFamily: 'Noto Nastaliq Urdu' }]}>
+                    {langMeta.nativeChar || langMeta.langCode?.toUpperCase()?.slice(0, 2)}
+                  </Text>
+                </View>
+              ) : null;
+            })()}
+            <Text style={styles.title}>
+              {step === 'input' ? 'Import Text' : step === 'review' ? 'Review Words' : 'Import Complete'}
+            </Text>
+          </View>
           <View style={{ width: 40 }} />
         </View>
 
@@ -737,7 +1035,10 @@ export default function TextImportModal({ visible, onClose, language, onImportCo
                         return (
                           <TouchableOpacity
                             key={lang.code}
-                            style={[styles.crossTranslateLangRow, isSel && styles.crossTranslateLangRowSelected]}
+                            style={[
+                              styles.crossTranslateLangRow,
+                              isSel && styles.crossTranslateLangRowSelected,
+                            ]}
                             onPress={() => toggleTargetLang(lang.code)}
                             activeOpacity={0.7}
                           >
@@ -756,6 +1057,49 @@ export default function TextImportModal({ visible, onClose, language, onImportCo
                     </View>
                   )}
                 </View>
+              )}
+
+              {/* Save this combination as default for this language */}
+              {language && (
+                <TouchableOpacity
+                  style={styles.saveDefaultRow}
+                  onPress={async () => {
+                    try {
+                      const current = personalization || {};
+                      const body = {
+                        default_transliterate:
+                          typeof current.default_transliterate === 'boolean'
+                            ? current.default_transliterate
+                            : true,
+                        default_import_translate: selectedTargetLangs.length > 0,
+                        default_import_target_langs: selectedTargetLangs,
+                      };
+                      const res = await fetch(`${API_BASE_URL}/api/language-personalization/${language}`, {
+                        method: 'PUT',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(body),
+                      });
+                      if (res.ok) {
+                        Alert.alert('Saved', 'Default import languages updated for this language.');
+                        try {
+                          const updated = await res.json();
+                          setPersonalization(updated);
+                        } catch {
+                          // ignore parse errors; not all endpoints echo body
+                        }
+                      } else {
+                        Alert.alert('Error', 'Could not save default import languages.');
+                      }
+                    } catch {
+                      Alert.alert('Error', 'Could not save default import languages.');
+                    }
+                  }}
+                >
+                  <Ionicons name="checkmark-circle-outline" size={18} color="#4A90E2" />
+                  <Text style={styles.saveDefaultText}>
+                    Use this combination as default for {language.charAt(0).toUpperCase() + language.slice(1)}
+                  </Text>
+                </TouchableOpacity>
               )}
 
               {text.trim().length > 0 && (
@@ -837,6 +1181,61 @@ export default function TextImportModal({ visible, onClose, language, onImportCo
                 </TouchableOpacity>
               )}
             </View>
+
+            {/* Input sentence + lemma explorer */}
+            {debugData && (debugData.input_text || (debugData.raw_tokens || []).length > 0) && (
+              <View style={styles.lemmaPanel}>
+                <TouchableOpacity
+                  style={styles.lemmaPanelHeader}
+                  onPress={() => setLemmaPanelExpanded(prev => !prev)}
+                  activeOpacity={0.7}
+                >
+                  <View style={{ flexDirection: 'row', alignItems: 'center', flex: 1 }}>
+                    <Ionicons name="document-text-outline" size={16} color="#4B5563" style={{ marginRight: 6 }} />
+                    <Text style={styles.lemmaPanelTitle}>Sentence & lemmas</Text>
+                  </View>
+                  <Text style={styles.lemmaPanelHint}>Tap a word to see lemmas</Text>
+                  <Ionicons
+                    name={lemmaPanelExpanded ? 'chevron-up' : 'chevron-down'}
+                    size={16}
+                    color="#4B5563"
+                    style={{ marginLeft: 8 }}
+                  />
+                </TouchableOpacity>
+                {lemmaPanelExpanded && (
+                  <View style={styles.lemmaSentence}>
+                    <Text style={styles.lemmaSentenceText}>
+                      {(() => {
+                        const lemmaTokens = (debugData.lemma_tokens || debugData.lemmatized_tokens || []);
+                        const allLemmaForms = new Set(
+                          lemmaTokens.map(lem => (lem.word || '').trim().toLowerCase()).filter(Boolean)
+                        );
+                        const tokens = debugData.raw_tokens && debugData.raw_tokens.length > 0
+                          ? debugData.raw_tokens
+                          : (debugData.input_text || '').split(/\s+/);
+                        return tokens.map((tok, idx) => {
+                          const t = String(tok || '').trim();
+                          if (!t) return null;
+                          const tLower = t.toLowerCase();
+                          const hasLemma = allLemmaForms.has(tLower)
+                            || [...allLemmaForms].some(lem => tLower.includes(lem) || lem.includes(tLower));
+                          return (
+                            <Text
+                              key={`${t}-${idx}`}
+                              style={hasLemma ? styles.lemmaWordHighlighted : styles.lemmaWordPlain}
+                              onPress={() => openLemmaModal(t)}
+                            >
+                              {t}
+                              {idx < tokens.length - 1 ? ' ' : ''}
+                            </Text>
+                          );
+                        });
+                      })()}
+                    </Text>
+                  </View>
+                )}
+              </View>
+            )}
 
             {/* Language Tabs — all visible (flex-wrap), no horizontal scroll */}
             {reviewTabs.length > 1 && (
@@ -925,6 +1324,16 @@ export default function TextImportModal({ visible, onClose, language, onImportCo
                   );
                 })}
               </View>
+              {importResult.import_duration_seconds != null && (
+                <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 4, marginTop: 12 }}>
+                  <Ionicons name="timer-outline" size={14} color="#9CA3AF" />
+                  <Text style={{ fontSize: 13, color: '#9CA3AF' }}>
+                    {importResult.import_duration_seconds >= 60
+                      ? `${Math.floor(importResult.import_duration_seconds / 60)}m ${Math.round(importResult.import_duration_seconds % 60)}s`
+                      : `${importResult.import_duration_seconds.toFixed(1)}s`}
+                  </Text>
+                </View>
+              )}
             </View>
             <View style={styles.footer}>
               <TouchableOpacity style={styles.doneBtn} onPress={handleClose}>
@@ -940,6 +1349,165 @@ export default function TextImportModal({ visible, onClose, language, onImportCo
         data={debugData}
         sourceLanguage={language}
       />
+      {/* Lemma detail modal */}
+      <Modal
+        visible={lemmaModalVisible}
+        transparent
+        animationType="fade"
+        onRequestClose={() => setLemmaModalVisible(false)}
+      >
+        <View style={styles.lemmaModalOverlay}>
+          <View style={styles.lemmaModalCard}>
+            <View style={styles.lemmaModalHeader}>
+              <Text style={styles.lemmaModalTitle}>{lemmaModalWord || 'Word details'}</Text>
+              <TouchableOpacity onPress={() => setLemmaModalVisible(false)} style={{ padding: 4 }}>
+                <Ionicons name="close" size={20} color="#1A1A1A" />
+              </TouchableOpacity>
+            </View>
+            <ScrollView contentContainerStyle={styles.lemmaModalBody}>
+              {lemmaModalLemmas && lemmaModalLemmas.length > 0 ? (() => {
+                const srcMeta = LANGUAGES.find(l => l.code === language);
+                return (
+                  <>
+                    <Text style={styles.lemmaModalSectionTitle}>Source lemmas</Text>
+                    {lemmaModalLemmas.map((lem, idx) => {
+                      const lvlKey = (lem.level || '').toUpperCase();
+                      const lvlColor = LEVEL_COLORS[lvlKey] || { bg: '#E5E7EB', text: '#374151' };
+                      const wcc = getWordClassColor(lem.word_class);
+                      const isSrcUrdu = language === 'urdu';
+                      return (
+                        <View key={`lem-${idx}`} style={styles.lemmaEntryRow}>
+                          <View style={[
+                            styles.lemmaLangIcon,
+                            { backgroundColor: srcMeta?.color || '#4B5563' }
+                          ]}>
+                            <Text style={[styles.lemmaLangIconText, isSrcUrdu && { fontFamily: 'Noto Nastaliq Urdu' }]}>
+                              {srcMeta?.nativeChar || srcMeta?.langCode?.toUpperCase() || (language[0] || '').toUpperCase()}
+                            </Text>
+                          </View>
+                          <View style={{ flex: 1 }}>
+                            <Text style={[
+                              styles.lemmaEntryNative,
+                              isSrcUrdu && { fontFamily: 'Noto Nastaliq Urdu', textAlign: 'left', writingDirection: 'rtl' },
+                            ]}>
+                              {isSrcUrdu ? (lem.nastaliq || lem.word || '(no word)') : (lem.word || '(no word)')}
+                            </Text>
+                            {lem.transliteration ? (
+                              <Text style={styles.lemmaEntryTranslit}>{lem.transliteration}</Text>
+                            ) : null}
+                            {lem.english ? (
+                              <Text style={styles.lemmaEntryEnglish}>{lem.english}</Text>
+                            ) : null}
+                            {(lem.word_class || lem.level) && (
+                              <View style={styles.lemmaChipRow}>
+                                {lem.word_class ? (
+                                  <View style={[styles.lemmaChip, { backgroundColor: wcc.bg }]}>
+                                    <Text style={[styles.lemmaChipText, { color: wcc.text }]}>
+                                      {lem.word_class}
+                                    </Text>
+                                  </View>
+                                ) : null}
+                                {lem.level ? (
+                                  <View style={[styles.lemmaChip, { backgroundColor: lvlColor.bg }]}>
+                                    <Text style={[styles.lemmaChipText, { color: lvlColor.text }]}>
+                                      {lvlKey}
+                                    </Text>
+                                  </View>
+                                ) : null}
+                                {lem.verb_transitivity && lem.verb_transitivity !== 'N/A' ? (
+                                  <View style={[styles.lemmaChip, { backgroundColor: '#6B7280' }]}>
+                                    <Text style={[styles.lemmaChipText, { color: '#FFF' }]}>
+                                      {lem.verb_transitivity.toLowerCase()}
+                                    </Text>
+                                  </View>
+                                ) : null}
+                              </View>
+                            )}
+                          </View>
+                        </View>
+                      );
+                    })}
+                  </>
+                );
+              })() : (
+                <Text style={styles.lemmaEntryEnglish}>No lemmas found for this word.</Text>
+              )}
+
+              {lemmaModalTranslations && Object.keys(lemmaModalTranslations).length > 0 && (
+                <>
+                  <Text style={[styles.lemmaModalSectionTitle, { marginTop: 16 }]}>Translated lemmas</Text>
+                  {Object.entries(lemmaModalTranslations).map(([langCode, items]) => {
+                    const meta = LANGUAGES.find(l => l.code === langCode);
+                    const badgeChar = meta?.nativeChar || (langCode[0] || '').toUpperCase();
+                    const isLangUrdu = langCode === 'urdu';
+                    return (
+                      <View key={langCode} style={{ marginBottom: 8 }}>
+                        <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 4 }}>
+                          <View style={[styles.lemmaLangIcon, { backgroundColor: meta?.color || '#4B5563', marginRight: 6 }]}>
+                            <Text style={[styles.lemmaLangIconText, isLangUrdu && { fontFamily: 'Noto Nastaliq Urdu' }]}>{badgeChar}</Text>
+                          </View>
+                          <Text style={styles.lemmaLangLabel}>{meta?.name || langCode}</Text>
+                          <Text style={{ fontSize: 11, color: '#9CA3AF', marginLeft: 4 }}>
+                            {items.length} word{items.length !== 1 ? 's' : ''}
+                          </Text>
+                        </View>
+                        <View style={styles.translatedLemmaGrid}>
+                          {items.map((w, idx) => {
+                            const wcc = getWordClassColor(w.word_class);
+                            const lvlKey = String(w.level || '').toUpperCase();
+                            const lvlColor = LEVEL_COLORS[lvlKey] || { bg: '#E5E7EB', text: '#374151' };
+                            return (
+                              <View key={`${langCode}-${idx}`} style={styles.translatedLemmaCard}>
+                                <Text style={[
+                                  styles.lemmaEntryNative,
+                                  isLangUrdu && { fontFamily: 'Noto Nastaliq Urdu', textAlign: 'right', writingDirection: 'rtl' },
+                                ]}>
+                                  {isLangUrdu ? (w.nastaliq || w.word) : w.word}
+                                </Text>
+                                {w.transliteration ? (
+                                  <Text style={styles.lemmaEntryTranslit}>{w.transliteration}</Text>
+                                ) : null}
+                                <Text style={styles.lemmaEntryEnglish} numberOfLines={2}>
+                                  {w.english || w.english_word || ''}
+                                </Text>
+                                {(w.word_class || w.level) && (
+                                  <View style={styles.lemmaChipRow}>
+                                    {w.word_class ? (
+                                      <View style={[styles.lemmaChip, { backgroundColor: wcc.bg }]}>
+                                        <Text style={[styles.lemmaChipText, { color: wcc.text }]}>
+                                          {w.word_class}
+                                        </Text>
+                                      </View>
+                                    ) : null}
+                                    {w.level ? (
+                                      <View style={[styles.lemmaChip, { backgroundColor: lvlColor.bg }]}>
+                                        <Text style={[styles.lemmaChipText, { color: lvlColor.text }]}>
+                                          {lvlKey}
+                                        </Text>
+                                      </View>
+                                    ) : null}
+                                    {w.verb_transitivity && w.verb_transitivity !== 'N/A' ? (
+                                      <View style={[styles.lemmaChip, { backgroundColor: '#6B7280' }]}>
+                                        <Text style={[styles.lemmaChipText, { color: '#FFF' }]}>
+                                          {w.verb_transitivity.toLowerCase()}
+                                        </Text>
+                                      </View>
+                                    ) : null}
+                                  </View>
+                                )}
+                              </View>
+                            );
+                          })}
+                        </View>
+                      </View>
+                    );
+                  })}
+                </>
+              )}
+            </ScrollView>
+          </View>
+        </View>
+      </Modal>
     </Modal>
   );
 }
@@ -948,7 +1516,14 @@ const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#F8F9FA' },
   header: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 16, paddingTop: Platform.OS === 'ios' ? 16 : 16, paddingBottom: 12, borderBottomWidth: 1, borderBottomColor: '#E5E5E5', backgroundColor: '#FFF' },
   closeBtn: { padding: 8 },
-  title: { fontSize: 18, fontWeight: '700', color: '#1A1A1A' },
+  headerCenter: {
+    flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 8,
+  },
+  headerLangIcon: {
+    width: 28, height: 28, borderRadius: 7, alignItems: 'center', justifyContent: 'center',
+  },
+  headerLangIconText: { color: '#FFF', fontSize: 13, fontWeight: '700' },
+  title: { fontSize: 17, fontWeight: '700', color: '#1A1A1A' },
   body: { flex: 1 },
   bodyContent: { padding: 16, paddingBottom: 100 },
   reviewListContent: { padding: 16, paddingBottom: 120 },
@@ -974,6 +1549,75 @@ const styles = StyleSheet.create({
   reviewStatNum: { fontSize: 20, fontWeight: '700', color: '#1A1A1A' },
   reviewStatLabel: { fontSize: 11, color: '#888', marginTop: 2 },
 
+  // Lemma explorer
+  lemmaPanel: { backgroundColor: '#FFF', borderBottomWidth: 1, borderBottomColor: '#E5E5E5' },
+  lemmaPanelHeader: { flexDirection: 'row', alignItems: 'center', paddingHorizontal: 16, paddingVertical: 10 },
+  lemmaPanelTitle: { fontSize: 13, fontWeight: '600', color: '#111827' },
+  lemmaPanelHint: { fontSize: 11, color: '#9CA3AF' },
+  lemmaSentence: { paddingHorizontal: 16, paddingBottom: 10 },
+  lemmaSentenceText: { fontSize: 14, lineHeight: 22, color: '#111827', flexWrap: 'wrap' },
+  lemmaWordPlain: { fontSize: 14, color: '#111827' },
+  lemmaWordHighlighted: { fontSize: 14, color: '#1D4ED8', fontWeight: '600' },
+
+  // Lemma detail modal
+  lemmaModalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.35)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+  },
+  lemmaModalCard: {
+    width: '100%',
+    maxHeight: '75%',
+    backgroundColor: '#FFF',
+    borderRadius: 16,
+    paddingHorizontal: 16,
+    paddingTop: 12,
+    paddingBottom: 8,
+  },
+  lemmaModalHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 8,
+  },
+  lemmaModalTitle: { fontSize: 16, fontWeight: '700', color: '#111827' },
+  lemmaModalBody: { paddingBottom: 8 },
+  lemmaModalSectionTitle: { fontSize: 13, fontWeight: '600', color: '#374151', marginBottom: 4 },
+  lemmaEntryRow: { flexDirection: 'row', alignItems: 'flex-start', marginBottom: 6 },
+  lemmaLangIcon: {
+    width: 28,
+    height: 28,
+    borderRadius: 8,
+    backgroundColor: '#4B5563',
+    marginRight: 8,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  lemmaLangIconText: { fontSize: 13, color: '#FFF', fontWeight: '700' },
+  lemmaLangLabel: { fontSize: 12, fontWeight: '600', color: '#374151' },
+  lemmaEntryNative: { fontSize: 15, fontWeight: '600', color: '#111827' },
+  lemmaEntryTranslit: { fontSize: 12, color: '#6B7280', fontStyle: 'italic' },
+  lemmaEntryEnglish: { fontSize: 13, color: '#2563EB', marginTop: 1 },
+  lemmaEntryMeta: { fontSize: 11, color: '#6B7280', marginTop: 1 },
+  lemmaChipRow: { flexDirection: 'row', flexWrap: 'wrap', gap: 6, marginTop: 4 },
+  lemmaChip: { paddingHorizontal: 8, paddingVertical: 3, borderRadius: 999 },
+  lemmaChipText: { fontSize: 11, fontWeight: '600' },
+  translatedLemmaGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 8,
+  },
+  translatedLemmaCard: {
+    width: '31%', // roughly 3 per row minus gap
+    backgroundColor: '#F9FAFB',
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: '#E5E7EB',
+    padding: 10,
+  },
+
   // Language tabs — flex-wrap so all are visible
   tabBar: { backgroundColor: '#FFF', borderBottomWidth: 1, borderBottomColor: '#E5E5E5', flexDirection: 'row', flexWrap: 'wrap', paddingHorizontal: 8, paddingTop: 4, paddingBottom: 0 },
   tabBarContent: { paddingHorizontal: 12, gap: 4, alignItems: 'center' },
@@ -988,7 +1632,8 @@ const styles = StyleSheet.create({
   tabBadgeTextActive: { color: '#1D4ED8' },
 
   // Filters
-  filterBar: { backgroundColor: '#FFF', borderBottomWidth: 1, borderBottomColor: '#E5E5E5', paddingVertical: 8 },
+  filterBar: { backgroundColor: '#FFF', borderBottomWidth: 1, borderBottomColor: '#E5E5E5', paddingVertical: 8, paddingHorizontal: 16 },
+  filterWrap: { flexDirection: 'row', flexWrap: 'wrap', paddingHorizontal: 16, gap: 8 },
   filterScroll: { paddingHorizontal: 16, gap: 8, alignItems: 'center' },
   filterChip: { paddingHorizontal: 12, paddingVertical: 5, borderRadius: 16, borderWidth: 1.5 },
   filterChipText: { fontSize: 12, fontWeight: '600' },
@@ -1032,8 +1677,12 @@ const styles = StyleSheet.create({
   synonymCard: { borderColor: '#FDE68A', borderWidth: 1.5, backgroundColor: '#FFFDF5' },
   synonymCardSelected: { backgroundColor: '#FFFBEB', borderColor: '#F59E0B' },
   synonymCheckboxActive: { backgroundColor: '#D97706', borderColor: '#D97706' },
-  synonymOfBadge: { flexDirection: 'row', alignItems: 'center', gap: 4, marginTop: 4, paddingHorizontal: 7, paddingVertical: 3, backgroundColor: '#FEF3C7', borderRadius: 6, alignSelf: 'flex-start' },
+  synonymOfSection: { marginTop: 10, paddingTop: 8, paddingBottom: 6, paddingHorizontal: 10, backgroundColor: '#FEF3C7', borderRadius: 8, borderWidth: 1, borderColor: '#FDE68A', alignSelf: 'stretch' },
+  synonymOfBadge: { flexDirection: 'row', alignItems: 'center', gap: 4, marginBottom: 6 },
+  synonymOfLabel: { fontSize: 11, fontWeight: '700', color: '#92400E' },
   synonymOfText: { fontSize: 11, fontWeight: '600', color: '#92400E' },
+  synonymOfNative: { fontSize: 15, fontWeight: '600', color: '#78350F', marginBottom: 2 },
+  synonymOfTranslit: { fontSize: 12, color: '#B45309', fontStyle: 'italic' },
 
   // Empty state
   emptyContainer: { alignItems: 'center', paddingVertical: 40, gap: 10 },
@@ -1057,7 +1706,8 @@ const styles = StyleSheet.create({
   btnDisabled: { opacity: 0.45 },
   btnText: { fontSize: 16, fontWeight: '700', color: '#FFF' },
 
-  // Cross-translate section
+  // Cross-translate section (use the older simple row style here;
+  // the new chip-style design is only used on the Profile screen)
   crossTranslateSection: { backgroundColor: '#FFF', borderRadius: 12, borderWidth: 1, borderColor: '#E0E0E0', marginBottom: 12, overflow: 'hidden' },
   crossTranslateHeader: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 14, paddingVertical: 12 },
   crossTranslateHeaderLeft: { flexDirection: 'row', alignItems: 'center', flex: 1, gap: 10 },
@@ -1075,4 +1725,12 @@ const styles = StyleSheet.create({
   crossTranslateLangName: { fontSize: 14, fontWeight: '500', color: '#333', flex: 1 },
   crossTranslateLangCheckbox: { width: 22, height: 22, borderRadius: 6, borderWidth: 2, borderColor: '#CCC', alignItems: 'center', justifyContent: 'center' },
   crossTranslateLangCheckboxActive: { backgroundColor: '#4A90E2', borderColor: '#4A90E2' },
+  saveDefaultRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    marginTop: 4,
+    marginBottom: 8,
+  },
+  saveDefaultText: { fontSize: 13, color: '#4A90E2', fontWeight: '600', flex: 1 },
 });

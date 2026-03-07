@@ -67,11 +67,32 @@ def get_translation_prompt(language: str, words: list, target_languages: list) -
     word_list = ', '.join([w['word'] for w in words])
     other_langs = [lang for lang in target_languages if lang != language]
     target_langs_str = ', '.join(other_langs) if other_langs else 'none'
-    
-    template = _load_prompt_template("translation.txt")
+
+    # Choose a language-specific translation template when available.
+    # We keep translation.txt as the generic fallback, but allow per-language
+    # rules that incorporate script and style guidance from the vocab_pipeline prompts.
+    lang_code = LANGUAGE_CODE_MAP.get(language.lower(), language.lower()[:2])
+    per_lang_filename = None
+    if lang_code == 'kn':
+        per_lang_filename = "translation_prompts/translation_kn.txt"
+    elif lang_code == 'ta':
+        per_lang_filename = "translation_prompts/translation_ta.txt"
+    elif lang_code == 'te':
+        per_lang_filename = "translation_prompts/translation_te.txt"
+    elif lang_code == 'ml':
+        per_lang_filename = "translation_prompts/translation_ml.txt"
+    elif lang_code == 'hi':
+        per_lang_filename = "translation_prompts/translation_hi.txt"
+    elif lang_code == 'ur':
+        per_lang_filename = "translation_prompts/translation_ur.txt"
+
+    template = _load_prompt_template(per_lang_filename) if per_lang_filename else ""
+    if not template:
+        # Fallback to generic prompt which already encodes key cross-language rules
+        template = _load_prompt_template("translation.txt")
     if not template:
         return ""
-    
+
     prompt = template.format(
         source_language=language,
         target_languages=target_langs_str,
@@ -79,3 +100,38 @@ def get_translation_prompt(language: str, words: list, target_languages: list) -
     )
     
     return prompt
+
+
+def get_synonym_decision_prompt(
+    extracted_word: str,
+    extracted_transliteration: str,
+    extracted_english: str,
+    language: str,
+    candidates: list,
+) -> str:
+    """Build prompt for AI to decide if extracted word is synonym of an existing card or new card.
+    candidates: list of dicts with id, translation, transliteration, english_word."""
+    template = _load_prompt_template("synonym_decision.txt")
+    if not template:
+        return ""
+    import json
+    candidates_json = json.dumps(
+        [
+            {
+                "id": c.get("id"),
+                "translation": c.get("translation", ""),
+                "transliteration": c.get("transliteration", ""),
+                "english_word": c.get("english_word", ""),
+            }
+            for c in candidates
+        ],
+        indent=2,
+        ensure_ascii=False,
+    )
+    return template.format(
+        extracted_word=extracted_word or "",
+        extracted_transliteration=extracted_transliteration or "",
+        extracted_english=extracted_english or "",
+        language=language or "",
+        candidates_json=candidates_json,
+    )

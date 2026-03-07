@@ -3,7 +3,7 @@
 #
 # Usage:
 #   ./dev_launcher.sh --all          Start all 4 processes
-#   ./dev_launcher.sh --ll-backend   LL backend  (port 8080)
+#   ./dev_launcher.sh --ll-backend   LL backend  (port 9090)
 #   ./dev_launcher.sh --ll-frontend  LL frontend (Expo)
 #   ./dev_launcher.sh --ac-backend   AC backend  (port 8000)
 #   ./dev_launcher.sh --ac-frontend  AC frontend (Electron)
@@ -26,7 +26,7 @@ fi
 
 # ── defaults (override via env vars) ──────────────────────────────────────────
 # Use the venv Python if available, otherwise fall back to system python3
-LL_BACKEND_CMD="${LL_BACKEND_CMD:-if [ -f backend/venv/bin/python3 ]; then PYTHON=backend/venv/bin/python3; else PYTHON=python3; fi && \$PYTHON -m uvicorn backend.main:app --host 0.0.0.0 --port 8080 --reload}"
+LL_BACKEND_CMD="${LL_BACKEND_CMD:-if [ -f backend/venv/bin/python3 ]; then PYTHON=backend/venv/bin/python3; else PYTHON=python3; fi && \$PYTHON -m uvicorn backend.main:app --host 0.0.0.0 --port 9090 --reload}"
 LL_FRONTEND_CMD="${LL_FRONTEND_CMD:-export NVM_DIR=\"\$HOME/.nvm\" && [ -s \"\$NVM_DIR/nvm.sh\" ] && . \"\$NVM_DIR/nvm.sh\"; npx expo start --web}"
 AC_BACKEND_CMD="${AC_BACKEND_CMD:-if [ -f backend/venv/bin/python3 ]; then PYTHON=backend/venv/bin/python3; else PYTHON=python3; fi && \$PYTHON -m uvicorn backend.server:app --host 0.0.0.0 --port 8000 --reload --reload-exclude 'frontend/node_modules/*' --reload-exclude 'node_modules/*'}"
 AC_FRONTEND_CMD="${AC_FRONTEND_CMD:-export NVM_DIR=\"\$HOME/.nvm\" && [ -s \"\$NVM_DIR/nvm.sh\" ] && . \"\$NVM_DIR/nvm.sh\"; npm start}"
@@ -109,7 +109,7 @@ if [[ ${DO_STOP} -eq 1 ]]; then
   pkill -f "npm exec expo"          2>/dev/null || true   # also catch npm wrapper
   pkill -f "electron"               2>/dev/null && echo "  stopped AC frontend" || echo "  AC frontend not running"
   # Free any lingering ports
-  lsof -ti:8080 2>/dev/null | xargs kill -9 2>/dev/null || true
+  lsof -ti:9090 2>/dev/null | xargs kill -9 2>/dev/null || true
   lsof -ti:8081 2>/dev/null | xargs kill -9 2>/dev/null || true
   exit 0
 fi
@@ -117,7 +117,7 @@ fi
 # ── --status ──────────────────────────────────────────────────────────────────
 if [[ ${DO_STATUS} -eq 1 ]]; then
   echo "Running processes:"
-  pgrep -fl "uvicorn backend.main"   && echo "  LL backend  :8080" || echo "  LL backend  — not running"
+  pgrep -fl "uvicorn backend.main"   && echo "  LL backend  :9090" || echo "  LL backend  — not running"
   pgrep -fl "uvicorn backend.server" && echo "  AC backend  :8000" || echo "  AC backend  — not running"
   pgrep -fl "expo start"             && echo "  LL frontend — running" || echo "  LL frontend — not running"
   pgrep -fl "electron"               && echo "  AC frontend — running" || echo "  AC frontend — not running"

@@ -48,3 +48,10 @@ export const CEFR_LEVELS = [
   { label: 'C1', value: 'c1', color: { bg: '#4A90E2', text: '#FFFFFF' } },
   { label: 'C2', value: 'c2', color: { bg: '#9B59B6', text: '#FFFFFF' } },
 ];
+
+// Verb transitivity filter options (used in import + library views)
+export const VERB_TRANSITIVITY_FILTERS = [
+  { label: 'Transitive', value: 'transitive', color: { bg: '#EF4444', text: '#FFFFFF' } },
+  { label: 'Intransitive', value: 'intransitive', color: { bg: '#10B981', text: '#FFFFFF' } },
+  { label: 'Ditransitive', value: 'ditransitive', color: { bg: '#6366F1', text: '#FFFFFF' } },
+];

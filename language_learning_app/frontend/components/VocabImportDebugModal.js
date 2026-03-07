@@ -22,6 +22,9 @@ export default function VocabImportDebugModal({ visible, onClose, data, sourceLa
   const synonyms = data.synonyms || [];
   const existing = data.existing || [];
   const translationsByLang = data.translations_by_lang || {};
+  const inputText = data.input_text || '';
+  const rawTokens = data.raw_tokens || [];
+  const lemmaTokens = data.lemma_tokens || data.lemmatized_tokens || [];
 
   const totalExtracted =
     data.total_extracted != null
@@ -59,6 +62,36 @@ export default function VocabImportDebugModal({ visible, onClose, data, sourceLa
                 New words: {newWords.length} • Synonyms: {synonyms.length} • Existing: {existing.length}
               </SafeText>
             </View>
+
+            {/* Input text preview */}
+            {inputText ? (
+              <View style={styles.section}>
+                <SafeText style={styles.sectionTitle}>Input Text (preview)</SafeText>
+                <SafeText style={styles.itemText} numberOfLines={6}>
+                  {inputText}
+                </SafeText>
+                <SafeText style={styles.noteText}>
+                  Length: {inputText.length} characters • ~{inputText.trim().split(/\s+/).length} words
+                </SafeText>
+              </View>
+            ) : null}
+
+            {/* Tokenized lemmas */}
+            {lemmaTokens && lemmaTokens.length > 0 && (
+              <View style={styles.section}>
+                <SafeText style={styles.sectionTitle}>Tokenized Lemmas (first 50)</SafeText>
+                {lemmaTokens.slice(0, 50).map((tok, idx) => (
+                  <SafeText key={`lemma-${idx}`} style={styles.itemText}>
+                    • {tok.word || '(no word)'} — {tok.english || 'no gloss'} ({tok.word_class || 'unknown'})
+                  </SafeText>
+                ))}
+                {lemmaTokens.length > 50 && (
+                  <SafeText style={styles.noteText}>
+                    Showing first 50 lemmas (total {lemmaTokens.length}).
+                  </SafeText>
+                )}
+              </View>
+            )}
 
             {/* DB search effects */}
             <View style={styles.section}>
@@ -127,7 +160,7 @@ export default function VocabImportDebugModal({ visible, onClose, data, sourceLa
                       ))}
                       {(info.existing_words || []).slice(0, 40).map((w, idx) => (
                         <SafeText key={`${lang}-exist-${idx}`} style={styles.itemText}>
-                          • EXISTING {w.word} — {w.english_word || w.english || 'no gloss'}
+                          • EXISTING {w.word} — {w.english_word || w.english || 'no gloss'} (id {w.existing_id || 'n/a'}, {w.word_class || 'unknown'}, {w.level || 'no level'}, mastery {w.mastery_level || 'n/a'})
                         </SafeText>
                       ))}
                       {(((info.new_words || []).length + (info.existing_words || []).length) > 80) && (

@@ -25,6 +25,22 @@ def devanagari_to_nastaliq(text: str) -> str:
         print(f"[devanagari_to_nastaliq] error: {e}")
         return text
 
+
+def nastaliq_to_devanagari(text: str) -> str:
+    """Convert Nastaliq (Perso-Arabic/Urdu) text to Devanagari using aksharamukha.
+    Used so the pipeline keeps Urdu in Devanagari and then derives Latin + Nastaliq from it.
+    """
+    if not text or not text.strip():
+        return text
+    if not re.search(r'[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF]', text):
+        return text  # already not Arabic
+    try:
+        result = transliterate.process('Urdu', 'Devanagari', text)
+        return result if result else text
+    except Exception as e:
+        print(f"[nastaliq_to_devanagari] error: {e}")
+        return text
+
 def transliterate_text(text: str, from_script: str = 'kannada', to_script: str = 'ISO', from_script_override: str = None) -> str:
     """
     Transliterate text from one script to another using aksharmukha with ISO (IAST-like) scheme
@@ -136,6 +152,38 @@ def transliterate_text(text: str, from_script: str = 'kannada', to_script: str =
     except Exception as e:
         print(f"Transliteration error: {e}")
         return text  # Return original if transliteration fails
+
+
+def latin_to_native_script(text: str, language: str) -> str:
+    """
+    Convert Latin/IAST romanization to the language's native script.
+    Used for search: when user types "hona" in Hindi, we convert to Devanagari "होना"
+    to match against the translation column.
+    """
+    if not text or not text.strip():
+        return text
+    lang_key = (language or '').lower()
+    script_map = {
+        'hindi': 'Devanagari',
+        'urdu': 'Devanagari',
+        'kannada': 'Kannada',
+        'telugu': 'Telugu',
+        'tamil': 'Tamil',
+        'malayalam': 'Malayalam',
+    }
+    target = script_map.get(lang_key)
+    if not target:
+        return text
+    try:
+        result = transliterate.process('ISO', target, text.strip())
+        return result if result else text
+    except Exception as e:
+        try:
+            print(f"[latin_to_native_script] {lang_key} '{text[:50]}': {e}")
+        except Exception:
+            pass
+        return text
+
 
 def delete_final_schwa(text: str, language: str = None) -> str:
     """

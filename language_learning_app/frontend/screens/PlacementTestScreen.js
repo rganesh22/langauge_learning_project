@@ -23,6 +23,7 @@ import Slider from '@react-native-community/slider';
 import * as FileSystem from 'expo-file-system';
 import { useNavigation } from '@react-navigation/native';
 import SafeText from '../components/SafeText';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { LanguageContext, LANGUAGES } from '../contexts/LanguageContext';
 
 const API_BASE_URL = __DEV__ ? 'http://localhost:9090' : 'http://localhost:9090';
@@ -488,6 +489,7 @@ function ResultsScreen({ result, srsCalibration, language, onRetake, onDone, isP
 // ─────────────────────────────────────────────────────────────────────────────
 
 export default function PlacementTestScreen({ route }) {
+  const insets = useSafeAreaInsets();
   const navigation = useNavigation();
   const { selectedLanguage } = useContext(LanguageContext);
   const language = route?.params?.language || selectedLanguage || 'kannada';
@@ -1328,7 +1330,7 @@ export default function PlacementTestScreen({ route }) {
     return (
       <View style={styles.container}>
         {/* Header */}
-        <View style={[styles.header, { backgroundColor: langColor }]}>
+        <View style={[styles.header, { backgroundColor: langColor, paddingTop: insets.top + 8 }]}>
           <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backBtn}>
             <Ionicons name="arrow-back" size={24} color="#FFF" />
           </TouchableOpacity>
@@ -1400,7 +1402,7 @@ export default function PlacementTestScreen({ route }) {
                     const lvl = r.overall_level || '—';
                     const color = CEFR_COLORS[lvl] || '#9CA3AF';
                     const dateStr = r.taken_at
-                      ? new Date(r.taken_at).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' })
+                      ? new Date(r.taken_at).toLocaleString(undefined, { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' })
                       : '';
                     const skills = r.skill_levels || {};
                     return (
@@ -1456,7 +1458,7 @@ export default function PlacementTestScreen({ route }) {
     };
     const histColor = CEFR_COLORS[normalised.overall_cefr_level] || '#4A90E2';
     const histDate = r.taken_at
-      ? new Date(r.taken_at).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' })
+      ? new Date(r.taken_at).toLocaleString(undefined, { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' })
       : '';
 
     const storedTestData = r.test_data || {};
@@ -1486,7 +1488,7 @@ export default function PlacementTestScreen({ route }) {
     return (
       <View style={styles.container}>
         {/* Header */}
-        <View style={[styles.header, { backgroundColor: histColor }]}>
+        <View style={[styles.header, { backgroundColor: histColor, paddingTop: insets.top + 8 }]}>
           <TouchableOpacity onPress={() => setPhase('intro')} style={styles.backBtn}>
             <Ionicons name="arrow-back" size={24} color="#FFF" />
           </TouchableOpacity>
@@ -1781,7 +1783,7 @@ export default function PlacementTestScreen({ route }) {
   if (phase === 'loading') {
     return (
       <View style={styles.container}>
-        <View style={[styles.header, { backgroundColor: langColor }]}>
+        <View style={[styles.header, { backgroundColor: langColor, paddingTop: insets.top + 8 }]}>
           <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backBtn}>
             <Ionicons name="arrow-back" size={24} color="#FFF" />
           </TouchableOpacity>
@@ -1801,7 +1803,7 @@ export default function PlacementTestScreen({ route }) {
   if (phase === 'submitting') {
     return (
       <View style={styles.container}>
-        <View style={[styles.header, { backgroundColor: langColor }]}>
+        <View style={[styles.header, { backgroundColor: langColor, paddingTop: insets.top + 8 }]}>
           <View style={{ width: 40 }} />
           <SafeText style={styles.headerTitle}>Analysing Answers</SafeText>
           <View style={{ width: 40 }} />
@@ -1819,7 +1821,7 @@ export default function PlacementTestScreen({ route }) {
   if (phase === 'error') {
     return (
       <View style={styles.container}>
-        <View style={[styles.header, { backgroundColor: '#EF4444' }]}>
+        <View style={[styles.header, { backgroundColor: '#EF4444', paddingTop: insets.top + 8 }]}>
           <TouchableOpacity onPress={() => setPhase('intro')} style={styles.backBtn}>
             <Ionicons name="arrow-back" size={24} color="#FFF" />
           </TouchableOpacity>
@@ -1872,7 +1874,7 @@ export default function PlacementTestScreen({ route }) {
 
     return (
       <View style={styles.container}>
-        <View style={[styles.header, { backgroundColor: resColor }]}>
+        <View style={[styles.header, { backgroundColor: resColor, paddingTop: insets.top + 8 }]}>
           <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backBtn}>
             <Ionicons name="arrow-back" size={24} color="#FFF" />
           </TouchableOpacity>
@@ -2035,7 +2037,7 @@ export default function PlacementTestScreen({ route }) {
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}
     >
       {/* Header */}
-      <View style={[styles.header, { backgroundColor: sectionColor }]}>
+      <View style={[styles.header, { backgroundColor: sectionColor, paddingTop: insets.top + 8 }]}>
         <TouchableOpacity onPress={() => setPhase('intro')} style={styles.backBtn}>
           <Ionicons name="close" size={24} color="#FFF" />
         </TouchableOpacity>
@@ -2115,7 +2117,6 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingTop: Platform.OS === 'ios' ? 52 : 20,
     paddingBottom: 14,
     paddingHorizontal: 16,
   },

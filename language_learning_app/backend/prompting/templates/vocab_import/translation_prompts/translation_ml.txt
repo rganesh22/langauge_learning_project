@@ -1,0 +1,60 @@
+For each {source_language} word below, provide:
+1) A concise English translation (8 words maximum).
+2) Translations into: {target_languages}.
+3) The word class (part of speech).
+
+PART-OF-SPEECH RULES:
+- word_class MUST be chosen from this fixed list ONLY:
+  noun, verb, adjective, adverb, pronoun, preposition, conjunction, exclamation,
+  modal verb, determiner, number, ordinal number, auxiliary verb, linking verb,
+  infinitive marker, indefinite article, definite article
+- Do NOT invent any new POS labels.
+- Even if none is a perfect grammatical match, choose the CLOSEST option
+  (for example, treat postpositions as "preposition").
+
+TRANSLATION RULES (GENERIC):
+- English must be SHORT — 8 words maximum per translation.
+- For VERBS: always prefix the English with "to" (e.g. "to eat", "to sleep", "to run").
+- For NOUNS / ADJECTIVES / others: give the most common meaning first.
+
+TARGET-LANGUAGE RULES — MALAYALAM:
+- When translating INTO Malayalam ("malayalam" appears in {target_languages}):
+  - Output MUST be in Malayalam script (U+0D00–U0D7F) ONLY. Absolutely NO Latin, NO transliteration.
+  - For verbs: use the INFORMAL IMPERATIVE (singular) form (e.g. "വായിക്കു", "പോ") or the standard citation form that learners will see in dictionaries, not nominalized forms.
+  - Provide up to 4 synonyms, ordered from MOST COMMON / SPOKEN → MORE FORMAL / LITERARY.
+  - Prefer words current in modern speech, media, and education; avoid archaic or hyper‑formal items unless still widely used.
+  - Include both native Dravidian and well‑integrated Sanskrit or other loanwords where natural, with the most natural everyday choice first.
+
+TARGET-LANGUAGE RULES — OTHER LANGUAGES:
+- For each other target language listed in {target_languages}, obey that language’s native script and modern usage conventions. Output MUST be in each language’s native script, never in Latin transliteration.
+- For Urdu (if present): write translations in DEVANAGARI ONLY (देवनागरी), NOT Perso‑Arabic/Nastaliq; the client converts to Nastaliq later.
+
+GENDER & LEVEL RULES:
+- For Hindi and Urdu nouns/adjectives: whenever you give a translation, also output "gender_hindi" and/or "gender_urdu" with value "m" or "f" for every noun and adjective; omit for other word classes.
+- Carry through the CEFR level (A1–C2) from the source word to each translation where appropriate.
+
+IN-CONTEXT EXAMPLES (Malayalam as one of the targets):
+
+Noun example:
+  Input word: ಮನೆ
+  Output:
+  {{"word": "ಮನೆ", "english": "house", "word_class": "noun",
+    "translations": {{"hindi": "घर", "malayalam": "വീട്"}}}}
+
+Verb example:
+  Input word: ತಿನ್ನು
+  Output:
+  {{"word": "ತಿನ್ನು", "english": "to eat", "word_class": "verb",
+    "translations": {{"hindi": "खाना", "malayalam": "കഴിക്കു"}}}}
+
+Return ONLY a valid JSON array in the following format (no extra text):
+- For Urdu (if in target_languages): use Devanagari script in the "urdu" translation, e.g. "urdu": "घर" not Nastaliq.
+- For Hindi and Urdu: include "gender_hindi" and/or "gender_urdu" with value "m" or "f" for every noun and adjective; omit for other word classes.
+[
+  {{"word": "original_in_native_script", "english": "...", "word_class": "noun",
+    "translations": {{"lang1": "...", "lang2": "..."}}, "gender_hindi": "m", "gender_urdu": "m"}}
+]
+
+Words:
+{words}
+

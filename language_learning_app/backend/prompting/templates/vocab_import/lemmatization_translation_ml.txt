@@ -19,6 +19,10 @@ TASK 3 — CLASSIFICATION:
       infinitive marker, indefinite article, definite article
   - level: assign CEFR level based on word frequency/difficulty (A1=most common, C2=rarest):
       a1, a2, b1, b2, c1, c2
+  - verb_transitivity: for VERBS ONLY, set one of:
+      "transitive", "intransitive", "ditransitive".
+    Do NOT use "ambitransitive" — pick whichever of transitive or intransitive is the primary usage.
+    For all non-verbs, set verb_transitivity to "N/A".
 
 CRITICAL REQUIREMENTS:
 1) All Malayalam output MUST be in Malayalam script (മലയാളം). NO Latin/English letters in the "word" field.
@@ -30,9 +34,9 @@ IN-CONTEXT EXAMPLES:
 Example input words: വീട്ടിൽ, പഠനം, കഴിക്കുന്നു
 Example output:
 [
-  {{"word": "വീട്", "english": "house", "word_class": "noun", "level": "a1"}},
-  {{"word": "പഠനം", "english": "study (academic learning)", "word_class": "noun", "level": "b1"}},
-  {{"word": "കഴിക്കുക", "english": "to eat", "word_class": "verb", "level": "a1"}}
+  {{"word": "വീട്", "english": "house", "word_class": "noun", "level": "a1", "verb_transitivity": "N/A"}},
+  {{"word": "പഠനം", "english": "study (academic learning)", "word_class": "noun", "level": "b1", "verb_transitivity": "N/A"}},
+  {{"word": "കഴിക്കുക", "english": "to eat", "word_class": "verb", "level": "a1", "verb_transitivity": "transitive"}}
 ]
 
 Words to process:

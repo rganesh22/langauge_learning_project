@@ -19,6 +19,7 @@ const ACTIVITY_COLORS = {
   writing: { primary: '#FF6B6B', light: '#FFE8E8' },
   speaking: { primary: '#FF9500', light: '#FFF4E6' },
   translation: { primary: '#8B5CF6', light: '#F3E8FF' },
+  transliteration: { primary: '#EC4899', light: '#FCE7F3' },
   flashcards: { primary: '#14B8A6', light: '#E0F7F4' },
 };
 
@@ -340,8 +341,8 @@ export default function WeeklyOverviewSection({ expanded, onToggle }) {
                       
                       if (languageActivities.size === 0) return null;
                       
-                      // Define activity order
-                      const activityOrder = ['flashcards', 'reading', 'listening', 'writing', 'speaking'];
+// Define activity order
+                                      const activityOrder = ['flashcards', 'transliteration', 'reading', 'listening', 'writing', 'speaking', 'translation'];
                       
                       return (
                         <View style={styles.dayActivities}>
@@ -381,6 +382,7 @@ export default function WeeklyOverviewSection({ expanded, onToggle }) {
                                         <View style={[styles.activityIconCircle, { backgroundColor: colors.light }]}>
                                           <Ionicons 
                                             name={activity === 'flashcards' ? 'albums' :
+                                                  activity === 'transliteration' ? 'swap-horizontal' :
                                                   activity === 'reading' ? 'book' : 
                                                   activity === 'listening' ? 'headset' :
                                                   activity === 'writing' ? 'create' : 

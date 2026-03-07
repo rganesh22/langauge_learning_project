@@ -12,6 +12,7 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import * as FileSystem from 'expo-file-system';
 import SafeText from '../../components/SafeText';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { LanguageContext } from '../../contexts/LanguageContext';
 import { useActivityData } from './shared/hooks/useActivityData';
 import { useGenerationCallbacks } from './shared/hooks/useGenerationCallbacks';
@@ -62,6 +63,7 @@ import { API_BASE_URL } from './shared/constants';
  * Handles speaking exercises with recording and AI grading
  */
 export default function SpeakingActivity({ route, navigation }) {
+  const insets = useSafeAreaInsets();
   const { activityId, fromHistory, activityData: providedActivityData } = route.params || {};
   const { selectedLanguage: ctxLanguage } = useContext(LanguageContext);
   const routeLang = (route && route.params && route.params.language) || null;
@@ -639,7 +641,7 @@ export default function SpeakingActivity({ route, navigation }) {
   if (activityData.loading) {
     return (
       <View style={styles.container}>
-        <View style={[styles.header, { backgroundColor: colors.primary }]}>
+        <View style={[styles.header, { backgroundColor: colors.primary, paddingTop: insets.top + 8 }]}>
           <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
             <Ionicons name="arrow-back" size={24} color="#FFFFFF" />
           </TouchableOpacity>
@@ -678,7 +680,7 @@ export default function SpeakingActivity({ route, navigation }) {
   return (
     <View style={styles.container}>
       {/* Header */}
-      <View style={[styles.header, { backgroundColor: colors.primary }]}>
+      <View style={[styles.header, { backgroundColor: colors.primary, paddingTop: insets.top + 8 }]}>
         <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
           <Ionicons name="arrow-back" size={24} color="#FFFFFF" />
         </TouchableOpacity>
@@ -1566,7 +1568,6 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingTop: 60,
     paddingBottom: 20,
     paddingHorizontal: 20,
   },

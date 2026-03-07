@@ -85,6 +85,7 @@ export function useActivityData(
       
       // Set loading status based on activity type
       const loadingMessages = {
+        transliteration: 'Generating transliteration practice...',
         listening: 'Generating passage and questions...',
         reading: 'Generating story and questions...',
         writing: 'Generating writing prompt...',
@@ -182,6 +183,7 @@ export function useActivityData(
       const derivedTitle =
         sanitized?.activity_name ||
         sanitized?.passage_name ||
+        sanitized?.story_name ||
         sanitized?.title ||
         sanitized?.topic ||
         sanitized?.writing_prompt ||
