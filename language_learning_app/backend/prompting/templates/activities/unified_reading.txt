@@ -1,0 +1,56 @@
+You are an expert language teacher creating a reading comprehension activity for a student learning {language} at the {user_cefr_level} level.
+
+# Goal
+Create an engaging reading story and 8-12 questions (mix of multiple choice and short free response) based on the topic: "{custom_topic}". Make sure the context connects deeply with the topic, and the story is substantial and meaty.
+
+# Instructions
+1. Write a compelling, detailed story (4-6 paragraphs) in {language}. Provide substantial content for the user to practice reading.
+2. Make it engaging, culturally relevant, rich in vocabulary, and suitable for {user_cefr_level} level.
+3. Incorporate these required words naturally: {required_learning_words}
+4. Create 8 to 12 questions total: at least 6 multiple-choice and 2 to 4 free-response (short answers in {language}). For multiple choice: 4 options, 1 correct (0-indexed). For free response: use type "free_response", prompt_native, question_en, min_words, max_words (e.g. 5-20).
+
+# Output format
+Return ONLY valid JSON matching this exact schema. DO NOT wrap the output in markdown code blocks (e.g. no ```json). Output raw JSON only. Do not use trailing commas. Ensure all quotes inside string values are escaped.
+
+CRITICAL: The "items" array MUST contain exactly one "passage" item followed by 8 to 12 question items (multiple_choice and free_response). Never return only the passage without questions.
+
+{{
+  "activity_type": "reading",
+  "topic": "{custom_topic}",
+  "sections": [
+    {{
+      "section_id": "reading",
+      "section_title": "Reading",
+      "section_icon": "book-outline",
+      "instruction_en": "Read the story and answer the questions below.",
+      "items": [
+        {{
+          "item_id": "r1_passage",
+          "type": "passage",
+          "cefr_target": "{user_cefr_level}",
+          "passage_title": "Title of the story in {language}",
+          "passage_text": "The complete story text in {language}. Use \\n\\n for paragraphs."
+        }},
+        {{
+          "item_id": "r1_q1",
+          "type": "multiple_choice",
+          "cefr_target": "{user_cefr_level}",
+          "refers_to_passage": "r1_passage",
+          "question": "Question text in {language}",
+          "options": ["Option A", "Option B", "Option C", "Option D"],
+          "correct_index": 0
+        }},
+        {{
+          "item_id": "r1_q2",
+          "type": "multiple_choice",
+          "cefr_target": "{user_cefr_level}",
+          "refers_to_passage": "r1_passage",
+          "question": "Another question in {language}",
+          "options": ["Option A", "Option B", "Option C", "Option D"],
+          "correct_index": 2
+        }}
+        // Include 4 to 7 more multiple_choice and 1 to 3 free_response items
+      ]
+    }}
+  ]
+}}

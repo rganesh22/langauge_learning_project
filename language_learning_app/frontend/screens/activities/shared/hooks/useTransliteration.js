@@ -74,42 +74,80 @@ export function useTransliteration(language, activity) {
     }
   };
 
-  // Ensure transliterations for all activity content
+  // Ensure transliterations for all activity content (supports sections→items schema)
   const ensureTransliterationsForActivity = async () => {
     if (!activity || !showTransliterations) return;
     const toFetch = [];
 
-    // Story / passage
-    if (activity.story && !transliterations.story) toFetch.push({ key: 'story', text: activity.story });
-    if (activity.story_name && !transliterations.storyName) toFetch.push({ key: 'storyName', text: activity.story_name });
-    if (activity.passage && !transliterations.passage) toFetch.push({ key: 'passage', text: activity.passage });
-    if (activity.passage_name && !transliterations.passageName) toFetch.push({ key: 'passageName', text: activity.passage_name });
+    // Helper: add key+text if not already transliterated
+    const add = (key, text) => {
+      if (text && !transliterations[key]) toFetch.push({ key, text });
+    };
 
-    // Questions and options
+    // Old flat schema fallbacks (legacy)
+    add('story', activity.story);
+    add('storyName', activity.story_name);
+    add('passage', activity.passage);
+    add('passageName', activity.passage_name);
+
     if (activity.questions && Array.isArray(activity.questions)) {
-      for (let i = 0; i < activity.questions.length; i++) {
-        const q = activity.questions[i];
-        if (q.question && !transliterations[`question_${i}`]) toFetch.push({ key: `question_${i}`, text: q.question });
-        if (q.options && Array.isArray(q.options)) {
-          for (let o = 0; o < q.options.length; o++) {
-            if (q.options[o] && !transliterations[`option_${i}_${o}`]) toFetch.push({ key: `option_${i}_${o}`, text: q.options[o] });
+      activity.questions.forEach((q, i) => {
+        add(`question_${i}`, q.question);
+        if (q.options) q.options.forEach((opt, o) => add(`option_${i}_${o}`, opt));
+      });
+    }
+
+    // New sections→items schema
+    if (activity.sections && Array.isArray(activity.sections)) {
+      activity.sections.forEach((section, si) => {
+        if (section.instruction_native) add(`s${si}_instruction`, section.instruction_native);
+        if (!section.items || !Array.isArray(section.items)) return;
+        section.items.forEach((item, ii) => {
+          const prefix = `s${si}_i${ii}`;
+          // Passages
+          if (item.passage_text) add(`${prefix}_passage`, item.passage_text);
+          if (item.passage_title) add(`${prefix}_passageTitle`, item.passage_title);
+          // Questions
+          if (item.question) add(`${prefix}_question`, item.question);
+          if (item.options && Array.isArray(item.options)) {
+            item.options.forEach((opt, oi) => add(`${prefix}_opt${oi}`, opt));
           }
-        }
-      }
+          // Transcript / dialogue
+          if (item.transcript_title) add(`${prefix}_transcriptTitle`, item.transcript_title);
+          if (item.dialogue && Array.isArray(item.dialogue)) {
+            item.dialogue.forEach((line, li) => {
+              if (line.text) add(`${prefix}_dial${li}`, line.text);
+            });
+          }
+          // Transliteration items
+          if (item.source_phrase) add(`${prefix}_source`, item.source_phrase);
+          // Speaking / writing prompts
+          if (item.prompt_native) add(`${prefix}_prompt`, item.prompt_native);
+          // Translation items
+          if (item.source_sentence) add(`${prefix}_srcSent`, item.source_sentence);
+        });
+      });
     }
 
     if (toFetch.length === 0) return;
 
     try {
-      const newTrans = {};
-      for (const item of toFetch) {
+      const promises = toFetch.map(async (item) => {
         try {
           const t = await transliterateText(item.text, language, 'IAST');
-          if (t) newTrans[item.key] = t;
+          if (t) return { key: item.key, t };
         } catch (err) {
           console.error('Error transliterating', item.key, err);
         }
-      }
+        return null;
+      });
+      
+      const results = await Promise.all(promises);
+      const newTrans = {};
+      results.forEach(res => {
+        if (res) newTrans[res.key] = res.t;
+      });
+
       if (Object.keys(newTrans).length > 0) {
         setTransliterations(prev => ({ ...prev, ...coerceTranslitMapToStrings(newTrans) }));
       }
@@ -117,6 +155,7 @@ export function useTransliteration(language, activity) {
       console.error('Error ensuring transliterations for activity:', err);
     }
   };
+
 
   // Auto-fetch transliterations when enabled
   useEffect(() => {
@@ -128,7 +167,7 @@ export function useTransliteration(language, activity) {
   // For Urdu, prefetch native-script renderings
   useEffect(() => {
     if (activity && language === 'urdu') {
-      // Fetch native script for story/passage if needed
+      // Legacy flat schema
       if (activity.story && !nativeScriptRenderings.story) {
         ensureNativeScriptForKey('story', activity.story);
       }
@@ -141,8 +180,6 @@ export function useTransliteration(language, activity) {
       if (activity.passage_name && !nativeScriptRenderings.passageName) {
         ensureNativeScriptForKey('passageName', activity.passage_name);
       }
-      
-      // Fetch native script for questions and options
       if (activity.questions && Array.isArray(activity.questions)) {
         activity.questions.forEach((q, i) => {
           if (q.question && !nativeScriptRenderings[`question_${i}`]) {
@@ -155,6 +192,53 @@ export function useTransliteration(language, activity) {
               }
             });
           }
+        });
+      }
+      // Sections schema: fetch Nastaliq for every native text field so we never show Devanagari
+      if (activity.sections && Array.isArray(activity.sections)) {
+        activity.sections.forEach((section, si) => {
+          if (section.instruction_native && !nativeScriptRenderings[`s${si}_instruction`]) {
+            ensureNativeScriptForKey(`s${si}_instruction`, section.instruction_native);
+          }
+          if (!section.items || !Array.isArray(section.items)) return;
+          section.items.forEach((item, ii) => {
+            const prefix = `s${si}_i${ii}`;
+            if (item.passage_text && !nativeScriptRenderings[`${prefix}_passage`]) {
+              ensureNativeScriptForKey(`${prefix}_passage`, item.passage_text);
+            }
+            if (item.passage_title && !nativeScriptRenderings[`${prefix}_passageTitle`]) {
+              ensureNativeScriptForKey(`${prefix}_passageTitle`, item.passage_title);
+            }
+            if (item.question && !nativeScriptRenderings[`${prefix}_question`]) {
+              ensureNativeScriptForKey(`${prefix}_question`, item.question);
+            }
+            if (item.options && Array.isArray(item.options)) {
+              item.options.forEach((opt, oi) => {
+                if (opt && !nativeScriptRenderings[`${prefix}_opt${oi}`]) {
+                  ensureNativeScriptForKey(`${prefix}_opt${oi}`, opt);
+                }
+              });
+            }
+            if (item.transcript_title && !nativeScriptRenderings[`${prefix}_transcriptTitle`]) {
+              ensureNativeScriptForKey(`${prefix}_transcriptTitle`, item.transcript_title);
+            }
+            if (item.dialogue && Array.isArray(item.dialogue)) {
+              item.dialogue.forEach((line, li) => {
+                if (line.text && !nativeScriptRenderings[`${prefix}_dial${li}`]) {
+                  ensureNativeScriptForKey(`${prefix}_dial${li}`, line.text);
+                }
+              });
+            }
+            if (item.source_phrase && !nativeScriptRenderings[`${prefix}_source`]) {
+              ensureNativeScriptForKey(`${prefix}_source`, item.source_phrase);
+            }
+            if (item.prompt_native && !nativeScriptRenderings[`${prefix}_prompt`]) {
+              ensureNativeScriptForKey(`${prefix}_prompt`, item.prompt_native);
+            }
+            if (item.source_sentence && !nativeScriptRenderings[`${prefix}_srcSent`]) {
+              ensureNativeScriptForKey(`${prefix}_srcSent`, item.source_sentence);
+            }
+          });
         });
       }
     }

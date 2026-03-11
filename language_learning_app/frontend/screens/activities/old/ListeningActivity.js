@@ -20,8 +20,8 @@ import { useAudio } from './shared/hooks/useAudio';
 import { useTTSProgress } from './shared/hooks/useTTSProgress';
 import { useActivityCompletion } from './shared/hooks/useActivityCompletion';
 import { VocabularyDictionary, APIDebugModal, AudioPlayer, TopicSelectionModal } from './shared/components';
-import TranslationToolModal from '../../components/TranslationToolModal';
 import TextImportModal from '../../components/TextImportModal';
+import { useTranslationJob } from '../../contexts/TranslationJobContext';
 import { ACTIVITY_COLORS } from './shared/constants';
 import { normalizeText } from './shared/utils/textProcessing';
 import { 
@@ -57,7 +57,7 @@ import {
  * Handles listening comprehension with audio playback and questions
  * Language-agnostic design with full transliteration, dictionary, and debug support
  */
-export default function ListeningActivity({ route, navigation }) {
+export default function ListeningActivity({ route, navigation, themeColor }) {
   const insets = useSafeAreaInsets();
   const { activityId, fromHistory, activityData: routeActivityData } = route.params || {};
   const { selectedLanguage: ctxLanguage } = useContext(LanguageContext);
@@ -73,6 +73,7 @@ export default function ListeningActivity({ route, navigation }) {
   const audio = useAudio();
   const ttsProgress = useTTSProgress(activityData.sessionId);  // Real-time TTS progress
   const { complete } = useActivityCompletion(language, 'listening');
+  const { openModalWithPrefill, closeModal } = useTranslationJob();
 
   // Listening-specific state
   const [selectedOptions, setSelectedOptions] = useState({});
@@ -85,7 +86,6 @@ export default function ListeningActivity({ route, navigation }) {
   const [speakerProfileExpanded, setSpeakerProfileExpanded] = useState(false);
   const [dialogueExpanded, setDialogueExpanded] = useState(true);
   const [showTopicModal, setShowTopicModal] = useState(!fromHistory);
-  const [showTranslationModal, setShowTranslationModal] = useState(false);
   const [showImportModal, setShowImportModal] = useState(false);
   
   // Listen to All functionality
@@ -93,7 +93,7 @@ export default function ListeningActivity({ route, navigation }) {
   const listenToAllStartIndexRef = useRef(null);
   const wasPlayingRef = useRef(false);  // Track if audio was playing before
 
-  const colors = ACTIVITY_COLORS.listening;
+  const colors = themeColor || ACTIVITY_COLORS.listening;
   const paragraphScrollViewRef = useRef(null);
   const [ttsComplete, setTtsComplete] = useState(false);
 
@@ -747,7 +747,11 @@ export default function ListeningActivity({ route, navigation }) {
           {/* Highlight vocab toggle retained (no color palette icon) */}
           <TouchableOpacity
             style={styles.toggleButton}
-            onPress={() => setShowTranslationModal(true)}
+            onPress={() => openModalWithPrefill({
+          language: language || 'kannada',
+          prefillText: (activityData.activity?.paragraphs || []).map(p => p.text || p.content || '').join(' '),
+          onMakeVocabCards: () => { closeModal(); setShowImportModal(true); },
+        })}
           >
             <Ionicons name="language" size={20} color="#FFFFFF" />
           </TouchableOpacity>
@@ -1593,18 +1597,6 @@ export default function ListeningActivity({ route, navigation }) {
           </View>
         )}
       </ScrollView>
-
-      {/* Translation Tool Modal */}
-      <TranslationToolModal
-        visible={showTranslationModal}
-        onClose={() => setShowTranslationModal(false)}
-        language={language}
-        prefillText={(activityData.activity?.paragraphs || []).map(p => p.text || p.content || '').join(' ')}
-        onMakeVocabCards={(text) => {
-          setShowTranslationModal(false);
-          setShowImportModal(true);
-        }}
-      />
 
       {/* Import Vocab Modal — pre-filled with listening transcript (paragraphs or dialogue or passage) */}
       <TextImportModal

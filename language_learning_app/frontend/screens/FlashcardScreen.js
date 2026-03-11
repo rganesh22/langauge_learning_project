@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef, useCallback, useMemo, useContext } 
 import {
   View,
   Text,
+  TextInput,
   StyleSheet,
   Animated,
   PanResponder,
@@ -297,6 +298,9 @@ export default function FlashcardScreen({ route, navigation }) {
   const [studyMode, setStudyMode] = useState(routeStudyMode); // null = picker, 'reviews', 'new', 'all', 'deck'
   const [activeDeckId, setActiveDeckId] = useState(routeDeckId); // set when studyMode='deck'
   const [activeDeckName, setActiveDeckName] = useState(routeDeckName || ''); // display label in header
+  const [renameModalVisible, setRenameModalVisible] = useState(false);
+  const [renameInput, setRenameInput] = useState('');
+  const [renaming, setRenaming] = useState(false);
   const [deckStartMode, setDeckStartMode] = useState(route.params?.deckStartMode || 'mixed');
 
   // Imported decks for the picker
@@ -1862,7 +1866,7 @@ export default function FlashcardScreen({ route, navigation }) {
                 {deleteDeckList.map((d) => {
                   const langMeta = availableLanguages?.find((l) => l.code === d.language) || { name: d.language };
                   const selected = deleteDeckSelectedIds.has(d.id);
-                  const cardBg = selected ? '#EFF6FF' : '#F5F5F5';
+                  const cardBg = selected ? '#EFF6FF' : '#FFFFFF';
                   const borderColor = selected ? '#3B82F6' : 'transparent';
                   return (
                     <TouchableOpacity
@@ -1948,7 +1952,7 @@ export default function FlashcardScreen({ route, navigation }) {
               {availableLanguages.map((lang) => {
                 const isSelected = language === lang.code;
                 const langStats = allLanguagesSrsStats[lang.code] || { new_count: 0, due_count: 0 };
-                const cardBg = isSelected ? '#EFF6FF' : '#F5F5F5';
+                const cardBg = isSelected ? '#EFF6FF' : '#FFFFFF';
                 const borderColor = isSelected ? '#3B82F6' : 'transparent';
                 const nameColor = isSelected ? '#2563EB' : '#1A1A1A';
                 const nativeColor = isSelected ? '#2563EB' : '#666666';
@@ -2085,7 +2089,7 @@ export default function FlashcardScreen({ route, navigation }) {
               {availableLanguages.map((lang) => {
                 const isSelected = language === lang.code;
                 const langStats = allLanguagesSrsStats[lang.code] || { new_count: 0, due_count: 0 };
-                const cardBg = isSelected ? '#EFF6FF' : '#F5F5F5';
+                const cardBg = isSelected ? '#EFF6FF' : '#FFFFFF';
                 const borderColor = isSelected ? '#3B82F6' : 'transparent';
                 const nameColor = isSelected ? '#2563EB' : '#1A1A1A';
                 const nativeColor = isSelected ? '#2563EB' : '#666666';
@@ -2153,7 +2157,62 @@ export default function FlashcardScreen({ route, navigation }) {
   if (!currentWord) {
     // Get localized text
     const localizedText = FLASHCARD_LOCALIZATION[language] || FLASHCARD_LOCALIZATION.tamil;
-    
+
+    // In deck mode, words start empty until loadDeckWords completes. Show loading instead of "finished".
+    if (studyMode === 'deck' && words.length === 0 && loading) {
+      return (
+        <View style={styles.container}>
+          <View style={[styles.header, { paddingTop: insets.top + 8 }]}>
+            <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+              <Ionicons name="arrow-back" size={24} color="#FFFFFF" />
+            </TouchableOpacity>
+            <View style={styles.headerTitleContainer}>
+              <View style={styles.headerTitleRow}>
+                <SafeText style={styles.headerTitle} numberOfLines={1}>{activeDeckName || localizedText.headerTitle.text}</SafeText>
+                <TouchableOpacity onPress={openTutor} style={styles.tutorIconBtn} hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}>
+                  <View style={{ alignItems: 'center' }}>
+                    <Ionicons name="school" size={20} color="#4A90E2" />
+                    <SafeText style={styles.tutorIconLabel}>Tutor</SafeText>
+                  </View>
+                </TouchableOpacity>
+              </View>
+            </View>
+            <View style={styles.headerRight}>
+              <TouchableOpacity onPress={() => setShowTransliterations(!showTransliterations)} style={styles.transliterationButton}>
+                <Text style={styles.transliterationIcon}>Aa</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.langPickerButton} onPress={() => { loadAllLanguagesSrsStats(); setLanguageMenuVisible(true); }}>
+                {(currentLanguage?.nativeChar || currentLanguage?.langCode) && (
+                  <View style={[styles.countryCodeBox, { backgroundColor: currentLanguage?.color || '#0FA896' }]}>
+                    {currentLanguage?.nativeChar ? (
+                      <SafeText style={[styles.nativeCharText, currentLanguage?.code === 'urdu' && { fontFamily: 'Noto Nastaliq Urdu' }]}>
+                        {currentLanguage.nativeChar}
+                      </SafeText>
+                    ) : (
+                      <SafeText style={styles.countryCodeText}>{currentLanguage?.langCode?.toUpperCase()}</SafeText>
+                    )}
+                  </View>
+                )}
+                <View style={styles.languageButtonContent}>
+                  <SafeText style={styles.languageName} numberOfLines={1}>{currentLanguage?.name}</SafeText>
+                  {currentLanguage?.nativeName ? (
+                    <SafeText style={[styles.languageNativeName, currentLanguage?.code === 'urdu' && { fontFamily: 'Noto Nastaliq Urdu', textAlign: 'left', writingDirection: 'ltr' }]} numberOfLines={1}>
+                      {currentLanguage.nativeName}
+                    </SafeText>
+                  ) : null}
+                </View>
+                <Ionicons name="chevron-down" size={16} color="#666" />
+              </TouchableOpacity>
+            </View>
+          </View>
+          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', padding: 24 }}>
+            <ActivityIndicator size="large" color="#14B8A6" />
+            <SafeText style={{ fontSize: 16, color: '#666', marginTop: 16 }}>Loading deck...</SafeText>
+          </View>
+        </View>
+      );
+    }
+
     return (
       <View style={styles.container}>
         <View style={[styles.header, { paddingTop: insets.top + 8 }]}>
@@ -2367,7 +2426,7 @@ export default function FlashcardScreen({ route, navigation }) {
               {availableLanguages.map((lang) => {
                 const isSelected = language === lang.code;
                 const langStats = allLanguagesSrsStats[lang.code] || { new_count: 0, due_count: 0 };
-                const cardBg = isSelected ? '#EFF6FF' : '#F5F5F5';
+                const cardBg = isSelected ? '#EFF6FF' : '#FFFFFF';
                 const borderColor = isSelected ? '#3B82F6' : 'transparent';
                 const nameColor = isSelected ? '#2563EB' : '#1A1A1A';
                 const nativeColor = isSelected ? '#2563EB' : '#666666';
@@ -2466,6 +2525,15 @@ export default function FlashcardScreen({ route, navigation }) {
         <View style={styles.headerTitleContainer}>
           <View style={styles.headerTitleRow}>
             <SafeText style={styles.headerTitle} numberOfLines={1}>{headerDisplayTitle}</SafeText>
+            {studyMode === 'deck' && activeDeckId ? (
+              <TouchableOpacity
+                onPress={() => { setRenameInput(activeDeckName); setRenameModalVisible(true); }}
+                style={{ padding: 6, marginLeft: 4 }}
+                hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+              >
+                <Ionicons name="pencil" size={18} color="#FFFFFF" />
+              </TouchableOpacity>
+            ) : null}
             <TouchableOpacity onPress={openTutor} style={styles.tutorIconBtn} hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}>
               <View style={{ alignItems: 'center' }}>
                 <Ionicons name="school" size={20} color="#4A90E2" />
@@ -2742,11 +2810,13 @@ export default function FlashcardScreen({ route, navigation }) {
               <SafeText style={[
                 styles.wordText,
                 (currentWord?.cardDirection !== 'english-to-native' && language === 'urdu' && currentWord?.nastaliq)
-                  ? { fontFamily: 'Noto Nastaliq Urdu', writingDirection: 'rtl' } : null,
+                  ? { fontFamily: 'Noto Nastaliq Urdu', textAlign: 'left', writingDirection: 'ltr' } : null,
               ]}>
-                {(currentWord?.cardDirection === 'english-to-native'
+                {((currentWord?.cardDirection === 'english-to-native'
                   ? currentWord?.english_word
-                  : (language === 'urdu' && currentWord?.nastaliq ? currentWord.nastaliq : currentWord?.translation)) || ''}
+                  : (language === 'urdu' && currentWord?.nastaliq ? currentWord.nastaliq : currentWord?.translation))) || ''}
+                {(currentWord?.cardDirection !== 'english-to-native' && (language === 'hindi' || language === 'urdu') && currentWord?.gender && /^[mf]$/i.test(String(currentWord.gender)))
+                  ? ` (${String(currentWord.gender).toLowerCase()})` : ''}
               </SafeText>
               {currentWord?.cardDirection === 'native-to-english' && showTransliterations && (transliterations[currentWord.id] || currentWord.transliteration) && (
                 <SafeText style={styles.transliterationText}>
@@ -2879,11 +2949,13 @@ export default function FlashcardScreen({ route, navigation }) {
               <SafeText style={[
                 styles.translationText,
                 (currentWord?.cardDirection === 'english-to-native' && language === 'urdu' && currentWord?.nastaliq)
-                  ? { fontFamily: 'Noto Nastaliq Urdu', writingDirection: 'rtl' } : null,
+                  ? { fontFamily: 'Noto Nastaliq Urdu', textAlign: 'left', writingDirection: 'ltr' } : null,
               ]}>
-                {(currentWord?.cardDirection === 'english-to-native'
+                {((currentWord?.cardDirection === 'english-to-native'
                   ? (language === 'urdu' && currentWord?.nastaliq ? currentWord.nastaliq : currentWord?.translation)
-                  : currentWord?.english_word) || ''}
+                  : currentWord?.english_word)) || ''}
+                {(currentWord?.cardDirection === 'english-to-native' && (language === 'hindi' || language === 'urdu') && currentWord?.gender && /^[mf]$/i.test(String(currentWord.gender)))
+                  ? ` (${String(currentWord.gender).toLowerCase()})` : ''}
               </SafeText>
               {currentWord?.cardDirection === 'english-to-native' && showTransliterations && (transliterations[currentWord.id] || currentWord.transliteration) && (
                 <SafeText style={styles.transliterationTextBack}>
@@ -3192,6 +3264,52 @@ export default function FlashcardScreen({ route, navigation }) {
                 </View>
               )}
             </ScrollView>
+          </TouchableOpacity>
+        </TouchableOpacity>
+      </Modal>
+
+      {/* Rename deck modal (when studying an imported deck) */}
+      <Modal visible={renameModalVisible} transparent animationType="fade" onRequestClose={() => setRenameModalVisible(false)}>
+        <TouchableOpacity activeOpacity={1} style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.5)', justifyContent: 'center', padding: 24 }} onPress={() => setRenameModalVisible(false)}>
+          <TouchableOpacity activeOpacity={1} onPress={() => {}} style={{ backgroundColor: '#FFF', borderRadius: 12, padding: 20 }}>
+            <Text style={{ fontSize: 16, fontWeight: '600', color: '#1A1A1A', marginBottom: 12 }}>Rename deck</Text>
+            <TextInput
+              style={{ borderWidth: 1, borderColor: '#E0E0E0', borderRadius: 8, paddingHorizontal: 12, paddingVertical: 10, fontSize: 15, color: '#333', marginBottom: 16 }}
+              value={renameInput}
+              onChangeText={setRenameInput}
+              placeholder="Deck name"
+              placeholderTextColor="#999"
+              autoFocus
+            />
+            <View style={{ flexDirection: 'row', justifyContent: 'flex-end', gap: 12 }}>
+              <TouchableOpacity onPress={() => setRenameModalVisible(false)} style={{ paddingVertical: 8, paddingHorizontal: 16 }}>
+                <Text style={{ fontSize: 15, color: '#666' }}>Cancel</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={async () => {
+                  const name = (renameInput || '').trim();
+                  if (!name || !activeDeckId) return;
+                  setRenaming(true);
+                  try {
+                    await fetch(`${API_BASE_URL}/api/vocab/decks/${activeDeckId}`, {
+                      method: 'PUT',
+                      headers: { 'Content-Type': 'application/json' },
+                      body: JSON.stringify({ name }),
+                    });
+                    setActiveDeckName(name);
+                    setRenameModalVisible(false);
+                  } catch (e) {
+                    console.error('Error renaming deck:', e);
+                  } finally {
+                    setRenaming(false);
+                  }
+                }}
+                disabled={renaming || !(renameInput || '').trim()}
+                style={{ paddingVertical: 8, paddingHorizontal: 16 }}
+              >
+                {renaming ? <ActivityIndicator size="small" color="#14B8A6" /> : <Text style={{ fontSize: 15, fontWeight: '600', color: '#14B8A6' }}>Save</Text>}
+              </TouchableOpacity>
+            </View>
           </TouchableOpacity>
         </TouchableOpacity>
       </Modal>
@@ -4197,9 +4315,9 @@ const styles = StyleSheet.create({
     padding: 12,
     borderRadius: 10,
     marginBottom: 8,
-    backgroundColor: '#F5F5F5',
+    backgroundColor: '#FFFFFF',
     borderWidth: 1,
-    borderColor: 'transparent',
+    borderColor: '#E8E8E8',
   },
   langModalOptionSelected: {
     backgroundColor: '#F0F7FF',

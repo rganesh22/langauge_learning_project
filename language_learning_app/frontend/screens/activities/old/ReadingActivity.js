@@ -22,13 +22,13 @@ import { ACTIVITY_COLORS } from './shared/constants';
 import { normalizeText, normalizeField } from './shared/utils/textProcessing';
 import { getQuestionLabel, getSubmitLabel, getShowAnswersLabel, getHideAnswersLabel, getReadingHeaderLabel, getYourScoreLabel, getCorrectAnswersLabel, getImportVocabFromStoryLabel } from '../../constants/ui_labels';
 import TextImportModal from '../../components/TextImportModal';
-import TranslationToolModal from '../../components/TranslationToolModal';
+import { useTranslationJob } from '../../contexts/TranslationJobContext';
 
 /**
  * ReadingActivity Component
  * Handles reading comprehension activities with story and multiple-choice questions
  */
-export default function ReadingActivity({ route, navigation }) {
+export default function ReadingActivity({ route, navigation, themeColor }) {
   const insets = useSafeAreaInsets();
   const { activityId, fromHistory, activityData: routeActivityData } = route.params || {};
   const { selectedLanguage: ctxLanguage } = useContext(LanguageContext);
@@ -42,6 +42,7 @@ export default function ReadingActivity({ route, navigation }) {
   const transliteration = useTransliteration(language, activityData.activity);
   const dictionary = useDictionary(language);
   const { complete } = useActivityCompletion(language, 'reading');
+  const { openModalWithPrefill, closeModal } = useTranslationJob();
 
   // Reading-specific state
   const [selectedOptions, setSelectedOptions] = useState({});
@@ -51,9 +52,8 @@ export default function ReadingActivity({ route, navigation }) {
   const [highlightVocab, setHighlightVocab] = useState(false);
   const [showTopicModal, setShowTopicModal] = useState(!fromHistory); // Show modal for new activities
   const [showImportModal, setShowImportModal] = useState(false);
-  const [showTranslationModal, setShowTranslationModal] = useState(false);
 
-  const colors = ACTIVITY_COLORS.reading;
+  const colors = themeColor || ACTIVITY_COLORS.reading;
 
   const handleTopicSelection = (selectedTopic) => {
     setShowTopicModal(false);
@@ -294,7 +294,11 @@ export default function ReadingActivity({ route, navigation }) {
           {/* Highlight vocab toggle retained (no color palette icon) */}
           <TouchableOpacity
             style={styles.toggleButton}
-            onPress={() => setShowTranslationModal(true)}
+            onPress={() => openModalWithPrefill({
+          language: language || 'kannada',
+          prefillText: activityData.activity?.story || '',
+          onMakeVocabCards: () => { closeModal(); setShowImportModal(true); },
+        })}
           >
             <Ionicons name="language" size={20} color="#FFFFFF" />
           </TouchableOpacity>
@@ -614,18 +618,6 @@ export default function ReadingActivity({ route, navigation }) {
         initialSearchQuery={dictionary.initialSearchQuery}
         dictionaryLanguage={dictionary.dictionaryLanguage}
         setDictionaryLanguage={dictionary.setDictionaryLanguage}
-      />
-
-      {/* Translation Tool Modal */}
-      <TranslationToolModal
-        visible={showTranslationModal}
-        onClose={() => setShowTranslationModal(false)}
-        language={language}
-        prefillText={activityData.activity?.story || ''}
-        onMakeVocabCards={() => {
-          setShowTranslationModal(false);
-          setShowImportModal(true);
-        }}
       />
 
       {/* Import Vocab Modal — pre-filled with story text */}

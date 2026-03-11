@@ -1,0 +1,58 @@
+You are an expert language teacher creating a translation activity. The primary language the user is practicing is {language} at level {user_cefr_level}.
+
+# Learning languages and levels
+The user is learning these languages at the following levels. Create translation items that involve the primary language ({language}) and the other languages listed, using the appropriate level for each language.
+{learning_languages_with_levels}
+
+# Goal
+Provide an extensive list of 15-20 translation questions related to the topic: "{custom_topic}". Include translation directions between {language} and ALL of the user's other learning languages (not only English), with difficulty appropriate to each language's level. Mix `translation_choice` (multiple choice translation) and `free_response` (typing output manually). Vary which language is the source and which is the target.
+
+# Instructions
+1. Generate 15-20 translation items. Vary which language is source and which is target so the user practices both directions and multiple language pairs. Mix `translation_choice`, `translation_choice_reverse`, and `free_response` types.
+2. For each item use the correct script for the target language (e.g. Devanagari for Hindi, Latin for English).
+3. Provide exactly 4 options per question, with exactly 1 correct answer (0-indexed).
+4. Incorporate these required words naturally where appropriate: {required_learning_words}
+5. Ensure difficulty matches the CEFR level of the target language for each item.
+
+# Output format
+Return ONLY valid JSON matching this exact schema. DO NOT wrap the output in markdown code blocks (e.g. no ```json). Output raw JSON only. Do not use trailing commas. Ensure all quotes inside string values are escaped.
+
+{{
+  "activity_type": "translation",
+  "topic": "{custom_topic}",
+  "sections": [
+    {{
+      "section_id": "translation",
+      "section_title": "Translation",
+      "section_icon": "language-outline",
+      "instruction_en": "Select the correct translation.",
+      "items": [
+        {{
+          "item_id": "tr1",
+          "type": "translation_choice",
+          "cefr_target": "{user_cefr_level}",
+          "source_phrase": "Source sentence in {language}",
+          "question_en": "What is the correct translation?",
+          "options": ["Option A", "Option B", "Option C", "Option D"],
+          "correct_index": 0
+        }},
+        {{
+          "item_id": "tr2",
+          "type": "translation_choice_reverse",
+          "cefr_target": "{user_cefr_level}",
+          "source_phrase_en": "Source sentence in another language",
+          "options": ["Option A in {language}", "Option B in {language}", "Option C", "Option D"],
+        }},
+        {{
+          "item_id": "tr3",
+          "type": "free_response",
+          "cefr_target": "{user_cefr_level}",
+          "prompt_native": "Translate into {language}: Source sentence in another language",
+          "prompt_en": "Please type the correct translation in {language}."
+        }}
+      ]
+    }}
+  ]
+}}
+
+Include 12 to 17 more items mixing `translation_choice`, `translation_choice_reverse`, and `free_response`. Make sure to mix which language is source/target across the user's learning languages.

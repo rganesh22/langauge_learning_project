@@ -158,7 +158,7 @@ export const SEARCH_VOCABULARY_LABELS = {
   tamil: 'சொற்களஞ்சியம் தேடுக...',
   english: 'Search vocabulary...',
   hindi: 'शब्दावली खोजें...',
-  urdu: 'शब्दावली तलाश करें...', // Devanagari - will be transliterated to Nastaliq
+  urdu: 'الفاظ تلاش کریں...', // Nastaliq — search vocabulary
 };
 
 export const SPEAKER_NAME_LABELS = {

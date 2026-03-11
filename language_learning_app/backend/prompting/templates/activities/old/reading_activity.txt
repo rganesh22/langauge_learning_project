@@ -1,0 +1,46 @@
+Generate a {language} reading activity with a story and comprehension questions.
+
+{script_requirement}
+
+IMPORTANT: The user's current CEFR level is {user_cefr_level}. Tailor the story complexity, vocabulary, and sentence structures to be appropriate for this level.
+
+{type_instruction}
+
+Topic: {selected_topic}
+
+{learned_section}
+
+{learning_section}
+
+Instructions:
+1. Write a story in {language_for_template} script (Kannada: ಕನ್ನಡ, Devanagari: देवनागरी) that is engaging and appropriate for {user_cefr_level} level language learners. Adjust complexity, sentence length, and vocabulary difficulty to match this level.
+2. {usage_instruction}
+3. {learning_instruction}
+4. The story should be 3-5 paragraphs long.
+5. After the story, create 5 multiple-choice comprehension questions in {language_for_template} script. Make questions appropriate for {user_cefr_level} level.
+6. Each question should have 4 options in {language_for_template} script, with one correct answer.
+7. Generate a creative, unique name for this story in {language_for_template} script.
+8. Ensure that there is ABSOLUTELY ZERO English in the generated text, not even in parentheses to define words.
+
+CRITICAL: Return ONLY valid JSON. All quotes inside string values must be escaped with backslash (\\"). Do not include any markdown formatting, code blocks, or explanations.
+
+Return ONLY valid JSON in this exact format:
+{{
+    "story_name": "story name in {language_for_template} script",
+    "story": "the story text in {language_for_template} script, split into paragraphs with \\n\\n between paragraphs. IMPORTANT: If the story contains any double quotes, escape them with \\\\\"",
+    "questions": [
+        {{
+            "question": "question text in {language_for_template} script. IMPORTANT: If the question contains any double quotes, escape them with \\\\\"",
+            "options": ["option1 in {language_for_template}", "option2 in {language_for_template}", "option3 in {language_for_template}", "option4 in {language_for_template}"],
+            "correct": 0
+        }},
+        ... (4 more questions)
+    ]
+}}
+
+IMPORTANT JSON RULES:
+- All string values must be enclosed in double quotes
+- Any double quotes inside string values must be escaped as \\"
+- Use \\n for newlines within strings
+- No trailing commas
+- No comments or explanations outside the JSON

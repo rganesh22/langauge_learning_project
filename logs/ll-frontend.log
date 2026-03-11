@@ -436,3 +436,134 @@ Web Bundled 464ms (node_modules/expo/AppEntry.js)
 Web Bundled 499ms (node_modules/expo/AppEntry.js)
 Web Bundled 47ms (node_modules/expo/AppEntry.js)
 Web Bundled 637ms (node_modules/expo/AppEntry.js)
+Web Bundled 506ms (node_modules/expo/AppEntry.js)
+Web Bundled 27ms (node_modules/expo/AppEntry.js)
+Web Bundled 42ms (node_modules/expo/AppEntry.js)
+Web Bundled 679ms (node_modules/expo/AppEntry.js)
+Web Bundled 631ms (node_modules/expo/AppEntry.js)
+Web Bundled 42ms (node_modules/expo/AppEntry.js)
+Web Bundled 146ms (node_modules/expo/AppEntry.js)
+Web Bundled 49ms (node_modules/expo/AppEntry.js)
+Web Bundled 47ms (node_modules/expo/AppEntry.js)
+Web Bundled 23ms (node_modules/expo/AppEntry.js)
+Web Bundled 39ms (node_modules/expo/AppEntry.js)
+Web Bundled 141ms (node_modules/expo/AppEntry.js)
+Web Bundled 47ms (node_modules/expo/AppEntry.js)
+Web Bundled 43ms (node_modules/expo/AppEntry.js)
+Web Bundled 42ms (node_modules/expo/AppEntry.js)
+Web Bundled 127ms (node_modules/expo/AppEntry.js)
+Web Bundled 632ms (node_modules/expo/AppEntry.js)
+Web Bundled 1306ms (node_modules/expo/AppEntry.js)
+Web Bundled 539ms (node_modules/expo/AppEntry.js)
+Web Bundling failed 438ms (node_modules/expo/AppEntry.js)
+Unable to resolve "expo-clipboard" from "components/TutorChatButton.js"
+Web Bundling failed 20ms (node_modules/expo/AppEntry.js)
+Unable to resolve "expo-clipboard" from "components/TutorChatButton.js"
+Web Bundled 135ms (node_modules/expo/AppEntry.js)
+Web Bundled 44ms (node_modules/expo/AppEntry.js)
+Web Bundled 655ms (node_modules/expo/AppEntry.js)
+Web Bundled 68ms (node_modules/expo/AppEntry.js)
+Web Bundled 587ms (node_modules/expo/AppEntry.js)
+Web Bundled 737ms (node_modules/expo/AppEntry.js)
+Web Bundled 45ms (node_modules/expo/AppEntry.js)
+Web Bundled 777ms (node_modules/expo/AppEntry.js)
+Web Bundling failed 1024ms (node_modules/expo/AppEntry.js)
+error: SyntaxError: /Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/frontend/components/TranslationToolModal.js: Expected corresponding JSX closing tag for <View>. (1413:20)
+
+  1411 |                       </Text>
+  1412 |                         </View>
+> 1413 |                     </TouchableOpacity>
+       |                     ^
+  1414 |                   );
+  1415 |                 }}
+  1416 |               />
+transform[stderr]: Missing transform.routerRoot option in Metro bundling request, falling back to `app` as routes directory.
+transform[stderr]: Missing transform.routerRoot option in Metro bundling request, falling back to `app` as routes directory.
+transform[stderr]: Missing transform.routerRoot option in Metro bundling request, falling back to `app` as routes directory.
+transform[stderr]: Missing transform.routerRoot option in Metro bundling request, falling back to `app` as routes directory.
+transform[stderr]: Missing transform.routerRoot option in Metro bundling request, falling back to `app` as routes directory.
+transform[stderr]: Missing transform.routerRoot option in Metro bundling request, falling back to `app` as routes directory.
+transform[stderr]: Missing transform.routerRoot option in Metro bundling request, falling back to `app` as routes directory.
+transform[stderr]: Missing transform.routerRoot option in Metro bundling request, falling back to `app` as routes directory.
+transform[stderr]: Missing transform.routerRoot option in Metro bundling request, falling back to `app` as routes directory.
+Web Bundling failed 2643ms (node_modules/expo/AppEntry.js)
+error: SyntaxError: /Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/frontend/components/TranslationToolModal.js: Expected corresponding JSX closing tag for <View>. (1413:20)
+
+  1411 |                       </Text>
+  1412 |                         </View>
+> 1413 |                     </TouchableOpacity>
+       |                     ^
+  1414 |                   );
+  1415 |                 }}
+  1416 |               />
+Web Bundled 676ms (node_modules/expo/AppEntry.js)
+Web Bundled 830ms (node_modules/expo/AppEntry.js)
+Web Bundled 47ms (node_modules/expo/AppEntry.js)
+Web Bundled 39ms (node_modules/expo/AppEntry.js)
+Web Bundled 45ms (node_modules/expo/AppEntry.js)
+Web Bundled 194ms (node_modules/expo/AppEntry.js)
+Web Bundled 45ms (node_modules/expo/AppEntry.js)
+Web Bundled 287ms (node_modules/expo/AppEntry.js)
+Web Bundled 380ms (node_modules/expo/AppEntry.js)
+Web Bundled 399ms (node_modules/expo/AppEntry.js)
+Web Bundled 508ms (node_modules/expo/AppEntry.js)
+Web Bundling failed 1139ms (node_modules/expo/AppEntry.js)
+Unable to resolve "../../components/SafeText" from "screens/activities/old/TransliterationActivity.js"
+Web Bundled 416ms (node_modules/expo/AppEntry.js)
+Web Bundled 236ms (node_modules/expo/AppEntry.js)
+Web Bundled 522ms (node_modules/expo/AppEntry.js)
+Web Bundled 45ms (node_modules/expo/AppEntry.js)
+Web Bundled 54ms (node_modules/expo/AppEntry.js)
+Web Bundled 156ms (node_modules/expo/AppEntry.js)
+Web Bundled 139ms (node_modules/expo/AppEntry.js)
+Web Bundled 49ms (node_modules/expo/AppEntry.js)
+Web Bundled 93ms (node_modules/expo/AppEntry.js)
+Web Bundled 146ms (node_modules/expo/AppEntry.js)
+Web Bundled 41ms (node_modules/expo/AppEntry.js)
+Web Bundled 66ms (node_modules/expo/AppEntry.js)
+Web Bundled 47ms (node_modules/expo/AppEntry.js)
+Web Bundled 59ms (node_modules/expo/AppEntry.js)
+Web Bundled 42ms (node_modules/expo/AppEntry.js)
+Web Bundled 43ms (node_modules/expo/AppEntry.js)
+Web Bundled 122ms (node_modules/expo/AppEntry.js)
+Web Bundled 121ms (node_modules/expo/AppEntry.js)
+Web Bundled 135ms (node_modules/expo/AppEntry.js)
+Web Bundled 130ms (node_modules/expo/AppEntry.js)
+Web Bundled 211ms (node_modules/expo/AppEntry.js)
+Web Bundled 46ms (node_modules/expo/AppEntry.js)
+Web Bundled 460ms (node_modules/expo/AppEntry.js)
+Web Bundled 246ms (node_modules/expo/AppEntry.js)
+Web Bundled 40ms (node_modules/expo/AppEntry.js)
+Web Bundled 53ms (node_modules/expo/AppEntry.js)
+Web Bundled 206ms (node_modules/expo/AppEntry.js)
+Web Bundled 226ms (node_modules/expo/AppEntry.js)
+Web Bundled 79ms (node_modules/expo/AppEntry.js)
+Web Bundled 173ms (node_modules/expo/AppEntry.js)
+Web Bundled 60ms (node_modules/expo/AppEntry.js)
+Web Bundled 56ms (node_modules/expo/AppEntry.js)
+Web Bundled 230ms (node_modules/expo/AppEntry.js)
+Web Bundled 221ms (node_modules/expo/AppEntry.js)
+Web Bundled 221ms (node_modules/expo/AppEntry.js)
+Web Bundled 67ms (node_modules/expo/AppEntry.js)
+Web Bundled 52ms (node_modules/expo/AppEntry.js)
+Starting project at /Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/frontend
+› Port 8081 is running this app in another window
+  /Users/raghavganesh/Documents/Code Projects/Language Learning Project/language_learning_app/frontend (pid 4420)
+Input is required, but 'npx expo' is in non-interactive mode.
+Required input:
+> Use port 8083 instead?
+› Skipping dev server
+Web Bundled 70ms (node_modules/expo/AppEntry.js)
+Web Bundled 282ms (node_modules/expo/AppEntry.js)
+Web Bundled 277ms (node_modules/expo/AppEntry.js)
+Web Bundled 65ms (node_modules/expo/AppEntry.js)
+Web Bundled 282ms (node_modules/expo/AppEntry.js)
+Web Bundled 259ms (node_modules/expo/AppEntry.js)
+Web Bundled 255ms (node_modules/expo/AppEntry.js)
+Web Bundled 101ms (node_modules/expo/AppEntry.js)
+Web Bundled 38ms (node_modules/expo/AppEntry.js)
+Web Bundled 186ms (node_modules/expo/AppEntry.js)
+Web Bundled 48ms (node_modules/expo/AppEntry.js)
+Web Bundled 225ms (node_modules/expo/AppEntry.js)
+Web Bundled 248ms (node_modules/expo/AppEntry.js)
+Web Bundled 153ms (node_modules/expo/AppEntry.js)

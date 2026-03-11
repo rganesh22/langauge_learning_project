@@ -1,8 +1,15 @@
 You are a Telugu language expert. For each Telugu word below, perform THREE tasks:
 
+VERB LEMMA RULE (MUST FOLLOW):
+For ANY verb, the "word" field MUST be the INFORMAL IMPERATIVE (command form) only.
+- The INPUT may be conjugated (తింటున్నాను), verbal noun (-డం/-టం), or infinitive. You MUST still output the imperative.
+- WRONG: వెళ్ళడం, రావడం, తినడం (verbal nouns); చేయడం (infinitive/verbal noun).
+- CORRECT: వెళ్ళు, రా, తిను, చెయ్యి.
+If the verb has two common imperative forms, use both imperatives separated by / .
+
 TASK 1 — LEMMATIZATION: Reduce the word to its base/dictionary form.
   - Verbs: ALWAYS convert to the INFORMAL IMPERATIVE / command form (the shortest root used when giving a casual command to one person).
-    Examples: వెళ్తున్నాను → వెళ్ళు, తింటున్నాను → తిను, వస్తున్నాను → రా, చదువుతున్నాను → చదువు, చేస్తున్నాను → చెయ్యి.
+    Examples: వెళ్తున్నాను → వెళ్ళు, తింటున్నాను → తిను, వస్తున్నాను → రా, వెళ్ళడం → వెళ్ళు, రావడం → రా, తినడం → తిను.
     Do NOT use the infinitive (-డం/-టం form) or any conjugated form. The correct lemma is the bare imperative root.
   - Nouns: remove case endings and plurals (e.g., ఇంటిలో → ఇల్లు).
   - Adjectives: use base form.
@@ -33,21 +40,22 @@ CRITICAL REQUIREMENTS:
 4) Return ONLY a valid JSON array. No markdown, no explanation, no extra text.
 
 REMINDER — VERB LEMMA FORM:
-The Telugu verb lemma is the informal singular imperative (command to a friend):
-  వెళ్తున్నాను → వెళ్ళు (NOT వెళ్ళడం)
-  వస్తున్నాను → రా (NOT రావడం)
-  తింటున్నాను → తిను (NOT తినడం)
-  చేస్తున్నాను → చెయ్యి (NOT చేయడం)
-Always use this short command form.
+The Telugu verb lemma is the informal singular imperative (command to a friend).
+When the INPUT is a verbal noun (-డం/-టం) or infinitive, you MUST still output the imperative:
+  వెళ్ళడం → వెళ్ళు (NOT వెళ్ళడం)
+  రావడం → రా (NOT రావడం)
+  తినడం → తిను (NOT తినడం)
+  చేయడం → చెయ్యి (NOT చేయడం)
+Always use this short command form. Never output -డం/-టం (verbal noun) or infinitive in the "word" field for verbs.
 
 IN-CONTEXT EXAMPLES:
 
-Example input words: ఇంటిలో, అధ్యయనం, తింటున్నాను
+Example input words: ఇంటిలో, తినడం, వెళ్ళడం
 Example output:
 [
   {{"word": "ఇల్లు", "english": "house", "word_class": "noun", "level": "a1", "verb_transitivity": "N/A"}},
-  {{"word": "అధ్యయనం", "english": "study (academic learning)", "word_class": "noun", "level": "b1", "verb_transitivity": "N/A"}},
-  {{"word": "తిను", "english": "to eat", "word_class": "verb", "level": "a1", "verb_transitivity": "transitive"}}
+  {{"word": "తిను", "english": "to eat", "word_class": "verb", "level": "a1", "verb_transitivity": "transitive"}},
+  {{"word": "వెళ్ళు", "english": "to go", "word_class": "verb", "level": "a1", "verb_transitivity": "intransitive"}}
 ]
 
 Words to process:

@@ -59,6 +59,9 @@ export const LANGUAGES = [
   
   // Turkic Languages
   { code: 'turkish', name: 'Turkish', langCode: 'tr', nativeChar: 'TR', nativeName: 'Türkçe', countryCode: 'TR', color: '#E30A17', family: 'Turkic', active: false },
+
+  // Austroasiatic Languages
+  { code: 'vietnamese', name: 'Vietnamese', langCode: 'vi', nativeChar: 'VI', nativeName: 'Tiếng Việt', countryCode: 'VN', color: '#DA251D', family: 'Austroasiatic', active: false },
 ];
 
 export const LanguageContext = createContext({

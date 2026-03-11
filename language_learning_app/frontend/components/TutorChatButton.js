@@ -3,7 +3,7 @@
  * Floating button (bottom-right) to open a chat with the tutor AI.
  * Hidden when another popup is open or when on Placement Test.
  */
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useRef } from 'react';
 import {
   View,
   Text,
@@ -16,13 +16,15 @@ import {
   Platform,
   ActivityIndicator,
   ScrollView,
+  Animated,
+  Alert,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { LanguageContext } from '../contexts/LanguageContext';
 import { useNavigationState } from '@react-navigation/native';
-import TextImportModal from './TextImportModal';
-import TranslationToolModal from './TranslationToolModal';
+import Markdown from 'react-native-markdown-display';
+import { setStringAsync as clipboardSetString } from '../utils/clipboard';
 import { useTutor } from '../contexts/TutorContext';
 
 const API_BASE_URL = __DEV__ ? 'http://localhost:9090' : 'http://localhost:9090';
@@ -37,6 +39,151 @@ const COLORS = {
   assistantBg: '#F5F5F5',
   userBg: '#4A90E2',
 };
+
+/** Preprocess LLM output so markdown parses correctly: ensure tables/lists have preceding newlines and table alignment row is valid. */
+function preprocessTutorMarkdown(content) {
+  if (typeof content !== 'string' || !content.trim()) return content;
+  let s = content;
+  // Ensure a blank line before the *first* table row only (so we don't break consecutive table rows)
+  s = s.replace(/(^|\n)([^\n]+)\n(\|[^\n]*)/gm, (_, before, prev, pipeLine) => {
+    if (/^\s*\|/.test(prev.trim())) return before + prev + '\n' + pipeLine; // prev is table row, keep consecutive
+    return before + prev + '\n\n' + pipeLine;
+  });
+  // Normalize table alignment row: use ASCII hyphen, ensure at least 2 dashes per column (markdown-it expects /^:?-+:?$/)
+  s = s.replace(/^\s*\|[\s|:\t-]+\|\s*$/gm, (line) => {
+    const cells = line.split('|').map(c => c.trim().replace(/\u2013|\u2014|\u2212/g, '-'));
+    const out = cells.filter(Boolean).map((t) => {
+      if (!/^:?-+:?$/.test(t)) return t;
+      if (t.length >= 2) return t;
+      if (t === ':-') return ':--';
+      if (t === '-:') return '--:';
+      return '---';
+    });
+    return out.length ? '| ' + out.join(' | ') + ' |' : line;
+  });
+  // Trim leading spaces from table rows (4+ spaces → code block in markdown-it) so table is recognized
+  s = s.replace(/(^|\n)([ \t]{4,})(\|[^\n]*)/g, (_, before, spaces, rest) => before + rest.replace(/^\s*/, ''));
+  return s;
+}
+
+/** Markdown styles for assistant (tutor) message bubbles — supports tables, lists, code, etc. */
+const tutorMarkdownStyles = {
+  body: { fontSize: 15, color: COLORS.text, lineHeight: 22 },
+  heading1: { fontSize: 20, fontWeight: '700', color: COLORS.text, marginTop: 12, marginBottom: 8 },
+  heading2: { fontSize: 18, fontWeight: '700', color: COLORS.text, marginTop: 10, marginBottom: 6 },
+  heading3: { fontSize: 16, fontWeight: '600', color: COLORS.text, marginTop: 8, marginBottom: 4 },
+  heading4: { fontSize: 15, fontWeight: '600', color: COLORS.text, marginTop: 6, marginBottom: 4 },
+  heading5: { fontSize: 14, fontWeight: '600', color: COLORS.text, marginTop: 4, marginBottom: 2 },
+  heading6: { fontSize: 13, fontWeight: '600', color: COLORS.text, marginTop: 4, marginBottom: 2 },
+  paragraph: { marginTop: 0, marginBottom: 8 },
+  strong: { fontWeight: '700', color: COLORS.text },
+  em: { fontStyle: 'italic' },
+  s: { textDecorationLine: 'line-through' },
+  blockquote: {
+    backgroundColor: 'rgba(0,0,0,0.06)',
+    borderLeftWidth: 4,
+    borderLeftColor: COLORS.primary,
+    marginVertical: 8,
+    paddingVertical: 6,
+    paddingHorizontal: 10,
+  },
+  code_inline: {
+    backgroundColor: 'rgba(0,0,0,0.08)',
+    paddingHorizontal: 6,
+    paddingVertical: 2,
+    borderRadius: 4,
+    fontFamily: Platform.OS === 'ios' ? 'Menlo' : 'monospace',
+    fontSize: 14,
+  },
+  code_block: {
+    backgroundColor: 'rgba(0,0,0,0.08)',
+    padding: 10,
+    borderRadius: 8,
+    marginVertical: 8,
+    fontFamily: Platform.OS === 'ios' ? 'Menlo' : 'monospace',
+    fontSize: 13,
+  },
+  fence: {
+    backgroundColor: 'rgba(0,0,0,0.08)',
+    padding: 10,
+    borderRadius: 8,
+    marginVertical: 8,
+    fontFamily: Platform.OS === 'ios' ? 'Menlo' : 'monospace',
+    fontSize: 13,
+  },
+  bullet_list: { marginBottom: 8 },
+  ordered_list: { marginBottom: 8 },
+  list_item: { marginBottom: 4 },
+  bullet_list_icon: { marginLeft: 6, marginRight: 8 },
+  bullet_list_content: { flex: 1 },
+  ordered_list_icon: { marginLeft: 6, marginRight: 8 },
+  ordered_list_content: { flex: 1 },
+  table: {
+    borderWidth: 1,
+    borderColor: COLORS.border,
+    borderRadius: 8,
+    marginVertical: 10,
+  },
+  thead: {},
+  tbody: {},
+  th: {
+    flex: 1,
+    padding: 10,
+    fontWeight: '700',
+    backgroundColor: 'rgba(0,0,0,0.06)',
+    borderRightWidth: 1,
+    borderRightColor: COLORS.border,
+  },
+  tr: {
+    borderBottomWidth: 1,
+    borderBottomColor: COLORS.border,
+    flexDirection: 'row',
+  },
+  td: {
+    flex: 1,
+    padding: 10,
+    borderRightWidth: 1,
+    borderRightColor: COLORS.border,
+  },
+  link: { color: COLORS.primary, textDecorationLine: 'underline' },
+  hr: { backgroundColor: COLORS.border, height: 1, marginVertical: 12 },
+  image: { marginVertical: 8, borderRadius: 8 },
+};
+
+/** Animated "..." typing indicator for when the agent is thinking */
+function TypingIndicator() {
+  const dot1 = useRef(new Animated.Value(0.3)).current;
+  const dot2 = useRef(new Animated.Value(0.3)).current;
+  const dot3 = useRef(new Animated.Value(0.3)).current;
+
+  useEffect(() => {
+    const animate = (anim, delay) =>
+      Animated.sequence([
+        Animated.delay(delay),
+        Animated.timing(anim, { toValue: 1, useNativeDriver: true, duration: 200 }),
+        Animated.timing(anim, { toValue: 0.3, useNativeDriver: true, duration: 200 }),
+      ]);
+    const loop = Animated.loop(
+      Animated.parallel([
+        animate(dot1, 0),
+        animate(dot2, 150),
+        animate(dot3, 300),
+      ])
+    );
+    loop.start();
+    return () => loop.stop();
+  }, [dot1, dot2, dot3]);
+
+  return (
+    <View style={[styles.bubble, styles.bubbleAssistant, { alignSelf: 'flex-start' }]}>
+      <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}>
+        <Animated.Text style={[styles.typingDot, { opacity: dot1 }]}>.</Animated.Text>
+        <Animated.Text style={[styles.typingDot, { opacity: dot2 }]}>.</Animated.Text>
+        <Animated.Text style={[styles.typingDot, { opacity: dot3 }]}>.</Animated.Text>
+      </View>
+    </View>
+  );
+}
 
 export function TutorChatButton({ visible = true, onOpenChange }) {
   const insets = useSafeAreaInsets();
@@ -91,9 +238,7 @@ function TutorModal({ visible, onClose }) {
   const [loadingHistory, setLoadingHistory] = useState(false);
   const [levels, setLevels] = useState({});
   const [debugVisible, setDebugVisible] = useState(false);
-  const [showImportModal, setShowImportModal] = useState(false);
-  const [showTranslateModal, setShowTranslateModal] = useState(false);
-  const [toolsMenuVisible, setToolsMenuVisible] = useState(false);
+  const [editingMessageIndex, setEditingMessageIndex] = useState(null);
 
   useEffect(() => {
     if (visible && view === 'history') {
@@ -124,8 +269,20 @@ function TutorModal({ visible, onClose }) {
     const text = (input || '').trim();
     if (!text || loading) return;
     setInput('');
-    const userMsg = { role: 'user', content: text };
-    setMessages(prev => [...prev, userMsg]);
+    const now = new Date().toISOString();
+    const userMsg = { role: 'user', content: text, timestamp: now };
+
+    if (editingMessageIndex != null) {
+      setMessages(prev => {
+        const next = prev.map((m, i) => (i === editingMessageIndex ? { ...userMsg } : m));
+        return next.slice(0, editingMessageIndex + 1);
+      });
+      setEditingMessageIndex(null);
+      setConversationId(null);
+    } else {
+      setMessages(prev => [...prev, userMsg]);
+    }
+
     setLoading(true);
     try {
       const res = await fetch(`${API_BASE_URL}/api/tutor/chat`, {
@@ -143,10 +300,10 @@ function TutorModal({ visible, onClose }) {
       });
       if (!res.ok) throw new Error(await res.text());
       const data = await res.json();
-      setMessages(prev => [...prev, { role: 'assistant', content: data.reply || '' }]);
+      setMessages(prev => [...prev, { role: 'assistant', content: data.reply || '', timestamp: new Date().toISOString() }]);
       setConversationId(data.conversation_id || null);
     } catch (e) {
-      setMessages(prev => [...prev, { role: 'assistant', content: 'Sorry, I couldn\'t respond. Please try again.' }]);
+      setMessages(prev => [...prev, { role: 'assistant', content: 'Sorry, I couldn\'t respond. Please try again.', timestamp: new Date().toISOString() }]);
     } finally {
       setLoading(false);
     }
@@ -158,9 +315,11 @@ function TutorModal({ visible, onClose }) {
       const res = await fetch(`${API_BASE_URL}/api/tutor/conversation/${id}`);
       if (!res.ok) throw new Error();
       const data = await res.json();
-      setMessages(data.messages || []);
+      const msgs = (data.messages || []).map(m => ({ ...m, timestamp: m.timestamp || null }));
+      setMessages(msgs);
       setConversationId(data.id);
       setView('chat');
+      setEditingMessageIndex(null);
     } finally {
       setLoadingHistory(false);
     }
@@ -170,50 +329,86 @@ function TutorModal({ visible, onClose }) {
     setMessages([]);
     setConversationId(null);
     setView('chat');
+    setEditingMessageIndex(null);
+  };
+
+  const copyMessage = async (content) => {
+    try {
+      await clipboardSetString(content || '');
+      Alert.alert('Copied', 'Message copied to clipboard.');
+    } catch (e) {
+      Alert.alert('Error', 'Could not copy.');
+    }
+  };
+
+  const editUserMessage = (index) => {
+    const msg = messages[index];
+    if (msg?.role === 'user' && msg?.content) {
+      setInput(msg.content);
+      setEditingMessageIndex(index);
+    }
+  };
+
+  const formatMessageTime = (isoString) => {
+    if (!isoString) return null;
+    try {
+      const d = new Date(isoString);
+      return d.toLocaleTimeString(undefined, { hour: 'numeric', minute: '2-digit' });
+    } catch {
+      return null;
+    }
+  };
+
+  const showMessageMenu = (item, index) => {
+    const options = [
+      { text: 'Copy', onPress: () => copyMessage(item.content) },
+      ...(item.role === 'user' ? [{ text: 'Edit', onPress: () => editUserMessage(index) }] : []),
+      { text: 'Cancel', style: 'cancel' },
+    ];
+    Alert.alert('Message', '', options);
   };
 
   if (!visible) return null;
 
   return (
-    <Modal visible transparent animationType="fade">
-      <View style={[styles.modalOverlay, { paddingTop: insets.top, paddingBottom: insets.bottom }]}>
-        <View style={styles.modalCard}>
-          <View style={styles.modalHeader}>
-            <View style={styles.modalHeaderLeft}>
-              <TouchableOpacity onPress={onClose} style={styles.iconBtn}>
-                <Ionicons name="close" size={24} color={COLORS.text} />
-              </TouchableOpacity>
-              <Ionicons name="school" size={22} color={COLORS.primary} style={{ marginRight: 6 }} />
-              <Text style={styles.modalTitle}>Tutor</Text>
+    <Modal visible animationType="slide" presentationStyle="pageSheet" onRequestClose={onClose}>
+      <View style={[styles.tutorContainer, { paddingTop: insets.top, paddingBottom: insets.bottom }]}>
+        <View style={styles.tutorHeader}>
+          <TouchableOpacity onPress={onClose} style={styles.closeBtn}>
+            <Ionicons name="close" size={24} color="#666" />
+          </TouchableOpacity>
+          <View style={styles.headerLeft}>
+            <View style={styles.headerTutorIcon}>
+              <Ionicons name="school" size={20} color="#FFF" />
             </View>
-            <View style={styles.headerTabs}>
-              <TouchableOpacity
-                style={[styles.tab, view === 'chat' && styles.tabActive]}
-                onPress={() => setView('chat')}
-              >
-                <Ionicons name="chatbubbles" size={18} color={view === 'chat' ? COLORS.primary : COLORS.textSecondary} />
-                <Text style={[styles.tabText, view === 'chat' && styles.tabTextActive]}>Chat</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.tab}
-                onPress={startNewChat}
-              >
-                <Ionicons name="add-circle-outline" size={18} color={COLORS.primary} />
-                <Text style={[styles.tabText, { color: COLORS.primary }]}>New chat</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={[styles.tab, view === 'history' && styles.tabActive]}
-                onPress={() => setView('history')}
-              >
-                <Ionicons name="time" size={18} color={view === 'history' ? COLORS.primary : COLORS.textSecondary} />
-                <Text style={[styles.tabText, view === 'history' && styles.tabTextActive]}>History</Text>
-              </TouchableOpacity>
-            </View>
+            <Text style={styles.tutorHeaderTitle}>Tutor</Text>
+          </View>
+          <View style={styles.headerRight}>
+            <TouchableOpacity
+              style={[styles.tab, view === 'chat' && styles.tabActive]}
+              onPress={() => setView('chat')}
+            >
+              <Ionicons name="chatbubbles" size={18} color={view === 'chat' ? COLORS.primary : COLORS.textSecondary} />
+              <Text style={[styles.tabText, view === 'chat' && styles.tabTextActive]}>Chat</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.tab} onPress={startNewChat}>
+              <Ionicons name="add-circle-outline" size={18} color={COLORS.primary} />
+              <Text style={[styles.tabText, { color: COLORS.primary }]}>New chat</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[styles.tab, view === 'history' && styles.tabActive]}
+              onPress={() => setView('history')}
+            >
+              <Ionicons name="time" size={18} color={view === 'history' ? COLORS.primary : COLORS.textSecondary} />
+              <Text style={[styles.tabText, view === 'history' && styles.tabTextActive]}>History</Text>
+            </TouchableOpacity>
             <TouchableOpacity onPress={() => setDebugVisible(true)} style={styles.debugBtn}>
               <Ionicons name="bug" size={20} color={COLORS.textSecondary} />
             </TouchableOpacity>
           </View>
+        </View>
 
+        <View style={styles.tutorBody}>
           {view === 'history' ? (
             <ScrollView style={styles.historyList} contentContainerStyle={styles.historyContent}>
               {loadingHistory ? (
@@ -241,11 +436,30 @@ function TutorModal({ visible, onClose }) {
                 keyExtractor={(_, i) => String(i)}
                 style={styles.messageList}
                 contentContainerStyle={styles.messageListContent}
-                renderItem={({ item }) => (
-                  <View style={[styles.bubble, item.role === 'user' ? styles.bubbleUser : styles.bubbleAssistant]}>
-                    <Text style={[styles.bubbleText, item.role === 'user' && styles.bubbleTextUser]}>
-                      {item.content}
-                    </Text>
+                ListFooterComponent={loading ? <TypingIndicator /> : null}
+                renderItem={({ item, index }) => (
+                  <View style={[styles.bubbleWrapper, item.role === 'user' ? styles.bubbleWrapperUser : styles.bubbleWrapperAssistant]}>
+                    <View style={[styles.bubble, item.role === 'user' ? styles.bubbleUser : styles.bubbleAssistant]}>
+                      {item.role === 'user' ? (
+                        <Text style={[styles.bubbleText, styles.bubbleTextUser]}>{item.content}</Text>
+                      ) : (
+                        <Markdown style={tutorMarkdownStyles}>
+                          {preprocessTutorMarkdown(item.content)}
+                        </Markdown>
+                      )}
+                    </View>
+                    <View style={[styles.messageMetaRow, item.role === 'user' ? styles.messageMetaRowUser : styles.messageMetaRowAssistant]}>
+                      {formatMessageTime(item.timestamp) ? (
+                        <Text style={styles.messageTimestamp}>{formatMessageTime(item.timestamp)}</Text>
+                      ) : null}
+                      <TouchableOpacity
+                        style={styles.messageMenuBtn}
+                        onPress={() => showMessageMenu(item, index)}
+                        hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+                      >
+                        <Ionicons name="ellipsis-horizontal" size={18} color={COLORS.textSecondary} />
+                      </TouchableOpacity>
+                    </View>
                   </View>
                 )}
                 ListEmptyComponent={
@@ -260,35 +474,6 @@ function TutorModal({ visible, onClose }) {
                 behavior={Platform.OS === 'ios' ? 'padding' : undefined}
                 keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 0}
               >
-                <View style={styles.actionRow}>
-                  <TouchableOpacity
-                    style={styles.toolsTrigger}
-                    onPress={() => setToolsMenuVisible(v => !v)}
-                    activeOpacity={0.8}
-                  >
-                    <Ionicons name="construct-outline" size={18} color={COLORS.text} />
-                    <Text style={styles.toolsTriggerText}>Tools</Text>
-                    <Ionicons name={toolsMenuVisible ? 'chevron-up' : 'chevron-down'} size={16} color={COLORS.textSecondary} />
-                  </TouchableOpacity>
-                  {toolsMenuVisible && (
-                    <View style={styles.toolsMenu}>
-                      <TouchableOpacity
-                        style={styles.toolsMenuItem}
-                        onPress={() => { setToolsMenuVisible(false); setShowImportModal(true); }}
-                      >
-                        <Ionicons name="add-circle-outline" size={18} color="#4A90E2" />
-                        <Text style={[styles.toolsMenuItemText, { color: '#4A90E2' }]}>Import Vocab</Text>
-                      </TouchableOpacity>
-                      <TouchableOpacity
-                        style={styles.toolsMenuItem}
-                        onPress={() => { setToolsMenuVisible(false); setShowTranslateModal(true); }}
-                      >
-                        <Ionicons name="language" size={18} color="#8B5CF6" />
-                        <Text style={[styles.toolsMenuItemText, { color: '#8B5CF6' }]}>Translate</Text>
-                      </TouchableOpacity>
-                    </View>
-                  )}
-                </View>
                 <View style={styles.inputRow}>
                   <TextInput
                     style={styles.input}
@@ -316,26 +501,8 @@ function TutorModal({ visible, onClose }) {
               </KeyboardAvoidingView>
             </>
           )}
-
-          {view === 'chat' && messages.length > 0 && (
-            <TouchableOpacity style={styles.newChatBtn} onPress={startNewChat}>
-              <Ionicons name="add-circle-outline" size={18} color={COLORS.primary} />
-              <Text style={styles.newChatText}>New chat</Text>
-            </TouchableOpacity>
-          )}
         </View>
       </View>
-
-      <TextImportModal
-        visible={showImportModal}
-        onClose={() => setShowImportModal(false)}
-        language={selectedLanguage || 'kannada'}
-      />
-      <TranslationToolModal
-        visible={showTranslateModal}
-        onClose={() => setShowTranslateModal(false)}
-        language={selectedLanguage || 'kannada'}
-      />
 
       {/* Debug popup */}
       <Modal visible={debugVisible} transparent animationType="fade">
@@ -401,6 +568,50 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 16,
   },
+  tutorContainer: {
+    flex: 1,
+    backgroundColor: '#F8F9FA',
+  },
+  tutorHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 16,
+    paddingTop: Platform.OS === 'ios' ? 16 : 16,
+    paddingBottom: 12,
+    borderBottomWidth: 1,
+    borderBottomColor: COLORS.border,
+    backgroundColor: '#FFF',
+  },
+  closeBtn: { padding: 8 },
+  headerLeft: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    gap: 8,
+  },
+  headerTutorIcon: {
+    width: 28,
+    height: 28,
+    borderRadius: 8,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: COLORS.primary,
+  },
+  tutorHeaderTitle: {
+    fontSize: 17,
+    fontWeight: '700',
+    color: COLORS.text,
+  },
+  headerRight: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+  },
+  tutorBody: {
+    flex: 1,
+  },
   modalCard: {
     backgroundColor: COLORS.surface,
     borderRadius: 20,
@@ -464,7 +675,6 @@ const styles = StyleSheet.create({
   },
   messageList: {
     flex: 1,
-    maxHeight: 420,
   },
   messageListContent: {
     padding: 16,
@@ -486,11 +696,16 @@ const styles = StyleSheet.create({
     opacity: 0.8,
   },
   bubble: {
-    maxWidth: '85%',
+    maxWidth: '100%',
     padding: 12,
     borderRadius: 12,
-    marginBottom: 8,
   },
+  bubbleWrapper: {
+    marginBottom: 8,
+    maxWidth: '85%',
+  },
+  bubbleWrapperUser: { alignSelf: 'flex-end' },
+  bubbleWrapperAssistant: { alignSelf: 'flex-start' },
   bubbleUser: {
     alignSelf: 'flex-end',
     backgroundColor: COLORS.userBg,
@@ -498,6 +713,44 @@ const styles = StyleSheet.create({
   bubbleAssistant: {
     alignSelf: 'flex-start',
     backgroundColor: COLORS.assistantBg,
+  },
+  messageActions: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+    marginTop: 4,
+    paddingHorizontal: 4,
+  },
+  messageActionsUser: { justifyContent: 'flex-end' },
+  messageActionsAssistant: { justifyContent: 'flex-start' },
+  messageMetaRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 4,
+    paddingHorizontal: 4,
+    gap: 8,
+  },
+  messageMetaRowUser: { justifyContent: 'flex-end' },
+  messageMetaRowAssistant: { justifyContent: 'flex-start' },
+  messageTimestamp: {
+    fontSize: 11,
+    color: COLORS.textSecondary,
+    fontWeight: '500',
+  },
+  messageMenuBtn: {
+    padding: 4,
+  },
+  messageActionBtn: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+    paddingVertical: 4,
+    paddingHorizontal: 6,
+  },
+  messageActionText: {
+    fontSize: 12,
+    color: COLORS.textSecondary,
+    fontWeight: '500',
   },
   bubbleText: {
     fontSize: 15,
@@ -507,6 +760,11 @@ const styles = StyleSheet.create({
   bubbleTextUser: {
     color: '#FFF',
   },
+  typingDot: {
+    fontSize: 20,
+    color: COLORS.text,
+    fontWeight: '700',
+  },
   inputRow: {
     flexDirection: 'row',
     alignItems: 'flex-end',
@@ -514,72 +772,7 @@ const styles = StyleSheet.create({
     gap: 8,
     borderTopWidth: 1,
     borderTopColor: COLORS.border,
-  },
-  actionRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingHorizontal: 12,
-    paddingVertical: 10,
-    gap: 12,
-    borderTopWidth: 1,
-    borderTopColor: COLORS.border,
-    position: 'relative',
-  },
-  toolsTrigger: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-    paddingVertical: 10,
-    paddingHorizontal: 14,
-    borderRadius: 10,
-    backgroundColor: COLORS.assistantBg,
-  },
-  toolsTriggerText: {
-    fontSize: 15,
-    fontWeight: '600',
-    color: COLORS.text,
-  },
-  toolsMenu: {
-    position: 'absolute',
-    left: 12,
-    top: '100%',
-    marginTop: 4,
-    minWidth: 180,
-    backgroundColor: COLORS.surface,
-    borderRadius: 12,
-    borderWidth: 1,
-    borderColor: COLORS.border,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 8,
-    elevation: 4,
-    zIndex: 10,
-  },
-  toolsMenuItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 10,
-    paddingVertical: 12,
-    paddingHorizontal: 14,
-  },
-  toolsMenuItemText: {
-    fontSize: 15,
-    fontWeight: '600',
-  },
-  actionBtn: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 6,
-    paddingVertical: 8,
-    paddingHorizontal: 12,
-    borderRadius: 8,
-    backgroundColor: COLORS.primaryLight,
-  },
-  actionBtnText: {
-    fontSize: 14,
-    fontWeight: '600',
-    color: COLORS.primary,
+    backgroundColor: '#FFF',
   },
   input: {
     flex: 1,
@@ -619,7 +812,6 @@ const styles = StyleSheet.create({
   },
   historyList: {
     flex: 1,
-    maxHeight: 460,
   },
   historyContent: {
     padding: 16,

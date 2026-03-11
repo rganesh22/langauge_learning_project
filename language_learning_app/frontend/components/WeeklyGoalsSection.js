@@ -126,24 +126,31 @@ export default function WeeklyGoalsSection({ expanded, onToggle, onGoalsSaved })
 
   const setFlashcardCount = (language, countText) => {
     if (!selectedDay) return;
-    const count = parseInt(countText) || 0;
-    const updated = { ...weeklyGoals };
-    
-    if (count > 0) {
+    const count = parseInt(countText, 10) || 0;
+    setWeeklyGoals((prev) => {
+      const updated = { ...prev };
       if (!updated[selectedDay]) updated[selectedDay] = {};
-      if (!updated[selectedDay][language]) updated[selectedDay][language] = {};
-      updated[selectedDay][language]['flashcards'] = count;
-    } else {
-      // Remove if count is 0
-      if (updated[selectedDay]?.[language]?.['flashcards']) {
-        delete updated[selectedDay][language]['flashcards'];
-        if (Object.keys(updated[selectedDay][language]).length === 0) {
-          delete updated[selectedDay][language];
+      updated[selectedDay] = { ...updated[selectedDay] };
+
+      if (count > 0) {
+        updated[selectedDay][language] = {
+          ...(updated[selectedDay][language] || {}),
+          flashcards: count,
+        };
+      } else {
+        const langActivities = updated[selectedDay][language];
+        if (langActivities && 'flashcards' in langActivities) {
+          const { flashcards, ...rest } = langActivities;
+          if (Object.keys(rest).length === 0) {
+            const { [language]: _, ...dayRest } = updated[selectedDay];
+            updated[selectedDay] = dayRest;
+          } else {
+            updated[selectedDay][language] = rest;
+          }
         }
       }
-    }
-    
-    setWeeklyGoals(updated);
+      return updated;
+    });
   };
 
   const removeActivity = (day, language, activity) => {
@@ -232,6 +239,11 @@ export default function WeeklyGoalsSection({ expanded, onToggle, onGoalsSaved })
     return count;
   };
 
+  const getActivityCountForDay = (languageCode, activity) => {
+    if (!selectedDay) return 0;
+    return (weeklyGoals[selectedDay]?.[languageCode]?.[activity] ?? 0) || 0;
+  };
+
   const toggleLanguage = (langCode) => {
     setExpandedLanguages(prev => ({
       ...prev,
@@ -239,9 +251,36 @@ export default function WeeklyGoalsSection({ expanded, onToggle, onGoalsSaved })
     }));
   };
 
-  const getActivityCountForDay = (langCode, activity) => {
-    if (!selectedDay) return 0;
-    return weeklyGoals[selectedDay]?.[langCode]?.[activity] || 0;
+  const closeAddModal = () => {
+    setShowAddModal(false);
+    // Persist any changes made in the modal so goals show up and are saved
+    if (Object.keys(weeklyGoals).length > 0) {
+      persistGoalsQuietly(weeklyGoals);
+    }
+  };
+
+  const persistGoalsQuietly = async (goals) => {
+    try {
+      const byLanguage = {};
+      Object.entries(goals).forEach(([day, languages]) => {
+        Object.entries(languages || {}).forEach(([lang, activities]) => {
+          if (!byLanguage[lang]) byLanguage[lang] = {};
+          byLanguage[lang][day] = activities;
+        });
+      });
+      await Promise.all(
+        Object.entries(byLanguage).map(([lang, g]) =>
+          fetch(`${API_BASE_URL}/api/weekly-goals/${lang}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ weekly_goals: g }),
+          }).then(r => { if (!r.ok) throw new Error(r.status); })
+        )
+      );
+      if (onGoalsSaved) onGoalsSaved();
+    } catch (e) {
+      console.error('Failed to save weekly goals on modal close:', e);
+    }
   };
 
   return (
@@ -422,21 +461,15 @@ export default function WeeklyGoalsSection({ expanded, onToggle, onGoalsSaved })
         <TouchableOpacity
           style={styles.modalOverlay}
           activeOpacity={1}
-          onPress={() => {
-            setShowAddModal(false);
-            loadWeeklyGoals();
-          }}
+          onPress={closeAddModal}
         >
           <TouchableWithoutFeedback>
-            <View style={styles.modalContent}>
+            <View style={styles.modalContent} onStartShouldSetResponder={() => true}>
               <View style={styles.modalHeader}>
                 <Text style={styles.modalTitle}>
                   Add Activity - {selectedDay ? WEEKDAY_LABELS[selectedDay] : ''}
                 </Text>
-                <TouchableOpacity onPress={() => {
-                  setShowAddModal(false);
-                  loadWeeklyGoals();
-                }}>
+                <TouchableOpacity onPress={closeAddModal}>
                   <Ionicons name="close" size={28} color="#666" />
                 </TouchableOpacity>
               </View>

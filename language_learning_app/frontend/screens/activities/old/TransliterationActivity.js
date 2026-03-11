@@ -18,9 +18,9 @@ import { useTransliteration } from './shared/hooks/useTransliteration';
 import { useDictionary } from './shared/hooks/useDictionary';
 import { ACTIVITY_COLORS, API_BASE_URL } from './shared/constants';
 import { APIDebugModal, VocabularyDictionary, TopicSelectionModal } from './shared/components';
-import TranslationToolModal from '../../components/TranslationToolModal';
+import { useTranslationJob } from '../../contexts/TranslationJobContext';
 
-export default function TransliterationActivity({ route, navigation }) {
+export default function TransliterationActivity({ route, navigation, themeColor }) {
   const insets = useSafeAreaInsets();
   const { activityId, fromHistory, activityData: routeActivityData } = route.params || {};
   const { selectedLanguage: ctxLanguage } = useContext(LanguageContext);
@@ -31,15 +31,15 @@ export default function TransliterationActivity({ route, navigation }) {
   const activityData = useActivityData('transliteration', language, activityId, fromHistory, routeActivityData, null, genCallbacks);
   const transliteration = useTransliteration(language, activityData.activity);
   const dictionary = useDictionary(language);
+  const { openModalWithPrefill } = useTranslationJob();
 
-  const [showTranslationModal, setShowTranslationModal] = useState(false);
   const [showAPIDebug, setShowAPIDebug] = useState(false);
   const [userInputs, setUserInputs] = useState({});
   const [grading, setGrading] = useState(false);
   const [gradingResult, setGradingResult] = useState(null);
   const [showTopicModal, setShowTopicModal] = useState(!fromHistory);
 
-  const colors = ACTIVITY_COLORS.transliteration;
+  const colors = themeColor || ACTIVITY_COLORS.transliteration;
 
   useEffect(() => {
     if (!activityData.activity) return;
@@ -167,7 +167,7 @@ export default function TransliterationActivity({ route, navigation }) {
     <View style={styles.container}>
       <TopicSelectionModal
         visible={showTopicModal}
-        onSelect={handleTopicSelection}
+        onSelectTopic={handleTopicSelection}
         onClose={handleCloseTopicModal}
         activityType="transliteration"
         color={colors.primary}
@@ -198,7 +198,7 @@ export default function TransliterationActivity({ route, navigation }) {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.toggleButton}
-            onPress={() => setShowTranslationModal(true)}
+            onPress={() => openModalWithPrefill({ language: language || 'kannada' })}
           >
             <Ionicons name="language" size={20} color="#FFFFFF" />
           </TouchableOpacity>
@@ -305,13 +305,6 @@ export default function TransliterationActivity({ route, navigation }) {
       </View>
 
       {/* Modals */}
-      <TranslationToolModal
-        visible={showTranslationModal}
-        onClose={() => setShowTranslationModal(false)}
-        language={language}
-        prefillText={null}
-        onImportComplete={null}
-      />
       <VocabularyDictionary
         visible={dictionary.showDictionary}
         onClose={() => dictionary.setShowDictionary(false)}

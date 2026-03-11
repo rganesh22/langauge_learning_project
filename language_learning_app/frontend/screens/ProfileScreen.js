@@ -2213,6 +2213,7 @@ export default function ProfileScreen() {
                     style={[
                       styles.defaultTranslateChip,
                       isSelected && styles.defaultTranslateChipSelected,
+                      isSelected && { borderColor: l.color || '#4A90E2' },
                     ]}
                     onPress={() => {
                       const next = isSelected

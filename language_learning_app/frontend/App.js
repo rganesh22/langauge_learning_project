@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { NavigationContainer, useNavigationState } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { RootNavigationRefContext } from './contexts/NavigationRefContext';
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import DashboardScreen from './screens/DashboardScreen';
@@ -18,13 +19,57 @@ import { Ionicons } from '@expo/vector-icons';
 import LanguageProvider from './contexts/LanguageContext';
 import { ActivityGenerationProvider } from './contexts/ActivityGenerationContext';
 import ActivityGenerationTray from './components/ActivityGenerationTray';
+import { TranslationJobProvider, useTranslationJob } from './contexts/TranslationJobContext';
+import TranslationTray from './components/TranslationTray';
+import TranslationToolModal from './components/TranslationToolModal';
+import { ImportJobProvider, useImportJob } from './contexts/ImportJobContext';
+import ImportTray from './components/ImportTray';
+import TextImportModal from './components/TextImportModal';
 import { TutorChatButton } from './components/TutorChatButton';
 import { TutorProvider } from './contexts/TutorContext';
 import { useFonts } from 'expo-font';
 import { ActivityIndicator, View, Text as RNText } from 'react-native';
 import SafeText from './components/SafeText';
+import { useContext } from 'react';
+import { LanguageContext } from './contexts/LanguageContext';
 
 const API_BASE_URL = __DEV__ ? 'http://localhost:9090' : 'http://localhost:9090';
+
+function GlobalTranslationModal() {
+  const { selectedLanguage } = useContext(LanguageContext);
+  const { modalRequest, closeModal } = useTranslationJob();
+  const visible = modalRequest != null;
+  const language = (modalRequest?.type === 'prefill' && modalRequest.language) || selectedLanguage || 'kannada';
+  const prefillText = modalRequest?.type === 'prefill' ? (modalRequest.prefillText || '') : '';
+  const initialJobId = modalRequest?.type === 'job' ? modalRequest.jobId : null;
+  const onMakeVocabCards = modalRequest?.type === 'prefill' ? modalRequest.onMakeVocabCards : null;
+  return (
+    <TranslationToolModal
+      visible={visible}
+      onClose={closeModal}
+      language={language}
+      prefillText={prefillText}
+      initialJobId={initialJobId}
+      onMakeVocabCards={onMakeVocabCards}
+    />
+  );
+}
+
+function GlobalImportModal() {
+  const { modalRequest, closeModal, getJob } = useImportJob();
+  const visible = modalRequest?.type === 'job' && modalRequest.jobId != null;
+  const job = visible ? (getJob(modalRequest.jobId) ?? modalRequest.jobSnapshot) : null;
+  const language = job?.language || 'kannada';
+  const initialJobId = modalRequest?.type === 'job' ? modalRequest.jobId : null;
+  return (
+    <TextImportModal
+      visible={visible}
+      onClose={closeModal}
+      language={language}
+      initialJobId={initialJobId}
+    />
+  );
+}
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -142,12 +187,16 @@ export default function App() {
     <SafeAreaProvider>
       <LanguageProvider>
         <ActivityGenerationProvider>
+          <TranslationJobProvider>
+          <ImportJobProvider>
           <TutorProvider>
           <NavigationContainer ref={navigationRef}>
+            <RootNavigationRefContext.Provider value={navigationRef}>
             <>
               <StatusBar style="auto" />
               <Stack.Navigator screenOptions={{ headerShown: false }}>
                 <Stack.Screen name="Main" component={MainTabs} />
+                {/* Activity = unified lesson renderer (LessonActivity). Practice tab opens this via root ref + CommonActions. */}
                 <Stack.Screen name="Activity" component={ActivityScreen} />
                 <Stack.Screen name="ActivityHistory" component={ActivityHistoryScreen} />
                 <Stack.Screen name="Flashcards" component={FlashcardScreen} />
@@ -169,10 +218,17 @@ export default function App() {
                   navigationRef.current.navigate('Activity', params);
                 }}
               />
+              <TranslationTray />
+              <ImportTray navigationRef={navigationRef} />
+              <GlobalTranslationModal />
+              <GlobalImportModal />
               <TutorVisibilityGate />
             </>
+            </RootNavigationRefContext.Provider>
           </NavigationContainer>
           </TutorProvider>
+          </ImportJobProvider>
+          </TranslationJobProvider>
         </ActivityGenerationProvider>
       </LanguageProvider>
     </SafeAreaProvider>

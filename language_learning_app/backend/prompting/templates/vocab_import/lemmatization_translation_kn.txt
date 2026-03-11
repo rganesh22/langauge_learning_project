@@ -1,8 +1,15 @@
 You are a Kannada language expert. For each Kannada word below, perform THREE tasks:
 
+VERB LEMMA RULE (MUST FOLLOW):
+For ANY verb, the "word" field MUST be the INFORMAL IMPERATIVE (command form) only.
+- The INPUT may be conjugated (ಹೋಗುತ್ತೇನೆ), infinitive (-ಲು form), or other form. You MUST still output the imperative.
+- WRONG: ಹೋಗಲು, ಬರಲು, ತಿನ್ನಲು, ಮಾಡಲು (infinitives); any -ತ್ತೇನೆ/-ತ್ತಾನೆ conjugated form in the output.
+- CORRECT: ಹೋಗು, ಬಾ, ತಿನ್ನು, ಮಾಡು, ನೋಡು, ಓದು.
+If the verb has two common imperative forms, use both imperatives separated by / .
+
 TASK 1 — LEMMATIZATION: Reduce the word to its base/dictionary form.
   - Verbs: ALWAYS convert to the INFORMAL IMPERATIVE / command form (the shortest root used when giving a casual command to one person).
-    Examples: ಹೋಗುತ್ತೇನೆ → ಹೋಗು, ತಿನ್ನುತ್ತೇನೆ → ತಿನ್ನು, ಬರುತ್ತೇನೆ → ಬಾ, ನೋಡುತ್ತೇನೆ → ನೋಡು, ಮಾಡುತ್ತೇನೆ → ಮಾಡು.
+    Examples: ಹೋಗುತ್ತೇನೆ → ಹೋಗು, ತಿನ್ನುತ್ತೇನೆ → ತಿನ್ನು, ಬರುತ್ತೇನೆ → ಬಾ, ಹೋಗಲು → ಹೋಗು, ಬರಲು → ಬಾ, ಓದುತ್ತೇನೆ → ಓದು.
     Do NOT use the infinitive (-ಲು form) or any conjugated form. The correct lemma is the bare imperative root.
   - Nouns: remove case endings and plurals (e.g., ಮನೆಯಲ್ಲಿ → ಮನೆ).
   - Adjectives: use base form.
@@ -33,21 +40,23 @@ CRITICAL REQUIREMENTS:
 4) Return ONLY a valid JSON array. No markdown, no explanation, no extra text.
 
 REMINDER — VERB LEMMA FORM:
-The Kannada verb lemma is the informal singular imperative (command to a friend):
-  ಹೋಗುತ್ತೇನೆ → ಹೋಗು (NOT ಹೋಗಲು)
-  ಬರುತ್ತೇನೆ → ಬಾ (NOT ಬರಲು)
-  ತಿನ್ನುತ್ತೇನೆ → ತಿನ್ನು (NOT ತಿನ್ನಲು)
-  ಮಾಡುತ್ತೇನೆ → ಮಾಡು (NOT ಮಾಡಲು)
-Always use this short command form.
+The Kannada verb lemma is the informal singular imperative (command to a friend).
+When the INPUT is an infinitive (-ಲು) or conjugated form, you MUST still output the imperative:
+  ಹೋಗಲು → ಹೋಗು (NOT ಹೋಗಲು)
+  ಬರಲು → ಬಾ (NOT ಬರಲು)
+  ತಿನ್ನಲು → ತಿನ್ನು (NOT ತಿನ್ನಲು)
+  ಮಾಡಲು → ಮಾಡು (NOT ಮಾಡಲು)
+  ಓದುತ್ತೇನೆ → ಓದು (NOT ಓದಲು)
+Always use this short command form. Never output the -ಲು infinitive in the "word" field for verbs.
 
 IN-CONTEXT EXAMPLES:
 
-Example input words: ಮನೆಯಲ್ಲಿ, ಅಧ್ಯಯನ, ಹೋಗುತ್ತೇನೆ
+Example input words: ಮನೆಯಲ್ಲಿ, ಹೋಗಲು, ಓದುತ್ತೇನೆ
 Example output:
 [
   {{"word": "ಮನೆ", "english": "house", "word_class": "noun", "level": "a1", "verb_transitivity": "N/A"}},
-  {{"word": "ಅಧ್ಯಯನ", "english": "study (academic learning)", "word_class": "noun", "level": "b1", "verb_transitivity": "N/A"}},
-  {{"word": "ಹೋಗು", "english": "to go", "word_class": "verb", "level": "a1", "verb_transitivity": "intransitive"}}
+  {{"word": "ಹೋಗು", "english": "to go", "word_class": "verb", "level": "a1", "verb_transitivity": "intransitive"}},
+  {{"word": "ಓದು", "english": "to read", "word_class": "verb", "level": "a1", "verb_transitivity": "transitive"}}
 ]
 
 Words to process:

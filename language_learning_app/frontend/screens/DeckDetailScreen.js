@@ -1,6 +1,7 @@
-import React, { useEffect, useMemo, useState, useContext } from 'react';
+import React, { useEffect, useMemo, useState, useContext, useCallback } from 'react';
 import {
   View,
+  Text,
   TextInput,
   StyleSheet,
   ActivityIndicator,
@@ -48,9 +49,17 @@ export default function DeckDetailScreen({ route, navigation }) {
   const [masteryFilter, setMasteryFilter] = useState([]); // multi-select
   const [transitivityFilter, setTransitivityFilter] = useState([]); // multi-select
   const [originFilter, setOriginFilter] = useState([]); // multi-select
-  const [filtersExpanded, setFiltersExpanded] = useState(false);
+  const [filtersAndStudyExpanded, setFiltersAndStudyExpanded] = useState(true); // collapsible block: Filters + study mode cards (default uncollapsed)
   const [deckName, setDeckName] = useState(initialDeckName || '');
   const [renaming, setRenaming] = useState(false);
+  const [renameModalVisible, setRenameModalVisible] = useState(false);
+  const [renameInput, setRenameInput] = useState('');
+
+  // Multi-select cards for deletion (user-generated only)
+  const [selectionMode, setSelectionMode] = useState(false);
+  const [selectedWordIds, setSelectedWordIds] = useState(new Set());
+  const [deletingWords, setDeletingWords] = useState(false);
+  const [showDeleteWordsConfirm, setShowDeleteWordsConfirm] = useState(false);
 
   // Review history modal state
   const [selectedWord, setSelectedWord] = useState(null);
@@ -112,6 +121,39 @@ export default function DeckDetailScreen({ route, navigation }) {
     setShowDeleteChoiceModal(true);
   };
 
+  const toggleWordSelection = useCallback((wordId) => {
+    setSelectedWordIds(prev => {
+      const next = new Set(prev);
+      if (next.has(wordId)) next.delete(wordId); else next.add(wordId);
+      return next;
+    });
+  }, []);
+
+  const exitSelectionMode = useCallback(() => {
+    setSelectionMode(false);
+    setSelectedWordIds(new Set());
+  }, []);
+
+  const handleDeleteSelectedWords = useCallback(async () => {
+    setShowDeleteWordsConfirm(false);
+    if (!deckId || selectedWordIds.size === 0) return;
+    setDeletingWords(true);
+    try {
+      const res = await fetch(`${API_BASE_URL}/api/vocab/decks/${deckId}/words`, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ word_ids: Array.from(selectedWordIds) }),
+      });
+      if (!res.ok) throw new Error('Delete failed');
+      await reloadDeckWords();
+      exitSelectionMode();
+    } catch (e) {
+      console.error('Error deleting words:', e);
+    } finally {
+      setDeletingWords(false);
+    }
+  }, [deckId, selectedWordIds, reloadDeckWords, exitSelectionMode]);
+
   useEffect(() => {
     const loadDeck = async () => {
       try {
@@ -134,6 +176,22 @@ export default function DeckDetailScreen({ route, navigation }) {
     };
     if (deckId && language) {
       loadDeck();
+    }
+  }, [deckId, language]);
+
+  const reloadDeckWords = useCallback(async () => {
+    if (!deckId || !language) return;
+    try {
+      const res = await fetch(`${API_BASE_URL}/api/vocab/decks/${deckId}/words?language=${language}`);
+      const data = await res.json();
+      setWords(data.words || []);
+      setDeckMeta(prev => ({
+        ...prev,
+        import_duration_seconds: data.import_duration_seconds,
+        created_at: data.created_at,
+      }));
+    } catch (e) {
+      console.error('Error reloading deck words:', e);
     }
   }, [deckId, language]);
 
@@ -268,22 +326,53 @@ export default function DeckDetailScreen({ route, navigation }) {
 
   const renderWordItem = ({ item }) => {
     const english = String(item.english_word ?? '');
-    const native = String(item.translation ?? '');
+    const native = language === 'urdu' && item.nastaliq
+      ? String(item.nastaliq)
+      : String(item.translation ?? '');
+    const genderSuffix = (language === 'hindi' || language === 'urdu') && item.gender && /^[mf]$/i.test(String(item.gender))
+      ? ` (${String(item.gender).toLowerCase()})`
+      : '';
     const transliteration = String(item.transliteration ?? '');
     const isDue = item.next_review_date && new Date(item.next_review_date) <= new Date();
+    const isUrdu = language === 'urdu';
+    const isSelected = selectedWordIds.has(item.id);
 
-    return (
-      <View style={styles.wordCard}>
+    const cardContent = (
+      <>
+        {selectionMode && (
+          <View style={[styles.wordCardCheckbox, isSelected && styles.wordCardCheckboxSelected]}>
+            {isSelected ? <Ionicons name="checkmark" size={16} color="#FFF" /> : null}
+          </View>
+        )}
+        <View style={[styles.wordCardContent, selectionMode && { marginLeft: 12 }]}>
         <View style={styles.wordHeader}>
           <View style={styles.wordMain}>
             <SafeText style={styles.englishWord}>{english}</SafeText>
-            <SafeText style={styles.translation}>{native}</SafeText>
+            <SafeText style={[
+              styles.translation,
+              isUrdu && { fontFamily: 'Noto Nastaliq Urdu', textAlign: 'left', writingDirection: 'ltr' },
+            ]}>{native}{genderSuffix}</SafeText>
             {!!transliteration && (
               <SafeText style={styles.transliteration}>{transliteration}</SafeText>
             )}
           </View>
           <View style={styles.masteryBadgeContainer}>
-            <TouchableOpacity onPress={() => handleWordPress(item)} activeOpacity={0.7}>
+            {!selectionMode && (
+              <TouchableOpacity onPress={() => handleWordPress(item)} activeOpacity={0.7}>
+                <View
+                  style={[
+                    styles.masteryBadge,
+                    { backgroundColor: getMasteryColor(item.mastery_level) },
+                  ]}
+                >
+                  <SafeText style={styles.masteryText}>
+                    {getMasteryEmoji(item.mastery_level)}{' '}
+                    {String(item.mastery_level?.toUpperCase() || 'NEW')}
+                  </SafeText>
+                </View>
+              </TouchableOpacity>
+            )}
+            {selectionMode && (
               <View
                 style={[
                   styles.masteryBadge,
@@ -295,7 +384,7 @@ export default function DeckDetailScreen({ route, navigation }) {
                   {String(item.mastery_level?.toUpperCase() || 'NEW')}
                 </SafeText>
               </View>
-            </TouchableOpacity>
+            )}
             {isDue && (
               <View style={styles.dueBadge}>
                 <Ionicons name="time-outline" size={10} color="#FFFFFF" />
@@ -344,7 +433,7 @@ export default function DeckDetailScreen({ route, navigation }) {
             return (
               <View style={[styles.tag, { backgroundColor: vtColor.bg }]}>
                 <SafeText style={[styles.tagText, { color: vtColor.text }]}>
-                  {String(item.verb_transitivity)}
+                  {String(item.verb_transitivity).toLowerCase()}
                 </SafeText>
               </View>
             );
@@ -354,13 +443,6 @@ export default function DeckDetailScreen({ route, navigation }) {
             <View style={[styles.tag, { backgroundColor: '#FDE68A' }]}>
               <SafeText style={[styles.tagText, { color: '#92400E' }]}>
                 Translated
-              </SafeText>
-            </View>
-          )}
-          {item.is_ref === 1 && (
-            <View style={[styles.tag, { backgroundColor: '#E0E7FF' }]}>
-              <SafeText style={[styles.tagText, { color: '#3730A3' }]}>
-                Existing
               </SafeText>
             </View>
           )}
@@ -375,8 +457,22 @@ export default function DeckDetailScreen({ route, navigation }) {
             );
           })() : null}
         </View>
-      </View>
+        </View>
+      </>
     );
+
+    if (selectionMode) {
+      return (
+        <TouchableOpacity
+          style={[styles.wordCard, isSelected && styles.wordCardSelected]}
+          onPress={() => toggleWordSelection(item.id)}
+          activeOpacity={0.8}
+        >
+          {cardContent}
+        </TouchableOpacity>
+      );
+    }
+    return <View style={styles.wordCard}>{cardContent}</View>;
   };
 
   const handleStartDeckStudy = (mode) => {
@@ -406,30 +502,14 @@ export default function DeckDetailScreen({ route, navigation }) {
         </TouchableOpacity>
         <View style={styles.headerTitleContainer}>
           <View style={styles.headerTitleRow}>
-            <TextInput
-              style={styles.headerTitleInput}
-              value={deckName}
-              onChangeText={setDeckName}
-              placeholder="Deck name"
-              placeholderTextColor="#E0F2F1"
-              editable={!renaming}
-              onBlur={async () => {
-                if (!deckId || !deckName || deckName === initialDeckName) return;
-                try {
-                  setRenaming(true);
-                  await fetch(`${API_BASE_URL}/api/vocab/decks/${deckId}`, {
-                    method: 'PUT',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ name: deckName }),
-                  });
-                } catch (e) {
-                  console.error('Error renaming deck:', e);
-                } finally {
-                  setRenaming(false);
-                }
-              }}
-            />
-            {renaming && <ActivityIndicator size="small" color="#FFFFFF" style={{ marginLeft: 6 }} />}
+            <SafeText style={styles.headerTitle} numberOfLines={1}>{deckName || 'Deck'}</SafeText>
+            <TouchableOpacity
+              onPress={() => { setRenameInput(deckName); setRenameModalVisible(true); }}
+              style={{ padding: 6, marginLeft: 4 }}
+              hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+            >
+              <Ionicons name="pencil" size={18} color="#FFFFFF" />
+            </TouchableOpacity>
           </View>
           <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
             <SafeText style={styles.headerSubtitle} numberOfLines={1}>
@@ -496,42 +576,80 @@ export default function DeckDetailScreen({ route, navigation }) {
               hitSlop={{ top: 12, bottom: 12, left: 12, right: 12 }}
               activeOpacity={0.7}
             >
-              <Ionicons name="trash" size={20} color="#FEE2E2" />
+              <Ionicons name="trash" size={20} color="#FFFFFF" />
             </TouchableOpacity>
           </View>
         </View>
       </View>
 
-      {/* Search + filters */}
+      {/* Collapsible section: Filters + search + study mode cards (default uncollapsed) */}
       <View style={styles.body}>
-        <View style={styles.searchRow}>
-          <Ionicons name="search" size={18} color="#9CA3AF" style={{ marginRight: 6 }} />
-          <TextInput
-            style={styles.searchInput}
-            placeholder="Search in this deck..."
-            placeholderTextColor="#9CA3AF"
-            value={search}
-            onChangeText={setSearch}
-          />
-        </View>
-        {/* Collapsible Filters (SRS, Part of Speech, Level) */}
         <View style={styles.filtersSection}>
           <TouchableOpacity
             style={styles.filtersHeader}
-            onPress={() => setFiltersExpanded(!filtersExpanded)}
+            onPress={() => setFiltersAndStudyExpanded(!filtersAndStudyExpanded)}
             activeOpacity={0.7}
           >
-            <SafeText style={styles.filtersHeaderText}>Filters</SafeText>
+            <View style={styles.filtersHeaderLeft}>
+              <SafeText style={styles.filtersHeaderText}>Filters</SafeText>
+              {words.length > 0 && (
+                <SafeText style={styles.filtersCountLine}>
+                  Showing {filteredWords.length} of {words.length} entries
+                </SafeText>
+              )}
+            </View>
             <Ionicons
-              name={filtersExpanded ? 'chevron-up' : 'chevron-down'}
+              name={filtersAndStudyExpanded ? 'chevron-up' : 'chevron-down'}
               size={20}
               color="#666"
             />
           </TouchableOpacity>
 
-          {filtersExpanded && (
+          {filtersAndStudyExpanded && (
             <>
-              {/* SRS / Mastery filters */}
+              {/* Search + Select bar (inside collapsible) */}
+              <View style={styles.searchRow}>
+                <Ionicons name="search" size={18} color="#9CA3AF" style={{ marginRight: 6 }} />
+                <TextInput
+                  style={styles.searchInput}
+                  placeholder="Search in this deck..."
+                  placeholderTextColor="#9CA3AF"
+                  value={search}
+                  onChangeText={setSearch}
+                />
+                {!selectionMode ? (
+                  <TouchableOpacity
+                    style={styles.selectButton}
+                    onPress={() => setSelectionMode(true)}
+                    activeOpacity={0.7}
+                  >
+                    <Ionicons name="checkbox-outline" size={20} color="#4A90E2" />
+                    <SafeText style={styles.selectButtonText}>Select</SafeText>
+                  </TouchableOpacity>
+                ) : (
+                  <View style={styles.selectionBar}>
+                    <TouchableOpacity onPress={exitSelectionMode} style={{ paddingVertical: 8, paddingHorizontal: 12 }}>
+                      <SafeText style={{ fontSize: 15, color: '#6B7280' }}>Cancel</SafeText>
+                    </TouchableOpacity>
+                    <SafeText style={{ fontSize: 14, color: '#6B7280', marginHorizontal: 8 }}>
+                      {selectedWordIds.size} selected
+                    </SafeText>
+                    <TouchableOpacity
+                      onPress={() => setShowDeleteWordsConfirm(true)}
+                      disabled={selectedWordIds.size === 0 || deletingWords}
+                      style={{ paddingVertical: 8, paddingHorizontal: 12, flexDirection: 'row', alignItems: 'center', gap: 4 }}
+                    >
+                      {deletingWords ? (
+                        <ActivityIndicator size="small" color="#DC2626" />
+                      ) : (
+                        <Ionicons name="trash-outline" size={18} color={selectedWordIds.size > 0 ? '#DC2626' : '#9CA3AF'} />
+                      )}
+                      <SafeText style={{ fontSize: 15, fontWeight: '600', color: selectedWordIds.size > 0 ? '#DC2626' : '#9CA3AF' }}>Delete</SafeText>
+                    </TouchableOpacity>
+                  </View>
+                )}
+              </View>
+              {/* Filter chips */}
               <View style={styles.filterWrapContainer}>
                 {MASTERY_FILTERS.map((filter) => {
                   const isAll = filter.value === '';
@@ -659,6 +777,71 @@ export default function DeckDetailScreen({ route, navigation }) {
                 </View>
               )}
 
+              {/* Verb transitivity filters - only if verbs with transitivity exist */}
+              {presentVtSet.size > 0 && (
+                <View style={styles.filterGroup}>
+                  <SafeText style={styles.filterGroupLabel}>Verb transitivity</SafeText>
+                  <View style={styles.filterWrapContainer}>
+                    <TouchableOpacity
+                      style={[
+                        styles.filterChip,
+                        {
+                          backgroundColor: transitivityFilter.length === 0 ? '#9CA3AF' : '#9CA3AF20',
+                          borderColor: '#9CA3AF',
+                        },
+                      ]}
+                      onPress={() => setTransitivityFilter([])}
+                    >
+                      <SafeText
+                        style={[
+                          styles.filterChipText,
+                          {
+                            color: transitivityFilter.length === 0 ? '#FFFFFF' : '#9CA3AF',
+                            fontWeight: transitivityFilter.length === 0 ? '600' : '500',
+                          },
+                        ]}
+                      >
+                        All
+                      </SafeText>
+                    </TouchableOpacity>
+                    {VERB_TRANSITIVITY_FILTERS.filter(vt => presentVtSet.has(vt.value.toLowerCase())).map((vt) => {
+                      const isSelected = transitivityFilter.includes(vt.value);
+                      return (
+                        <TouchableOpacity
+                          key={vt.value}
+                          style={[
+                            styles.filterChip,
+                            {
+                              backgroundColor: isSelected ? vt.color.bg : vt.color.bg + '20',
+                              borderColor: vt.color.bg,
+                            },
+                          ]}
+                          onPress={() => {
+                            if (isSelected) {
+                              setTransitivityFilter(transitivityFilter.filter(f => f !== vt.value));
+                            } else {
+                              setTransitivityFilter([...transitivityFilter, vt.value]);
+                            }
+                          }}
+                        >
+                          <SafeText
+                            style={[
+                              styles.filterChipText,
+                              {
+                                color: isSelected ? vt.color.text : vt.color.bg,
+                                fontWeight: isSelected ? '600' : '500',
+                              },
+                            ]}
+                          >
+                            {String(vt.label)}
+                          </SafeText>
+                        </TouchableOpacity>
+                      );
+                    })}
+                  </View>
+                </View>
+              )}
+
               {/* Level filters - only levels present in deck */}
               {presentLvSet.size > 0 && (
                 <View style={styles.filterGroup}>
@@ -717,71 +900,6 @@ export default function DeckDetailScreen({ route, navigation }) {
                             ]}
                           >
                             {String(level)}
-                          </SafeText>
-                        </TouchableOpacity>
-                      );
-                    })}
-                  </View>
-                </View>
-              )}
-
-              {/* Verb Transitivity filters - only if verbs with transitivity exist */}
-              {presentVtSet.size > 0 && (
-                <View style={styles.filterGroup}>
-                  <SafeText style={styles.filterGroupLabel}>Verb Transitivity</SafeText>
-                  <View style={styles.filterWrapContainer}>
-                    <TouchableOpacity
-                      style={[
-                        styles.filterChip,
-                        {
-                          backgroundColor: transitivityFilter.length === 0 ? '#9CA3AF' : '#9CA3AF20',
-                          borderColor: '#9CA3AF',
-                        },
-                      ]}
-                      onPress={() => setTransitivityFilter([])}
-                    >
-                      <SafeText
-                        style={[
-                          styles.filterChipText,
-                          {
-                            color: transitivityFilter.length === 0 ? '#FFFFFF' : '#9CA3AF',
-                            fontWeight: transitivityFilter.length === 0 ? '600' : '500',
-                          },
-                        ]}
-                      >
-                        All
-                      </SafeText>
-                    </TouchableOpacity>
-                    {VERB_TRANSITIVITY_FILTERS.filter(vt => presentVtSet.has(vt.value.toLowerCase())).map((vt) => {
-                      const isSelected = transitivityFilter.includes(vt.value);
-                      return (
-                        <TouchableOpacity
-                          key={vt.value}
-                          style={[
-                            styles.filterChip,
-                            {
-                              backgroundColor: isSelected ? vt.color.bg : vt.color.bg + '20',
-                              borderColor: vt.color.bg,
-                            },
-                          ]}
-                          onPress={() => {
-                            if (isSelected) {
-                              setTransitivityFilter(transitivityFilter.filter(f => f !== vt.value));
-                            } else {
-                              setTransitivityFilter([...transitivityFilter, vt.value]);
-                            }
-                          }}
-                        >
-                          <SafeText
-                            style={[
-                              styles.filterChipText,
-                              {
-                                color: isSelected ? vt.color.text : vt.color.bg,
-                                fontWeight: isSelected ? '600' : '500',
-                              },
-                            ]}
-                          >
-                            {String(vt.label)}
                           </SafeText>
                         </TouchableOpacity>
                       );
@@ -854,47 +972,47 @@ export default function DeckDetailScreen({ route, navigation }) {
                   </View>
                 </View>
               )}
+
+              {/* Deck study buttons (New / Due / Mixed) */}
+              <View style={styles.modeRow}>
+                <TouchableOpacity
+                  style={[styles.modeCard, { backgroundColor: '#E0F2FE', borderColor: '#3B82F6' }]}
+                  onPress={() => handleStartDeckStudy('new')}
+                  activeOpacity={0.8}
+                >
+                  <View style={styles.modeTitleRow}>
+                    <Ionicons name="add-circle" size={18} color="#1D4ED8" style={{ marginRight: 4 }} />
+                    <SafeText style={[styles.modeTitle, { color: '#1D4ED8' }]}>New cards</SafeText>
+                  </View>
+                  <SafeText style={styles.modeSubtitle}>{newCount} available</SafeText>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  style={[styles.modeCard, { backgroundColor: '#FEE2E2', borderColor: '#EF4444' }]}
+                  onPress={() => handleStartDeckStudy('due')}
+                  activeOpacity={0.8}
+                >
+                  <View style={styles.modeTitleRow}>
+                    <Ionicons name="alarm" size={18} color="#B91C1C" style={{ marginRight: 4 }} />
+                    <SafeText style={[styles.modeTitle, { color: '#B91C1C' }]}>Due cards</SafeText>
+                  </View>
+                  <SafeText style={styles.modeSubtitle}>{dueCount} due</SafeText>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  style={[styles.modeCard, { backgroundColor: '#F3E8FF', borderColor: '#8B5CF6' }]}
+                  onPress={() => handleStartDeckStudy('mixed')}
+                  activeOpacity={0.8}
+                >
+                  <View style={styles.modeTitleRow}>
+                    <Ionicons name="layers" size={18} color="#6D28D9" style={{ marginRight: 4 }} />
+                    <SafeText style={[styles.modeTitle, { color: '#6D28D9' }]}>Mixed</SafeText>
+                  </View>
+                  <SafeText style={styles.modeSubtitle}>{filteredWords.length} cards</SafeText>
+                </TouchableOpacity>
+              </View>
             </>
           )}
-        </View>
-
-        {/* Deck study buttons */}
-        <View style={styles.modeRow}>
-          <TouchableOpacity
-            style={[styles.modeCard, { backgroundColor: '#E0F2FE', borderColor: '#3B82F6' }]}
-            onPress={() => handleStartDeckStudy('new')}
-            activeOpacity={0.8}
-          >
-            <View style={styles.modeTitleRow}>
-              <Ionicons name="add-circle" size={18} color="#1D4ED8" style={{ marginRight: 4 }} />
-              <SafeText style={[styles.modeTitle, { color: '#1D4ED8' }]}>New cards</SafeText>
-            </View>
-            <SafeText style={styles.modeSubtitle}>{newCount} available</SafeText>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={[styles.modeCard, { backgroundColor: '#FEE2E2', borderColor: '#EF4444' }]}
-            onPress={() => handleStartDeckStudy('due')}
-            activeOpacity={0.8}
-          >
-            <View style={styles.modeTitleRow}>
-              <Ionicons name="alarm" size={18} color="#B91C1C" style={{ marginRight: 4 }} />
-              <SafeText style={[styles.modeTitle, { color: '#B91C1C' }]}>Due cards</SafeText>
-            </View>
-            <SafeText style={styles.modeSubtitle}>{dueCount} due</SafeText>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={[styles.modeCard, { backgroundColor: '#F3E8FF', borderColor: '#8B5CF6' }]}
-            onPress={() => handleStartDeckStudy('mixed')}
-            activeOpacity={0.8}
-          >
-            <View style={styles.modeTitleRow}>
-              <Ionicons name="layers" size={18} color="#6D28D9" style={{ marginRight: 4 }} />
-              <SafeText style={[styles.modeTitle, { color: '#6D28D9' }]}>Mixed</SafeText>
-            </View>
-            <SafeText style={styles.modeSubtitle}>{filteredWords.length} cards</SafeText>
-          </TouchableOpacity>
         </View>
 
         {loading ? (
@@ -1301,6 +1419,75 @@ export default function DeckDetailScreen({ route, navigation }) {
           </View>
         </TouchableOpacity>
       </Modal>
+
+      {/* Rename deck modal (same UI as FlashcardScreen) */}
+      <Modal visible={renameModalVisible} transparent animationType="fade" onRequestClose={() => setRenameModalVisible(false)}>
+        <TouchableOpacity activeOpacity={1} style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.5)', justifyContent: 'center', padding: 24 }} onPress={() => setRenameModalVisible(false)}>
+          <TouchableOpacity activeOpacity={1} onPress={() => {}} style={{ backgroundColor: '#FFF', borderRadius: 12, padding: 20 }}>
+            <Text style={{ fontSize: 16, fontWeight: '600', color: '#1A1A1A', marginBottom: 12 }}>Rename deck</Text>
+            <TextInput
+              style={{ borderWidth: 1, borderColor: '#E0E0E0', borderRadius: 8, paddingHorizontal: 12, paddingVertical: 10, fontSize: 15, color: '#333', marginBottom: 16 }}
+              value={renameInput}
+              onChangeText={setRenameInput}
+              placeholder="Deck name"
+              placeholderTextColor="#999"
+              autoFocus
+            />
+            <View style={{ flexDirection: 'row', justifyContent: 'flex-end', gap: 12 }}>
+              <TouchableOpacity onPress={() => setRenameModalVisible(false)} style={{ paddingVertical: 8, paddingHorizontal: 16 }}>
+                <Text style={{ fontSize: 15, color: '#666' }}>Cancel</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={async () => {
+                  const name = (renameInput || '').trim();
+                  if (!name || !deckId) return;
+                  setRenaming(true);
+                  try {
+                    await fetch(`${API_BASE_URL}/api/vocab/decks/${deckId}`, {
+                      method: 'PUT',
+                      headers: { 'Content-Type': 'application/json' },
+                      body: JSON.stringify({ name }),
+                    });
+                    setDeckName(name);
+                    setRenameModalVisible(false);
+                  } catch (e) {
+                    console.error('Error renaming deck:', e);
+                  } finally {
+                    setRenaming(false);
+                  }
+                }}
+                disabled={renaming || !(renameInput || '').trim()}
+                style={{ paddingVertical: 8, paddingHorizontal: 16 }}
+              >
+                {renaming ? <ActivityIndicator size="small" color="#14B8A6" /> : <Text style={{ fontSize: 15, fontWeight: '600', color: '#14B8A6' }}>Save</Text>}
+              </TouchableOpacity>
+            </View>
+          </TouchableOpacity>
+        </TouchableOpacity>
+      </Modal>
+
+      {/* Delete selected words confirm */}
+      <Modal visible={showDeleteWordsConfirm} transparent animationType="fade" onRequestClose={() => setShowDeleteWordsConfirm(false)}>
+        <TouchableOpacity activeOpacity={1} style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.5)', justifyContent: 'center', padding: 24 }} onPress={() => setShowDeleteWordsConfirm(false)}>
+          <TouchableOpacity activeOpacity={1} onPress={() => {}} style={{ backgroundColor: '#FFF', borderRadius: 12, padding: 20 }}>
+            <Text style={{ fontSize: 16, fontWeight: '600', color: '#1A1A1A', marginBottom: 12 }}>Delete cards</Text>
+            <Text style={{ fontSize: 14, color: '#4B5563', marginBottom: 16 }}>
+              Remove {selectedWordIds.size} card{selectedWordIds.size !== 1 ? 's' : ''} from this deck? User-generated cards will be permanently deleted; original-set cards will only be removed from this deck.
+            </Text>
+            <View style={{ flexDirection: 'row', justifyContent: 'flex-end', gap: 12 }}>
+              <TouchableOpacity onPress={() => setShowDeleteWordsConfirm(false)} style={{ paddingVertical: 8, paddingHorizontal: 16 }}>
+                <Text style={{ fontSize: 15, color: '#666' }}>Cancel</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={handleDeleteSelectedWords}
+                style={{ paddingVertical: 8, paddingHorizontal: 16 }}
+              >
+                <Text style={{ fontSize: 15, fontWeight: '600', color: '#DC2626' }}>Delete</Text>
+              </TouchableOpacity>
+            </View>
+          </TouchableOpacity>
+        </TouchableOpacity>
+      </Modal>
     </View>
   );
 }
@@ -1325,6 +1512,11 @@ const styles = StyleSheet.create({
   },
   headerTitleContainer: { flex: 1 },
   headerTitleRow: { flexDirection: 'row', alignItems: 'center' },
+  headerTitle: {
+    fontSize: 18,
+    fontWeight: '700',
+    color: '#FFFFFF',
+  },
   headerTitleInput: {
     flex: 1,
     fontSize: 18,
@@ -1403,6 +1595,18 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   searchInput: { flex: 1, fontSize: 14, color: '#111827', paddingVertical: 4 },
+  selectButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+    paddingVertical: 6,
+    paddingHorizontal: 10,
+  },
+  selectButtonText: { fontSize: 14, fontWeight: '600', color: '#4A90E2' },
+  selectionBar: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
 
   filtersSection: {
     backgroundColor: '#F8F8F8',
@@ -1419,10 +1623,26 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     paddingVertical: 10,
   },
+  filtersHeaderLeft: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    flex: 1,
+  },
   filtersHeaderText: {
     fontSize: 14,
     fontWeight: '600',
     color: '#111827',
+  },
+  filtersCountRow: {
+    paddingHorizontal: 12,
+    paddingVertical: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#E5E7EB',
+  },
+  filtersCountLine: {
+    fontSize: 13,
+    color: '#6B7280',
   },
   filterGroup: {
     marginBottom: 8,
@@ -1488,7 +1708,28 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.04,
     shadowRadius: 3,
     elevation: 1,
+    flexDirection: 'row',
+    alignItems: 'flex-start',
   },
+  wordCardSelected: {
+    borderWidth: 2,
+    borderColor: '#4A90E2',
+    backgroundColor: '#EFF6FF',
+  },
+  wordCardCheckbox: {
+    width: 22,
+    height: 22,
+    borderRadius: 6,
+    borderWidth: 2,
+    borderColor: '#9CA3AF',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  wordCardCheckboxSelected: {
+    backgroundColor: '#4A90E2',
+    borderColor: '#4A90E2',
+  },
+  wordCardContent: { flex: 1 },
   wordHeader: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: 6 },
   wordMain: { flex: 1, paddingRight: 8 },
   englishWord: { fontSize: 15, fontWeight: '600', color: '#111827' },

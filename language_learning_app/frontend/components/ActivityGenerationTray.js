@@ -20,6 +20,7 @@ import {
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useNavigationState } from '@react-navigation/native';
 import { useActivityGeneration } from '../contexts/ActivityGenerationContext';
 import { LANGUAGES } from '../contexts/LanguageContext';
 
@@ -155,8 +156,33 @@ function GenerationCard({ job, onDismiss, onPressJob }) {
 export default function ActivityGenerationTray({ onPressJob }) {
   const { jobs, dismissJob } = useActivityGeneration();
   const insets = useSafeAreaInsets();
+  
+  // Find current route params to hide tray if we are already viewing the activity being generated
+  const routeState = useNavigationState(state => {
+    if (!state) return null;
+    const route = state.routes[state.index];
+    return { name: route.name, params: route.params || {} };
+  });
 
   if (jobs.length === 0) return null;
+
+  // Filter out jobs that match the currently viewed activity screen
+  const visibleJobs = jobs.filter(job => {
+    if (routeState?.name === 'Activity') {
+      const p = routeState.params;
+      // If we are looking at the same activity type and language that is currently generating
+      if (p.activityType === job.activityType && (p.language === job.language || (!p.language && job.language))) {
+        // If a specific activityId is set in the route, only hide if it matches. 
+        // If no activityId is set in the route (it's a new generation), hide it.
+        if (!p.activityId || p.activityId === job.activityId || !job.activityId) {
+          return false;
+        }
+      }
+    }
+    return true;
+  });
+
+  if (visibleJobs.length === 0) return null;
 
   return (
     <View
@@ -166,7 +192,7 @@ export default function ActivityGenerationTray({ onPressJob }) {
       ]}
       pointerEvents="box-none"
     >
-      {jobs.map((job) => (
+      {visibleJobs.map((job) => (
         <GenerationCard key={job.id} job={job} onDismiss={dismissJob} onPressJob={onPressJob} />
       ))}
     </View>

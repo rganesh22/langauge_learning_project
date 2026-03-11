@@ -375,6 +375,7 @@ def get_vocabulary(
     word_class_filter: Optional[list[str]] = Query(None),
     level_filter: Optional[list[str]] = Query(None),
     origin_filter: Optional[list[str]] = Query(None),
+    transitivity_filter: Optional[list[str]] = Query(None),
     limit: int = 50,
     offset: int = 0
 ):
@@ -396,6 +397,7 @@ def get_vocabulary(
         word_class_filter_str = normalize_filter(word_class_filter)
         level_filter_str = normalize_filter(level_filter)
         origin_filter_str = normalize_filter(origin_filter)
+        transitivity_filter_str = normalize_filter(transitivity_filter)
         
         # Decode URL-encoded search query if needed
         import urllib.parse
@@ -412,6 +414,7 @@ def get_vocabulary(
             word_class_filter_str,
             level_filter_str,
             origin_filter_str,
+            transitivity_filter_str,
             limit,
             offset
         )
@@ -457,18 +460,26 @@ def transliterate_endpoint(request: TransliterationRequest):
 
 class TranslateRequest(BaseModel):
     text: str
-    source_language: str
+    source_language: Optional[str] = None  # Optional: if omitted, model detects source language
     target_language: str = "english"
+
+
+# Known language codes the app supports; model should prefer these for source_language_code.
+TRANSLATE_KNOWN_SOURCE_CODES = [
+    "english", "hindi", "urdu", "kannada", "telugu", "tamil", "malayalam",
+    "spanish", "french", "welsh", "vietnamese", "german", "japanese",
+    "chinese", "korean", "arabic", "bengali", "marathi", "gujarati",
+]
 
 
 @app.post("/api/translate")
 async def translate_text(request: TranslateRequest):
-    """Translate arbitrary text from source_language into target_language using Gemini."""
+    """Translate text into target_language. If source_language is not provided, the model detects it."""
     import concurrent.futures
     import time as _time
     _t0 = _time.time()
 
-    source = request.source_language.strip().lower()
+    source_hint = (request.source_language or "").strip().lower() or None
     target = request.target_language.strip().lower()
     text   = request.text.strip()
 
@@ -491,12 +502,27 @@ async def translate_text(request: TranslateRequest):
                 "- Maintain formal academic register where the source text is formal.\n"
             )
 
+    detect_instruction = (
+        "First identify the source language of the input text (any language/script). "
+        "If the ENTIRE input text is already in the target language (same as target), do NOT translate. "
+        "In that case return ONLY a JSON object with these keys:\n"
+        '  "same_language": true\n'
+        '  "message": one short user-friendly sentence, e.g. "The text is already in English."\n'
+        '  "source_language_name": display name of the source language\n'
+        '  "source_language_code": lowercase code (e.g. "english")\n\n'
+        "Otherwise (when source and target differ), return a JSON object with:\n"
+        '  "translated_text": the full translation into the target language as a plain string\n'
+        '  "source_language_name": display name of the source language (e.g. "English", "Hindi")\n'
+        '  "source_language_code": lowercase code for the source language (e.g. "english", "hindi"). '
+        "Prefer one of: " + ", ".join(TRANSLATE_KNOWN_SOURCE_CODES) + ". "
+        "If the language is not in this list, use a standard ISO 639-1 two-letter code or a clear lowercase identifier.\n\n"
+        "Do NOT add markdown, code fences, or extra keys.\n"
+    )
+    source_phrase = f"from {source_hint} " if source_hint else ""
+
     prompt = (
-        f"Translate the following {source} text into {target}.\n"
-        "Return ONLY a JSON object with exactly two keys:\n"
-        '  "translated_text": the full translation as a plain string\n'
-        '  "notes": a short (≤2 sentence) optional note about register, dialect, or ambiguity (empty string if none)\n\n'
-        "Do NOT add any markdown, code fences, or extra keys.\n"
+        f"Translate the following text {source_phrase}into {target}.\n\n"
+        f"{detect_instruction}"
         f"{script_instructions}\n"
         f"Text to translate:\n{text}"
     )
@@ -505,25 +531,47 @@ async def translate_text(request: TranslateRequest):
     with concurrent.futures.ThreadPoolExecutor() as pool:
         result_text, *_ = await loop.run_in_executor(
             pool,
-            lambda: api_client.generate_text_with_gemini(prompt),
+            lambda: api_client.generate_text_with_gemini(
+                prompt, model_name=api_client.get_model_for_flow('translation')
+            ),
         )
 
     import json as _json, re as _re
     cleaned = _re.sub(r"```(?:json)?|```", "", result_text).strip()
     try:
         data = _json.loads(cleaned)
-        translated = str(data.get("translated_text", ""))
-        notes = str(data.get("notes", ""))
+        same_language = data.get("same_language") is True
+        if same_language:
+            translated = text  # Echo original; UI will show message
+            detected_name = (data.get("source_language_name") or "").strip() or None
+            detected_code = (data.get("source_language_code") or "").strip().lower() or None
+            same_message = (data.get("message") or "The text is already in the target language.").strip()
+        else:
+            translated = str(data.get("translated_text", ""))
+            detected_name = (data.get("source_language_name") or "").strip() or None
+            detected_code = (data.get("source_language_code") or "").strip().lower() or None
+            same_message = None
     except Exception:
         translated = result_text.strip()
-        notes = ""
+        detected_name = None
+        detected_code = None
+        same_language = False
+        same_message = None
+
+    source = detected_code or source_hint or "english"
+    if not detected_name and detected_code:
+        detected_name = detected_code.capitalize()
 
     resp = {
         "translated_text": translated,
-        "notes": notes,
         "source_language": source,
         "target_language": target,
+        "detected_source_language_name": detected_name or source.capitalize(),
+        "detected_source_language_code": detected_code or source,
     }
+    if same_language:
+        resp["same_language"] = True
+        resp["message"] = same_message or "The text is already in the target language."
 
     if target == "urdu" and translated:
         is_devanagari = bool(_re.search(r'[\u0900-\u097F]', translated))
@@ -580,6 +628,16 @@ def delete_translation_history_entry(history_id: int):
     return {"success": True}
 
 
+class DeleteTranslationHistoryBulkRequest(BaseModel):
+    ids: List[int]
+
+
+@app.post("/api/translation-history/delete-bulk")
+def delete_translation_history_bulk_endpoint(request: DeleteTranslationHistoryBulkRequest):
+    deleted = db.delete_translation_history_bulk(request.ids)
+    return {"success": True, "deleted": deleted}
+
+
 # ============================================================================
 # Vocabulary Import Endpoint
 # ============================================================================
@@ -598,6 +656,9 @@ class ExtractedWord(BaseModel):
     level: Optional[str] = None
     transliteration: Optional[str] = None
     verb_transitivity: Optional[str] = None
+    gender: Optional[str] = None  # m/f for Hindi/Urdu nouns (source language)
+    gender_hindi: Optional[str] = None  # m/f when this word is Hindi translation
+    gender_urdu: Optional[str] = None   # m/f when this word is Urdu translation
 
 
 class LangWordList(BaseModel):
@@ -649,7 +710,7 @@ async def extract_text_to_vocab(request: TextImportRequest):
         def process_lemma_batch(batch):
             prompt = get_lemmatization_translation_prompt(request.language, batch)
             response_text, *_ = api_client.generate_text_with_gemini(
-                prompt, model_name=api_client.GEMINI_MODEL
+                prompt, model_name=api_client.get_model_for_flow('import_vocab')
             )
             try:
                 parsed = json.loads(response_text.strip().replace('```json', '').replace('```', ''))
@@ -736,7 +797,7 @@ async def extract_text_to_vocab(request: TextImportRequest):
                             )
                             if prompt:
                                 response_text, *_ = api_client.generate_text_with_gemini(
-                                    prompt, model_name=api_client.GEMINI_MODEL
+                                    prompt, model_name=api_client.get_model_for_flow('import_vocab')
                                 )
                                 raw = response_text.strip().replace('```json', '').replace('```', '').strip()
                                 decision = json.loads(raw)
@@ -854,7 +915,7 @@ async def extract_text_to_vocab(request: TextImportRequest):
                 if not prompt:
                     return []
                 response_text, *_ = api_client.generate_text_with_gemini(
-                    prompt, model_name=api_client.GEMINI_MODEL
+                    prompt, model_name=api_client.get_model_for_flow('import_vocab')
                 )
                 try:
                     return json.loads(response_text.strip().replace('```json', '').replace('```', ''))
@@ -1027,7 +1088,9 @@ async def extract_text_stream(request: TextImportRequest):
             def process_lemma_batch(batch_idx_batch):
                 idx, batch = batch_idx_batch
                 prompt = get_lemmatization_translation_prompt(request.language, batch)
-                response_text, *_ = api_client.generate_text_with_gemini(prompt, model_name=api_client.GEMINI_MODEL)
+                response_text, *_ = api_client.generate_text_with_gemini(
+                    prompt, model_name=api_client.get_model_for_flow('import_vocab')
+                )
                 try:
                     parsed = _json.loads(response_text.strip().replace('```json','').replace('```',''))
                     return idx, parsed if isinstance(parsed, list) else []
@@ -1116,7 +1179,7 @@ async def extract_text_stream(request: TextImportRequest):
                                 )
                                 if prompt:
                                     response_text, *_ = api_client.generate_text_with_gemini(
-                                        prompt, model_name=api_client.GEMINI_MODEL
+                                        prompt, model_name=api_client.get_model_for_flow('import_vocab')
                                     )
                                     raw = response_text.strip().replace('```json', '').replace('```', '').strip()
                                     decision = _json.loads(raw)
@@ -1216,7 +1279,9 @@ async def extract_text_stream(request: TextImportRequest):
                     idx, batch = batch_idx_batch
                     prompt = get_translation_prompt(request.language, batch, target_languages)
                     if not prompt: return idx, []
-                    response_text, *_ = api_client.generate_text_with_gemini(prompt, model_name=api_client.GEMINI_MODEL)
+                    response_text, *_ = api_client.generate_text_with_gemini(
+                        prompt, model_name=api_client.get_model_for_flow('import_vocab')
+                    )
                     try:
                         return idx, _json.loads(response_text.strip().replace('```json','').replace('```',''))
                     except Exception:
@@ -1404,6 +1469,11 @@ async def commit_import_to_vocab(request: CommitImportRequest):
                 word = transliteration.nastaliq_to_devanagari(word)
             translit = wd.transliteration or transliteration.transliterate_text(word, request.language, 'IAST')
             vt = getattr(wd, 'verb_transitivity', None) if hasattr(wd, 'verb_transitivity') else getattr(wd, 'verb_transitivity', None)
+            gender_src = (getattr(wd, 'gender', None) or (wd.get('gender') if isinstance(wd, dict) else None)) if wd else None
+            if gender_src and str(gender_src).strip().lower() in ('m', 'f'):
+                gender_src = str(gender_src).strip().lower()
+            else:
+                gender_src = None
             db.insert_vocabulary_entry(
                 language=request.language,
                 english_word=wd.english,
@@ -1414,6 +1484,7 @@ async def commit_import_to_vocab(request: CommitImportRequest):
                 verb_transitivity=vt,
                 origin='deck',
                 deck_id=deck_ids_by_lang.get(request.language),
+                gender=gender_src,
             )
             added_words.append({'word': word, 'transliteration': translit, 'english_word': wd.english,
                                  'word_class': wd.word_class, 'level': wd.level, 'verb_transitivity': vt, 'language': request.language})
@@ -1443,6 +1514,9 @@ async def commit_import_to_vocab(request: CommitImportRequest):
                 )
             # Also insert as a standalone entry in the deck for discovery
             if not db.find_word_by_translation(word, request.language):
+                syn_gender = (syn.get('gender') or '').strip().lower()
+                if syn_gender not in ('m', 'f'):
+                    syn_gender = None
                 db.insert_vocabulary_entry(
                     language=request.language,
                     english_word=english,
@@ -1453,6 +1527,7 @@ async def commit_import_to_vocab(request: CommitImportRequest):
                     verb_transitivity=vt_syn,
                     origin='deck',
                     deck_id=deck_ids_by_lang.get(request.language),
+                    gender=syn_gender,
                 )
             merged_synonyms.append({'word': word, 'synonym_of': syn_of_word, 'english': english, 'verb_transitivity': vt_syn})
             csv_words.append({'word': word, 'english': english, 'transliteration': translit,
@@ -1483,6 +1558,18 @@ async def commit_import_to_vocab(request: CommitImportRequest):
                     translit = transliteration.transliterate_text(word, lang, 'IAST')
                 else:
                     translit = base_translit or transliteration.transliterate_text(word, lang, 'IAST')
+                # Gender: from gender_hindi/gender_urdu for target langs, or generic gender
+                tgt_gender = None
+                if lang == 'hindi':
+                    tgt_gender = wd.get('gender_hindi') if isinstance(wd, dict) else getattr(wd, 'gender_hindi', None)
+                elif lang == 'urdu':
+                    tgt_gender = wd.get('gender_urdu') if isinstance(wd, dict) else getattr(wd, 'gender_urdu', None)
+                if not tgt_gender:
+                    tgt_gender = wd.get('gender') if isinstance(wd, dict) else getattr(wd, 'gender', None)
+                if tgt_gender and str(tgt_gender).strip().lower() not in ('m', 'f'):
+                    tgt_gender = None
+                elif tgt_gender:
+                    tgt_gender = str(tgt_gender).strip().lower()
                 if not db.find_word_by_translation(word, lang):
                     db.insert_vocabulary_entry(
                         language=lang,
@@ -1492,8 +1579,9 @@ async def commit_import_to_vocab(request: CommitImportRequest):
                         word_class=wc,
                         level=lvl,
                         verb_transitivity=vt_tgt,
-                        origin='translated',
+                        origin='deck',
                         deck_id=deck_ids_by_lang.get(lang),
+                        gender=tgt_gender,
                     )
                     lang_added.append({'word': word, 'english_word': english, 'word_class': wc, 'verb_transitivity': vt_tgt})
             added_by_lang[lang] = lang_added
@@ -1612,6 +1700,20 @@ def rename_deck(deck_id: int, request: RenameDeckRequest):
     return {"success": True, "deck_id": deck_id, "name": request.name}
 
 
+class RemoveDeckWordsRequest(BaseModel):
+    word_ids: List[int]
+
+
+@app.delete("/api/vocab/decks/{deck_id}/words")
+def remove_words_from_deck_endpoint(deck_id: int, request: RemoveDeckWordsRequest):
+    """Remove selected words from a deck. Only user-generated cards (origin deck/activity/user) are
+    deleted from the vocabulary; original-set words are only unlinked from this deck."""
+    if not request.word_ids:
+        return {"success": True, "removed": 0}
+    removed = db.remove_words_from_deck(deck_id, request.word_ids, only_user_generated=True)
+    return {"success": True, "removed": removed}
+
+
 @app.delete("/api/vocab/decks/{deck_id}")
 def delete_deck(deck_id: int, all_languages: bool = False):
     """Delete a vocab deck and all associated words for the current user.
@@ -1705,7 +1807,9 @@ def grade_lesson_free_response(request: LessonFreeResponseRequest):
         )
         
         # Generate with Gemini
-        response_text, response_time, token_info, is_truncated, _ = api_client.generate_text_with_gemini(prompt)
+        response_text, response_time, token_info, is_truncated, _ = api_client.generate_text_with_gemini(
+            prompt, model_name=api_client.get_model_for_flow('lesson_free_response')
+        )
         
         if not response_text:
             raise HTTPException(status_code=500, detail="Failed to generate feedback")
@@ -2093,7 +2197,9 @@ async def generate_placement_test_stream(language: str):
                                         "message": "Calling Gemini AI — crafting 5 skill sections…", "progress": 0.10}))
 
             # 16 000 tokens — full 25-question Indic-script test regularly exceeds 8 192
-            response_text, response_time, token_info, is_truncated, _ = generate_text_with_gemini(prompt, max_tokens=16000)
+            response_text, response_time, token_info, is_truncated, _ = generate_text_with_gemini(
+                prompt, model_name=api_client.get_model_for_flow('placement_test'), max_tokens=16000
+            )
 
             if not response_text or not response_text.strip():
                 raise Exception("Gemini returned an empty response. Please try again.")
@@ -2117,6 +2223,25 @@ async def generate_placement_test_stream(language: str):
 
             section_ids = [s['section_id'] for s in result.get('sections', [])]
             print(f"[PlacementTest/SSE] Generated test with sections: {section_ids}")
+
+            # ── Pre-generate audio for listening sections BEFORE sending `done` ──
+            has_listening = any(s.get('section_id') == 'listening' for s in result.get('sections', []))
+            if has_listening:
+                progress_q.put(json.dumps({"type": "status", "stage": "generating_audio", "message": "Generating audio for listening section...", "progress": 0.95}))
+                for section in result.get('sections', []):
+                    if section.get('section_id') == 'listening':
+                        for item in section.get('items', []):
+                            if item.get('type') == 'transcript':
+                                try:
+                                    item['audio_base64'] = _generate_listening_audio_b64(
+                                        language=language,
+                                        transcript_text=item.get('transcript_text', ''),
+                                        speakers_meta=item.get('speakers', []),
+                                        dialogue_lines=item.get('dialogue', [])
+                                    )
+                                except Exception as e:
+                                    print(f"[PlacementTest/SSE] Error pre-generating audio: {e}")
+
             progress_q.put(json.dumps({"type": "done", "test": result, "progress": 1.0,
                                         "message": "Test ready!"}))
         except Exception as exc:
@@ -2277,30 +2402,31 @@ def get_latest_placement_result(language: str):
 
 @app.post("/api/placement-test/listening-audio/{language}")
 async def generate_placement_listening_audio(language: str, request: Request):
-    """Generate TTS audio for a placement test listening transcript.
-
-    Supports multi-speaker dialogues via the `speakers` + `dialogue` fields.
-    Each speaker is assigned a distinct Gemini voice matched to their gender.
-    All per-utterance WAV segments are stitched into a single WAV file.
-
-    Body: {
-        "transcript_text": "...",          # flat fallback (single speaker)
-        "speakers": [...],                 # optional, list of {name, gender}
-        "dialogue": [...]                  # optional, list of {speaker_index, text}
-    }
-    Returns: { "audio_base64": "..." }
-    """
-    import struct, io as _io, random as _random
-
+    """Generate TTS audio for a placement test listening transcript."""
     try:
         body = await request.json()
-        speakers_meta = body.get("speakers") or []
-        dialogue_lines = body.get("dialogue") or []
-        transcript_text = body.get("transcript_text", "").strip()
+        audio_base64 = _generate_listening_audio_b64(
+            language=language,
+            transcript_text=body.get("transcript_text", "").strip(),
+            speakers_meta=body.get("speakers") or [],
+            dialogue_lines=body.get("dialogue") or []
+        )
+        return {"audio_base64": audio_base64}
+    except HTTPException:
+        raise
+    except Exception as e:
+        print(f"[PlacementTest] TTS error: {e}")
+        import traceback; traceback.print_exc()
+        raise HTTPException(status_code=500, detail=f"TTS error: {str(e)}")
+
+def _generate_listening_audio_b64(language: str, transcript_text: str, speakers_meta: list, dialogue_lines: list) -> str:
+    import struct, io as _io, random as _random
+
 
         LANGUAGE_TTS_CODES = {
             'kannada': 'kn-IN', 'hindi': 'hi-IN', 'malayalam': 'ml-IN',
             'tamil': 'ta-IN', 'telugu': 'te-IN', 'urdu': 'ur-IN',
+            'vietnamese': 'vi-VN',
         }
         lang_code = LANGUAGE_TTS_CODES.get(language.lower(), 'kn-IN')
 
@@ -2398,21 +2524,7 @@ async def generate_placement_listening_audio(language: str, request: Request):
         wav_bytes_final = wav_buf.getvalue()
 
         import base64 as _b64
-        audio_base64 = _b64.b64encode(wav_bytes_final).decode('utf-8')
-        print(f"[PlacementTest/TTS] ✓ Stitched WAV: {len(wav_bytes_final)} bytes, {len(audio_base64)} base64 chars")
-
-        return {
-            "audio_base64": audio_base64,
-            "voices": speaker_voices,
-            "num_utterances": len(utterances),
-        }
-    except HTTPException:
-        raise
-    except Exception as e:
-        print(f"[PlacementTest] TTS error: {e}")
-        import traceback; traceback.print_exc()
-        raise HTTPException(status_code=500, detail=f"TTS error: {str(e)}")
-
+        return _b64.b64encode(wav_bytes_final).decode('utf-8')
 
 @app.get("/api/placement-test/history/{language}")
 def get_placement_test_history(language: str):
@@ -2689,7 +2801,9 @@ def generate_listening_activity_background(
     custom_topic: str = None,
     user_interests: list = None
 ):
-    """Background task to generate listening activity with progress updates"""
+    """Background task: generate listening via unified flow (same as unified endpoint) so
+    both POST /api/activity/listening and POST /api/activity/unified/listening return
+    the same activity shape with embedded audio."""
     try:
         print(f"[Background Task] Starting activity generation for session {session_id}")
         if custom_topic:
@@ -2697,19 +2811,22 @@ def generate_listening_activity_background(
         elif user_interests:
             print(f"[Background Task] User interests: {user_interests}")
         
-        activity = api_client.generate_listening_activity(
-            word_bank_words, 
-            language, 
-            required_learning_words=required_learning_words, 
+        activity = api_client.generate_unified_activity(
+            'listening',
+            word_bank_words,
+            language,
+            required_learning_words=required_learning_words,
             user_cefr_level=user_cefr_level,
             session_id=session_id,
             progress_store=tts_progress_store,
             custom_topic=custom_topic,
-            user_interests=user_interests
+            user_interests=user_interests,
+            learning_languages_with_levels=None
         )
         
         if not activity:
             print(f"[Background Task] Failed to generate activity for session {session_id}")
+            completed_activities[session_id] = {"status": "error", "error": "Activity generation returned empty"}
             return
         
         # Check for errors in activity
@@ -2723,6 +2840,13 @@ def generate_listening_activity_background(
             }
             return
         
+        # Listening without audio: treat as error (do not save)
+        if activity.get('_tts_status') == 'no_audio':
+            err_msg = activity.get('_tts_error') or 'Audio could not be generated. Please try again.'
+            print(f"⚠️ [Background Task] Listening no_audio: {err_msg}")
+            completed_activities[session_id] = {"status": "error", "error": err_msg}
+            return
+        
         # Save activity to history
         activity_data_json = json.dumps(activity)
         activity_id = db.log_activity(language, 'listening', 0.0, activity_data_json)
@@ -2730,10 +2854,7 @@ def generate_listening_activity_background(
             print(f"✅ [Background Task] Activity logged with ID: {activity_id}")
             activity['activity_id'] = activity_id
         
-        # Extract words_used from activity
         words_used_data = activity.get('_words_used_data', [])
-        
-        # Build API details
         token_info = activity.get("_token_info", {})
         tts_cost = activity.get("_tts_cost", 0.0)
         total_cost = token_info.get('total_cost', 0.0) + tts_cost
@@ -2742,33 +2863,25 @@ def generate_listening_activity_background(
             "endpoint": f"POST /api/activity/listening/{language}",
             "session_id": session_id,
             "prompt": activity.get("_prompt", ""),
-            "learned_words": activity.get("_learned_words", []),
-            "required_learning_words": activity.get("_required_learning_words", []),
-            "response_time": activity.get("_response_time", 0),
             "raw_response": activity.get("_raw_response", ""),
+            "response_time": activity.get("_response_time", 0),
             "token_info": token_info,
+            "model": activity.get("_model", "Unknown"),
             "tts_cost": tts_cost,
-            "tts_response_time": activity.get("_tts_response_time", 0.0),
             "total_cost": total_cost,
-            "voice_used": activity.get("_voice_used", ""),
-            "speaker_profile": activity.get("_speaker_profile"),
-            "parse_error": activity.get("_parse_error"),
-            "error": activity.get("_error"),
-            "error_type": activity.get("_error_type"),
-            "error_traceback": activity.get("_error_traceback"),
-            "tts_errors": activity.get("_tts_errors"),
-            "tts_results": activity.get("_tts_results"),
-            "warning": activity.get("_warning"),
-            "debug_steps": activity.get("_debug_steps", []),
+            "tts_error": activity.get("_tts_error"),
+            "tts_status": activity.get("_tts_status"),
         }
         
-        # Store completed activity with full structure
         completed_activities[session_id] = {
             "status": "complete",
             "activity": activity,
             "words_used": words_used_data,
             "api_details": api_details
         }
+        _plen = len(activity.get("_prompt") or "")
+        _rlen = len(activity.get("_raw_response") or "")
+        print(f"[Listening result] Stored api_details: prompt len={_plen}, raw_response len={_rlen}")
         print(f"✅ [Background Task] Activity generation complete for session {session_id}")
         
         # Notify progress tracker that generation is fully complete
@@ -2804,7 +2917,7 @@ def generate_listening_activity_background(
 
 @app.post("/api/activity/listening/{language}")
 async def create_listening_activity(language: str, request: Request, background_tasks: BackgroundTasks):
-    """Initialize a listening activity session and return session ID immediately"""
+    """Initialize a listening activity session (uses same unified flow as /api/activity/unified/listening)."""
     try:
         # Parse topic from request body (handle empty body gracefully)
         body = {}
@@ -2840,7 +2953,7 @@ async def create_listening_activity(language: str, request: Request, background_
         session_id = str(uuid.uuid4())
         
         print(f"\n{'='*80}")
-        print(f"[Listening Activity] Starting generation for {language}")
+        print(f"[Listening Activity] Starting generation for {language} (unified flow)")
         print(f"[Listening Activity] Session ID: {session_id}")
         if custom_topic:
             print(f"[Listening Activity] Custom topic: {custom_topic}")
@@ -2911,11 +3024,21 @@ def get_listening_activity_result(session_id: str):
     if result["status"] == "error":
         raise HTTPException(status_code=500, detail=result["error"])
     
+    # Ensure api_details has prompt and raw_response for debug modal (from activity if missing)
+    activity = result.get("activity") or {}
+    api_details = result.get("api_details") or {}
+    if activity and (not api_details.get("prompt") or not api_details.get("raw_response")):
+        api_details = dict(api_details)
+        if not api_details.get("prompt") and activity.get("_prompt"):
+            api_details["prompt"] = activity["_prompt"]
+        if not api_details.get("raw_response") and activity.get("_raw_response"):
+            api_details["raw_response"] = activity["_raw_response"]
+    
     # Return the completed activity in the same format as the old endpoint
     response = {
-        "activity": result["activity"],
+        "activity": activity,
         "words_used": result.get("words_used", []),
-        "api_details": result.get("api_details", {})
+        "api_details": api_details,
     }
     
     # Clean up the stored activity after retrieval
@@ -3134,49 +3257,30 @@ async def create_translation_activity(language: str, request: Request):
         print(f"Generating translation activity for {language} (level: {user_cefr_level})")
         print(f"Other languages: {other_language_levels}")
         
-        # Determine number of sentences (15-30)
+        # Build string of other languages and levels
+        learning_languages_str = ", ".join([f"{lang.title()} (Level {lvl})" for lang, lvl in other_language_levels.items()])
+        
+        print(f"Generating unified translation activity for {language} (level: {user_cefr_level})")
+        print(f"Other languages: {learning_languages_str}")
+        
+        # Get words for the activity
+        word_bank_words = db.get_words_for_activity(language, learned_limit=100, learning_limit=50)
+        learning_words = [w for w in word_bank_words if w.get('mastery_level') in ['learning', 'review']]
+        if not learning_words:
+            learning_words = [w for w in word_bank_words if w.get('mastery_level') not in ['mastered', 'learning', 'review']]
+            
         import random
-        num_sentences = random.randint(15, 30)
+        required_learning_words = random.sample(learning_words, min(10, len(learning_words))) if learning_words else []
         
-        # Decide how many sentences from each language
-        # If target language is much higher level (2+ levels), include English
-        use_english = False
-        if other_languages:
-            max_other_level = max([db._cefr_to_numeric(lvl) for lvl in other_language_levels.values()])
-            target_level_numeric = db._cefr_to_numeric(user_cefr_level)
-            if target_level_numeric - max_other_level >= 2:
-                use_english = True
-                other_languages.append('english')
-                other_language_levels['english'] = user_cefr_level
-        
-        # If no other languages, use English
-        if not other_languages:
-            other_languages = ['english']
-            other_language_levels['english'] = user_cefr_level
-        
-        # Distribute sentences across languages
-        sentences_per_language = {}
-        remaining_sentences = num_sentences
-        for i, lang in enumerate(other_languages):
-            if i == len(other_languages) - 1:
-                sentences_per_language[lang] = remaining_sentences
-            else:
-                count = random.randint(max(1, num_sentences // len(other_languages) - 3), 
-                                      num_sentences // len(other_languages) + 3)
-                count = min(count, remaining_sentences - (len(other_languages) - i - 1))
-                sentences_per_language[lang] = count
-                remaining_sentences -= count
-        
-        print(f"Sentence distribution: {sentences_per_language}")
-        
-        # Generate translation activity
-        activity = api_client.generate_translation_activity(
-            target_language=language,
-            target_level=user_cefr_level,
-            source_languages=other_languages,
-            source_language_levels=other_language_levels,
-            sentences_per_language=sentences_per_language,
-            custom_topic=custom_topic
+        # Generate translation activity using unified format
+        activity = api_client.generate_unified_activity(
+            activity_type='translation',
+            language=language,
+            user_cefr_level=user_cefr_level,
+            required_learning_words=required_learning_words,
+            word_bank=word_bank_words,
+            custom_topic=custom_topic,
+            learning_languages_with_levels=learning_languages_str
         )
         
         if not activity:
@@ -5339,7 +5443,7 @@ def get_language_stats_endpoint(language: str):
 @app.get("/api/stats/languages")
 def get_all_languages_stats():
     """Get stats summary for all languages"""
-    languages = ['kannada', 'telugu', 'malayalam', 'tamil', 'hindi', 'urdu', 'spanish', 'french', 'welsh']
+    languages = ['kannada', 'telugu', 'malayalam', 'tamil', 'hindi', 'urdu', 'spanish', 'french', 'welsh', 'vietnamese']
     all_stats = {}
     for lang in languages:
         try:
@@ -5690,6 +5794,7 @@ def speech_to_text(request: SpeechToTextRequest):
             'spanish': 'es-ES',
             'french': 'fr-FR',
             'welsh': 'cy-GB',
+            'vietnamese': 'vi-VN',
         }
         
         language_code = language_map.get(request.language.lower(), 'kn-IN')
@@ -6171,7 +6276,9 @@ Current app context (use only to personalize answers; do not announce the user's
 
     prompt = f"{system_instruction}\n\nUser: {request.message.strip()}\n\nTutor:"
     try:
-        response_text, _, _, _, _ = api_client.generate_text_with_gemini(prompt, max_tokens=1024)
+        response_text, _, _, _, _ = api_client.generate_text_with_gemini(
+            prompt, model_name=api_client.get_model_for_flow('tutor_chat'), max_tokens=1024
+        )
         reply = (response_text or "").strip()
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Tutor error: {str(e)}")
@@ -6214,6 +6321,179 @@ def get_tutor_conversation(conversation_id: str):
             return {"id": c.get("id"), "title": c.get("title"), "messages": c.get("messages", [])}
     raise HTTPException(status_code=404, detail="Conversation not found")
 
+
+@app.post("/api/activity/unified/{activity_type}/{language}")
+async def create_unified_activity(activity_type: str, language: str, request: Request, background_tasks: BackgroundTasks):
+    """Unified endpoint for generating any practice activity"""
+    try:
+        if activity_type not in ['transliteration', 'reading', 'listening', 'writing', 'speaking', 'translation']:
+            raise HTTPException(status_code=400, detail=f"Invalid activity type: {activity_type}")
+            
+        body = {}
+        try:
+            if request.headers.get('content-type') == 'application/json':
+                body = await request.json()
+        except json.JSONDecodeError:
+            pass
+            
+        custom_topic = body.get('topic')
+        
+        user_interests = []
+        if custom_topic is None:
+            try:
+                conn = sqlite3.connect(config.DB_PATH)
+                cursor = conn.cursor()
+                cursor.execute('''
+                    SELECT value FROM user_preferences
+                    WHERE user_id = 1 AND key = 'selected_interests'
+                ''')
+                row = cursor.fetchone()
+                if row and row[0]:
+                    user_interests = json.loads(row[0])
+                conn.close()
+            except Exception as e:
+                print(f"Error fetching user interests: {e}")
+                
+        user_level_info = db.calculate_user_level(language)
+        user_cefr_level = user_level_info.get('level', 'A1')
+        
+        word_bank_words = db.get_words_for_activity(language, learned_limit=200, learning_limit=50)
+        if not word_bank_words:
+            raise HTTPException(status_code=404, detail="No words available for activity")
+            
+        import random
+        learning_words = [w for w in word_bank_words if w.get('mastery_level') in ['learning', 'review']]
+        if not learning_words:
+            learning_words = [w for w in word_bank_words if w.get('mastery_level') not in ['mastered', 'learning', 'review']]
+            
+        required_learning_words = random.sample(learning_words, min(10, len(learning_words))) if learning_words else []
+        
+        learning_languages_with_levels = None
+        if activity_type == 'translation':
+            try:
+                conn = sqlite3.connect(config.DB_PATH)
+                cursor = conn.cursor()
+                cursor.execute('''
+                    SELECT DISTINCT language FROM vocabulary
+                    GROUP BY language
+                    HAVING COUNT(*) > 0
+                ''')
+                all_langs = [row[0] for row in cursor.fetchall()]
+                conn.close()
+                levels = {}
+                for lang in all_langs:
+                    level_info = db.calculate_user_level(lang)
+                    levels[lang] = level_info.get('level', 'A1')
+                parts = [f"- {lang}: {levels[lang]}" for lang in all_langs]
+                learning_languages_with_levels = '\n'.join(parts) if parts else f"- {language}: {user_cefr_level}"
+            except Exception as e:
+                print(f"Error fetching learning languages for translation: {e}")
+                learning_languages_with_levels = f"- {language}: {user_cefr_level}"
+        
+        if activity_type == 'listening':
+            import uuid
+            session_id = str(uuid.uuid4())
+            tts_progress_store.create_session(session_id, total_paragraphs=5)
+            
+            def background_generation():
+                try:
+                    activity = api_client.generate_unified_activity(
+                        activity_type, word_bank_words, language, required_learning_words,
+                        user_cefr_level, session_id, tts_progress_store, custom_topic, user_interests,
+                        learning_languages_with_levels if activity_type == 'translation' else None
+                    )
+                    
+                    if activity.get('_error'):
+                        completed_activities[session_id] = {"status": "error", "error": activity.get('_error')}
+                        return
+                    
+                    # Listening activities without audio are useless — treat as error and do not save
+                    if activity_type == 'listening' and activity.get('_tts_status') == 'no_audio':
+                        err_msg = activity.get('_tts_error') or 'Audio could not be generated. Please try again.'
+                        completed_activities[session_id] = {"status": "error", "error": err_msg}
+                        return
+                        
+                    activity_id = db.log_activity(language, activity_type, 0.0, json.dumps(activity))
+                    if activity_id:
+                        activity['activity_id'] = activity_id
+                        
+                    completed_activities[session_id] = {
+                        "status": "complete",
+                        "activity": activity,
+                        "words_used": activity.get('_words_used_data', []),
+                        "api_details": {
+                            "endpoint": f"POST /api/activity/unified/{activity_type}/{language}",
+                            "session_id": session_id,
+                            "response_time": activity.get('_response_time', 0),
+                            "token_info": activity.get('_token_info', {}),
+                            "model": activity.get('_model', 'Unknown'),
+                            "prompt": activity.get('_prompt', ''),
+                            "raw_response": activity.get('_raw_response', ''),
+                            "tts_error": activity.get('_tts_error'),
+                            "tts_status": activity.get('_tts_status'),
+                        }
+                    }
+                    # Log for debugging: ensure prompt/response are present for debug modal
+                    _plen = len(activity.get('_prompt') or '')
+                    _rlen = len(activity.get('_raw_response') or '')
+                    print(f"[Listening result] Stored api_details: prompt len={_plen}, raw_response len={_rlen}")
+                    
+                    if session_id in tts_progress_store:
+                        tracker = tts_progress_store.get(session_id)
+                        if tracker:
+                            for q in tracker.queues:
+                                try:
+                                    q.put_nowait({
+                                        'type': 'generation_complete',
+                                        'message': 'Activity generation completed',
+                                        'progress': tracker.progress.copy()
+                                    })
+                                except:
+                                    pass
+                except Exception as e:
+                    completed_activities[session_id] = {"status": "error", "error": str(e)}
+                    
+            background_tasks.add_task(background_generation)
+            return {
+                "session_id": session_id,
+                "status": "generating",
+                "message": "Activity generation started. Connect to SSE for progress updates."
+            }
+            
+        else:
+            activity = api_client.generate_unified_activity(
+                activity_type, word_bank_words, language, required_learning_words,
+                user_cefr_level, None, None, custom_topic, user_interests,
+                learning_languages_with_levels if activity_type == 'translation' else None
+            )
+            
+            if activity.get('_error'):
+                raise Exception(activity.get('_error'))
+                
+            activity_id = db.log_activity(language, activity_type, 0.0, json.dumps(activity))
+            if activity_id:
+                activity['activity_id'] = activity_id
+            
+            # Ensure debug modal gets prompt and raw response (explicit copy into api_details)
+            _prompt = activity.get('_prompt') or ''
+            _raw = activity.get('_raw_response') or ''
+            return {
+                "activity": activity,
+                "words_used": activity.get('_words_used_data', []),
+                "api_details": {
+                    "endpoint": f"POST /api/activity/unified/{activity_type}/{language}",
+                    "response_time": activity.get('_response_time', 0),
+                    "token_info": activity.get('_token_info', {}),
+                    "model": activity.get('_model', 'Unknown'),
+                    "prompt": _prompt,
+                    "raw_response": _raw,
+                }
+            }
+            
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 # ============================================================================
 # Server Startup

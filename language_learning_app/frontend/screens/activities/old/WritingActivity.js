@@ -20,8 +20,8 @@ import { useDictionary } from './shared/hooks/useDictionary';
 import { useGrading } from './shared/hooks/useGrading';
 import { useActivityCompletion } from './shared/hooks/useActivityCompletion';
 import { VocabularyDictionary, APIDebugModal, TopicSelectionModal } from './shared/components';
-import TranslationToolModal from '../../components/TranslationToolModal';
 import TextImportModal from '../../components/TextImportModal';
+import { useTranslationJob } from '../../contexts/TranslationJobContext';
 import { ACTIVITY_COLORS } from './shared/constants';
 import { normalizeText } from './shared/utils/textProcessing';
 import {
@@ -51,7 +51,7 @@ import {
  * Handles writing exercises with AI grading and feedback
  * Language-agnostic design with full transliteration and dictionary support
  */
-export default function WritingActivity({ route, navigation }) {
+export default function WritingActivity({ route, navigation, themeColor }) {
   const insets = useSafeAreaInsets();
   const { activityId, fromHistory, activityData: routeActivityData } = route.params || {};
   const { selectedLanguage: ctxLanguage } = useContext(LanguageContext);
@@ -66,16 +66,16 @@ export default function WritingActivity({ route, navigation }) {
   const dictionary = useDictionary(language);
   const grading = useGrading('writing', language);
   const { complete } = useActivityCompletion(language, 'writing');
+  const { openModalWithPrefill, closeModal } = useTranslationJob();
 
   // Writing-specific state
   const [highlightVocab, setHighlightVocab] = useState(false);
   const [rubricExpanded, setRubricExpanded] = useState(false);
   const [showAPIDebug, setShowAPIDebug] = useState(false);
   const [showTopicModal, setShowTopicModal] = useState(!fromHistory);
-  const [showTranslationModal, setShowTranslationModal] = useState(false);
   const [showImportModal, setShowImportModal] = useState(false);
 
-  const colors = ACTIVITY_COLORS.writing;
+  const colors = themeColor || ACTIVITY_COLORS.writing;
 
   const handleTopicSelection = (selectedTopic) => {
     setShowTopicModal(false);
@@ -378,7 +378,11 @@ export default function WritingActivity({ route, navigation }) {
           {/* Highlight vocab toggle retained (no color palette icon) */}
           <TouchableOpacity
             style={styles.toggleButton}
-            onPress={() => setShowTranslationModal(true)}
+            onPress={() => openModalWithPrefill({
+          language: language || 'kannada',
+          prefillText: activityData.activity?.prompt || '',
+          onMakeVocabCards: () => { closeModal(); setShowImportModal(true); },
+        })}
           >
             <Ionicons name="language" size={20} color="#FFFFFF" />
           </TouchableOpacity>
@@ -891,18 +895,6 @@ export default function WritingActivity({ route, navigation }) {
         dictionaryLanguage={dictionary.dictionaryLanguage}
         setDictionaryLanguage={dictionary.setDictionaryLanguage}
         highlightVocab={highlightVocab}
-      />
-
-      {/* Translation Tool Modal */}
-      <TranslationToolModal
-        visible={showTranslationModal}
-        onClose={() => setShowTranslationModal(false)}
-        language={language}
-        prefillText={activityData.activity?.prompt || ''}
-        onMakeVocabCards={() => {
-          setShowTranslationModal(false);
-          setShowImportModal(true);
-        }}
       />
 
       {/* Import Vocab Modal — pre-filled with writing prompt text */}

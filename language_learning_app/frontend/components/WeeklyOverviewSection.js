@@ -268,7 +268,8 @@ export default function WeeklyOverviewSection({ expanded, onToggle }) {
                 const isDayExpanded = expandedDays[index];
                 const dateStr = getDateForDay(index);
                 const dayProgress = weekData.progress[dateStr] || {};
-                const hasActivities = Object.keys(dayProgress).length > 0;
+                const dayGoals = weekData.goals[day] || {};
+                const hasActivities = Object.keys(dayProgress).length > 0 || Object.keys(dayGoals).length > 0;
                 
                 return (
                   <View 
@@ -310,13 +311,13 @@ export default function WeeklyOverviewSection({ expanded, onToggle }) {
 
                     {/* Expandable Activities Section */}
                     {isDayExpanded && hasActivities && (() => {
-                      const dayGoals = weekData.goals[day] || {};
+                      const dayGoalsForDay = weekData.goals[day] || {};
                       
                       // Group activities by language
                       const languageActivities = new Map();
                       
                       // Add activities from goals
-                      Object.entries(dayGoals).forEach(([lang, activities]) => {
+                      Object.entries(dayGoalsForDay).forEach(([lang, activities]) => {
                         if (!languageActivities.has(lang)) {
                           languageActivities.set(lang, new Map());
                         }
@@ -325,16 +326,17 @@ export default function WeeklyOverviewSection({ expanded, onToggle }) {
                         });
                       });
                       
-                      // Add activities from progress (even if no goal)
+                      // Add activities from progress (even if no goal); map 'flashcard' -> 'flashcards' so counts merge
                       Object.entries(dayProgress).forEach(([lang, activities]) => {
                         if (!languageActivities.has(lang)) {
                           languageActivities.set(lang, new Map());
                         }
                         Object.entries(activities).forEach(([activity, completedCount]) => {
-                          if (languageActivities.get(lang).has(activity)) {
-                            languageActivities.get(lang).get(activity).completedCount = completedCount;
+                          const key = activity === 'flashcard' ? 'flashcards' : activity;
+                          if (languageActivities.get(lang).has(key)) {
+                            languageActivities.get(lang).get(key).completedCount = completedCount;
                           } else {
-                            languageActivities.get(lang).set(activity, { goalCount: 0, completedCount });
+                            languageActivities.get(lang).set(key, { goalCount: 0, completedCount });
                           }
                         });
                       });

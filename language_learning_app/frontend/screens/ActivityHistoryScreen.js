@@ -34,8 +34,16 @@ import {
   getExpectedTranslationLabel,
 } from '../constants/ui_labels';
 import { Audio } from 'expo-av';
+import { isDevanagari } from './activities/shared/utils/textProcessing';
 
 const API_BASE_URL = __DEV__ ? 'http://localhost:9090' : 'http://localhost:9090';
+
+/** For Urdu: show Nastaliq from nativeRenderings when available; never show Devanagari. */
+function urduText(nativeRenderings, key, raw) {
+  if (nativeRenderings[key]) return nativeRenderings[key];
+  if (isDevanagari(raw)) return '';
+  return raw;
+}
 
 const ACTIVITY_COLORS = {
   transliteration: { primary: '#EC4899', light: '#FCE7F3' },
@@ -427,9 +435,9 @@ export default function ActivityHistoryScreen({ route, navigation }) {
         return (
           <View>
             {data.story_name && (
-              <SafeText style={styles.activityStoryName}>{language === 'urdu' && nativeRenderings[`storyName_${idx}`] ? nativeRenderings[`storyName_${idx}`] : String(data.story_name)}</SafeText>
+              <SafeText style={styles.activityStoryName}>{language === 'urdu' ? urduText(nativeRenderings, `storyName_${idx}`, data.story_name) : String(data.story_name)}</SafeText>
             )}
-            <SafeText style={styles.activityStory}>{language === 'urdu' && nativeRenderings[`story_${idx}`] ? nativeRenderings[`story_${idx}`] : String(data.story)}</SafeText>
+            <SafeText style={styles.activityStory}>{language === 'urdu' ? urduText(nativeRenderings, `story_${idx}`, data.story) : String(data.story)}</SafeText>
             {data.questions && data.questions.length > 0 && (
               <View style={styles.questionsSection}>
                 <SafeText style={styles.questionsTitle}>
@@ -437,7 +445,7 @@ export default function ActivityHistoryScreen({ route, navigation }) {
                 </SafeText>
                 {data.questions.map((q, qIndex) => (
                   <View key={qIndex} style={styles.questionItem}>
-                    <SafeText style={styles.questionText}>{`${qIndex + 1}. ${language === 'urdu' && nativeRenderings[`question_${idx}_${qIndex}`] ? nativeRenderings[`question_${idx}_${qIndex}`] : String(q.question)}`}</SafeText>
+                    <SafeText style={styles.questionText}>{`${qIndex + 1}. ${language === 'urdu' ? urduText(nativeRenderings, `question_${idx}_${qIndex}`, q.question) : String(q.question)}`}</SafeText>
                     {/* Always show answers in history */}
                     <View style={styles.optionsContainer}>
                       {q.options.map((option, oIndex) => (
@@ -452,7 +460,7 @@ export default function ActivityHistoryScreen({ route, navigation }) {
                             styles.optionText,
                             oIndex === q.correct && styles.correctOptionText,
                           ]}>
-                            {language === 'urdu' && nativeRenderings[`option_${idx}_${qIndex}_${oIndex}`] ? nativeRenderings[`option_${idx}_${qIndex}_${oIndex}`] : String(option)}
+                            {language === 'urdu' ? urduText(nativeRenderings, `option_${idx}_${qIndex}_${oIndex}`, option) : String(option)}
                           </SafeText>
                           {oIndex === q.correct && (
                             <Ionicons name="checkmark-circle" size={16} color="#50C878" />
@@ -470,14 +478,14 @@ export default function ActivityHistoryScreen({ route, navigation }) {
       
       if (activityType === 'listening') {
         // Split passage into paragraphs for audio playback
-        const passageText = language === 'urdu' && nativeRenderings[`passage_${idx}`] ? nativeRenderings[`passage_${idx}`] : (data.passage || '');
+        const passageText = language === 'urdu' ? urduText(nativeRenderings, `passage_${idx}`, data.passage || '') : (data.passage || '');
         const paragraphs = passageText ? passageText.split('\n\n').filter(p => p.trim()) : [];
         const audioDataList = data._audio_data || [];
         
         return (
           <View>
             {data.passage_name && (
-              <SafeText style={styles.activityStoryName}>{language === 'urdu' && nativeRenderings[`passageName_${idx}`] ? nativeRenderings[`passageName_${idx}`] : String(data.passage_name)}</SafeText>
+              <SafeText style={styles.activityStoryName}>{language === 'urdu' ? urduText(nativeRenderings, `passageName_${idx}`, data.passage_name) : String(data.passage_name)}</SafeText>
             )}
             {paragraphs.length > 0 ? (
               paragraphs.map((para, paraIndex) => {
@@ -520,7 +528,7 @@ export default function ActivityHistoryScreen({ route, navigation }) {
             {data.kannada_text && (
               <View style={styles.translationBox}>
                 <SafeText style={styles.translationLabel}>Kannada Text:</SafeText>
-                <SafeText style={styles.translationText}>{language === 'urdu' && nativeRenderings[`kannadaText_${idx}`] ? nativeRenderings[`kannadaText_${idx}`] : String(data.kannada_text)}</SafeText>
+                <SafeText style={styles.translationText}>{language === 'urdu' ? urduText(nativeRenderings, `kannadaText_${idx}`, data.kannada_text) : String(data.kannada_text)}</SafeText>
               </View>
             )}
             {data.questions && data.questions.length > 0 && (
@@ -528,7 +536,7 @@ export default function ActivityHistoryScreen({ route, navigation }) {
                 <SafeText style={styles.questionsTitle}><SafeText style={styles.boldText}>{getQuestionLabel(language)}</SafeText></SafeText>
                 {data.questions.map((q, qIndex) => (
                   <View key={qIndex} style={styles.questionItem}>
-                    <SafeText style={styles.questionText}>{`${String(qIndex + 1)}. ${language === 'urdu' && nativeRenderings[`question_${idx}_${qIndex}`] ? nativeRenderings[`question_${idx}_${qIndex}`] : String(q.question)}`}</SafeText>
+                    <SafeText style={styles.questionText}>{`${String(qIndex + 1)}. ${language === 'urdu' ? urduText(nativeRenderings, `question_${idx}_${qIndex}`, q.question) : String(q.question)}`}</SafeText>
                     <View style={styles.optionsContainer}>
                       {q.options.map((option, oIndex) => (
                         <View
@@ -560,7 +568,7 @@ export default function ActivityHistoryScreen({ route, navigation }) {
         return (
           <View>
             {data.activity_name && (
-              <SafeText style={styles.activityStoryName}>{language === 'urdu' && nativeRenderings[`activityName_${idx}`] ? nativeRenderings[`activityName_${idx}`] : String(data.activity_name)}</SafeText>
+              <SafeText style={styles.activityStoryName}>{language === 'urdu' ? urduText(nativeRenderings, `activityName_${idx}`, data.activity_name) : String(data.activity_name)}</SafeText>
             )}
             {data.writing_prompt && (
               <View style={styles.promptBox}>
@@ -569,7 +577,7 @@ export default function ActivityHistoryScreen({ route, navigation }) {
                     ? nativeRenderings.writingPrompt
                     : getWritingPromptLabel(language)}
                 </SafeText>
-                <SafeText style={styles.promptText}>{language === 'urdu' && nativeRenderings[`writingPrompt_${idx}`] ? nativeRenderings[`writingPrompt_${idx}`] : String(data.writing_prompt)}</SafeText>
+                <SafeText style={styles.promptText}>{language === 'urdu' ? urduText(nativeRenderings, `writingPrompt_${idx}`, data.writing_prompt) : String(data.writing_prompt)}</SafeText>
               </View>
             )}
             {data.required_words && data.required_words.length > 0 && (
@@ -582,7 +590,7 @@ export default function ActivityHistoryScreen({ route, navigation }) {
                 <View style={styles.wordsList}>
                   {data.required_words.map((word, wIdx) => (
                     <View key={wIdx} style={styles.wordTag}>
-                      <SafeText style={styles.wordTagText}>{language === 'urdu' && nativeRenderings[`requiredWord_${idx}_${wIdx}`] ? nativeRenderings[`requiredWord_${idx}_${wIdx}`] : String(word)}</SafeText>
+                      <SafeText style={styles.wordTagText}>{language === 'urdu' ? urduText(nativeRenderings, `requiredWord_${idx}_${wIdx}`, word) : String(word)}</SafeText>
                     </View>
                   ))}
                 </View>
@@ -603,7 +611,7 @@ export default function ActivityHistoryScreen({ route, navigation }) {
                         : getSubmissionNumberLabel(language)} {sIdx + 1}
                     </SafeText>
                     {submission.user_writing && (
-                      <SafeText style={styles.submissionText}>{language === 'urdu' && nativeRenderings[`userWriting_${idx}_${sIdx}`] ? nativeRenderings[`userWriting_${idx}_${sIdx}`] : String(submission.user_writing)}</SafeText>
+                      <SafeText style={styles.submissionText}>{language === 'urdu' ? urduText(nativeRenderings, `userWriting_${idx}_${sIdx}`, submission.user_writing) : String(submission.user_writing)}</SafeText>
                     )}
                     {submission.grading_result && (
                       <View style={styles.gradingResult}>
@@ -633,7 +641,7 @@ export default function ActivityHistoryScreen({ route, navigation }) {
                     ? nativeRenderings.submissionLabel
                     : getSubmissionNumberLabel(language)}:
                 </SafeText>
-                <SafeText style={styles.submissionText}>{language === 'urdu' && nativeRenderings[`userWriting_${idx}_0`] ? nativeRenderings[`userWriting_${idx}_0`] : String(data.user_writing)}</SafeText>
+                <SafeText style={styles.submissionText}>{language === 'urdu' ? urduText(nativeRenderings, `userWriting_${idx}_0`, data.user_writing) : String(data.user_writing)}</SafeText>
                 {data.grading_result && (
                   <View style={styles.gradingResult}>
                     <SafeText style={styles.gradingScore}>
@@ -660,7 +668,7 @@ export default function ActivityHistoryScreen({ route, navigation }) {
         return (
           <View>
             {data.activity_name && (
-              <SafeText style={styles.activityStoryName}>{language === 'urdu' && nativeRenderings[`activityName_${idx}`] ? nativeRenderings[`activityName_${idx}`] : String(data.activity_name)}</SafeText>
+              <SafeText style={styles.activityStoryName}>{language === 'urdu' ? urduText(nativeRenderings, `activityName_${idx}`, data.activity_name) : String(data.activity_name)}</SafeText>
             )}
             {data.topic && (
               <View style={styles.promptBox}>
@@ -669,7 +677,7 @@ export default function ActivityHistoryScreen({ route, navigation }) {
                     ? nativeRenderings.topicLabel
                     : getTopicLabel(language)}
                 </SafeText>
-                <SafeText style={styles.promptText}>{language === 'urdu' && nativeRenderings[`topic_${idx}`] ? nativeRenderings[`topic_${idx}`] : String(data.topic)}</SafeText>
+                <SafeText style={styles.promptText}>{language === 'urdu' ? urduText(nativeRenderings, `topic_${idx}`, data.topic) : String(data.topic)}</SafeText>
               </View>
             )}
             {data.instructions && (
@@ -679,7 +687,7 @@ export default function ActivityHistoryScreen({ route, navigation }) {
                     ? nativeRenderings.instructionsLabel
                     : getInstructionsLabel(language)}
                 </SafeText>
-                <SafeText style={styles.promptText}>{language === 'urdu' && nativeRenderings[`instructions_${idx}`] ? nativeRenderings[`instructions_${idx}`] : String(data.instructions)}</SafeText>
+                <SafeText style={styles.promptText}>{language === 'urdu' ? urduText(nativeRenderings, `instructions_${idx}`, data.instructions) : String(data.instructions)}</SafeText>
               </View>
             )}
             {data.required_words && data.required_words.length > 0 && (
@@ -692,7 +700,7 @@ export default function ActivityHistoryScreen({ route, navigation }) {
                 <View style={styles.wordsList}>
                   {data.required_words.map((word, wIdx) => (
                     <View key={wIdx} style={styles.wordTag}>
-                      <SafeText style={styles.wordTagText}>{language === 'urdu' && nativeRenderings[`requiredWord_${idx}_${wIdx}`] ? nativeRenderings[`requiredWord_${idx}_${wIdx}`] : String(word)}</SafeText>
+                      <SafeText style={styles.wordTagText}>{language === 'urdu' ? urduText(nativeRenderings, `requiredWord_${idx}_${wIdx}`, word) : String(word)}</SafeText>
                     </View>
                   ))}
                 </View>
@@ -705,7 +713,7 @@ export default function ActivityHistoryScreen({ route, navigation }) {
                     ? nativeRenderings.yourSpeech
                     : 'Your Speech:'}
                 </SafeText>
-                <SafeText style={styles.submissionText}>{language === 'urdu' && nativeRenderings[`userSpeech_${idx}`] ? nativeRenderings[`userSpeech_${idx}`] : String(data.user_speech)}</SafeText>
+                <SafeText style={styles.submissionText}>{language === 'urdu' ? urduText(nativeRenderings, `userSpeech_${idx}`, data.user_speech) : String(data.user_speech)}</SafeText>
               </View>
             )}
           </View>
@@ -733,7 +741,7 @@ export default function ActivityHistoryScreen({ route, navigation }) {
         return (
           <View>
             {data.activity_name && (
-              <SafeText style={styles.activityStoryName}>{language === 'urdu' && nativeRenderings[`activityName_${idx}`] ? nativeRenderings[`activityName_${idx}`] : String(data.activity_name)}</SafeText>
+              <SafeText style={styles.activityStoryName}>{language === 'urdu' ? urduText(nativeRenderings, `activityName_${idx}`, data.activity_name) : String(data.activity_name)}</SafeText>
             )}
             {data.sentences && data.sentences.length > 0 && (
               <SafeText style={styles.activityStory}>
@@ -755,6 +763,90 @@ export default function ActivityHistoryScreen({ route, navigation }) {
                 ))}
               </View>
             )}
+          </View>
+        );
+      }
+      
+      // Generic sections→items fallback for new-format activities
+      if (data.sections && Array.isArray(data.sections)) {
+        return (
+          <View>
+            {data.activity_name && (
+              <SafeText style={styles.activityStoryName}>{String(data.activity_name)}</SafeText>
+            )}
+            {data.sections.map((section, sIdx) => (
+              <View key={sIdx} style={{ marginBottom: 12 }}>
+                {section.section_title && (
+                  <SafeText style={[styles.questionsTitle, { marginBottom: 4 }]}>
+                    <SafeText style={styles.boldText}>{String(section.section_title)}</SafeText>
+                  </SafeText>
+                )}
+                {section.instruction_en && (
+                  <SafeText style={[styles.activityStory, { fontStyle: 'italic', marginBottom: 6 }]}>
+                    {String(section.instruction_en)}
+                  </SafeText>
+                )}
+                {(section.items || []).map((item, iIdx) => {
+                  const noDevanagari = (t) => (language === 'urdu' && isDevanagari(t)) ? '' : (t || '');
+                  // Passage
+                  if (item.type === 'passage' && item.passage_text) {
+                    return <SafeText key={iIdx} style={styles.activityStory}>{String(noDevanagari(item.passage_text))}</SafeText>;
+                  }
+                  // Transcript / dialogue
+                  if (item.type === 'transcript' && item.dialogue) {
+                    return (
+                      <View key={iIdx} style={{ marginBottom: 8 }}>
+                        {item.dialogue.map((line, lIdx) => (
+                          <SafeText key={lIdx} style={styles.activityStory}>
+                            {line.speaker ? `${line.speaker}: ` : ''}{String(noDevanagari(line.text || ''))}
+                          </SafeText>
+                        ))}
+                      </View>
+                    );
+                  }
+                  // MCQ
+                  if (item.type === 'mcq') {
+                    return (
+                      <View key={iIdx} style={styles.questionItem}>
+                        <SafeText style={styles.questionText}>{`${iIdx + 1}. ${String(noDevanagari(item.question || ''))}`}</SafeText>
+                        {item.options && (
+                          <View style={styles.optionsContainer}>
+                            {item.options.map((opt, oIdx) => (
+                              <View key={oIdx} style={[styles.optionItem, oIdx === item.correct && styles.correctOption]}>
+                                <SafeText style={[styles.optionText, oIdx === item.correct && styles.correctOptionText]}>
+                                  {String(noDevanagari(opt))}
+                                </SafeText>
+                                {oIdx === item.correct && <Ionicons name="checkmark-circle" size={16} color="#50C878" />}
+                              </View>
+                            ))}
+                          </View>
+                        )}
+                      </View>
+                    );
+                  }
+                  // Translation / free response prompts
+                  if (item.type === 'translation' || item.type === 'free_response' || item.type === 'speaking_prompt') {
+                    return (
+                      <View key={iIdx} style={styles.promptBox}>
+                        {item.prompt_native && <SafeText style={styles.promptText}>{String(noDevanagari(item.prompt_native))}</SafeText>}
+                        {item.source_phrase && <SafeText style={styles.promptText}>{String(noDevanagari(item.source_phrase))}</SafeText>}
+                        {item.prompt_en && <SafeText style={[styles.activityStory, { fontStyle: 'italic' }]}>{String(item.prompt_en)}</SafeText>}
+                      </View>
+                    );
+                  }
+                  // Transliteration items
+                  if (item.type === 'transliteration') {
+                    return (
+                      <View key={iIdx} style={styles.promptBox}>
+                        {item.source_text && <SafeText style={styles.promptText}>{String(noDevanagari(item.source_text))}</SafeText>}
+                        {item.romanized && <SafeText style={[styles.activityStory, { fontStyle: 'italic' }]}>{String(item.romanized)}</SafeText>}
+                      </View>
+                    );
+                  }
+                  return null;
+                })}
+              </View>
+            ))}
           </View>
         );
       }
@@ -828,17 +920,17 @@ export default function ActivityHistoryScreen({ route, navigation }) {
                     <View style={styles.historyInfo}>
                       {activityData && activityType === 'speaking' ? (
                         <>
-                          <SafeText style={styles.historyStoryName}>{language === 'urdu' && nativeRenderings[`activityName_${index}`] ? nativeRenderings[`activityName_${index}`] : String(activityData.activity_name || 'ಭಾಷಣ ಅಭ್ಯಾಸ')}</SafeText>
+                          <SafeText style={styles.historyStoryName}>{language === 'urdu' ? urduText(nativeRenderings, `activityName_${index}`, activityData.activity_name || '') : String(activityData.activity_name || 'ಭಾಷಣ ಅಭ್ಯಾಸ')}</SafeText>
                           {item.completed_at && <SafeText style={styles.historyDate}>{String(formatDate(item.completed_at))}</SafeText>}
                           {activityData.topic && (
                             <SafeText style={[styles.historyType, { marginTop: 4, fontSize: 12, color: '#666' }]} numberOfLines={1}>
-                              {language === 'urdu' && nativeRenderings[`topic_${index}`] ? String(nativeRenderings[`topic_${index}`].substring(0, 60)) : String(activityData.topic.substring(0, 60))}{(language === 'urdu' && nativeRenderings[`topic_${index}`] ? nativeRenderings[`topic_${index}`] : activityData.topic).length > 60 ? '...' : ''}
+                              {language === 'urdu' ? urduText(nativeRenderings, `topic_${index}`, activityData.topic).substring(0, 60) : String(activityData.topic.substring(0, 60))}{(language === 'urdu' ? urduText(nativeRenderings, `topic_${index}`, activityData.topic) : activityData.topic).length > 60 ? '...' : ''}
                             </SafeText>
                           )}
                         </>
                       ) : activityData && (activityData.story_name || activityData.activity_name || activityData.passage_name) ? (
                         <>
-                          <SafeText style={styles.historyStoryName}>{language === 'urdu' && (nativeRenderings[`storyName_${index}`] || nativeRenderings[`activityName_${index}`] || nativeRenderings[`passageName_${index}`]) ? (nativeRenderings[`storyName_${index}`] || nativeRenderings[`activityName_${index}`] || nativeRenderings[`passageName_${index}`]) : String(activityData.story_name || activityData.activity_name || activityData.passage_name)}</SafeText>
+                          <SafeText style={styles.historyStoryName}>{language === 'urdu' ? urduText(nativeRenderings, `storyName_${index}`, activityData.story_name) || urduText(nativeRenderings, `activityName_${index}`, activityData.activity_name) || urduText(nativeRenderings, `passageName_${index}`, activityData.passage_name) : String(activityData.story_name || activityData.activity_name || activityData.passage_name)}</SafeText>
                           {item.completed_at && <SafeText style={styles.historyDate}>{String(formatDate(item.completed_at))}</SafeText>}
                         </>
                       ) : (

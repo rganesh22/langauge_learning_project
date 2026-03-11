@@ -97,7 +97,8 @@ export const normalizeField = (key, v, context = {}, debug = false) => {
 };
 
 /**
- * Sanitize activity object to ensure all text fields are strings
+ * Sanitize activity object to ensure all text fields are strings.
+ * Sections and item fields (e.g. audio_base64 for listening) are preserved by spread.
  */
 export const sanitizeActivity = (act, debug = false) => {
   if (!act || typeof act !== 'object') return act;
@@ -166,3 +167,6 @@ export const transliterateText = async (text, language, toScript = 'IAST') => {
     return '';
   }
 };
+
+/** True if string contains Devanagari. Use so Urdu is never shown in Devanagari. */
+export const isDevanagari = (str) => /[\u0900-\u097F]/.test(str || '');

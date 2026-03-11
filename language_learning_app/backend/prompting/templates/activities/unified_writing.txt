@@ -1,0 +1,55 @@
+You are an expert language teacher creating a writing activity for a student learning {language} at the {user_cefr_level} level.
+
+# Goal
+Provide a detailed writing activity consisting of 4-5 distinct prompts asking the student to write comprehensive responses based on the chosen topic: "{custom_topic}". Make sure the context connects deeply with the topic.
+
+# Instructions
+1. Create 4 to 5 free-response writing prompts of escalating difficulty.
+2. Write compelling, multi-part prompts in {language} requesting the user to write about this topic.
+3. For each prompt, ask them specific questions to guide their writing.
+4. Incorporate these required words naturally into the prompts: {required_learning_words}
+
+# Output format
+Return ONLY valid JSON matching this exact schema. DO NOT wrap the output in markdown code blocks (e.g. no ```json). Output raw JSON only. Do not use trailing commas. Ensure all quotes inside string values are escaped.
+
+{{
+  "activity_type": "writing",
+  "topic": "{custom_topic}",
+  "sections": [
+    {{
+      "section_id": "writing",
+      "section_title": "Writing",
+      "section_icon": "create-outline",
+      "instruction_en": "Write your responses in {language}.",
+      "items": [
+        {{
+          "item_id": "w1",
+          "type": "free_response",
+          "cefr_target": "{user_cefr_level}",
+          "question_en": "English instruction for prompt 1",
+          "prompt_native": "Writing prompt 1 entirely in {language}",
+          "min_words": 10,
+          "max_words": 50
+        }},
+        {{
+          "item_id": "w2",
+          "type": "free_response",
+          "cefr_target": "{user_cefr_level}",
+          "question_en": "English instruction for prompt 2",
+          "prompt_native": "Writing prompt 2 entirely in {language} (slightly harder)",
+          "min_words": 20,
+          "max_words": 80
+        }},
+        {{
+          "item_id": "w3",
+          "type": "free_response",
+          "cefr_target": "{user_cefr_level}",
+          "question_en": "English instruction for prompt 3",
+          "prompt_native": "Writing prompt 3 entirely in {language} (hardest)",
+          "min_words": 40,
+          "max_words": 120
+        }}
+      ]
+    }}
+  ]
+}}

@@ -37,6 +37,7 @@ import VocabImportDebugModal from './VocabImportDebugModal';
 import TextImportModal from './TextImportModal';
 import VocabularyDictionary from '../screens/activities/shared/components/VocabularyDictionary';
 import { useDictionary } from '../screens/activities/shared/hooks/useDictionary';
+import { TranslationJobContext } from '../contexts/TranslationJobContext';
 
 const API_BASE_URL = __DEV__ ? 'http://localhost:9090' : 'http://localhost:9090';
 
@@ -49,16 +50,22 @@ export default function TranslationToolModal({
   onClose,
   language,
   prefillText = '',
+  initialJobId = null,
   onImportComplete,
   onMakeVocabCards,
 }) {
   const { userSelectedLanguages } = useContext(LanguageContext);
+  const translationJob = useContext(TranslationJobContext);
+
+  // When we start a translation via context or open from tray, we show that job's state
+  const [boundJobId, setBoundJobId] = useState(null);
 
   // ── Translation phase ──
   const [sourceText, setSourceText] = useState('');
   const [targetLang, setTargetLang] = useState('english');
   const [translating, setTranslating] = useState(false);
   const [translation, setTranslation] = useState(null); // { [langCode]: { translated_text, ... } }
+  const [lastTranslationDuration, setLastTranslationDuration] = useState(null); // seconds, for inline (non-job) translate
   const [translationError, setTranslationError] = useState('');
   // Default English selected for "Translate to"; can load from user prefs
   const [selectedTargetLangs, setSelectedTargetLangs] = useState(['english']);
@@ -100,6 +107,9 @@ export default function TranslationToolModal({
   const [historyLoading, setHistoryLoading] = useState(false);
   const [historyLangFilters, setHistoryLangFilters] = useState(null); // null = all selected
   const [historyFiltersExpanded, setHistoryFiltersExpanded] = useState(false);
+  const [historySelectionMode, setHistorySelectionMode] = useState(false);
+  const [selectedHistoryIds, setSelectedHistoryIds] = useState(new Set());
+  const [historyDeleting, setHistoryDeleting] = useState(false);
 
   const dictionary = useDictionary(language);
 
@@ -117,9 +127,26 @@ export default function TranslationToolModal({
     }
   }, [visible, prefillText]);
 
+  // When opened from tray (initialJobId), load that job's data
+  const jobs = translationJob?.jobs ?? [];
+  const effectiveJobId = boundJobId || initialJobId;
+  const boundJob = effectiveJobId ? jobs.find((j) => j.id === effectiveJobId) : null;
+  React.useEffect(() => {
+    if (!visible || !initialJobId || !translationJob) return;
+    const job = jobs.find((j) => j.id === initialJobId);
+    if (job) {
+      setSourceText(job.sourceText || '');
+      setSelectedTargetLangs(job.targetLanguages && job.targetLanguages.length ? job.targetLanguages : ['english']);
+      setTranslation(job.results || null);
+      setTranslationError(job.errorMsg || '');
+      setBoundJobId(initialJobId);
+    }
+  }, [visible, initialJobId, translationJob, jobs]);
+
   // ── Reset on close ──
   const handleClose = () => {
     if (abortRef.current) abortRef.current.abort();
+    setBoundJobId(null);
     setSourceText('');
     setTranslation(null);
     setTranslationError('');
@@ -151,6 +178,8 @@ export default function TranslationToolModal({
     setHistory([]);
     setHistoryLangFilters(null);
     setHistoryFiltersExpanded(false);
+    setHistorySelectionMode(false);
+    setSelectedHistoryIds(new Set());
     onClose();
   };
 
@@ -213,46 +242,6 @@ export default function TranslationToolModal({
       });
     } catch (_) {}
   }, []);
-
-  // ── Simple script-based language validation ──
-  const scriptMatchers = {
-    kannada: /[\u0C80-\u0CFF]/,
-    telugu: /[\u0C00-\u0C7F]/,
-    malayalam: /[\u0D00-\u0D7F]/,
-    tamil: /[\u0B80-\u0BFF]/,
-    hindi: /[\u0900-\u097F]/,
-    urdu: /[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF]/,
-    english: /[A-Za-z]/,
-  };
-
-  const validateTextLanguage = (langCode, text) => {
-    const trimmed = (text || '').trim();
-    if (!trimmed) return true;
-    const matcher = scriptMatchers[langCode];
-    if (!matcher) return true;
-    if (!matcher.test(trimmed)) {
-      const meta = LANGUAGES.find(l => l.code === langCode);
-      const langName = meta?.name || langCode;
-      Alert.alert(
-        'Language Mismatch',
-        `The text you entered does not look like it is in ${langName}. Please check the language or change the selected language.`,
-      );
-      return false;
-    }
-    return true;
-  };
-
-  const detectSourceLanguage = (text) => {
-    const trimmed = (text || '').trim();
-    if (!trimmed) return language;
-    // Prefer explicit matches for non-English scripts
-    const candidates = Object.keys(scriptMatchers).filter(code => scriptMatchers[code].test(trimmed));
-    if (candidates.length === 0) return language;
-    if (candidates.includes(language)) return language;
-    // If multiple matches, pick the first non-English; otherwise fall back to current language
-    const nonEnglish = candidates.find(c => c !== 'english');
-    return nonEnglish || candidates[0] || language;
-  };
 
   // Helper: fetch with timeout so translate phase can't hang forever
   const fetchWithTimeout = async (url, options = {}, timeoutMs = 60000) => {
@@ -318,6 +307,24 @@ export default function TranslationToolModal({
     setCollapsedLangs(prev => ({ ...prev, [code]: !prev[code] }));
   }, []);
 
+  // When bound to a context job, derive UI state from the job
+  const effectiveTranslating = boundJob ? boundJob.status === 'translating' : translating;
+  const effectiveTranslation = boundJob ? (boundJob.results ?? null) : translation;
+  const effectiveTranslationError = boundJob ? (boundJob.errorMsg || '') : translationError;
+  const effectiveTranslateProgress = boundJob ? boundJob.progress : translateProgress;
+  const effectiveStatus = boundJob ? (boundJob.statusMessage || status) : status;
+
+  // When bound job completes, fetch transliterations for results
+  React.useEffect(() => {
+    if (!boundJob?.results || boundJob.status !== 'done') return;
+      for (const [code, data] of Object.entries(boundJob.results)) {
+        if (code === 'english' || !data?.translated_text || data?.same_language) continue;
+      const textForTranslit = (code === 'urdu' && data.translated_text_devanagari)
+        ? data.translated_text_devanagari : data.translated_text;
+      fetchTransliteration(code, textForTranslit);
+    }
+  }, [boundJob?.status, boundJob?.results, fetchTransliteration]);
+
   const loadHistoryEntry = useCallback((entry) => {
     setSourceText(entry.source_text || '');
     setSelectedTargetLangs(entry.target_languages || []);
@@ -327,7 +334,7 @@ export default function TranslationToolModal({
     setStatus('Loaded from history.');
     setTransliterations({});
     for (const [code, data] of Object.entries(entry.results_json || {})) {
-      if (code === 'english' || !data?.translated_text) continue;
+      if (code === 'english' || !data?.translated_text || data?.same_language) continue;
       const textForTranslit = (code === 'urdu' && data.translated_text_devanagari)
         ? data.translated_text_devanagari : data.translated_text;
       fetchTransliteration(code, textForTranslit);
@@ -341,19 +348,30 @@ export default function TranslationToolModal({
       Alert.alert('No Text', 'Please enter some text to translate.');
       return;
     }
-    const detectedSource = detectSourceLanguage(text);
-    if (!validateTextLanguage(detectedSource, text)) {
+    const targets =
+      selectedTargetLangs.length > 0 ? selectedTargetLangs : ['english'];
+
+    if (translationJob) {
+      const jobId = translationJob.startTranslation(
+        text,
+        null,
+        targets,
+        language
+      );
+      setBoundJobId(jobId);
+      setTranslationError('');
+      setStatus('Translation running in background. You can close this and see progress in the top-right.');
       return;
     }
+
     setTranslating(true);
     setTranslationError('');
     setTranslation(null);
     setStatus('Starting translation…');
     const translateStartTime = Date.now();
+    let detectedSourceCode = null;
+    let detectedSourceName = null;
     try {
-      const targets =
-        selectedTargetLangs.length > 0 ? selectedTargetLangs : ['english'];
-
       const results = {};
       for (let i = 0; i < targets.length; i++) {
         const code = targets[i];
@@ -365,24 +383,17 @@ export default function TranslationToolModal({
           currentLangName: langName,
           stage: 'translating',
         });
-        if (detectedSource !== language) {
-          const detectedMeta = LANGUAGES.find(l => l.code === detectedSource);
-          const detectedName = detectedMeta?.name || detectedSource;
-          setStatus(`Detected ${detectedName} as source. Translating to ${langName} (${i + 1}/${targets.length})…`);
-        } else {
-          setStatus(`Translating to ${langName} (${i + 1}/${targets.length})…`);
-        }
+        setStatus(`Translating to ${langName} (${i + 1}/${targets.length})…`);
+
+        const body = { text, target_language: code };
+        if (detectedSourceCode) body.source_language = detectedSourceCode;
 
         let res;
         try {
           res = await fetchWithTimeout(`${API_BASE_URL}/api/translate`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            text,
-            source_language: detectedSource,
-            target_language: code,
-          }),
+            body: JSON.stringify(body),
           }, 60000);
         } catch (e) {
           if (e.name === 'AbortError') {
@@ -397,6 +408,10 @@ export default function TranslationToolModal({
         }
         const data = await res.json();
         results[code] = data;
+        if (detectedSourceCode == null && data.detected_source_language_code) {
+          detectedSourceCode = data.detected_source_language_code;
+          detectedSourceName = data.detected_source_language_name || null;
+        }
         setTranslateProgress({
           current: i + 1,
           total: targets.length,
@@ -405,11 +420,13 @@ export default function TranslationToolModal({
         });
       }
       const durationSeconds = (Date.now() - translateStartTime) / 1000;
+      const finalSource = detectedSourceCode || 'english';
       setTranslation(results);
+      setLastTranslationDuration(durationSeconds);
       setStatus(`Translation complete in ${durationSeconds >= 60 ? `${Math.floor(durationSeconds / 60)}m ${Math.round(durationSeconds % 60)}s` : `${durationSeconds.toFixed(1)}s`}.`);
-      saveToHistory(text, detectedSource, targets, results, durationSeconds);
+      saveToHistory(text, finalSource, targets, results, durationSeconds);
       for (const [code, data] of Object.entries(results)) {
-        if (code === 'english' || !data?.translated_text) continue;
+        if (code === 'english' || !data?.translated_text || data?.same_language) continue;
         const textForTranslit = (code === 'urdu' && data.translated_text_devanagari)
           ? data.translated_text_devanagari : data.translated_text;
         fetchTransliteration(code, textForTranslit);
@@ -420,7 +437,6 @@ export default function TranslationToolModal({
     } finally {
       setTranslating(false);
       setTranslateProgress(null);
-      // Leave final status visible; it will be cleared on close or next action
     }
   };
 
@@ -903,7 +919,7 @@ export default function TranslationToolModal({
   const sourceLangMeta = LANGUAGES.find(l => l.code === language);
 
   const openImportForTranslation = (code) => {
-    const text = translation?.[code]?.translated_text?.trim();
+    const text = (effectiveTranslation || translation)?.[code]?.translated_text?.trim();
     if (!text) return;
     setImportModal({ visible: true, language: code, text });
   };
@@ -917,18 +933,9 @@ export default function TranslationToolModal({
             <Ionicons name={goBack ? 'arrow-back' : 'close'} size={24} color="#666" />
           </TouchableOpacity>
           <View style={styles.headerCenter}>
-            {(() => {
-              const activeLang = (phase !== 'translate' && phase !== 'history' && importFromTranslation)
-                ? LANGUAGES.find(l => l.code === importFromTranslation.language)
-                : sourceLangMeta;
-              return activeLang ? (
-                <View style={[styles.headerLangIcon, { backgroundColor: activeLang.color || '#0FA896' }]}>
-                  <Text style={[styles.headerLangIconText, activeLang.code === 'urdu' && { fontFamily: 'Noto Nastaliq Urdu' }]}>
-                    {activeLang.nativeChar || activeLang.langCode?.toUpperCase()?.slice(0, 2)}
-                  </Text>
-                </View>
-              ) : null;
-            })()}
+            <View style={styles.headerTranslateIcon}>
+              <Ionicons name="language" size={20} color="#8B5CF6" />
+            </View>
             <Text style={styles.title}>
               {phase === 'translate' ? 'Translate'
                 : phase === 'history' ? 'Translation History'
@@ -973,7 +980,7 @@ export default function TranslationToolModal({
                   multiline
                   value={sourceText}
                   onChangeText={setSourceText}
-                  editable={!translating}
+                  editable={!effectiveTranslating}
                   textAlignVertical="top"
                   underlineColorAndroid="transparent"
                 />
@@ -1027,18 +1034,18 @@ export default function TranslationToolModal({
               </TouchableOpacity>
 
               {/* Translation result */}
-              {translating && (
+              {effectiveTranslating && (
                 <View style={styles.translatingBox}>
                   <ActivityIndicator size="small" color="#4A90E2" />
                   <View style={{ flex: 1 }}>
                     <Text style={styles.translatingText}>
-                      {translateProgress && translateProgress.total > 0
-                        ? `Translating ${translateProgress.current}/${translateProgress.total}${
-                            translateProgress.currentLangName ? ` – ${translateProgress.currentLangName}` : ''
+                      {effectiveTranslateProgress && effectiveTranslateProgress.total > 0
+                        ? `Translating ${effectiveTranslateProgress.current}/${effectiveTranslateProgress.total}${
+                            effectiveTranslateProgress.currentLangName ? ` – ${effectiveTranslateProgress.currentLangName}` : ''
                           }…`
                         : 'Translating…'}
                     </Text>
-                    {translateProgress && translateProgress.total > 0 && (
+                    {effectiveTranslateProgress && effectiveTranslateProgress.total > 0 && (
                       <View style={styles.translateProgressBarOuter}>
                         <View
                           style={[
@@ -1046,27 +1053,40 @@ export default function TranslationToolModal({
                             {
                               width: `${Math.max(
                                 5,
-                                Math.round((translateProgress.current / translateProgress.total) * 100),
+                                Math.round((effectiveTranslateProgress.current / effectiveTranslateProgress.total) * 100),
                               )}%`,
                             },
                           ]}
                         />
                       </View>
                     )}
-                    {!!status && <Text style={styles.translateStatusText}>{status}</Text>}
+                    {!!effectiveStatus && <Text style={styles.translateStatusText}>{effectiveStatus}</Text>}
                   </View>
                 </View>
               )}
-              {translationError ? (
+              {effectiveTranslationError ? (
                 <View style={styles.errorBox}>
                   <Ionicons name="warning-outline" size={18} color="#EF4444" />
-                  <Text style={styles.errorText}>{translationError}</Text>
+                  <Text style={styles.errorText}>{effectiveTranslationError}</Text>
                 </View>
               ) : null}
-              {translation && !translating && (
+              {effectiveTranslation && !effectiveTranslating && (
                 <View style={styles.resultBox}>
                   <View style={styles.resultHeader}>
-                    <Text style={styles.resultLabel}>Translations</Text>
+                    <Text style={styles.resultLabel}>
+                      Translations
+                      {(boundJob?.durationSeconds != null || lastTranslationDuration != null) && (
+                        <Text style={styles.resultDuration}>
+                          {' · '}
+                          {(() => {
+                            const sec = boundJob?.durationSeconds ?? lastTranslationDuration;
+                            return sec >= 60
+                              ? `${Math.floor(sec / 60)}m ${Math.round(sec % 60)}s`
+                              : `${Math.round(sec * 10) / 10}s`;
+                          })()}
+                        </Text>
+                      )}
+                    </Text>
                     <TouchableOpacity
                       style={styles.translitToggleBtn}
                       onPress={() => setShowTransliterations(!showTransliterations)}
@@ -1075,11 +1095,13 @@ export default function TranslationToolModal({
                       <Text style={[styles.translitToggleText, showTransliterations && styles.translitToggleTextActive]}>Aa</Text>
                     </TouchableOpacity>
                   </View>
-                  {Object.entries(translation).map(([code, data]) => {
+                  {Object.entries(effectiveTranslation).map(([code, data]) => {
                     const meta = LANGUAGES.find(l => l.code === code) || { name: code };
                     const isUrdu = code === 'urdu';
                     const isCollapsed = collapsedLangs[code];
                     const translit = transliterations[code];
+                    const isSameLanguage = data?.same_language === true;
+                    const sameMessage = data?.message;
                     return (
                       <View key={code} style={styles.resultLangBlock}>
                         <TouchableOpacity
@@ -1103,27 +1125,33 @@ export default function TranslationToolModal({
                         </TouchableOpacity>
                         {!isCollapsed && (
                           <>
-                            {renderTappableText(
-                              data?.translated_text,
-                              code,
-                              [
-                                styles.resultText,
-                                isUrdu && { fontFamily: 'Noto Nastaliq Urdu', textAlign: 'right', writingDirection: 'rtl' },
-                              ],
+                            {isSameLanguage && sameMessage ? (
+                              <View style={styles.sameLanguageMessage}>
+                                <Ionicons name="information-circle-outline" size={18} color="#6B7280" />
+                                <Text style={styles.sameLanguageMessageText}>{sameMessage}</Text>
+                              </View>
+                            ) : (
+                              <>
+                                {renderTappableText(
+                                  data?.translated_text,
+                                  code,
+                                  [
+                                    styles.resultText,
+                                    isUrdu && { fontFamily: 'Noto Nastaliq Urdu', textAlign: 'right', writingDirection: 'rtl' },
+                                  ],
+                                )}
+                                {showTransliterations && translit && code !== 'english'
+                                  ? renderTappableText(translit, code, styles.resultTranslit)
+                                  : null}
+                                <TouchableOpacity
+                                  style={styles.importFromTranslationBtn}
+                                  onPress={() => openImportForTranslation(code)}
+                                >
+                                  <Ionicons name="albums-outline" size={16} color="#8B5CF6" />
+                                  <Text style={styles.importFromTranslationBtnText}>Import vocab for {meta.name}</Text>
+                                </TouchableOpacity>
+                              </>
                             )}
-                            {showTransliterations && translit && code !== 'english'
-                              ? renderTappableText(translit, code, styles.resultTranslit)
-                              : null}
-                            {data?.notes ? (
-                              <Text style={styles.resultNotes}>{data.notes}</Text>
-                            ) : null}
-                            <TouchableOpacity
-                              style={styles.importFromTranslationBtn}
-                              onPress={() => openImportForTranslation(code)}
-                            >
-                              <Ionicons name="albums-outline" size={16} color="#8B5CF6" />
-                              <Text style={styles.importFromTranslationBtnText}>Import vocab for {meta.name}</Text>
-                            </TouchableOpacity>
                           </>
                         )}
                       </View>
@@ -1134,11 +1162,11 @@ export default function TranslationToolModal({
             </ScrollView>
             <View style={styles.footer}>
               <TouchableOpacity
-                style={[styles.primaryBtn, (!sourceText.trim() || translating) && styles.btnDisabled]}
+                style={[styles.primaryBtn, (!sourceText.trim() || effectiveTranslating) && styles.btnDisabled]}
                 onPress={handleTranslate}
-                disabled={!sourceText.trim() || translating}
+                disabled={!sourceText.trim() || effectiveTranslating}
               >
-                {translating
+                {effectiveTranslating
                   ? <ActivityIndicator size="small" color="#FFF" />
                   : <>
                       <Ionicons name="language" size={20} color="#FFF" />
@@ -1161,11 +1189,18 @@ export default function TranslationToolModal({
               onPress={() => setHistoryFiltersExpanded(!historyFiltersExpanded)}
               activeOpacity={0.7}
             >
-              <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}>
-                <Ionicons name="filter" size={16} color="#555" />
-                <Text style={{ fontSize: 13, fontWeight: '600', color: '#555' }}>
-                  Filters{!historyLangFilters ? '' : historyLangFilters.size === 0 ? ' (none)' : ` (${historyLangFilters.size})`}
-                </Text>
+              <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8, flex: 1 }}>
+                <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}>
+                  <Ionicons name="filter" size={16} color="#555" />
+                  <Text style={{ fontSize: 13, fontWeight: '600', color: '#555' }}>
+                    Filters{!historyLangFilters ? '' : historyLangFilters.size === 0 ? ' (none)' : ` (${historyLangFilters.size})`}
+                  </Text>
+                </View>
+                {!historyLoading && (
+                  <Text style={{ fontSize: 13, color: '#666' }}>
+                    Showing {filteredHistory.length} of {allHistory.length} entries
+                  </Text>
+                )}
               </View>
               <Ionicons name={historyFiltersExpanded ? 'chevron-up' : 'chevron-down'} size={16} color="#999" />
             </TouchableOpacity>
@@ -1214,6 +1249,61 @@ export default function TranslationToolModal({
               </View>
             )}
 
+            {/* Entry count is in the Filters header row above. Selection toolbar. */}
+            {!historyLoading && (
+              <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end', paddingHorizontal: 16, paddingVertical: 10, borderBottomWidth: 1, borderBottomColor: '#E5E5E5', backgroundColor: '#FAFAFA' }}>
+                {!historySelectionMode ? (
+                  <TouchableOpacity onPress={() => setHistorySelectionMode(true)} style={{ paddingVertical: 6, paddingHorizontal: 12 }}>
+                    <Text style={{ fontSize: 14, fontWeight: '600', color: '#4A90E2' }}>Select</Text>
+                  </TouchableOpacity>
+                ) : (
+                  <View style={{ flexDirection: 'row', alignItems: 'center', gap: 12 }}>
+                    <TouchableOpacity onPress={() => setSelectedHistoryIds(new Set(filteredHistory.map(h => h.id)))} style={{ paddingVertical: 6 }}>
+                      <Text style={{ fontSize: 13, color: '#4A90E2' }}>Select all</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => setSelectedHistoryIds(new Set())} style={{ paddingVertical: 6 }}>
+                      <Text style={{ fontSize: 13, color: '#666' }}>Select none</Text>
+                    </TouchableOpacity>
+                    {selectedHistoryIds.size > 0 && (
+                      <TouchableOpacity
+                        onPress={async () => {
+                          if (selectedHistoryIds.size === 0) return;
+                          setHistoryDeleting(true);
+                          try {
+                            const res = await fetch(`${API_BASE_URL}/api/translation-history/delete-bulk`, {
+                              method: 'POST',
+                              headers: { 'Content-Type': 'application/json' },
+                              body: JSON.stringify({ ids: Array.from(selectedHistoryIds) }),
+                            });
+                            if (res.ok) {
+                              await loadHistory();
+                              setSelectedHistoryIds(new Set());
+                              setHistorySelectionMode(false);
+                            }
+                          } catch (e) {
+                            console.error('Delete history error:', e);
+                          } finally {
+                            setHistoryDeleting(false);
+                          }
+                        }}
+                        disabled={historyDeleting}
+                        style={{ paddingVertical: 6 }}
+                      >
+                        {historyDeleting ? (
+                          <ActivityIndicator size="small" color="#DC2626" />
+                        ) : (
+                          <Text style={{ fontSize: 13, fontWeight: '600', color: '#DC2626' }}>Delete ({selectedHistoryIds.size})</Text>
+                        )}
+                      </TouchableOpacity>
+                    )}
+                    <TouchableOpacity onPress={() => { setHistorySelectionMode(false); setSelectedHistoryIds(new Set()); }} style={{ paddingVertical: 6 }}>
+                      <Text style={{ fontSize: 13, color: '#666' }}>Cancel</Text>
+                    </TouchableOpacity>
+                  </View>
+                )}
+              </View>
+            )}
+
             {historyLoading ? (
               <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                 <ActivityIndicator size="large" color="#4A90E2" />
@@ -1244,22 +1334,48 @@ export default function TranslationToolModal({
                   const durationStr = durationSec != null
                     ? durationSec >= 60 ? `${Math.floor(durationSec / 60)}m ${Math.round(durationSec % 60)}s` : `${Math.round(durationSec)}s`
                     : null;
+                  const isSelected = selectedHistoryIds.has(item.id);
                   return (
                     <TouchableOpacity
-                      style={styles.histCard}
-                      onPress={() => loadHistoryEntry(item)}
+                      style={[styles.histCard, historySelectionMode && isSelected && { borderColor: '#4A90E2', borderWidth: 2, backgroundColor: '#EFF6FF' }]}
+                      onPress={() => {
+                        if (historySelectionMode) {
+                          setSelectedHistoryIds(prev => {
+                            const next = new Set(prev);
+                            if (next.has(item.id)) next.delete(item.id); else next.add(item.id);
+                            return next;
+                          });
+                        } else {
+                          loadHistoryEntry(item);
+                        }
+                      }}
                       activeOpacity={0.7}
                     >
+                      <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
+                        {historySelectionMode && (
+                          <View style={{ marginRight: 12, marginTop: 2 }}>
+                            <View style={[styles.histCardCheckbox, isSelected && styles.histCardCheckboxSelected]}>
+                              {isSelected && <Ionicons name="checkmark" size={14} color="#FFF" />}
+                            </View>
+                          </View>
+                        )}
+                        <View style={{ flex: 1 }}>
                       <View style={styles.histCardTop}>
                         <View style={{ flexDirection: 'row', alignItems: 'center', flex: 1 }}>
-                          {srcMeta && (
-                            <View style={[styles.histCardLangIcon, { backgroundColor: srcMeta.color || '#888' }]}>
-                              <Text style={[styles.histCardLangIconText, srcMeta.code === 'urdu' && { fontFamily: 'Noto Nastaliq Urdu' }]}>
-                                {srcMeta.nativeChar || srcMeta.langCode?.toUpperCase()?.slice(0, 2)}
-                              </Text>
-                            </View>
-                          )}
-                          <Text style={styles.histCardSourceLang}>{srcMeta?.name || item.source_language}</Text>
+                          <View style={[
+                            styles.histCardLangIcon,
+                            { backgroundColor: srcMeta ? (srcMeta.color || '#888') : '#9CA3AF' },
+                          ]}>
+                            <Text style={[
+                              styles.histCardLangIconText,
+                              srcMeta?.code === 'urdu' && { fontFamily: 'Noto Nastaliq Urdu' },
+                            ]}>
+                              {srcMeta
+                                ? (srcMeta.nativeChar || srcMeta.langCode?.toUpperCase()?.slice(0, 2))
+                                : (item.source_language?.slice(0, 2).toUpperCase() || '?')}
+                            </Text>
+                          </View>
+                          <Text style={styles.histCardSourceLang}>{srcMeta?.name || item.source_language || 'Unknown'}</Text>
                           {targetCodes.length > 0 && (
                             <>
                               <Ionicons name="arrow-forward" size={14} color="#9CA3AF" style={{ marginHorizontal: 6 }} />
@@ -1293,6 +1409,8 @@ export default function TranslationToolModal({
                       ]} numberOfLines={2}>
                         {previewText}{item.source_text?.length > 120 ? '…' : ''}
                       </Text>
+                        </View>
+                      </View>
                     </TouchableOpacity>
                   );
                 }}
@@ -1581,6 +1699,10 @@ const styles = StyleSheet.create({
   headerCenter: {
     flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 8,
   },
+  headerTranslateIcon: {
+    width: 28, height: 28, borderRadius: 7, alignItems: 'center', justifyContent: 'center',
+    backgroundColor: '#F3E8FF',
+  },
   headerLangIcon: {
     width: 28, height: 28, borderRadius: 7, alignItems: 'center', justifyContent: 'center',
   },
@@ -1674,6 +1796,7 @@ const styles = StyleSheet.create({
   },
   resultHeader: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10 },
   resultLabel: { fontSize: 13, fontWeight: '600', color: '#555', flex: 1 },
+  resultDuration: { fontWeight: '400', color: '#9CA3AF', fontSize: 12 },
   translitToggleBtn: {
     paddingHorizontal: 10,
     paddingVertical: 4,
@@ -1696,8 +1819,18 @@ const styles = StyleSheet.create({
   },
   makeCardsBtnText: { fontSize: 12, fontWeight: '600', color: '#4A90E2' },
   resultText: { fontSize: 16, color: '#1A1A1A', lineHeight: 24 },
+  sameLanguageMessage: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    backgroundColor: '#F3F4F6',
+    borderRadius: 8,
+    paddingVertical: 10,
+    paddingHorizontal: 12,
+    marginTop: 4,
+  },
+  sameLanguageMessageText: { fontSize: 14, color: '#6B7280', flex: 1 },
   tappableWord: { textDecorationLine: 'underline', textDecorationStyle: 'dotted', textDecorationColor: '#D1D5DB' },
-  resultNotes: { fontSize: 13, color: '#888', marginTop: 8, fontStyle: 'italic' },
   resultLangBlock: {
     marginTop: 10,
     borderTopWidth: 1,
@@ -1934,4 +2067,8 @@ const styles = StyleSheet.create({
     width: 22, height: 22, borderRadius: 5, alignItems: 'center', justifyContent: 'center',
   },
   histCardTargetIconText: { color: '#FFF', fontSize: 10, fontWeight: '700' },
+  histCardCheckbox: {
+    width: 22, height: 22, borderRadius: 6, borderWidth: 2, borderColor: '#D1D5DB', alignItems: 'center', justifyContent: 'center',
+  },
+  histCardCheckboxSelected: { backgroundColor: '#4A90E2', borderColor: '#4A90E2' },
 });

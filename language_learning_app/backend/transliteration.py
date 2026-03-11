@@ -87,6 +87,7 @@ def transliterate_text(text: str, from_script: str = 'kannada', to_script: str =
             'spanish': None,  # No transliteration needed for non-Indic scripts
             'french': None,
             'welsh': None,
+            'vietnamese': None,
         }
 
         # Choose source scheme. If the language is 'urdu' but the input text

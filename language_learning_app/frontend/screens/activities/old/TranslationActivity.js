@@ -25,7 +25,7 @@ import { VocabularyDictionary, APIDebugModal, TopicSelectionModal, AudioPlayer }
 import { ACTIVITY_COLORS } from './shared/constants';
 import { normalizeText } from './shared/utils/textProcessing';
 import TextImportModal from '../../components/TextImportModal';
-import TranslationToolModal from '../../components/TranslationToolModal';
+import { useTranslationJob } from '../../contexts/TranslationJobContext';
 import {
   getProgressTitleLabel,
   getSentenceNumberLabel,
@@ -63,7 +63,7 @@ import {
  * Handles translation exercises from other languages the user is learning
  * Language-agnostic design with full transliteration and dictionary support
  */
-export default function TranslationActivity({ route, navigation }) {
+export default function TranslationActivity({ route, navigation, themeColor }) {
   const insets = useSafeAreaInsets();
   const { activityId, fromHistory, activityData: routeActivityData } = route.params || {};
   const { selectedLanguage: ctxLanguage } = useContext(LanguageContext);
@@ -78,6 +78,7 @@ export default function TranslationActivity({ route, navigation }) {
   const dictionary = useDictionary(language);
   const grading = useGrading('translation', language);
   const { complete } = useActivityCompletion(language, 'translation');
+  const { openModalWithPrefill, closeModal } = useTranslationJob();
 
   // Translation-specific state
   const [currentSentenceIndex, setCurrentSentenceIndex] = useState(0);
@@ -86,7 +87,6 @@ export default function TranslationActivity({ route, navigation }) {
   const [showAPIDebug, setShowAPIDebug] = useState(false);
   const [showTopicModal, setShowTopicModal] = useState(!fromHistory);
   const [showImportModal, setShowImportModal] = useState(false);
-  const [showTranslationModal, setShowTranslationModal] = useState(false);
   const [allSentencesExpanded, setAllSentencesExpanded] = useState(false); // Start collapsed
   
   // Audio recording state
@@ -99,7 +99,7 @@ export default function TranslationActivity({ route, navigation }) {
   const [audioStates, setAudioStates] = useState({});
   const audioRefs = useRef({});
 
-  const colors = ACTIVITY_COLORS.translation;
+  const colors = themeColor || ACTIVITY_COLORS.translation;
 
   const handleTopicSelection = (selectedTopic) => {
     setShowTopicModal(false);
@@ -412,7 +412,11 @@ export default function TranslationActivity({ route, navigation }) {
           {/* Highlight vocab toggle retained (no color palette icon) */}
           <TouchableOpacity
             style={styles.toggleButton}
-            onPress={() => setShowTranslationModal(true)}
+            onPress={() => openModalWithPrefill({
+          language: language || 'kannada',
+          prefillText: (activityData.activity?.sentences || []).map(s => s.source || s.target || '').join(' '),
+          onMakeVocabCards: () => { closeModal(); setShowImportModal(true); },
+        })}
           >
             <Ionicons name="language" size={20} color="#FFFFFF" />
           </TouchableOpacity>
@@ -1098,18 +1102,6 @@ export default function TranslationActivity({ route, navigation }) {
         initialSearchQuery={dictionary.initialSearchQuery}
         dictionaryLanguage={dictionary.dictionaryLanguage}
         setDictionaryLanguage={dictionary.setDictionaryLanguage}
-      />
-
-      {/* Translation Tool Modal */}
-      <TranslationToolModal
-        visible={showTranslationModal}
-        onClose={() => setShowTranslationModal(false)}
-        language={language}
-        prefillText={(activityData.activity?.sentences || []).map(s => s.source || s.target || '').join(' ')}
-        onMakeVocabCards={() => {
-          setShowTranslationModal(false);
-          setShowImportModal(true);
-        }}
       />
 
       {/* Import Vocab Modal — pre-filled with all source sentences */}

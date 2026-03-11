@@ -634,6 +634,11 @@ def init_db_schema():
         cursor.execute("SELECT deck_id FROM vocabulary LIMIT 1")
     except sqlite3.OperationalError:
         cursor.execute("ALTER TABLE vocabulary ADD COLUMN deck_id INTEGER REFERENCES vocab_decks(id)")
+    # Migration: add gender column for Hindi/Urdu nouns (m/f)
+    try:
+        cursor.execute("SELECT gender FROM vocabulary LIMIT 1")
+    except sqlite3.OperationalError:
+        cursor.execute("ALTER TABLE vocabulary ADD COLUMN gender TEXT")
     
     # SRS word states table
     cursor.execute('''
@@ -760,6 +765,29 @@ def init_db_schema():
             cursor.execute(f'ALTER TABLE activity_history ADD COLUMN {col} {coldef}')
         except sqlite3.OperationalError:
             pass  # Column already exists
+
+    # Translation history table (for translate-tool results)
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS translation_history (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            user_id INTEGER DEFAULT 1,
+            source_text TEXT NOT NULL,
+            source_language TEXT NOT NULL,
+            target_languages TEXT NOT NULL,
+            results_json TEXT NOT NULL,
+            duration_seconds REAL,
+            created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (user_id) REFERENCES user_profile(id)
+        )
+    ''')
+    cursor.execute('''
+        CREATE INDEX IF NOT EXISTS idx_translation_history_user
+        ON translation_history(user_id, created_at DESC)
+    ''')
+    try:
+        cursor.execute("SELECT duration_seconds FROM translation_history LIMIT 1")
+    except sqlite3.OperationalError:
+        cursor.execute("ALTER TABLE translation_history ADD COLUMN duration_seconds REAL")
 
     # Lessons table
     cursor.execute('''
@@ -1047,8 +1075,10 @@ def sync_vocab_from_csvs(force: bool = False) -> dict:
 
     For each language:
     - Counts rows in the CSV (excluding header).
-    - Compares against the DB row count.
-    - If they differ (or force=True), deletes the existing rows and reloads from the CSV.
+    - Compares against the DB row count for that language.
+    - If DB has MORE rows than CSV, we skip reload (extra rows are user/imported words).
+    - If DB has FEWER or equal (including 0), we reload default set from CSV without
+      touching rows with origin != 'default' (deck/user/activity), so imports persist.
 
     Returns a summary dict: {language: {'csv_rows': int, 'db_rows': int, 'action': str}}
     """
@@ -1080,10 +1110,21 @@ def sync_vocab_from_csvs(force: bool = False) -> dict:
             summary[language] = {'csv_rows': csv_row_count, 'db_rows': db_row_count, 'action': 'up_to_date'}
             continue
 
+        # Do not wipe DB when it has more rows than CSV — those are imported words
+        if not force and db_row_count > csv_row_count:
+            print(f"[VocabSync] {language}: preserving imports (db={db_row_count} > csv={csv_row_count}), skipping")
+            summary[language] = {'csv_rows': csv_row_count, 'db_rows': db_row_count, 'action': 'preserved_imports'}
+            continue
+
         action = 'force_reload' if force else ('initial_load' if db_row_count == 0 else 'mismatch_reload')
         print(f"[VocabSync] {language}: {action} (csv={csv_row_count}, db={db_row_count})")
         load_vocabulary_from_csv(language)
-        summary[language] = {'csv_rows': csv_row_count, 'db_rows': csv_row_count, 'action': action}
+        conn = sqlite3.connect(config.DB_PATH)
+        cursor = conn.cursor()
+        cursor.execute('SELECT COUNT(*) FROM vocabulary WHERE language = ?', (language,))
+        db_after = cursor.fetchone()[0]
+        conn.close()
+        summary[language] = {'csv_rows': csv_row_count, 'db_rows': db_after, 'action': action}
 
     return summary
 
@@ -1112,17 +1153,16 @@ def load_vocabulary_from_csv(language: str = 'kannada', origin: str = 'default')
     conn = sqlite3.connect(config.DB_PATH)
     cursor = conn.cursor()
     
-    # Check if vocabulary already loaded
-    cursor.execute('SELECT COUNT(*) FROM vocabulary WHERE language = ?', (language,))
-    existing_count = cursor.fetchone()[0]
-    if existing_count > 0:
-        # If entries already exist for this language, remove them and reload.
-        # This handles previous runs where CSV headers (e.g. with BOM) caused empty
-        # or malformed imports. Safer to replace than to leave incomplete rows.
-        print(f"Existing vocabulary for {language} detected ({existing_count} rows) - deleting and reloading...")
-        cursor.execute('DELETE FROM vocabulary WHERE language = ?', (language,))
+    # Only remove default-origin rows so we never delete imported (deck/user/activity) words.
+    cursor.execute('SELECT COUNT(*) FROM vocabulary WHERE language = ? AND (origin IS NULL OR origin = ?)', (language, 'default'))
+    default_count = cursor.fetchone()[0]
+    if default_count > 0:
+        print(f"Reloading default vocabulary for {language} ({default_count} rows) — keeping non-default (imported) rows...")
+        cursor.execute('DELETE FROM vocabulary WHERE language = ? AND (origin IS NULL OR origin = ?)', (language, 'default'))
         conn.commit()
     
+    # If no default rows existed, this may be first load; then we load from CSV below.
+    # If we just deleted default rows, we reload from CSV. Non-default rows are untouched.
     print(f"Loading vocabulary from {vocab_file}...")
     from . import transliteration
     with open(vocab_file, 'r', encoding='utf-8') as f:
@@ -2793,6 +2833,7 @@ def get_vocabulary(
     word_class_filter: str = '',
     level_filter: str = '',
     origin_filter: str = '',
+    transitivity_filter: str = '',
     limit: int = 50,
     offset: int = 0
 ) -> tuple:
@@ -2897,6 +2938,13 @@ def get_vocabulary(
             params.extend(deck_name_filters)
         if conditions:
             where_clause += ' AND (' + ' OR '.join(conditions) + ')'
+    
+    if transitivity_filter:
+        # Handle multiple transitivity filters (comma-separated), case-insensitive match
+        transitivity_values = [f.strip().lower() for f in transitivity_filter.split(',') if f.strip()]
+        if transitivity_values:
+            where_clause += ' AND LOWER(v.verb_transitivity) IN (' + ','.join(['?' for _ in transitivity_values]) + ')'
+            params.extend(transitivity_values)
     
     # Count query
     count_query = f'''
@@ -4647,11 +4695,20 @@ def get_week_goals_all_languages(week_offset: int = 0) -> Dict:
         conn.row_factory = sqlite3.Row
         cursor = conn.cursor()
         
+        # Try week-specific goals first; if none, use perpetual 'default' template
         cursor.execute('''
             SELECT day_of_week, language, activity_type, target_count
             FROM weekly_goals
             WHERE week_start_date = ?
         ''', (week_start_date,))
+        rows = cursor.fetchall()
+        if not rows:
+            cursor.execute('''
+                SELECT day_of_week, language, activity_type, target_count
+                FROM weekly_goals
+                WHERE week_start_date = 'default'
+            ''')
+            rows = cursor.fetchall()
         
         # Organize by day -> language -> activity -> count
         week_goals = {}
@@ -4660,7 +4717,7 @@ def get_week_goals_all_languages(week_offset: int = 0) -> Dict:
         for day in day_names:
             week_goals[day] = {}
         
-        for row in cursor.fetchall():
+        for row in rows:
             day = row['day_of_week']
             lang = row['language']
             activity = row['activity_type']
@@ -5603,18 +5660,19 @@ def insert_vocabulary_entry(
     level: Optional[str] = None,
     origin: str = 'user',
     verb_transitivity: Optional[str] = None,
-    deck_id: Optional[int] = None
+    deck_id: Optional[int] = None,
+    gender: Optional[str] = None,
 ) -> int:
-    """Insert a new vocabulary entry and return its ID"""
+    """Insert a new vocabulary entry and return its ID. gender is 'm' or 'f' for Hindi/Urdu nouns."""
     try:
         conn = sqlite3.connect(config.DB_PATH)
         cursor = conn.cursor()
         
         cursor.execute('''
             INSERT INTO vocabulary 
-            (language, english_word, translation, transliteration, word_class, level, origin, verb_transitivity, deck_id)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-        ''', (language, english_word, translation, transliteration, word_class, level, origin, verb_transitivity, deck_id))
+            (language, english_word, translation, transliteration, word_class, level, origin, verb_transitivity, deck_id, gender)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ''', (language, english_word, translation, transliteration, word_class, level, origin, verb_transitivity, deck_id, gender))
         
         word_id = cursor.lastrowid
         conn.commit()
@@ -5828,6 +5886,56 @@ def get_words_for_deck(language: str, deck_id: int, limit: int = 500) -> List[Di
         return []
 
 
+def remove_words_from_deck(deck_id: int, word_ids: List[int], only_user_generated: bool = True) -> int:
+    """Remove words from a deck. Returns the number of words removed.
+
+    - If only_user_generated is True (default): only deletes words whose origin
+      is 'deck', 'activity', or 'user'. Words with origin 'default' are not deleted;
+      if they are in vocab_deck_refs, the ref is removed so they no longer appear in this deck.
+    - For user-generated words that are directly in this deck (vocabulary.deck_id = deck_id),
+      the vocabulary row and word_states are deleted.
+    - For any word in vocab_deck_refs for this deck, the ref row is deleted.
+    """
+    if not word_ids or deck_id is None:
+        return 0
+    removed = 0
+    try:
+        conn = sqlite3.connect(config.DB_PATH)
+        cursor = conn.cursor()
+        for wid in word_ids:
+            cursor.execute(
+                'SELECT id, deck_id, COALESCE(origin, ?) AS origin FROM vocabulary WHERE id = ?',
+                ('default', wid)
+            )
+            row = cursor.fetchone()
+            if not row:
+                continue
+            v_id, v_deck_id, origin = row[0], row[1], row[2]
+            in_deck_direct = (v_deck_id == deck_id)
+            cursor.execute('SELECT 1 FROM vocab_deck_refs WHERE deck_id = ? AND word_id = ?', (deck_id, wid))
+            in_deck_ref = cursor.fetchone() is not None
+            if not in_deck_direct and not in_deck_ref:
+                continue
+            if only_user_generated and origin == 'default':
+                if in_deck_ref:
+                    cursor.execute('DELETE FROM vocab_deck_refs WHERE deck_id = ? AND word_id = ?', (deck_id, wid))
+                    removed += 1
+                continue
+            if in_deck_ref:
+                cursor.execute('DELETE FROM vocab_deck_refs WHERE deck_id = ? AND word_id = ?', (deck_id, wid))
+                removed += 1
+            if in_deck_direct and (not only_user_generated or origin in ('deck', 'activity', 'user')):
+                cursor.execute('DELETE FROM word_states WHERE word_id = ?', (wid,))
+                cursor.execute('DELETE FROM vocabulary WHERE id = ?', (wid,))
+                removed += 1
+        conn.commit()
+        conn.close()
+        return removed
+    except Exception as e:
+        print(f"Error removing words from deck: {e}")
+        return 0
+
+
 def attach_words_to_deck(word_ids: List[int], deck_id: int) -> None:
     """Attach existing vocabulary rows to a deck via the junction table.
 
@@ -6006,6 +6114,24 @@ def delete_translation_history(history_id: int) -> bool:
     except Exception as e:
         print(f"Error deleting translation history: {e}")
         return False
+
+
+def delete_translation_history_bulk(history_ids: List[int]) -> int:
+    """Delete multiple translation history entries. Returns number deleted."""
+    if not history_ids:
+        return 0
+    try:
+        conn = sqlite3.connect(config.DB_PATH)
+        cursor = conn.cursor()
+        placeholders = ','.join('?' * len(history_ids))
+        cursor.execute(f'DELETE FROM translation_history WHERE id IN ({placeholders})', history_ids)
+        deleted = cursor.rowcount
+        conn.commit()
+        conn.close()
+        return deleted
+    except Exception as e:
+        print(f"Error bulk deleting translation history: {e}")
+        return 0
 
 
 # ============================================================================

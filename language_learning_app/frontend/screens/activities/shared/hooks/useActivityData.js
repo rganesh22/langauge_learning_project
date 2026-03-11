@@ -2,7 +2,8 @@
  * Hook for loading and managing activity data
  * Handles API calls, error states, and loading states
  */
-import { useState, useRef } from 'react';
+import { useState, useCallback, useRef, useEffect } from 'react';
+import { useIsFocused } from '@react-navigation/native';
 import { fetchActivityData, getActivityTimeout, createApiDetails } from '../utils/apiHelpers';
 import { sanitizeActivity } from '../utils/textProcessing';
 import { API_BASE_URL } from '../constants';
@@ -18,6 +19,7 @@ export function useActivityData(
   generationCallbacks = null,
   // generationCallbacks shape: { createJob, completeJob, failJob, updateJobStatus }
 ) {
+  const isFocused = useIsFocused();
   const [activity, setActivity] = useState(null);
   const [loading, setLoading] = useState(fromHistory ? true : false); // Only start loading if from history
   const [loadingStatus, setLoadingStatus] = useState('Initializing...');
@@ -63,6 +65,17 @@ export function useActivityData(
         const savedActivity = row.activity_data || row;
         setActivity(sanitizeActivity(savedActivity));
         setWordsUsed(savedActivity._words_used_data || savedActivity.words_used || []);
+        
+        // Populate API details from history
+        if (savedActivity._prompt || savedActivity.api_details) {
+          const apiData = savedActivity.api_details 
+            ? { api_details: savedActivity.api_details, words_used: savedActivity.words_used || [] } 
+            : { activity: savedActivity, words_used: savedActivity._words_used_data || savedActivity.words_used || [] };
+          const apiCall = createApiDetails(apiData, activityType, language);
+          apiCall.endpoint = `Loaded from History (ID: ${activityId})`;
+          setAllApiDetails([apiCall]);
+        }
+        
         setResolvedActivityId(activityId);
         setLoading(false);
       } catch (error) {
@@ -75,8 +88,10 @@ export function useActivityData(
 
     // ── Background generation job tracking ────────────────────────────────
     let jobId = null;
+    const baseActivityType = activityType.startsWith('unified/') ? activityType.replace('unified/', '') : activityType;
+    
     if (generationCallbacks?.createJob) {
-      jobId = generationCallbacks.createJob(activityType, language);
+      jobId = generationCallbacks.createJob(baseActivityType, language);
       bgJobIdRef.current = jobId;
     }
 
@@ -85,15 +100,16 @@ export function useActivityData(
       
       // Set loading status based on activity type
       const loadingMessages = {
-        transliteration: 'Generating transliteration practice...',
-        listening: 'Generating passage and questions...',
-        reading: 'Generating story and questions...',
-        writing: 'Generating writing prompt...',
-        speaking: 'Generating speaking topic...',
+        transliteration: 'Generating Transliteration Activity...',
+        listening: 'Generating Listening Activity...',
+        reading: 'Generating Reading Activity...',
+        writing: 'Generating Writing Activity...',
+        speaking: 'Generating Speaking Activity...',
+        translation: 'Generating Translation Activity...',
       };
-      setLoadingStatus(loadingMessages[activityType] || 'Loading activity...');
+      setLoadingStatus(loadingMessages[baseActivityType] || 'Loading Activity...');
       if (jobId && generationCallbacks?.updateJobStatus) {
-        generationCallbacks.updateJobStatus(jobId, loadingMessages[activityType] || 'Loading activity...');
+        generationCallbacks.updateJobStatus(jobId, loadingMessages[baseActivityType] || 'Loading Activity...');
       }
 
       // Create abort controller with timeout
@@ -103,11 +119,11 @@ export function useActivityData(
 
       // For listening activities, show initial state (real progress will come from SSE)
       let statusInterval;
-      if (activityType === 'listening') {
+      if (baseActivityType === 'listening') {
         // Don't set paragraph count yet - SSE will provide the actual count
-        setLoadingStatus('Initializing activity generation...');
+        setLoadingStatus('Initializing Activity generation...');
         if (jobId && generationCallbacks?.updateJobStatus) {
-          generationCallbacks.updateJobStatus(jobId, 'Initializing activity generation...');
+          generationCallbacks.updateJobStatus(jobId, 'Initializing Activity generation...');
         }
       }
 
@@ -147,7 +163,7 @@ export function useActivityData(
       const data = await response.json();
 
       // For listening activities, we get a session_id and need to wait for generation to complete
-      if (activityType === 'listening' && data.session_id) {
+      if (baseActivityType === 'listening' && data.session_id) {
         console.log('[Activity Data] Received session_id:', data.session_id);
         setSessionId(data.session_id);
         setLoadingStatus('Generating passage and questions...');
@@ -196,6 +212,11 @@ export function useActivityData(
           activityId: String(resolvedId),
           activityData: sanitized,
         });
+
+        // Hide notification tray if the user is still actively watching it load
+        if (isFocused && generationCallbacks?.dismissJob) {
+           generationCallbacks.dismissJob(jobId);
+        }
       }
       
     } catch (error) {
@@ -221,6 +242,11 @@ export function useActivityData(
         activityId: aId ? String(aId) : null,
         activityData: aData || null,
       });
+
+      // Hide notification tray if the user is still actively watching it load
+      if (isFocused && generationCallbacks?.dismissJob) {
+         generationCallbacks.dismissJob(jobId);
+      }
       bgJobIdRef.current = null;
     }
   };

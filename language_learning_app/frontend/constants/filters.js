@@ -49,9 +49,10 @@ export const CEFR_LEVELS = [
   { label: 'C2', value: 'c2', color: { bg: '#9B59B6', text: '#FFFFFF' } },
 ];
 
-// Verb transitivity filter options (used in import + library views)
+// Verb transitivity filter options (used in import + library views). Labels lowercase for display.
+// "All" clears the filter; ditransitive removed per product.
 export const VERB_TRANSITIVITY_FILTERS = [
-  { label: 'Transitive', value: 'transitive', color: { bg: '#EF4444', text: '#FFFFFF' } },
-  { label: 'Intransitive', value: 'intransitive', color: { bg: '#10B981', text: '#FFFFFF' } },
-  { label: 'Ditransitive', value: 'ditransitive', color: { bg: '#6366F1', text: '#FFFFFF' } },
+  { label: 'All', value: '', color: { bg: '#6C757D', text: '#FFFFFF' } },
+  { label: 'transitive', value: 'transitive', color: { bg: '#EF4444', text: '#FFFFFF' } },
+  { label: 'intransitive', value: 'intransitive', color: { bg: '#10B981', text: '#FFFFFF' } },
 ];

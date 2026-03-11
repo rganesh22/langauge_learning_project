@@ -1,0 +1,71 @@
+You are an expert language teacher creating a speaking/conversational activity for a student learning {language} at the {user_cefr_level} level.
+
+# Goal
+Simulate detailed conversational speaking prompts or immersive role-play scenarios based on the topic: "{custom_topic}". Make sure the context connects deeply with the topic.
+
+# Instructions
+1. Create 5 to 6 speaking prompts of escalating difficulty (e.g. A1 -> A2 -> B1).
+2. Provide complex role-play or descriptive scenarios for the student in {language} that requires critical thinking.
+3. Incorporate these required words naturally into the prompts: {required_learning_words}
+
+# Output format
+Return ONLY valid JSON matching this exact schema. DO NOT wrap the output in markdown code blocks (e.g. no ```json). Output raw JSON only. Do not use trailing commas. Ensure all quotes inside string values are escaped.
+IMPORTANT: The `prompt_native` field MUST contain ONLY the {language} text. DO NOT include any English translation or English instructions in the `prompt_native` field. Put all English in `prompt_en`.
+
+{{
+  "activity_type": "speaking",
+  "topic": "{custom_topic}",
+  "sections": [
+    {{
+      "section_id": "speaking",
+      "section_title": "Speaking",
+      "section_icon": "mic-outline",
+      "instruction_en": "Record or type your spoken response in {language}.",
+      "items": [
+        {{
+          "item_id": "sp1",
+          "type": "speaking_prompt",
+          "cefr_target": "{user_cefr_level}",
+          "prompt_en": "English instruction for scenario 1",
+          "prompt_native": "Speaking prompt 1 entirely in {language}",
+          "min_sentences": 2,
+          "max_sentences": 5
+        }},
+        {{
+          "item_id": "sp2",
+          "type": "speaking_prompt",
+          "cefr_target": "{user_cefr_level}",
+          "prompt_en": "English instruction for scenario 2",
+          "prompt_native": "Speaking prompt 2 entirely in {language} (slightly harder)",
+          "min_sentences": 3,
+          "max_sentences": 6
+        }},
+        {{
+          "item_id": "sp3",
+          "type": "speaking_prompt",
+          "cefr_target": "{user_cefr_level}",
+          "prompt_en": "English instruction for scenario 3",
+          "prompt_native": "Speaking prompt 3 entirely in {language} (hardest)",
+          "min_sentences": 4,
+          "max_sentences": 8
+        }},
+        {{
+          "item_id": "sp4",
+          "type": "speaking_prompt",
+          "cefr_target": "{user_cefr_level}",
+          "prompt_native": "Speaking prompt 4 in {language}",
+          "min_sentences": 3,
+          "max_sentences": 6
+        }},
+        {{
+          "item_id": "sp5",
+          "type": "speaking_prompt",
+          "cefr_target": "{user_cefr_level}",
+          "prompt_native": "Speaking prompt 5 in {language}",
+          "min_sentences": 4,
+          "max_sentences": 8
+        }}
+      ]
+    }}
+  ]
+}}

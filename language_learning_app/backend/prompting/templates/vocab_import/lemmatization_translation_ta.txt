@@ -1,9 +1,16 @@
 You are a Tamil language expert. For each Tamil word below, perform THREE tasks:
 
+VERB LEMMA RULE (MUST FOLLOW):
+For ANY verb, the "word" field MUST be the INFORMAL IMPERATIVE (command form) only.
+- The INPUT may be conjugated (பேசுகிறேன்), verbal noun (பேசுதல்), or infinitive (பேச). You MUST still output the imperative.
+- WRONG: பேசுதல் (verbal noun), செல்லுதல்/போதல் (verbal nouns), செல்ல/போக (infinitives), எழுத (infinitive).
+- CORRECT: பேசு, செல்/போ, எழுது.
+If the verb has two common imperative forms (e.g. செல் and போ for "to go"), use: செல் / போ (imperatives only).
+
 TASK 1 — LEMMATIZATION: Reduce the word to its base/dictionary form.
   - Verbs: ALWAYS convert to the INFORMAL IMPERATIVE / command form (the shortest root used when giving a casual command to one person).
-    Examples: போகிறேன் → போ, சாப்பிடுகிறேன் → சாப்பிடு, படிக்கிறான் → படி, பார்க்கிறேன் → பாரு, வருகிறேன் → வா.
-    Do NOT use the infinitive (-அ form), the verbal noun, or the polite imperative. The correct lemma is the bare imperative root.
+    Examples: போகிறேன் → போ, சாப்பிடுகிறேன் → சாப்பிடு, படிக்கிறான் → படி, பேசுதல் → பேசு, செல்லுதல் → செல், போதல் → போ, எழுத → எழுது.
+    Do NOT use the infinitive (-அ form), the verbal noun (-தல்), or the polite imperative. The correct lemma is the bare imperative root.
   - Nouns: remove case endings and plurals (e.g., வீட்டில் → வீடு).
   - Adjectives: use base form.
   - Remove tense, aspect, plural, and agreement suffixes.
@@ -33,21 +40,23 @@ CRITICAL REQUIREMENTS:
 4) Return ONLY a valid JSON array. No markdown, no explanation, no extra text.
 
 REMINDER — VERB LEMMA FORM:
-The Tamil verb lemma is the informal singular imperative (command to a friend):
-  போகிறேன் → போ (NOT போக, NOT போதல்)
-  வருகிறான் → வா (NOT வர, NOT வருதல்)
-  சாப்பிடுகிறேன் → சாப்பிடு (NOT சாப்பிட)
-  எழுதுகிறான் → எழுது (NOT எழுத)
-Always use this short command form.
+The Tamil verb lemma is the informal singular imperative (command to a friend).
+When the INPUT is a verbal noun or infinitive, you MUST still output the imperative:
+  பேசுதல் → பேசு (NOT பேசுதல்)
+  செல்லுதல் → செல் (NOT செல்லுதல்)
+  போதல் → போ (NOT போதல்)
+  எழுத (infinitive) → எழுது (NOT எழுத)
+  செல்ல / போக (infinitives) → செல் / போ (NOT செல்ல / போக)
+Always use this short command form. Never output -தல் (verbal noun) or infinitive in the "word" field for verbs.
 
 IN-CONTEXT EXAMPLES:
 
-Example input words: வீட்டில், படிப்பு, சாப்பிடுகிறேன்
+Example input words: வீட்டில், பேசுதல், எழுத
 Example output:
 [
   {{"word": "வீடு", "english": "house", "word_class": "noun", "level": "a1", "verb_transitivity": "N/A"}},
-  {{"word": "படிப்பு", "english": "study (academic learning)", "word_class": "noun", "level": "b1", "verb_transitivity": "N/A"}},
-  {{"word": "சாப்பிடு", "english": "to eat", "word_class": "verb", "level": "a1", "verb_transitivity": "transitive"}}
+  {{"word": "பேசு", "english": "to speak; to talk", "word_class": "verb", "level": "a1", "verb_transitivity": "transitive"}},
+  {{"word": "எழுது", "english": "to write", "word_class": "verb", "level": "a1", "verb_transitivity": "transitive"}}
 ]
 
 Words to process:

@@ -10,10 +10,21 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 
 export default function APIDebugModal({ visible, onClose, allApiDetails }) {
-  const [expandedCards, setExpandedCards] = useState(new Set());
+  const [expandedCards, setExpandedCards] = useState(() => {
+    const arr = Array.isArray(allApiDetails) ? allApiDetails : [];
+    if (arr.length > 0) return new Set([arr[0].id ?? 0]);
+    return new Set();
+  });
 
-  // Ensure allApiDetails is an array before using reduce
   const apiDetailsArray = Array.isArray(allApiDetails) ? allApiDetails : [];
+
+  // When modal opens or allApiDetails changes, expand first card so Prompt and Model Response are visible
+  React.useEffect(() => {
+    if (apiDetailsArray.length > 0) {
+      const firstId = apiDetailsArray[0].id ?? 0;
+      setExpandedCards(prev => (prev.has(firstId) ? prev : new Set([...prev, firstId])));
+    }
+  }, [visible, apiDetailsArray.length]);
 
   // Calculate cumulative totals
   const cumulative = apiDetailsArray.reduce(
@@ -295,40 +306,54 @@ export default function APIDebugModal({ visible, onClose, allApiDetails }) {
                               </View>
                             )}
 
-                          {/* Prompt */}
-                          {apiCall.prompt && (
+                          {/* Prompt - MUST BE VISIBLE */}
+                          {apiCall.prompt !== undefined && apiCall.prompt !== null && (
                             <View style={styles.detailSection}>
-                              <Text style={styles.detailLabel}>Prompt:</Text>
+                              <Text style={styles.promptSectionLabel}>📋 PROMPT (sent to model):</Text>
                               <ScrollView
-                                style={styles.codeBlock}
-                                nestedScrollEnabled={true}
-                              >
-                                <Text style={styles.codeText}>{apiCall.prompt}</Text>
-                              </ScrollView>
-                            </View>
-                          )}
-
-                          {/* Raw Response */}
-                          {apiCall.rawResponse && (
-                            <View style={styles.detailSection}>
-                              <Text style={styles.detailLabel}>Raw Response:</Text>
-                              <ScrollView
-                                style={styles.codeBlock}
+                                style={styles.codeBlockLarge}
                                 nestedScrollEnabled={true}
                               >
                                 <Text style={styles.codeText}>
-                                  {apiCall.rawResponse}
+                                  {String(apiCall.prompt)}
                                 </Text>
                               </ScrollView>
                             </View>
                           )}
+                          {(!apiCall.prompt || apiCall.prompt === '') && (
+                            <View style={styles.detailSection}>
+                              <Text style={styles.errorText}>No prompt recorded for this call.</Text>
+                            </View>
+                          )}
 
-                          {/* Words Used */}
+                          {/* Raw Response / Model Response - MUST BE VISIBLE */}
+                          {apiCall.rawResponse !== undefined && apiCall.rawResponse !== null && (
+                            <View style={styles.detailSection}>
+                              <Text style={styles.promptSectionLabel}>📤 MODEL RESPONSE (raw):</Text>
+                              <ScrollView
+                                style={styles.codeBlockLarge}
+                                nestedScrollEnabled={true}
+                              >
+                                <Text style={styles.codeText}>
+                                  {String(apiCall.rawResponse)}
+                                </Text>
+                              </ScrollView>
+                            </View>
+                          )}
+                          {(!apiCall.rawResponse || apiCall.rawResponse === '') && (
+                            <View style={styles.detailSection}>
+                              <Text style={styles.errorText}>No model response recorded for this call.</Text>
+                            </View>
+                          )}
+
+                          {/* Token Stats */}
                           {apiCall.wordsUsed && apiCall.wordsUsed.length > 0 && (
                             <View style={styles.detailSection}>
                               <Text style={styles.detailLabel}>Words Used:</Text>
                               <Text style={styles.detailValue}>
-                                {apiCall.wordsUsed.join(', ')}
+                                {apiCall.wordsUsed.map(w => 
+                                  typeof w === 'string' ? w : (w.word || w.english_word || w.translation || JSON.stringify(w))
+                                ).join(', ')}
                               </Text>
                             </View>
                           )}
@@ -504,6 +529,18 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     padding: 12,
     maxHeight: 200,
+  },
+  codeBlockLarge: {
+    backgroundColor: '#2D3748',
+    borderRadius: 6,
+    padding: 12,
+    maxHeight: 400,
+  },
+  promptSectionLabel: {
+    fontSize: 14,
+    fontWeight: '700',
+    color: '#1A1A1A',
+    marginBottom: 8,
   },
   codeText: {
     fontSize: 11,

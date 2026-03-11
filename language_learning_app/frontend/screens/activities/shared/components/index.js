@@ -7,3 +7,7 @@ export { default as APIDebugModal } from './APIDebugModal';
 export { TTSProgressIndicator } from './TTSProgressIndicator';
 export { AudioPlayer } from './AudioPlayer';
 export { default as TopicSelectionModal } from './TopicSelectionModal';
+export { default as HistoryAudioPlayer } from './HistoryAudioPlayer';
+export { renderItem } from './ItemRenderer';
+export { default as itemStyles } from './itemStyles';
+

@@ -118,6 +118,7 @@ export function useRecording(language = 'kannada') {
 
   /**
    * Convert audio to text using speech-to-text API
+   * Returns { transcriptText, audioBase64, audioFormat } so callers can store playback.
    */
   const convertAudioToText = async (audioUri, audioFormat = null) => {
     try {
@@ -187,24 +188,51 @@ export function useRecording(language = 'kannada') {
       const transcriptText = data.transcript || '';
       setTranscript(transcriptText);
       setRecordingStatus('idle');
-      return transcriptText;
+      return { transcriptText, audioBase64, audioFormat };
     } catch (error) {
       console.error('Error converting audio to text:', error);
-      Alert.alert('Error', 'Failed to transcribe audio. Please try again.');
       setRecordingStatus('idle');
-      return '';
+      // Still return audio so user can play back even if transcription failed
+      let audioBase64Out = null;
+      let audioFormatOut = audioFormat || 'webm';
+      try {
+        if (Platform.OS === 'web') {
+          const response = await fetch(audioUri);
+          const blob = await response.blob();
+          audioBase64Out = await new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onloadend = () => resolve(reader.result.split(',')[1]);
+            reader.onerror = reject;
+            reader.readAsDataURL(blob);
+          });
+          if (blob.type.includes('webm')) audioFormatOut = 'webm';
+          else if (blob.type.includes('wav')) audioFormatOut = 'wav';
+        } else {
+          audioBase64Out = await FileSystem.readAsStringAsync(audioUri, { encoding: FileSystem.EncodingType.Base64 });
+        }
+      } catch (e) {
+        console.warn('Could not read audio for playback:', e);
+      }
+      Alert.alert('Error', 'Failed to transcribe audio. You can still play back your recording.');
+      setRecordingStatus('idle');
+      return { transcriptText: '', audioBase64: audioBase64Out, audioFormat: audioFormatOut };
     }
   };
 
   /**
-   * Record and transcribe in one go
+   * Record and transcribe in one go.
+   * Returns { audio_base64, audio_format, text } so the caller can display playback and optionally use transcript.
    */
   const recordAndTranscribe = async () => {
     const uri = await stopRecording();
-    if (uri) {
-      return await convertAudioToText(uri);
-    }
-    return '';
+    if (!uri) return null;
+    const result = await convertAudioToText(uri);
+    if (!result) return null;
+    return {
+      audio_base64: result.audioBase64,
+      audio_format: result.audioFormat || (Platform.OS === 'web' ? 'webm' : 'm4a'),
+      text: result.transcriptText || '',
+    };
   };
 
   /**

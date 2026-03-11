@@ -15,6 +15,6 @@
 import { useActivityGeneration } from '../../../../contexts/ActivityGenerationContext';
 
 export function useGenerationCallbacks() {
-  const { createJob, completeJob, failJob, updateJobStatus } = useActivityGeneration();
-  return { createJob, completeJob, failJob, updateJobStatus };
+  const { createJob, completeJob, failJob, updateJobStatus, dismissJob } = useActivityGeneration();
+  return { createJob, completeJob, failJob, updateJobStatus, dismissJob };
 }

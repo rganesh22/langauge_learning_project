@@ -25,6 +25,9 @@ import { useNavigation } from '@react-navigation/native';
 import SafeText from '../components/SafeText';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { LanguageContext, LANGUAGES } from '../contexts/LanguageContext';
+import HistoryAudioPlayer from './activities/shared/components/HistoryAudioPlayer';
+import { renderItem as sharedRenderItem } from './activities/shared/components/ItemRenderer';
+import itemStyles from './activities/shared/components/itemStyles';
 
 const API_BASE_URL = __DEV__ ? 'http://localhost:9090' : 'http://localhost:9090';
 
@@ -47,132 +50,7 @@ const SECTION_META = {
   translation:        { icon: 'language-outline',  label: 'Translation',     color: '#8B5CF6' },
 };
 
-// ─────────────────────────────────────────────────────────────────────────────
-// Reusable audio player for history review (listening + speaking)
-// ─────────────────────────────────────────────────────────────────────────────
-function HistoryAudioPlayer({ audioBase64, mimeType = 'audio/wav', color = '#3B82F6', label = 'Play' }) {
-  const [playing, setPlaying] = useState(false);
-  const [position, setPosition] = useState(0);  // seconds
-  const [duration, setDuration] = useState(0);   // seconds
-  const soundRef = useRef(null);
-  const webAudioRef = useRef(null);
-  const pollRef = useRef(null);
-
-  const cleanup = useCallback(() => {
-    if (pollRef.current) { clearInterval(pollRef.current); pollRef.current = null; }
-    if (soundRef.current) { soundRef.current.unloadAsync().catch(() => {}); soundRef.current = null; }
-    if (webAudioRef.current) { webAudioRef.current.pause(); webAudioRef.current = null; }
-    setPlaying(false);
-  }, []);
-
-  useEffect(() => () => cleanup(), [cleanup]);
-
-  const fmt = (secs) => {
-    const s = Math.floor(secs);
-    const m = Math.floor(s / 60);
-    return `${m}:${String(s % 60).padStart(2, '0')}`;
-  };
-
-  const toggle = useCallback(async () => {
-    if (Platform.OS === 'web') {
-      if (webAudioRef.current && !webAudioRef.current.paused) {
-        webAudioRef.current.pause();
-        setPlaying(false);
-        if (pollRef.current) { clearInterval(pollRef.current); pollRef.current = null; }
-        return;
-      }
-      if (!webAudioRef.current) {
-        const el = new window.Audio(`data:${mimeType};base64,${audioBase64}`);
-        webAudioRef.current = el;
-        el.onloadedmetadata = () => setDuration(el.duration || 0);
-        el.onended = () => { setPlaying(false); setPosition(0); if (pollRef.current) { clearInterval(pollRef.current); pollRef.current = null; } };
-      }
-      await webAudioRef.current.play();
-      setPlaying(true);
-      pollRef.current = setInterval(() => {
-        const el = webAudioRef.current;
-        if (!el) return;
-        setPosition(el.currentTime || 0);
-        setDuration(el.duration || 0);
-      }, 250);
-    } else {
-      // Native
-      if (soundRef.current) {
-        const st = await soundRef.current.getStatusAsync();
-        if (st.isLoaded && st.isPlaying) {
-          await soundRef.current.pauseAsync();
-          setPlaying(false);
-          if (pollRef.current) { clearInterval(pollRef.current); pollRef.current = null; }
-          return;
-        }
-        if (st.isLoaded && !st.isPlaying) {
-          await soundRef.current.playAsync();
-          setPlaying(true);
-          pollRef.current = setInterval(async () => {
-            const s = await soundRef.current?.getStatusAsync();
-            if (s?.isLoaded) { setPosition((s.positionMillis || 0) / 1000); setDuration((s.durationMillis || 0) / 1000); }
-          }, 250);
-          return;
-        }
-      }
-      await Audio.setAudioModeAsync({ playsInSilentModeIOS: true });
-      const { sound } = await Audio.Sound.createAsync(
-        { uri: `data:${mimeType};base64,${audioBase64}` },
-        { shouldPlay: true }
-      );
-      soundRef.current = sound;
-      const st = await sound.getStatusAsync();
-      setDuration((st.durationMillis || 0) / 1000);
-      setPlaying(true);
-      sound.setOnPlaybackStatusUpdate(s => {
-        if (s.isLoaded) {
-          setPosition((s.positionMillis || 0) / 1000);
-          setDuration((s.durationMillis || 0) / 1000);
-          if (s.didJustFinish) { setPlaying(false); setPosition(0); }
-        }
-      });
-    }
-  }, [audioBase64, mimeType]);
-
-  const seek = useCallback(async (secs) => {
-    setPosition(secs);
-    if (Platform.OS === 'web') {
-      if (webAudioRef.current) webAudioRef.current.currentTime = secs;
-    } else {
-      if (soundRef.current) await soundRef.current.setPositionAsync(secs * 1000);
-    }
-  }, []);
-
-  return (
-    <View style={{ gap: 6 }}>
-      <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
-        <TouchableOpacity
-          style={[{ backgroundColor: color, borderRadius: 20, paddingHorizontal: 14, paddingVertical: 8, flexDirection: 'row', alignItems: 'center', gap: 6 }]}
-          onPress={toggle}
-          activeOpacity={0.8}
-        >
-          <Ionicons name={playing ? 'pause' : 'play'} size={16} color="#FFF" />
-          <SafeText style={{ color: '#FFF', fontSize: 13, fontWeight: '600' }}>{label}</SafeText>
-        </TouchableOpacity>
-        {duration > 0 && (
-          <SafeText style={{ fontSize: 12, color: '#9CA3AF' }}>{fmt(position)} / {fmt(duration)}</SafeText>
-        )}
-      </View>
-      {duration > 0 && (
-        <Slider
-          style={{ width: '100%', height: 32 }}
-          minimumValue={0}
-          maximumValue={duration}
-          value={position}
-          onSlidingComplete={seek}
-          minimumTrackTintColor={color}
-          maximumTrackTintColor="#E5E7EB"
-          thumbTintColor={color}
-        />
-      )}
-    </View>
-  );
-}
+// HistoryAudioPlayer, renderItem, and itemStyles imported from shared components above.
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Helpers
@@ -915,318 +793,34 @@ export default function PlacementTestScreen({ route }) {
   }, [currentIdx, flatItems, answers, textInputValue, animateIn]);
   goPrevRef.current = goPrev;
 
-  // ── render item ──
+  // ── render item — delegates to shared ItemRenderer ──
   const renderItem = useCallback((item) => {
     const secMeta = item._section_meta || {};
     const sectionColor = secMeta.color || langColor;
 
-    if (item.type === 'passage') {
-      return (
-        <View style={styles.passageCard}>
-          <View style={[styles.passageHeader, { backgroundColor: sectionColor }]}>
-            <Ionicons name="book-outline" size={18} color="#FFF" />
-            <SafeText style={styles.passageHeaderText}>{item.passage_title || 'Passage'}</SafeText>
-          </View>
-          <SafeText style={styles.passageText}>{item.passage_text}</SafeText>
-        </View>
-      );
-    }
+    const config = {
+      answers,
+      setAnswers,
+      sectionColor,
+      showResult: false,
+      showAnswers: false,
+      language,
+      // PT uses a single textInputValue model
+      textInputValue,
+      setTextInputValue,
+      // Audio state for transcripts
+      listeningAudio,
+      onLoadAudio: loadListeningAudio,
+      onToggleAudio: toggleListeningAudio,
+      showDialogue: false,
+      // Recording callbacks
+      onStartRecording: () => startRecording(),
+      onStopRecording: (itemId) => stopAndSaveAudio(itemId),
+      isRecordingItem: () => recordingState === 'recording',
+      isSavingItem: () => recordingState === 'saving',
+    };
 
-    // Listening transcript — show audio player + optional dialogue preview
-    if (item.type === 'transcript') {
-      const audioState = listeningAudio[item.item_id] || {};
-      const hasSpeakers = item.speakers && item.speakers.length > 0;
-      const hasDialogue = item.dialogue && item.dialogue.length > 0;
-
-      // Assign colours to each speaker for visual differentiation
-      const speakerColors = ['#3B82F6', '#EF4444', '#10B981', '#F59E0B'];
-
-      return (
-        <View style={[styles.audioPlayerCard, { borderColor: sectionColor }]}>
-          <View style={[styles.audioPlayerHeader, { backgroundColor: sectionColor }]}>
-            <Ionicons name="headset-outline" size={18} color="#FFF" />
-            <SafeText style={styles.passageHeaderText}>{item.transcript_title || 'Listening'}</SafeText>
-          </View>
-
-          {/* Speaker legend */}
-          {hasSpeakers && (
-            <View style={styles.speakerLegend}>
-              {item.speakers.map((sp, i) => (
-                <View key={i} style={styles.speakerLegendItem}>
-                  <Ionicons
-                    name={sp.gender === 'male' ? 'man-outline' : 'woman-outline'}
-                    size={14}
-                    color={speakerColors[i % speakerColors.length]}
-                  />
-                  <SafeText style={[styles.speakerLegendName, { color: speakerColors[i % speakerColors.length] }]}>
-                    {sp.name}
-                  </SafeText>
-                </View>
-              ))}
-            </View>
-          )}
-
-          {/* Dialogue lines — HIDDEN during active test; only shown in history view */}
-          {false && hasDialogue && (
-            <View style={styles.dialoguePreview}>
-              {item.dialogue.map((line, i) => {
-                const color = speakerColors[line.speaker_index % speakerColors.length];
-                const sp = item.speakers?.[line.speaker_index];
-                const isRight = line.speaker_index % 2 === 1;
-                return (
-                  <View key={i} style={[styles.dialogueLine, isRight && styles.dialogueLineRight]}>
-                    {!isRight && (
-                      <Ionicons
-                        name={sp?.gender === 'male' ? 'man-outline' : 'woman-outline'}
-                        size={14} color={color} style={{ marginTop: 2 }}
-                      />
-                    )}
-                    <View style={[styles.dialogueBubble, { backgroundColor: color + '18', borderColor: color + '40' }, isRight && styles.dialogueBubbleRight]}>
-                      <SafeText style={[styles.dialogueBubbleText]}>{line.text}</SafeText>
-                    </View>
-                    {isRight && (
-                      <Ionicons
-                        name={sp?.gender === 'male' ? 'man-outline' : 'woman-outline'}
-                        size={14} color={color} style={{ marginTop: 2 }}
-                      />
-                    )}
-                  </View>
-                );
-              })}
-            </View>
-          )}
-
-          {/* Label fallback */}
-          {!hasSpeakers && item.speaker_label_en ? (
-            <SafeText style={styles.speakerLabel}>{item.speaker_label_en}</SafeText>
-          ) : null}
-
-          <View style={styles.audioControls}>
-            {audioState.loading ? (
-              <View style={styles.audioLoadingRow}>
-                <ActivityIndicator size="small" color={sectionColor} />
-                <SafeText style={[styles.audioLoadingText, { color: sectionColor }]}>Preparing audio…</SafeText>
-              </View>
-            ) : audioState.error ? (
-              <View style={styles.audioErrorRow}>
-                <Ionicons name="alert-circle-outline" size={18} color="#EF4444" />
-                <SafeText style={styles.audioErrorText}>Could not load audio</SafeText>
-                <TouchableOpacity onPress={() => loadListeningAudio(item)} style={styles.audioRetryBtn}>
-                  <SafeText style={[styles.audioRetryText, { color: sectionColor }]}>Retry</SafeText>
-                </TouchableOpacity>
-              </View>
-            ) : audioState.audioBase64 ? (
-              <TouchableOpacity
-                style={[styles.audioPlayBtn, { backgroundColor: sectionColor }]}
-                onPress={() => toggleListeningAudio(item.item_id, audioState.audioBase64)}
-                activeOpacity={0.8}
-              >
-                <Ionicons name={audioState.playing ? 'stop-circle' : 'play-circle'} size={28} color="#FFF" />
-                <SafeText style={styles.audioPlayBtnText}>
-                  {audioState.playing ? 'Stop' : 'Play Audio'}
-                </SafeText>
-              </TouchableOpacity>
-            ) : (
-              <View style={styles.audioLoadingRow}>
-                <ActivityIndicator size="small" color={sectionColor} />
-                <SafeText style={[styles.audioLoadingText, { color: sectionColor }]}>Loading audio…</SafeText>
-              </View>
-            )}
-          </View>
-        </View>
-      );
-    }
-
-    if (item.type === 'multiple_choice') {
-      const selected = answers[item.item_id];
-      return (
-        <View>
-          <SafeText style={styles.questionText}>{item.question}</SafeText>
-          <View style={styles.optionsContainer}>
-            {(item.options || []).map((opt, i) => {
-              const isSelected = selected === i;
-              return (
-                <TouchableOpacity
-                  key={i}
-                  style={[styles.optionBtn, isSelected && { borderColor: sectionColor, backgroundColor: sectionColor + '18' }]}
-                  onPress={() => setAnswers(prev => ({ ...prev, [item.item_id]: i }))}
-                  activeOpacity={0.7}
-                >
-                  <View style={[styles.optionNumber, isSelected && { backgroundColor: sectionColor }]}>
-                    <SafeText style={[styles.optionNumberText, isSelected && { color: '#FFF' }]}>{i + 1}</SafeText>
-                  </View>
-                  <SafeText style={[styles.optionText, isSelected && { color: sectionColor, fontWeight: '600' }]}>{opt}</SafeText>
-                </TouchableOpacity>
-              );
-            })}
-          </View>
-        </View>
-      );
-    }
-
-    // Translation: show native phrase prominently, target-language options below
-    if (item.type === 'translation_choice') {
-      const selected = answers[item.item_id];
-      return (
-        <View>
-          <View style={[styles.translationSourceBox, { borderColor: sectionColor }]}>
-            <SafeText style={styles.translationSourceText}>{item.source_phrase}</SafeText>
-          </View>
-          {item.question_en && (
-            <SafeText style={styles.questionEnText}>{item.question_en}</SafeText>
-          )}
-          <View style={styles.optionsContainer}>
-            {(item.options || []).map((opt, i) => {
-              const isSelected = selected === i;
-              return (
-                <TouchableOpacity
-                  key={i}
-                  style={[styles.optionBtn, isSelected && { borderColor: sectionColor, backgroundColor: sectionColor + '18' }]}
-                  onPress={() => setAnswers(prev => ({ ...prev, [item.item_id]: i }))}
-                  activeOpacity={0.7}
-                >
-                  <View style={[styles.optionNumber, isSelected && { backgroundColor: sectionColor }]}>
-                    <SafeText style={[styles.optionNumberText, isSelected && { color: '#FFF' }]}>{i + 1}</SafeText>
-                  </View>
-                  <SafeText style={[styles.optionText, isSelected && { color: sectionColor, fontWeight: '600' }]}>{opt}</SafeText>
-                </TouchableOpacity>
-              );
-            })}
-          </View>
-        </View>
-      );
-    }
-
-    // Reverse translation: show English phrase, pick native-language translation
-    if (item.type === 'translation_choice_reverse') {
-      const selected = answers[item.item_id];
-      return (
-        <View>
-          <View style={[styles.translationSourceBox, { borderColor: sectionColor }]}>
-            <SafeText style={[styles.translationSourceText, { fontSize: 22 }]}>{item.source_phrase_en}</SafeText>
-          </View>
-          <SafeText style={styles.questionEnText}>What is the {language.charAt(0).toUpperCase() + language.slice(1)} translation?</SafeText>
-          <View style={styles.optionsContainer}>
-            {(item.options || []).map((opt, i) => {
-              const isSelected = selected === i;
-              return (
-                <TouchableOpacity
-                  key={i}
-                  style={[styles.optionBtn, isSelected && { borderColor: sectionColor, backgroundColor: sectionColor + '18' }]}
-                  onPress={() => setAnswers(prev => ({ ...prev, [item.item_id]: i }))}
-                  activeOpacity={0.7}
-                >
-                  <View style={[styles.optionNumber, isSelected && { backgroundColor: sectionColor }]}>
-                    <SafeText style={[styles.optionNumberText, isSelected && { color: '#FFF' }]}>{i + 1}</SafeText>
-                  </View>
-                  <SafeText style={[styles.optionText, isSelected && { color: sectionColor, fontWeight: '600' }]}>{opt}</SafeText>
-                </TouchableOpacity>
-              );
-            })}
-          </View>
-        </View>
-      );
-    }
-
-    if (item.type === 'free_response') {
-      return (
-        <View>
-          {item.prompt_native && (
-            <SafeText style={styles.questionText}>{item.prompt_native}</SafeText>
-          )}
-          <TextInput
-            style={[styles.textInput, { borderColor: sectionColor }]}
-            multiline
-            numberOfLines={5}
-            value={textInputValue}
-            onChangeText={setTextInputValue}
-            placeholder="Write your response here…"
-            placeholderTextColor="#9CA3AF"
-            textAlignVertical="top"
-          />
-          {item.min_words && (
-            <SafeText style={styles.wordHint}>{item.min_words}–{item.max_words || '∞'} words</SafeText>
-          )}
-        </View>
-      );
-    }
-
-    if (item.type === 'speaking_prompt') {
-      const audioAnswer = typeof answers[item.item_id] === 'object' ? answers[item.item_id] : null;
-      const hasAudio = !!(audioAnswer?.audio_base64);
-
-      return (
-        <View>
-          {item.prompt_native && (
-            <SafeText style={styles.questionText}>{item.prompt_native}</SafeText>
-          )}
-
-          {/* Recorded audio status + playback with seek */}
-          {hasAudio && (
-            <View style={[styles.audioRecordedCard, { borderColor: sectionColor, flexDirection: 'column', gap: 8 }]}>
-              <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
-                <Ionicons name="mic-circle-outline" size={20} color={sectionColor} />
-                <SafeText style={[styles.audioRecordedText, { color: sectionColor }]}>Audio recorded</SafeText>
-                <TouchableOpacity
-                  style={[styles.audioRecordedBtn, { backgroundColor: '#EF444418', borderColor: '#EF4444', marginLeft: 'auto' }]}
-                  onPress={() => {
-                    setAnswers(prev => ({ ...prev, [item.item_id]: undefined }));
-                    setTextInputValue('');
-                  }}
-                  activeOpacity={0.7}
-                >
-                  <Ionicons name="refresh-outline" size={15} color="#EF4444" />
-                  <SafeText style={[styles.audioRecordedBtnText, { color: '#EF4444' }]}>Re-record</SafeText>
-                </TouchableOpacity>
-              </View>
-              <HistoryAudioPlayer
-                audioBase64={audioAnswer.audio_base64}
-                mimeType={audioAnswer.audio_format === 'webm' ? 'audio/webm' : 'audio/mp4'}
-                color={sectionColor}
-                label="Play back"
-              />
-            </View>
-          )}
-
-          {/* Record / Stop buttons — only show when no audio saved yet */}
-          {!hasAudio && (
-            <View style={styles.recordRow}>
-              {recordingState === 'idle' && (
-                <TouchableOpacity
-                  style={[styles.recordBtn, { backgroundColor: sectionColor }]}
-                  onPress={startRecording}
-                  activeOpacity={0.8}
-                >
-                  <Ionicons name="mic" size={22} color="#FFF" />
-                  <SafeText style={styles.recordBtnText}>Record Response</SafeText>
-                </TouchableOpacity>
-              )}
-              {recordingState === 'recording' && (
-                <TouchableOpacity
-                  style={[styles.recordBtn, { backgroundColor: '#EF4444' }]}
-                  onPress={() => stopAndSaveAudio(item.item_id)}
-                  activeOpacity={0.8}
-                >
-                  <Ionicons name="stop-circle" size={22} color="#FFF" />
-                  <SafeText style={styles.recordBtnText}>Stop Recording</SafeText>
-                </TouchableOpacity>
-              )}
-              {recordingState === 'saving' && (
-                <View style={[styles.recordBtn, { backgroundColor: '#6B7280' }]}>
-                  <ActivityIndicator size="small" color="#FFF" />
-                  <SafeText style={styles.recordBtnText}>Saving…</SafeText>
-                </View>
-              )}
-            </View>
-          )}
-          {item.min_sentences && !hasAudio && (
-            <SafeText style={styles.wordHint}>{item.min_sentences}–{item.max_sentences || '∞'} sentences</SafeText>
-          )}
-        </View>
-      );
-    }
-
-    return <SafeText style={styles.questionText}>{JSON.stringify(item)}</SafeText>;
+    return sharedRenderItem(item, null, config);
   }, [answers, textInputValue, langColor, language, listeningAudio, loadListeningAudio, toggleListeningAudio, recordingState, startRecording, stopAndSaveAudio]);
 
   // ── look ahead for any passage/transcript needed for the current MCQ ──

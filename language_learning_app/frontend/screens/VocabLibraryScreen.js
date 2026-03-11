@@ -10,13 +10,14 @@ import {
   ActivityIndicator,
   Modal,
   Alert,
+  Dimensions,
 } from 'react-native';
 import SafeText from '../components/SafeText';
 import TextImportModal from '../components/TextImportModal';
-import TranslationToolModal from '../components/TranslationToolModal';
 import { LanguageContext, LANGUAGES } from '../contexts/LanguageContext';
+import { useTranslationJob } from '../contexts/TranslationJobContext';
 import NoLanguageEmptyState from '../components/NoLanguageEmptyState';
-import { MASTERY_FILTERS, WORD_CLASSES as SHARED_WORD_CLASSES, LEVELS as SHARED_LEVELS, LEVEL_COLORS as SHARED_LEVEL_COLORS } from '../constants/filters';
+import { MASTERY_FILTERS, WORD_CLASSES as SHARED_WORD_CLASSES, LEVELS as SHARED_LEVELS, LEVEL_COLORS as SHARED_LEVEL_COLORS, VERB_TRANSITIVITY_FILTERS } from '../constants/filters';
 import { Ionicons } from '@expo/vector-icons';
 import { useFocusEffect } from '@react-navigation/native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -46,8 +47,11 @@ export default function VocabLibraryScreen({ route, navigation }) {
   const [masteryFilter, setMasteryFilter] = useState([]); // Array for multiple selections
   const [wordClassFilter, setWordClassFilter] = useState([]); // Array for multiple selections
   const [levelFilter, setLevelFilter] = useState([]); // Array for multiple selections
+  const [transitivityFilter, setTransitivityFilter] = useState([]); // transitive / intransitive
   const [originFilter, setOriginFilter] = useState([]); // Array for multiple selections
   const [availableDecks, setAvailableDecks] = useState([]); // deck names for origin filter
+  const [specificDeckExpanded, setSpecificDeckExpanded] = useState(false);
+  const [deckSearchQuery, setDeckSearchQuery] = useState('');
   const [transliterations, setTransliterations] = useState({});
   // Default filters collapsed
   const [filtersExpanded, setFiltersExpanded] = useState(false);
@@ -59,7 +63,7 @@ export default function VocabLibraryScreen({ route, navigation }) {
   
   // Text import modal state
   const [showImportModal, setShowImportModal] = useState(false);
-  const [showTranslationModal, setShowTranslationModal] = useState(false);
+  const { openModalWithPrefill } = useTranslationJob();
   
   // Review history modal state
   const [selectedWord, setSelectedWord] = useState(null);
@@ -119,7 +123,7 @@ export default function VocabLibraryScreen({ route, navigation }) {
         .then(r => r.ok ? r.json() : { decks: [] })
         .then(data => setAvailableDecks((data.decks || []).filter(d => d.word_count > 0)))
         .catch(() => {});
-    }, [route?.params?.language, selectedLanguage, availableLanguages.length, searchQuery, masteryFilter, wordClassFilter, levelFilter, originFilter, language])
+    }, [route?.params?.language, selectedLanguage, availableLanguages.length, searchQuery, masteryFilter, wordClassFilter, levelFilter, transitivityFilter, originFilter, language])
   );
 
   // Note: removed separate useEffect for filters - now handled by useFocusEffect
@@ -174,6 +178,12 @@ export default function VocabLibraryScreen({ route, navigation }) {
       if (levelFilter.length > 0) {
         levelFilter.forEach(filter => {
           params.append('level_filter', filter);
+        });
+      }
+      // Verb transitivity filter
+      if (transitivityFilter.length > 0) {
+        transitivityFilter.forEach(filter => {
+          params.append('transitivity_filter', filter);
         });
       }
       // Handle origin filter
@@ -319,23 +329,19 @@ export default function VocabLibraryScreen({ route, navigation }) {
               </SafeText>
             </View>
           ) : null}
-          {item.verb_transitivity && item.verb_transitivity !== 'N/A' ? (
-            <View style={[
-              styles.tag,
-              {
-                backgroundColor: '#6B7280',
-              }
-            ]}>
-              <SafeText style={[
-                styles.tagText,
-                {
-                  color: '#FFFFFF',
-                }
-              ]}>
-                {String(item.verb_transitivity)}
-              </SafeText>
-            </View>
-          ) : null}
+          {item.verb_transitivity && item.verb_transitivity !== 'N/A' ? (() => {
+            const vtFilter = VERB_TRANSITIVITY_FILTERS.find(
+              f => (f.value || '').toLowerCase() === (item.verb_transitivity || '').toLowerCase(),
+            );
+            const vtColor = vtFilter ? vtFilter.color : { bg: '#6B7280', text: '#FFFFFF' };
+            return (
+              <View style={[styles.tag, { backgroundColor: vtColor.bg }]}>
+                <SafeText style={[styles.tagText, { color: vtColor.text }]}>
+                  {String(item.verb_transitivity).toLowerCase()}
+                </SafeText>
+              </View>
+            );
+          })() : null}
           {item.deck_name ? (
             <TouchableOpacity
               onPress={() => {
@@ -437,16 +443,20 @@ export default function VocabLibraryScreen({ route, navigation }) {
         <View style={styles.headerActionRow}>
           <TouchableOpacity
             style={styles.importButton}
-            onPress={() => setShowTranslationModal(true)}
+            onPress={() => openModalWithPrefill({ language: language || 'kannada' })}
           >
-            <Ionicons name="language" size={18} color="#8B5CF6" />
+            <View style={styles.importButtonIconWrap}>
+              <Ionicons name="language" size={18} color="#8B5CF6" />
+            </View>
             <SafeText style={[styles.importButtonText, { color: '#8B5CF6' }]}>Translate</SafeText>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.importButton}
             onPress={() => setShowImportModal(true)}
           >
-            <Ionicons name="add-circle-outline" size={18} color="#4A90E2" />
+            <View style={styles.importButtonIconWrap}>
+              <Ionicons name="document-text" size={18} color="#4A90E2" />
+            </View>
             <SafeText style={styles.importButtonText}>Import Vocab</SafeText>
           </TouchableOpacity>
         </View>
@@ -466,6 +476,16 @@ export default function VocabLibraryScreen({ route, navigation }) {
             <Ionicons name="close-circle" size={20} color="#999" />
           </TouchableOpacity>
         )}
+        <TouchableOpacity
+          onPress={() => openModalWithPrefill({
+            language: language || 'kannada',
+            prefillText: searchQuery.trim(),
+          })}
+          style={styles.searchTranslateIcon}
+          hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+        >
+          <Ionicons name="language" size={22} color="#8B5CF6" />
+        </TouchableOpacity>
       </View>
 {/* Filters */}
   <View style={styles.filtersSection}>
@@ -481,7 +501,13 @@ export default function VocabLibraryScreen({ route, navigation }) {
           />
     </TouchableOpacity>
       {filtersExpanded && (
-      <>
+      <ScrollView
+        style={styles.filtersScrollContent}
+        contentContainerStyle={styles.filtersScrollContentContainer}
+        showsVerticalScrollIndicator={true}
+        keyboardShouldPersistTaps="handled"
+        nestedScrollEnabled
+      >
   <View style={styles.filterWrapContainer}>
   {MASTERY_FILTERS.map((filter) => {
                 const isAll = filter.value === '';
@@ -588,6 +614,47 @@ export default function VocabLibraryScreen({ route, navigation }) {
         </View>
 
         <View style={styles.filterGroup}>
+          <SafeText style={styles.filterGroupLabel}>Verb transitivity</SafeText>
+          <View style={styles.filterWrapContainer}>
+            {VERB_TRANSITIVITY_FILTERS.map((f) => {
+              const isAll = f.value === '';
+              const isSelected = isAll ? transitivityFilter.length === 0 : transitivityFilter.includes(f.value);
+              return (
+                <TouchableOpacity
+                  key={f.value || '__all__'}
+                  style={[
+                    styles.filterChip,
+                    {
+                      backgroundColor: isSelected ? f.color.bg : f.color.bg + '20',
+                      borderColor: f.color.bg,
+                    },
+                  ]}
+                  onPress={() => {
+                    if (isAll) {
+                      setTransitivityFilter([]);
+                    } else if (isSelected) {
+                      setTransitivityFilter(transitivityFilter.filter(x => x !== f.value));
+                    } else {
+                      setTransitivityFilter([...transitivityFilter, f.value]);
+                    }
+                  }}
+                >
+                  <SafeText
+                    style={[
+                      styles.filterChipText,
+                      {
+                        color: isSelected ? f.color.text : f.color.bg,
+                        fontWeight: isSelected ? '600' : '500',
+                      },
+                    ]}
+                  >{String(f.label)}</SafeText>
+                </TouchableOpacity>
+              );
+            })}
+          </View>
+        </View>
+
+        <View style={styles.filterGroup}>
           <SafeText style={styles.filterGroupLabel}>Level</SafeText>
           <ScrollView
             horizontal
@@ -681,46 +748,104 @@ export default function VocabLibraryScreen({ route, navigation }) {
               );
             })}
           </View>
-          {/* Specific imported-deck chips — same style */}
+          {/* Imported decks: collapsible section with search + deck picker */}
           {availableDecks.length > 0 && (
-            <View>
-              <SafeText style={[styles.filterGroupLabel, { marginTop: 8 }]}>Specific Deck</SafeText>
-              <View style={styles.filterWrapContainer}>
-                {availableDecks.map((deck) => {
-                  const isSelected = originFilter.includes(deck.name);
-                  const deckColor = { bg: '#7C3AED', text: '#FFFFFF' };
-                  return (
-                    <TouchableOpacity
-                      key={`deck_${deck.id}`}
-                      style={[
-                        styles.filterChip,
-                        {
-                          backgroundColor: isSelected ? deckColor.bg : deckColor.bg + '20',
-                          borderColor: deckColor.bg,
-                        },
-                      ]}
-                      onPress={() => {
-                        if (isSelected) {
-                          setOriginFilter(originFilter.filter(f => f !== deck.name));
-                        } else {
-                          setOriginFilter([...originFilter, deck.name]);
-                        }
-                      }}
-                    >
-                      <View style={styles.filterChipContent}>
-                        <Ionicons name="albums-outline" size={14} color={isSelected ? deckColor.text : deckColor.bg} />
-                        <SafeText style={[styles.filterChipText, { color: isSelected ? deckColor.text : deckColor.bg, marginLeft: 4 }]}>
-                          {deck.name.length > 20 ? deck.name.substring(0, 20) + '…' : deck.name}
-                        </SafeText>
-                      </View>
-                    </TouchableOpacity>
-                  );
-                })}
-              </View>
+            <View style={styles.importedDecksGroup}>
+              <TouchableOpacity
+                style={styles.specificDeckHeader}
+                onPress={() => setSpecificDeckExpanded(!specificDeckExpanded)}
+                activeOpacity={0.7}
+              >
+                <SafeText style={styles.filterGroupLabel}>Imported decks</SafeText>
+                <Ionicons
+                  name={specificDeckExpanded ? 'chevron-up' : 'chevron-down'}
+                  size={20}
+                  color="#666"
+                />
+              </TouchableOpacity>
+              {specificDeckExpanded && (
+                <View style={styles.importedDecksContent}>
+                  <TextInput
+                    style={styles.deckSearchInput}
+                    placeholder="Search decks by name..."
+                    placeholderTextColor="#9CA3AF"
+                    value={deckSearchQuery}
+                    onChangeText={setDeckSearchQuery}
+                  />
+                  <ScrollView
+                    style={styles.deckPickerContainer}
+                    contentContainerStyle={styles.deckPickerContent}
+                    nestedScrollEnabled
+                    showsVerticalScrollIndicator={true}
+                    keyboardShouldPersistTaps="handled"
+                  >
+                    {availableDecks
+                      .filter((d) =>
+                        (d.name || '')
+                          .toLowerCase()
+                          .includes((deckSearchQuery || '').toLowerCase().trim())
+                      )
+                      .sort((a, b) => (a.name || '').localeCompare(b.name || '', undefined, { sensitivity: 'base' }))
+                      .map((deck) => {
+                        const isSelected = originFilter.includes(deck.name);
+                        const deckColor = { bg: '#7C3AED', text: '#FFFFFF' };
+                        return (
+                          <TouchableOpacity
+                            key={`deck_${deck.id}`}
+                            style={[
+                              styles.filterChip,
+                              styles.deckPickerChip,
+                              {
+                                backgroundColor: isSelected ? deckColor.bg : deckColor.bg + '20',
+                                borderColor: deckColor.bg,
+                              },
+                            ]}
+                            onPress={() => {
+                              if (isSelected) {
+                                setOriginFilter(originFilter.filter((f) => f !== deck.name));
+                              } else {
+                                setOriginFilter([...originFilter, deck.name]);
+                              }
+                            }}
+                          >
+                            <View style={styles.filterChipContent}>
+                              <Ionicons
+                                name="albums-outline"
+                                size={14}
+                                color={isSelected ? deckColor.text : deckColor.bg}
+                              />
+                              <SafeText
+                                style={[
+                                  styles.filterChipText,
+                                  {
+                                    color: isSelected ? deckColor.text : deckColor.bg,
+                                    marginLeft: 4,
+                                    flex: 1,
+                                  },
+                                ]}
+                                numberOfLines={1}
+                              >
+                                {deck.name}
+                              </SafeText>
+                              {isSelected && <Ionicons name="checkmark-circle" size={18} color={deckColor.text} />}
+                            </View>
+                          </TouchableOpacity>
+                        );
+                      })}
+                    {availableDecks.filter((d) =>
+                      (d.name || '')
+                        .toLowerCase()
+                        .includes((deckSearchQuery || '').toLowerCase().trim())
+                    ).length === 0 && (
+                      <SafeText style={styles.deckPickerEmpty}>No decks match your search</SafeText>
+                    )}
+                  </ScrollView>
+                </View>
+              )}
             </View>
           )}
         </View>
-        </>
+        </ScrollView>
         )}
       </View>
 {/* Word Count */}
@@ -991,16 +1116,6 @@ export default function VocabLibraryScreen({ route, navigation }) {
       </Modal>
 
       {/* Translation Tool Modal */}
-      <TranslationToolModal
-        visible={showTranslationModal}
-        onClose={() => setShowTranslationModal(false)}
-        language={language}
-        onImportComplete={(data) => {
-          setOffset(0);
-          setWords([]);
-          loadVocabulary(0, true);
-        }}
-      />
 
       {/* Text Import Modal */}
       <TextImportModal
@@ -1056,7 +1171,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     borderRadius: 8,
     backgroundColor: '#F0F7FF',
-    gap: 4,
+    gap: 6,
+  },
+  importButtonIconWrap: {
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   importButtonText: {
     fontSize: 13,
@@ -1209,6 +1328,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#1A1A1A',
   },
+  searchTranslateIcon: {
+    marginLeft: 4,
+    padding: 4,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   filtersSection: {
     backgroundColor: '#F8F8F8',
     borderBottomWidth: 1,
@@ -1225,6 +1350,12 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: '600',
     color: '#1A1A1A',
+  },
+  filtersScrollContent: {
+    maxHeight: Dimensions.get('window').height * 0.55,
+  },
+  filtersScrollContentContainer: {
+    paddingBottom: 24,
   },
   filterGroup: {
     marginBottom: 12,
@@ -1250,6 +1381,44 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     paddingHorizontal: 20,
     marginTop: 4,
+  },
+  specificDeckHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 20,
+    marginBottom: 4,
+  },
+  deckSearchInput: {
+    marginHorizontal: 20,
+    marginTop: 8,
+    marginBottom: 10,
+    paddingHorizontal: 12,
+    paddingVertical: 10,
+    fontSize: 14,
+    color: '#111827',
+    backgroundColor: '#FFF',
+    borderWidth: 1,
+    borderColor: '#E5E7EB',
+    borderRadius: 10,
+  },
+  deckPickerContainer: {
+    paddingHorizontal: 20,
+    maxHeight: 200,
+  },
+  deckPickerContent: {
+    paddingBottom: 16,
+  },
+  deckPickerChip: {
+    marginBottom: 8,
+    width: '100%',
+    marginRight: 0,
+  },
+  deckPickerEmpty: {
+    fontSize: 13,
+    color: '#9CA3AF',
+    paddingVertical: 12,
+    textAlign: 'center',
   },
   filterChip: {
     paddingHorizontal: 14,

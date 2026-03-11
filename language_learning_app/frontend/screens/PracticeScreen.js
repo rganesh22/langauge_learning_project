@@ -10,10 +10,12 @@ import {
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useFocusEffect } from '@react-navigation/native';
+import { CommonActions } from '@react-navigation/native';
 import { LANGUAGES } from '../contexts/LanguageContext';
 import { LanguageContext } from '../contexts/LanguageContext';
 import NoLanguageEmptyState from '../components/NoLanguageEmptyState';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { RootNavigationRefContext } from '../contexts/NavigationRefContext';
 
 const API_BASE_URL = __DEV__ ? 'http://localhost:9090' : 'http://localhost:9090';
 
@@ -31,6 +33,7 @@ const PRACTICE_ACTIVITIES = ['transliteration', 'reading', 'listening', 'writing
 
 export default function PracticeScreen({ navigation }) {
   const insets = useSafeAreaInsets();
+  const rootNavRef = useContext(RootNavigationRefContext);
   const { selectedLanguage: ctxLanguage, setSelectedLanguage: setCtxLanguage, availableLanguages } = React.useContext(LanguageContext);
   const selectedLanguage = ctxLanguage;
   const setSelectedLanguage = (l) => setCtxLanguage(l);
@@ -144,17 +147,51 @@ export default function PracticeScreen({ navigation }) {
   }
 
   const startActivity = (activityType) => {
-    navigation.navigate('Activity', {
-      language: selectedLanguage,
-      activityType: activityType,
-    });
+    const params = { language: selectedLanguage, activityType };
+    const action = CommonActions.navigate({ name: 'Activity', params });
+    // 1) Root ref — Stack navigator (same ref used by ActivityGenerationTray when you tap a tray card)
+    const root = rootNavRef?.current;
+    if (root && typeof root.dispatch === 'function') {
+      root.dispatch(action);
+      return;
+    }
+    // 2) Find the navigator that has the Activity screen and dispatch there
+    let nav = navigation;
+    while (nav) {
+      try {
+        const state = nav.getState?.();
+        const hasActivity = state?.routes?.some?.((r) => r.name === 'Activity');
+        if (hasActivity && typeof nav.dispatch === 'function') {
+          nav.dispatch(action);
+          return;
+        }
+      } catch (_) {}
+      nav = nav.getParent?.() ?? null;
+    }
+    // 3) Fallback: use navigate (bubbles in RN 6)
+    navigation.dispatch?.(action) ?? navigation.navigate('Activity', params);
   };
 
   const viewHistory = (activityType) => {
-    navigation.navigate('ActivityHistory', {
-      language: selectedLanguage,
-      activityType: activityType,
-    });
+    const params = { language: selectedLanguage, activityType };
+    const action = CommonActions.navigate({ name: 'ActivityHistory', params });
+    const root = rootNavRef?.current;
+    if (root && typeof root.dispatch === 'function') {
+      root.dispatch(action);
+      return;
+    }
+    let nav = navigation;
+    while (nav) {
+      try {
+        const state = nav.getState?.();
+        if (state?.routes?.some?.((r) => r.name === 'ActivityHistory') && typeof nav.dispatch === 'function') {
+          nav.dispatch(action);
+          return;
+        }
+      } catch (_) {}
+      nav = nav.getParent?.() ?? null;
+    }
+    navigation.dispatch?.(action) ?? navigation.navigate('ActivityHistory', params);
   };
 
   return (

@@ -3,6 +3,7 @@ API client for Gemini AI and Google Cloud Speech-to-Text
 Handles text generation, TTS, and STT operations
 """
 import json
+import os
 import random
 import time
 import threading
@@ -26,6 +27,15 @@ except ImportError:
 from google.cloud import texttospeech
 from . import config
 from .prompting import render_template, PLACEMENT_TEST_GENERATE_PROMPT, PLACEMENT_TEST_ANALYZE_PROMPT
+from .prompting.activity_prompts import (
+    UNIFIED_TRANSLITERATION_PROMPT,
+    UNIFIED_READING_PROMPT,
+    UNIFIED_LISTENING_PROMPT,
+    UNIFIED_WRITING_PROMPT,
+    UNIFIED_SPEAKING_PROMPT,
+    UNIFIED_TRANSLATION_PROMPT
+)
+
 from .prompting.transliteration_sentences import FALLBACK_SENTENCES
 
 # Initialize Gemini API
@@ -36,9 +46,14 @@ if config.GEMINI_API_KEY:
 # Model Configuration
 # ============================================================================
 
-# Gemini model to use throughout the application
-GEMINI_MODEL = "gemini-3-flash-preview"
+# Default Gemini model (used when no flow is specified). For flow-specific models, use get_model_for_flow().
+GEMINI_MODEL = os.getenv('GEMINI_MODEL', config.GEMINI_MODEL_DEFAULT)
 GEMINI_MODEL_LIVE = "gemini-2.5-flash-native-audio-preview-12-2025"  # For live API (real-time audio)
+
+
+def get_model_for_flow(flow: str) -> str:
+    """Return the Gemini model name for the given flow (e.g. 'listening_activity_script', 'import_vocab')."""
+    return config.get_gemini_model_for_flow(flow)
 
 # ============================================================================
 # Text Generation Functions
@@ -109,7 +124,8 @@ SCRIPT_REQUIREMENTS = {
     'tamil': "CRITICAL: Use only Tamil script (தமிழ் எழுத்து). NO English, NO Latin letters.",
     'hindi': "CRITICAL: Use only Devanagari script (देवनागरी लिपि). NO English, NO Latin letters.",
     'urdu': "CRITICAL: Use ONLY Devanagari script (देवनागरी लिपि) - NOT Nastaliq/Arabic script. The client will handle conversion to Nastaliq. NO English, NO Latin letters.",
-    'english': "Use only English (Latin script)."
+    'english': "Use only English (Latin script).",
+    'vietnamese': "Use only Vietnamese (Latin script with standard diacritics, e.g. ă, â, ê, ô, ơ, ư).",
 }
 
 def get_script_requirement(language):
@@ -296,8 +312,10 @@ def generate_text_with_gemini(prompt: str, model_name: str = None, max_tokens: i
 
 
 # Gemini TTS Model Configuration
-# Using Gemini 2.5 Flash TTS for cost-efficient, low-latency audio generation
-GEMINI_TTS_MODEL = "gemini-2.5-flash-preview-tts"  # Or "gemini-2.5-pro-tts" for higher quality
+# Preview model is the one currently available for generateContent (v1beta); production may 404 until fully rolled out.
+GEMINI_TTS_MODEL = os.environ.get("GEMINI_TTS_MODEL", "gemini-2.5-flash-preview-tts")
+# Fallback if the primary model returns 404 (e.g. production not yet available in region)
+GEMINI_TTS_FALLBACK_MODEL = "gemini-2.5-flash-preview-tts"
 
 # Available Gemini TTS prebuilt voices
 # Voice genders based on Gemini TTS documentation: https://docs.cloud.google.com/text-to-speech/docs/gemini-tts#voice_options
@@ -611,143 +629,154 @@ def generate_tts(text: str, language: str = 'kn-IN', voice: str = None, style_in
         
         # Use google.genai API for Gemini TTS (preferred method)
         if HAS_GOOGLE_GENAI:
-            try:
-                print(f"Using google.genai API for TTS with model: {GEMINI_TTS_MODEL}, voice: {voice}")
-                
-                # Prepare text with style instruction if provided
-                # Format: "Say [style]: [text]" as shown in the example
-                if style_instruction:
-                    text_with_style = f"Say {style_instruction.lower()}: {text}"
-                    print(f"Applied TTS style instruction: {style_instruction}")
-                else:
-                    text_with_style = text
-                
-                # Initialize the genai client
-                client = google_genai.Client(api_key=config.GEMINI_API_KEY)
-                
-                # Track TTS response time
-                tts_start_time = time.time()
-                
-                # Generate audio using Gemini TTS (following the example pattern)
-                print(f"[TTS] Calling generate_content with model={GEMINI_TTS_MODEL}, voice={voice}")
-                response = client.models.generate_content(
-                    model=GEMINI_TTS_MODEL,
-                    contents=text_with_style,
-                    config=types.GenerateContentConfig(
-                        response_modalities=["AUDIO"],
-                        speech_config=types.SpeechConfig(
-                            voice_config=types.VoiceConfig(
-                                prebuilt_voice_config=types.PrebuiltVoiceConfig(
-                                    voice_name=voice,
+            models_to_try = [GEMINI_TTS_MODEL]
+            if GEMINI_TTS_FALLBACK_MODEL and GEMINI_TTS_FALLBACK_MODEL != GEMINI_TTS_MODEL:
+                models_to_try.append(GEMINI_TTS_FALLBACK_MODEL)
+            last_error = None
+            for model_attempt in models_to_try:
+                try:
+                    print(f"Using google.genai API for TTS with model: {model_attempt}, voice: {voice}")
+                    
+                    # Prepare text with style instruction if provided
+                    # Format: "Say [style]: [text]" as shown in the example
+                    if style_instruction:
+                        text_with_style = f"Say {style_instruction.lower()}: {text}"
+                        print(f"Applied TTS style instruction: {style_instruction}")
+                    else:
+                        text_with_style = text
+                    
+                    # Initialize the genai client
+                    client = google_genai.Client(api_key=config.GEMINI_API_KEY)
+                    
+                    # Track TTS response time
+                    tts_start_time = time.time()
+                    
+                    # Generate audio using Gemini TTS (following the example pattern)
+                    print(f"[TTS] Calling generate_content with model={model_attempt}, voice={voice}")
+                    response = client.models.generate_content(
+                        model=model_attempt,
+                        contents=text_with_style,
+                        config=types.GenerateContentConfig(
+                            response_modalities=["AUDIO"],
+                            speech_config=types.SpeechConfig(
+                                voice_config=types.VoiceConfig(
+                                    prebuilt_voice_config=types.PrebuiltVoiceConfig(
+                                        voice_name=voice,
+                                    )
                                 )
-                            )
-                        ),
+                            ),
+                        )
                     )
-                )
+                    
+                    tts_response_time = time.time() - tts_start_time
+                    print(f"[TTS] Response received in {tts_response_time:.2f}s, checking candidates...")
+                    
+                    # Extract audio data from response (following the example)
+                    if not response.candidates:
+                        print(f"[TTS] Error: No candidates in response")
+                        raise Exception("No candidates in TTS response")
+                    
+                    if not hasattr(response.candidates[0], 'content') or response.candidates[0].content is None:
+                        print(f"[TTS] Error: No content in response candidate")
+                        raise Exception("No content in TTS response candidate")
+                    
+                    if not hasattr(response.candidates[0].content, 'parts') or not response.candidates[0].content.parts:
+                        print(f"[TTS] Error: No parts in response content")
+                        raise Exception("No audio content in response")
+                    
+                    audio_part = response.candidates[0].content.parts[0]
+                    if not hasattr(audio_part, 'inline_data') or not audio_part.inline_data:
+                        raise Exception("No inline_data in audio part")
+                    
+                    # Audio data is PCM format (raw audio bytes) - 24kHz, 16-bit, mono
+                    pcm_data = audio_part.inline_data.data
+                    audio_size = len(pcm_data)
+                    
+                    print(f"TTS Response received: audio size={audio_size} bytes (PCM format)")
+                    
+                    if not pcm_data or audio_size < 1000:  # At least 1KB for valid audio
+                        raise Exception(f"Generated audio is too short: {audio_size} bytes (expected at least 1000)")
+                    
+                    # Convert PCM to WAV format for better browser compatibility
+                    # WAV header: 44 bytes
+                    sample_rate = 24000
+                    channels = 1
+                    sample_width = 2  # 16-bit
+                    
+                    # Create WAV file in memory
+                    wav_buffer = io.BytesIO()
+                    # WAV header
+                    wav_buffer.write(b'RIFF')
+                    wav_buffer.write(struct.pack('<I', 36 + audio_size))  # File size - 8
+                    wav_buffer.write(b'WAVE')
+                    wav_buffer.write(b'fmt ')
+                    wav_buffer.write(struct.pack('<I', 16))  # fmt chunk size
+                    wav_buffer.write(struct.pack('<H', 1))  # Audio format (1 = PCM)
+                    wav_buffer.write(struct.pack('<H', channels))  # Number of channels
+                    wav_buffer.write(struct.pack('<I', sample_rate))  # Sample rate
+                    wav_buffer.write(struct.pack('<I', sample_rate * channels * sample_width))  # Byte rate
+                    wav_buffer.write(struct.pack('<H', channels * sample_width))  # Block align
+                    wav_buffer.write(struct.pack('<H', sample_width * 8))  # Bits per sample
+                    wav_buffer.write(b'data')
+                    wav_buffer.write(struct.pack('<I', audio_size))  # Data chunk size
+                    wav_buffer.write(pcm_data)  # Audio data
+                    
+                    wav_data = wav_buffer.getvalue()
+                    
+                    # Encode WAV data as base64 for transmission
+                    audio_base64 = base64.b64encode(wav_data).decode('utf-8')
+                    
+                    print(f"✓ Audio converted to WAV and encoded to base64: {len(audio_base64)} chars from {len(wav_data)} bytes")
+                    
+                    audio_data = {
+                        'audio_base64': audio_base64,
+                        'text': text,
+                        'voice': voice,
+                        'language': language,
+                        'format': 'wav',  # WAV format for browser compatibility
+                        'sample_rate': sample_rate,
+                        'channels': channels,
+                        'sample_width': sample_width,
+                        'model': model_attempt,
+                        'response_time': tts_response_time,
+                        'style_instruction': style_instruction,  # Include for debug
+                        'text_with_style': text_with_style if style_instruction else None
+                    }
+                    
+                    cost_info['response_time'] = tts_response_time
+                    cost_info['style_instruction'] = style_instruction
+                    cost_info['audio_size_bytes'] = len(wav_data)
+                    cost_info['audio_base64_length'] = len(audio_base64)
+                    cost_info['model'] = model_attempt
+                    
+                    print(f"✓ Generated TTS audio using {model_attempt}: {len(audio_base64)} base64 chars, {len(wav_data)} bytes, time: {tts_response_time:.2f}s")
+                    return audio_data, voice, cost_info
                 
-                tts_response_time = time.time() - tts_start_time
-                print(f"[TTS] Response received in {tts_response_time:.2f}s, checking candidates...")
-                
-                # Extract audio data from response (following the example)
-                if not response.candidates:
-                    print(f"[TTS] Error: No candidates in response")
-                    raise Exception("No candidates in TTS response")
-                
-                if not hasattr(response.candidates[0], 'content') or response.candidates[0].content is None:
-                    print(f"[TTS] Error: No content in response candidate")
-                    raise Exception("No content in TTS response candidate")
-                
-                if not hasattr(response.candidates[0].content, 'parts') or not response.candidates[0].content.parts:
-                    print(f"[TTS] Error: No parts in response content")
-                    raise Exception("No audio content in response")
-                
-                audio_part = response.candidates[0].content.parts[0]
-                if not hasattr(audio_part, 'inline_data') or not audio_part.inline_data:
-                    raise Exception("No inline_data in audio part")
-                
-                # Audio data is PCM format (raw audio bytes) - 24kHz, 16-bit, mono
-                pcm_data = audio_part.inline_data.data
-                audio_size = len(pcm_data)
-                
-                print(f"TTS Response received: audio size={audio_size} bytes (PCM format)")
-                
-                if not pcm_data or audio_size < 1000:  # At least 1KB for valid audio
-                    raise Exception(f"Generated audio is too short: {audio_size} bytes (expected at least 1000)")
-                
-                # Convert PCM to WAV format for better browser compatibility
-                # WAV header: 44 bytes
-                sample_rate = 24000
-                channels = 1
-                sample_width = 2  # 16-bit
-                
-                # Create WAV file in memory
-                wav_buffer = io.BytesIO()
-                # WAV header
-                wav_buffer.write(b'RIFF')
-                wav_buffer.write(struct.pack('<I', 36 + audio_size))  # File size - 8
-                wav_buffer.write(b'WAVE')
-                wav_buffer.write(b'fmt ')
-                wav_buffer.write(struct.pack('<I', 16))  # fmt chunk size
-                wav_buffer.write(struct.pack('<H', 1))  # Audio format (1 = PCM)
-                wav_buffer.write(struct.pack('<H', channels))  # Number of channels
-                wav_buffer.write(struct.pack('<I', sample_rate))  # Sample rate
-                wav_buffer.write(struct.pack('<I', sample_rate * channels * sample_width))  # Byte rate
-                wav_buffer.write(struct.pack('<H', channels * sample_width))  # Block align
-                wav_buffer.write(struct.pack('<H', sample_width * 8))  # Bits per sample
-                wav_buffer.write(b'data')
-                wav_buffer.write(struct.pack('<I', audio_size))  # Data chunk size
-                wav_buffer.write(pcm_data)  # Audio data
-                
-                wav_data = wav_buffer.getvalue()
-                
-                # Encode WAV data as base64 for transmission
-                audio_base64 = base64.b64encode(wav_data).decode('utf-8')
-                
-                print(f"✓ Audio converted to WAV and encoded to base64: {len(audio_base64)} chars from {len(wav_data)} bytes")
-                
-                audio_data = {
-                    'audio_base64': audio_base64,
-                    'text': text,
-                    'voice': voice,
-                    'language': language,
-                    'format': 'wav',  # WAV format for browser compatibility
-                    'sample_rate': sample_rate,
-                    'channels': channels,
-                    'sample_width': sample_width,
-                    'model': GEMINI_TTS_MODEL,
-                    'response_time': tts_response_time,
-                    'style_instruction': style_instruction,  # Include for debug
-                    'text_with_style': text_with_style if style_instruction else None
-                }
-                
-                cost_info['response_time'] = tts_response_time
-                cost_info['style_instruction'] = style_instruction
-                cost_info['audio_size_bytes'] = len(wav_data)
-                cost_info['audio_base64_length'] = len(audio_base64)
-                
-                print(f"✓ Generated TTS audio using {GEMINI_TTS_MODEL}: {len(audio_base64)} base64 chars, {len(wav_data)} bytes, time: {tts_response_time:.2f}s")
-                return audio_data, voice, cost_info
-                
-            except Exception as tts_error:
-                error_str = str(tts_error)
-                print(f"❌ Error with google.genai TTS API: {error_str}")
-                import traceback
-                traceback.print_exc()
-                print("Falling back to text-only mode")
-                # Check if it's a quota error
-                if '429' in error_str or 'quota' in error_str.lower() or 'RESOURCE_EXHAUSTED' in error_str:
-                    print(f"[ERROR] TTS quota exceeded - cannot generate audio")
-                audio_data = {
-                    'text': text,
-                    'voice': voice,
-                    'language': language,
-                    'format': 'text_only',  # Mark as text-only so caller knows audio failed
-                    'model': GEMINI_TTS_MODEL,
-                    'response_time': 0.0,
-                    'error': error_str  # Include error message for debugging
-                }
-                cost_info['response_time'] = 0.0
-                return audio_data, voice, cost_info
+                except Exception as tts_error:
+                    last_error = tts_error
+                    error_str = str(tts_error)
+                    print(f"❌ Error with google.genai TTS API ({model_attempt}): {error_str}")
+                    # On 404 NOT_FOUND, retry with fallback model if we have another to try
+                    if '404' in error_str and 'NOT_FOUND' in error_str and model_attempt != models_to_try[-1]:
+                        print(f"[TTS] Retrying with fallback model: {models_to_try[-1]}")
+                        continue
+                    import traceback
+                    traceback.print_exc()
+                    print("Falling back to text-only mode")
+                    # Check if it's a quota error
+                    if '429' in error_str or 'quota' in error_str.lower() or 'RESOURCE_EXHAUSTED' in error_str:
+                        print(f"[ERROR] TTS quota exceeded - cannot generate audio")
+                    audio_data = {
+                        'text': text,
+                        'voice': voice,
+                        'language': language,
+                        'format': 'text_only',  # Mark as text-only so caller knows audio failed
+                        'model': model_attempt,
+                        'response_time': 0.0,
+                        'error': error_str  # Include error message for debugging
+                    }
+                    cost_info['response_time'] = 0.0
+                    return audio_data, voice, cost_info
         else:
             # Fallback: return text-only if google.genai is not available
             print("google.genai not available, returning text-only")
@@ -1015,33 +1044,22 @@ def parse_json_response(response_text: str, is_truncated: bool = False) -> dict:
             "_raw_response": response_text or ""
         }
     
-    # Strip markdown code blocks if present (```json ... ``` or ``` ... ```)
+    import re
     cleaned_text = response_text.strip()
     original_start = cleaned_text[:50]  # For debugging
     
-    # Remove markdown code block markers
-    if cleaned_text.startswith('```'):
-        # Find the first newline after opening ```
-        first_newline = cleaned_text.find('\n')
-        if first_newline != -1:
-            # Remove opening ```json or ``` and the newline
-            cleaned_text = cleaned_text[first_newline + 1:].lstrip()
+    # Try to extract content between ```json and ```
+    match = re.search(r'```(?:json)?\s*(.*?)\s*```', cleaned_text, re.DOTALL)
+    if match:
+        cleaned_text = match.group(1).strip()
+    else:
+        # Fallback: extract substring from the first { to the last }
+        start_idx = cleaned_text.find('{')
+        end_idx = cleaned_text.rfind('}')
+        if start_idx != -1 and end_idx != -1 and end_idx >= start_idx:
+            cleaned_text = cleaned_text[start_idx:end_idx+1].strip()
         else:
-            # No newline found, just remove the opening ```
-            cleaned_text = cleaned_text[3:].lstrip()
-            # Try to remove json/python/etc identifier if present
-            if cleaned_text.startswith('json'):
-                cleaned_text = cleaned_text[4:].lstrip()
-            elif cleaned_text.startswith('python'):
-                cleaned_text = cleaned_text[6:].lstrip()
-    
-    # Remove closing ``` if present
-    cleaned_text = cleaned_text.rstrip()
-    if cleaned_text.endswith('```'):
-        cleaned_text = cleaned_text[:-3].rstrip()
-    
-    # Additional cleanup: remove any remaining markdown artifacts
-    cleaned_text = cleaned_text.strip()
+            cleaned_text = cleaned_text.strip()
 
     # ── Pre-pass: escape literal newlines/tabs inside JSON string values ──
     # Gemini sometimes emits multi-line string values (real \n in the text) which
@@ -1265,7 +1283,7 @@ def generate_speaker_profile(region: str, formality: str, voice: str, language: 
         
         # Generate prompt using template
         prompt = render_template(
-            'activities/speaker_profile.txt',
+            'activities/old/speaker_profile.txt',
             language=language.capitalize(),
             selected_region=region,
             formality_instruction=formality_instruction,
@@ -1274,7 +1292,9 @@ def generate_speaker_profile(region: str, formality: str, voice: str, language: 
         )
         
         # Call Gemini API
-        response_text, response_time, token_info, is_truncated, _ = generate_text_with_gemini(prompt)
+        response_text, response_time, token_info, is_truncated, _ = generate_text_with_gemini(
+            prompt, model_name=get_model_for_flow('conversation')
+        )
         
         # Parse JSON response
         result = parse_json_response(response_text, is_truncated)
@@ -1472,7 +1492,7 @@ def generate_reading_activity(word_bank: list, learned_words: list, language: st
         # (so transliteration to Perso-Arabic/Urdu and to Roman can be derived).
         language_for_template = 'Devanagari' if (language and language.lower() == 'urdu') else language
         prompt = render_template(
-            'activities/reading_activity.txt',
+            'activities/lesson_reading.txt',
             language=language,
             language_for_template=language_for_template,
             script_requirement=get_script_requirement(language),
@@ -1496,7 +1516,9 @@ def generate_reading_activity(word_bank: list, learned_words: list, language: st
         
         for attempt in range(max_retries):
             try:
-                response_text, response_time, token_info, is_truncated, _ = generate_text_with_gemini(prompt)
+                response_text, response_time, token_info, is_truncated, _ = generate_text_with_gemini(
+                    prompt, model_name=get_model_for_flow('reading_activity')
+                )
                 
                 # Parse JSON
                 result = parse_json_response(response_text, is_truncated)
@@ -1771,19 +1793,17 @@ def generate_listening_activity(word_bank: list, language: str, required_learnin
         # This matches the pattern used in reading activities.
         language_for_template = 'Devanagari' if (language and language.lower() == 'urdu') else language
         
+        # For now, fix number of speakers to 3 (later we can randomise 2–5 in the caller)
+        num_speakers = 3
+        print(f"[Listening Activity] Using num_speakers={num_speakers}")
+        
         prompt = render_template(
-            'activities/listening_activity.txt',
+            'activities/unified_listening.txt',
             language=language,
-            language_for_template=language_for_template,
             user_cefr_level=user_cefr_level,
-            selected_topic=selected_topic,
-            selected_region=selected_region,
-            formality_instruction=formality_instruction,
-            learned_section=learned_section,
-            learning_section=learning_section,
-            usage_instruction=usage_instruction,
-            learning_instruction=learning_instruction,
-            preferred_gender=preferred_gender
+            custom_topic=selected_topic,
+            required_learning_words=required_learning_words_str,
+            num_speakers=num_speakers,
         )
 
         # Initialize debug tracking
@@ -1792,7 +1812,9 @@ def generate_listening_activity(word_bank: list, language: str, required_learnin
         
         try:
             debug_steps.append({'step': 'calling_gemini_api', 'status': 'in_progress'})
-            response_text, response_time, token_info, is_truncated, api_debug_info = generate_text_with_gemini(prompt)
+            response_text, response_time, token_info, is_truncated, api_debug_info = generate_text_with_gemini(
+                prompt, model_name=get_model_for_flow('listening_activity_script')
+            )
             debug_steps.append({'step': 'gemini_api_response', 'status': 'success', 'details': api_debug_info})
         except Exception as gen_error:
             error_msg = f"Error calling Gemini API: {str(gen_error)}"
@@ -2182,7 +2204,9 @@ def generate_writing_activity(word_bank: list, language: str, required_learning_
         
         try:
             debug_steps.append({'step': 'calling_gemini_api', 'status': 'in_progress'})
-            response_text, response_time, token_info, is_truncated, api_debug_info = generate_text_with_gemini(prompt)
+            response_text, response_time, token_info, is_truncated, api_debug_info = generate_text_with_gemini(
+                prompt, model_name=get_model_for_flow('writing_activity')
+            )
             debug_steps.append({'step': 'gemini_api_response', 'status': 'success', 'details': api_debug_info})
         except Exception as gen_error:
             error_msg = f"Error calling Gemini API: {str(gen_error)}"
@@ -2338,7 +2362,7 @@ def generate_speaking_activity(word_bank: list, language: str, required_learning
             learning_instruction = ""
         
         prompt = render_template(
-            'activities/speaking_activity.txt',
+            'activities/lesson_speaking.txt',
             language=language,
             script_requirement=get_script_requirement(language),
             user_cefr_level=user_cefr_level,
@@ -2353,7 +2377,9 @@ def generate_speaking_activity(word_bank: list, language: str, required_learning
         
         try:
             debug_steps.append({'step': 'calling_gemini_api', 'status': 'in_progress'})
-            response_text, response_time, token_info, is_truncated, api_debug_info = generate_text_with_gemini(prompt)
+            response_text, response_time, token_info, is_truncated, api_debug_info = generate_text_with_gemini(
+                prompt, model_name=get_model_for_flow('speaking_activity')
+            )
             debug_steps.append({'step': 'gemini_api_response', 'status': 'success', 'details': api_debug_info})
         except Exception as gen_error:
             error_msg = f"Error calling Gemini API: {str(gen_error)}"
@@ -2500,6 +2526,7 @@ def generate_translation_activity(
         'korean': '한국어',
         'chinese': '中文',
         'arabic': 'العربية',
+        'vietnamese': 'Tiếng Việt',
     }
     
     try:
@@ -2531,7 +2558,7 @@ def generate_translation_activity(
         
         # Create prompt for translation activity
         prompt = render_template(
-            'activities/translation_activity.txt',
+            'activities/lesson_translation.txt',
             target_language=target_language,
             target_script_requirement=get_script_requirement(target_language),
             target_level=target_level,
@@ -2544,7 +2571,9 @@ def generate_translation_activity(
         
         # Call Gemini API
         try:
-            response_text, response_time, token_info, is_truncated, api_debug_info = generate_text_with_gemini(prompt)
+            response_text, response_time, token_info, is_truncated, api_debug_info = generate_text_with_gemini(
+                prompt, model_name=get_model_for_flow('translation_activity')
+            )
         except Exception as gen_error:
             error_msg = f"Error calling Gemini API: {str(gen_error)}"
             print(error_msg)
@@ -2800,7 +2829,7 @@ def grade_writing_activity(user_text: str, writing_prompt: str, required_words: 
             learning_context = f"\nUser's learning/review words (encourage usage of these): {', '.join(learning_list)}"
         
         prompt = render_template(
-            'activities/writing_grading.txt',
+            'activities/grading/writing_grading.txt',
             language=language,
             script_requirement=get_script_requirement(language),
             user_cefr_level=user_cefr_level,
@@ -2812,7 +2841,9 @@ def grade_writing_activity(user_text: str, writing_prompt: str, required_words: 
             evaluation_criteria=evaluation_criteria
         )
 
-        response_text, response_time, token_info, is_truncated, _ = generate_text_with_gemini(prompt)
+        response_text, response_time, token_info, is_truncated, _ = generate_text_with_gemini(
+            prompt, model_name=get_model_for_flow('writing_grading')
+        )
         
         # Validate response_text
         if response_text is None:
@@ -2889,7 +2920,7 @@ def grade_translation_activity(translations: list, target_language: str, user_ce
         translations_formatted = "\n\n".join(translations_text)
         
         prompt = render_template(
-            'activities/translation_grading.txt',
+            'activities/old/translation_grading.txt',
             target_language=target_language,
             target_script_requirement=get_script_requirement(target_language),
             user_cefr_level=user_cefr_level,
@@ -2898,7 +2929,9 @@ def grade_translation_activity(translations: list, target_language: str, user_ce
         )
         
         # Call Gemini API
-        response_text, response_time, token_info, is_truncated, api_debug_info = generate_text_with_gemini(prompt)
+        response_text, response_time, token_info, is_truncated, api_debug_info = generate_text_with_gemini(
+            prompt, model_name=get_model_for_flow('translation_grading')
+        )
         
         # Parse JSON response
         result = parse_json_response(response_text, is_truncated)
@@ -2955,7 +2988,7 @@ def grade_speaking_activity(user_transcript: str, speaking_topic: str, tasks: li
         tasks_list = '\n'.join([f"- {task}" for task in tasks]) if tasks else ""
         
         prompt = render_template(
-            'activities/speaking_grading.txt',
+            'activities/grading/speaking_grading.txt',
             language=language,
             script_requirement=get_script_requirement(language),
             user_cefr_level=user_cefr_level,
@@ -2967,7 +3000,9 @@ def grade_speaking_activity(user_transcript: str, speaking_topic: str, tasks: li
             learning_context=learning_context
         )
 
-        response_text, response_time, token_info, is_truncated, _ = generate_text_with_gemini(prompt)
+        response_text, response_time, token_info, is_truncated, _ = generate_text_with_gemini(
+            prompt, model_name=get_model_for_flow('speaking_grading')
+        )
         
         # Validate response_text
         if response_text is None:
@@ -3073,7 +3108,7 @@ def grade_speaking_activity_with_audio(audio_data: bytes, audio_format: str, spe
         
         # Create prompt for audio grading
         prompt = render_template(
-            'activities/speaking_grading.txt',
+            'activities/grading/speaking_grading.txt',
             language=language,
             script_requirement=get_script_requirement(language),
             user_cefr_level=user_cefr_level,
@@ -3131,7 +3166,7 @@ def grade_speaking_activity_with_audio(audio_data: bytes, audio_format: str, spe
                 }
             
             # Generate content with audio + text prompt
-            model = genai.GenerativeModel(GEMINI_MODEL)
+            model = genai.GenerativeModel(get_model_for_flow('speaking_grading'))
             
             start_time = time.time()
             response = model.generate_content(
@@ -3370,7 +3405,7 @@ def generate_conversation_activity(words: list, language: str, user_cefr_level: 
         # The template will handle language-specific formality instructions
         
         prompt = render_template(
-            'activities/conversation_activity.txt',
+            'activities/old/conversation_activity.txt',
             language=language,
             user_cefr_level=user_cefr_level,
             topic=topic,
@@ -3379,7 +3414,9 @@ def generate_conversation_activity(words: list, language: str, user_cefr_level: 
             words_context=words_context
         )
 
-        response_text, response_time, token_info, is_truncated, _ = generate_text_with_gemini(prompt)
+        response_text, response_time, token_info, is_truncated, _ = generate_text_with_gemini(
+            prompt, model_name=get_model_for_flow('conversation')
+        )
         
         # Parse JSON
         result = parse_json_response(response_text, is_truncated)
@@ -3624,7 +3661,9 @@ def generate_conversation_response(message: str, words: list, language: str, use
         )
 
         try:
-            response_text, response_time, token_info, is_truncated, _ = generate_text_with_gemini(prompt)
+            response_text, response_time, token_info, is_truncated, _ = generate_text_with_gemini(
+                prompt, model_name=get_model_for_flow('conversation')
+            )
         except Exception as e:
             # Handle API errors gracefully
             error_msg = str(e)
@@ -3874,7 +3913,7 @@ def rate_conversation_performance(conversation_transcript: str, tasks: list, top
         tasks_list = "\n".join([f"- {task}" for task in tasks])
         
         prompt = render_template(
-            'activities/conversation_rating.txt',
+            'activities/old/conversation_rating.txt',
             language=language,
             user_cefr_level=user_cefr_level,
             topic=topic,
@@ -3884,7 +3923,9 @@ def rate_conversation_performance(conversation_transcript: str, tasks: list, top
             learning_context=learning_context
         )
 
-        response_text, response_time, token_info, is_truncated, _ = generate_text_with_gemini(prompt)
+        response_text, response_time, token_info, is_truncated, _ = generate_text_with_gemini(
+            prompt, model_name=get_model_for_flow('conversation')
+        )
         
         # Validate response_text
         if response_text is None or not response_text.strip():
@@ -3943,6 +3984,7 @@ LANGUAGE_SCRIPT_NAMES = {
     'tamil':     'தமிழ் (Tamil script)',
     'hindi':     'देवनागरी (Devanagari)',
     'urdu':      'देवनागरी (Devanagari — client converts to Nastaliq)',
+    'vietnamese': 'Vietnamese (Latin script)',
 }
 
 
@@ -3967,7 +4009,9 @@ def generate_placement_test(language: str) -> dict:
 
     print(f"[PlacementTest] Generating test for {language} …")
     # Use 16 000 tokens — a full 25-question test in Indic script regularly exceeds 8 192
-    response_text, response_time, token_info, is_truncated, _ = generate_text_with_gemini(prompt, max_tokens=16000)
+    response_text, response_time, token_info, is_truncated, _ = generate_text_with_gemini(
+        prompt, model_name=get_model_for_flow('placement_test'), max_tokens=16000
+    )
     text = response_text
 
     if not text or not text.strip():
@@ -4112,7 +4156,7 @@ def analyze_placement_test(language: str, test_data: dict, answers: dict) -> dic
 
     if audio_parts:
         # Multimodal request: text prompt + audio blobs
-        model = genai.GenerativeModel(GEMINI_MODEL)
+        model = genai.GenerativeModel(get_model_for_flow('placement_test_analyze'))
         content_parts = [prompt] + audio_parts
         response = model.generate_content(
             content_parts,
@@ -4124,7 +4168,9 @@ def analyze_placement_test(language: str, test_data: dict, answers: dict) -> dic
             finish_reason = getattr(response.candidates[0], 'finish_reason', None)
             is_truncated = finish_reason in ('MAX_TOKENS', 'OTHER')
     else:
-        response_text, _, _, is_truncated, _ = generate_text_with_gemini(prompt, max_tokens=8192)
+        response_text, _, _, is_truncated, _ = generate_text_with_gemini(
+            prompt, model_name=get_model_for_flow('placement_test_analyze'), max_tokens=8192
+        )
     text = response_text
 
     if not text or not text.strip():
@@ -4154,3 +4200,273 @@ def analyze_placement_test(language: str, test_data: dict, answers: dict) -> dic
 
     print(f"[PlacementTest] Analysis complete. Overall level: {result.get('overall_cefr_level')}")
     return result
+
+
+# ============================================================================
+# Unified Activity Generation
+# ============================================================================
+
+def generate_unified_activity(
+    activity_type: str,
+    word_bank: list,
+    language: str,
+    required_learning_words: list = None,
+    user_cefr_level: str = 'A1',
+    session_id: str = None,
+    progress_store: dict = None,
+    custom_topic: str = None,
+    user_interests: list = None,
+    learning_languages_with_levels: str = None
+) -> dict:
+    """
+    A single unified function to generate any of the 6 activity types.
+    """
+    start_time = time.time()
+    required_words_str = ", ".join([w.get('english_word', '') for w in (required_learning_words or [])])
+    
+    topic_str = custom_topic if custom_topic else (random.choice(user_interests) if user_interests else "General life")
+    
+    PROMPT_MAP = {
+        'transliteration': UNIFIED_TRANSLITERATION_PROMPT,
+        'reading': UNIFIED_READING_PROMPT,
+        'listening': UNIFIED_LISTENING_PROMPT,
+        'writing': UNIFIED_WRITING_PROMPT,
+        'speaking': UNIFIED_SPEAKING_PROMPT,
+        'translation': UNIFIED_TRANSLATION_PROMPT
+    }
+    
+    prompt_template = PROMPT_MAP.get(activity_type)
+    if not prompt_template:
+        raise ValueError(f"Unknown activity type: {activity_type}")
+
+    format_kwargs = {
+        'language': language,
+        'user_cefr_level': user_cefr_level,
+        'custom_topic': topic_str,
+        'required_learning_words': required_words_str
+    }
+    if activity_type == 'translation' and learning_languages_with_levels:
+        format_kwargs['learning_languages_with_levels'] = learning_languages_with_levels
+    elif activity_type == 'translation':
+        format_kwargs['learning_languages_with_levels'] = f"- {language}: {user_cefr_level}"
+    prompt = prompt_template.format(**format_kwargs)
+    
+    # Append common JSON formatting instructions
+    prompt += f"\n\n{get_script_requirement(language)}\nEnsure ONLY valid JSON is returned."
+
+    print(f"[Unified Activity] Generating {activity_type} activity for {language}...")
+
+    if activity_type == 'listening' and session_id and progress_store:
+        tracker = progress_store.get(session_id)
+        if tracker:
+            for q in tracker.queues:
+                q.put_nowait({"type": "status", "message": "Generating passage and questions...", "progress": {"overall": 0.1}})
+    
+    try:
+        response_text, res_time, token_info, is_truncated, debug_info = generate_text_with_gemini(
+            prompt, 
+            model_name=get_model_for_flow('unified_activity'), 
+            max_tokens=16384
+        )
+        
+        # Parse JSON
+        result = parse_json_response(response_text, is_truncated)
+        if "_parse_error" in result:
+            print(f"Failed to parse JSON: {result['_parse_error']}")
+            print(f"Raw response: {response_text[:500]}")
+            raise ValueError(f"Failed to parse activity JSON: {result['_parse_error']}")
+            
+        data = result
+        
+        # Track words actually used in the response
+        words_used = []
+        response_lower = response_text.lower()
+        for w in (required_learning_words or []) + word_bank:
+            eng_word = w.get('english_word', '').lower()
+            native_word = w.get('translation', '').lower()
+            if (eng_word and eng_word in response_lower) or (native_word and native_word in response_lower):
+                if w not in words_used:
+                    words_used.append(w)
+                    
+        data['_words_used_data'] = words_used
+        data['_token_info'] = token_info
+        data['_response_time'] = res_time
+        data['_prompt'] = prompt
+        data['_raw_response'] = response_text
+        data['_model'] = get_model_for_flow('unified_activity')
+        print(f"[Unified Activity] Set debug fields: _prompt len={len(prompt)}, _raw_response len={len(response_text)}")
+        
+        # If listening, generate TTS
+        if activity_type == 'listening':
+            # Find dialogue from sections→items or top-level
+            utterances = data.get('dialogue') or []
+            if not utterances:
+                # Look in sections→items for transcript items
+                for section in data.get('sections', []):
+                    for item in section.get('items', []):
+                        if item.get('type') == 'transcript' and item.get('dialogue'):
+                            utterances = item['dialogue']
+                            break
+                    if utterances:
+                        break
+            if not utterances and data.get('passage'):
+                utterances = [{"speaker_index": 0, "text": data.get('passage')}]
+            if not utterances:
+                # Fallback: build dialogue from speakers[].lines so TTS has something to generate
+                utterances = []
+                for section in data.get('sections', []):
+                    for item in section.get('items', []):
+                        if item.get('type') != 'transcript':
+                            continue
+                        sps = item.get('speakers', [])
+                        for si, sp in enumerate(sps):
+                            for line in sp.get('lines', []):
+                                if isinstance(line, str) and line.strip():
+                                    utterances.append({"speaker_index": si, "text": line.strip()})
+                        if utterances:
+                            break
+                    if utterances:
+                        break
+            # Ensure we have a list and normalize each line to have 'text' and 'speaker_index'
+            utterances = list(utterances) if utterances else []
+            for u in utterances:
+                if not isinstance(u, dict):
+                    continue
+                if 'text' not in u and 'line' in u:
+                    u['text'] = u.get('line', '')
+                if 'speaker_index' not in u:
+                    u['speaker_index'] = 0
+
+            if not utterances:
+                print("[Listening TTS] WARNING: No dialogue or speaker lines found; audio will not be generated.")
+            else:
+                print(f"[Listening TTS] Found {len(utterances)} dialogue lines for TTS.")
+                
+            # Find speakers from sections→items or top-level
+            speakers = data.get('speakers', [])
+            if not speakers:
+                for section in data.get('sections', []):
+                    for item in section.get('items', []):
+                        if item.get('type') == 'transcript' and item.get('speakers'):
+                            speakers = item['speakers']
+                            break
+                    if speakers:
+                        break
+            
+            speaker_genders = []
+            for sp in speakers:
+                speaker_genders.append(str(sp.get('gender', 'female')).lower())
+            if not speaker_genders:
+                speaker_genders = ['female']
+            
+            used_voices = set()
+            def pick_voice(gender: str) -> str:
+                pool = GEMINI_FEMALE_VOICES if gender == 'female' else GEMINI_MALE_VOICES
+                avail = [v for v in pool if v not in used_voices]
+                if not avail: avail = pool
+                v = random.choice(avail)
+                used_voices.add(v)
+                return v
+                
+            speaker_voices = [pick_voice(g) for g in speaker_genders]
+            
+            pcm_segments = []
+            sample_rate = 24000
+            silence_pcm = b"\x00\x00" * int(sample_rate * 0.35)
+            first_tts_error = None  # Capture first TTS error for debug modal
+            
+            total_paragraphs = len(utterances)
+            
+            if session_id and progress_store:
+                tracker = progress_store.get(session_id)
+                if tracker:
+                    tracker.total_paragraphs = total_paragraphs
+            
+            for i, line in enumerate(utterances):
+                if session_id and progress_store:
+                    tracker = progress_store.get(session_id)
+                    if tracker:
+                        for q in tracker.queues:
+                            q.put_nowait({"type": "status", "message": f"Generating audio {i+1} of {total_paragraphs}...", "progress": {"overall": 0.2 + (0.7 * (i/total_paragraphs))}})
+                
+                idx = int(line.get('speaker_index', 0))
+                text = (line.get('text') or line.get('line') or '').strip()
+                if not text:
+                    continue
+                
+                voice = speaker_voices[idx] if idx < len(speaker_voices) else speaker_voices[0]
+                audio, _, _ = generate_tts(text, language=language, voice=voice)
+                # Retry once if TTS returned text_only (no audio)
+                if (not audio or not audio.get('audio_base64')) and audio is not None and audio.get('format') == 'text_only':
+                    if first_tts_error is None and audio.get('error'):
+                        first_tts_error = audio.get('error')
+                    print(f"[Listening TTS] Retry line {i+1} (TTS returned text_only)")
+                    audio, _, _ = generate_tts(text, language=language, voice=voice)
+                
+                if audio and audio.get('audio_base64'):
+                    wav_bytes = base64.b64decode(audio['audio_base64'])
+                    if wav_bytes[:4] == b'RIFF':
+                        pcm_segments.append(wav_bytes[44:])
+                    else:
+                        pcm_segments.append(wav_bytes)
+                    pcm_segments.append(silence_pcm)
+                elif audio is not None and audio.get('format') == 'text_only' and first_tts_error is None and audio.get('error'):
+                    first_tts_error = audio.get('error')
+            
+            if not pcm_segments and utterances:
+                print("[Listening TTS] WARNING: TTS produced no audio for any line; check TTS API and language support.")
+            
+            # Combine PCM segments into a single WAV and embed on the transcript item
+            if pcm_segments:
+                import struct
+                import io
+                all_pcm = b''.join(pcm_segments)
+                # Build WAV header
+                num_channels = 1
+                bits_per_sample = 16
+                byte_rate = sample_rate * num_channels * bits_per_sample // 8
+                block_align = num_channels * bits_per_sample // 8
+                data_size = len(all_pcm)
+                wav_buf = io.BytesIO()
+                wav_buf.write(b'RIFF')
+                wav_buf.write(struct.pack('<I', 36 + data_size))
+                wav_buf.write(b'WAVE')
+                wav_buf.write(b'fmt ')
+                wav_buf.write(struct.pack('<I', 16))  # chunk size
+                wav_buf.write(struct.pack('<H', 1))   # PCM
+                wav_buf.write(struct.pack('<H', num_channels))
+                wav_buf.write(struct.pack('<I', sample_rate))
+                wav_buf.write(struct.pack('<I', byte_rate))
+                wav_buf.write(struct.pack('<H', block_align))
+                wav_buf.write(struct.pack('<H', bits_per_sample))
+                wav_buf.write(b'data')
+                wav_buf.write(struct.pack('<I', data_size))
+                wav_buf.write(all_pcm)
+                combined_b64 = base64.b64encode(wav_buf.getvalue()).decode('utf-8')
+                
+                # Embed on the first transcript item in sections→items
+                for section in data.get('sections', []):
+                    for item in section.get('items', []):
+                        if item.get('type') == 'transcript':
+                            item['audio_base64'] = combined_b64
+                            break
+                    else:
+                        continue
+                    break
+                
+                print(f"  ✅ Combined WAV audio: {len(combined_b64)} chars base64")
+                data['_tts_status'] = 'ok'
+                data['_tts_segments'] = len(pcm_segments) // 2  # each segment + silence
+            else:
+                data['_tts_status'] = 'no_audio'
+                data['_tts_error'] = first_tts_error if first_tts_error else 'TTS produced no audio segments (check logs for TTS API errors)'
+            
+        return data
+        
+    except Exception as e:
+        print(f"Error in unified generation: {e}")
+        return {
+            "_error": str(e),
+            "_error_type": "GenerationError"
+        }
+

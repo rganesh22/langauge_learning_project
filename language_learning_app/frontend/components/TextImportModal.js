@@ -1,4 +1,4 @@
-import React, { useState, useContext, useMemo, useRef } from 'react';
+import React, { useState, useContext, useMemo, useRef, useEffect } from 'react';
 import {
   View,
   Text,
@@ -14,6 +14,7 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import { LanguageContext, LANGUAGES } from '../contexts/LanguageContext';
 import { WORD_CLASSES, LEVELS, LEVEL_COLORS, CEFR_LEVELS, VERB_TRANSITIVITY_FILTERS } from '../constants/filters';
+import { ImportJobContext } from '../contexts/ImportJobContext';
 import VocabImportDebugModal from './VocabImportDebugModal';
 
 const API_BASE_URL = __DEV__ ? 'http://localhost:9090' : 'http://localhost:9090';
@@ -23,8 +24,15 @@ const formatMultiTerm = (s) => (s || '').replace(/\s*,\s*/g, ' / ');
 
 // step: 'input' | 'review' | 'done'
 
-export default function TextImportModal({ visible, onClose, language, onImportComplete, prefillText = '' }) {
+export default function TextImportModal({ visible, onClose, language, onImportComplete, prefillText = '', initialJobId: initialJobIdProp = null }) {
   const { userSelectedLanguages } = useContext(LanguageContext);
+  const importJob = useContext(ImportJobContext);
+
+  // When opened from tray (GlobalImportModal) we get initialJobId; when we start extract via context we set boundJobId
+  const [boundJobId, setBoundJobId] = useState(null);
+  const initialJobId = initialJobIdProp ?? null;
+  const effectiveJobId = boundJobId || initialJobId;
+  const job = (effectiveJobId && importJob) ? importJob.getJob(effectiveJobId) : null;
 
   // ── Step 1: Input state ──
   const [text, setText] = useState('');
@@ -60,6 +68,7 @@ export default function TextImportModal({ visible, onClose, language, onImportCo
   const [progress, setProgress] = useState(null); // { phase, batch, total_batches, words_done }
   const abortRef = useRef(null); // AbortController ref for SSE
   const importStartTimeRef = useRef(null);
+  const lastBoundJobStatusRef = useRef(null);
 
   // ── Done state & debug ──
   const [importResult, setImportResult] = useState(null);
@@ -105,12 +114,110 @@ export default function TextImportModal({ visible, onClose, language, onImportCo
     return true;
   };
 
+  // When modal is closed (by any method), reset binding/processing so reopening gives a fresh form; job stays in context for tray
+  useEffect(() => {
+    if (!visible) {
+      setBoundJobId(null);
+      setProcessing(false);
+      setProgress(null);
+      setStatus('');
+      lastBoundJobStatusRef.current = null;
+    }
+  }, [visible]);
+
   // When a prefillText is provided (e.g., from Reading/Translation activity), populate the text field
   React.useEffect(() => {
     if (visible && prefillText && !text) {
       setText(prefillText);
     }
   }, [visible, prefillText]);
+
+  // When opened from tray with initialJobId, load job state into modal (once per open)
+  const loadedJobIdRef = useRef(null);
+  useEffect(() => {
+    if (!visible || !initialJobId || !importJob || !job) return;
+    if (job.status !== 'review' && job.status !== 'done') return;
+    if (loadedJobIdRef.current === initialJobId) return;
+    loadedJobIdRef.current = initialJobId;
+    setStep(job.importResult ? 'done' : 'review');
+    setExtractedWords(job.extractedWords || []);
+    setSynonymWords(job.synonymWords || []);
+    setExistingWords(job.existingWords || []);
+    setSelectedWords(new Set(job.selectedWords || []));
+    setSelectedSynonyms(new Set(job.selectedSynonyms || []));
+    const ld = {};
+    for (const [lang, data] of Object.entries(job.langData || {})) {
+      ld[lang] = {
+        ...data,
+        selected: new Set(Array.isArray(data.selected) ? data.selected : []),
+      };
+    }
+    setLangData(ld);
+    setActiveTab(job.language || language);
+    setDeckName(job.deckName || '');
+    setImportResult(job.importResult || null);
+    setBoundJobId(initialJobId);
+    setDebugData(job.debugData || null);
+  }, [visible, initialJobId, importJob, job?.id, job?.status]);
+  useEffect(() => {
+    if (!visible) loadedJobIdRef.current = null;
+  }, [visible]);
+
+  // When we started extract via context (boundJobId), watch job until review or error (only run setState once per transition to avoid loop)
+  useEffect(() => {
+    if (!visible || !boundJobId || !importJob || !job) return;
+    if (job.status === 'review') {
+      if (lastBoundJobStatusRef.current === 'review') return;
+      lastBoundJobStatusRef.current = 'review';
+      setProcessing(false);
+      setProgress(null);
+      setStatus('');
+      setExtractedWords(job.extractedWords || []);
+      setSynonymWords(job.synonymWords || []);
+      setExistingWords(job.existingWords || []);
+      setSelectedWords(new Set(job.selectedWords || []));
+      setSelectedSynonyms(new Set(job.selectedSynonyms || []));
+      const ld = {};
+      for (const [lang, data] of Object.entries(job.langData || {})) {
+        ld[lang] = {
+          ...data,
+          selected: new Set(Array.isArray(data.selected) ? data.selected : []),
+        };
+      }
+      setLangData(ld);
+      setActiveTab(job.language || language);
+      setStep('review');
+      setDebugData(job.debugData || null);
+    } else if (job.status === 'error') {
+      if (lastBoundJobStatusRef.current === 'error') return;
+      lastBoundJobStatusRef.current = 'error';
+      setProcessing(false);
+      setProgress(null);
+      setStatus('');
+      Alert.alert('Extract Error', job.errorMsg || 'Failed to extract words.');
+    } else {
+      lastBoundJobStatusRef.current = job.status;
+    }
+  }, [visible, boundJobId, importJob, job?.id, job?.status]);
+
+  // Sync selection changes back to the job (for tray/reopen). Use ref for importJob to avoid loop when context identity changes.
+  const importJobRef = useRef(importJob);
+  importJobRef.current = importJob;
+  useEffect(() => {
+    if (!effectiveJobId || !importJobRef.current || step !== 'review' || extractedWords.length === 0) return;
+    const serializedLangData = {};
+    for (const [lang, ld] of Object.entries(langData)) {
+      serializedLangData[lang] = {
+        ...ld,
+        selected: ld.selected instanceof Set ? [...ld.selected] : (ld.selected || []),
+      };
+    }
+    importJobRef.current.updateJob(effectiveJobId, {
+      selectedWords: [...selectedWords],
+      selectedSynonyms: [...selectedSynonyms],
+      langData: serializedLangData,
+    });
+  }, [effectiveJobId, step, extractedWords.length, selectedWords, selectedSynonyms, langData]);
 
   // Load default import-translation preferences when modal opens
   React.useEffect(() => {
@@ -176,6 +283,13 @@ export default function TextImportModal({ visible, onClose, language, onImportCo
       return;
     }
     if (!validateTextLanguage(language, inputText)) {
+      return;
+    }
+    // Run extract in background via context so closing the modal doesn't cancel it
+    if (importJob) {
+      const id = importJob.startImport(inputText, language, deckName.trim(), selectedTargetLangs);
+      setBoundJobId(id);
+      setProcessing(true);
       return;
     }
     setProcessing(true);
@@ -271,7 +385,13 @@ export default function TextImportModal({ visible, onClose, language, onImportCo
       setLangData(newLangData);
       setActiveTab(language);
       setStep('review');
-      setDebugData(finalData);
+      setDebugData({
+        ...finalData,
+        input_text: finalData.input_text ?? inputText,
+        raw_tokens: finalData.raw_tokens ?? (inputText.trim().split(/\s+/).filter(Boolean)),
+        lemma_tokens: finalData.lemma_tokens ?? finalData.words ?? [],
+        translations_by_lang: finalData.translations_by_lang ?? {},
+      });
     } catch (err) {
       if (err.name === 'AbortError') return; // user cancelled
       Alert.alert('Extract Error', err.message || 'Failed to extract words.');
@@ -292,43 +412,59 @@ export default function TextImportModal({ visible, onClose, language, onImportCo
       Alert.alert('No Words', 'Select at least one word to import.');
       return;
     }
+
+    // Build words_by_lang and existing_by_lang
+    const wordsByLang = {};
+    const existingByLang = {};
+    for (const [lang, ld] of Object.entries(langData)) {
+      const selected = ld.new_words.filter(w => ld.selected.has(w.word));
+      if (selected.length > 0) {
+        wordsByLang[lang] = selected;
+      }
+      const existingIds = (ld.existing_words || [])
+        .map(w => w.existing_id || w.id)
+        .filter(Boolean);
+      if (existingIds.length > 0) {
+        existingByLang[lang] = existingIds;
+      }
+    }
+    const existingIds = (existingWords || [])
+      .map(w => w.existing_id || w.id)
+      .filter(Boolean);
+
+    const payload = {
+      language,
+      words: sourceToImport,
+      synonyms: synonymsToMerge,
+      words_by_lang: wordsByLang,
+      deck_name: deckName.trim() || null,
+      existing_ids: existingIds.length > 0 ? existingIds : undefined,
+      existing_by_lang: Object.keys(existingByLang).length > 0 ? existingByLang : undefined,
+    };
+
+    // When this modal was opened from the import job flow (tray), run commit in background and close so user can leave
+    if (effectiveJobId && importJob?.startCommit) {
+      importJob.startCommit(effectiveJobId, payload);
+      importJob.closeModal();
+      onClose();
+      return;
+    }
+
+    // No job context (e.g. opened from Vocab Library): block in modal until done
     setImporting(true);
     setStatus('Importing words…');
     try {
-      // Build words_by_lang for target languages (new words only)
-      const wordsByLang = {};
-      const existingByLang = {};
-      for (const [lang, ld] of Object.entries(langData)) {
-        const selected = ld.new_words.filter(w => ld.selected.has(w.word));
-        if (selected.length > 0) {
-          wordsByLang[lang] = selected;
-        }
-        // Collect existing vocabulary IDs (if provided by backend) so we can
-        // attach them to sibling decks without duplicating entries.
-        const existingIds = (ld.existing_words || [])
-          .map(w => w.existing_id || w.id)
-          .filter(Boolean);
-        if (existingIds.length > 0) {
-          existingByLang[lang] = existingIds;
-        }
-      }
-
-      // Source-language existing vocab IDs
-      const existingIds = (existingWords || [])
-        .map(w => w.existing_id || w.id)
-        .filter(Boolean);
-
       const res = await fetch(`${API_BASE_URL}/api/vocab/commit-import`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          language,
-          words: sourceToImport,
-          synonyms: synonymsToMerge,
-          words_by_lang: wordsByLang,
-          deck_name: deckName.trim() || null,
-          existing_ids: existingIds.length > 0 ? existingIds : undefined,
-          existing_by_lang: Object.keys(existingByLang).length > 0 ? existingByLang : undefined,
+          language: payload.language,
+          words: payload.words,
+          synonyms: payload.synonyms,
+          words_by_lang: payload.words_by_lang,
+          deck_name: payload.deck_name,
+          existing_ids: payload.existing_ids,
+          existing_by_lang: payload.existing_by_lang,
         }),
       });
       if (!res.ok) {
@@ -355,7 +491,8 @@ export default function TextImportModal({ visible, onClose, language, onImportCo
   };
 
   const handleClose = () => {
-    if (abortRef.current) abortRef.current.abort();
+    if (!boundJobId && abortRef.current) abortRef.current.abort();
+    setBoundJobId(null);
     setText('');
     setDeckName('');
     setStep('input');
@@ -451,6 +588,11 @@ export default function TextImportModal({ visible, onClose, language, onImportCo
   const getTabWcFilter = (tabLang) => wordClassFilter[tabLang] || '';
   const getTabLvFilter = (tabLang) => levelFilter[tabLang] || '';
   const getTabTrFilter = (tabLang) => transitivityFilter[tabLang] || '';
+
+  // When bound to a background job, show its progress in the modal
+  const effectiveProcessing = processing || (!!job && job.status === 'extracting');
+  const effectiveProgress = (job?.status === 'extracting' && job.progress) ? job.progress : progress;
+  const effectiveStatus = (job?.status === 'extracting' && job.statusMessage) ? job.statusMessage : status;
 
   // Open lemma detail modal for a clicked surface token
   const openLemmaModal = (surfaceWord) => {
@@ -652,9 +794,15 @@ export default function TextImportModal({ visible, onClose, language, onImportCo
             </Text>
           </View>
           {item.verb_transitivity && (item.word_class || '').toLowerCase().includes('verb') && item.verb_transitivity !== 'N/A' && (
-            <View style={[styles.tag, { backgroundColor: '#6B7280' }]}>
-              <Text style={[styles.tagText, { color: '#FFF' }]}>{String(item.verb_transitivity)}</Text>
-            </View>
+            (() => {
+              const vtFilter = VERB_TRANSITIVITY_FILTERS.find(f => (f.value || '').toLowerCase() === (item.verb_transitivity || '').toLowerCase());
+              const vtColor = vtFilter ? vtFilter.color : { bg: '#6B7280', text: '#FFF' };
+              return (
+                <View style={[styles.tag, { backgroundColor: vtColor.bg }]}>
+                  <Text style={[styles.tagText, { color: vtColor.text }]}>{String(item.verb_transitivity).toLowerCase()}</Text>
+                </View>
+              );
+            })()
           )}
         </View>
       </TouchableOpacity>
@@ -693,28 +841,33 @@ export default function TextImportModal({ visible, onClose, language, onImportCo
       <View style={{ flex: 1 }}>
         {/* Collapsible filters header */}
         {(presentWc.length > 0 || cefrLevels.length > 0 || trFilters.length > 0) && (
-          <View style={[styles.filterBar, { paddingVertical: 6, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }]}>
-            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}>
-              <Ionicons name="options-outline" size={16} color="#4B5563" />
-              <Text style={{ fontSize: 12, fontWeight: '600', color: '#374151' }}>Filters</Text>
-              {(wc || lv || tr) ? (
-                <Text style={{ fontSize: 11, color: '#6B7280' }}>Active</Text>
-              ) : (
-                <Text style={{ fontSize: 11, color: '#9CA3AF' }}>None</Text>
-              )}
+          <View style={styles.reviewFiltersContainer}>
+            <View style={[styles.filterBar, { paddingVertical: 6, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }]}>
+              <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}>
+                <Ionicons name="options-outline" size={16} color="#4B5563" />
+                <Text style={{ fontSize: 12, fontWeight: '600', color: '#374151' }}>Filters</Text>
+              </View>
+              <TouchableOpacity onPress={() => setFiltersExpanded(prev => !prev)} style={{ paddingHorizontal: 8, paddingVertical: 4 }}>
+                <Ionicons name={filtersExpanded ? 'chevron-up' : 'chevron-down'} size={18} color="#4B5563" />
+              </TouchableOpacity>
             </View>
-            <TouchableOpacity onPress={() => setFiltersExpanded(prev => !prev)} style={{ paddingHorizontal: 8, paddingVertical: 4 }}>
-              <Ionicons name={filtersExpanded ? 'chevron-up' : 'chevron-down'} size={18} color="#4B5563" />
-            </TouchableOpacity>
+            <View style={styles.reviewFiltersCountRow}>
+              <Text style={styles.reviewFiltersCountText}>
+                {allWords.length === filtered.length + filteredSynonyms.length + existing.length
+                  ? `${allWords.length} word${allWords.length !== 1 ? 's' : ''}`
+                  : `Showing ${filtered.length + filteredSynonyms.length} of ${allWords.length} words`}
+              </Text>
+            </View>
           </View>
         )}
 
-        {/* Filters body */}
+        {/* Filters body — single column, wrap so all visible without horizontal scroll */}
         {filtersExpanded && (
           <>
-            {/* Row 1: POS filters — wrap so all visible without horizontal scroll */}
+            {/* Part of Speech */}
             {presentWc.length > 0 && (
               <View style={[styles.filterBar, { borderTopWidth: 0 }]}>
+                <Text style={styles.reviewFilterGroupLabel}>Part of speech</Text>
                 <View style={styles.filterWrap}>
                   {presentWc.map(c => {
                     const active = wc === c.value;
@@ -731,9 +884,10 @@ export default function TextImportModal({ visible, onClose, language, onImportCo
                 </View>
               </View>
             )}
-            {/* Row 2: CEFR level filters — wrap so all visible without horizontal scroll */}
+            {/* Level */}
             {cefrLevels.length > 0 && (
               <View style={[styles.filterBar, { marginTop: 0 }]}>
+                <Text style={styles.reviewFilterGroupLabel}>Level</Text>
                 <View style={styles.filterWrap}>
                   {cefrLevels.map(l => {
                     const lc = LEVEL_COLORS[l.value?.toUpperCase()] || { bg: '#999', text: '#FFF' };
@@ -751,9 +905,10 @@ export default function TextImportModal({ visible, onClose, language, onImportCo
                 </View>
               </View>
             )}
-            {/* Row 3: Verb transitivity filters */}
+            {/* Verb transitivity */}
             {trFilters.length > 0 && (
               <View style={[styles.filterBar, { marginTop: 0 }]}>
+                <Text style={styles.reviewFilterGroupLabel}>Verb transitivity</Text>
                 <View style={styles.filterWrap}>
                   {trFilters.map(f => {
                     const active = (tr || '').toLowerCase() === f.value.toLowerCase();
@@ -866,9 +1021,15 @@ export default function TextImportModal({ visible, onClose, language, onImportCo
                         </Text>
                       </View>
                       {w.verb_transitivity && (w.word_class || '').toLowerCase().includes('verb') && w.verb_transitivity !== 'N/A' && (
-                        <View style={[styles.tag, { backgroundColor: '#F97316' }]}>
-                          <Text style={[styles.tagText, { color: '#FFF' }]}>{String(w.verb_transitivity)}</Text>
-                        </View>
+                        (() => {
+                          const vtFilter = VERB_TRANSITIVITY_FILTERS.find(f => (f.value || '').toLowerCase() === (w.verb_transitivity || '').toLowerCase());
+                          const vtColor = vtFilter ? vtFilter.color : { bg: '#6B7280', text: '#FFF' };
+                          return (
+                            <View style={[styles.tag, { backgroundColor: vtColor.bg }]}>
+                              <Text style={[styles.tagText, { color: vtColor.text }]}>{String(w.verb_transitivity).toLowerCase()}</Text>
+                            </View>
+                          );
+                        })()
                       )}
                     </View>
                   </TouchableOpacity>
@@ -912,9 +1073,15 @@ export default function TextImportModal({ visible, onClose, language, onImportCo
                         </Text>
                       </View>
                       {w.verb_transitivity && (w.word_class || '').toLowerCase().includes('verb') && w.verb_transitivity !== 'N/A' && (
-                        <View style={[styles.tag, { backgroundColor: '#F97316' }]}>
-                          <Text style={[styles.tagText, { color: '#FFF' }]}>{String(w.verb_transitivity)}</Text>
-                        </View>
+                        (() => {
+                          const vtFilter = VERB_TRANSITIVITY_FILTERS.find(f => (f.value || '').toLowerCase() === (w.verb_transitivity || '').toLowerCase());
+                          const vtColor = vtFilter ? vtFilter.color : { bg: '#6B7280', text: '#FFF' };
+                          return (
+                            <View style={[styles.tag, { backgroundColor: vtColor.bg }]}>
+                              <Text style={[styles.tagText, { color: vtColor.text }]}>{String(w.verb_transitivity).toLowerCase()}</Text>
+                            </View>
+                          );
+                        })()
                       )}
                     </View>
                   </View>
@@ -941,7 +1108,10 @@ export default function TextImportModal({ visible, onClose, language, onImportCo
       <View style={styles.container}>
         {/* Header */}
         <View style={styles.header}>
-          <TouchableOpacity onPress={step === 'review' ? () => setStep('input') : handleClose} style={styles.closeBtn}>
+          <TouchableOpacity
+            onPress={step === 'review' ? (initialJobId ? handleClose : () => setStep('input')) : handleClose}
+            style={styles.closeBtn}
+          >
             <Ionicons name={step === 'review' ? 'arrow-back' : 'close'} size={24} color="#666" />
           </TouchableOpacity>
           <View style={styles.headerCenter}>
@@ -955,8 +1125,15 @@ export default function TextImportModal({ visible, onClose, language, onImportCo
                 </View>
               ) : null;
             })()}
+            <View style={styles.headerImportIconWrap}>
+              <Ionicons name="document-text" size={20} color="#4A90E2" />
+            </View>
             <Text style={styles.title}>
-              {step === 'input' ? 'Import Text' : step === 'review' ? 'Review Words' : 'Import Complete'}
+              {step === 'input'
+                ? 'Import Vocab'
+                : step === 'review'
+                ? 'Review Words'
+                : 'Import Complete'}
             </Text>
           </View>
           <View style={{ width: 40 }} />
@@ -977,11 +1154,11 @@ export default function TextImportModal({ visible, onClose, language, onImportCo
                   multiline
                   value={text}
                   onChangeText={setText}
-                  editable={!processing}
+                  editable={!effectiveProcessing}
                   textAlignVertical="top"
                 />
               </View>
-              <TouchableOpacity style={styles.fileBtn} onPress={handleFilePick} disabled={processing}>
+              <TouchableOpacity style={styles.fileBtn} onPress={handleFilePick} disabled={effectiveProcessing}>
                 <Ionicons name="document-attach-outline" size={20} color="#4A90E2" />
                 <Text style={styles.fileBtnText}>Upload a Text File</Text>
               </TouchableOpacity>
@@ -995,7 +1172,7 @@ export default function TextImportModal({ visible, onClose, language, onImportCo
                   placeholderTextColor="#999"
                   value={deckName}
                   onChangeText={setDeckName}
-                  editable={!processing}
+                  editable={!effectiveProcessing}
                   maxLength={60}
                 />
                 <Text style={styles.deckNameHint}>Name this import set. Shown as a chip on each word.</Text>
@@ -1105,30 +1282,30 @@ export default function TextImportModal({ visible, onClose, language, onImportCo
               {text.trim().length > 0 && (
                 <Text style={styles.wordCount}>~{text.trim().split(/\s+/).length} words in text</Text>
               )}
-              {processing && (
+              {effectiveProcessing && (
                 <View style={styles.processingContainer}>
                   <ActivityIndicator size="large" color="#4A90E2" />
-                  <Text style={styles.processingText}>{status || 'Extracting words…'}</Text>
-                  {progress && progress.total_batches > 1 && (
+                  <Text style={styles.processingText}>{effectiveStatus || 'Extracting words…'}</Text>
+                  {effectiveProgress && effectiveProgress.total_batches > 1 && (
                     <View style={styles.progressBarOuter}>
                       <View style={[
                         styles.progressBarInner,
                         {
                           width: `${Math.round(
-                            (progress.batch / progress.total_batches) * 100
+                            (effectiveProgress.batch / effectiveProgress.total_batches) * 100
                           )}%`,
-                          backgroundColor: progress.phase === 'translate' ? '#8B5CF6' : '#4A90E2',
+                          backgroundColor: effectiveProgress.phase === 'translate' ? '#8B5CF6' : '#4A90E2',
                         },
                       ]} />
                     </View>
                   )}
-                  {progress && (
+                  {effectiveProgress && (
                     <Text style={styles.progressDetail}>
-                      {progress.phase === 'lemmatize'
-                        ? `Batch ${progress.batch} / ${progress.total_batches}  •  ~${Math.min(progress.words_done || 0, progress.total_words || 0)} words done`
-                        : progress.phase === 'translate'
-                        ? `Translating batch ${progress.batch} / ${progress.total_batches}`
-                        : status}
+                      {effectiveProgress.phase === 'lemmatize'
+                        ? `Batch ${effectiveProgress.batch} / ${effectiveProgress.total_batches}  •  ~${Math.min(effectiveProgress.words_done || 0, effectiveProgress.total_words || 0)} words done`
+                        : effectiveProgress.phase === 'translate'
+                        ? `Translating batch ${effectiveProgress.batch} / ${effectiveProgress.total_batches}`
+                        : effectiveStatus}
                     </Text>
                   )}
                 </View>
@@ -1136,11 +1313,11 @@ export default function TextImportModal({ visible, onClose, language, onImportCo
             </ScrollView>
             <View style={styles.footer}>
               <TouchableOpacity
-                style={[styles.extractBtn, (!text.trim() || processing) && styles.btnDisabled]}
+                style={[styles.extractBtn, (!text.trim() || effectiveProcessing) && styles.btnDisabled]}
                 onPress={handleExtract}
-                disabled={!text.trim() || processing}
+                disabled={!text.trim() || effectiveProcessing}
               >
-                {processing
+                {effectiveProcessing
                   ? <ActivityIndicator size="small" color="#FFF" />
                   : (<>
                       <Ionicons name="sparkles" size={20} color="#FFF" />
@@ -1170,6 +1347,16 @@ export default function TextImportModal({ visible, onClose, language, onImportCo
                 <Text style={[styles.reviewStatNum, { color: '#4A90E2' }]}>{totalSelectedCount}</Text>
                 <Text style={styles.reviewStatLabel}>Selected</Text>
               </View>
+              {job?.extractDurationSeconds != null && (
+                <View style={styles.reviewStat}>
+                  <Text style={styles.reviewStatNum}>
+                    {job.extractDurationSeconds >= 60
+                      ? `${Math.floor(job.extractDurationSeconds / 60)} m ${Math.round(job.extractDurationSeconds % 60)} s`
+                      : `${Math.round(job.extractDurationSeconds)} s`}
+                  </Text>
+                  <Text style={styles.reviewStatLabel}>Elapsed</Text>
+                </View>
+              )}
               {debugData && (
                 <TouchableOpacity
                   style={styles.debugButton}
@@ -1367,28 +1554,31 @@ export default function TextImportModal({ visible, onClose, language, onImportCo
             <ScrollView contentContainerStyle={styles.lemmaModalBody}>
               {lemmaModalLemmas && lemmaModalLemmas.length > 0 ? (() => {
                 const srcMeta = LANGUAGES.find(l => l.code === language);
+                const isSrcUrdu = language === 'urdu';
                 return (
                   <>
                     <Text style={styles.lemmaModalSectionTitle}>Source lemmas</Text>
-                    {lemmaModalLemmas.map((lem, idx) => {
-                      const lvlKey = (lem.level || '').toUpperCase();
-                      const lvlColor = LEVEL_COLORS[lvlKey] || { bg: '#E5E7EB', text: '#374151' };
-                      const wcc = getWordClassColor(lem.word_class);
-                      const isSrcUrdu = language === 'urdu';
-                      return (
-                        <View key={`lem-${idx}`} style={styles.lemmaEntryRow}>
-                          <View style={[
-                            styles.lemmaLangIcon,
-                            { backgroundColor: srcMeta?.color || '#4B5563' }
-                          ]}>
-                            <Text style={[styles.lemmaLangIconText, isSrcUrdu && { fontFamily: 'Noto Nastaliq Urdu' }]}>
-                              {srcMeta?.nativeChar || srcMeta?.langCode?.toUpperCase() || (language[0] || '').toUpperCase()}
-                            </Text>
-                          </View>
-                          <View style={{ flex: 1 }}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 4 }}>
+                      <View style={[styles.lemmaLangIcon, { backgroundColor: srcMeta?.color || '#4B5563', marginRight: 6 }]}>
+                        <Text style={[styles.lemmaLangIconText, isSrcUrdu && { fontFamily: 'Noto Nastaliq Urdu' }]}>
+                          {srcMeta?.nativeChar || srcMeta?.langCode?.toUpperCase() || (language[0] || '').toUpperCase()}
+                        </Text>
+                      </View>
+                      <Text style={styles.lemmaLangLabel}>{srcMeta?.name || language}</Text>
+                      <Text style={{ fontSize: 11, color: '#9CA3AF', marginLeft: 4 }}>
+                        {lemmaModalLemmas.length} word{lemmaModalLemmas.length !== 1 ? 's' : ''}
+                      </Text>
+                    </View>
+                    <View style={styles.translatedLemmaGrid}>
+                      {lemmaModalLemmas.map((lem, idx) => {
+                        const lvlKey = (lem.level || '').toUpperCase();
+                        const lvlColor = LEVEL_COLORS[lvlKey] || { bg: '#E5E7EB', text: '#374151' };
+                        const wcc = getWordClassColor(lem.word_class);
+                        return (
+                          <View key={`lem-${idx}`} style={styles.translatedLemmaCard}>
                             <Text style={[
                               styles.lemmaEntryNative,
-                              isSrcUrdu && { fontFamily: 'Noto Nastaliq Urdu', textAlign: 'left', writingDirection: 'rtl' },
+                              isSrcUrdu && { fontFamily: 'Noto Nastaliq Urdu', textAlign: 'left', writingDirection: 'ltr' },
                             ]}>
                               {isSrcUrdu ? (lem.nastaliq || lem.word || '(no word)') : (lem.word || '(no word)')}
                             </Text>
@@ -1415,18 +1605,24 @@ export default function TextImportModal({ visible, onClose, language, onImportCo
                                   </View>
                                 ) : null}
                                 {lem.verb_transitivity && lem.verb_transitivity !== 'N/A' ? (
-                                  <View style={[styles.lemmaChip, { backgroundColor: '#6B7280' }]}>
-                                    <Text style={[styles.lemmaChipText, { color: '#FFF' }]}>
-                                      {lem.verb_transitivity.toLowerCase()}
-                                    </Text>
-                                  </View>
+                                  (() => {
+                                    const vtF = VERB_TRANSITIVITY_FILTERS.find(f => (f.value || '').toLowerCase() === (lem.verb_transitivity || '').toLowerCase());
+                                    const vtC = vtF ? vtF.color : { bg: '#6B7280', text: '#FFF' };
+                                    return (
+                                      <View style={[styles.lemmaChip, { backgroundColor: vtC.bg }]}>
+                                        <Text style={[styles.lemmaChipText, { color: vtC.text }]}>
+                                          {lem.verb_transitivity.toLowerCase()}
+                                        </Text>
+                                      </View>
+                                    );
+                                  })()
                                 ) : null}
                               </View>
                             )}
                           </View>
-                        </View>
-                      );
-                    })}
+                        );
+                      })}
+                    </View>
                   </>
                 );
               })() : (
@@ -1460,7 +1656,7 @@ export default function TextImportModal({ visible, onClose, language, onImportCo
                               <View key={`${langCode}-${idx}`} style={styles.translatedLemmaCard}>
                                 <Text style={[
                                   styles.lemmaEntryNative,
-                                  isLangUrdu && { fontFamily: 'Noto Nastaliq Urdu', textAlign: 'right', writingDirection: 'rtl' },
+                                  isLangUrdu && { fontFamily: 'Noto Nastaliq Urdu', textAlign: 'left', writingDirection: 'ltr' },
                                 ]}>
                                   {isLangUrdu ? (w.nastaliq || w.word) : w.word}
                                 </Text>
@@ -1487,11 +1683,17 @@ export default function TextImportModal({ visible, onClose, language, onImportCo
                                       </View>
                                     ) : null}
                                     {w.verb_transitivity && w.verb_transitivity !== 'N/A' ? (
-                                      <View style={[styles.lemmaChip, { backgroundColor: '#6B7280' }]}>
-                                        <Text style={[styles.lemmaChipText, { color: '#FFF' }]}>
-                                          {w.verb_transitivity.toLowerCase()}
-                                        </Text>
-                                      </View>
+                                      (() => {
+                                        const vtF = VERB_TRANSITIVITY_FILTERS.find(f => (f.value || '').toLowerCase() === (w.verb_transitivity || '').toLowerCase());
+                                        const vtC = vtF ? vtF.color : { bg: '#6B7280', text: '#FFF' };
+                                        return (
+                                          <View style={[styles.lemmaChip, { backgroundColor: vtC.bg }]}>
+                                            <Text style={[styles.lemmaChipText, { color: vtC.text }]}>
+                                              {w.verb_transitivity.toLowerCase()}
+                                            </Text>
+                                          </View>
+                                        );
+                                      })()
                                     ) : null}
                                   </View>
                                 )}
@@ -1523,7 +1725,9 @@ const styles = StyleSheet.create({
     width: 28, height: 28, borderRadius: 7, alignItems: 'center', justifyContent: 'center',
   },
   headerLangIconText: { color: '#FFF', fontSize: 13, fontWeight: '700' },
+  headerImportIconWrap: { alignItems: 'center', justifyContent: 'center' },
   title: { fontSize: 17, fontWeight: '700', color: '#1A1A1A' },
+  resultDuration: { fontSize: 14, fontWeight: '500', color: '#888' },
   body: { flex: 1 },
   bodyContent: { padding: 16, paddingBottom: 100 },
   reviewListContent: { padding: 16, paddingBottom: 120 },
@@ -1632,6 +1836,30 @@ const styles = StyleSheet.create({
   tabBadgeTextActive: { color: '#1D4ED8' },
 
   // Filters
+  reviewFiltersContainer: {
+    backgroundColor: '#FFF',
+    borderBottomWidth: 1,
+    borderBottomColor: '#E5E5E5',
+  },
+  reviewFiltersCountRow: {
+    paddingHorizontal: 16,
+    paddingVertical: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#E5E5E5',
+  },
+  reviewFiltersCountText: {
+    fontSize: 13,
+    color: '#6B7280',
+  },
+  reviewFilterGroupLabel: {
+    fontSize: 11,
+    fontWeight: '600',
+    color: '#6B7280',
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
+    marginBottom: 6,
+    paddingHorizontal: 16,
+  },
   filterBar: { backgroundColor: '#FFF', borderBottomWidth: 1, borderBottomColor: '#E5E5E5', paddingVertical: 8, paddingHorizontal: 16 },
   filterWrap: { flexDirection: 'row', flexWrap: 'wrap', paddingHorizontal: 16, gap: 8 },
   filterScroll: { paddingHorizontal: 16, gap: 8, alignItems: 'center' },

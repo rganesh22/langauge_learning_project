@@ -55,14 +55,14 @@ import {
 import VocabularyDictionary from './shared/components/VocabularyDictionary';
 import { AudioPlayer } from './shared/components/AudioPlayer';
 import { TopicSelectionModal } from './shared/components';
-import TranslationToolModal from '../../components/TranslationToolModal';
+import { useTranslationJob } from '../../contexts/TranslationJobContext';
 import { API_BASE_URL } from './shared/constants';
 
 /**
  * SpeakingActivity Component
  * Handles speaking exercises with recording and AI grading
  */
-export default function SpeakingActivity({ route, navigation }) {
+export default function SpeakingActivity({ route, navigation, themeColor }) {
   const insets = useSafeAreaInsets();
   const { activityId, fromHistory, activityData: providedActivityData } = route.params || {};
   const { selectedLanguage: ctxLanguage } = useContext(LanguageContext);
@@ -82,19 +82,19 @@ export default function SpeakingActivity({ route, navigation }) {
     : [];
   const grading = useGrading('speaking', language, initialSubmissions);
   const recording = useRecording(language);
+  const { openModalWithPrefill } = useTranslationJob();
 
   // Speaking-specific state
   const [highlightVocab, setHighlightVocab] = useState(false);
   const [rubricExpanded, setRubricExpanded] = useState(false);
   const [tasksExpanded, setTasksExpanded] = useState(true);
   const [showTopicModal, setShowTopicModal] = useState(!fromHistory);
-  const [showTranslationModal, setShowTranslationModal] = useState(false);
   
   // Submission audio playback state
   const [submissionAudioStates, setSubmissionAudioStates] = useState({});
   const submissionAudioRefs = useRef({});
 
-  const colors = ACTIVITY_COLORS.speaking;
+  const colors = themeColor || ACTIVITY_COLORS.speaking;
 
   const handleTopicSelection = (selectedTopic) => {
     setShowTopicModal(false);
@@ -709,7 +709,7 @@ export default function SpeakingActivity({ route, navigation }) {
           {/* Highlight vocab toggle retained (no color palette icon) */}
           <TouchableOpacity
             style={styles.toggleButton}
-            onPress={() => setShowTranslationModal(true)}
+            onPress={() => openModalWithPrefill({ language: language || 'kannada' })}
           >
             <Ionicons name="language" size={20} color="#FFFFFF" />
           </TouchableOpacity>
@@ -1527,14 +1527,6 @@ export default function SpeakingActivity({ route, navigation }) {
           </View>
         )}
       </ScrollView>
-
-      {/* Translation Tool Modal */}
-      <TranslationToolModal
-        visible={showTranslationModal}
-        onClose={() => setShowTranslationModal(false)}
-        language={language}
-        prefillText={activityData.activity?.activity_name || ''}
-      />
 
       {/* Vocabulary Dictionary Modal */}
       <VocabularyDictionary

@@ -13,6 +13,7 @@ LANGUAGE_CODE_MAP = {
     'telugu': 'te',
     'hindi': 'hi',
     'urdu': 'ur',
+    'vietnamese': 'vi',
 }
 
 
@@ -88,8 +89,8 @@ def get_translation_prompt(language: str, words: list, target_languages: list) -
 
     template = _load_prompt_template(per_lang_filename) if per_lang_filename else ""
     if not template:
-        # Fallback to generic prompt which already encodes key cross-language rules
-        template = _load_prompt_template("translation.txt")
+        # Fallback to Hindi template if no language-specific template (translation.txt removed)
+        template = _load_prompt_template("translation_prompts/translation_hi.txt")
     if not template:
         return ""
 

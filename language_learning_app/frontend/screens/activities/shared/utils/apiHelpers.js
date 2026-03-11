@@ -95,33 +95,51 @@ export const getActivityTimeout = (activityType) => {
 };
 
 /**
- * Create API details object for debugging
+ * Create API details object for debugging.
+ * For listening/unified flow, prompt and raw_response come from api_details or from activity._prompt / activity._raw_response.
  */
 export const createApiDetails = (data, activityType, language) => {
+  const activity = data.activity || data;
+  const apiDetails = data.api_details || {};
+  const prompt = (apiDetails.prompt != null && apiDetails.prompt !== '')
+    ? apiDetails.prompt
+    : (activity._prompt != null && activity._prompt !== '')
+      ? activity._prompt
+      : (data._prompt != null && data._prompt !== '')
+        ? data._prompt
+        : '';
+  const rawResponse = (apiDetails.raw_response != null && apiDetails.raw_response !== '')
+    ? apiDetails.raw_response
+    : (activity._raw_response != null && activity._raw_response !== '')
+      ? activity._raw_response
+      : (data._raw_response != null && data._raw_response !== '')
+        ? data._raw_response
+        : '';
   return {
     id: Date.now(),
     timestamp: new Date().toISOString(),
-    endpoint: data.api_details?.endpoint || `POST /api/activity/${activityType}/${language}`,
-    prompt: data.api_details?.prompt || data.activity?._prompt || '',
-    wordsUsed: data.api_details?.words || data.words_used?.map(w => w.word || w) || [],
-    responseTime: data.api_details?.response_time || 0,
-    rawResponse: data.api_details?.raw_response || '',
-    learnedWords: data.api_details?.learned_words || [],
-    learningWords: data.api_details?.learning_words || [],
-    tokenInfo: data.api_details?.token_info || null,
-    parseError: data.api_details?.parse_error || null,
-    // High-level errors and warnings
-    error: data.api_details?.error || null,
-    errorType: data.api_details?.error_type || null,
-    warning: data.api_details?.warning || null,
-    errorTraceback: data.api_details?.error_traceback || null,
-    ttsCost: data.api_details?.tts_cost || null,
-    ttsResponseTime: data.api_details?.tts_response_time || null,
-    totalCost: data.api_details?.total_cost || null,
-    voiceUsed: data.api_details?.voice_used || null,
-    ttsError: data.api_details?.tts_error || data.api_details?._tts_error || null,
-    ttsErrors: data.api_details?.tts_errors || data.api_details?._tts_errors || null,
-    ttsResults: data.api_details?.tts_results || data.api_details?._tts_results || null,
-    debugSteps: data.api_details?.debug_steps || null,
+    endpoint: apiDetails.endpoint || `POST /api/activity/${activityType}/${language}`,
+    prompt,
+    wordsUsed: apiDetails.words || data.words_used?.map(w => w.word || w) || [],
+    responseTime: apiDetails.response_time ?? activity._response_time ?? data._response_time ?? 0,
+    rawResponse,
+    learnedWords: apiDetails.learned_words || [],
+    learningWords: apiDetails.learning_words || [],
+    tokenInfo: apiDetails.token_info ?? activity._token_info ?? data._token_info ?? null,
+    model: apiDetails.model ?? activity._model ?? data._model ?? 'Unknown',
+    parseError: apiDetails.parse_error ?? null,
+    error: apiDetails.error ?? null,
+    errorType: apiDetails.error_type ?? null,
+    warning: apiDetails.warning ?? null,
+    errorTraceback: apiDetails.error_traceback ?? null,
+    ttsCost: apiDetails.tts_cost ?? null,
+    ttsResponseTime: apiDetails.tts_response_time ?? null,
+    totalCost: apiDetails.total_cost ?? null,
+    voiceUsed: apiDetails.voice_used ?? null,
+    ttsError: apiDetails.tts_error ?? apiDetails._tts_error ?? null,
+    ttsStatus: apiDetails.tts_status ?? null,
+    ttsErrors: apiDetails.tts_errors ?? apiDetails._tts_errors ?? null,
+    ttsResults: apiDetails.tts_results ?? apiDetails._tts_results ?? null,
+    debugSteps: apiDetails.debug_steps ?? null,
   };
 };

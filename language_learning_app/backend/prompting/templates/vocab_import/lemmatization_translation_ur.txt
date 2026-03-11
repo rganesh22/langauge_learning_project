@@ -23,7 +23,7 @@ TASK 3 — CLASSIFICATION:
     (for example, treat Urdu postpositions as "preposition").
   - level: assign CEFR level based on word frequency/difficulty (A1=most common, C2=rarest):
       a1, a2, b1, b2, c1, c2
-  - gender: REQUIRED for every noun and every adjective — use "m" (masculine) or "f" (feminine). Omit only for verb, adverb, and other non-noun/adjective word classes.
+  - gender: REQUIRED for every noun and every adjective — use "m" (masculine) or "f" (feminine). Omit only for verb, adverb, and other non-noun/adjective word classes. If you omit gender for a noun or adjective, the word will appear without (m)/(f) in the app; always include it for nouns and adjectives.
   - verb_transitivity: for VERBS ONLY, set one of:
       "transitive", "intransitive", "ditransitive".
     Do NOT use "ambitransitive" — pick whichever of transitive or intransitive is the primary usage.
@@ -31,7 +31,7 @@ TASK 3 — CLASSIFICATION:
 
 CRITICAL REQUIREMENTS:
 1) You MUST return the "word" field in DEVANAGARI script ONLY (देवनागरी). Do NOT use Perso-Arabic/Nastaliq/Urdu script (ا، و، ہ، etc.) anywhere in the "word" field. The system stores Urdu in Devanagari and will convert to Nastaliq for display. Input may be in Devanagari or Nastaliq; your output "word" MUST be Devanagari only.
-2) You MUST include "gender" for every noun and adjective (value "m" or "f"). Omit only for other word classes. The app displays (m) or (f) next to the word when you provide this.
+2) You MUST include "gender" for every noun and adjective (value "m" or "f"). Omit only for other word classes. The app displays (m) or (f) next to the word when you provide this. Never skip gender for nouns or adjectives.
 3) The "english" field must be in English.
 4) Return exactly ONE word per array element. Do not put multiple words in a single "word" field; use separate array elements for each word.
 5) Return ONLY a valid JSON array. No markdown, no explanation, no extra text.

@@ -1,0 +1,48 @@
+You are an expert language teacher creating a transliteration activity for a student learning {language} at the {user_cefr_level} level.
+
+# Goal
+Create a unified and extensive transliteration activity based on the user's chosen topic: "{custom_topic}". Make sure the context connects deeply with the topic and provides meaty practice.
+
+# Instructions
+1. Generate 12 to 16 items: at least 10 multiple choice (transliteration_choice) and 2 to 4 free response (type "free_response" with source_phrase in native script, question_en "Type the transliteration in Latin script", min_words/max_words for the transliteration length). 
+2. Provide the native script phrase, and 4 English transliteration (phonetic spelling) options.
+3. Vary the sentence lengths to challenge the student depending on {user_cefr_level}.
+4. Provide exactly 4 options per question, with exactly 1 correct answer (0-indexed).
+5. Incorporate these required words naturally: {required_learning_words}
+
+# Output format
+Return ONLY valid JSON matching this exact schema. DO NOT wrap the output in markdown code blocks (e.g. no ```json). Output raw JSON only. Do not use trailing commas. Ensure all quotes inside string values are escaped.
+
+{{
+  "activity_type": "transliteration",
+  "topic": "{custom_topic}",
+  "sections": [
+    {{
+      "section_id": "transliteration",
+      "section_title": "Transliteration",
+      "section_icon": "text-outline",
+      "instruction_en": "Select the correct pronunciation (transliteration).",
+      "items": [
+        {{
+          "item_id": "tl1",
+          "type": "transliteration_choice",
+          "cefr_target": "{user_cefr_level}",
+          "source_phrase": "Source phrase in {language} native script",
+          "question_en": "How is this pronounced?",
+          "options": ["Transliteration Option A", "Transliteration Option B", "Transliteration Option C", "Transliteration Option D"],
+          "correct_index": 2
+        }},
+        {{
+          "item_id": "tl2",
+          "type": "transliteration_choice",
+          "cefr_target": "{user_cefr_level}",
+          "source_phrase": "Another phrase in {language} native script",
+          "question_en": "How is this pronounced?",
+          "options": ["Option A", "Option B", "Option C", "Option D"],
+          "correct_index": 0
+        }}
+        // Include 8 to 12 more transliteration_choice and 2 to 4 free_response (transliteration typing) items
+      ]
+    }}
+  ]
+}}

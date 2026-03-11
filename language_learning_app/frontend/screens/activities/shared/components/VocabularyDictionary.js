@@ -19,9 +19,10 @@ import {
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import SafeText from '../../../../components/SafeText';
-import { MASTERY_FILTERS, WORD_CLASSES, LEVELS, LEVEL_COLORS } from '../../../../constants/filters';
+import { MASTERY_FILTERS, WORD_CLASSES, LEVELS, LEVEL_COLORS, VERB_TRANSITIVITY_FILTERS } from '../../../../constants/filters';
 import { getSearchVocabularyLabel } from '../../../../constants/ui_labels';
 import { LANGUAGES } from '../../../../contexts/LanguageContext';
+import { useTranslationJob } from '../../../../contexts/TranslationJobContext';
 
 const API_BASE_URL = __DEV__ ? 'http://localhost:9090' : 'http://localhost:9090';
 
@@ -48,6 +49,7 @@ export default function VocabularyDictionary({
   const [transliterations, setTransliterations] = useState({});
   const [totalCount, setTotalCount] = useState(0);
   const [offset, setOffset] = useState(0);
+  const { openModalWithPrefill } = useTranslationJob();
   const [hasMore, setHasMore] = useState(true);
   const [selectedWord, setSelectedWord] = useState(null);
   const [reviewHistory, setReviewHistory] = useState(null);
@@ -269,23 +271,19 @@ export default function VocabularyDictionary({
               </SafeText>
             </View>
           ) : null}
-          {item.verb_transitivity && item.verb_transitivity !== 'N/A' ? (
-            <View style={[
-              styles.tag,
-              {
-                backgroundColor: '#6B7280',
-              }
-            ]}>
-              <SafeText style={[
-                styles.tagText,
-                {
-                  color: '#FFFFFF',
-                }
-              ]}>
-                {String(item.verb_transitivity)}
-              </SafeText>
-            </View>
-          ) : null}
+          {item.verb_transitivity && item.verb_transitivity !== 'N/A' ? (() => {
+            const vtFilter = VERB_TRANSITIVITY_FILTERS.find(
+              f => (f.value || '').toLowerCase() === (item.verb_transitivity || '').toLowerCase(),
+            );
+            const vtColor = vtFilter ? vtFilter.color : { bg: '#6B7280', text: '#FFFFFF' };
+            return (
+              <View style={[styles.tag, { backgroundColor: vtColor.bg }]}>
+                <SafeText style={[styles.tagText, { color: vtColor.text }]}>
+                  {String(item.verb_transitivity).toLowerCase()}
+                </SafeText>
+              </View>
+            );
+          })() : null}
         </View>
         {/* Origin chip — same shape as other chips */}
         {item.origin ? (() => {
@@ -383,6 +381,19 @@ export default function VocabularyDictionary({
                 <Ionicons name="close-circle" size={20} color="#999" />
               </TouchableOpacity>
             )}
+            <TouchableOpacity
+              onPress={() => {
+                openModalWithPrefill({
+                  prefillText: searchQuery.trim(),
+                  language: dictionaryLanguage || initialLanguage || 'kannada',
+                });
+                onClose();
+              }}
+              style={styles.searchTranslateIcon}
+              hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+            >
+              <Ionicons name="language" size={22} color="#8B5CF6" />
+            </TouchableOpacity>
           </View>
 
           {/* Filters Section */}
@@ -879,6 +890,12 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 16,
     color: '#1A1A1A',
+  },
+  searchTranslateIcon: {
+    marginLeft: 4,
+    padding: 4,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   filtersSection: {
     borderBottomWidth: 1,
