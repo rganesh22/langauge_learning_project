@@ -15,6 +15,7 @@ import {
 import SafeText from '../components/SafeText';
 import TextImportModal from '../components/TextImportModal';
 import { LanguageContext, LANGUAGES } from '../contexts/LanguageContext';
+import { AuthContext } from '../contexts/AuthContext';
 import { useTranslationJob } from '../contexts/TranslationJobContext';
 import NoLanguageEmptyState from '../components/NoLanguageEmptyState';
 import { MASTERY_FILTERS, WORD_CLASSES as SHARED_WORD_CLASSES, LEVELS as SHARED_LEVELS, LEVEL_COLORS as SHARED_LEVEL_COLORS, VERB_TRANSITIVITY_FILTERS } from '../constants/filters';
@@ -34,6 +35,7 @@ const LEVEL_COLORS = SHARED_LEVEL_COLORS;
 export default function VocabLibraryScreen({ route, navigation }) {
   const insets = useSafeAreaInsets();
   const { selectedLanguage: ctxLanguage, setSelectedLanguage: setCtxLanguage, availableLanguages } = useContext(LanguageContext);
+  const { authHeaders } = useContext(AuthContext);
   // Use global selected language and keep context in sync
   const selectedLanguage = route?.params?.language || ctxLanguage || null;
   const setSelectedLanguage = (lang) => {
@@ -119,7 +121,7 @@ export default function VocabLibraryScreen({ route, navigation }) {
       loadAllLanguagesSrsStats();
 
       // Load available decks for origin filter
-      fetch(`${API_BASE_URL}/api/vocab/decks?language=${selectedLanguage}`)
+      fetch(`${API_BASE_URL}/api/vocab/decks?language=${selectedLanguage}`, { headers: { ...authHeaders } })
         .then(r => r.ok ? r.json() : { decks: [] })
         .then(data => setAvailableDecks((data.decks || []).filter(d => d.word_count > 0)))
         .catch(() => {});

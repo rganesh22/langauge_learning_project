@@ -1304,14 +1304,14 @@ def ensure_lesson_words_table():
 # User Profile Operations
 # ============================================================================
 
-def get_user_profile() -> Dict:
+def get_user_profile(user_id: int) -> Dict:
     """Get user profile with streak"""
     try:
         conn = sqlite3.connect(config.DB_PATH, timeout=10.0)
         conn.row_factory = sqlite3.Row
         cursor = conn.cursor()
         
-        cursor.execute('SELECT * FROM user_profile WHERE id = 1')
+        cursor.execute('SELECT * FROM user_profile WHERE id = ?', (user_id,))
         profile = cursor.fetchone()
         conn.close()
         
@@ -1321,7 +1321,7 @@ def get_user_profile() -> Dict:
         return {'streak': 0}
 
 
-def calculate_goal_based_streak(user_id: int = 1) -> Dict[str, int]:
+def calculate_goal_based_streak(user_id: int) -> Dict[str, int]:
     """Calculate streak based on goal completion
     
     Returns the longest continuous stretch of days (including today) where all goals were met.
@@ -1444,7 +1444,7 @@ def update_streak():
     pass
 
 
-def update_user_profile(name: Optional[str] = None, username: Optional[str] = None, profile_picture_url: Optional[str] = None) -> bool:
+def update_user_profile(name: Optional[str] = None, username: Optional[str] = None, profile_picture_url: Optional[str] = None, *, user_id: int) -> bool:
     """Update user profile name, username, and/or profile picture"""
     try:
         conn = sqlite3.connect(config.DB_PATH)
@@ -1470,7 +1470,7 @@ def update_user_profile(name: Optional[str] = None, username: Optional[str] = No
             params.append(url_value)
         
         if updates:
-            params.append(1)  # user_id = 1
+            params.append(user_id)  # user_id
             query = f'UPDATE user_profile SET {", ".join(updates)} WHERE id = ?'
             cursor.execute(query, params)
             conn.commit()
@@ -1486,7 +1486,7 @@ def update_user_profile(name: Optional[str] = None, username: Optional[str] = No
 # Placement Test Operations
 # ============================================================================
 
-def save_placement_test_result(language: str, result: Dict, test_data: Dict, answers: Dict, srs_calibration: Dict = None) -> Optional[int]:
+def save_placement_test_result(language: str, result: Dict, test_data: Dict, answers: Dict, srs_calibration: Dict = None, *, user_id: int) -> Optional[int]:
     """Save a completed placement test result to the DB and return its id."""
     import json as _json
     try:
@@ -1508,8 +1508,9 @@ def save_placement_test_result(language: str, result: Dict, test_data: Dict, ans
                  level_breakdown_json, strengths_json, improvements_json,
                  recommendation, analysis_notes, test_data_json, answers_json,
                  item_feedback_json, srs_calibration_json, taken_at)
-            VALUES (1, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
         ''', (
+            user_id,
             language,
             result.get('overall_cefr_level', 'A1'),
             _json.dumps(result.get('skill_levels', {})),
@@ -1533,7 +1534,7 @@ def save_placement_test_result(language: str, result: Dict, test_data: Dict, ans
         return None
 
 
-def get_latest_placement_result(language: str) -> Optional[Dict]:
+def get_latest_placement_result(language: str, *, user_id: int) -> Optional[Dict]:
     """Return the most recent placement test result for a language, or None."""
     import json as _json
     try:
@@ -1542,9 +1543,9 @@ def get_latest_placement_result(language: str) -> Optional[Dict]:
         cursor = conn.cursor()
         cursor.execute('''
             SELECT * FROM placement_test_results
-            WHERE user_id = 1 AND language = ?
+            WHERE user_id = ? AND language = ?
             ORDER BY taken_at DESC LIMIT 1
-        ''', (language,))
+        ''', (user_id, language))
         row = cursor.fetchone()
         conn.close()
         if not row:
@@ -1696,7 +1697,7 @@ def get_language_for_word(word_id: int) -> str:
 # Vocabulary Operations
 # ============================================================================
 
-def get_words_for_review(language: str, limit: int = 10, user_id: int = 1) -> List[Dict]:
+def get_words_for_review(language: str, limit: int = 10, *, user_id: int) -> List[Dict]:
     """Get words for flashcard review based on SRS algorithm and daily quota.
     
     Returns:
@@ -1844,7 +1845,7 @@ def get_words_for_review(language: str, limit: int = 10, user_id: int = 1) -> Li
     return prioritized[:limit]
 
 
-def get_words_for_review_only(language: str, limit: int = 50, user_id: int = 1) -> List[Dict]:
+def get_words_for_review_only(language: str, limit: int = 50, *, user_id: int) -> List[Dict]:
     """Get only DUE review words (no new words). Used when user selects 'Reviews' mode."""
     conn = sqlite3.connect(config.DB_PATH)
     conn.row_factory = sqlite3.Row
@@ -1876,7 +1877,7 @@ def get_words_for_review_only(language: str, limit: int = 50, user_id: int = 1) 
     return [dict(row) for row in rows]
 
 
-def get_new_words_only(language: str, limit: int = 50, user_id: int = 1) -> List[Dict]:
+def get_new_words_only(language: str, limit: int = 50, *, user_id: int) -> List[Dict]:
     """Get only NEW words (not yet introduced). Used when user selects 'New Words' mode."""
     conn = sqlite3.connect(config.DB_PATH)
     conn.row_factory = sqlite3.Row
@@ -1917,7 +1918,7 @@ def get_new_words_only(language: str, limit: int = 50, user_id: int = 1) -> List
 # SRS Settings and Quota Management
 # ============================================================================
 
-def get_srs_settings(language: str, user_id: int = 1) -> Dict:
+def get_srs_settings(language: str, user_id: int) -> Dict:
     """Get SRS settings for a language (or defaults if not set)"""
     try:
         conn = sqlite3.connect(config.DB_PATH)
@@ -1960,7 +1961,7 @@ def get_srs_settings(language: str, user_id: int = 1) -> Dict:
         }
 
 
-def update_srs_settings(language: str, new_cards_per_day: int, reviews_per_day: int, user_id: int = 1) -> bool:
+def update_srs_settings(language: str, new_cards_per_day: int, reviews_per_day: int, user_id: int) -> bool:
     """Update SRS settings for a language and recalculate daily quotas"""
     try:
         # Validate input
@@ -1994,7 +1995,7 @@ def update_srs_settings(language: str, new_cards_per_day: int, reviews_per_day: 
         return False
 
 
-def _recalculate_daily_quotas(language: str, user_id: int = 1):
+def _recalculate_daily_quotas(language: str, user_id: int):
     """Recalculate daily quotas for the current week based on SRS settings"""
     try:
         settings = get_srs_settings(language, user_id)
@@ -2044,7 +2045,7 @@ def _recalculate_daily_quotas(language: str, user_id: int = 1):
         print(f"Error recalculating daily quotas: {str(e)}")
 
 
-def sync_srs_quotas_from_weekly_goals(language: str, week_start_date: str = None, user_id: int = 1):
+def sync_srs_quotas_from_weekly_goals(language: str, week_start_date: str = None, *, user_id: int):
     """Sync SRS daily quotas from weekly flashcard goals
     
     This function reads the weekly goals for flashcards and sets the SRS daily quotas
@@ -2129,7 +2130,7 @@ def sync_srs_quotas_from_weekly_goals(language: str, week_start_date: str = None
         traceback.print_exc()
 
 
-def sync_all_languages_srs_quotas(week_start_date: str = None, user_id: int = 1):
+def sync_all_languages_srs_quotas(week_start_date: str = None, *, user_id: int):
     """Sync SRS quotas for all active languages from their weekly goals
     
     Args:
@@ -2152,7 +2153,7 @@ def sync_all_languages_srs_quotas(week_start_date: str = None, user_id: int = 1)
         return False
 
 
-def get_daily_quota(language: str, date: str = None, user_id: int = 1) -> Dict:
+def get_daily_quota(language: str, date: str = None, *, user_id: int) -> Dict:
     """Get daily quota for a specific date (defaults to today)"""
     try:
         if date is None:
@@ -2195,7 +2196,7 @@ def get_daily_quota(language: str, date: str = None, user_id: int = 1) -> Dict:
         }
 
 
-def increment_daily_quota(language: str, is_new_card: bool, user_id: int = 1):
+def increment_daily_quota(language: str, is_new_card: bool, user_id: int):
     """Increment the completed count for new cards or reviews"""
     try:
         date = config.get_current_date_str()
@@ -2222,7 +2223,7 @@ def increment_daily_quota(language: str, is_new_card: bool, user_id: int = 1):
         print(f"Error incrementing daily quota: {str(e)}")
 
 
-def get_srs_stats(language: str, user_id: int = 1) -> Dict:
+def get_srs_stats(language: str, user_id: int) -> Dict:
     """Get comprehensive SRS stats for a language"""
     try:
         conn = sqlite3.connect(config.DB_PATH)
@@ -2308,7 +2309,7 @@ def get_srs_stats(language: str, user_id: int = 1) -> Dict:
         }
 
 
-def check_and_log_flashcard_completion(language: str, user_id: int = 1) -> bool:
+def check_and_log_flashcard_completion(language: str, user_id: int) -> bool:
     """Check if daily flashcard goal is met and log as activity if complete
     
     Checks if the number of cards reviewed (new + reviews) meets or exceeds
@@ -2439,7 +2440,7 @@ def get_words_for_activity(language: str, limit: int = 10, learned_limit: int = 
             SELECT v.*, COALESCE(ws.mastery_level, 'new') as mastery_level,
                    COALESCE(ws.next_review_date, '') as next_review_date
             FROM vocabulary v
-            LEFT JOIN word_states ws ON v.id = ws.word_id AND ws.user_id = 1
+            LEFT JOIN word_states ws ON v.id = ws.word_id AND ws.user_id = ?
             WHERE v.language = ?
             AND COALESCE(ws.mastery_level, 'new') = 'mastered'
         ''', (language,))
@@ -2453,7 +2454,7 @@ def get_words_for_activity(language: str, limit: int = 10, learned_limit: int = 
             SELECT v.*, COALESCE(ws.mastery_level, 'new') as mastery_level,
                    COALESCE(ws.next_review_date, '') as next_review_date
             FROM vocabulary v
-            LEFT JOIN word_states ws ON v.id = ws.word_id AND ws.user_id = 1
+            LEFT JOIN word_states ws ON v.id = ws.word_id AND ws.user_id = ?
             WHERE v.language = ?
             AND COALESCE(ws.mastery_level, 'new') IN ('learning', 'review')
         ''', (language,))
@@ -2468,7 +2469,7 @@ def get_words_for_activity(language: str, limit: int = 10, learned_limit: int = 
                 SELECT v.*, COALESCE(ws.mastery_level, 'new') as mastery_level,
                        COALESCE(ws.next_review_date, '') as next_review_date
                 FROM vocabulary v
-                LEFT JOIN word_states ws ON v.id = ws.word_id AND ws.user_id = 1
+                LEFT JOIN word_states ws ON v.id = ws.word_id AND ws.user_id = ?
                 WHERE v.language = ?
                 AND COALESCE(ws.mastery_level, 'new') = 'new'
             ''', (language,))
@@ -2950,7 +2951,7 @@ def get_vocabulary(
     count_query = f'''
         SELECT COUNT(*) as total
         FROM vocabulary v
-        LEFT JOIN word_states ws ON v.id = ws.word_id AND ws.user_id = 1
+        LEFT JOIN word_states ws ON v.id = ws.word_id AND ws.user_id = ?
         LEFT JOIN vocab_decks vd ON v.deck_id = vd.id
         {where_clause}
     '''
@@ -2975,7 +2976,7 @@ def get_vocabulary(
                    COALESCE(ws.next_review_date, '') as next_review_date,
                    vd.name as deck_name
             FROM vocabulary v
-            LEFT JOIN word_states ws ON v.id = ws.word_id AND ws.user_id = 1
+            LEFT JOIN word_states ws ON v.id = ws.word_id AND ws.user_id = ?
             LEFT JOIN vocab_decks vd ON v.deck_id = vd.id
             {where_clause}
             LIMIT ?
@@ -2988,7 +2989,7 @@ def get_vocabulary(
                    COALESCE(ws.next_review_date, '') as next_review_date,
                    vd.name as deck_name
             FROM vocabulary v
-            LEFT JOIN word_states ws ON v.id = ws.word_id AND ws.user_id = 1
+            LEFT JOIN word_states ws ON v.id = ws.word_id AND ws.user_id = ?
             LEFT JOIN vocab_decks vd ON v.deck_id = vd.id
             {where_clause}
             ORDER BY v.english_word
@@ -3011,7 +3012,7 @@ def get_vocabulary(
             SELECT v.*, COALESCE(ws.mastery_level, 'new') as mastery_level,
                    COALESCE(ws.next_review_date, '') as next_review_date
             FROM vocabulary v
-            LEFT JOIN word_states ws ON v.id = ws.word_id AND ws.user_id = 1
+            LEFT JOIN word_states ws ON v.id = ws.word_id AND ws.user_id = ?
             {where_clause_simple}
             ORDER BY v.english_word
             LIMIT ? OFFSET ?
@@ -3029,7 +3030,7 @@ def get_vocabulary(
                        COALESCE(ws.next_review_date, '') as next_review_date,
                        vd.name as deck_name
                 FROM vocabulary v
-                LEFT JOIN word_states ws ON v.id = ws.word_id AND ws.user_id = 1
+                LEFT JOIN word_states ws ON v.id = ws.word_id AND ws.user_id = ?
                 LEFT JOIN vocab_decks vd ON v.deck_id = vd.id
                 WHERE LOWER(v.language) = LOWER(?) AND v.transliteration IS NOT NULL AND TRIM(v.transliteration) != ''
                 LIMIT 500
@@ -3316,7 +3317,7 @@ def calculate_user_level(language: str) -> Dict:
             SELECT v.level, COUNT(*) as count
             FROM word_states ws
             JOIN vocabulary v ON ws.word_id = v.id
-            WHERE ws.user_id = 1 
+            WHERE ws.user_id = ? 
             AND ws.mastery_level = 'mastered'
             AND v.language = ?
             AND v.level IS NOT NULL AND v.level != ''
@@ -3330,10 +3331,10 @@ def calculate_user_level(language: str) -> Dict:
             SELECT COUNT(*) as count
             FROM word_states ws
             JOIN vocabulary v ON ws.word_id = v.id
-            WHERE ws.user_id = 1 
+            WHERE ws.user_id = ? 
             AND ws.mastery_level = 'mastered'
             AND v.language = ?
-        ''', (language,))
+        ''', (user_id, language))
         
         total_mastered = cursor.fetchone()[0] or 0
         
@@ -3429,7 +3430,7 @@ def calculate_user_level(language: str) -> Dict:
 # SRS (Spaced Repetition System) Operations
 # ============================================================================
 
-def bulk_update_word_states_by_level(language: str, level: str, mastery_level: str, user_id: int = 1):
+def bulk_update_word_states_by_level(language: str, level: str, mastery_level: str, user_id: int):
     """Bulk update word states for all words of a specific level"""
     conn = sqlite3.connect(config.DB_PATH)
     cursor = conn.cursor()
@@ -3594,7 +3595,7 @@ def update_word_state(word_id: int, user_id: int, correct: bool, activity_type: 
     check_and_log_flashcard_completion(language, user_id)
 
 
-def preview_word_intervals(word_id: int, user_id: int = 1) -> Dict:
+def preview_word_intervals(word_id: int, user_id: int) -> Dict:
     """Preview what the next review intervals would be for each possible response
     
     Returns a dictionary with keys 'again', 'hard', 'good', 'easy' containing
@@ -3893,9 +3894,9 @@ def get_daily_stats(language: str = None, days: int = 365) -> Dict:
     activity_query = '''
         SELECT DATE(completed_at) as date, COUNT(*) as count
         FROM activity_history
-        WHERE user_id = 1 AND completed_at IS NOT NULL
+        WHERE user_id = ? AND completed_at IS NOT NULL
     '''
-    activity_params = []
+    activity_params = [user_id]
     
     if language:
         activity_query += ' AND language = ?'
@@ -3914,10 +3915,11 @@ def get_daily_stats(language: str = None, days: int = 365) -> Dict:
             SELECT DATE(ws.last_reviewed) as date, COUNT(*) as count
             FROM word_states ws
             JOIN vocabulary v ON ws.word_id = v.id
-            WHERE ws.user_id = 1 AND ws.mastery_level = 'mastered' 
+            WHERE ws.user_id = ? AND ws.mastery_level = 'mastered' 
             AND v.language = ? AND DATE(ws.last_reviewed) >= ?
             GROUP BY DATE(ws.last_reviewed)
         '''
+        # WE NEED TO ADD user_id to params later
         words_params = [language, start_date]
     else:
         words_query = '''
@@ -3965,9 +3967,9 @@ def get_user_learning_languages() -> List[str]:
         # Prefer the most-recently written selected_languages preference row
         cursor.execute('''
             SELECT value FROM user_preferences
-            WHERE user_id = 1 AND key = 'selected_languages'
+            WHERE user_id = ? AND key = 'selected_languages'
             ORDER BY id DESC LIMIT 1
-        ''')
+        ''', (user_id,))
         pref_row = cursor.fetchone()
         
         if pref_row and pref_row[0]:
@@ -3981,13 +3983,13 @@ def get_user_learning_languages() -> List[str]:
                 pass
         
         # Fallback: derive from activity history + word states
-        cursor.execute('SELECT DISTINCT language FROM activity_history WHERE user_id = 1')
+        cursor.execute('SELECT DISTINCT language FROM activity_history WHERE user_id = ?', (user_id,))
         activity_languages = {row[0] for row in cursor.fetchall()}
         
         cursor.execute('''
             SELECT DISTINCT v.language FROM word_states ws
-            JOIN vocabulary v ON ws.word_id = v.id WHERE ws.user_id = 1
-        ''')
+            JOIN vocabulary v ON ws.word_id = v.id WHERE ws.user_id = ?
+        ''', (user_id,))
         word_languages = {row[0] for row in cursor.fetchall()}
         conn.close()
         
@@ -4011,9 +4013,9 @@ def get_language_stats(language: str) -> Dict:
     cursor.execute('''
         SELECT activity_type, COUNT(*) as count
         FROM activity_history
-        WHERE user_id = 1 AND language = ?
+        WHERE user_id = ? AND language = ?
         GROUP BY activity_type
-    ''', (language,))
+    ''', (user_id, language))
     activity_counts = cursor.fetchall()
     stats['activities'] = {row['activity_type']: row['count'] for row in activity_counts}
     stats['total_activities'] = sum(row['count'] for row in activity_counts)
@@ -4023,8 +4025,8 @@ def get_language_stats(language: str) -> Dict:
         SELECT COUNT(*) as count
         FROM word_states ws
         JOIN vocabulary v ON ws.word_id = v.id
-        WHERE ws.user_id = 1 AND ws.mastery_level = 'mastered' AND v.language = ?
-    ''', (language,))
+        WHERE ws.user_id = ? AND ws.mastery_level = 'mastered' AND v.language = ?
+    ''', (user_id, language))
     result = cursor.fetchone()
     stats['words_mastered'] = result['count'] if result else 0
     
@@ -4033,8 +4035,8 @@ def get_language_stats(language: str) -> Dict:
         SELECT COUNT(*) as count
         FROM word_states ws
         JOIN vocabulary v ON ws.word_id = v.id
-        WHERE ws.user_id = 1 AND ws.mastery_level IN ('learning', 'review') AND v.language = ?
-    ''', (language,))
+        WHERE ws.user_id = ? AND ws.mastery_level IN ('learning', 'review') AND v.language = ?
+    ''', (user_id, language))
     result = cursor.fetchone()
     stats['words_learning'] = result['count'] if result else 0
     
@@ -4042,8 +4044,8 @@ def get_language_stats(language: str) -> Dict:
     cursor.execute('''
         SELECT AVG(score) as avg_score
         FROM activity_history
-        WHERE user_id = 1 AND language = ? AND score IS NOT NULL
-    ''', (language,))
+        WHERE user_id = ? AND language = ? AND score IS NOT NULL
+    ''', (user_id, language))
     result = cursor.fetchone()
     stats['average_score'] = round(result['avg_score'], 2) if result and result['avg_score'] else 0
 
@@ -4052,8 +4054,8 @@ def get_language_stats(language: str) -> Dict:
         SELECT COUNT(*) as count
         FROM lesson_completions lc
         JOIN lessons l ON lc.lesson_id = l.lesson_id
-        WHERE lc.user_id = 1 AND LOWER(TRIM(l.language)) = LOWER(?)
-    ''', (language,))
+        WHERE lc.user_id = ? AND LOWER(TRIM(l.language)) = LOWER(?)
+    ''', (user_id, language))
     result = cursor.fetchone()
     stats['lessons_completed'] = result['count'] if result else 0
 
@@ -4061,8 +4063,8 @@ def get_language_stats(language: str) -> Dict:
     cursor.execute('''
         SELECT started_at, completed_at
         FROM activity_history
-        WHERE user_id = 1 AND language = ? AND started_at IS NOT NULL AND completed_at IS NOT NULL
-    ''', (language,))
+        WHERE user_id = ? AND language = ? AND started_at IS NOT NULL AND completed_at IS NOT NULL
+    ''', (user_id, language))
     rows = cursor.fetchall()
     total_seconds = 0
     for row in rows:
@@ -4088,7 +4090,7 @@ def get_language_stats(language: str) -> Dict:
 # Activity & Progress Operations
 # ============================================================================
 
-def log_activity(language: str, activity_type: str, score: float = 0.0, activity_data: str = '') -> int:
+def log_activity(language: str, activity_type: str, score: float = 0.0, activity_data: str = '', user_id: int = 1) -> int:
     """Log an activity completion. Returns the new row's id."""
     try:
         conn = sqlite3.connect(config.DB_PATH, timeout=10.0)
@@ -4112,8 +4114,8 @@ def log_activity(language: str, activity_type: str, score: float = 0.0, activity
         # Log to activity history - use Python local time to match daily_progress.date
         cursor.execute('''
             INSERT INTO activity_history (user_id, language, activity_type, activity_data, score, started_at, completed_at)
-            VALUES (1, ?, ?, ?, ?, ?, ?)
-        ''', (language, activity_type, activity_data, score, now_str, now_str))
+            VALUES (?, ?, ?, ?, ?, ?, ?)
+        ''', (user_id, language, activity_type, activity_data, score, now_str, now_str))
         
         # Get the inserted ID to verify
         activity_id = cursor.lastrowid
@@ -4121,10 +4123,10 @@ def log_activity(language: str, activity_type: str, score: float = 0.0, activity
         # Update daily progress
         cursor.execute('''
             INSERT INTO daily_progress (user_id, language, activity_type, date, count)
-            VALUES (1, ?, ?, ?, 1)
+            VALUES (?, ?, ?, ?, 1)
             ON CONFLICT(user_id, language, activity_type, date) DO UPDATE SET
                 count = count + 1
-        ''', (language, activity_type, today))
+        ''', (user_id, language, activity_type, today))
         
         conn.commit()
         conn.close()
@@ -4141,7 +4143,7 @@ def log_activity(language: str, activity_type: str, score: float = 0.0, activity
         return 0
 
 
-def update_activity_score(language: str, activity_type: str, score: float, activity_data: str = '', activity_id: Optional[int] = None):
+def update_activity_score(language: str, activity_type: str, score: float, activity_data: str = '', activity_id: Optional[int] = None, user_id: int = 1):
     """Update the score of the most recent activity for this language and type, or a specific activity by ID"""
     try:
         import json
@@ -4152,24 +4154,24 @@ def update_activity_score(language: str, activity_type: str, score: float, activ
         if activity_id:
             cursor.execute('''
                 SELECT id, activity_data, score FROM activity_history
-                WHERE user_id = 1 AND id = ? AND language = ? AND activity_type = ?
-            ''', (activity_id, language, activity_type))
+                WHERE user_id = ? AND id = ? AND language = ? AND activity_type = ?
+            ''', (user_id, activity_id, language, activity_type))
         # For writing and speaking, always use the most recent activity entry (we may add new submissions later)
         # For other activities, find the one with score 0.0 (the one saved on generation)
         elif activity_type in ['writing', 'speaking']:
             cursor.execute('''
                 SELECT id, activity_data, score FROM activity_history
-                WHERE user_id = 1 AND language = ? AND activity_type = ?
+                WHERE user_id = ? AND language = ? AND activity_type = ?
                 ORDER BY completed_at DESC
                 LIMIT 1
-            ''', (language, activity_type))
+            ''', (user_id, language, activity_type))
         else:
             cursor.execute('''
                 SELECT id, activity_data, score FROM activity_history
-                WHERE user_id = 1 AND language = ? AND activity_type = ? AND score = 0.0
+                WHERE user_id = ? AND language = ? AND activity_type = ? AND score = 0.0
                 ORDER BY completed_at DESC
                 LIMIT 1
-            ''', (language, activity_type))
+            ''', (user_id, language, activity_type))
         
         result = cursor.fetchone()
         
@@ -4277,8 +4279,8 @@ def update_activity_score(language: str, activity_type: str, score: float, activ
             today = config.get_current_date_str()
             cursor.execute('''
                 SELECT count FROM daily_progress
-                WHERE user_id = 1 AND language = ? AND activity_type = ? AND date = ?
-            ''', (language, activity_type, today))
+                WHERE user_id = ? AND language = ? AND activity_type = ? AND date = ?
+            ''', (user_id, language, activity_type, today))
             progress_result = cursor.fetchone()
             
             if not progress_result:
@@ -4286,19 +4288,19 @@ def update_activity_score(language: str, activity_type: str, score: float, activ
                 # Use INSERT OR IGNORE to handle race conditions gracefully
                 cursor.execute('''
                     INSERT OR IGNORE INTO daily_progress (user_id, language, activity_type, date, count)
-                    VALUES (1, ?, ?, ?, 1)
-                ''', (language, activity_type, today))
+                    VALUES (?, ?, ?, ?, 1)
+                ''', (user_id, language, activity_type, today))
                 # If INSERT was ignored (already exists), update instead
                 if cursor.rowcount == 0:
                     cursor.execute('''
                         UPDATE daily_progress
                         SET count = count + 1
-                        WHERE user_id = 1 AND language = ? AND activity_type = ? AND date = ?
-                    ''', (language, activity_type, today))
+                        WHERE user_id = ? AND language = ? AND activity_type = ? AND date = ?
+                    ''', (user_id, language, activity_type, today))
         else:
             # If no activity found, just log a new one
             print(f"  No existing activity found, logging new one...")
-            log_activity(language, activity_type, score, activity_data)
+            log_activity(language, activity_type, score, activity_data, user_id=user_id)
             conn.close()
             return
         
@@ -4368,9 +4370,9 @@ def get_daily_progress(language: str, date: Optional[str] = None) -> Dict:
         cursor.execute('''
             SELECT activity_type, COALESCE(SUM(count), 0) as count
             FROM daily_progress
-            WHERE user_id = 1 AND language = ? AND date = ?
+            WHERE user_id = ? AND language = ? AND date = ?
             GROUP BY activity_type
-        ''', (language, date))
+        ''', (user_id, language, date))
         
         progress = {row['activity_type']: row['count'] for row in cursor.fetchall()}
         conn.close()
@@ -5250,10 +5252,10 @@ def get_units_by_language(language: str) -> List[Dict]:
                    up.lessons_completed,
                    up.is_completed
             FROM units u
-            LEFT JOIN unit_progress up ON u.unit_id = up.unit_id AND up.user_id = 1
+            LEFT JOIN unit_progress up ON u.unit_id = up.unit_id AND up.user_id = ?
             WHERE LOWER(u.language) = LOWER(?)
             ORDER BY u.unit_number
-        ''', (language,))
+        ''', (user_id, language))
         
         rows = cursor.fetchall()
         conn.close()
@@ -5443,7 +5445,7 @@ def clear_lesson_progress(user_id: int, lesson_id: str) -> bool:
 # Vocabulary Import Helpers
 # ============================================================================
 
-def get_user_active_languages(user_id: int = 1) -> List[str]:
+def get_user_active_languages(user_id: int) -> List[str]:
     """Get list of languages the user is actively learning"""
     try:
         conn = sqlite3.connect(config.DB_PATH)
@@ -5853,7 +5855,7 @@ def get_words_for_deck(language: str, deck_id: int, limit: int = 500) -> List[Di
                         THEN 1 ELSE 0 END AS is_translated,
                    0 AS is_ref
             FROM vocabulary v
-            LEFT JOIN word_states ws ON ws.word_id = v.id AND ws.user_id = 1
+            LEFT JOIN word_states ws ON ws.word_id = v.id AND ws.user_id = ?
             LEFT JOIN vocab_decks vd_deck ON vd_deck.id = ?
             WHERE v.language = ? AND v.deck_id = ?
 
@@ -5871,7 +5873,7 @@ def get_words_for_deck(language: str, deck_id: int, limit: int = 500) -> List[Di
                    1 AS is_ref
             FROM vocab_deck_refs dr
             JOIN vocabulary v ON v.id = dr.word_id
-            LEFT JOIN word_states ws ON ws.word_id = v.id AND ws.user_id = 1
+            LEFT JOIN word_states ws ON ws.word_id = v.id AND ws.user_id = ?
             LEFT JOIN vocab_decks vd_deck ON vd_deck.id = ?
             WHERE dr.deck_id = ? AND v.language = ? AND (v.deck_id IS NULL OR v.deck_id != ?)
 

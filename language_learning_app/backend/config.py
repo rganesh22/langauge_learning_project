@@ -27,13 +27,14 @@ GOOGLE_APPLICATION_CREDENTIALS = os.getenv('GOOGLE_APPLICATION_CREDENTIALS', '')
 # ============================================================================
 # Gemini model per flow (text generation). One model used per "flow" (e.g.
 # placement test, listening script, import vocab, translate, etc.). Override
-# via env for any flow, e.g. GEMINI_MODEL_LISTENING_ACTIVITY_SCRIPT=gemini-2.5-pro
+# via env for any flow, e.g. GEMINI_MODEL_LISTENING_ACTIVITY_SCRIPT=gemini-3.1-pro-preview
+# Default: gemini-3-flash-preview for most flows; gemini-3.1-pro-preview for listening script, import vocab, translate.
 # ============================================================================
-GEMINI_MODEL_DEFAULT = os.getenv('GEMINI_MODEL_DEFAULT', 'gemini-2.5-flash-preview')
-# Flows that use the "pro" model by default (listening script, import vocab, translate)
-GEMINI_MODEL_LISTENING_ACTIVITY_SCRIPT = os.getenv('GEMINI_MODEL_LISTENING_ACTIVITY_SCRIPT', 'gemini-2.5-pro-preview')
-GEMINI_MODEL_IMPORT_VOCAB = os.getenv('GEMINI_MODEL_IMPORT_VOCAB', 'gemini-2.5-pro-preview')
-GEMINI_MODEL_TRANSLATION = os.getenv('GEMINI_MODEL_TRANSLATION', 'gemini-2.5-pro-preview')
+GEMINI_MODEL_DEFAULT = os.getenv('GEMINI_MODEL_DEFAULT', 'gemini-3-flash-preview')
+# Flows that use the Pro model by default (listening script, import vocab, translate)
+GEMINI_MODEL_LISTENING_ACTIVITY_SCRIPT = os.getenv('GEMINI_MODEL_LISTENING_ACTIVITY_SCRIPT', 'gemini-3.1-pro-preview')
+GEMINI_MODEL_IMPORT_VOCAB = os.getenv('GEMINI_MODEL_IMPORT_VOCAB', 'gemini-3.1-pro-preview')
+GEMINI_MODEL_TRANSLATION = os.getenv('GEMINI_MODEL_TRANSLATION', 'gemini-3.1-pro-preview')
 # Optional overrides for other flows (default = GEMINI_MODEL_DEFAULT)
 GEMINI_MODEL_PLACEMENT_TEST = os.getenv('GEMINI_MODEL_PLACEMENT_TEST', None)
 GEMINI_MODEL_WRITING_ACTIVITY = os.getenv('GEMINI_MODEL_WRITING_ACTIVITY', None)
@@ -46,6 +47,7 @@ GEMINI_MODEL_SPEAKING_GRADING = os.getenv('GEMINI_MODEL_SPEAKING_GRADING', None)
 GEMINI_MODEL_TRANSLATION_ACTIVITY = os.getenv('GEMINI_MODEL_TRANSLATION_ACTIVITY', None)
 GEMINI_MODEL_TRANSLATION_GRADING = os.getenv('GEMINI_MODEL_TRANSLATION_GRADING', None)
 GEMINI_MODEL_CONVERSATION = os.getenv('GEMINI_MODEL_CONVERSATION', None)
+GEMINI_MODEL_SPEAKER_PROFILE = os.getenv('GEMINI_MODEL_SPEAKER_PROFILE', None)
 GEMINI_MODEL_TUTOR_CHAT = os.getenv('GEMINI_MODEL_TUTOR_CHAT', None)
 GEMINI_MODEL_PLACEMENT_TEST_ANALYZE = os.getenv('GEMINI_MODEL_PLACEMENT_TEST_ANALYZE', None)
 GEMINI_MODEL_LESSON_FREE_RESPONSE = os.getenv('GEMINI_MODEL_LESSON_FREE_RESPONSE', None)
@@ -69,6 +71,7 @@ def get_gemini_model_for_flow(flow: str) -> str:
         'translation_activity': GEMINI_MODEL_TRANSLATION_ACTIVITY,
         'translation_grading': GEMINI_MODEL_TRANSLATION_GRADING,
         'conversation': GEMINI_MODEL_CONVERSATION,
+        'speaker_profile': GEMINI_MODEL_SPEAKER_PROFILE,
         'tutor_chat': GEMINI_MODEL_TUTOR_CHAT,
         'placement_test_analyze': GEMINI_MODEL_PLACEMENT_TEST_ANALYZE,
         'lesson_free_response': GEMINI_MODEL_LESSON_FREE_RESPONSE,

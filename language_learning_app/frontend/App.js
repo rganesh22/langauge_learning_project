@@ -15,6 +15,7 @@ import ActivityHistoryScreen from './screens/ActivityHistoryScreen';
 import FlashcardScreen from './screens/FlashcardScreen';
 import DeckDetailScreen from './screens/DeckDetailScreen';
 import PlacementTestScreen from './screens/PlacementTestScreen';
+import LoginScreen from './screens/LoginScreen';
 import { Ionicons } from '@expo/vector-icons';
 import LanguageProvider from './contexts/LanguageContext';
 import { ActivityGenerationProvider } from './contexts/ActivityGenerationContext';
@@ -32,6 +33,7 @@ import { ActivityIndicator, View, Text as RNText } from 'react-native';
 import SafeText from './components/SafeText';
 import { useContext } from 'react';
 import { LanguageContext } from './contexts/LanguageContext';
+import { AuthProvider, AuthContext } from './contexts/AuthContext';
 
 const API_BASE_URL = __DEV__ ? 'http://localhost:9090' : 'http://localhost:9090';
 
@@ -57,16 +59,22 @@ function GlobalTranslationModal() {
 
 function GlobalImportModal() {
   const { modalRequest, closeModal, getJob } = useImportJob();
-  const visible = modalRequest?.type === 'job' && modalRequest.jobId != null;
-  const job = visible ? (getJob(modalRequest.jobId) ?? modalRequest.jobSnapshot) : null;
-  const language = job?.language || 'kannada';
+  const isJob = modalRequest?.type === 'job' && modalRequest.jobId != null;
+  const isAddToDeck = modalRequest?.type === 'addToDeck';
+  const visible = isJob || isAddToDeck;
+  const job = isJob ? (getJob(modalRequest.jobId) ?? modalRequest.jobSnapshot) : null;
+  const language = isAddToDeck ? (modalRequest.language || 'kannada') : (job?.language || 'kannada');
   const initialJobId = modalRequest?.type === 'job' ? modalRequest.jobId : null;
+  const targetDeckId = isAddToDeck ? modalRequest.deckId : null;
+  const initialDeckName = isAddToDeck ? modalRequest.deckName : '';
   return (
     <TextImportModal
       visible={visible}
       onClose={closeModal}
       language={language}
       initialJobId={initialJobId}
+      targetDeckId={targetDeckId}
+      initialDeckName={initialDeckName}
     />
   );
 }
@@ -185,52 +193,69 @@ export default function App() {
   }
   return (
     <SafeAreaProvider>
+      <AuthProvider>
       <LanguageProvider>
         <ActivityGenerationProvider>
           <TranslationJobProvider>
           <ImportJobProvider>
           <TutorProvider>
-          <NavigationContainer ref={navigationRef}>
-            <RootNavigationRefContext.Provider value={navigationRef}>
-            <>
-              <StatusBar style="auto" />
-              <Stack.Navigator screenOptions={{ headerShown: false }}>
-                <Stack.Screen name="Main" component={MainTabs} />
-                {/* Activity = unified lesson renderer (LessonActivity). Practice tab opens this via root ref + CommonActions. */}
-                <Stack.Screen name="Activity" component={ActivityScreen} />
-                <Stack.Screen name="ActivityHistory" component={ActivityHistoryScreen} />
-                <Stack.Screen name="Flashcards" component={FlashcardScreen} />
-                <Stack.Screen name="DeckDetail" component={DeckDetailScreen} />
-                <Stack.Screen name="PlacementTest" component={PlacementTestScreen} />
-              </Stack.Navigator>
-              <ActivityGenerationTray
-                onPressJob={(job) => {
-                  if (!job || !navigationRef.current?.isReady()) return;
-                  const params = {
-                    activityType: job.activityType,
-                    language: job.language,
-                  };
-                  if (job.status === 'done' && job.activityId) {
-                    params.activityId = job.activityId;
-                    params.fromHistory = true;
-                    if (job.activityData) params.activityData = job.activityData;
-                  }
-                  navigationRef.current.navigate('Activity', params);
-                }}
-              />
-              <TranslationTray />
-              <ImportTray navigationRef={navigationRef} />
-              <GlobalTranslationModal />
-              <GlobalImportModal />
-              <TutorVisibilityGate />
-            </>
-            </RootNavigationRefContext.Provider>
-          </NavigationContainer>
+          <AppContent navigationRef={navigationRef} />
           </TutorProvider>
           </ImportJobProvider>
           </TranslationJobProvider>
         </ActivityGenerationProvider>
       </LanguageProvider>
+      </AuthProvider>
     </SafeAreaProvider>
+  );
+}
+
+function AppContent({ navigationRef }) {
+  const { user, loading } = useContext(AuthContext);
+  if (loading) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <ActivityIndicator size="large" color="#4A90E2" />
+      </View>
+    );
+  }
+  if (!user) {
+    return <LoginScreen />;
+  }
+  return (
+    <>
+      <NavigationContainer ref={navigationRef}>
+        <RootNavigationRefContext.Provider value={navigationRef}>
+        <>
+          <StatusBar style="auto" />
+          <Stack.Navigator screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="Main" component={MainTabs} />
+            <Stack.Screen name="Activity" component={ActivityScreen} />
+            <Stack.Screen name="ActivityHistory" component={ActivityHistoryScreen} />
+            <Stack.Screen name="Flashcards" component={FlashcardScreen} />
+            <Stack.Screen name="DeckDetail" component={DeckDetailScreen} />
+            <Stack.Screen name="PlacementTest" component={PlacementTestScreen} />
+          </Stack.Navigator>
+          <ActivityGenerationTray
+            onPressJob={(job) => {
+              if (!job || !navigationRef.current?.isReady()) return;
+              const params = { activityType: job.activityType, language: job.language };
+              if (job.status === 'done' && job.activityId) {
+                params.activityId = job.activityId;
+                params.fromHistory = true;
+                if (job.activityData) params.activityData = job.activityData;
+              }
+              navigationRef.current.navigate('Activity', params);
+            }}
+          />
+          <TranslationTray />
+          <ImportTray navigationRef={navigationRef} />
+          <GlobalTranslationModal />
+          <GlobalImportModal />
+          <TutorVisibilityGate />
+        </>
+        </RootNavigationRefContext.Provider>
+      </NavigationContainer>
+    </>
   );
 }

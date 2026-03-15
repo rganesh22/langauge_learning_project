@@ -9,3 +9,4 @@ pydantic==2.10.3
 aksharamukha==2.3
 websockets==12.0
 json-repair>=0.30.0
+firebase-admin>=6.0.0

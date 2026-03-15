@@ -29,6 +29,7 @@
  * }
  */
 import React, { createContext, useContext, useState, useCallback, useRef } from 'react';
+import { AuthContext } from './AuthContext';
 
 const API_BASE_URL = __DEV__ ? 'http://localhost:9090' : 'http://localhost:9090';
 
@@ -37,6 +38,7 @@ const ImportJobContext = createContext(null);
 export { ImportJobContext };
 
 export function ImportJobProvider({ children }) {
+  const { authHeaders } = useContext(AuthContext);
   const [jobs, setJobs] = useState([]);
   const jobsRef = useRef([]);
   const [modalRequest, setModalRequest] = useState(null); // { type: 'job', jobId, jobSnapshot? } | { type: 'open', language?, prefillText? } | null
@@ -224,13 +226,14 @@ export function ImportJobProvider({ children }) {
       try {
         const res = await fetch(`${API_BASE_URL}/api/vocab/commit-import`, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: { 'Content-Type': 'application/json', ...authHeaders },
           body: JSON.stringify({
             language: payload.language,
             words: payload.words || [],
             synonyms: payload.synonyms || [],
             words_by_lang: payload.words_by_lang || {},
             deck_name: payload.deck_name?.trim() || null,
+            deck_id: payload.deck_id ?? undefined,
             existing_ids: payload.existing_ids?.length ? payload.existing_ids : undefined,
             existing_by_lang: payload.existing_by_lang && Object.keys(payload.existing_by_lang).length > 0 ? payload.existing_by_lang : undefined,
           }),
@@ -243,7 +246,7 @@ export function ImportJobProvider({ children }) {
         const duration = Math.round((Date.now() - startTime) / 100) / 10;
         if (duration != null) data.import_duration_seconds = duration;
         if (data.deck_id && data.import_duration_seconds != null) {
-          fetch(`${API_BASE_URL}/api/vocab/decks/${data.deck_id}/duration?duration_seconds=${data.import_duration_seconds}`, { method: 'PATCH' }).catch(() => {});
+          fetch(`${API_BASE_URL}/api/vocab/decks/${data.deck_id}/duration?duration_seconds=${data.import_duration_seconds}`, { method: 'PATCH', headers: { ...authHeaders } }).catch(() => {});
         }
         setJobsDirect((prev) =>
           prev.map((j) => (j.id === id ? { ...j, status: 'done', statusMessage: null, importResult: data } : j))
@@ -288,6 +291,11 @@ export function ImportJobProvider({ children }) {
     setModalRequest({ type: 'open', language: language || null, prefillText: prefillText || '' });
   }, []);
 
+  /** Open import modal to add words to an existing deck (commit will send deck_id). */
+  const openModalForDeck = useCallback((deckId, deckName, language) => {
+    setModalRequest({ type: 'addToDeck', deckId, deckName: deckName || '', language: language || 'kannada' });
+  }, []);
+
   const closeModal = useCallback(() => {
     setModalRequest(null);
   }, []);
@@ -304,6 +312,7 @@ export function ImportJobProvider({ children }) {
         dismissJob,
         openModalForJob,
         openModalWithPrefill,
+        openModalForDeck,
         closeModal,
       }}
     >

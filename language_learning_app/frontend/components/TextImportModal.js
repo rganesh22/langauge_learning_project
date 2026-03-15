@@ -13,6 +13,7 @@ import {
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { LanguageContext, LANGUAGES } from '../contexts/LanguageContext';
+import { AuthContext } from '../contexts/AuthContext';
 import { WORD_CLASSES, LEVELS, LEVEL_COLORS, CEFR_LEVELS, VERB_TRANSITIVITY_FILTERS } from '../constants/filters';
 import { ImportJobContext } from '../contexts/ImportJobContext';
 import VocabImportDebugModal from './VocabImportDebugModal';
@@ -24,8 +25,9 @@ const formatMultiTerm = (s) => (s || '').replace(/\s*,\s*/g, ' / ');
 
 // step: 'input' | 'review' | 'done'
 
-export default function TextImportModal({ visible, onClose, language, onImportComplete, prefillText = '', initialJobId: initialJobIdProp = null }) {
+export default function TextImportModal({ visible, onClose, language, onImportComplete, prefillText = '', initialJobId: initialJobIdProp = null, targetDeckId = null, initialDeckName = '' }) {
   const { userSelectedLanguages } = useContext(LanguageContext);
+  const { authHeaders } = useContext(AuthContext);
   const importJob = useContext(ImportJobContext);
 
   // When opened from tray (GlobalImportModal) we get initialJobId; when we start extract via context we set boundJobId
@@ -131,6 +133,13 @@ export default function TextImportModal({ visible, onClose, language, onImportCo
       setText(prefillText);
     }
   }, [visible, prefillText]);
+
+  // When opened for "add to deck", prefill deck name
+  React.useEffect(() => {
+    if (visible && targetDeckId && initialDeckName) {
+      setDeckName(initialDeckName);
+    }
+  }, [visible, targetDeckId, initialDeckName]);
 
   // When opened from tray with initialJobId, load job state into modal (once per open)
   const loadedJobIdRef = useRef(null);
@@ -438,6 +447,7 @@ export default function TextImportModal({ visible, onClose, language, onImportCo
       synonyms: synonymsToMerge,
       words_by_lang: wordsByLang,
       deck_name: deckName.trim() || null,
+      deck_id: targetDeckId ?? undefined,
       existing_ids: existingIds.length > 0 ? existingIds : undefined,
       existing_by_lang: Object.keys(existingByLang).length > 0 ? existingByLang : undefined,
     };
@@ -456,13 +466,14 @@ export default function TextImportModal({ visible, onClose, language, onImportCo
     try {
       const res = await fetch(`${API_BASE_URL}/api/vocab/commit-import`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', ...authHeaders },
         body: JSON.stringify({
           language: payload.language,
           words: payload.words,
           synonyms: payload.synonyms,
           words_by_lang: payload.words_by_lang,
           deck_name: payload.deck_name,
+          deck_id: payload.deck_id,
           existing_ids: payload.existing_ids,
           existing_by_lang: payload.existing_by_lang,
         }),
@@ -477,7 +488,7 @@ export default function TextImportModal({ visible, onClose, language, onImportCo
         : null;
       if (totalDuration != null) data.import_duration_seconds = totalDuration;
       if (data.deck_id && totalDuration != null) {
-        fetch(`${API_BASE_URL}/api/vocab/decks/${data.deck_id}/duration?duration_seconds=${totalDuration}`, { method: 'PATCH' }).catch(() => {});
+        fetch(`${API_BASE_URL}/api/vocab/decks/${data.deck_id}/duration?duration_seconds=${totalDuration}`, { method: 'PATCH', headers: { ...authHeaders } }).catch(() => {});
       }
       setImportResult(data);
       setStep('done');
@@ -1165,17 +1176,23 @@ export default function TextImportModal({ visible, onClose, language, onImportCo
 
               {/* Deck Name */}
               <View style={styles.deckNameSection}>
-                <Text style={styles.deckNameLabel}>Deck Name</Text>
-                <TextInput
-                  style={styles.deckNameInput}
-                  placeholder={`Deck ${new Date().toISOString().slice(0, 16).replace('T', ' ')}`}
-                  placeholderTextColor="#999"
-                  value={deckName}
-                  onChangeText={setDeckName}
-                  editable={!effectiveProcessing}
-                  maxLength={60}
-                />
-                <Text style={styles.deckNameHint}>Name this import set. Shown as a chip on each word.</Text>
+                <Text style={styles.deckNameLabel}>{targetDeckId ? 'Adding to deck' : 'Deck Name'}</Text>
+                {targetDeckId ? (
+                  <View style={[styles.deckNameInput, { backgroundColor: '#F3F4F6' }]}>
+                    <Text style={styles.deckNameHint}>{deckName || initialDeckName || 'This deck'}</Text>
+                  </View>
+                ) : (
+                  <TextInput
+                    style={styles.deckNameInput}
+                    placeholder={`Deck ${new Date().toISOString().slice(0, 16).replace('T', ' ')}`}
+                    placeholderTextColor="#999"
+                    value={deckName}
+                    onChangeText={setDeckName}
+                    editable={!effectiveProcessing}
+                    maxLength={60}
+                  />
+                )}
+                <Text style={styles.deckNameHint}>{targetDeckId ? 'Imported words will be added to this deck.' : 'Name this import set. Shown as a chip on each word.'}</Text>
               </View>
 
               {/* Also Translate To Other Languages */}

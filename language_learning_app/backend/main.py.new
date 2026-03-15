@@ -82,6 +82,9 @@ async def startup_event():
     db.init_db_schema()
     print("[Startup] Database initialization complete")
     
+    # Initialize Firebase Admin SDK for auth
+    firebase_auth.init_firebase()
+    
     # Auto-sync lessons from filesystem into database (guarded)
     print("[Startup] Syncing lessons from filesystem (if available)...")
     if hasattr(db, 'sync_lessons_from_files') and callable(getattr(db, 'sync_lessons_from_files')):
@@ -277,6 +280,21 @@ def health_check():
     return {"status": "healthy", "service": "fluo-backend"}
 
 
+@app.post("/api/auth/verify")
+async def auth_verify(request: Request, user_id: int = Depends(get_current_user_id)):
+    """Verify Firebase token and return user_id. Optional body: { display_name?, username? } to set profile."""
+    try:
+        if request.headers.get("content-type", "").strip().startswith("application/json"):
+            body = await request.json()
+            display_name = body.get("display_name")
+            username = body.get("username")
+            if display_name is not None or username is not None:
+                db.update_user_profile_for_id(user_id, name=display_name, username=username)
+    except Exception:
+        pass
+    return {"user_id": user_id}
+
+
 # ============================================================================
 # WebSocket Endpoints
 # ============================================================================
@@ -295,9 +313,9 @@ async def websocket_conversation_live(websocket: WebSocket):
 # ============================================================================
 
 @app.get("/api/profile")
-def get_profile(user_id: int = Depends(get_current_user_id)):
+def get_profile():
     """Get user profile with streak"""
-    profile = db.get_user_profile(user_id=user_id)
+    profile = db.get_user_profile()
     return profile
 
 
@@ -309,15 +327,15 @@ class ProfileUpdateRequest(BaseModel):
 
 
 @app.put("/api/profile")
-def update_profile(request: ProfileUpdateRequest, user_id: int = Depends(get_current_user_id)):
+def update_profile(request: ProfileUpdateRequest):
     """Update user profile"""
     success = db.update_user_profile(
         name=request.name,
         username=request.username,
         profile_picture_url=request.profile_picture_url
-    , user_id=user_id)
+    )
     if success:
-        updated_profile = db.get_user_profile(user_id=user_id)
+        updated_profile = db.get_user_profile()
         return updated_profile
     else:
         raise HTTPException(status_code=500, detail="Failed to update profile")
@@ -338,7 +356,7 @@ class SettingUpdateRequest(BaseModel):
 
 
 @app.put("/api/settings")
-def update_setting(request: SettingUpdateRequest, user_id: int = Depends(get_current_user_id)):
+def update_setting(request: SettingUpdateRequest):
     """Update a user setting for a specific language"""
     success = db.update_user_setting(request.key, request.value, request.language)
     if success:
@@ -353,11 +371,11 @@ def update_setting(request: SettingUpdateRequest, user_id: int = Depends(get_cur
 # ============================================================================
 
 @app.get("/api/dashboard/{language}")
-def get_dashboard(language: str, user_id: int = Depends(get_current_user_id)):
+def get_dashboard(language: str):
     """Get dashboard data for a language (streak, progress, goals, level)"""
     try:
         print(f"Getting dashboard data for {language}...")
-        profile = db.get_user_profile(user_id=user_id)
+        profile = db.get_user_profile()
         progress = db.get_daily_progress(language)
         
         # Get today's goals from weekly goals instead of daily goals
@@ -456,7 +474,7 @@ class TransliterationRequest(BaseModel):
     from_script: Optional[str] = None
 
 @app.post("/api/transliterate")
-def transliterate_endpoint(request: TransliterationRequest, user_id: int = Depends(get_current_user_id)):
+def transliterate_endpoint(request: TransliterationRequest):
     """Transliterate text from target language script to Roman using IAST or ITRANS via aksharmukha"""
     # Allow client to specify source script for disambiguation (e.g., Devanagari vs Urdu Perso-Arabic)
     result = transliteration.transliterate_text(request.text, request.language, request.to_script or 'IAST', request.from_script)
@@ -489,7 +507,7 @@ TRANSLATE_KNOWN_SOURCE_CODES = [
 
 
 @app.post("/api/translate")
-async def translate_text(request: TranslateRequest, user_id: int = Depends(get_current_user_id)):
+async def translate_text(request: TranslateRequest):
     """Translate text into target_language. If source_language is not provided, the model detects it."""
     import concurrent.futures
     import time as _time
@@ -615,7 +633,7 @@ class SaveTranslationHistoryRequest(BaseModel):
 
 
 @app.post("/api/translation-history")
-def save_translation(req: SaveTranslationHistoryRequest, user_id: int = Depends(get_current_user_id)):
+def save_translation(req: SaveTranslationHistoryRequest):
     row_id = db.save_translation_history(
         req.source_text, req.source_language, req.target_languages, req.results,
         duration_seconds=req.duration_seconds,
@@ -626,12 +644,12 @@ def save_translation(req: SaveTranslationHistoryRequest, user_id: int = Depends(
 
 
 @app.get("/api/translation-history")
-def list_translation_history(language: Optional[str] = None, limit: int = 50, user_id: int = Depends(get_current_user_id)):
+def list_translation_history(language: Optional[str] = None, limit: int = 50):
     return {"history": db.get_translation_history(limit=limit, language=language)}
 
 
 @app.get("/api/translation-history/{history_id}")
-def get_translation_history_entry(history_id: int, user_id: int = Depends(get_current_user_id)):
+def get_translation_history_entry(history_id: int):
     entry = db.get_translation_history_by_id(history_id)
     if not entry:
         raise HTTPException(status_code=404, detail="Not found")
@@ -639,7 +657,7 @@ def get_translation_history_entry(history_id: int, user_id: int = Depends(get_cu
 
 
 @app.delete("/api/translation-history/{history_id}")
-def delete_translation_history_entry(history_id: int, user_id: int = Depends(get_current_user_id)):
+def delete_translation_history_entry(history_id: int):
     db.delete_translation_history(history_id)
     return {"success": True}
 
@@ -649,7 +667,7 @@ class DeleteTranslationHistoryBulkRequest(BaseModel):
 
 
 @app.post("/api/translation-history/delete-bulk")
-def delete_translation_history_bulk_endpoint(request: DeleteTranslationHistoryBulkRequest, user_id: int = Depends(get_current_user_id)):
+def delete_translation_history_bulk_endpoint(request: DeleteTranslationHistoryBulkRequest):
     deleted = db.delete_translation_history_bulk(request.ids)
     return {"success": True, "deleted": deleted}
 
@@ -688,6 +706,7 @@ class CommitImportRequest(BaseModel):
     synonyms: Optional[List[Dict]] = None  # Synonym words (will be merged into existing cards)
     words_by_lang: Optional[Dict[str, List[ExtractedWord]]] = None  # Per-language words
     deck_name: Optional[str] = None
+    deck_id: Optional[int] = None  # If set, add words to this deck instead of creating a new one
     target_languages: Optional[List[str]] = None
     # IDs of existing vocabulary entries that should also be attached to this deck
     existing_ids: Optional[List[int]] = None
@@ -696,7 +715,7 @@ class CommitImportRequest(BaseModel):
 
 
 @app.post("/api/vocab/extract-text")
-async def extract_text_to_vocab(request: TextImportRequest, user_id: int = Depends(get_current_user_id)):
+async def extract_text_to_vocab(request: TextImportRequest):
     """Step 1: Extract and process words from text WITHOUT saving to DB.
     Returns words with lemmatization, translation, and CEFR level for user review.
     If target_languages provided, also cross-translates and returns per-language previews.
@@ -1064,7 +1083,7 @@ async def extract_text_to_vocab(request: TextImportRequest, user_id: int = Depen
 
 
 @app.post("/api/vocab/extract-text-stream")
-async def extract_text_stream(request: TextImportRequest, user_id: int = Depends(get_current_user_id)):
+async def extract_text_stream(request: TextImportRequest):
     """Streaming SSE variant of extract-text. Sends progress events while processing.
     Events: { type: 'progress', batch: N, total_batches: N, processed: N } 
             { type: 'done', words: [...], existing: [...], translations_by_lang: {...} }
@@ -1418,11 +1437,8 @@ async def extract_text_stream(request: TextImportRequest, user_id: int = Depends
 @app.post("/api/vocab/commit-import")
 async def commit_import_to_vocab(request: CommitImportRequest, user_id: int = Depends(get_current_user_id)):
     """Step 2: Save pre-extracted words to DB (after user review/filtering).
-    
-    - `words`: Completely new words — added as fresh entries to the deck.
-    - `synonyms`: Words that are synonyms of existing entries — merged into the existing card
-                  (appended to translation field as 'original / synonym') and also saved to deck.
-    - Saves all committed words to a CSV file in storage/imports/ for record-keeping.
+    - `words`: new words added to the deck. - `synonyms`: merged into existing cards and saved to deck.
+    - Saves committed words to CSV in storage/imports/.
     """
     try:
         from datetime import datetime
@@ -1433,19 +1449,19 @@ async def commit_import_to_vocab(request: CommitImportRequest, user_id: int = De
         if not deck_name:
             deck_name = f"Deck {datetime.now().strftime('%Y-%m-%d %H:%M')}"
 
-        # Determine source words (backward compat: either `words` or `words_by_lang[language]`)
+        existing_deck_id = request.deck_id
+        if existing_deck_id:
+            deck_info = db.get_vocab_deck_info(existing_deck_id, user_id=user_id)
+            if deck_info:
+                deck_name = deck_info.get('name') or deck_name
+
         source_words = request.words or []
         words_by_lang = request.words_by_lang or {}
         synonym_words = request.synonyms or []
 
-        # Merge: source_words takes precedence; words_by_lang may also contain source lang
         if not source_words and request.language in words_by_lang:
             source_words = words_by_lang[request.language]
 
-        # Create decks only if there are words to import (any language).
-        # We create a separate deck per language so that each language
-        # shows its own deck in the Flashcards tab, but all share the
-        # same human-visible name.
         total_across_langs = (
             len(source_words)
             + len(synonym_words)
@@ -1453,16 +1469,21 @@ async def commit_import_to_vocab(request: CommitImportRequest, user_id: int = De
         )
         deck_ids_by_lang: Dict[str, Optional[int]] = {}
         if total_across_langs > 0:
-            # Source-language deck: base_language is the import language itself
-            deck_ids_by_lang[request.language] = db.create_vocab_deck(request.language, deck_name, base_language=request.language, user_id=user_id)
+            if existing_deck_id:
+                deck_info = db.get_vocab_deck_info(existing_deck_id, user_id=user_id)
+                if deck_info and deck_info.get('language') == request.language:
+                    deck_ids_by_lang[request.language] = existing_deck_id
+                else:
+                    existing_deck_id = None
+            if request.language not in deck_ids_by_lang:
+                deck_ids_by_lang[request.language] = db.create_vocab_deck(request.language, deck_name, base_language=request.language, user_id=user_id)
             for lang, lang_words in words_by_lang.items():
                 if lang == request.language:
                     continue
                 if not lang_words:
                     continue
-                # Only create a deck for this target language if there are words for it.
-                # base_language remains the source import language so we can mark these as translated.
-                deck_ids_by_lang[lang] = db.create_vocab_deck(lang, deck_name, base_language=request.language, user_id=user_id)
+                if lang not in deck_ids_by_lang:
+                    deck_ids_by_lang[lang] = db.create_vocab_deck(lang, deck_name, base_language=request.language, user_id=user_id)
 
         added_words = []
         csv_words = []  # All words for CSV record
@@ -1501,6 +1522,7 @@ async def commit_import_to_vocab(request: CommitImportRequest, user_id: int = De
                 origin='deck',
                 deck_id=deck_ids_by_lang.get(request.language),
                 gender=gender_src,
+                user_id=user_id,
             )
             added_words.append({'word': word, 'transliteration': translit, 'english_word': wd.english,
                                  'word_class': wd.word_class, 'level': wd.level, 'verb_transitivity': vt, 'language': request.language})
@@ -1544,6 +1566,7 @@ async def commit_import_to_vocab(request: CommitImportRequest, user_id: int = De
                     origin='deck',
                     deck_id=deck_ids_by_lang.get(request.language),
                     gender=syn_gender,
+                    user_id=user_id,
                 )
             merged_synonyms.append({'word': word, 'synonym_of': syn_of_word, 'english': english, 'verb_transitivity': vt_syn})
             csv_words.append({'word': word, 'english': english, 'transliteration': translit,
@@ -1598,6 +1621,7 @@ async def commit_import_to_vocab(request: CommitImportRequest, user_id: int = De
                         origin='deck',
                         deck_id=deck_ids_by_lang.get(lang),
                         gender=tgt_gender,
+                        user_id=user_id,
                     )
                     lang_added.append({'word': word, 'english_word': english, 'word_class': wc, 'verb_transitivity': vt_tgt})
             added_by_lang[lang] = lang_added
@@ -1638,6 +1662,63 @@ async def commit_import_to_vocab(request: CommitImportRequest, user_id: int = De
 # Vocab Deck Endpoints
 # ============================================================================
 
+class CreateDeckRequest(BaseModel):
+    name: str
+    language: str
+
+
+class AddDeckWordsRequest(BaseModel):
+    words: List[Dict]  # [{ english_word, translation, transliteration?, word_class?, level? }]
+
+
+@app.post("/api/vocab/decks")
+def create_vocab_deck_endpoint(request: CreateDeckRequest, user_id: int = Depends(get_current_user_id)):
+    """Create a new empty vocab deck. Returns deck_id, deck_name, language."""
+    name = (request.name or "").strip()
+    if not name:
+        raise HTTPException(status_code=400, detail="Deck name is required")
+    deck_id = db.create_vocab_deck(request.language, name, base_language=request.language, user_id=user_id)
+    if not deck_id:
+        raise HTTPException(status_code=500, detail="Failed to create deck")
+    return {"deck_id": deck_id, "deck_name": name, "language": request.language}
+
+
+@app.post("/api/vocab/decks/{deck_id}/words")
+def add_words_to_deck_endpoint(deck_id: int, request: AddDeckWordsRequest, user_id: int = Depends(get_current_user_id)):
+    """Add one or more words to a deck (manual entry). Words are created with origin='user'."""
+    deck_info = db.get_vocab_deck_info(deck_id, user_id=user_id)
+    if not deck_info:
+        raise HTTPException(status_code=404, detail="Deck not found")
+    language = deck_info.get("language")
+    added = []
+    for w in request.words or []:
+        eng = (w.get("english_word") or "").strip()
+        trans = (w.get("translation") or "").strip()
+        if not eng or not trans:
+            continue
+        translit = (w.get("transliteration") or "").strip()
+        word_class = (w.get("word_class") or "").strip() or None
+        level = (w.get("level") or "").strip() or None
+        if language == "urdu" and trans and re.search(r"[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF]", trans):
+            trans = transliteration.nastaliq_to_devanagari(trans)
+        if not translit and trans:
+            translit = transliteration.transliterate_text(trans, language, "IAST")
+        wid = db.insert_vocabulary_entry(
+            language=language,
+            english_word=eng,
+            translation=trans,
+            transliteration=translit,
+            word_class=word_class or "",
+            level=level,
+            origin="user",
+            deck_id=deck_id,
+            user_id=user_id,
+        )
+        if wid:
+            added.append({"id": wid, "english_word": eng, "translation": trans})
+    return {"success": True, "added": added, "count": len(added)}
+
+
 @app.get("/api/vocab/decks")
 def list_vocab_decks(language: Optional[str] = None, user_id: int = Depends(get_current_user_id)):
     """List all vocab decks with word counts, optionally filtered by language"""
@@ -1648,6 +1729,9 @@ def list_vocab_decks(language: Optional[str] = None, user_id: int = Depends(get_
 @app.get("/api/vocab/decks/{deck_id}/words")
 def get_deck_words(deck_id: int, language: str, user_id: int = Depends(get_current_user_id)):
     """Get all words in a deck for flashcard study"""
+    deck_info = db.get_vocab_deck_info(deck_id, user_id=user_id)
+    if not deck_info:
+        raise HTTPException(status_code=404, detail="Deck not found")
     words = db.get_words_for_deck(language, deck_id, user_id=user_id)
     # Add Nastaliq rendering for Urdu words (stored as Devanagari in DB)
     if language == 'urdu':
@@ -1655,7 +1739,6 @@ def get_deck_words(deck_id: int, language: str, user_id: int = Depends(get_curre
             t = w.get('translation', '')
             if t:
                 w['nastaliq'] = transliteration.devanagari_to_nastaliq(t)
-    deck_info = db.get_vocab_deck_info(deck_id)
     return {
         "words": words,
         "deck_id": deck_id,
@@ -1666,8 +1749,10 @@ def get_deck_words(deck_id: int, language: str, user_id: int = Depends(get_curre
 
 
 @app.patch("/api/vocab/decks/{deck_id}/duration")
-def update_deck_duration(deck_id: int, duration_seconds: float = 0):
+def update_deck_duration(deck_id: int, duration_seconds: float = 0, user_id: int = Depends(get_current_user_id)):
     """Store the total import processing duration on a deck."""
+    if not db.get_vocab_deck_info(deck_id, user_id=user_id):
+        raise HTTPException(status_code=404, detail="Deck not found")
     db.update_deck_import_duration(deck_id, duration_seconds)
     return {"success": True}
 
@@ -1675,11 +1760,11 @@ def update_deck_duration(deck_id: int, duration_seconds: float = 0):
 @app.get("/api/vocab/decks/{deck_id}/siblings")
 def get_deck_siblings(deck_id: int, user_id: int = Depends(get_current_user_id)):
     """Get all vocab decks that share the same name as this deck (different languages)."""
-    deck_name = db.get_vocab_deck_name(deck_id)
+    deck_name = db.get_vocab_deck_name(deck_id, user_id=user_id)
     if not deck_name:
         raise HTTPException(status_code=404, detail="Deck not found")
     from . import db as db_module
-    decks = db_module.get_vocab_decks_by_name(deck_name)
+    decks = db_module.get_vocab_decks_by_name(deck_name, user_id=user_id)
     return {"decks": decks, "deck_name": deck_name}
 
 
@@ -1688,26 +1773,19 @@ class RenameDeckRequest(BaseModel):
 
 @app.put("/api/vocab/decks/{deck_id}")
 def rename_deck(deck_id: int, request: RenameDeckRequest, user_id: int = Depends(get_current_user_id)):
-    """Rename a vocab deck.
-
-    This will rename ALL decks that share the same human-visible name
-    (i.e., sibling decks in other languages created from the same import)
-    so that translated decks stay in sync with the source deck name.
-    """
-    # Look up the current deck name
-    old_name = db.get_vocab_deck_name(deck_id)
+    """Rename a vocab deck and all sibling decks (same name, other languages)."""
+    old_name = db.get_vocab_deck_name(deck_id, user_id=user_id)
     if not old_name:
         raise HTTPException(status_code=404, detail="Deck not found")
 
-    # Find all decks with this name
     from . import db as db_module
-    sibling_decks = db_module.get_vocab_decks_by_name(old_name)
+    sibling_decks = db_module.get_vocab_decks_by_name(old_name, user_id=user_id)
     if not sibling_decks:
         raise HTTPException(status_code=404, detail="No decks found for this name")
 
     any_success = False
     for d in sibling_decks:
-        if db.rename_vocab_deck(d["id"], request.name):
+        if db.rename_vocab_deck(d["id"], request.name, user_id=user_id):
             any_success = True
 
     if not any_success:
@@ -1722,10 +1800,11 @@ class RemoveDeckWordsRequest(BaseModel):
 
 @app.delete("/api/vocab/decks/{deck_id}/words")
 def remove_words_from_deck_endpoint(deck_id: int, request: RemoveDeckWordsRequest, user_id: int = Depends(get_current_user_id)):
-    """Remove selected words from a deck. Only user-generated cards (origin deck/activity/user) are
-    deleted from the vocabulary; original-set words are only unlinked from this deck."""
+    """Remove selected words from a deck. Only user-generated cards are deleted; default words are unlinked."""
     if not request.word_ids:
         return {"success": True, "removed": 0}
+    if not db.get_vocab_deck_info(deck_id, user_id=user_id):
+        raise HTTPException(status_code=404, detail="Deck not found")
     removed = db.remove_words_from_deck(deck_id, request.word_ids, only_user_generated=True)
     return {"success": True, "removed": removed}
 
@@ -1733,28 +1812,25 @@ def remove_words_from_deck_endpoint(deck_id: int, request: RemoveDeckWordsReques
 @app.delete("/api/vocab/decks/{deck_id}")
 def delete_deck(deck_id: int, all_languages: bool = False, user_id: int = Depends(get_current_user_id)):
     """Delete a vocab deck and all associated words for the current user.
-    
-    If all_languages=True, deletes ALL decks (all languages) that share the
-    same deck name, along with their words and SRS state.
+    If all_languages=True, deletes ALL decks (all languages) that share the same deck name.
     """
     if all_languages:
-        # Find this deck's name, then remove all decks with that name.
-        deck_name = db.get_vocab_deck_name(deck_id)
+        deck_name = db.get_vocab_deck_name(deck_id, user_id=user_id)
         if not deck_name:
             raise HTTPException(status_code=404, detail="Deck not found")
-        from . import db as db_module  # avoid circular import type hints
-        decks = db_module.get_vocab_decks_by_name(deck_name)
+        from . import db as db_module
+        decks = db_module.get_vocab_decks_by_name(deck_name, user_id=user_id)
         if not decks:
             raise HTTPException(status_code=404, detail="No decks found for this name")
         any_deleted = False
         for d in decks:
-            if db.delete_vocab_deck(d["id"]):
+            if db.delete_vocab_deck(d["id"], user_id=user_id):
                 any_deleted = True
         if not any_deleted:
             raise HTTPException(status_code=500, detail="Failed to delete decks")
         return {"success": True, "deleted_all_languages": True, "deck_name": deck_name}
     else:
-        success = db.delete_vocab_deck(deck_id)
+        success = db.delete_vocab_deck(deck_id, user_id=user_id)
         if not success:
             raise HTTPException(status_code=404, detail="Deck not found or could not be deleted")
         return {"success": True, "deck_id": deck_id, "deleted_all_languages": False}
@@ -1765,7 +1841,7 @@ def delete_deck(deck_id: int, all_languages: bool = False, user_id: int = Depend
 # ============================================================================
 
 @app.get("/api/lessons/{language}")
-def get_lessons(language: str, user_id: int = Depends(get_current_user_id)):
+def get_lessons(language: str, user_id: int = 1):
     """Get all available lessons for a language with completion status"""
     try:
         # Get lessons from database
@@ -1811,7 +1887,7 @@ class LessonFreeResponseRequest(BaseModel):
 
 
 @app.post("/api/lessons/grade-free-response")
-def grade_lesson_free_response(request: LessonFreeResponseRequest, user_id: int = Depends(get_current_user_id)):
+def grade_lesson_free_response(request: LessonFreeResponseRequest):
     """Grade a free response answer from a lesson using AI"""
     try:
         # Use the prompt from prompting folder
@@ -1869,7 +1945,6 @@ class LessonCompletionRequest(BaseModel):
 def complete_lesson(request: LessonCompletionRequest, user_id: int = Depends(get_current_user_id)):
     """Record a lesson completion"""
     try:
-        pass  # user_id param now used
         success = db.record_lesson_completion(
             user_id=user_id,
             lesson_id=request.lesson_id,
@@ -1891,7 +1966,6 @@ def complete_lesson(request: LessonCompletionRequest, user_id: int = Depends(get
 def get_lesson_completion_history(lesson_id: str, user_id: int = Depends(get_current_user_id)):
     """Get completion history for a specific lesson"""
     try:
-        pass  # user_id param now used
         completions = db.get_lesson_completions(user_id, lesson_id)
         return {"completions": completions}
     except Exception as e:
@@ -1909,7 +1983,6 @@ class LessonProgressRequest(BaseModel):
 def save_progress(request: LessonProgressRequest, user_id: int = Depends(get_current_user_id)):
     """Save lesson progress (current step and completed steps)"""
     try:
-        pass  # user_id param now used
         success = db.save_lesson_progress(
             user_id=user_id,
             lesson_id=request.lesson_id,
@@ -1930,7 +2003,6 @@ def save_progress(request: LessonProgressRequest, user_id: int = Depends(get_cur
 def get_progress(lesson_id: str, user_id: int = Depends(get_current_user_id)):
     """Get lesson progress"""
     try:
-        pass  # user_id param now used
         progress = db.get_lesson_progress(user_id, lesson_id)
         if progress:
             return progress
@@ -1945,7 +2017,6 @@ def get_progress(lesson_id: str, user_id: int = Depends(get_current_user_id)):
 def clear_progress(lesson_id: str, user_id: int = Depends(get_current_user_id)):
     """Clear lesson progress (for redo functionality)"""
     try:
-        pass  # user_id param now used
         success = db.clear_lesson_progress(user_id, lesson_id)
         
         if success:
@@ -1958,7 +2029,7 @@ def clear_progress(lesson_id: str, user_id: int = Depends(get_current_user_id)):
 
 
 @app.get("/api/lessons/by-id/{lesson_id}")
-def get_lesson_by_id(lesson_id: str, user_id: int = Depends(get_current_user_id)):
+def get_lesson_by_id(lesson_id: str, user_id: int = 1):
     """Get a specific lesson by ID with completion status"""
     try:
         conn = db.sqlite3.connect(db.config.DB_PATH)
@@ -2000,7 +2071,7 @@ def get_lesson_by_id(lesson_id: str, user_id: int = Depends(get_current_user_id)
 # ============================================================================
 
 @app.get("/api/units/{language}")
-def get_units(language: str, user_id: int = Depends(get_current_user_id)):
+def get_units(language: str, user_id: int = 1):
     """Get all units for a language with progress"""
     try:
         units = db.get_units_by_language(language)
@@ -2011,7 +2082,7 @@ def get_units(language: str, user_id: int = Depends(get_current_user_id)):
 
 
 @app.get("/api/units/{unit_id}/lessons")
-def get_unit_lessons(unit_id: str, user_id: int = Depends(get_current_user_id)):
+def get_unit_lessons(unit_id: str, user_id: int = 1):
     """Get all lessons in a unit with completion status"""
     try:
         # Get all lessons for this unit
@@ -2065,7 +2136,7 @@ def get_unit_lessons(unit_id: str, user_id: int = Depends(get_current_user_id)):
 
 
 @app.post("/api/units/{unit_id}/update-progress")
-def update_unit_progress_endpoint(unit_id: str, user_id: int = Depends(get_current_user_id)):
+def update_unit_progress_endpoint(unit_id: str, user_id: int = 1):
     """Update unit progress based on lesson completions"""
     try:
         success = db.update_unit_progress(user_id, unit_id)
@@ -2113,7 +2184,7 @@ class LessonWordsRequest(BaseModel):
 
 
 @app.post("/api/lesson-words/{language}/{lesson_id}")
-def lesson_words(language: str, lesson_id: str, request: LessonWordsRequest, user_id: int = Depends(get_current_user_id)):
+def lesson_words(language: str, lesson_id: str, request: LessonWordsRequest):
     """Get (and cache) words for a specific lesson, filtered by allowed characters learned so far."""
     try:
         words = db.get_lesson_words(
@@ -2132,7 +2203,7 @@ def lesson_words(language: str, lesson_id: str, request: LessonWordsRequest, use
 
 
 @app.get("/api/words-for-review/{language}")
-def get_words_for_review(language: str, limit: int = 10, mode: str = "all", user_id: int = Depends(get_current_user_id)):
+def get_words_for_review(language: str, limit: int = 10, mode: str = "all"):
     """Get words due for review based on SRS
     
     Args:
@@ -2142,22 +2213,22 @@ def get_words_for_review(language: str, limit: int = 10, mode: str = "all", user
         mode: 'all' (default), 'reviews' (only due reviews), or 'new' (only new words)
     """
     if mode == "reviews":
-        words = db.get_words_for_review_only(language, limit, user_id=user_id)
+        words = db.get_words_for_review_only(language, limit)
     elif mode == "new":
         # Always respect today's daily quota — never return more new words than the
         # user is supposed to learn today.
         from datetime import date as _date
         today = config.get_current_date_str()
-        quota = db.get_daily_quota(language, today, user_id=user_id)
+        quota = db.get_daily_quota(language, today)
         remaining = max(0, quota['new_cards_quota'] - quota['new_cards_completed'])
         # Cap the requested limit at the daily remaining quota
         effective_limit = min(limit, remaining) if remaining > 0 else 0
         if effective_limit == 0:
             words = []
         else:
-            words = db.get_new_words_only(language, effective_limit, user_id=user_id)
+            words = db.get_new_words_only(language, effective_limit)
     else:
-        words = db.get_words_for_review(language, limit, user_id=user_id)
+        words = db.get_words_for_review(language, limit)
     # Attach Nastaliq rendering for Urdu words (stored as Devanagari)
     if language == 'urdu' and words:
         for w in words:
@@ -2172,7 +2243,7 @@ def get_words_for_review(language: str, limit: int = 10, mode: str = "all", user
 # ============================================================================
 
 @app.post("/api/placement-test/generate/{language}")
-async def generate_placement_test_endpoint(language: str, user_id: int = Depends(get_current_user_id)):
+async def generate_placement_test_endpoint(language: str):
     """Generate a CEFR placement test for the given language."""
     try:
         test_data = api_client.generate_placement_test(language)
@@ -2183,7 +2254,7 @@ async def generate_placement_test_endpoint(language: str, user_id: int = Depends
 
 
 @app.get("/api/placement-test/generate-stream/{language}")
-async def generate_placement_test_stream(language: str, user_id: int = Depends(get_current_user_id)):
+async def generate_placement_test_stream(language: str):
     """Stream placement test generation with real-time SSE status updates."""
     import threading
     import queue as _queue
@@ -2287,7 +2358,7 @@ async def generate_placement_test_stream(language: str, user_id: int = Depends(g
 
 
 @app.post("/api/placement-test/submit-stream/{language}")
-async def submit_placement_test_stream(language: str, request: Request, user_id: int = Depends(get_current_user_id)):
+async def submit_placement_test_stream(language: str, request: Request):
     """Stream placement test submission/analysis with real-time SSE status updates."""
     import threading
     import queue as _queue
@@ -2318,7 +2389,7 @@ async def submit_placement_test_stream(language: str, request: Request, user_id:
             # Ensure srs_cal is always defined before use
             srs_cal = None
             if not _practice:
-                db.save_placement_test_result(language, analysis, test_data_payload, answers, srs_calibration=srs_cal, user_id=user_id)
+                db.save_placement_test_result(language, analysis, test_data_payload, answers, srs_calibration=srs_cal)
                 db.update_language_level_override(language, overall_level)
 
             progress_q.put(json.dumps({"type": "status", "stage": "calibrating_srs",
@@ -2361,7 +2432,7 @@ async def submit_placement_test_stream(language: str, request: Request, user_id:
 
 
 @app.post("/api/placement-test/submit/{language}")
-async def submit_placement_test_endpoint(language: str, request: Request, user_id: int = Depends(get_current_user_id)):
+async def submit_placement_test_endpoint(language: str, request: Request):
     """Submit placement test answers, analyze them, save result, update CEFR override,
     and automatically calibrate SRS states for the language vocabulary."""
     try:
@@ -2378,7 +2449,7 @@ async def submit_placement_test_endpoint(language: str, request: Request, user_i
         result = api_client.analyze_placement_test(language, test_data, answers)
 
         # Persist result to DB
-        result_id = db.save_placement_test_result(language, result, test_data, answers, user_id=user_id)
+        result_id = db.save_placement_test_result(language, result, test_data, answers)
 
         # Update the CEFR override for this language
         cefr_level = result.get("overall_cefr_level", "A1")
@@ -2408,16 +2479,16 @@ async def submit_placement_test_endpoint(language: str, request: Request, user_i
 
 
 @app.get("/api/placement-test/latest/{language}")
-def get_latest_placement_result(language: str, user_id: int = Depends(get_current_user_id)):
+def get_latest_placement_result(language: str):
     """Get the most recent placement test result for a language."""
-    result = db.get_latest_placement_result(language, user_id=user_id)
+    result = db.get_latest_placement_result(language)
     if not result:
         return {"result": None}
     return {"result": result}
 
 
 @app.post("/api/placement-test/listening-audio/{language}")
-async def generate_placement_listening_audio(language: str, request: Request, user_id: int = Depends(get_current_user_id)):
+async def generate_placement_listening_audio(language: str, request: Request):
     """Generate TTS audio for a placement test listening transcript."""
     try:
         body = await request.json()
@@ -2437,7 +2508,6 @@ async def generate_placement_listening_audio(language: str, request: Request, us
 
 def _generate_listening_audio_b64(language: str, transcript_text: str, speakers_meta: list, dialogue_lines: list) -> str:
     import struct, io as _io, random as _random
-
 
     LANGUAGE_TTS_CODES = {
         'kannada': 'kn-IN', 'hindi': 'hi-IN', 'malayalam': 'ml-IN',
@@ -2543,14 +2613,14 @@ def _generate_listening_audio_b64(language: str, transcript_text: str, speakers_
     return _b64.b64encode(wav_bytes_final).decode('utf-8')
 
 @app.get("/api/placement-test/history/{language}")
-def get_placement_test_history(language: str, user_id: int = Depends(get_current_user_id)):
+def get_placement_test_history(language: str):
     """Get all placement test results for a language, newest first."""
     results = db.get_all_placement_results(language)
     return {"results": results}
 
 
 @app.post("/api/placement-test/calibrate/{language}")
-async def calibrate_srs_from_placement(language: str, request: Request, user_id: int = Depends(get_current_user_id)):
+async def calibrate_srs_from_placement(language: str, request: Request):
     """Manually trigger SRS calibration for a language using the stored placement
     result (or a level supplied in the request body).
 
@@ -2570,7 +2640,7 @@ async def calibrate_srs_from_placement(language: str, request: Request, user_id:
         overwrite_mastered = bool(body.get("overwrite_mastered", False))
 
         if not cefr_level:
-            stored = db.get_latest_placement_result(language, user_id=user_id)
+            stored = db.get_latest_placement_result(language)
             if not stored:
                 raise HTTPException(
                     status_code=404,
@@ -2594,7 +2664,7 @@ async def calibrate_srs_from_placement(language: str, request: Request, user_id:
 
 
 @app.get("/api/placement-test/calibrate/preview/{language}")
-async def preview_srs_calibration(language: str, cefr_level: str, user_id: int = Depends(get_current_user_id)):
+async def preview_srs_calibration(language: str, cefr_level: str):
     """Return a dry-run preview of the SRS calibration for a given CEFR level.
 
     Query param: ?cefr_level=B1
@@ -2617,6 +2687,157 @@ async def preview_srs_calibration(language: str, cefr_level: str, user_id: int =
 # ============================================================================
 # Activity Generation Endpoints
 # ============================================================================
+
+@app.post("/api/activity/conversation/{language}")
+async def create_conversation_activity(language: str, request: Request, user_id: int = Depends(get_current_user_id)):
+    """Generate a conversation activity with persona and tasks"""
+    try:
+        # Parse topic from request body
+        body = {}
+        try:
+            if request.headers.get('content-type') == 'application/json':
+                body = await request.json()
+        except json.JSONDecodeError:
+            print("[Conversation Activity] No valid JSON body provided, will use random topic")
+            pass
+        
+        custom_topic = body.get('topic') if body else None
+        
+        # Get user interests
+        user_interests = []
+        if custom_topic is None:
+            try:
+                conn = sqlite3.connect(config.DB_PATH)
+                cursor = conn.cursor()
+                cursor.execute('''
+                    SELECT value FROM user_preferences
+                    WHERE user_id = 1 AND key = 'selected_interests'
+                ''')
+                row = cursor.fetchone()
+                if row and row[0]:
+                    user_interests = json.loads(row[0])
+                conn.close()
+            except Exception as e:
+                print(f"Error fetching user interests: {e}")
+        
+        # Get user's CEFR level
+        user_level_info = db.calculate_user_level(language)
+        user_cefr_level = user_level_info.get('level', 'A1')
+        
+        # Get word bank
+        word_bank_words = db.get_words_for_activity(language, learned_limit=200, learning_limit=50)
+        
+        print(f"Generating conversation activity for {language}...")
+        
+        activity = api_client.generate_conversation_activity(
+            word_bank_words,
+            language,
+            user_cefr_level=user_cefr_level,
+            custom_topic=custom_topic,
+            user_interests=user_interests
+        )
+        
+        if not activity:
+            raise HTTPException(status_code=500, detail="Failed to generate conversation activity")
+            
+        if activity.get('_error'):
+            error_detail = activity.get('_error', 'Unknown error')
+            error_type = activity.get('_error_type', 'unknown')
+            print(f"⚠️ Activity generation error: {error_type} - {error_detail}")
+            raise HTTPException(
+                status_code=500, 
+                detail=f"Error creating conversation activity: {error_type}: {error_detail}"
+            )
+            
+        activity_data_json = json.dumps(activity)
+        activity_id = db.log_activity(
+            language,
+            'conversation',
+            0.0,
+            activity_data_json
+        )
+        if activity_id:
+            activity['activity_id'] = activity_id
+            
+        # Get words used
+        words_used_data = []
+        words_used_from_data = activity.get('_words_used_data', [])
+        
+        for w in words_used_from_data:
+            words_used_data.append({
+                "id": w["id"],
+                "word": w["english_word"],
+                "kannada": w.get("translation", ""),
+                "transliteration": w.get("transliteration", ""),
+                "word_class": w.get("word_class", ""),
+                "level": w.get("level", ""),
+                "mastery_level": w.get("mastery_level", "new"),
+                "verb_transitivity": w.get("verb_transitivity", ""),
+            })
+            
+        token_info = activity.get("_token_info", {})
+        
+        return {
+            "activity": activity,
+            "words_used": words_used_data,
+            "api_details": {
+                "endpoint": f"POST /api/activity/conversation/{language}",
+                "prompt": activity.get("_prompt", ""),
+                "response_time": activity.get("_response_time", 0),
+                "raw_response": activity.get("_raw_response", ""),
+                "token_info": token_info,
+                "parse_error": activity.get("_parse_error"),
+            }
+        }
+    except HTTPException:
+        raise
+    except Exception as e:
+        print(f"Error in create_conversation_activity: {str(e)}")
+        import traceback
+        traceback.print_exc()
+        raise HTTPException(status_code=500, detail=f"Error generating activity: {str(e)}")
+
+@app.post("/api/activity/conversation/{language}/turn")
+async def process_conversation_turn_endpoint(language: str, request: Request):
+    """Process a conversation turn and return model's response"""
+    try:
+        body = await request.json()
+        
+        activity = body.get("activity")
+        user_message_text = body.get("user_message", "")
+        chat_history = body.get("chat_history", [])
+        
+        if not activity or not user_message_text:
+            raise HTTPException(status_code=400, detail="Missing activity data or user message")
+            
+        # Get user CEFR level
+        user_level_info = db.calculate_user_level(language)
+        user_cefr_level = user_level_info.get('level', 'A1')
+        
+        persona = activity.get('persona', {})
+        tasks = activity.get('tasks', [])
+        
+        result = api_client.process_conversation_turn(
+            language=language,
+            user_cefr_level=user_cefr_level,
+            persona=persona,
+            tasks=tasks,
+            chat_history=chat_history,
+            user_message=user_message_text
+        )
+        
+        if result.get('_error'):
+            raise HTTPException(status_code=500, detail=result['_error'])
+            
+        return result
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        print(f"Error in process_conversation_turn_endpoint: {str(e)}")
+        import traceback
+        traceback.print_exc()
+        raise HTTPException(status_code=500, detail=f"Error processing turn: {str(e)}")
 
 @app.post("/api/activity/reading/{language}")
 async def create_reading_activity(language: str, request: Request, user_id: int = Depends(get_current_user_id)):
@@ -2642,8 +2863,8 @@ async def create_reading_activity(language: str, request: Request, user_id: int 
                 cursor = conn.cursor()
                 cursor.execute('''
                     SELECT value FROM user_preferences
-                    WHERE user_id = ? AND key = 'selected_interests'
-                ''', (user_id,))
+                    WHERE user_id = 1 AND key = 'selected_interests'
+                ''')
                 row = cursor.fetchone()
                 if row and row[0]:
                     user_interests = json.loads(row[0])
@@ -2700,8 +2921,7 @@ async def create_reading_activity(language: str, request: Request, user_id: int 
             language,
             'reading',
             0.0,  # Score is 0 until completed
-            activity_data_json,
-            user_id=user_id,
+            activity_data_json
         )
         if activity_id:
             print(f"✓ Activity saved with ID: {activity_id}")
@@ -2866,7 +3086,7 @@ def generate_listening_activity_background(
         
         # Save activity to history
         activity_data_json = json.dumps(activity)
-        activity_id = db.log_activity(language, 'listening', 0.0, activity_data_json, user_id=user_id)
+        activity_id = db.log_activity(language, 'listening', 0.0, activity_data_json)
         if activity_id:
             print(f"✅ [Background Task] Activity logged with ID: {activity_id}")
             activity['activity_id'] = activity_id
@@ -2956,8 +3176,8 @@ async def create_listening_activity(language: str, request: Request, background_
                 cursor = conn.cursor()
                 cursor.execute('''
                     SELECT value FROM user_preferences
-                    WHERE user_id = ? AND key = 'selected_interests'
-                ''', (user_id,))
+                    WHERE user_id = 1 AND key = 'selected_interests'
+                ''')
                 row = cursor.fetchone()
                 if row and row[0]:
                     user_interests = json.loads(row[0])
@@ -3028,7 +3248,7 @@ async def create_listening_activity(language: str, request: Request, background_
 
 
 @app.get("/api/activity/listening/result/{session_id}")
-def get_listening_activity_result(session_id: str, user_id: int = Depends(get_current_user_id)):
+def get_listening_activity_result(session_id: str):
     """Retrieve the completed activity for a session"""
     if session_id not in completed_activities:
         return {
@@ -3091,8 +3311,8 @@ async def create_speaking_activity(language: str, request: Request, user_id: int
                 cursor = conn.cursor()
                 cursor.execute('''
                     SELECT value FROM user_preferences
-                    WHERE user_id = ? AND key = 'selected_interests'
-                ''', (user_id,))
+                    WHERE user_id = 1 AND key = 'selected_interests'
+                ''')
                 row = cursor.fetchone()
                 if row and row[0]:
                     user_interests = json.loads(row[0])
@@ -3171,8 +3391,7 @@ async def create_speaking_activity(language: str, request: Request, user_id: int
             language,
             'speaking',
             0.0,
-            activity_data_json,
-            user_id=user_id,
+            activity_data_json
         )
         if activity_id:
             activity['activity_id'] = activity_id
@@ -3232,7 +3451,7 @@ async def create_speaking_activity(language: str, request: Request, user_id: int
 
 
 @app.post("/api/activity/translation/{language}")
-async def create_translation_activity(language: str, request: Request, user_id: int = Depends(get_current_user_id)):
+async def create_translation_activity(language: str, request: Request):
     """Generate a translation activity with sentences from other languages the user is learning"""
     try:
         # Parse topic from request body (handle empty body gracefully)
@@ -3321,8 +3540,7 @@ async def create_translation_activity(language: str, request: Request, user_id: 
             language,
             'translation',
             0.0,  # Score is 0 until completed
-            activity_data_json,
-            user_id=user_id,
+            activity_data_json
         )
         if activity_id:
             print(f"✓ Translation activity saved with ID: {activity_id}")
@@ -3409,8 +3627,8 @@ async def create_writing_activity(language: str, request: Request, user_id: int 
                 cursor = conn.cursor()
                 cursor.execute('''
                     SELECT value FROM user_preferences
-                    WHERE user_id = ? AND key = 'selected_interests'
-                ''', (user_id,))
+                    WHERE user_id = 1 AND key = 'selected_interests'
+                ''')
                 row = cursor.fetchone()
                 if row and row[0]:
                     user_interests = json.loads(row[0])
@@ -3493,8 +3711,7 @@ async def create_writing_activity(language: str, request: Request, user_id: int 
             language,
             'writing',
             0.0,
-            activity_data_json,
-            user_id=user_id,
+            activity_data_json
         )
         if activity_id:
             activity['activity_id'] = activity_id
@@ -3596,7 +3813,7 @@ async def create_writing_activity(language: str, request: Request, user_id: int 
 
 
 @app.post("/api/activity/writing/{language}/grade")
-def grade_writing_activity(language: str, request: WritingGradingRequest, user_id: int = Depends(get_current_user_id)):
+def grade_writing_activity(language: str, request: WritingGradingRequest):
     """Grade a writing activity using Gemini 2.5 Flash"""
     try:
         # Validate required fields
@@ -3706,7 +3923,7 @@ def grade_writing_activity(language: str, request: WritingGradingRequest, user_i
 
 
 @app.post("/api/activity/speaking/{language}/grade")
-def grade_speaking_activity(language: str, request: SpeakingGradingRequest, user_id: int = Depends(get_current_user_id)):
+def grade_speaking_activity(language: str, request: SpeakingGradingRequest):
     """Grade a speaking activity using Gemini 2.0 Flash with audio input"""
     import base64
     
@@ -3827,7 +4044,7 @@ def grade_speaking_activity(language: str, request: SpeakingGradingRequest, user
 
 
 @app.post("/api/activity/translation/{language}/grade")
-def grade_translation_activity(language: str, request: TranslationGradingRequest, user_id: int = Depends(get_current_user_id)):
+def grade_translation_activity(language: str, request: TranslationGradingRequest):
     """Grade a translation activity using Gemini 2.5 Flash"""
     try:
         # Validate required fields
@@ -3915,7 +4132,7 @@ def grade_translation_activity(language: str, request: TranslationGradingRequest
 
 
 @app.post("/api/activity/transliteration/{language}")
-async def create_transliteration_activity(language: str, request: Request, user_id: int = Depends(get_current_user_id)):
+async def create_transliteration_activity(language: str, request: Request):
     """Create a transliteration activity (from DB content or fallback sentences). Accepts optional JSON body: { \"topic\": \"custom theme\" }."""
     try:
         topic = None
@@ -3943,7 +4160,7 @@ async def create_transliteration_activity(language: str, request: Request, user_
 
         # Persist to history so activity can be reopened later
         activity_json = json.dumps(activity)
-        activity_id = db.log_activity(language, 'transliteration', 0.0, activity_json, user_id=user_id)
+        activity_id = db.log_activity(language, 'transliteration', 0.0, activity_json)
         if activity_id:
             activity['activity_id'] = activity_id
 
@@ -3970,7 +4187,7 @@ async def create_transliteration_activity(language: str, request: Request, user_
 
 
 @app.post("/api/activity/transliteration/{language}/grade")
-def grade_transliteration_activity(language: str, request: TransliterationGradingRequest, user_id: int = Depends(get_current_user_id)):
+def grade_transliteration_activity(language: str, request: TransliterationGradingRequest):
     """Grade a transliteration activity locally using aksharamukha transliteration."""
     try:
         if not request.items or len(request.items) == 0:
@@ -4032,7 +4249,7 @@ def grade_transliteration_activity(language: str, request: TransliterationGradin
         raise HTTPException(status_code=500, detail=f"Error grading transliteration activity: {str(e)}")
 
 @app.post("/api/activity/conversation/{language}/intro-audio")
-def generate_intro_audio(language: str, request: Dict, user_id: int = Depends(get_current_user_id)):
+def generate_intro_audio(language: str, request: Dict):
     """Generate TTS audio for conversation introduction"""
     try:
         introduction = request.get('introduction')
@@ -4068,7 +4285,7 @@ def generate_intro_audio(language: str, request: Dict, user_id: int = Depends(ge
 
 
 @app.post("/api/activity/listening/{language}/audio")
-def get_listening_audio(language: str, request: Dict, user_id: int = Depends(get_current_user_id)):
+def get_listening_audio(language: str, request: Dict):
     """Get audio for a specific paragraph - receives base64 audio data and returns it as MP3"""
     try:
         import base64
@@ -4097,8 +4314,8 @@ def get_listening_audio(language: str, request: Dict, user_id: int = Depends(get
         raise HTTPException(status_code=500, detail=f"Error getting audio: {str(e)}")
 
 
-@app.post("/api/activity/conversation/{language}/create")
-async def create_conversation_activity(language: str, request: Request, user_id: int = Depends(get_current_user_id)):
+@app.post("/api/activity/conversation-legacy/{language}/create")
+async def create_conversation_intro_response(language: str, request: ConversationIntroRequest, user_id: int = Depends(get_current_user_id)):
     """Create a new conversation activity with automatically selected topic and tasks"""
     try:
         # Parse topic from request body (handle empty body gracefully)
@@ -4121,8 +4338,8 @@ async def create_conversation_activity(language: str, request: Request, user_id:
                 cursor = conn.cursor()
                 cursor.execute('''
                     SELECT value FROM user_preferences
-                    WHERE user_id = ? AND key = 'selected_interests'
-                ''', (user_id,))
+                    WHERE user_id = 1 AND key = 'selected_interests'
+                ''')
                 row = cursor.fetchone()
                 if row and row[0]:
                     user_interests = json.loads(row[0])
@@ -4181,8 +4398,7 @@ async def create_conversation_activity(language: str, request: Request, user_id:
             language,
             'conversation',
             0.0,
-            activity_data_json,
-            user_id=user_id,
+            activity_data_json
         )
         conversation_id = activity_id
         
@@ -4237,9 +4453,9 @@ def rate_conversation(language: str, request: ConversationRatingRequest, user_id
         cursor = conn.cursor()
         cursor.execute('''
             SELECT activity_data FROM activity_history
-            WHERE user_id = ? AND language = ? AND activity_type = 'conversation'
+            WHERE user_id = 1 AND language = ? AND activity_type = 'conversation'
             AND id = ?
-        ''', (user_id, language, request.conversation_id))
+        ''', (language, request.conversation_id))
         row = cursor.fetchone()
         conn.close()
         
@@ -4311,7 +4527,7 @@ def rate_conversation(language: str, request: ConversationRatingRequest, user_id
         raise HTTPException(status_code=500, detail=f"Error rating conversation: {str(e)}")
 
 
-@app.post("/api/activity/conversation/{language}")
+@app.post("/api/activity/conversation-legacy/{language}")
 def create_conversation_response(language: str, request: ConversationRequest, user_id: int = Depends(get_current_user_id)):
     """Generate a conversation response from AI tutor"""
     
@@ -4344,9 +4560,9 @@ def create_conversation_response(language: str, request: ConversationRequest, us
         
         cursor.execute('''
             SELECT activity_data FROM activity_history
-            WHERE user_id = ? AND language = ? AND activity_type = 'conversation'
+            WHERE user_id = 1 AND language = ? AND activity_type = 'conversation'
             AND id = ?
-        ''', (user_id, language, conversation_id))
+        ''', (language, conversation_id))
         
         row = cursor.fetchone()
         conn.close()
@@ -4517,9 +4733,9 @@ def create_conversation_response(language: str, request: ConversationRequest, us
             cursor = conn.cursor()
             cursor.execute('''
                 SELECT activity_data FROM activity_history
-                WHERE user_id = ? AND language = ? AND activity_type = 'conversation'
+                WHERE user_id = 1 AND language = ? AND activity_type = 'conversation'
                 AND id = ?
-            ''', (user_id, language, conversation_id))
+            ''', (language, conversation_id))
             row = cursor.fetchone()
             conn.close()
             if row and row['activity_data']:
@@ -4569,8 +4785,8 @@ def create_conversation_response(language: str, request: ConversationRequest, us
             cursor.execute('''
                 UPDATE activity_history
                 SET activity_data = ?, completed_at = CURRENT_TIMESTAMP
-                WHERE user_id = ? AND language = ? AND activity_type = 'conversation' AND id = ?
-            ''', (json.dumps(activity_data), user_id, language, conversation_id))
+                WHERE user_id = 1 AND language = ? AND activity_type = 'conversation' AND id = ?
+            ''', (json.dumps(activity_data), language, conversation_id))
             conn.commit()
             conn.close()
         except Exception as e:
@@ -4580,17 +4796,16 @@ def create_conversation_response(language: str, request: ConversationRequest, us
                 language,
                 'conversation',
                 json.dumps(activity_data),
-                0.0,
-                user_id=user_id,
+                0.0
             )
             conn = sqlite3.connect(config.DB_PATH)
             conn.row_factory = sqlite3.Row
             cursor = conn.cursor()
             cursor.execute('''
                 SELECT id FROM activity_history
-                WHERE user_id = ? AND language = ? AND activity_type = 'conversation'
+                WHERE user_id = 1 AND language = ? AND activity_type = 'conversation'
                 ORDER BY completed_at DESC LIMIT 1
-            ''', (user_id, language))
+            ''', (language,))
             row = cursor.fetchone()
             conn.close()
             conversation_id = row['id'] if row else conversation_id
@@ -4600,8 +4815,7 @@ def create_conversation_response(language: str, request: ConversationRequest, us
             language,
             'conversation',
             json.dumps(activity_data),
-            0.0,
-            user_id=user_id,
+            0.0
         )
         # Get the new conversation ID
         conn = sqlite3.connect(config.DB_PATH)
@@ -4609,9 +4823,9 @@ def create_conversation_response(language: str, request: ConversationRequest, us
         cursor = conn.cursor()
         cursor.execute('''
             SELECT id FROM activity_history
-            WHERE user_id = ? AND language = ? AND activity_type = 'conversation'
+            WHERE user_id = 1 AND language = ? AND activity_type = 'conversation'
             ORDER BY completed_at DESC LIMIT 1
-        ''', (user_id, language))
+        ''', (language,))
         row = cursor.fetchone()
         conn.close()
         conversation_id = row['id'] if row else None
@@ -4665,10 +4879,10 @@ def bulk_update_levels():
     """Bulk update word states: A1 -> mastered, A2 -> learning"""
     try:
         # Set A1 words to mastered
-        a1_result = db.bulk_update_word_states_by_level('kannada', 'A1', 'mastered', user_id=user_id)
+        a1_result = db.bulk_update_word_states_by_level('kannada', 'A1', 'mastered')
         
         # Set A2 words to learning
-        a2_result = db.bulk_update_word_states_by_level('kannada', 'A2', 'learning', user_id=user_id)
+        a2_result = db.bulk_update_word_states_by_level('kannada', 'A2', 'learning')
         
         return {
             "success": True,
@@ -4680,14 +4894,14 @@ def bulk_update_levels():
 
 
 @app.post("/api/activity/complete")
-def complete_activity(completion: ActivityCompletion, user_id: int = Depends(get_current_user_id)):
+def complete_activity(completion: ActivityCompletion):
     """Complete an activity and update word states via SRS"""
     try:
         # Update word states
         for word_update in completion.word_updates:
             db.update_word_state(
                 word_update.word_id,
-                user_id=user_id,
+                user_id=1,
                 correct=word_update.correct
             )
         
@@ -4700,8 +4914,7 @@ def complete_activity(completion: ActivityCompletion, user_id: int = Depends(get
             completion.activity_type,
             completion.score,
             activity_data_json,
-            completion.activity_id,
-            user_id=user_id,
+            completion.activity_id
         )
         
         return {"success": True, "message": "Activity completed"}
@@ -4717,14 +4930,14 @@ def complete_activity(completion: ActivityCompletion, user_id: int = Depends(get
 # ============================================================================
 
 @app.get("/api/goals/{language}")
-def get_goals(language: str, user_id: int = Depends(get_current_user_id)):
+def get_goals(language: str):
     """Get daily goals for a language (deprecated - use weekly goals)"""
     goals = db.get_language_goals(language)
     return {"goals": goals}
 
 
 @app.put("/api/goals/{language}")
-def update_goals(language: str, goal_update: GoalUpdate, user_id: int = Depends(get_current_user_id)):
+def update_goals(language: str, goal_update: GoalUpdate):
     """Update daily goals for a language (deprecated - use weekly goals)"""
     db.update_language_goals(language, goal_update.goals)
     return {"success": True, "message": "Goals updated"}
@@ -4747,7 +4960,7 @@ class LanguagePersonalizationUpdate(BaseModel):
 
 
 @app.get("/api/weekly-goals/{language}")
-def get_weekly_goals(language: str, week_start_date: str = None, user_id: int = Depends(get_current_user_id)):
+def get_weekly_goals(language: str, week_start_date: str = None):
     """Get weekly goals for a language
     
     Args:
@@ -4785,7 +4998,7 @@ def get_weekly_goals(language: str, week_start_date: str = None, user_id: int = 
 
 
 @app.put("/api/weekly-goals/{language}")
-def update_weekly_goals(language: str, goals_update: WeeklyGoalsUpdate, week_start_date: str = None, user_id: int = Depends(get_current_user_id)):
+def update_weekly_goals(language: str, goals_update: WeeklyGoalsUpdate, week_start_date: str = None):
     """Update weekly goals for a language (applies perpetually to all future weeks)
     
     Args:
@@ -4819,7 +5032,7 @@ def update_weekly_goals(language: str, goals_update: WeeklyGoalsUpdate, week_sta
 
 
 @app.get("/api/today-goals/{language}")
-def get_today_goals(language: str, user_id: int = Depends(get_current_user_id)):
+def get_today_goals(language: str):
     """Get today's goals based on weekly goals
     
     Returns:
@@ -4844,7 +5057,7 @@ def get_today_goals(language: str, user_id: int = Depends(get_current_user_id)):
 
 
 @app.get("/api/today-goals-all")
-def get_today_goals_all(user_id: int = Depends(get_current_user_id)):
+def get_today_goals_all():
     """Get today's goals for all languages
     
     Returns:
@@ -4877,7 +5090,7 @@ def get_today_goals_all(user_id: int = Depends(get_current_user_id)):
 
 
 @app.get("/api/week-overview")
-def get_week_overview(week_offset: int = 0, user_id: int = Depends(get_current_user_id)):
+def get_week_overview(week_offset: int = 0):
     """Get weekly goals and progress overview for all languages
     
     Args:
@@ -4933,7 +5146,7 @@ def get_week_overview(week_offset: int = 0, user_id: int = Depends(get_current_u
 # ============================================================================
 
 @app.get("/api/language-personalization/{language}")
-def get_language_personalization(language: str, user_id: int = Depends(get_current_user_id)):
+def get_language_personalization(language: str):
     """Get personalization settings for a language
     
     Returns:
@@ -4953,7 +5166,7 @@ def get_language_personalization(language: str, user_id: int = Depends(get_curre
 
 
 @app.put("/api/language-personalization/{language}")
-def update_language_personalization(language: str, settings_update: LanguagePersonalizationUpdate, user_id: int = Depends(get_current_user_id)):
+def update_language_personalization(language: str, settings_update: LanguagePersonalizationUpdate):
     """Update personalization settings for a language
     
     Args:
@@ -4993,12 +5206,12 @@ class FlashcardUpdateRequest(BaseModel):
     comfort_level: str  # 'very_difficult', 'difficult', 'easy', 'very_easy'
 
 @app.post("/api/flashcard/update")
-def update_flashcard_word(request: FlashcardUpdateRequest, user_id: int = Depends(get_current_user_id)):
+def update_flashcard_word(request: FlashcardUpdateRequest):
     """Update word state based on flashcard comfort level"""
     try:
         result = db.update_word_state_from_flashcard(
             word_id=request.word_id,
-            user_id=user_id,
+            user_id=1,
             comfort_level=request.comfort_level
         )
         return {
@@ -5018,7 +5231,7 @@ def update_flashcard_word(request: FlashcardUpdateRequest, user_id: int = Depend
 # ============================================================================
 
 @app.get("/api/streak")
-def get_streak_info(user_id: int = Depends(get_current_user_id)):
+def get_streak_info():
     """Get streak information based on goal completion
     
     Returns:
@@ -5029,7 +5242,7 @@ def get_streak_info(user_id: int = Depends(get_current_user_id)):
         }
     """
     try:
-        streak_info = db.calculate_goal_based_streak(user_id=user_id)
+        streak_info = db.calculate_goal_based_streak()
         return streak_info
     except Exception as e:
         print(f"Error getting streak info: {str(e)}")
@@ -5039,11 +5252,11 @@ def get_streak_info(user_id: int = Depends(get_current_user_id)):
 
 
 @app.get("/api/srs/settings/{language}")
-def get_srs_settings_api(language: str, user_id: int = Depends(get_current_user_id)):
+def get_srs_settings_api(language: str):
     """Get SRS settings for a language"""
     try:
         # Get basic settings
-        settings = db.get_srs_settings(language, user_id=user_id)
+        settings = db.get_srs_settings(language)
         
         # Get advanced settings
         advanced_settings = db.get_srs_settings_for_language(language)
@@ -5060,7 +5273,7 @@ def get_srs_settings_api(language: str, user_id: int = Depends(get_current_user_
 
 
 @app.put("/api/srs/settings/{language}")
-async def update_srs_settings_api(language: str, request: Request, user_id: int = Depends(get_current_user_id)):
+async def update_srs_settings_api(language: str, request: Request):
     """Update SRS settings for a language"""
     try:
         body = await request.json()
@@ -5079,7 +5292,7 @@ async def update_srs_settings_api(language: str, request: Request, user_id: int 
             )
         
         # Update basic SRS settings
-        success = db.update_srs_settings(language, new_cards, reviews, user_id=user_id)
+        success = db.update_srs_settings(language, new_cards, reviews)
         
         if not success:
             raise HTTPException(status_code=500, detail="Failed to update settings")
@@ -5108,10 +5321,10 @@ async def update_srs_settings_api(language: str, request: Request, user_id: int 
 
 
 @app.get("/api/srs/stats/{language}")
-def get_srs_stats_api(language: str, user_id: int = Depends(get_current_user_id)):
+def get_srs_stats_api(language: str):
     """Get SRS stats for a language"""
     try:
-        stats = db.get_srs_stats(language, user_id=user_id)
+        stats = db.get_srs_stats(language)
         return stats
     except Exception as e:
         print(f"Error getting SRS stats: {str(e)}")
@@ -5121,7 +5334,7 @@ def get_srs_stats_api(language: str, user_id: int = Depends(get_current_user_id)
 
 
 @app.post("/api/srs/simulate")
-async def simulate_srs_interval(request: Request, user_id: int = Depends(get_current_user_id)):
+async def simulate_srs_interval(request: Request):
     """Simulate SRS intervals for different button presses
     
     Body:
@@ -5357,10 +5570,10 @@ def get_word_review_history(word_id: int, user_id: int = 1):
 
 
 @app.get("/api/flashcards/{language}")
-def get_flashcards_api(language: str, limit: int = 50, user_id: int = Depends(get_current_user_id)):
+def get_flashcards_api(language: str, limit: int = 50):
     """Get flashcards for review (respects SRS quotas)"""
     try:
-        words = db.get_words_for_review(language, limit, user_id=user_id)
+        words = db.get_words_for_review(language, limit)
         return {"words": words, "count": len(words)}
     except Exception as e:
         print(f"Error getting flashcards: {str(e)}")
@@ -5370,7 +5583,7 @@ def get_flashcards_api(language: str, limit: int = 50, user_id: int = Depends(ge
 
 
 @app.post("/api/srs/sync-quotas/{language}")
-def sync_srs_quotas_for_language(language: str, week_start_date: str = None, user_id: int = Depends(get_current_user_id)):
+def sync_srs_quotas_for_language(language: str, week_start_date: str = None):
     """Sync SRS daily quotas from weekly flashcard goals for a specific language
     
     This endpoint syncs the SRS system's daily quotas with the user's weekly goals
@@ -5394,7 +5607,7 @@ def sync_srs_quotas_for_language(language: str, week_start_date: str = None, use
             today = config.get_current_time()
             week_start_date = (today - timedelta(days=today.weekday())).strftime('%Y-%m-%d')
         
-        db.sync_srs_quotas_from_weekly_goals(language, week_start_date, user_id=user_id)
+        db.sync_srs_quotas_from_weekly_goals(language, week_start_date)
         
         return {
             "success": True,
@@ -5410,7 +5623,7 @@ def sync_srs_quotas_for_language(language: str, week_start_date: str = None, use
 
 
 @app.post("/api/srs/sync-quotas-all")
-def sync_srs_quotas_all_languages(week_start_date: str = None, user_id: int = Depends(get_current_user_id)):
+def sync_srs_quotas_all_languages(week_start_date: str = None):
     """Sync SRS daily quotas from weekly flashcard goals for ALL languages
     
     This endpoint syncs the SRS system for all languages that have weekly goals.
@@ -5430,7 +5643,7 @@ def sync_srs_quotas_all_languages(week_start_date: str = None, user_id: int = De
             today = config.get_current_time()
             week_start_date = (today - timedelta(days=today.weekday())).strftime('%Y-%m-%d')
         
-        success = db.sync_all_languages_srs_quotas(week_start_date, user_id=user_id)
+        success = db.sync_all_languages_srs_quotas(week_start_date)
         
         if success:
             return {
@@ -5453,19 +5666,19 @@ def sync_srs_quotas_all_languages(week_start_date: str = None, user_id: int = De
 # ============================================================================
 
 @app.get("/api/stats/daily")
-def get_daily_stats_endpoint(language: Optional[str] = None, days: int = 365, user_id: int = Depends(get_current_user_id)):
+def get_daily_stats_endpoint(language: Optional[str] = None, days: int = 365):
     """Get daily activity and word learning stats for contribution graph"""
     stats = db.get_daily_stats(language=language, days=days)
     return {"stats": stats}
 
 @app.get("/api/stats/language/{language}")
-def get_language_stats_endpoint(language: str, user_id: int = Depends(get_current_user_id)):
+def get_language_stats_endpoint(language: str):
     """Get comprehensive stats for a specific language"""
     stats = db.get_language_stats(language)
     return stats
 
 @app.get("/api/stats/languages")
-def get_all_languages_stats(user_id: int = Depends(get_current_user_id)):
+def get_all_languages_stats():
     """Get stats summary for all languages"""
     languages = ['kannada', 'telugu', 'malayalam', 'tamil', 'hindi', 'urdu', 'spanish', 'french', 'welsh', 'vietnamese']
     all_stats = {}
@@ -5485,7 +5698,7 @@ def get_all_languages_stats(user_id: int = Depends(get_current_user_id)):
 
 
 @app.get("/api/languages/learning")
-def get_learning_languages(user_id: int = Depends(get_current_user_id)):
+def get_learning_languages():
     """Get all languages the user is learning with their levels"""
     languages = db.get_user_learning_languages()
     result = []
@@ -5526,10 +5739,10 @@ def get_activity_history(language: str, limit: int = 1000, user_id: int = Depend
     
     cursor.execute('''
         SELECT * FROM activity_history
-        WHERE user_id = ? AND language = ?
+        WHERE user_id = 1 AND language = ?
         ORDER BY COALESCE(completed_at, '9999-12-31') DESC, id DESC
         LIMIT ?
-    ''', (user_id, language, limit))
+    ''', (language, limit))
     
     history = [dict(row) for row in cursor.fetchall()]
     conn.close()
@@ -5564,12 +5777,12 @@ def get_weekly_stats(days: int = 7, offset: int = 0, user_id: int = Depends(get_
             DATE(completed_at) as date,
             COUNT(*) as activity_count
         FROM activity_history
-        WHERE user_id = ? 
+        WHERE user_id = 1 
         AND completed_at IS NOT NULL
         AND completed_at >= ?
         GROUP BY DATE(completed_at)
         ORDER BY date ASC
-    ''', (user_id, start_date.strftime('%Y-%m-%d')))
+    ''', (start_date.strftime('%Y-%m-%d'),))
     
     activity_counts = {row['date']: row['activity_count'] for row in cursor.fetchall()}
     
@@ -5579,12 +5792,12 @@ def get_weekly_stats(days: int = 7, offset: int = 0, user_id: int = Depends(get_
             DATE(completed_at) as date,
             COUNT(*) as lesson_count
         FROM lesson_completions
-        WHERE user_id = ? 
+        WHERE user_id = 1 
         AND completed_at IS NOT NULL
         AND completed_at >= ?
         GROUP BY DATE(completed_at)
         ORDER BY date ASC
-    ''', (user_id, start_date.strftime('%Y-%m-%d')))
+    ''', (start_date.strftime('%Y-%m-%d'),))
     
     lesson_counts = {row['date']: row['lesson_count'] for row in cursor.fetchall()}
     
@@ -5594,11 +5807,11 @@ def get_weekly_stats(days: int = 7, offset: int = 0, user_id: int = Depends(get_
             DATE(completed_at) as date,
             activity_data
         FROM activity_history
-        WHERE user_id = ? 
+        WHERE user_id = 1 
         AND completed_at IS NOT NULL
         AND completed_at >= ?
         ORDER BY date ASC
-    ''', (user_id, start_date.strftime('%Y-%m-%d')))
+    ''', (start_date.strftime('%Y-%m-%d'),))
     
     word_counts = {}
     for row in cursor.fetchall():
@@ -5646,8 +5859,8 @@ def get_activity_by_id(activity_id: int, user_id: int = Depends(get_current_user
     
     cursor.execute('''
         SELECT * FROM activity_history
-        WHERE user_id = ? AND id = ?
-    ''', (user_id, activity_id))
+        WHERE user_id = 1 AND id = ?
+    ''', (activity_id,))
     
     row = cursor.fetchone()
     conn.close()
@@ -5690,10 +5903,10 @@ def get_daily_activities(date: str, user_id: int = Depends(get_current_user_id))
             completed_at as timestamp,
             activity_data
         FROM activity_history
-        WHERE user_id = ? 
+        WHERE user_id = 1 
         AND DATE(completed_at) = ?
         ORDER BY completed_at DESC
-    ''', (user_id, date))
+    ''', (date,))
     
     activities = []
     for row in cursor.fetchall():
@@ -5743,10 +5956,10 @@ def get_daily_activities(date: str, user_id: int = Depends(get_current_user_id))
             l.language
         FROM lesson_completions lc
         LEFT JOIN lessons l ON lc.lesson_id = l.lesson_id
-        WHERE lc.user_id = ? 
+        WHERE lc.user_id = 1 
         AND DATE(lc.completed_at) = ?
         ORDER BY lc.completed_at DESC
-    ''', (user_id, date))
+    ''', (date,))
     
     # Map full language names to language codes
     language_code_map = {
@@ -5871,9 +6084,9 @@ def get_user_languages(user_id: int = Depends(get_current_user_id)):
     # that can accumulate when the UNIQUE constraint doesn't exist on the table)
     cursor.execute('''
         SELECT value FROM user_preferences
-        WHERE user_id = ? AND key = 'selected_languages'
+        WHERE user_id = 1 AND key = 'selected_languages'
         ORDER BY id DESC LIMIT 1
-    ''', (user_id,))
+    ''')
     
     row = cursor.fetchone()
     conn.close()
@@ -5961,12 +6174,12 @@ async def save_user_languages(request: Request, user_id: int = Depends(get_curre
     
     # Delete ALL existing rows for this key (cleans up any duplicates), then insert fresh
     cursor.execute('''
-        DELETE FROM user_preferences WHERE user_id = ? AND key = 'selected_languages'
-    ''', (user_id,))
+        DELETE FROM user_preferences WHERE user_id = 1 AND key = 'selected_languages'
+    ''')
     cursor.execute('''
         INSERT INTO user_preferences (user_id, key, value, updated_at)
-        VALUES (?, 'selected_languages', ?, datetime('now'))
-    ''', (user_id, json.dumps(languages)))
+        VALUES (1, 'selected_languages', ?, datetime('now'))
+    ''', (json.dumps(languages),))
     
     conn.commit()
     conn.close()
@@ -5998,8 +6211,8 @@ def get_user_interests(user_id: int = Depends(get_current_user_id)):
     # Get interests from user_preferences
     cursor.execute('''
         SELECT value FROM user_preferences
-        WHERE user_id = ? AND key = 'selected_interests'
-    ''', (user_id,))
+        WHERE user_id = 1 AND key = 'selected_interests'
+    ''')
     row = cursor.fetchone()
     conn.close()
     
@@ -6034,11 +6247,11 @@ async def save_user_interests(request: Request, user_id: int = Depends(get_curre
     ''')
     
     # Delete then insert to avoid duplicate-row buildup from missing UNIQUE constraint
-    cursor.execute("DELETE FROM user_preferences WHERE user_id = ? AND key = 'selected_interests'", (user_id,))
+    cursor.execute("DELETE FROM user_preferences WHERE user_id = 1 AND key = 'selected_interests'")
     cursor.execute('''
         INSERT INTO user_preferences (user_id, key, value, updated_at)
-        VALUES (?, 'selected_interests', ?, datetime('now'))
-    ''', (user_id, json.dumps(interests)))
+        VALUES (1, 'selected_interests', ?, datetime('now'))
+    ''', (json.dumps(interests),))
     
     conn.commit()
     conn.close()
@@ -6050,7 +6263,15 @@ async def save_user_interests(request: Request, user_id: int = Depends(get_curre
 # User Preferences (Toggle States)
 # ============================================================================
 
-def _ensure_user_preferences_table(cursor):
+@app.get("/api/user-preferences")
+def get_user_preferences(keys: str = None, user_id: int = Depends(get_current_user_id)):
+    """Get user preferences by keys (comma-separated)"""
+    
+    conn = sqlite3.connect(config.DB_PATH)
+    conn.row_factory = sqlite3.Row
+    cursor = conn.cursor()
+    
+    # Create user_preferences table if it doesn't exist
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS user_preferences (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -6061,38 +6282,35 @@ def _ensure_user_preferences_table(cursor):
             updated_at TEXT DEFAULT CURRENT_TIMESTAMP
         )
     ''')
-
-
-def _get_user_preferences_internal(user_id: int, keys: str = None) -> dict:
-    """Read user preferences from DB by user_id. Used by HTTP endpoints and tutor history."""
-    conn = sqlite3.connect(config.DB_PATH)
-    conn.row_factory = sqlite3.Row
-    cursor = conn.cursor()
-    _ensure_user_preferences_table(cursor)
+    
     if keys:
         key_list = [k.strip() for k in keys.split(',')]
         placeholders = ','.join('?' * len(key_list))
+        # Use MAX(id) subquery to get the most-recently written row per key
         cursor.execute(f'''
             SELECT key, value FROM user_preferences
-            WHERE user_id = ? AND key IN ({placeholders})
+            WHERE user_id = 1 AND key IN ({placeholders})
             AND id IN (
                 SELECT MAX(id) FROM user_preferences
-                WHERE user_id = ? AND key IN ({placeholders})
+                WHERE user_id = 1 AND key IN ({placeholders})
                 GROUP BY key
             )
-        ''', (user_id,) + tuple(key_list) + (user_id,) + tuple(key_list))
+        ''', key_list + key_list)
     else:
         cursor.execute('''
             SELECT key, value FROM user_preferences
-            WHERE user_id = ?
+            WHERE user_id = 1
             AND id IN (
                 SELECT MAX(id) FROM user_preferences
-                WHERE user_id = ?
+                WHERE user_id = 1
                 GROUP BY key
             )
-        ''', (user_id, user_id))
+        ''')
+    
     rows = cursor.fetchall()
     conn.close()
+    
+    # Convert to dict and parse boolean values
     preferences = {}
     for row in rows:
         key = row['key']
@@ -6101,36 +6319,44 @@ def _get_user_preferences_internal(user_id: int, keys: str = None) -> dict:
             preferences[key] = value == 'true'
         else:
             preferences[key] = value
+    
     return preferences
-
-
-def _save_user_preferences_internal(user_id: int, preferences: dict) -> None:
-    """Write user preferences to DB by user_id."""
-    conn = sqlite3.connect(config.DB_PATH)
-    cursor = conn.cursor()
-    _ensure_user_preferences_table(cursor)
-    for key, value in preferences.items():
-        if isinstance(value, bool):
-            value = 'true' if value else 'false'
-        cursor.execute('DELETE FROM user_preferences WHERE user_id = ? AND key = ?', (user_id, key))
-        cursor.execute('''
-            INSERT INTO user_preferences (user_id, key, value, updated_at)
-            VALUES (?, ?, ?, datetime('now'))
-        ''', (user_id, key, value))
-    conn.commit()
-    conn.close()
-
-
-@app.get("/api/user-preferences")
-def get_user_preferences(keys: str = None, user_id: int = Depends(get_current_user_id)):
-    """Get user preferences by keys (comma-separated)"""
-    return _get_user_preferences_internal(user_id, keys)
 
 
 @app.put("/api/user-preferences")
 def save_user_preferences(preferences: dict, user_id: int = Depends(get_current_user_id)):
     """Save user preferences (supports multiple key-value pairs)"""
-    _save_user_preferences_internal(user_id, preferences)
+    
+    conn = sqlite3.connect(config.DB_PATH)
+    cursor = conn.cursor()
+    
+    # Create user_preferences table if it doesn't exist
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS user_preferences (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            user_id INTEGER NOT NULL,
+            key TEXT NOT NULL,
+            value TEXT,
+            created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+            updated_at TEXT DEFAULT CURRENT_TIMESTAMP
+        )
+    ''')
+    
+    # Save each preference (delete + insert to handle missing UNIQUE constraint)
+    for key, value in preferences.items():
+        # Convert boolean to string for storage
+        if isinstance(value, bool):
+            value = 'true' if value else 'false'
+        
+        cursor.execute('DELETE FROM user_preferences WHERE user_id = 1 AND key = ?', (key,))
+        cursor.execute('''
+            INSERT INTO user_preferences (user_id, key, value, updated_at)
+            VALUES (1, ?, ?, datetime('now'))
+        ''', (key, value))
+    
+    conn.commit()
+    conn.close()
+    
     return {'success': True, 'saved': list(preferences.keys())}
 
 
@@ -6148,10 +6374,10 @@ class PracticeVisibleActivitiesUpdate(BaseModel):
 
 
 @app.get("/api/practice-visible-activities")
-def get_practice_visible_activities(language: str = None, user_id: int = Depends(get_current_user_id)):
+def get_practice_visible_activities(language: str = None):
     """Get which activities are visible on the Practice screen for a language.
     If language is omitted, returns the first available language's settings (for apply_to_all)."""
-    prefs = _get_user_preferences_internal(user_id, None)
+    prefs = get_user_preferences(None)
     apply_all = prefs.get('practice_visible_activities_apply_all') in (True, 'true')
     key = f"practice_visible_activities_{language}" if language else None
     if key:
@@ -6184,7 +6410,7 @@ def get_practice_visible_activities(language: str = None, user_id: int = Depends
 
 
 @app.put("/api/practice-visible-activities")
-def put_practice_visible_activities(body: PracticeVisibleActivitiesUpdate, user_id: int = Depends(get_current_user_id)):
+def put_practice_visible_activities(body: PracticeVisibleActivitiesUpdate):
     """Set visible activities for a language, or for all languages.
     Body: { "language": "tamil"?, "visible_activities": ["reading", ...], "apply_to_all": bool? }"""
     visible = body.visible_activities if isinstance(body.visible_activities, list) else DEFAULT_PRACTICE_ACTIVITIES.copy()
@@ -6192,7 +6418,7 @@ def put_practice_visible_activities(body: PracticeVisibleActivitiesUpdate, user_
     language = body.language
     to_save = {}
     if apply_to_all:
-        raw = _get_user_preferences_internal(user_id, None).get("selected_languages")
+        raw = get_user_preferences(None).get("selected_languages")
         try:
             langs = json.loads(raw) if isinstance(raw, str) else raw if isinstance(raw, list) else []
         except (TypeError, ValueError):
@@ -6204,7 +6430,7 @@ def put_practice_visible_activities(body: PracticeVisibleActivitiesUpdate, user_
         if language:
             to_save[f"practice_visible_activities_{language}"] = json.dumps(visible)
         to_save["practice_visible_activities_apply_all"] = "false"
-    _save_user_preferences_internal(user_id, to_save)
+    save_user_preferences(to_save)
     return {"success": True, "visible_activities": visible, "apply_to_all": apply_to_all}
 
 
@@ -6218,10 +6444,10 @@ class TutorChatRequest(BaseModel):
     conversation_id: Optional[str] = None  # for continuing a conversation
 
 
-def _get_tutor_history(user_id: int):
-    """Load tutor chat history from user_preferences for the given user."""
+def _get_tutor_history():
+    """Load tutor chat history from user_preferences."""
     try:
-        prefs = _get_user_preferences_internal(user_id, "tutor_chat_history")
+        prefs = get_user_preferences("tutor_chat_history")
         raw = prefs.get("tutor_chat_history")
         if not raw:
             return []
@@ -6230,28 +6456,15 @@ def _get_tutor_history(user_id: int):
         return []
 
 
-def _save_tutor_history(history: list, user_id: int):
+def _save_tutor_history(history: list):
     """Persist tutor chat history (list of { id, title?, messages: [{ role, content }], updated_at })."""
-    _save_user_preferences_internal(user_id, {"tutor_chat_history": json.dumps(history)})
+    save_user_preferences({"tutor_chat_history": json.dumps(history)})
 
 
 @app.get("/api/tutor/history")
-def get_tutor_history(search: Optional[str] = None, user_id: int = Depends(get_current_user_id)):
-    """Return list of past tutor conversations (id, title, updated_at, message_count). Optional search filters by title or message content."""
-    history = _get_tutor_history(user_id)
-    if search and search.strip():
-        q = search.strip().lower()
-        filtered = []
-        for c in history:
-            title = (c.get("title") or "").lower()
-            if q in title:
-                filtered.append(c)
-                continue
-            for m in c.get("messages", []):
-                if q in (m.get("content") or "").lower():
-                    filtered.append(c)
-                    break
-        history = filtered
+def get_tutor_history():
+    """Return list of past tutor conversations (id, title, updated_at, message_count)."""
+    history = _get_tutor_history()
     return {
         "conversations": [
             {
@@ -6266,7 +6479,7 @@ def get_tutor_history(search: Optional[str] = None, user_id: int = Depends(get_c
 
 
 @app.post("/api/tutor/chat")
-def tutor_chat(request: TutorChatRequest, user_id: int = Depends(get_current_user_id)):
+def tutor_chat(request: TutorChatRequest):
     """Send a message to the tutor AI and get a reply. Optionally include app context."""
     if not request.message or not request.message.strip():
         raise HTTPException(status_code=400, detail="message is required")
@@ -6308,7 +6521,7 @@ Current app context (use only to personalize answers; do not announce the user's
         raise HTTPException(status_code=500, detail=f"Tutor error: {str(e)}")
 
     # Append to or create conversation in history
-    history = _get_tutor_history(user_id)
+    history = _get_tutor_history()
     conv_id = request.conversation_id
     if conv_id:
         for c in history:
@@ -6316,7 +6529,7 @@ Current app context (use only to personalize answers; do not announce the user's
                 c.setdefault("messages", []).append({"role": "user", "content": request.message.strip()})
                 c["messages"].append({"role": "assistant", "content": reply})
                 c["updated_at"] = datetime.utcnow().isoformat() + "Z"
-                _save_tutor_history(history, user_id)
+                _save_tutor_history(history)
                 return {"reply": reply, "conversation_id": conv_id}
     import uuid
     new_id = str(uuid.uuid4())[:8]
@@ -6332,47 +6545,18 @@ Current app context (use only to personalize answers; do not announce the user's
     history.insert(0, new_conv)
     # Keep last 50 conversations
     history = history[:50]
-    _save_tutor_history(history, user_id)
+    _save_tutor_history(history)
     return {"reply": reply, "conversation_id": new_id}
 
 
 @app.get("/api/tutor/conversation/{conversation_id}")
-def get_tutor_conversation(conversation_id: str, user_id: int = Depends(get_current_user_id)):
+def get_tutor_conversation(conversation_id: str):
     """Get full messages for a conversation."""
-    history = _get_tutor_history(user_id)
+    history = _get_tutor_history()
     for c in history:
         if c.get("id") == conversation_id:
             return {"id": c.get("id"), "title": c.get("title"), "messages": c.get("messages", [])}
     raise HTTPException(status_code=404, detail="Conversation not found")
-
-
-class TutorConversationsDeleteRequest(BaseModel):
-    conversation_ids: list[str] = []
-
-
-@app.delete("/api/tutor/conversation/{conversation_id}")
-def delete_tutor_conversation(conversation_id: str, user_id: int = Depends(get_current_user_id)):
-    """Delete a single tutor conversation."""
-    history = _get_tutor_history(user_id)
-    new_history = [c for c in history if c.get("id") != conversation_id]
-    if len(new_history) == len(history):
-        raise HTTPException(status_code=404, detail="Conversation not found")
-    _save_tutor_history(new_history, user_id)
-    return {"success": True, "deleted": conversation_id}
-
-
-@app.post("/api/tutor/conversations/delete")
-def delete_tutor_conversations(body: TutorConversationsDeleteRequest, user_id: int = Depends(get_current_user_id)):
-    """Delete multiple tutor conversations by id."""
-    ids = list(body.conversation_ids or [])
-    if not ids:
-        return {"success": True, "deleted": 0}
-    history = _get_tutor_history(user_id)
-    id_set = set(ids)
-    new_history = [c for c in history if c.get("id") not in id_set]
-    deleted = len(history) - len(new_history)
-    _save_tutor_history(new_history, user_id)
-    return {"success": True, "deleted": deleted}
 
 
 @app.post("/api/activity/unified/{activity_type}/{language}")
@@ -6398,8 +6582,8 @@ async def create_unified_activity(activity_type: str, language: str, request: Re
                 cursor = conn.cursor()
                 cursor.execute('''
                     SELECT value FROM user_preferences
-                    WHERE user_id = ? AND key = 'selected_interests'
-                ''', (user_id,))
+                    WHERE user_id = 1 AND key = 'selected_interests'
+                ''')
                 row = cursor.fetchone()
                 if row and row[0]:
                     user_interests = json.loads(row[0])
@@ -6466,7 +6650,7 @@ async def create_unified_activity(activity_type: str, language: str, request: Re
                         completed_activities[session_id] = {"status": "error", "error": err_msg}
                         return
                         
-                    activity_id = db.log_activity(language, activity_type, 0.0, json.dumps(activity), user_id=user_id)
+                    activity_id = db.log_activity(language, activity_type, 0.0, json.dumps(activity))
                     if activity_id:
                         activity['activity_id'] = activity_id
                         
@@ -6523,7 +6707,7 @@ async def create_unified_activity(activity_type: str, language: str, request: Re
             if activity.get('_error'):
                 raise Exception(activity.get('_error'))
                 
-            activity_id = db.log_activity(language, activity_type, 0.0, json.dumps(activity), user_id=user_id)
+            activity_id = db.log_activity(language, activity_type, 0.0, json.dumps(activity))
             if activity_id:
                 activity['activity_id'] = activity_id
             

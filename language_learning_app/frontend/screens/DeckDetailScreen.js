@@ -15,7 +15,9 @@ import { Ionicons } from '@expo/vector-icons';
 import SafeText from '../components/SafeText';
 import { WORD_CLASSES, LEVELS, LEVEL_COLORS, MASTERY_FILTERS, VERB_TRANSITIVITY_FILTERS } from '../constants/filters';
 import { LanguageContext } from '../contexts/LanguageContext';
+import { AuthContext } from '../contexts/AuthContext';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useImportJob } from '../contexts/ImportJobContext';
 
 const API_BASE_URL = __DEV__ ? 'http://localhost:9090' : 'http://localhost:9090';
 
@@ -37,6 +39,7 @@ export default function DeckDetailScreen({ route, navigation }) {
   const insets = useSafeAreaInsets();
   const { deckId, deckName: initialDeckName, language } = route.params || {};
   const { availableLanguages } = useContext(LanguageContext);
+  const { authHeaders } = useContext(AuthContext);
 
   const currentLanguage = availableLanguages?.find(l => l.code === language) || { name: language };
 
@@ -73,11 +76,17 @@ export default function DeckDetailScreen({ route, navigation }) {
   const [showDeleteConfirmModal, setShowDeleteConfirmModal] = useState(false);
   const [deleteConfirmMode, setDeleteConfirmMode] = useState('single');
 
+  const [addCardsModalVisible, setAddCardsModalVisible] = useState(false);
+  const [addCardsTab, setAddCardsTab] = useState('manual');
+  const [manualRows, setManualRows] = useState([{ english_word: '', translation: '', transliteration: '' }]);
+  const [addingCards, setAddingCards] = useState(false);
+  const importJob = useImportJob();
+
   const executeDeleteSingle = async () => {
     setShowDeleteConfirmModal(false);
     if (!deckId) return;
     try {
-      await fetch(`${API_BASE_URL}/api/vocab/decks/${deckId}`, { method: 'DELETE' });
+      await fetch(`${API_BASE_URL}/api/vocab/decks/${deckId}`, { method: 'DELETE', headers: { ...authHeaders } });
       navigation.goBack();
     } catch (e) {
       console.error('Error deleting deck:', e);
@@ -89,7 +98,7 @@ export default function DeckDetailScreen({ route, navigation }) {
     setShowDeleteConfirmModal(false);
     for (const id of selected) {
       try {
-        await fetch(`${API_BASE_URL}/api/vocab/decks/${id}`, { method: 'DELETE' });
+        await fetch(`${API_BASE_URL}/api/vocab/decks/${id}`, { method: 'DELETE', headers: { ...authHeaders } });
       } catch (e) {
         console.error('Error deleting deck:', e);
       }
@@ -141,7 +150,7 @@ export default function DeckDetailScreen({ route, navigation }) {
     try {
       const res = await fetch(`${API_BASE_URL}/api/vocab/decks/${deckId}/words`, {
         method: 'DELETE',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', ...authHeaders },
         body: JSON.stringify({ word_ids: Array.from(selectedWordIds) }),
       });
       if (!res.ok) throw new Error('Delete failed');
@@ -158,7 +167,7 @@ export default function DeckDetailScreen({ route, navigation }) {
     const loadDeck = async () => {
       try {
         setLoading(true);
-        const res = await fetch(`${API_BASE_URL}/api/vocab/decks/${deckId}/words?language=${language}`);
+        const res = await fetch(`${API_BASE_URL}/api/vocab/decks/${deckId}/words?language=${language}`, { headers: { ...authHeaders } });
         const data = await res.json();
         setWords(data.words || []);
         setDeckMeta({
@@ -182,7 +191,7 @@ export default function DeckDetailScreen({ route, navigation }) {
   const reloadDeckWords = useCallback(async () => {
     if (!deckId || !language) return;
     try {
-      const res = await fetch(`${API_BASE_URL}/api/vocab/decks/${deckId}/words?language=${language}`);
+      const res = await fetch(`${API_BASE_URL}/api/vocab/decks/${deckId}/words?language=${language}`, { headers: { ...authHeaders } });
       const data = await res.json();
       setWords(data.words || []);
       setDeckMeta(prev => ({
@@ -200,7 +209,7 @@ export default function DeckDetailScreen({ route, navigation }) {
     const loadSiblings = async () => {
       if (!deckId) return;
       try {
-        const res = await fetch(`${API_BASE_URL}/api/vocab/decks/${deckId}/siblings`);
+        const res = await fetch(`${API_BASE_URL}/api/vocab/decks/${deckId}/siblings`, { headers: { ...authHeaders } });
         if (res.ok) {
           const data = await res.json();
           setSiblingDecks(data.decks || []);
@@ -529,6 +538,13 @@ export default function DeckDetailScreen({ route, navigation }) {
         </View>
         <View style={styles.headerRight}>
           <View style={styles.headerRightRow}>
+            <TouchableOpacity
+              style={{ minWidth: 44, minHeight: 44, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(255,255,255,0.2)', borderRadius: 8, marginRight: 6 }}
+              onPress={() => { setAddCardsModalVisible(true); setAddCardsTab('manual'); setManualRows([{ english_word: '', translation: '', transliteration: '' }]); }}
+              activeOpacity={0.7}
+            >
+              <Ionicons name="add" size={22} color="#FFFFFF" />
+            </TouchableOpacity>
             {siblingDecks.length > 1 && (
               <TouchableOpacity
                 style={styles.headerLangButton}
@@ -1445,7 +1461,7 @@ export default function DeckDetailScreen({ route, navigation }) {
                   try {
                     await fetch(`${API_BASE_URL}/api/vocab/decks/${deckId}`, {
                       method: 'PUT',
-                      headers: { 'Content-Type': 'application/json' },
+                      headers: { 'Content-Type': 'application/json', ...authHeaders },
                       body: JSON.stringify({ name }),
                     });
                     setDeckName(name);
@@ -1485,6 +1501,59 @@ export default function DeckDetailScreen({ route, navigation }) {
                 <Text style={{ fontSize: 15, fontWeight: '600', color: '#DC2626' }}>Delete</Text>
               </TouchableOpacity>
             </View>
+          </TouchableOpacity>
+        </TouchableOpacity>
+      </Modal>
+
+      {/* Add cards modal */}
+      <Modal visible={addCardsModalVisible} transparent animationType="fade" onRequestClose={() => setAddCardsModalVisible(false)}>
+        <TouchableOpacity activeOpacity={1} style={styles.reviewModalOverlay} onPress={() => setAddCardsModalVisible(false)}>
+          <TouchableOpacity activeOpacity={1} onPress={(e) => e.stopPropagation()} style={[styles.reviewModalContent, { maxHeight: '85%' }]}>
+            <View style={styles.reviewModalHeader}>
+              <SafeText style={styles.reviewModalTitle}>Add cards</SafeText>
+              <TouchableOpacity onPress={() => setAddCardsModalVisible(false)} style={styles.closeButton}>
+                <Ionicons name="close" size={24} color="#666" />
+              </TouchableOpacity>
+            </View>
+            <View style={{ flexDirection: 'row', marginBottom: 12 }}>
+              <TouchableOpacity style={{ flex: 1, paddingVertical: 10, borderRadius: 8, backgroundColor: addCardsTab === 'manual' ? '#0FA896' : '#E5E7EB' }} onPress={() => setAddCardsTab('manual')}>
+                <SafeText style={{ textAlign: 'center', fontWeight: '600', color: addCardsTab === 'manual' ? '#FFF' : '#374151' }}>Add manually</SafeText>
+              </TouchableOpacity>
+              <TouchableOpacity style={{ flex: 1, marginLeft: 8, paddingVertical: 10, borderRadius: 8, backgroundColor: addCardsTab === 'import' ? '#0FA896' : '#E5E7EB' }} onPress={() => setAddCardsTab('import')}>
+                <SafeText style={{ textAlign: 'center', fontWeight: '600', color: addCardsTab === 'import' ? '#FFF' : '#374151' }}>Import vocab</SafeText>
+              </TouchableOpacity>
+            </View>
+            {addCardsTab === 'import' ? (
+              <View style={{ paddingVertical: 16 }}>
+                <SafeText style={{ fontSize: 14, color: '#4B5563', marginBottom: 12 }}>Paste or upload text to extract vocabulary. Words will be added to this deck.</SafeText>
+                <TouchableOpacity style={{ backgroundColor: '#0FA896', borderRadius: 10, paddingVertical: 14, alignItems: 'center' }} onPress={() => { setAddCardsModalVisible(false); importJob.openModalForDeck(deckId, deckName, language); }}>
+                  <SafeText style={{ fontSize: 15, fontWeight: '600', color: '#FFF' }}>Open Import Vocab</SafeText>
+                </TouchableOpacity>
+              </View>
+            ) : (
+              <>
+                <ScrollView style={{ maxHeight: 360 }}>
+                  {manualRows.map((row, idx) => (
+                    <View key={idx} style={{ marginBottom: 12, paddingBottom: 12, borderBottomWidth: 1, borderBottomColor: '#E5E7EB' }}>
+                      <TextInput style={styles.searchInput} placeholder="English / front" placeholderTextColor="#9CA3AF" value={row.english_word} onChangeText={(t) => setManualRows(prev => prev.map((r, i) => i === idx ? { ...r, english_word: t } : r))} />
+                      <TextInput style={[styles.searchInput, { marginTop: 6 }]} placeholder="Translation / back" placeholderTextColor="#9CA3AF" value={row.translation} onChangeText={(t) => setManualRows(prev => prev.map((r, i) => i === idx ? { ...r, translation: t } : r))} />
+                      <TextInput style={[styles.searchInput, { marginTop: 6 }]} placeholder="Transliteration (optional)" placeholderTextColor="#9CA3AF" value={row.transliteration} onChangeText={(t) => setManualRows(prev => prev.map((r, i) => i === idx ? { ...r, transliteration: t } : r))} />
+                    </View>
+                  ))}
+                  <TouchableOpacity onPress={() => setManualRows(prev => [...prev, { english_word: '', translation: '', transliteration: '' }])}>
+                    <SafeText style={{ fontSize: 14, color: '#0FA896', fontWeight: '600' }}>+ Add another card</SafeText>
+                  </TouchableOpacity>
+                </ScrollView>
+                <View style={{ flexDirection: 'row', justifyContent: 'flex-end', marginTop: 12 }}>
+                  <TouchableOpacity onPress={() => setAddCardsModalVisible(false)} style={{ paddingVertical: 8, paddingHorizontal: 16 }}>
+                    <SafeText style={{ fontSize: 15, color: '#666' }}>Cancel</SafeText>
+                  </TouchableOpacity>
+                  <TouchableOpacity disabled={addingCards || !manualRows.some(r => (r.english_word || '').trim() && (r.translation || '').trim())} onPress={async () => { const toAdd = manualRows.map(r => ({ english_word: (r.english_word || '').trim(), translation: (r.translation || '').trim(), transliteration: (r.transliteration || '').trim() })).filter(w => w.english_word && w.translation); if (!toAdd.length || !deckId) return; setAddingCards(true); try { const res = await fetch(`${API_BASE_URL}/api/vocab/decks/${deckId}/words`, { method: 'POST', headers: { 'Content-Type': 'application/json', ...authHeaders }, body: JSON.stringify({ words: toAdd }) }); if (!res.ok) throw new Error('Failed to add cards'); await reloadDeckWords(); setAddCardsModalVisible(false); setManualRows([{ english_word: '', translation: '', transliteration: '' }]); } catch (e) { console.error('Error adding cards:', e); Alert.alert('Error', e.message || 'Could not add cards.'); } finally { setAddingCards(false); } }} style={{ paddingVertical: 8, paddingHorizontal: 16 }}>
+                    {addingCards ? <ActivityIndicator size="small" color="#0FA896" /> : <SafeText style={{ fontSize: 15, fontWeight: '600', color: '#0FA896' }}>Save</SafeText>}
+                  </TouchableOpacity>
+                </View>
+              </>
+            )}
           </TouchableOpacity>
         </TouchableOpacity>
       </Modal>

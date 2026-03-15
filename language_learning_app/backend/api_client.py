@@ -1293,7 +1293,7 @@ def generate_speaker_profile(region: str, formality: str, voice: str, language: 
         
         # Call Gemini API
         response_text, response_time, token_info, is_truncated, _ = generate_text_with_gemini(
-            prompt, model_name=get_model_for_flow('conversation')
+            prompt, model_name=get_model_for_flow('speaker_profile')
         )
         
         # Parse JSON response
@@ -2281,6 +2281,288 @@ def generate_writing_activity(word_bank: list, language: str, required_learning_
             '_debug_steps': debug_steps,
         }
 
+
+def generate_conversation_activity(word_bank: list, language: str, required_learning_words: list = None, user_cefr_level: str = 'A1', custom_topic: str = None, user_interests: list = None) -> dict:
+    """Generate a conversation activity with persona and tasks"""
+    if not config.GEMINI_API_KEY:
+        return {
+            '_error': 'GEMINI_API_KEY not set',
+            '_error_type': 'missing_api_key',
+            '_prompt': '',
+            '_response_time': 0,
+            '_raw_response': '',
+            '_required_learning_words': [],
+            '_token_info': {},
+        }
+    
+    # Initialize debug tracking
+    debug_steps = []
+    
+    try:
+        # Handle topic selection
+        if custom_topic:
+            selected_topic = custom_topic
+            print(f"Using custom topic: {custom_topic}")
+        else:
+            base_topics = [
+                "daily life and routines", "travel and adventure", "food and cooking", 
+                "technology and modern life", "hobbies and interests", "work and career",
+                "nature and environment", "culture and traditions", "family and relationships",
+                "education and learning", "health and wellness", "shopping and markets",
+                "sports and activities", "music and arts", "cities and places",
+                "festivals and celebrations", "weather and seasons", "transportation",
+                "entertainment and media", "science and discovery", "history and heritage",
+                "art and creativity", "business and economy", "social issues"
+            ]
+            
+            if user_interests and len(user_interests) > 0:
+                interest_topics = [interest.lower() for interest in user_interests]
+                matching_topics = [topic for topic in base_topics 
+                                  if any(interest_word in topic for interest_word in interest_topics)]
+                
+                if matching_topics:
+                    if random.random() < 0.7:
+                        selected_topic = random.choice(matching_topics)
+                        print(f"Selected topic from user interests: {selected_topic}")
+                    else:
+                        selected_topic = random.choice(base_topics)
+                        print(f"Selected random topic (30% chance): {selected_topic}")
+                else:
+                    selected_topic = random.choice(base_topics)
+                    print(f"No matching topics, selected random: {selected_topic}")
+            else:
+                selected_topic = random.choice(base_topics)
+                print(f"No user interests, selected random topic: {selected_topic}")
+        
+        # Format word lists (mostly for target language)
+        def format_word_list_target_language(words):
+            if not words:
+                return ""
+            return "\n".join([
+                f"- {w.get('translation', '')}"
+                for w in words[:50]
+            ])
+        
+        learned_str = format_word_list_target_language([w for w in word_bank if w.get('mastery_level') == 'mastered'][:200])
+        required_learning_words = required_learning_words or []
+        required_learning_words_str = format_word_list_target_language(required_learning_words[:10])
+        
+        # Build prompt
+        prompt = render_template(
+            'activities/unified_conversation.txt',
+            language=language,
+            user_cefr_level=user_cefr_level,
+            custom_topic=selected_topic,
+            required_learning_words=required_learning_words_str
+        )
+
+        debug_steps.append({'step': 'prompt_generated', 'status': 'success', 'prompt_length': len(prompt), 'topic': selected_topic})
+        
+        try:
+            debug_steps.append({'step': 'calling_gemini_api', 'status': 'in_progress'})
+            response_text, response_time, token_info, is_truncated, api_debug_info = generate_text_with_gemini(
+                prompt, model_name=get_model_for_flow('speaking_activity') # can use similar model for generating conversation setup
+            )
+            debug_steps.append({'step': 'gemini_api_response', 'status': 'success', 'details': api_debug_info})
+        except Exception as gen_error:
+            error_msg = f"Error calling Gemini API: {str(gen_error)}"
+            print(error_msg)
+            import traceback
+            error_traceback = traceback.format_exc()
+            debug_steps.append({'step': 'gemini_api_error', 'status': 'error', 'error': error_msg, 'traceback': error_traceback})
+            return {
+                '_error': error_msg,
+                '_error_type': 'api_error',
+                '_error_traceback': error_traceback,
+                '_prompt': prompt,
+                '_response_time': 0,
+                '_raw_response': '',
+                '_required_learning_words': [w.get('english_word') for w in required_learning_words],
+                '_token_info': {},
+                '_debug_steps': debug_steps,
+            }
+        
+        # Parse JSON
+        debug_steps.append({'step': 'parsing_json', 'status': 'in_progress'})
+        result = parse_json_response(response_text, is_truncated)
+        
+        if "_parse_error" in result:
+            error_msg = f"JSON parsing failed: {result['_parse_error']}"
+            print(error_msg)
+            debug_steps.append({'step': 'json_parse_error', 'status': 'error', 'error': error_msg, 'raw_response_preview': response_text[:500]})
+            return {
+                '_error': error_msg,
+                '_error_type': 'parse_error',
+                '_prompt': prompt,
+                '_response_time': response_time,
+                '_raw_response': response_text,
+                '_required_learning_words': [w.get('english_word') for w in required_learning_words],
+                '_token_info': token_info,
+                '_parse_error': result.get('_parse_error'),
+                '_debug_steps': debug_steps,
+            }
+            
+        debug_steps.append({'step': 'json_parsed', 'status': 'success'})
+        
+        # Pick a voice based on the persona gender
+        used_voices = set()
+        gender = result.get('persona', {}).get('gender', 'female').lower()
+        if gender in ('female', 'f', 'woman', 'girl'):
+            pool = GEMINI_FEMALE_VOICES
+        elif gender in ('male', 'm', 'man', 'boy'):
+            pool = GEMINI_MALE_VOICES
+        else:
+            pool = GEMINI_TTS_VOICES
+        voice = pool[0] if pool else random.choice(GEMINI_TTS_VOICES)
+        result['persona']['voice'] = voice
+        
+        # Ensure dialogue list is correctly setup
+        if 'chat_history' not in result:
+            result['chat_history'] = []
+            if result.get('starting_message'):
+                result['chat_history'].append({
+                    "role": "model",
+                    "text": result.get('starting_message', '')
+                })
+
+        # Generate audio for the first starting message
+        language_code_map = {
+            'kannada': 'kn-IN', 'hindi': 'hi-IN', 'urdu': 'ur-PK',
+            'tamil': 'ta-IN', 'telugu': 'te-IN', 'malayalam': 'ml-IN', 'english': 'en-US'
+        }
+        language_code = language_code_map.get(language.lower(), 'kn-IN')
+        
+        if result.get('starting_message'):
+            audio_data, _, _ = generate_tts(
+                result['starting_message'],
+                language=language_code,
+                voice=voice,
+                style_instruction=result.get('persona', {}).get('style_instruction', 'casual, natural')
+            )
+            if audio_data and audio_data.get('format') != 'text_only':
+                result['chat_history'][0]['audio'] = audio_data.get('audio_base64')
+        
+        result['_prompt'] = prompt
+        result['_response_time'] = response_time
+        result['_raw_response'] = response_text
+        result['_required_learning_words'] = [w.get('english_word') for w in required_learning_words]
+        result['_token_info'] = token_info
+        result['_debug_steps'] = debug_steps
+        
+        # Use required learning words to populate target words to check
+        # This can be used in the task checks later
+        
+        return result
+        
+    except Exception as e:
+        error_msg = f"Error generating conversation activity: {str(e)}"
+        print(error_msg)
+        import traceback
+        error_traceback = traceback.format_exc()
+        traceback.print_exc()
+        debug_steps.append({'step': 'general_error', 'status': 'error', 'error': error_msg, 'traceback': error_traceback})
+        return {
+            '_error': error_msg,
+            '_error_type': 'general_error',
+            '_error_traceback': error_traceback,
+            '_prompt': prompt if 'prompt' in locals() else '',
+            '_response_time': 0,
+            '_raw_response': '',
+            '_required_learning_words': [w.get('english_word') for w in required_learning_words] if 'required_learning_words' in locals() else [],
+            '_token_info': {},
+            '_debug_steps': debug_steps,
+        }
+
+def process_conversation_turn(language: str, user_cefr_level: str, persona: dict, tasks: list, chat_history: list, user_message: str) -> dict:
+    """Process a conversation turn, evaluating tasks and generating a response"""
+    if not config.GEMINI_API_KEY:
+        return {
+            '_error': 'GEMINI_API_KEY not set',
+            '_error_type': 'missing_api_key',
+        }
+    
+    debug_steps = []
+    
+    try:
+        # Format tasks
+        tasks_list = "\n".join([f"[{i}] {task}" for i, task in enumerate(tasks)])
+        
+        # Format chat history
+        formatted_history = ""
+        for msg in chat_history:
+            role = "Persona" if msg.get("role") == "model" else "User"
+            formatted_history += f"{role}: {msg.get('text', '')}\n"
+            
+        script_req = get_script_requirement(language)
+        
+        prompt = render_template(
+            'activities/conversation_turn.txt',
+            language=language,
+            user_cefr_level=user_cefr_level,
+            persona_name=persona.get('name', 'Assistant'),
+            persona_age=persona.get('age', 'Unknown'),
+            persona_gender=persona.get('gender', 'Unknown'),
+            persona_traits=", ".join(persona.get('traits', [])),
+            persona_background=persona.get('background', ''),
+            persona_goal=persona.get('goal', ''),
+            persona_style=persona.get('style_instruction', 'casual'),
+            chat_history=formatted_history,
+            user_message=user_message,
+            tasks_list=tasks_list,
+            script_requirement=script_req
+        )
+        
+        debug_steps.append({'step': 'turn_prompt_generated', 'status': 'success', 'prompt_length': len(prompt)})
+        
+        response_text, response_time, token_info, is_truncated, api_debug_info = generate_text_with_gemini(
+            prompt, model_name=get_model_for_flow('speaking_activity')
+        )
+        debug_steps.append({'step': 'gemini_api_response', 'status': 'success', 'details': api_debug_info})
+        
+        result = parse_json_response(response_text, is_truncated)
+        
+        if "_parse_error" in result:
+            error_msg = f"JSON parsing failed: {result['_parse_error']}"
+            return {
+                '_error': error_msg,
+                '_error_type': 'parse_error',
+                '_prompt': prompt,
+                '_raw_response': response_text,
+            }
+            
+        # Generate Audio
+        language_code_map = {
+            'kannada': 'kn-IN', 'hindi': 'hi-IN', 'urdu': 'ur-PK',
+            'tamil': 'ta-IN', 'telugu': 'te-IN', 'malayalam': 'ml-IN', 'english': 'en-US'
+        }
+        language_code = language_code_map.get(language.lower(), 'kn-IN')
+        voice = persona.get('voice') or random.choice(GEMINI_TTS_VOICES)
+        
+        if result.get('response'):
+            audio_data, _, _ = generate_tts(
+                result['response'],
+                language=language_code,
+                voice=voice,
+                style_instruction=persona.get('style_instruction', 'casual, natural')
+            )
+            if audio_data and audio_data.get('format') != 'text_only':
+                result['audio'] = audio_data.get('audio_base64')
+                
+        result['_prompt'] = prompt
+        result['_response_time'] = response_time
+        result['_raw_response'] = response_text
+        result['_token_info'] = token_info
+        
+        return result
+        
+    except Exception as e:
+        error_msg = f"Error processing conversation turn: {str(e)}"
+        import traceback
+        return {
+            '_error': error_msg,
+            '_error_type': 'general_error',
+            '_error_traceback': traceback.format_exc(),
+        }
 
 def generate_speaking_activity(word_bank: list, language: str, required_learning_words: list = None, user_cefr_level: str = 'A1', custom_topic: str = None, user_interests: list = None) -> dict:
     """Generate a speaking activity with topic and instructions"""
@@ -4059,8 +4341,10 @@ def analyze_placement_test(language: str, test_data: dict, answers: dict) -> dic
     listening_lines = []
     vocab_grammar_lines = []
     translation_lines = []
+    transliteration_lines = []
     writing_lines = []
     speaking_lines = []
+    conversation_lines = []
 
     for section in test_data.get('sections', []):
         sid = section['section_id']
@@ -4073,7 +4357,7 @@ def analyze_placement_test(language: str, test_data: dict, answers: dict) -> dic
             if itype in ('passage', 'transcript'):
                 continue  # Reference material, not a question
 
-            elif itype in ('multiple_choice', 'translation_choice', 'translation_choice_reverse'):
+            elif itype in ('multiple_choice', 'translation_choice', 'translation_choice_reverse', 'transliteration_choice'):
                 correct_idx = item.get('correct_index', -1)
                 if answer is not None:
                     is_correct = (answer == correct_idx)
@@ -4090,6 +4374,8 @@ def analyze_placement_test(language: str, test_data: dict, answers: dict) -> dic
                     vocab_grammar_lines.append(line)
                 elif sid == 'translation':
                     translation_lines.append(line)
+                elif sid == 'transliteration':
+                    transliteration_lines.append(line)
 
             elif itype == 'free_response':
                 response_text = answer if isinstance(answer, str) and answer else '(no response)'
@@ -4111,6 +4397,18 @@ def analyze_placement_test(language: str, test_data: dict, answers: dict) -> dic
                     f"  [{cefr}] Prompt: {prompt_native}\n  Response: {response_text}\n"
                 )
 
+            elif itype == 'conversation_task':
+                if isinstance(answer, dict):
+                    history = answer.get('chatHistory', [])
+                    tasks = item.get('tasks', [])
+                    completed_indices = answer.get('completedTaskIndices', [])
+                    history_str = "\n".join([f"    {msg.get('role', 'unknown')}: {msg.get('text', '')}" for msg in history])
+                    tasks_str = "\n".join([f"    - {t} (Completed: {'Yes' if i in completed_indices else 'No'})" for i, t in enumerate(tasks)])
+                    response_text = f"  [{cefr}] History:\n{history_str}\n  Tasks:\n{tasks_str}\n"
+                else:
+                    response_text = f"  [{cefr}] (no response)\n"
+                conversation_lines.append(response_text)
+
     def fmt(lines, default='  (no data)'):
         return '\n'.join(lines) if lines else default
 
@@ -4125,6 +4423,8 @@ def analyze_placement_test(language: str, test_data: dict, answers: dict) -> dic
         listening_results=fmt(listening_lines),
         vocab_grammar_results=fmt(vocab_grammar_lines),
         translation_results=fmt(translation_lines),
+        transliteration_results=fmt(transliteration_lines),
+        conversation_results=fmt(conversation_lines),
         writing_responses=fmt(writing_lines),
         speaking_responses=fmt(speaking_lines),
     )

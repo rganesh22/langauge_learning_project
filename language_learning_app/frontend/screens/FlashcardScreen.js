@@ -19,6 +19,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useFocusEffect } from '@react-navigation/native';
 import { MASTERY_FILTERS, WORD_CLASSES, CEFR_LEVELS, VERB_TRANSITIVITY_FILTERS } from '../constants/filters';
 import { LanguageContext, LANGUAGES } from '../contexts/LanguageContext';
+import { AuthContext } from '../contexts/AuthContext';
 import { useTutor } from '../contexts/TutorContext';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -281,6 +282,7 @@ export default function FlashcardScreen({ route, navigation }) {
 
   // ── Language context + in-screen picker ──
   const { selectedLanguage: ctxLanguage, setSelectedLanguage: setCtxLanguage, availableLanguages } = useContext(LanguageContext);
+  const { authHeaders } = useContext(AuthContext);
   const { openTutor } = useTutor();
   const [selectedLanguage, setSelectedLanguageState] = useState(ctxLanguage || routeLanguage);
   const language = selectedLanguage; // alias used throughout the file
@@ -307,6 +309,9 @@ export default function FlashcardScreen({ route, navigation }) {
   const [decks, setDecks] = useState([]);
   const [decksLoading, setDecksLoading] = useState(false);
   const [decksExpanded, setDecksExpanded] = useState(false);
+  const [createDeckModalVisible, setCreateDeckModalVisible] = useState(false);
+  const [createDeckName, setCreateDeckName] = useState('');
+  const [createDeckCreating, setCreateDeckCreating] = useState(false);
   const [showDeleteDeckModal, setShowDeleteDeckModal] = useState(false);
   const [deleteDeckList, setDeleteDeckList] = useState([]);
   const [deleteDeckSelectedIds, setDeleteDeckSelectedIds] = useState(new Set());
@@ -652,7 +657,7 @@ export default function FlashcardScreen({ route, navigation }) {
   const loadDecks = async () => {
     setDecksLoading(true);
     try {
-      const res = await fetch(`${API_BASE_URL}/api/vocab/decks?language=${language}`);
+      const res = await fetch(`${API_BASE_URL}/api/vocab/decks?language=${language}`, { headers: { ...authHeaders } });
       if (res.ok) {
         const data = await res.json();
         setDecks(data.decks || []);
@@ -672,7 +677,7 @@ export default function FlashcardScreen({ route, navigation }) {
       if (deckId === 'all') {
         // Load all words from all imported decks
         const allRes = await Promise.all(
-          decks.map(d => fetch(`${API_BASE_URL}/api/vocab/decks/${d.id}/words?language=${language}`).then(r => r.json()))
+          decks.map(d => fetch(`${API_BASE_URL}/api/vocab/decks/${d.id}/words?language=${language}`, { headers: { ...authHeaders } }).then(r => r.json()))
         );
         const seen = new Set();
         for (const data of allRes) {
@@ -681,7 +686,7 @@ export default function FlashcardScreen({ route, navigation }) {
           }
         }
       } else {
-        const res = await fetch(`${API_BASE_URL}/api/vocab/decks/${deckId}/words?language=${language}`);
+        const res = await fetch(`${API_BASE_URL}/api/vocab/decks/${deckId}/words?language=${language}`, { headers: { ...authHeaders } });
         const data = await res.json();
         deckWords = data.words || [];
       }
@@ -1490,7 +1495,7 @@ export default function FlashcardScreen({ route, navigation }) {
       const deck = deletePendingDeck;
       if (!deck?.id) return;
       try {
-        const res = await fetch(`${API_BASE_URL}/api/vocab/decks/${deck.id}/siblings`);
+        const res = await fetch(`${API_BASE_URL}/api/vocab/decks/${deck.id}/siblings`, { headers: { ...authHeaders } });
         const data = res.ok ? await res.json() : { decks: [] };
         const siblings = data.decks || [];
         const list = siblings.length > 0 ? siblings : [{ id: deck.id, name: deck.name, language: deck.language || language }];
@@ -1512,7 +1517,7 @@ export default function FlashcardScreen({ route, navigation }) {
       setDeleteSingleDeckId(null);
       if (!id) return;
       try {
-        await fetch(`${API_BASE_URL}/api/vocab/decks/${id}`, { method: 'DELETE' });
+        await fetch(`${API_BASE_URL}/api/vocab/decks/${id}`, { method: 'DELETE', headers: { ...authHeaders } });
         loadDecks();
       } catch (e) {
         console.error('Error deleting deck:', e);
@@ -1534,7 +1539,7 @@ export default function FlashcardScreen({ route, navigation }) {
       setDeleteDeckSelectedIds(new Set());
       for (const id of selected) {
         try {
-          await fetch(`${API_BASE_URL}/api/vocab/decks/${id}`, { method: 'DELETE' });
+          await fetch(`${API_BASE_URL}/api/vocab/decks/${id}`, { method: 'DELETE', headers: { ...authHeaders } });
         } catch (e) {
           console.error('Error deleting deck:', e);
         }
@@ -1683,7 +1688,17 @@ export default function FlashcardScreen({ route, navigation }) {
                 </View>
               )}
             </View>
-            <Ionicons name={decksExpanded ? 'chevron-up' : 'chevron-down'} size={18} color="#999" />
+            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
+              <TouchableOpacity
+                onPress={(e) => { e.stopPropagation(); setCreateDeckModalVisible(true); }}
+                style={{ backgroundColor: '#16A34A', borderRadius: 10, paddingHorizontal: 12, paddingVertical: 6, flexDirection: 'row', alignItems: 'center', gap: 6 }}
+                activeOpacity={0.8}
+              >
+                <Ionicons name="add" size={18} color="#FFF" />
+                <SafeText style={{ fontSize: 13, fontWeight: '700', color: '#FFF' }}>New deck</SafeText>
+              </TouchableOpacity>
+              <Ionicons name={decksExpanded ? 'chevron-up' : 'chevron-down'} size={18} color="#999" />
+            </View>
           </TouchableOpacity>
 
           {decksExpanded && (
@@ -1842,6 +1857,58 @@ export default function FlashcardScreen({ route, navigation }) {
                 </TouchableOpacity>
               </View>
             </View>
+          </TouchableOpacity>
+        </Modal>
+        {/* Create new deck modal */}
+        <Modal visible={createDeckModalVisible} transparent animationType="fade" onRequestClose={() => setCreateDeckModalVisible(false)}>
+          <TouchableOpacity activeOpacity={1} style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.5)', justifyContent: 'center', padding: 24 }} onPress={() => setCreateDeckModalVisible(false)}>
+            <TouchableOpacity activeOpacity={1} onPress={() => {}} style={{ backgroundColor: '#FFF', borderRadius: 12, padding: 20 }}>
+              <SafeText style={{ fontSize: 16, fontWeight: '600', color: '#1A1A1A', marginBottom: 12 }}>Create new deck</SafeText>
+              <SafeText style={{ fontSize: 13, color: '#6B7280', marginBottom: 8 }}>Deck name</SafeText>
+              <TextInput
+                style={{ borderWidth: 1, borderColor: '#E0E0E0', borderRadius: 8, paddingHorizontal: 12, paddingVertical: 10, fontSize: 15, color: '#333', marginBottom: 8 }}
+                value={createDeckName}
+                onChangeText={setCreateDeckName}
+                placeholder="e.g. Chapter 1 vocab"
+                placeholderTextColor="#999"
+                autoFocus
+              />
+              <SafeText style={{ fontSize: 13, color: '#6B7280', marginBottom: 4 }}>Language: {currentLanguage?.name || language}</SafeText>
+              <View style={{ flexDirection: 'row', justifyContent: 'flex-end', gap: 12, marginTop: 16 }}>
+                <TouchableOpacity onPress={() => { setCreateDeckModalVisible(false); setCreateDeckName(''); }} style={{ paddingVertical: 8, paddingHorizontal: 16 }}>
+                  <SafeText style={{ fontSize: 15, color: '#666' }}>Cancel</SafeText>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={async () => {
+                    const name = (createDeckName || '').trim();
+                    if (!name) return;
+                    setCreateDeckCreating(true);
+                    try {
+                      const res = await fetch(`${API_BASE_URL}/api/vocab/decks`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json', ...authHeaders },
+                        body: JSON.stringify({ name, language }),
+                      });
+                      if (!res.ok) throw new Error('Failed to create deck');
+                      const data = await res.json();
+                      setCreateDeckModalVisible(false);
+                      setCreateDeckName('');
+                      loadDecks();
+                      navigation.navigate('DeckDetail', { deckId: data.deck_id, deckName: data.deck_name, language: data.language });
+                    } catch (e) {
+                      console.error('Error creating deck:', e);
+                      Alert.alert('Error', e.message || 'Could not create deck.');
+                    } finally {
+                      setCreateDeckCreating(false);
+                    }
+                  }}
+                  disabled={createDeckCreating || !(createDeckName || '').trim()}
+                  style={{ paddingVertical: 8, paddingHorizontal: 16 }}
+                >
+                  {createDeckCreating ? <ActivityIndicator size="small" color="#16A34A" /> : <SafeText style={{ fontSize: 15, fontWeight: '600', color: '#16A34A' }}>Create</SafeText>}
+                </TouchableOpacity>
+              </View>
+            </TouchableOpacity>
           </TouchableOpacity>
         </Modal>
         {/* Delete deck(s) selection modal */}
@@ -3293,7 +3360,7 @@ export default function FlashcardScreen({ route, navigation }) {
                   try {
                     await fetch(`${API_BASE_URL}/api/vocab/decks/${activeDeckId}`, {
                       method: 'PUT',
-                      headers: { 'Content-Type': 'application/json' },
+                      headers: { 'Content-Type': 'application/json', ...authHeaders },
                       body: JSON.stringify({ name }),
                     });
                     setActiveDeckName(name);

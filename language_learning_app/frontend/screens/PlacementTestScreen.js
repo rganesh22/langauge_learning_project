@@ -48,6 +48,8 @@ const SECTION_META = {
   speaking:           { icon: 'mic-outline',       label: 'Speaking',        color: '#F59E0B' },
   vocabulary_grammar: { icon: 'library-outline',   label: 'Vocab & Grammar', color: '#06B6D4' },
   translation:        { icon: 'language-outline',  label: 'Translation',     color: '#8B5CF6' },
+  transliteration:    { icon: 'text-outline',      label: 'Transliteration', color: '#134e4a' },
+  conversation:       { icon: 'chatbubbles-outline', label: 'Conversation',   color: '#047857' },
 };
 
 // HistoryAudioPlayer, renderItem, and itemStyles imported from shared components above.
@@ -903,6 +905,21 @@ export default function PlacementTestScreen({ route }) {
               color={sColor}
               label="Your Speaking"
             />
+          </View>
+        )}
+
+        {/* Conversation History Answer */}
+        {userAnswer && userAnswer.chatHistory && (
+          <View style={{ marginTop: 8, backgroundColor: '#F9FAFB', borderRadius: 8, padding: 8, borderWidth: 1, borderColor: sColor }}>
+            <SafeText style={{ fontWeight: '600', fontSize: 12, color: sColor, marginBottom: 4, textTransform: 'uppercase' }}>Conversation History</SafeText>
+            {userAnswer.chatHistory.map((msg, idx) => (
+              <SafeText key={idx} style={{ fontSize: 13, color: '#374151', marginBottom: 4 }}>
+                <SafeText style={{ fontWeight: '600', color: msg.role === 'model' ? '#6B7280' : sColor }}>
+                  {msg.role === 'model' ? (item.persona?.name || 'AI') : 'You'}:{' '}
+                </SafeText>
+                {msg.text}
+              </SafeText>
+            ))}
           </View>
         )}
 

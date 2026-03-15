@@ -24,6 +24,12 @@ VOCABULARY & GRAMMAR — MCQ answers:
 TRANSLATION — MCQ answers (translate {language} phrase to English):
 {translation_results}
 
+TRANSLITERATION — MCQ answers:
+{transliteration_results}
+
+CONVERSATION — Learner conversation history and completed tasks (evaluate for interactive skills and fluency):
+{conversation_results}
+
 WRITING — Learner responses (evaluate each for grammar, vocabulary range, coherence, and CEFR alignment):
 {writing_responses}
 
@@ -51,12 +57,14 @@ For SUBJECTIVE sections (Writing, Speaking):
 • Score each response as an estimated CEFR level (A0-C1).
 
 Skill weights for final level:
-  Reading:            25%
-  Listening:          20%
-  Vocabulary/Grammar: 20%
+  Reading:            15%
+  Listening:          15%
+  Vocabulary/Grammar: 15%
   Translation:        10%
-  Writing:            13%
-  Speaking:           12%
+  Transliteration:    10%
+  Writing:            15%
+  Speaking:           10%
+  Conversation:       10%
 
 Final level = weighted average (map A0=0, A1=1, A2=2, B1=3, B2=4, C1=5, then round to nearest level).
 
@@ -86,7 +94,9 @@ OUTPUT FORMAT
     "writing": "B1",
     "speaking": "A2",
     "vocabulary_grammar": "B1",
-    "translation": "A2"
+    "translation": "A2",
+    "transliteration": "A2",
+    "conversation": "B1"
   }},
   "skill_scores": {{
     "reading": 72,
@@ -94,7 +104,9 @@ OUTPUT FORMAT
     "writing": 65,
     "speaking": 55,
     "vocabulary_grammar": 71,
-    "translation": 60
+    "translation": 60,
+    "transliteration": 68,
+    "conversation": 70
   }},
   "level_breakdown": {{
     "A0": {{ "score": 100, "passed": true }},

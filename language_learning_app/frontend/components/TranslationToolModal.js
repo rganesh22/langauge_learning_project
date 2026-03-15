@@ -32,6 +32,7 @@ import {
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { LanguageContext, LANGUAGES } from '../contexts/LanguageContext';
+import { AuthContext } from '../contexts/AuthContext';
 import { WORD_CLASSES, LEVELS, LEVEL_COLORS, CEFR_LEVELS } from '../constants/filters';
 import VocabImportDebugModal from './VocabImportDebugModal';
 import TextImportModal from './TextImportModal';
@@ -55,6 +56,7 @@ export default function TranslationToolModal({
   onMakeVocabCards,
 }) {
   const { userSelectedLanguages } = useContext(LanguageContext);
+  const { authHeaders } = useContext(AuthContext);
   const translationJob = useContext(TranslationJobContext);
 
   // When we start a translation via context or open from tray, we show that job's state
@@ -598,7 +600,7 @@ export default function TranslationToolModal({
         .filter(Boolean);
       const res = await fetch(`${API_BASE_URL}/api/vocab/commit-import`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', ...authHeaders },
         body: JSON.stringify({
           language: srcLang,
           words: sourceToImport,

@@ -9,8 +9,8 @@
  *   import { renderItem } from './shared/components/ItemRenderer';
  *   renderItem(item, config);
  */
-import React from 'react';
-import { View, TouchableOpacity, TextInput, ActivityIndicator } from 'react-native';
+import React, { useState, useRef, useEffect } from 'react';
+import { View, TouchableOpacity, TextInput, ActivityIndicator, ScrollView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import SafeText from '../../../../components/SafeText';
 import HistoryAudioPlayer from './HistoryAudioPlayer';
@@ -504,6 +504,237 @@ function renderSpeakingPrompt(item, config, index) {
   );
 }
 
+
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Conversation Activity
+// ─────────────────────────────────────────────────────────────────────────────
+const API_BASE_URL = __DEV__ ? 'http://localhost:9090' : 'http://localhost:9090';
+
+function ConversationTask({ item, config, index }) {
+  const [inputText, setInputText] = useState('');
+  const [chatHistory, setChatHistory] = useState(() => {
+    const defaultHistory = [];
+    if (item.starting_message && item.starting_message.text) {
+      defaultHistory.push({ role: 'model', text: item.starting_message.text });
+    }
+    return defaultHistory;
+  });
+  const [isLoading, setIsLoading] = useState(false);
+  const [completedTaskIndices, setCompletedTaskIndices] = useState([]);
+  const [audioBase64, setAudioBase64] = useState(item.starting_message?.audio_base64 || null);
+  const [feedbackText, setFeedbackText] = useState(null);
+  
+  const sc = config.sectionColor || '#047857';
+  const renderText = config.renderText || defaultRenderText;
+  
+  const persona = item.persona || {};
+  const maxTurns = item.max_turns || 6;
+  const userTurns = chatHistory.filter(msg => msg.role === 'user').length;
+  const turnsRemaining = Math.max(0, maxTurns - userTurns);
+  const isFinished = turnsRemaining <= 0 || completedTaskIndices.length === (item.tasks || []).length;
+  
+  const scrollViewRef = useRef(null);
+
+  useEffect(() => {
+    // Save completion state to parent config.answers if needed
+    if (isFinished && config.setAnswers) {
+      config.setAnswers(prev => ({
+        ...prev,
+        [item.item_id]: {
+          completedTaskIndices,
+          chatHistory,
+          isFinished: true
+        }
+      }));
+    }
+  }, [isFinished, completedTaskIndices, chatHistory]);
+
+  const handleSend = async () => {
+    if (!inputText.trim() || isLoading || isFinished) return;
+    
+    // Add user message to UI immediately
+    const userMsg = { role: 'user', text: inputText.trim() };
+    const newHistory = [...chatHistory, userMsg];
+    setChatHistory(newHistory);
+    setInputText('');
+    setIsLoading(true);
+    setFeedbackText(null);
+    setAudioBase64(null); // Clear previous audio
+    
+    try {
+      const payload = {
+        activity: item,
+        user_message: userMsg.text,
+        chat_history: chatHistory,
+      };
+      
+      const res = await fetch(`${API_BASE_URL}/api/activity/conversation/${config.language}/turn`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      
+      if (!res.ok) {
+        throw new Error(`Turn failed: ${res.status}`);
+      }
+      const data = await res.json();
+      
+      if (data.response) {
+        setChatHistory(prev => [...prev, { role: 'model', text: data.response }]);
+      }
+      if (data.completed_task_indices) {
+        setCompletedTaskIndices(data.completed_task_indices);
+      }
+      if (data.audio) {
+        setAudioBase64(data.audio);
+      }
+      if (data.feedback && typeof data.feedback === 'string' && data.feedback.trim() !== '') {
+        setFeedbackText(data.feedback);
+      }
+    } catch (err) {
+      console.error('Conversation turn error:', err);
+      // Optional: show error message in UI
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return (
+    <View key={item.item_id} style={itemStyles.conversationCard}>
+      {/* Header */}
+      <View style={itemStyles.conversationHeader}>
+        <Ionicons name="person-circle-outline" size={40} color={sc} />
+        <View style={itemStyles.conversationPersonaDetails}>
+          <SafeText style={itemStyles.conversationPersonaName}>
+            {resolveDisplayText(persona.name || 'Conversation', item, index, 'personaName', config)}
+          </SafeText>
+          <SafeText style={itemStyles.conversationPersonaSubtitle}>
+            Goal: {persona.goal || 'Chat in ' + config.language}
+          </SafeText>
+        </View>
+        <View style={itemStyles.conversationTurnsRemaining}>
+          <SafeText style={itemStyles.conversationTurnsText}>
+            {turnsRemaining} turn{turnsRemaining !== 1 ? 's' : ''} left
+          </SafeText>
+        </View>
+      </View>
+      
+      {/* Tasks */}
+      {item.tasks && item.tasks.length > 0 && (
+        <View style={itemStyles.conversationTasksContainer}>
+          <SafeText style={itemStyles.conversationTasksTitle}>Conversation Tasks</SafeText>
+          {item.tasks.map((t, i) => {
+            const isCompleted = completedTaskIndices.includes(i);
+            return (
+              <View key={`task-${i}`} style={itemStyles.conversationTaskItem}>
+                <Ionicons 
+                  name={isCompleted ? "checkmark-circle" : "ellipse-outline"} 
+                  size={18} 
+                  color={isCompleted ? "#10B981" : "#9CA3AF"} 
+                />
+                <SafeText style={[
+                  itemStyles.conversationTaskText,
+                  isCompleted && itemStyles.conversationTaskTextCompleted
+                ]}>
+                  {t}
+                </SafeText>
+              </View>
+            );
+          })}
+        </View>
+      )}
+
+      {/* Chat History */}
+      <ScrollView 
+        style={itemStyles.conversationHistory}
+        ref={scrollViewRef}
+        onContentSizeChange={() => scrollViewRef.current?.scrollToEnd({ animated: true })}
+      >
+        {chatHistory.map((msg, i) => {
+          const isUser = msg.role === 'user';
+          return (
+            <View key={`msg-${i}`} style={[
+              itemStyles.dialogueLine,
+              isUser ? itemStyles.dialogueLineRight : {}
+            ]}>
+              {!isUser && (
+                <View style={{ marginTop: 4 }}>
+                  <Ionicons name="person-circle" size={24} color={sc} />
+                </View>
+              )}
+              <View style={[
+                itemStyles.dialogueBubble,
+                isUser ? itemStyles.dialogueBubbleRight : {},
+                { 
+                  backgroundColor: isUser ? sc : '#F3F4F6',
+                  borderColor: isUser ? sc : '#E5E7EB',
+                }
+              ]}>
+                {renderText(msg.text, [itemStyles.dialogueBubbleText, { color: isUser ? '#FFF' : '#1F2937' }])}
+              </View>
+            </View>
+          );
+        })}
+        {isLoading && (
+          <View style={itemStyles.conversationLoadingContainer}>
+            <ActivityIndicator size="small" color={sc} />
+          </View>
+        )}
+      </ScrollView>
+
+      {/* Audio Player for latest model message */}
+      {!isLoading && audioBase64 && (
+        <View style={{ marginBottom: 12 }}>
+          <HistoryAudioPlayer 
+            audioBase64={audioBase64}
+            mimeType="audio/wav"
+            color={sc}
+            label="Listen to response"
+          />
+        </View>
+      )}
+
+      {/* Feedback from previous turn */}
+      {feedbackText && !isLoading && (
+        <View style={itemStyles.conversationFeedback}>
+          <SafeText style={itemStyles.conversationFeedbackText}>💡 {feedbackText}</SafeText>
+        </View>
+      )}
+      
+      {/* Input */}
+      {!isFinished ? (
+        <View style={itemStyles.conversationInputRow}>
+          <TextInput
+            style={itemStyles.conversationTextInput}
+            value={inputText}
+            onChangeText={setInputText}
+            placeholder={`Type in ${config.language}...`}
+            placeholderTextColor="#9CA3AF"
+            returnKeyType="send"
+            onSubmitEditing={handleSend}
+            editable={!isLoading && !config.showResult}
+          />
+          <TouchableOpacity 
+            style={[itemStyles.conversationSendBtn, { backgroundColor: (!inputText.trim() || isLoading) ? '#D1D5DB' : sc }]}
+            onPress={handleSend}
+            disabled={!inputText.trim() || isLoading || config.showResult}
+          >
+            <Ionicons name="send" size={18} color="#FFF" style={{ marginLeft: 4 }} />
+          </TouchableOpacity>
+        </View>
+      ) : (
+        <View style={{ alignItems: 'center', marginTop: 10, padding: 12, backgroundColor: '#ECFDF5', borderRadius: 12 }}>
+          <Ionicons name="checkmark-done-circle" size={32} color="#10B981" />
+          <SafeText style={{ color: '#047857', fontWeight: '600', marginTop: 4 }}>
+            Conversation complete
+          </SafeText>
+        </View>
+      )}
+    </View>
+  );
+}
+
 // ─────────────────────────────────────────────────────────────────────────────
 // Main entry point
 // ─────────────────────────────────────────────────────────────────────────────
@@ -534,6 +765,8 @@ export function renderItem(item, index, config) {
       return renderFreeResponse(item, config, index);
     case 'speaking_prompt':
       return renderSpeakingPrompt(item, config, index);
+    case 'conversation_task':
+      return <ConversationTask key={item.item_id} item={item} config={config} index={index} />;
     default:
       return (
         <SafeText key={item.item_id || index} style={itemStyles.questionText}>

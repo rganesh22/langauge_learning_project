@@ -33,6 +33,7 @@ const ACTIVITY_COLORS = {
 };
 
 import { LANGUAGES, LanguageContext } from '../contexts/LanguageContext';
+import { AuthContext } from '../contexts/AuthContext';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const LEVEL_COLORS = {
@@ -473,6 +474,7 @@ export default function ProfileScreen() {
   const [saving, setSaving] = useState(false);
   // Global language for goals, stats, and SRS settings
   const { selectedLanguage: ctxLanguage, setSelectedLanguage: setCtxLanguage, loadUserLanguages, availableLanguages } = React.useContext(LanguageContext);
+  const { logout } = React.useContext(AuthContext);
   const [profileLanguage, setProfileLanguage] = useState(ctxLanguage || null);
   const [languageMenuVisible, setLanguageMenuVisible] = useState(false);
   const [dailyStats, setDailyStats] = useState({});
@@ -3196,6 +3198,28 @@ export default function ProfileScreen() {
             </TouchableOpacity>
           </View>
         )}
+      </View>
+
+      {/* Sign out */}
+      <View style={{ alignItems: 'center', paddingHorizontal: 16, paddingTop: 32, paddingBottom: 32 }}>
+        <TouchableOpacity 
+          onPress={() => { 
+            Alert.alert('Sign out', 'Are you sure?', [
+              { text: 'Cancel', style: 'cancel' },
+              { 
+                text: 'Sign out', 
+                style: 'destructive', 
+                onPress: async () => {
+                  await logout();
+                  // AppContent re-renders on auth state change and shows LoginScreen when !user
+                } 
+              }
+            ]); 
+          }} 
+          style={{ paddingVertical: 12, paddingHorizontal: 24, backgroundColor: '#FEE2E2', borderRadius: 8, borderWidth: 1, borderColor: '#FCA5A5' }}
+        >
+          <Text style={{ color: '#DC2626', fontSize: 16, fontWeight: '600' }}>Sign out</Text>
+        </TouchableOpacity>
       </View>
 
     </ScrollView>

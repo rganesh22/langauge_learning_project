@@ -21,6 +21,13 @@ DESIGN PRINCIPLES
 SECTION BREAKDOWN
 ═══════════════════════════════════════════════════════
 
+TRANSLITERATION (2 transliteration multiple choice)
+  • tl1 (A1): Show {language} phrase → 4 English transliteration options.
+  • tl2 (A2): Show {language} phrase → 4 English transliteration options.
+
+CONVERSATION (1 conversation task)
+  • cv1 (A2/B1): A dynamic, interactive conversation task. The persona should be a local in {language} looking for a casual talk. Include 2 user tasks to complete. Follow the conversation JSON format below.
+
 READING (1 passage + 2 MCQ)
   • Passage (~80 words, A1/A2 level). 2 MCQ testing comprehension. All {language} text in {script_name}.
 
@@ -68,6 +75,65 @@ OUTPUT FORMAT — Return ONLY this JSON object, fully filled in with real conten
   "test_id": "placement_{language_code}",
   "language": "{language}",
   "sections": [
+    {{
+      "section_id": "transliteration",
+      "section_title": "Transliteration title in {script_name}",
+      "section_icon": "text-outline",
+      "instruction_en": "Select the correct pronunciation (transliteration).",
+      "items": [
+        {{
+          "item_id": "tl1",
+          "type": "transliteration_choice",
+          "cefr_target": "A1",
+          "source_phrase": "A1-level {language} phrase in {script_name}",
+          "question_en": "How is this pronounced?",
+          "options": ["Transliteration Option A", "Transliteration Option B", "Transliteration Option C", "Transliteration Option D"],
+          "correct_index": 1
+        }},
+        {{
+          "item_id": "tl2",
+          "type": "transliteration_choice",
+          "cefr_target": "A2",
+          "source_phrase": "A2-level {language} phrase in {script_name}",
+          "question_en": "How is this pronounced?",
+          "options": ["Option A", "Option B", "Option C", "Option D"],
+          "correct_index": 2
+        }}
+      ]
+    }},
+    {{
+      "section_id": "conversation",
+      "section_title": "Conversation title in {script_name}",
+      "section_icon": "chatbubbles-outline",
+      "instruction_en": "Chat with the AI character and complete the tasks.",
+      "items": [
+        {{
+          "item_id": "cv1",
+          "type": "conversation_task",
+          "cefr_target": "A2",
+          "persona": {
+            "name": "Persona Name in {script_name}",
+            "age": "25",
+            "gender": "female",
+            "traits": ["friendly", "talkative"],
+            "background": "works at a local cafe",
+            "goal": "have a casual conversation with the user",
+            "style_instruction": "casual, natural",
+            "voice": ""
+          },
+          "tasks": [
+            "Ask the persona about their day",
+            "Order a coffee or tea"
+          ],
+          "starting_message": {
+            "text": "Greeting in {script_name}",
+            "english": "Hello! How are you?",
+            "transliteration": "Transliteration of greeting"
+          },
+          "max_turns": 6
+        }}
+      ]
+    }},
     {{
       "section_id": "reading",
       "section_title": "section title in {script_name}",

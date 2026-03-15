@@ -360,6 +360,128 @@ const itemStyles = StyleSheet.create({
     fontWeight: '700',
     color: '#FFF',
   },
+
+  // ── Conversation Task ──
+  conversationCard: {
+    backgroundColor: '#FFF',
+    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: '#E5E7EB',
+    padding: 16,
+    marginBottom: 20,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.05,
+    shadowRadius: 4,
+    elevation: 2,
+  },
+  conversationHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: '#F3F4F6',
+    paddingBottom: 12,
+  },
+  conversationPersonaDetails: {
+    marginLeft: 12,
+    flex: 1,
+  },
+  conversationPersonaName: {
+    fontSize: 16,
+    fontWeight: '700',
+    color: '#111827',
+  },
+  conversationPersonaSubtitle: {
+    fontSize: 13,
+    color: '#6B7280',
+    marginTop: 2,
+  },
+  conversationTurnsRemaining: {
+    backgroundColor: '#F3F4F6',
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 12,
+  },
+  conversationTurnsText: {
+    fontSize: 12,
+    fontWeight: '600',
+    color: '#4B5563',
+  },
+  conversationTasksContainer: {
+    backgroundColor: '#F9FAFB',
+    borderRadius: 12,
+    padding: 12,
+    marginBottom: 16,
+    borderWidth: 1,
+    borderColor: '#F3F4F6',
+  },
+  conversationTasksTitle: {
+    fontSize: 13,
+    fontWeight: '600',
+    color: '#4B5563',
+    marginBottom: 8,
+  },
+  conversationTaskItem: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    marginBottom: 6,
+    gap: 8,
+  },
+  conversationTaskText: {
+    fontSize: 14,
+    color: '#374151',
+    flex: 1,
+  },
+  conversationTaskTextCompleted: {
+    color: '#9CA3AF',
+    textDecorationLine: 'line-through',
+  },
+  conversationHistory: {
+    flexGrow: 0,
+    maxHeight: 300,
+    marginBottom: 16,
+  },
+  conversationInputRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
+  },
+  conversationTextInput: {
+    flex: 1,
+    borderWidth: 1,
+    borderColor: '#D1D5DB',
+    borderRadius: 24,
+    paddingHorizontal: 16,
+    paddingVertical: 10,
+    fontSize: 15,
+    color: '#1F2937',
+    backgroundColor: '#F9FAFB',
+  },
+  conversationSendBtn: {
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  conversationFeedback: {
+    marginTop: 12,
+    padding: 12,
+    backgroundColor: '#FEF2F2',
+    borderRadius: 8,
+    borderLeftWidth: 4,
+    borderLeftColor: '#EF4444',
+  },
+  conversationFeedbackText: {
+    fontSize: 13,
+    color: '#991B1B',
+    fontStyle: 'italic',
+  },
+  conversationLoadingContainer: {
+    padding: 12,
+    alignItems: 'center',
+  },
 });
 
 export default itemStyles;

@@ -3,7 +3,7 @@
  * Floating button (bottom-right) to open a chat with the tutor AI.
  * Hidden when another popup is open or when on Placement Test.
  */
-import React, { useState, useEffect, useContext, useRef } from 'react';
+import React, { useState, useEffect, useContext, useRef, useCallback } from 'react';
 import {
   View,
   Text,
@@ -22,6 +22,7 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { LanguageContext } from '../contexts/LanguageContext';
+import { AuthContext } from '../contexts/AuthContext';
 import { useNavigationState } from '@react-navigation/native';
 import Markdown from 'react-native-markdown-display';
 import { setStringAsync as clipboardSetString } from '../utils/clipboard';
@@ -224,6 +225,7 @@ export function TutorChatButton({ visible = true, onOpenChange }) {
 function TutorModal({ visible, onClose }) {
   const insets = useSafeAreaInsets();
   const { selectedLanguage } = useContext(LanguageContext);
+  const { authHeaders } = useContext(AuthContext);
   const routeName = useNavigationState(state => {
     const r = state?.routes?.[state.index];
     return r?.name ?? 'Main';
@@ -236,26 +238,31 @@ function TutorModal({ visible, onClose }) {
   const [view, setView] = useState('chat');
   const [history, setHistory] = useState([]);
   const [loadingHistory, setLoadingHistory] = useState(false);
+  const [historySearch, setHistorySearch] = useState('');
+  const [selectingMode, setSelectingMode] = useState(false);
+  const [selectedIds, setSelectedIds] = useState([]);
+  const [deleting, setDeleting] = useState(false);
   const [levels, setLevels] = useState({});
   const [debugVisible, setDebugVisible] = useState(false);
   const [editingMessageIndex, setEditingMessageIndex] = useState(null);
 
+  const fetchHistory = useCallback(() => {
+    setLoadingHistory(true);
+    const searchParam = historySearch.trim() ? `?search=${encodeURIComponent(historySearch.trim())}` : '';
+    fetch(`${API_BASE_URL}/api/tutor/history${searchParam}`, { headers: authHeaders })
+      .then(res => res.json())
+      .then(data => setHistory(data.conversations || []))
+      .catch(() => setHistory([]))
+      .finally(() => setLoadingHistory(false));
+  }, [historySearch, authHeaders]);
+
   useEffect(() => {
-    if (visible && view === 'history') {
-      setLoadingHistory(true);
-      fetch(`${API_BASE_URL}/api/tutor/history`)
-        .then(res => res.json())
-        .then(data => {
-          setHistory(data.conversations || []);
-        })
-        .catch(() => setHistory([]))
-        .finally(() => setLoadingHistory(false));
-    }
-  }, [visible, view]);
+    if (visible && view === 'history') fetchHistory();
+  }, [visible, view, fetchHistory]);
 
   useEffect(() => {
     if (!visible) return;
-    fetch(`${API_BASE_URL}/api/dashboard/${selectedLanguage || 'kannada'}`)
+    fetch(`${API_BASE_URL}/api/dashboard/${selectedLanguage || 'kannada'}`, { headers: authHeaders })
       .then(res => res.ok ? res.json() : {})
       .then(data => {
         const lvl = {};
@@ -263,7 +270,7 @@ function TutorModal({ visible, onClose }) {
         setLevels(lvl);
       })
       .catch(() => {});
-  }, [visible, selectedLanguage]);
+  }, [visible, selectedLanguage, authHeaders]);
 
   const sendMessage = async () => {
     const text = (input || '').trim();
@@ -287,7 +294,7 @@ function TutorModal({ visible, onClose }) {
     try {
       const res = await fetch(`${API_BASE_URL}/api/tutor/chat`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', ...authHeaders },
         body: JSON.stringify({
           message: text,
           conversation_id: conversationId,
@@ -310,9 +317,13 @@ function TutorModal({ visible, onClose }) {
   };
 
   const loadConversation = async (id) => {
+    if (selectingMode) {
+      setSelectedIds(prev => prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id]);
+      return;
+    }
     setLoadingHistory(true);
     try {
-      const res = await fetch(`${API_BASE_URL}/api/tutor/conversation/${id}`);
+      const res = await fetch(`${API_BASE_URL}/api/tutor/conversation/${id}`, { headers: authHeaders });
       if (!res.ok) throw new Error();
       const data = await res.json();
       const msgs = (data.messages || []).map(m => ({ ...m, timestamp: m.timestamp || null }));
@@ -330,6 +341,53 @@ function TutorModal({ visible, onClose }) {
     setConversationId(null);
     setView('chat');
     setEditingMessageIndex(null);
+  };
+
+  const toggleSelect = (id) => {
+    setSelectedIds(prev => prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id]);
+  };
+
+  const deleteConversations = async (ids) => {
+    if (!ids.length) return;
+    setDeleting(true);
+    try {
+      if (ids.length === 1) {
+        const res = await fetch(`${API_BASE_URL}/api/tutor/conversation/${ids[0]}`, { method: 'DELETE', headers: authHeaders });
+        if (!res.ok) throw new Error(await res.text());
+      } else {
+        const res = await fetch(`${API_BASE_URL}/api/tutor/conversations/delete`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', ...authHeaders },
+          body: JSON.stringify({ conversation_ids: ids }),
+        });
+        if (!res.ok) throw new Error(await res.text());
+      }
+      setSelectedIds([]);
+      setSelectingMode(false);
+      fetchHistory();
+      if (conversationId && ids.includes(conversationId)) {
+        setMessages([]);
+        setConversationId(null);
+        setView('chat');
+      }
+    } catch (e) {
+      Alert.alert('Error', 'Could not delete conversation(s).');
+    } finally {
+      setDeleting(false);
+    }
+  };
+
+  const confirmDeleteSelected = () => {
+    const ids = selectedIds.length ? selectedIds : [];
+    if (!ids.length) return;
+    Alert.alert(
+      'Delete conversations',
+      `Delete ${ids.length} conversation${ids.length === 1 ? '' : 's'}?`,
+      [
+        { text: 'Cancel', style: 'cancel' },
+        { text: 'Delete', style: 'destructive', onPress: () => deleteConversations(ids) },
+      ]
+    );
   };
 
   const copyMessage = async (content) => {
@@ -410,25 +468,96 @@ function TutorModal({ visible, onClose }) {
 
         <View style={styles.tutorBody}>
           {view === 'history' ? (
-            <ScrollView style={styles.historyList} contentContainerStyle={styles.historyContent}>
-              {loadingHistory ? (
-                <ActivityIndicator size="small" color={COLORS.primary} style={{ marginTop: 24 }} />
-              ) : history.length === 0 ? (
-                <Text style={styles.emptyHistory}>No past conversations</Text>
-              ) : (
-                history.map((conv) => (
+            <>
+              <View style={styles.historyToolbar}>
+                <TextInput
+                  style={styles.historySearchInput}
+                  placeholder="Search chats..."
+                  placeholderTextColor={COLORS.textSecondary}
+                  value={historySearch}
+                  onChangeText={setHistorySearch}
+                  returnKeyType="search"
+                  onSubmitEditing={fetchHistory}
+                />
+                <TouchableOpacity
+                  style={[styles.historySearchBtn, (historySearch.trim().length > 0) && styles.historySearchBtnActive]}
+                  onPress={fetchHistory}
+                >
+                  <Ionicons name="search" size={20} color={historySearch.trim() ? COLORS.primary : COLORS.textSecondary} />
+                </TouchableOpacity>
+              </View>
+              <View style={styles.historyActionsRow}>
+                <TouchableOpacity
+                  style={[styles.historyActionBtn, selectingMode && styles.historyActionBtnActive]}
+                  onPress={() => {
+                    setSelectingMode(prev => !prev);
+                    if (selectingMode) setSelectedIds([]);
+                  }}
+                >
+                  <Text style={[styles.historyActionText, selectingMode && { color: COLORS.primary }]}>
+                    {selectingMode ? 'Cancel' : 'Select'}
+                  </Text>
+                </TouchableOpacity>
+                {selectingMode && selectedIds.length > 0 && (
                   <TouchableOpacity
-                    key={conv.id}
-                    style={styles.historyItem}
-                    onPress={() => loadConversation(conv.id)}
-                    activeOpacity={0.7}
+                    style={[styles.historyActionBtn, styles.historyDeleteBtn]}
+                    onPress={confirmDeleteSelected}
+                    disabled={deleting}
                   >
-                    <Text style={styles.historyTitle} numberOfLines={1}>{conv.title || 'Conversation'}</Text>
-                    <Text style={styles.historyMeta}>{conv.message_count} messages</Text>
+                    {deleting ? (
+                      <ActivityIndicator size="small" color="#FFF" />
+                    ) : (
+                      <>
+                        <Ionicons name="trash-outline" size={18} color="#FFF" />
+                        <Text style={styles.historyDeleteText}>Delete ({selectedIds.length})</Text>
+                      </>
+                    )}
                   </TouchableOpacity>
-                ))
-              )}
-            </ScrollView>
+                )}
+              </View>
+              <ScrollView style={styles.historyList} contentContainerStyle={styles.historyContent} keyboardShouldPersistTaps="handled">
+                {loadingHistory ? (
+                  <ActivityIndicator size="small" color={COLORS.primary} style={{ marginTop: 24 }} />
+                ) : history.length === 0 ? (
+                  <Text style={styles.emptyHistory}>
+                    {historySearch.trim() ? 'No matching conversations' : 'No past conversations'}
+                  </Text>
+                ) : (
+                  history.map((conv) => (
+                    <View key={conv.id} style={styles.historyItemWrapper}>
+                      <TouchableOpacity
+                        style={[styles.historyItem, selectingMode && selectedIds.includes(conv.id) && styles.historyItemSelected]}
+                        onPress={() => loadConversation(conv.id)}
+                        activeOpacity={0.7}
+                      >
+                        {selectingMode && (
+                          <View style={styles.historyCheckbox}>
+                            <Ionicons
+                              name={selectedIds.includes(conv.id) ? 'checkbox' : 'square-outline'}
+                              size={24}
+                              color={selectedIds.includes(conv.id) ? COLORS.primary : COLORS.textSecondary}
+                            />
+                          </View>
+                        )}
+                        <View style={styles.historyItemContent}>
+                          <Text style={styles.historyTitle} numberOfLines={1}>{conv.title || 'Conversation'}</Text>
+                          <Text style={styles.historyMeta}>{conv.message_count} messages</Text>
+                        </View>
+                        {!selectingMode && (
+                          <TouchableOpacity
+                            style={styles.historyItemDelete}
+                            onPress={(e) => { e.stopPropagation(); Alert.alert('Delete', 'Delete this conversation?', [{ text: 'Cancel', style: 'cancel' }, { text: 'Delete', style: 'destructive', onPress: () => deleteConversations([conv.id]) }]); }}
+                            hitSlop={{ top: 12, bottom: 12, left: 12, right: 12 }}
+                          >
+                            <Ionicons name="trash-outline" size={20} color={COLORS.textSecondary} />
+                          </TouchableOpacity>
+                        )}
+                      </TouchableOpacity>
+                    </View>
+                  ))
+                )}
+              </ScrollView>
+            </>
           ) : (
             <>
               <FlatList
@@ -823,11 +952,89 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: 24,
   },
+  historyToolbar: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 16,
+    paddingVertical: 10,
+    gap: 8,
+    borderBottomWidth: 1,
+    borderBottomColor: COLORS.border,
+    backgroundColor: '#FFF',
+  },
+  historySearchInput: {
+    flex: 1,
+    height: 40,
+    paddingHorizontal: 12,
+    borderRadius: 10,
+    backgroundColor: COLORS.assistantBg,
+    fontSize: 15,
+    color: COLORS.text,
+  },
+  historySearchBtn: {
+    padding: 10,
+  },
+  historySearchBtnActive: {},
+  historyActionsRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    gap: 12,
+    backgroundColor: '#FFF',
+    borderBottomWidth: 1,
+    borderBottomColor: COLORS.border,
+  },
+  historyActionBtn: {
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    borderRadius: 8,
+  },
+  historyActionBtnActive: {
+    backgroundColor: COLORS.primaryLight,
+  },
+  historyActionText: {
+    fontSize: 14,
+    color: COLORS.textSecondary,
+    fontWeight: '600',
+  },
+  historyDeleteBtn: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    borderRadius: 8,
+    backgroundColor: '#E53935',
+  },
+  historyDeleteText: {
+    fontSize: 14,
+    color: '#FFF',
+    fontWeight: '600',
+  },
+  historyItemWrapper: {
+    marginBottom: 8,
+  },
   historyItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
     padding: 14,
     borderRadius: 12,
     backgroundColor: COLORS.assistantBg,
-    marginBottom: 8,
+  },
+  historyItemSelected: {
+    backgroundColor: COLORS.primaryLight,
+    borderWidth: 1,
+    borderColor: COLORS.primary,
+  },
+  historyCheckbox: {
+    marginRight: 12,
+  },
+  historyItemContent: {
+    flex: 1,
+  },
+  historyItemDelete: {
+    padding: 8,
   },
   historyTitle: {
     fontSize: 16,

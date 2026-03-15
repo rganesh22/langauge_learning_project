@@ -372,6 +372,13 @@ export default function UnifiedActivityRenderer({ route, navigation, themeColor 
             totalGradable++;
             const val = answers[item.item_id];
             if (val && val.audio_base64) correctCount++;
+        } else if (item.type === 'conversation_task') {
+            totalGradable++;
+            const val = answers[item.item_id];
+            if (val && val.isFinished && val.completedTaskIndices?.length > 0) {
+              const fraction = val.completedTaskIndices.length / (item.tasks?.length || 1);
+              correctCount += fraction;
+            }
         }
     });
 
