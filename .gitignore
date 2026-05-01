@@ -1,3 +1,6 @@
+# Firebase Admin SDK (local only; never commit)
+language_learning_app/backend/firebase/*firebase-adminsdk*.json
+
 node_modules/
 .expo/
 .expo-shared/
